@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    properties = ServerPrivateEndpointConnectionProperties.DeserializeServerPrivateEndpointConnectionProperties(property.Value, options);
+                    properties = ServerPrivateEndpointConnectionProperties.DeserializeServerPrivateEndpointConnectionProperties(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

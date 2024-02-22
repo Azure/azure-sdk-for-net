@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property.Value, options);
+                    serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

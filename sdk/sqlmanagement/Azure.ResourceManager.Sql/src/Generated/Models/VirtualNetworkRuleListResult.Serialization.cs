@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerVirtualNetworkRuleData> array = new List<SqlServerVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(item, options));
+                        array.Add(SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(item));
                     }
                     value = array;
                     continue;

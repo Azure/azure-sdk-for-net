@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    subscriptionPolicies = SubscriptionPolicies.DeserializeSubscriptionPolicies(property.Value, options);
+                    subscriptionPolicies = SubscriptionPolicies.DeserializeSubscriptionPolicies(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationSource"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Resources
                     List<ManagedByTenant> array = new List<ManagedByTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedByTenant.DeserializeManagedByTenant(item, options));
+                        array.Add(ManagedByTenant.DeserializeManagedByTenant(item));
                     }
                     managedByTenants = array;
                     continue;

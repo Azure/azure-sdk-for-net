@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeWhatIfPropertyChange(item, options));
+                        array.Add(DeserializeWhatIfPropertyChange(item));
                     }
                     children = array;
                     continue;

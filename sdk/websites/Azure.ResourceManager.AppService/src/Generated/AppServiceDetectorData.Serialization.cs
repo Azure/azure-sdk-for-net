@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            metadata = DetectorInfo.DeserializeDetectorInfo(property0.Value, options);
+                            metadata = DetectorInfo.DeserializeDetectorInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataset"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService
                             List<DiagnosticDataset> array = new List<DiagnosticDataset>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticDataset.DeserializeDiagnosticDataset(item, options));
+                                array.Add(DiagnosticDataset.DeserializeDiagnosticDataset(item));
                             }
                             dataset = array;
                             continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            status = AppServiceStatusInfo.DeserializeAppServiceStatusInfo(property0.Value, options);
+                            status = AppServiceStatusInfo.DeserializeAppServiceStatusInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataProvidersMetadata"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
                             List<DataProviderMetadata> array = new List<DataProviderMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataProviderMetadata.DeserializeDataProviderMetadata(item, options));
+                                array.Add(DataProviderMetadata.DeserializeDataProviderMetadata(item));
                             }
                             dataProvidersMetadata = array;
                             continue;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            suggestedUtterances = QueryUtterancesResults.DeserializeQueryUtterancesResults(property0.Value, options);
+                            suggestedUtterances = QueryUtterancesResults.DeserializeQueryUtterancesResults(property0.Value);
                             continue;
                         }
                     }

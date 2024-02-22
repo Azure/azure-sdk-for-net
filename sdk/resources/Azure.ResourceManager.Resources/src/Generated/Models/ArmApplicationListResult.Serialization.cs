@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmApplicationData> array = new List<ArmApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmApplicationData.DeserializeArmApplicationData(item, options));
+                        array.Add(ArmApplicationData.DeserializeArmApplicationData(item));
                     }
                     value = array;
                     continue;

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerTrustGroupData> array = new List<SqlServerTrustGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(item, options));
+                        array.Add(SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(item));
                     }
                     value = array;
                     continue;

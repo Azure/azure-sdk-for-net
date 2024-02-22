@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEditionCapability> array = new List<ManagedInstanceEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEditionCapability.DeserializeManagedInstanceEditionCapability(item, options));
+                        array.Add(ManagedInstanceEditionCapability.DeserializeManagedInstanceEditionCapability(item));
                     }
                     supportedEditions = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolEditionCapability> array = new List<InstancePoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolEditionCapability.DeserializeInstancePoolEditionCapability(item, options));
+                        array.Add(InstancePoolEditionCapability.DeserializeInstancePoolEditionCapability(item));
                     }
                     supportedInstancePoolEditions = array;
                     continue;

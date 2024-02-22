@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerVersionCapability> array = new List<SqlServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerVersionCapability.DeserializeSqlServerVersionCapability(item, options));
+                        array.Add(SqlServerVersionCapability.DeserializeSqlServerVersionCapability(item));
                     }
                     supportedServerVersions = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceVersionCapability> array = new List<ManagedInstanceVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceVersionCapability.DeserializeManagedInstanceVersionCapability(item, options));
+                        array.Add(ManagedInstanceVersionCapability.DeserializeManagedInstanceVersionCapability(item));
                     }
                     supportedManagedInstanceVersions = array;
                     continue;

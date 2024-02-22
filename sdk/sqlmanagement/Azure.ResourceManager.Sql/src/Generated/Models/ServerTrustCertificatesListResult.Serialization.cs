@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServerTrustCertificateData> array = new List<ServerTrustCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerTrustCertificateData.DeserializeServerTrustCertificateData(item, options));
+                        array.Add(ServerTrustCertificateData.DeserializeServerTrustCertificateData(item));
                     }
                     value = array;
                     continue;

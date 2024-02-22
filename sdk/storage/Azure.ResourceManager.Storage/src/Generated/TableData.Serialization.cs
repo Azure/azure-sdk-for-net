@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Storage
                             List<StorageTableSignedIdentifier> array = new List<StorageTableSignedIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageTableSignedIdentifier.DeserializeStorageTableSignedIdentifier(item, options));
+                                array.Add(StorageTableSignedIdentifier.DeserializeStorageTableSignedIdentifier(item));
                             }
                             signedIdentifiers = array;
                             continue;

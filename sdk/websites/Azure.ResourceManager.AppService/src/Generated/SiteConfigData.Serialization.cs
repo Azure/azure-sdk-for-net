@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.AppService
                             List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item, options));
+                                array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
                             }
                             appSettings = array;
                             continue;
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.AppService
                             List<ConnStringInfo> array = new List<ConnStringInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnStringInfo.DeserializeConnStringInfo(item, options));
+                                array.Add(ConnStringInfo.DeserializeConnStringInfo(item));
                             }
                             connectionStrings = array;
                             continue;
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.AppService
                                 machineKey = null;
                                 continue;
                             }
-                            machineKey = SiteMachineKey.DeserializeSiteMachineKey(property0.Value, options);
+                            machineKey = SiteMachineKey.DeserializeSiteMachineKey(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("handlerMappings"u8))
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.AppService
                             List<HttpRequestHandlerMapping> array = new List<HttpRequestHandlerMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HttpRequestHandlerMapping.DeserializeHttpRequestHandlerMapping(item, options));
+                                array.Add(HttpRequestHandlerMapping.DeserializeHttpRequestHandlerMapping(item));
                             }
                             handlerMappings = array;
                             continue;
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.AppService
                             List<VirtualApplication> array = new List<VirtualApplication>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualApplication.DeserializeVirtualApplication(item, options));
+                                array.Add(VirtualApplication.DeserializeVirtualApplication(item));
                             }
                             virtualApplications = array;
                             continue;
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.AppService
                                 experiments = null;
                                 continue;
                             }
-                            experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property0.Value, options);
+                            experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("limits"u8))
@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.AppService
                                 limits = null;
                                 continue;
                             }
-                            limits = SiteLimits.DeserializeSiteLimits(property0.Value, options);
+                            limits = SiteLimits.DeserializeSiteLimits(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoHealEnabled"u8))
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.AppService
                                 autoHealRules = null;
                                 continue;
                             }
-                            autoHealRules = AutoHealRules.DeserializeAutoHealRules(property0.Value, options);
+                            autoHealRules = AutoHealRules.DeserializeAutoHealRules(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tracingOptions"u8))
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.AppService
                                 cors = null;
                                 continue;
                             }
-                            cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(property0.Value, options);
+                            cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("push"u8))
@@ -1528,7 +1528,7 @@ namespace Azure.ResourceManager.AppService
                                 push = null;
                                 continue;
                             }
-                            push = WebAppPushSettings.DeserializeWebAppPushSettings(property0.Value, options);
+                            push = WebAppPushSettings.DeserializeWebAppPushSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiDefinition"u8))
@@ -1538,7 +1538,7 @@ namespace Azure.ResourceManager.AppService
                                 apiDefinition = null;
                                 continue;
                             }
-                            apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(property0.Value, options);
+                            apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiManagementConfig"u8))
@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.AppService
                                 apiManagementConfig = null;
                                 continue;
                             }
-                            apiManagementConfig = ApiManagementConfig.DeserializeApiManagementConfig(property0.Value, options);
+                            apiManagementConfig = ApiManagementConfig.DeserializeApiManagementConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoSwapSlotName"u8))
@@ -1611,7 +1611,7 @@ namespace Azure.ResourceManager.AppService
                             List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item, options));
+                                array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item));
                             }
                             ipSecurityRestrictions = array;
                             continue;
@@ -1626,7 +1626,7 @@ namespace Azure.ResourceManager.AppService
                             List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item, options));
+                                array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item));
                             }
                             scmIPSecurityRestrictions = array;
                             continue;
@@ -1751,7 +1751,7 @@ namespace Azure.ResourceManager.AppService
                             Dictionary<string, AppServiceStorageAccessInfo> dictionary = new Dictionary<string, AppServiceStorageAccessInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property1.Value, options));
+                                dictionary.Add(property1.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property1.Value));
                             }
                             azureStorageAccounts = dictionary;
                             continue;

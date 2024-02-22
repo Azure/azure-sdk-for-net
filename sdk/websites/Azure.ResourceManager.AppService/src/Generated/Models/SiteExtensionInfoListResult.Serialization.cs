@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteExtensionInfoData> array = new List<SiteExtensionInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteExtensionInfoData.DeserializeSiteExtensionInfoData(item, options));
+                        array.Add(SiteExtensionInfoData.DeserializeSiteExtensionInfoData(item));
                     }
                     value = array;
                     continue;

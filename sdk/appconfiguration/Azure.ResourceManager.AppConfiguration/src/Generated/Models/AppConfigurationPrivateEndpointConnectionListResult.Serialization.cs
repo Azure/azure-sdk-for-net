@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<AppConfigurationPrivateEndpointConnectionData> array = new List<AppConfigurationPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationPrivateEndpointConnectionData.DeserializeAppConfigurationPrivateEndpointConnectionData(item, options));
+                        array.Add(AppConfigurationPrivateEndpointConnectionData.DeserializeAppConfigurationPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;

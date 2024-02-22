@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DatabaseAdvancedThreatProtectionData> array = new List<DatabaseAdvancedThreatProtectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseAdvancedThreatProtectionData.DeserializeDatabaseAdvancedThreatProtectionData(item, options));
+                        array.Add(DatabaseAdvancedThreatProtectionData.DeserializeDatabaseAdvancedThreatProtectionData(item));
                     }
                     value = array;
                     continue;

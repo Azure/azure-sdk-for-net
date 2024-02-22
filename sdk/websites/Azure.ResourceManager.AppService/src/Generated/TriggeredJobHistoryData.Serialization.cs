@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
                             List<TriggeredJobRun> array = new List<TriggeredJobRun>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TriggeredJobRun.DeserializeTriggeredJobRun(item, options));
+                                array.Add(TriggeredJobRun.DeserializeTriggeredJobRun(item));
                             }
                             runs = array;
                             continue;

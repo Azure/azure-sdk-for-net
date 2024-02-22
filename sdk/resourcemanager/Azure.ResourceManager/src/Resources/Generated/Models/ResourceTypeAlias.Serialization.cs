@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAliasPath> array = new List<ResourceTypeAliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item, options));
+                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item));
                     }
                     paths = array;
                     continue;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options);
+                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultMetadata"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options);
+                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

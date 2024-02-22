@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<Permission> array = new List<Permission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Permission.DeserializePermission(item, options));
+                        array.Add(Permission.DeserializePermission(item));
                     }
                     permissions = array;
                     continue;

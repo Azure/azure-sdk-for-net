@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlTimeZoneData> array = new List<SqlTimeZoneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlTimeZoneData.DeserializeSqlTimeZoneData(item, options));
+                        array.Add(SqlTimeZoneData.DeserializeSqlTimeZoneData(item));
                     }
                     value = array;
                     continue;

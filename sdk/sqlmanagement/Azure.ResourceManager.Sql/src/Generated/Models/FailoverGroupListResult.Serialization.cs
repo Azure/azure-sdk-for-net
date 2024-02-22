@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<FailoverGroupData> array = new List<FailoverGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FailoverGroupData.DeserializeFailoverGroupData(item, options));
+                        array.Add(FailoverGroupData.DeserializeFailoverGroupData(item));
                     }
                     value = array;
                     continue;

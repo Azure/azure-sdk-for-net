@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value, options);
+                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value, options);
+                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

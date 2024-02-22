@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncAgentLinkedDatabase> array = new List<SyncAgentLinkedDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase(item, options));
+                        array.Add(SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase(item));
                     }
                     value = array;
                     continue;

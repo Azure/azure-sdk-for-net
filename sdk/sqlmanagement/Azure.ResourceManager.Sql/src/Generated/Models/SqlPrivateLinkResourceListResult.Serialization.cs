@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlPrivateLinkResourceData> array = new List<SqlPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlPrivateLinkResourceData.DeserializeSqlPrivateLinkResourceData(item, options));
+                        array.Add(SqlPrivateLinkResourceData.DeserializeSqlPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

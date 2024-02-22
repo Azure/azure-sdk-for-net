@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = AppServiceAppleRegistration.DeserializeAppServiceAppleRegistration(property.Value, options);
+                    registration = AppServiceAppleRegistration.DeserializeAppServiceAppleRegistration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value, options);
+                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

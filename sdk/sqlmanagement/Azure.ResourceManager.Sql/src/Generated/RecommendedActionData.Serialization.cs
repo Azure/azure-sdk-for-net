@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            state = RecommendedActionStateInfo.DeserializeRecommendedActionStateInfo(property0.Value, options);
+                            state = RecommendedActionStateInfo.DeserializeRecommendedActionStateInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isExecutableAction"u8))
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            implementationDetails = RecommendedActionImplementationInfo.DeserializeRecommendedActionImplementationInfo(property0.Value, options);
+                            implementationDetails = RecommendedActionImplementationInfo.DeserializeRecommendedActionImplementationInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("errorDetails"u8))
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            errorDetails = RecommendedActionErrorInfo.DeserializeRecommendedActionErrorInfo(property0.Value, options);
+                            errorDetails = RecommendedActionErrorInfo.DeserializeRecommendedActionErrorInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("estimatedImpact"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item, options));
+                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
                             }
                             estimatedImpact = array;
                             continue;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item, options));
+                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
                             }
                             observedImpact = array;
                             continue;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionMetricInfo> array = new List<RecommendedActionMetricInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionMetricInfo.DeserializeRecommendedActionMetricInfo(item, options));
+                                array.Add(RecommendedActionMetricInfo.DeserializeRecommendedActionMetricInfo(item));
                             }
                             timeSeries = array;
                             continue;

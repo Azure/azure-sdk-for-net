@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property0.Value, options);
+                            privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ipAddresses"u8))

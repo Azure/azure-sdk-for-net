@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerConnectionPolicyData> array = new List<SqlServerConnectionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerConnectionPolicyData.DeserializeSqlServerConnectionPolicyData(item, options));
+                        array.Add(SqlServerConnectionPolicyData.DeserializeSqlServerConnectionPolicyData(item));
                     }
                     value = array;
                     continue;

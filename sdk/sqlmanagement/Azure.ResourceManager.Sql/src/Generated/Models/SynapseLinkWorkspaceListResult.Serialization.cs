@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlSynapseLinkWorkspace> array = new List<SqlSynapseLinkWorkspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace(item, options));
+                        array.Add(SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace(item));
                     }
                     value = array;
                     continue;

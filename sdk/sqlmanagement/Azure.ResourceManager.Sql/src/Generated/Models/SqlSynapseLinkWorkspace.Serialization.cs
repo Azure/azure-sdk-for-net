@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<SqlSynapseLinkWorkspaceInfo> array = new List<SqlSynapseLinkWorkspaceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlSynapseLinkWorkspaceInfo.DeserializeSqlSynapseLinkWorkspaceInfo(item, options));
+                                array.Add(SqlSynapseLinkWorkspaceInfo.DeserializeSqlSynapseLinkWorkspaceInfo(item));
                             }
                             workspaces = array;
                             continue;

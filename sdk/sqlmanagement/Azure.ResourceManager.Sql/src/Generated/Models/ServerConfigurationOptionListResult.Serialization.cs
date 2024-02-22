@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceServerConfigurationOptionData> array = new List<ManagedInstanceServerConfigurationOptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(item, options));
+                        array.Add(ManagedInstanceServerConfigurationOptionData.DeserializeManagedInstanceServerConfigurationOptionData(item));
                     }
                     value = array;
                     continue;

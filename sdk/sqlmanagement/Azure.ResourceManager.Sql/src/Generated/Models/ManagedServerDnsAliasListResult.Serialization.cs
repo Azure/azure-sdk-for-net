@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedServerDnsAliasData> array = new List<ManagedServerDnsAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(item, options));
+                        array.Add(ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(item));
                     }
                     value = array;
                     continue;

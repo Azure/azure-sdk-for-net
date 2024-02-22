@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppSnapshot> array = new List<AppSnapshot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppSnapshot.DeserializeAppSnapshot(item, options));
+                        array.Add(AppSnapshot.DeserializeAppSnapshot(item));
                     }
                     value = array;
                     continue;

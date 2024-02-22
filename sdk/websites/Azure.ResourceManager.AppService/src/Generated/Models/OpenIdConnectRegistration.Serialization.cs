@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    clientCredential = OpenIdConnectClientCredential.DeserializeOpenIdConnectClientCredential(property.Value, options);
+                    clientCredential = OpenIdConnectClientCredential.DeserializeOpenIdConnectClientCredential(property.Value);
                     continue;
                 }
                 if (property.NameEquals("openIdConnectConfiguration"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    openIdConnectConfiguration = OpenIdConnectConfig.DeserializeOpenIdConnectConfig(property.Value, options);
+                    openIdConnectConfiguration = OpenIdConnectConfig.DeserializeOpenIdConnectConfig(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

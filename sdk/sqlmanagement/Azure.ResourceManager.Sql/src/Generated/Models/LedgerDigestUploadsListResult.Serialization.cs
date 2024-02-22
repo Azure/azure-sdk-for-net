@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LedgerDigestUploadData> array = new List<LedgerDigestUploadData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LedgerDigestUploadData.DeserializeLedgerDigestUploadData(item, options));
+                        array.Add(LedgerDigestUploadData.DeserializeLedgerDigestUploadData(item));
                     }
                     value = array;
                     continue;

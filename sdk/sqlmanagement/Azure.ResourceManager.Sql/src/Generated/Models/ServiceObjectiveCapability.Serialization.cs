@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
                     }
                     supportedMaxSizes = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value, options);
+                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zoneRedundant"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value, options);
+                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedMinCapacities"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MinCapacityCapability> array = new List<MinCapacityCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item, options));
+                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item));
                     }
                     supportedMinCapacities = array;
                     continue;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaintenanceConfigurationCapability> array = new List<MaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item, options));
+                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item));
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<RecoverableDatabaseData> array = new List<RecoverableDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoverableDatabaseData.DeserializeRecoverableDatabaseData(item, options));
+                        array.Add(RecoverableDatabaseData.DeserializeRecoverableDatabaseData(item));
                     }
                     value = array;
                     continue;

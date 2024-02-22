@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<UpsertManagedServerOperationStep> array = new List<UpsertManagedServerOperationStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item, options));
+                        array.Add(UpsertManagedServerOperationStep.DeserializeUpsertManagedServerOperationStep(item));
                     }
                     stepsList = array;
                     continue;

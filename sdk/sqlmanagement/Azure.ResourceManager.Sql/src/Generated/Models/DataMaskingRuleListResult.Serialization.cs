@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DataMaskingRule> array = new List<DataMaskingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingRule.DeserializeDataMaskingRule(item, options));
+                        array.Add(DataMaskingRule.DeserializeDataMaskingRule(item));
                     }
                     value = array;
                     continue;

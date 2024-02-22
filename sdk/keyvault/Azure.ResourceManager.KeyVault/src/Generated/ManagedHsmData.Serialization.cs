@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    properties = ManagedHsmProperties.DeserializeManagedHsmProperties(property.Value, options);
+                    properties = ManagedHsmProperties.DeserializeManagedHsmProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value, options);
+                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

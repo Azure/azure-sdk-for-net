@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value, options);
+                    sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value);
                     continue;
                 }
                 if (property.NameEquals("score"u8))

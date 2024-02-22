@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerKeyData> array = new List<SqlServerKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerKeyData.DeserializeSqlServerKeyData(item, options));
+                        array.Add(SqlServerKeyData.DeserializeSqlServerKeyData(item));
                     }
                     value = array;
                     continue;

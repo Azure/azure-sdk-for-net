@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ManagementLockData> array = new List<ManagementLockData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementLockData.DeserializeManagementLockData(item, options));
+                        array.Add(ManagementLockData.DeserializeManagementLockData(item));
                     }
                     value = array;
                     continue;

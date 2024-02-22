@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncAgentData> array = new List<SyncAgentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncAgentData.DeserializeSyncAgentData(item, options));
+                        array.Add(SyncAgentData.DeserializeSyncAgentData(item));
                     }
                     value = array;
                     continue;

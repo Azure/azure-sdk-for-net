@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolOperationData> array = new List<ElasticPoolOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolOperationData.DeserializeElasticPoolOperationData(item, options));
+                        array.Add(ElasticPoolOperationData.DeserializeElasticPoolOperationData(item));
                     }
                     value = array;
                     continue;

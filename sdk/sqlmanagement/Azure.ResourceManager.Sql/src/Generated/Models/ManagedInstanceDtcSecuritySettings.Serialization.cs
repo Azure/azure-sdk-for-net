@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    transactionManagerCommunicationSettings = ManagedInstanceDtcTransactionManagerCommunicationSettings.DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(property.Value, options);
+                    transactionManagerCommunicationSettings = ManagedInstanceDtcTransactionManagerCommunicationSettings.DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("xaTransactionsEnabled"u8))

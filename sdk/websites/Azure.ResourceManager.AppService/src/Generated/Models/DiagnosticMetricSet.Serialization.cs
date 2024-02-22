@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticMetricSample> array = new List<DiagnosticMetricSample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticMetricSample.DeserializeDiagnosticMetricSample(item, options));
+                        array.Add(DiagnosticMetricSample.DeserializeDiagnosticMetricSample(item));
                     }
                     values = array;
                     continue;

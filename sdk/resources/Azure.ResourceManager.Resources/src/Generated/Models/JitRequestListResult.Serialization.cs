@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<JitRequestData> array = new List<JitRequestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitRequestData.DeserializeJitRequestData(item, options));
+                        array.Add(JitRequestData.DeserializeJitRequestData(item));
                     }
                     value = array;
                     continue;

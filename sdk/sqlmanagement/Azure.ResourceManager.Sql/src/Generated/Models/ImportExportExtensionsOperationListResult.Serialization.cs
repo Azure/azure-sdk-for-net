@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ImportExportExtensionsOperationResult> array = new List<ImportExportExtensionsOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult(item, options));
+                        array.Add(ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult(item));
                     }
                     value = array;
                     continue;

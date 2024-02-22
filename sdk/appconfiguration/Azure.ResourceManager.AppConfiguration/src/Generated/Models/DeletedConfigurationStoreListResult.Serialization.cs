@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<DeletedAppConfigurationStoreData> array = new List<DeletedAppConfigurationStoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(item, options));
+                        array.Add(DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(item));
                     }
                     value = array;
                     continue;

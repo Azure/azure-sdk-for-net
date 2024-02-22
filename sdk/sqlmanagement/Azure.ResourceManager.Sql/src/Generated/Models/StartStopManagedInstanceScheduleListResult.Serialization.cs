@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceStartStopScheduleData> array = new List<ManagedInstanceStartStopScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceStartStopScheduleData.DeserializeManagedInstanceStartStopScheduleData(item, options));
+                        array.Add(ManagedInstanceStartStopScheduleData.DeserializeManagedInstanceStartStopScheduleData(item));
                     }
                     value = array;
                     continue;

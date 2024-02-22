@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item, options));
+                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item));
                     }
                     resourceTypes = array;
                     continue;

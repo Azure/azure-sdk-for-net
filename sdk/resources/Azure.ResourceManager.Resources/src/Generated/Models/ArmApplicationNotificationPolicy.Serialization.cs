@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmApplicationNotificationEndpoint> array = new List<ArmApplicationNotificationEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmApplicationNotificationEndpoint.DeserializeArmApplicationNotificationEndpoint(item, options));
+                        array.Add(ArmApplicationNotificationEndpoint.DeserializeArmApplicationNotificationEndpoint(item));
                     }
                     notificationEndpoints = array;
                     continue;

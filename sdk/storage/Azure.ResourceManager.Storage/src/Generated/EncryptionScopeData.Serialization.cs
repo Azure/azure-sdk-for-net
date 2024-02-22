@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            keyVaultProperties = EncryptionScopeKeyVaultProperties.DeserializeEncryptionScopeKeyVaultProperties(property0.Value, options);
+                            keyVaultProperties = EncryptionScopeKeyVaultProperties.DeserializeEncryptionScopeKeyVaultProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("requireInfrastructureEncryption"u8))

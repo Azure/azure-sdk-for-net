@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value, options);
+                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("storageAccountSettings"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value, options);
+                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cleanupPreference"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            status = ScriptStatus.DeserializeScriptStatus(property0.Value, options);
+                            status = ScriptStatus.DeserializeScriptStatus(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ScriptEnvironmentVariable> array = new List<ScriptEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item, options));
+                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item));
                             }
                             environmentVariables = array;
                             continue;

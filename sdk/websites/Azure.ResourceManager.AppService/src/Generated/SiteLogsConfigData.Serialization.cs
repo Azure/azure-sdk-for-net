@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            applicationLogs = ApplicationLogsConfig.DeserializeApplicationLogsConfig(property0.Value, options);
+                            applicationLogs = ApplicationLogsConfig.DeserializeApplicationLogsConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpLogs"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            httpLogs = AppServiceHttpLogsConfig.DeserializeAppServiceHttpLogsConfig(property0.Value, options);
+                            httpLogs = AppServiceHttpLogsConfig.DeserializeAppServiceHttpLogsConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("failedRequestsTracing"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            failedRequestsTracing = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value, options);
+                            failedRequestsTracing = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("detailedErrorMessages"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            detailedErrorMessages = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value, options);
+                            detailedErrorMessages = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value);
                             continue;
                         }
                     }

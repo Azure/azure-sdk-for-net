@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServiceObjectiveData> array = new List<ServiceObjectiveData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceObjectiveData.DeserializeServiceObjectiveData(item, options));
+                        array.Add(ServiceObjectiveData.DeserializeServiceObjectiveData(item));
                     }
                     value = array;
                     continue;

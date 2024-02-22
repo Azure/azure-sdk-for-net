@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlOutboundEnvironmentEndpoint> array = new List<SqlOutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlOutboundEnvironmentEndpoint.DeserializeSqlOutboundEnvironmentEndpoint(item, options));
+                        array.Add(SqlOutboundEnvironmentEndpoint.DeserializeSqlOutboundEnvironmentEndpoint(item));
                     }
                     value = array;
                     continue;

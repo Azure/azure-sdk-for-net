@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    name = StorageUsageName.DeserializeStorageUsageName(property.Value, options);
+                    name = StorageUsageName.DeserializeStorageUsageName(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

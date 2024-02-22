@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LongTermRetentionPolicyData> array = new List<LongTermRetentionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(item, options));
+                        array.Add(LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(item));
                     }
                     value = array;
                     continue;

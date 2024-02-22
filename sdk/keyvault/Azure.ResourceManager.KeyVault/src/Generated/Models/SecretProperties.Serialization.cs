@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value, options);
+                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretUri"u8))

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceVcoresCapability> array = new List<ManagedInstanceVcoresCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceVcoresCapability.DeserializeManagedInstanceVcoresCapability(item, options));
+                        array.Add(ManagedInstanceVcoresCapability.DeserializeManagedInstanceVcoresCapability(item));
                     }
                     supportedVcoresValues = array;
                     continue;

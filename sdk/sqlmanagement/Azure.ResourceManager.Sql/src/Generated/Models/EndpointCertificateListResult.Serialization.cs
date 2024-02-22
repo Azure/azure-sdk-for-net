@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EndpointCertificateData> array = new List<EndpointCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointCertificateData.DeserializeEndpointCertificateData(item, options));
+                        array.Add(EndpointCertificateData.DeserializeEndpointCertificateData(item));
                     }
                     value = array;
                     continue;

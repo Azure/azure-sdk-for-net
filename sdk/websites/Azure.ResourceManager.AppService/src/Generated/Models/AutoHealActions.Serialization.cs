@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value, options);
+                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minProcessExecutionTime"u8))

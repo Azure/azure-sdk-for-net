@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql
                             Dictionary<string, AutomaticTuningServerOptions> dictionary = new Dictionary<string, AutomaticTuningServerOptions>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AutomaticTuningServerOptions.DeserializeAutomaticTuningServerOptions(property1.Value, options));
+                                dictionary.Add(property1.Name, AutomaticTuningServerOptions.DeserializeAutomaticTuningServerOptions(property1.Value));
                             }
                             options0 = dictionary;
                             continue;

@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources
                             List<JitAuthorizationPolicies> array = new List<JitAuthorizationPolicies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item, options));
+                                array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
                             }
                             jitAuthorizationPolicies = array;
                             continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value, options);
+                            jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
+                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
+                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
                     }

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<JitApprover> array = new List<JitApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitApprover.DeserializeJitApprover(item, options));
+                        array.Add(JitApprover.DeserializeJitApprover(item));
                     }
                     jitApprovers = array;
                     continue;

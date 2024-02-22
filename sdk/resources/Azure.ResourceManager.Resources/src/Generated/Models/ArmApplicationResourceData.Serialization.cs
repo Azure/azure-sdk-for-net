@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value, options);
+                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DeletedServerData> array = new List<DeletedServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedServerData.DeserializeDeletedServerData(item, options));
+                        array.Add(DeletedServerData.DeserializeDeletedServerData(item));
                     }
                     value = array;
                     continue;

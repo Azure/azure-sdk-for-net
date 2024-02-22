@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmDeploymentOperation> array = new List<ArmDeploymentOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDeploymentOperation.DeserializeArmDeploymentOperation(item, options));
+                        array.Add(ArmDeploymentOperation.DeserializeArmDeploymentOperation(item));
                     }
                     value = array;
                     continue;

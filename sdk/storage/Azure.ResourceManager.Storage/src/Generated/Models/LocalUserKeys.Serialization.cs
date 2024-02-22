@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSshPublicKey> array = new List<StorageSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item, options));
+                        array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item));
                     }
                     sshAuthorizedKeys = array;
                     continue;

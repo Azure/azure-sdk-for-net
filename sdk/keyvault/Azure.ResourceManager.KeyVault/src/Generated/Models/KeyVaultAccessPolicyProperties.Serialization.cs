@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item, options));
+                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item));
                     }
                     accessPolicies = array;
                     continue;

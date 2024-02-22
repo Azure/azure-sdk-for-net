@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEncryptionProtectorData> array = new List<ManagedInstanceEncryptionProtectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(item, options));
+                        array.Add(ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(item));
                     }
                     value = array;
                     continue;

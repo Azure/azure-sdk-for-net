@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources
                             List<ManagementLockOwner> array = new List<ManagementLockOwner>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item, options));
+                                array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item));
                             }
                             owners = array;
                             continue;

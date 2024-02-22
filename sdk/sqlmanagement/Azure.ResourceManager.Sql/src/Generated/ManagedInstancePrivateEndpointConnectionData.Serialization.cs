@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ManagedInstancePrivateLinkServiceConnectionStateProperty.DeserializeManagedInstancePrivateLinkServiceConnectionStateProperty(property0.Value, options);
+                            privateLinkServiceConnectionState = ManagedInstancePrivateLinkServiceConnectionStateProperty.DeserializeManagedInstancePrivateLinkServiceConnectionStateProperty(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

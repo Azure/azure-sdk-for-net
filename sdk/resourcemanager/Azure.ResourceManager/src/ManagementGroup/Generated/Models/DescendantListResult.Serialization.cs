@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<DescendantData> array = new List<DescendantData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DescendantData.DeserializeDescendantData(item, options));
+                        array.Add(DescendantData.DeserializeDescendantData(item));
                     }
                     value = array;
                     continue;

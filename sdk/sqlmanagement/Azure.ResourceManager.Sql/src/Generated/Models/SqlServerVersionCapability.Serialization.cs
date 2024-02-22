@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EditionCapability> array = new List<EditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EditionCapability.DeserializeEditionCapability(item, options));
+                        array.Add(EditionCapability.DeserializeEditionCapability(item));
                     }
                     supportedEditions = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolEditionCapability> array = new List<ElasticPoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item, options));
+                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item));
                     }
                     supportedElasticPoolEditions = array;
                     continue;

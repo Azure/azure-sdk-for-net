@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncFullSchemaProperties> array = new List<SyncFullSchemaProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(item, options));
+                        array.Add(SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties(item));
                     }
                     value = array;
                     continue;

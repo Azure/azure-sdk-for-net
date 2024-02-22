@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<BackupShortTermRetentionPolicyData> array = new List<BackupShortTermRetentionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(item, options));
+                        array.Add(BackupShortTermRetentionPolicyData.DeserializeBackupShortTermRetentionPolicyData(item));
                     }
                     value = array;
                     continue;

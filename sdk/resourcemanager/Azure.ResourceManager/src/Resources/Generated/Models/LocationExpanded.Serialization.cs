@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = LocationMetadata.DeserializeLocationMetadata(property.Value, options);
+                    metadata = LocationMetadata.DeserializeLocationMetadata(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availabilityZoneMappings"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<AvailabilityZoneMappings> array = new List<AvailabilityZoneMappings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AvailabilityZoneMappings.DeserializeAvailabilityZoneMappings(item, options));
+                        array.Add(Models.AvailabilityZoneMappings.DeserializeAvailabilityZoneMappings(item));
                     }
                     availabilityZoneMappings = array;
                     continue;

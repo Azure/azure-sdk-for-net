@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = SqlMetricName.DeserializeSqlMetricName(property.Value, options);
+                    name = SqlMetricName.DeserializeSqlMetricName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metricValues"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricValue> array = new List<SqlMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricValue.DeserializeSqlMetricValue(item, options));
+                        array.Add(SqlMetricValue.DeserializeSqlMetricValue(item));
                     }
                     metricValues = array;
                     continue;

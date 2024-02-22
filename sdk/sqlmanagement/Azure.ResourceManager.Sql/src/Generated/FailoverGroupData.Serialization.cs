@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value, options);
+                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value, options);
+                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Sql
                             List<PartnerServerInfo> array = new List<PartnerServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item, options));
+                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
                             }
                             partnerServers = array;
                             continue;

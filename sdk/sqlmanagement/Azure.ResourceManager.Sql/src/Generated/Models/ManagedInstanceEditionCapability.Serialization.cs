@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceFamilyCapability> array = new List<ManagedInstanceFamilyCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceFamilyCapability.DeserializeManagedInstanceFamilyCapability(item, options));
+                        array.Add(ManagedInstanceFamilyCapability.DeserializeManagedInstanceFamilyCapability(item));
                     }
                     supportedFamilies = array;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<StorageCapability> array = new List<StorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCapability.DeserializeStorageCapability(item, options));
+                        array.Add(StorageCapability.DeserializeStorageCapability(item));
                     }
                     supportedStorageCapabilities = array;
                     continue;

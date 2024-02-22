@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    smb = SmbSetting.DeserializeSmbSetting(property.Value, options);
+                    smb = SmbSetting.DeserializeSmbSetting(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Resources
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element, options);
-                    case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element, options);
+                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element);
+                    case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element);
                 }
             }
-            return UnknownArmDeploymentScript.DeserializeUnknownArmDeploymentScript(element, options);
+            return UnknownArmDeploymentScript.DeserializeUnknownArmDeploymentScript(element);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

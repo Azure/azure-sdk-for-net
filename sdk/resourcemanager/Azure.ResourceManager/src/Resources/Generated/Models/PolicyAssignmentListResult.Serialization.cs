@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PolicyAssignmentData> array = new List<PolicyAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyAssignmentData.DeserializePolicyAssignmentData(item, options));
+                        array.Add(PolicyAssignmentData.DeserializePolicyAssignmentData(item));
                     }
                     value = array;
                     continue;

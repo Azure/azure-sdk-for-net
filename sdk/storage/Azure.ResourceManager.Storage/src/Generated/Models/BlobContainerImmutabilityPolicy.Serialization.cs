@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<UpdateHistoryEntry> array = new List<UpdateHistoryEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateHistoryEntry.DeserializeUpdateHistoryEntry(item, options));
+                        array.Add(UpdateHistoryEntry.DeserializeUpdateHistoryEntry(item));
                     }
                     updateHistory = array;
                     continue;

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<WorkloadGroupData> array = new List<WorkloadGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadGroupData.DeserializeWorkloadGroupData(item, options));
+                        array.Add(WorkloadGroupData.DeserializeWorkloadGroupData(item));
                     }
                     value = array;
                     continue;

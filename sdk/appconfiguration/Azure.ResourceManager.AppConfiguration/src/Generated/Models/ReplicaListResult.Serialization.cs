@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<AppConfigurationReplicaData> array = new List<AppConfigurationReplicaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(item, options));
+                        array.Add(AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(item));
                     }
                     value = array;
                     continue;

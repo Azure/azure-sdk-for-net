@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    cpuUsage = ContainerCpuUsage.DeserializeContainerCpuUsage(property.Value, options);
+                    cpuUsage = ContainerCpuUsage.DeserializeContainerCpuUsage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("systemCpuUsage"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(property.Value, options);
+                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

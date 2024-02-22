@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxValue"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scaleSize"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("logSize"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value, options);
+                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceProviderData> array = new List<ResourceProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderData.DeserializeResourceProviderData(item, options));
+                        array.Add(ResourceProviderData.DeserializeResourceProviderData(item));
                     }
                     value = array;
                     continue;

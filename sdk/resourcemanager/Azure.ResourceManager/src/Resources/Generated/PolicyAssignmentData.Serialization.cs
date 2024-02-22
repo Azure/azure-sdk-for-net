@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, ArmPolicyParameterValue> dictionary = new Dictionary<string, ArmPolicyParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property1.Value, options));
+                                dictionary.Add(property1.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property1.Value));
                             }
                             parameters = dictionary;
                             continue;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Resources
                             List<NonComplianceMessage> array = new List<NonComplianceMessage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NonComplianceMessage.DeserializeNonComplianceMessage(item, options));
+                                array.Add(NonComplianceMessage.DeserializeNonComplianceMessage(item));
                             }
                             nonComplianceMessages = array;
                             continue;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Resources
                             List<ResourceSelector> array = new List<ResourceSelector>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceSelector.DeserializeResourceSelector(item, options));
+                                array.Add(ResourceSelector.DeserializeResourceSelector(item));
                             }
                             resourceSelectors = array;
                             continue;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyOverride> array = new List<PolicyOverride>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyOverride.DeserializePolicyOverride(item, options));
+                                array.Add(PolicyOverride.DeserializePolicyOverride(item));
                             }
                             overrides = array;
                             continue;

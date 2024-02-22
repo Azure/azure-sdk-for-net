@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            schema = SyncGroupSchema.DeserializeSyncGroupSchema(property0.Value, options);
+                            schema = SyncGroupSchema.DeserializeSyncGroupSchema(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableConflictLogging"u8))

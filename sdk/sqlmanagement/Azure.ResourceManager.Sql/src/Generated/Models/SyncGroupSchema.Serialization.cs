@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncGroupSchemaTable> array = new List<SyncGroupSchemaTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupSchemaTable.DeserializeSyncGroupSchemaTable(item, options));
+                        array.Add(SyncGroupSchemaTable.DeserializeSyncGroupSchemaTable(item));
                     }
                     tables = array;
                     continue;

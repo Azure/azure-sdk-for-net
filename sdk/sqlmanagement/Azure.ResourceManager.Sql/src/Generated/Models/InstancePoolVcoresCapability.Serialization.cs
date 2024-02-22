@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    storageLimit = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
+                    storageLimit = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

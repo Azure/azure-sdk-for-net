@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerJobData> array = new List<SqlServerJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerJobData.DeserializeSqlServerJobData(item, options));
+                        array.Add(SqlServerJobData.DeserializeSqlServerJobData(item));
                     }
                     value = array;
                     continue;

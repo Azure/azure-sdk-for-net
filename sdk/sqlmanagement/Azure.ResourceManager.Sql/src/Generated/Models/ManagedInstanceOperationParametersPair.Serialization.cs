@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    currentParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value, options);
+                    currentParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("requestedParameters"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    requestedParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value, options);
+                    requestedParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

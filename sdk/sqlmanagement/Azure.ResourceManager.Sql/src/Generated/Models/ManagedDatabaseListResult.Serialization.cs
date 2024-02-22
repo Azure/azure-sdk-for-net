@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedDatabaseData> array = new List<ManagedDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedDatabaseData.DeserializeManagedDatabaseData(item, options));
+                        array.Add(ManagedDatabaseData.DeserializeManagedDatabaseData(item));
                     }
                     value = array;
                     continue;

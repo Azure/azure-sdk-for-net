@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    properties = ManagedInstancePrivateLinkProperties.DeserializeManagedInstancePrivateLinkProperties(property.Value, options);
+                    properties = ManagedInstancePrivateLinkProperties.DeserializeManagedInstancePrivateLinkProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

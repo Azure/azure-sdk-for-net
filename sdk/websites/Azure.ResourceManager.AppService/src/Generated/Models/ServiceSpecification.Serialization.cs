@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricSpecification> array = new List<MetricSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSpecification.DeserializeMetricSpecification(item, options));
+                        array.Add(MetricSpecification.DeserializeMetricSpecification(item));
                     }
                     metricSpecifications = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<LogSpecification> array = new List<LogSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogSpecification.DeserializeLogSpecification(item, options));
+                        array.Add(LogSpecification.DeserializeLogSpecification(item));
                     }
                     logSpecifications = array;
                     continue;

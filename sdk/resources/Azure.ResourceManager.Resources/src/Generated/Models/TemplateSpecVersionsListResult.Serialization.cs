@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<TemplateSpecVersionData> array = new List<TemplateSpecVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TemplateSpecVersionData.DeserializeTemplateSpecVersionData(item, options));
+                        array.Add(TemplateSpecVersionData.DeserializeTemplateSpecVersionData(item));
                     }
                     value = array;
                     continue;

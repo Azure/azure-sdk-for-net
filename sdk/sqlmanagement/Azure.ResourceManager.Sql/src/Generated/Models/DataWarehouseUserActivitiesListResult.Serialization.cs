@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DataWarehouseUserActivityData> array = new List<DataWarehouseUserActivityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(item, options));
+                        array.Add(DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(item));
                     }
                     value = array;
                     continue;

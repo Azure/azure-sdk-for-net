@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<FunctionAppMajorVersion> array = new List<FunctionAppMajorVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FunctionAppMajorVersion.DeserializeFunctionAppMajorVersion(item, options));
+                                array.Add(FunctionAppMajorVersion.DeserializeFunctionAppMajorVersion(item));
                             }
                             majorVersions = array;
                             continue;

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstancePrivateLinkData> array = new List<ManagedInstancePrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstancePrivateLinkData.DeserializeManagedInstancePrivateLinkData(item, options));
+                        array.Add(ManagedInstancePrivateLinkData.DeserializeManagedInstancePrivateLinkData(item));
                     }
                     value = array;
                     continue;

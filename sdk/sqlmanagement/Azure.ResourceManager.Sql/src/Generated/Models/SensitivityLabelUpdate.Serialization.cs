@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            sensitivityLabel = SensitivityLabelData.DeserializeSensitivityLabelData(property0.Value, options);
+                            sensitivityLabel = SensitivityLabelData.DeserializeSensitivityLabelData(property0.Value);
                             continue;
                         }
                     }

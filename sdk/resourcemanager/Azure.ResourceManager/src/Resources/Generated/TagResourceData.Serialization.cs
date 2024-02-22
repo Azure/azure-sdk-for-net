@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = Tag.DeserializeTag(property.Value, options);
+                    properties = Tag.DeserializeTag(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

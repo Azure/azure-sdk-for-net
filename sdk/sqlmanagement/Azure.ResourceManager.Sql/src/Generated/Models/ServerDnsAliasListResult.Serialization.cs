@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerDnsAliasData> array = new List<SqlServerDnsAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(item, options));
+                        array.Add(SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(item));
                     }
                     value = array;
                     continue;

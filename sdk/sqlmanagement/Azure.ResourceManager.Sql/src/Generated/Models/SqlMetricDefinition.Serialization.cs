@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = SqlMetricName.DeserializeSqlMetricName(property.Value, options);
+                    name = SqlMetricName.DeserializeSqlMetricName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("primaryAggregationType"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item, options));
+                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item));
                     }
                     metricAvailabilities = array;
                     continue;

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PrivateAccessSubnet> array = new List<PrivateAccessSubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item, options));
+                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item));
                     }
                     subnets = array;
                     continue;

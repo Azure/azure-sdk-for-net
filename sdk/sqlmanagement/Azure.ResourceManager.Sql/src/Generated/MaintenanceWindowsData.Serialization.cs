@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                             List<MaintenanceWindowTimeRange> array = new List<MaintenanceWindowTimeRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item, options));
+                                array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item));
                             }
                             timeRanges = array;
                             continue;

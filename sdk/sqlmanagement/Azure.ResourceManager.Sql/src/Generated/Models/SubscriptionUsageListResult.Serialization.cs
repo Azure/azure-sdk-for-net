@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SubscriptionUsageData> array = new List<SubscriptionUsageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionUsageData.DeserializeSubscriptionUsageData(item, options));
+                        array.Add(SubscriptionUsageData.DeserializeSubscriptionUsageData(item));
                     }
                     value = array;
                     continue;

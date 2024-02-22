@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql
                             List<SqlScheduleItem> array = new List<SqlScheduleItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlScheduleItem.DeserializeSqlScheduleItem(item, options));
+                                array.Add(SqlScheduleItem.DeserializeSqlScheduleItem(item));
                             }
                             scheduleList = array;
                             continue;

@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmDependency> array = new List<ArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDependency.DeserializeArmDependency(item, options));
+                        array.Add(ArmDependency.DeserializeArmDependency(item));
                     }
                     dependencies = array;
                     continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
+                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value, options);
+                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value);
                     continue;
                 }
                 if (property.NameEquals("templateHash"u8))

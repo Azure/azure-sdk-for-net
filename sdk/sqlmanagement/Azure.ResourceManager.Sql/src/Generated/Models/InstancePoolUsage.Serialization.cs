@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = InstancePoolUsageName.DeserializeInstancePoolUsageName(property.Value, options);
+                    name = InstancePoolUsageName.DeserializeInstancePoolUsageName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

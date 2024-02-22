@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = SecretProperties.DeserializeSecretProperties(property.Value, options);
+                    properties = SecretProperties.DeserializeSecretProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

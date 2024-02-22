@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricProperties> array = new List<QueryMetricProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item, options));
+                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item));
                     }
                     metrics = array;
                     continue;

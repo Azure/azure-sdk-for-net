@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<AppConfigurationPrivateLinkResourceData> array = new List<AppConfigurationPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(item, options));
+                        array.Add(AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;
