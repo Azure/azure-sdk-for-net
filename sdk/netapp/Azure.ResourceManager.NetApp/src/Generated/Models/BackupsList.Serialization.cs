@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppBackupData> array = new List<NetAppBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppBackupData.DeserializeNetAppBackupData(item));
+                        array.Add(NetAppBackupData.DeserializeNetAppBackupData(item, options));
                     }
                     value = array;
                     continue;

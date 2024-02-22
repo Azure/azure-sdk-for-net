@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<RegionInfoResourceData> array = new List<RegionInfoResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionInfoResourceData.DeserializeRegionInfoResourceData(item));
+                        array.Add(RegionInfoResourceData.DeserializeRegionInfoResourceData(item, options));
                     }
                     value = array;
                     continue;

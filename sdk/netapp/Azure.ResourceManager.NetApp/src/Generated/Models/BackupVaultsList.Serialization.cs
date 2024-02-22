@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<BackupVaultData> array = new List<BackupVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupVaultData.DeserializeBackupVaultData(item));
+                        array.Add(BackupVaultData.DeserializeBackupVaultData(item, options));
                     }
                     value = array;
                     continue;

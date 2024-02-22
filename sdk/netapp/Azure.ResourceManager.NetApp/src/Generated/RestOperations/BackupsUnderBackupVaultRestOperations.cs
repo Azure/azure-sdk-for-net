@@ -77,12 +77,50 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RestoreFilesAsync(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppVolumeBackupBackupRestoreFilesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (backupVaultName == null)
+            {
+                throw new ArgumentNullException(nameof(backupVaultName));
+            }
+            if (backupVaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (backupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateRestoreFilesRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,12 +145,50 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RestoreFiles(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppVolumeBackupBackupRestoreFilesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (backupVaultName == null)
+            {
+                throw new ArgumentNullException(nameof(backupVaultName));
+            }
+            if (backupVaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupVaultName));
+            }
+            if (backupName == null)
+            {
+                throw new ArgumentNullException(nameof(backupName));
+            }
+            if (backupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateRestoreFilesRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName, content);
             _pipeline.Send(message, cancellationToken);

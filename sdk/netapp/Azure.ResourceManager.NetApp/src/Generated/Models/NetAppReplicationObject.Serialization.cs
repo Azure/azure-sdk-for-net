@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    remotePath = RemotePath.DeserializeRemotePath(property.Value);
+                    remotePath = RemotePath.DeserializeRemotePath(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("remoteVolumeRegion"u8))

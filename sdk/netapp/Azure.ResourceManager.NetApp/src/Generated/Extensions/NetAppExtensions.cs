@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="RegionInfoResource"/> object. </returns>
         public static RegionInfoResource GetRegionInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetAppArmClient(client).GetRegionInfoResource(id);
         }
@@ -178,7 +181,10 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="NetAppBackupVaultBackupResource"/> object. </returns>
         public static NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetAppArmClient(client).GetNetAppBackupVaultBackupResource(id);
         }
@@ -285,7 +291,10 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="BackupVaultResource"/> object. </returns>
         public static BackupVaultResource GetBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetAppArmClient(client).GetBackupVaultResource(id);
         }
@@ -405,7 +414,10 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of RegionInfoResources and their operations over a RegionInfoResource. </returns>
         public static RegionInfoResourceCollection GetRegionInfoResources(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetAppSubscriptionResource(subscriptionResource).GetRegionInfoResources(location);
         }
@@ -442,7 +454,10 @@ namespace Azure.ResourceManager.NetApp
         [ForwardsClientCalls]
         public static async Task<Response<RegionInfoResource>> GetRegionInfoResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableNetAppSubscriptionResource(subscriptionResource).GetRegionInfoResourceAsync(location, cancellationToken).ConfigureAwait(false);
         }
@@ -479,7 +494,10 @@ namespace Azure.ResourceManager.NetApp
         [ForwardsClientCalls]
         public static Response<RegionInfoResource> GetRegionInfoResource(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetAppSubscriptionResource(subscriptionResource).GetRegionInfoResource(location, cancellationToken);
         }

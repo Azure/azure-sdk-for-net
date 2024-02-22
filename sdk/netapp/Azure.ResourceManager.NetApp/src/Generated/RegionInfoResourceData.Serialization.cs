@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp
                             List<AvailabilityZoneMapping> array = new List<AvailabilityZoneMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AvailabilityZoneMapping.DeserializeAvailabilityZoneMapping(item));
+                                array.Add(AvailabilityZoneMapping.DeserializeAvailabilityZoneMapping(item, options));
                             }
                             availabilityZoneMappings = array;
                             continue;

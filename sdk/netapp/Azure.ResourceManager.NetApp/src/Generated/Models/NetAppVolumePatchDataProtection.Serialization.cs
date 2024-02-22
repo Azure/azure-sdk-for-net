@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value);
+                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshot"u8))

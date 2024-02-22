@@ -960,7 +960,10 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> MigrateBackupsBackupsUnderAccountAsync(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _backupsUnderAccountClientDiagnostics.CreateScope("NetAppAccountResource.MigrateBackupsBackupsUnderAccount");
             scope.Start();
@@ -1002,7 +1005,10 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation MigrateBackupsBackupsUnderAccount(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _backupsUnderAccountClientDiagnostics.CreateScope("NetAppAccountResource.MigrateBackupsBackupsUnderAccount");
             scope.Start();
