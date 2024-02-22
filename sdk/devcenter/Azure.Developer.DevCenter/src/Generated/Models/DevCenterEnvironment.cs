@@ -58,6 +58,7 @@ namespace Azure.Developer.DevCenter.Models
             Argument.AssertNotNull(catalogName, nameof(catalogName));
             Argument.AssertNotNull(environmentDefinitionName, nameof(environmentDefinitionName));
 
+            Parameters = new ChangeTrackingDictionary<string, string>();
             EnvironmentTypeName = environmentTypeName;
             CatalogName = catalogName;
             EnvironmentDefinitionName = environmentDefinitionName;
@@ -74,7 +75,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironment(BinaryData parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevCenterEnvironment(IDictionary<string, string> parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Parameters = parameters;
             Name = name;
@@ -93,23 +94,8 @@ namespace Azure.Developer.DevCenter.Models
         {
         }
 
-        /// <summary>
-        /// Parameters object for the environment.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Parameters { get; set; }
+        /// <summary> Parameters object for the environment. </summary>
+        public IDictionary<string, string> Parameters { get; }
         /// <summary> Environment name. </summary>
         public string Name { get; }
         /// <summary> Environment type. </summary>

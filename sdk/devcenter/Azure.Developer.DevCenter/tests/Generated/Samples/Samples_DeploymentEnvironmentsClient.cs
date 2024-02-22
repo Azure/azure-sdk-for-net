@@ -86,7 +86,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = client.GetEnvironment("<projectName>", "<userId>", "<environmentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("parameters").ToString());
+            Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -111,7 +111,7 @@ namespace Azure.Developer.DevCenter.Samples
             Response response = await client.GetEnvironmentAsync("<projectName>", "<userId>", "<environmentName>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("parameters").ToString());
+            Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -450,7 +450,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetAllEnvironments("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("parameters").ToString());
+                Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -476,7 +476,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("parameters").ToString());
+                Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -590,7 +590,7 @@ namespace Azure.Developer.DevCenter.Samples
             foreach (BinaryData item in client.GetEnvironments("<projectName>", "<userId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("parameters").ToString());
+                Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -616,7 +616,7 @@ namespace Azure.Developer.DevCenter.Samples
             await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "<userId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("parameters").ToString());
+                Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("environmentType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -1257,7 +1257,10 @@ namespace Azure.Developer.DevCenter.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                parameters = new object(),
+                parameters = new
+                {
+                    key = "<parameters>",
+                },
                 environmentType = "<environmentType>",
                 catalogName = "<catalogName>",
                 environmentDefinitionName = "<environmentDefinitionName>",
@@ -1266,7 +1269,7 @@ namespace Azure.Developer.DevCenter.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("parameters").ToString());
+            Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -1290,7 +1293,10 @@ namespace Azure.Developer.DevCenter.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                parameters = new object(),
+                parameters = new
+                {
+                    key = "<parameters>",
+                },
                 environmentType = "<environmentType>",
                 catalogName = "<catalogName>",
                 environmentDefinitionName = "<environmentDefinitionName>",
@@ -1299,7 +1305,7 @@ namespace Azure.Developer.DevCenter.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("parameters").ToString());
+            Console.WriteLine(result.GetProperty("parameters").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("environmentType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -1323,7 +1329,10 @@ namespace Azure.Developer.DevCenter.Samples
 
             DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
             {
-                Parameters = BinaryData.FromObjectAsJson(new object()),
+                Parameters =
+{
+["key"] = "<parameters>"
+},
             };
             Operation<DevCenterEnvironment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
             DevCenterEnvironment responseData = operation.Value;
@@ -1339,7 +1348,10 @@ namespace Azure.Developer.DevCenter.Samples
 
             DevCenterEnvironment body = new DevCenterEnvironment("<environmentType>", "<catalogName>", "<environmentDefinitionName>")
             {
-                Parameters = BinaryData.FromObjectAsJson(new object()),
+                Parameters =
+{
+["key"] = "<parameters>"
+},
             };
             Operation<DevCenterEnvironment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
             DevCenterEnvironment responseData = operation.Value;

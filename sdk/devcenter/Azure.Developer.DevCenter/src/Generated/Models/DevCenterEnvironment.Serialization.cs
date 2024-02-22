@@ -27,10 +27,16 @@ namespace Azure.Developer.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteBase64StringValue(Parameters.ToArray(), "D");
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W")
             {
@@ -101,7 +107,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            Optional<BinaryData> parameters = default;
+            Optional<IDictionary<string, string>> parameters = default;
             string name = default;
             string environmentType = default;
             Optional<Guid> user = default;
@@ -120,7 +126,12 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    parameters = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    parameters = dictionary;
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -185,7 +196,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterEnvironment(parameters.Value, name, environmentType, Optional.ToNullable(user), Optional.ToNullable(provisioningState), resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value, serializedAdditionalRawData);
+            return new DevCenterEnvironment(Optional.ToDictionary(parameters), name, environmentType, Optional.ToNullable(user), Optional.ToNullable(provisioningState), resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterEnvironment>.Write(ModelReaderWriterOptions options)

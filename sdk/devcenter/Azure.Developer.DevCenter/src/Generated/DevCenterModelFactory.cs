@@ -201,8 +201,10 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
         /// <returns> A new <see cref="Models.DevCenterEnvironment"/> instance for mocking. </returns>
-        public static DevCenterEnvironment DevCenterEnvironment(BinaryData parameters = null, string name = null, string environmentTypeName = null, Guid? userId = null, EnvironmentProvisioningState? provisioningState = null, ResourceIdentifier resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
+        public static DevCenterEnvironment DevCenterEnvironment(IDictionary<string, string> parameters = null, string name = null, string environmentTypeName = null, Guid? userId = null, EnvironmentProvisioningState? provisioningState = null, ResourceIdentifier resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
         {
+            parameters ??= new Dictionary<string, string>();
+
             return new DevCenterEnvironment(parameters, name, environmentTypeName, userId, provisioningState, resourceGroupId, catalogName, environmentDefinitionName, error, serializedAdditionalRawData: null);
         }
 
