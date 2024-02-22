@@ -17,10 +17,6 @@ namespace Azure.Provisioning.Tests
 
             WebSite frontEnd = new WebSite(this, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
 
-            // frontEnd.AssignParameter(
-            //     website => website.AppServicePlanId,
-            //     new Parameter("workaround", defaultValue: $"resourceId('Microsoft.Web/serverfarms', {appServicePlan.Id.Name})"));
-
             var frontEndPrincipalId = frontEnd.AddOutput(
                 website => website.Identity.PrincipalId,
                 "SERVICE_API_IDENTITY_PRINCIPAL_ID",
