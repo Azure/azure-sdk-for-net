@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<FunctionEnvelopeData> array = new List<FunctionEnvelopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionEnvelopeData.DeserializeFunctionEnvelopeData(item));
+                        array.Add(FunctionEnvelopeData.DeserializeFunctionEnvelopeData(item, options));
                     }
                     value = array;
                     continue;

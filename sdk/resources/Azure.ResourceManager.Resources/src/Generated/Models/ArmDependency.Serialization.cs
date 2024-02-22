@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<BasicArmDependency> array = new List<BasicArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BasicArmDependency.DeserializeBasicArmDependency(item));
+                        array.Add(BasicArmDependency.DeserializeBasicArmDependency(item, options));
                     }
                     dependsOn = array;
                     continue;

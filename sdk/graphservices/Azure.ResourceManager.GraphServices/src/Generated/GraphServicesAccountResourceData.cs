@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.GraphServices
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public GraphServicesAccountResourceData(AzureLocation location, GraphServicesAccountResourceProperties properties) : base(location)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
             Properties = properties;
         }

@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value);
+                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publishContentLink"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

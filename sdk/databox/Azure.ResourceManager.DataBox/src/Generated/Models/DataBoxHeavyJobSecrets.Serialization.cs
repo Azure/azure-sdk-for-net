@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxHeavySecret> array = new List<DataBoxHeavySecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxHeavySecret.DeserializeDataBoxHeavySecret(item));
+                        array.Add(DataBoxHeavySecret.DeserializeDataBoxHeavySecret(item, options));
                     }
                     cabinetPodSecrets = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))

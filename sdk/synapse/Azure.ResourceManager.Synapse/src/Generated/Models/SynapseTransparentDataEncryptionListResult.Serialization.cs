@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseTransparentDataEncryptionData> array = new List<SynapseTransparentDataEncryptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(item));
+                        array.Add(SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(item, options));
                     }
                     value = array;
                     continue;

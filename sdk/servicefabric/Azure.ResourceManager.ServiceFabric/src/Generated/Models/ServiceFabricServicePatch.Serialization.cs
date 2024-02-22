@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ServiceCorrelationDescription> array = new List<ServiceCorrelationDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceCorrelationDescription.DeserializeServiceCorrelationDescription(item));
+                                array.Add(ServiceCorrelationDescription.DeserializeServiceCorrelationDescription(item, options));
                             }
                             correlationScheme = array;
                             continue;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ServiceLoadMetricDescription> array = new List<ServiceLoadMetricDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceLoadMetricDescription.DeserializeServiceLoadMetricDescription(item));
+                                array.Add(ServiceLoadMetricDescription.DeserializeServiceLoadMetricDescription(item, options));
                             }
                             serviceLoadMetrics = array;
                             continue;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ServicePlacementPolicyDescription> array = new List<ServicePlacementPolicyDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServicePlacementPolicyDescription.DeserializeServicePlacementPolicyDescription(item));
+                                array.Add(ServicePlacementPolicyDescription.DeserializeServicePlacementPolicyDescription(item, options));
                             }
                             servicePlacementPolicies = array;
                             continue;

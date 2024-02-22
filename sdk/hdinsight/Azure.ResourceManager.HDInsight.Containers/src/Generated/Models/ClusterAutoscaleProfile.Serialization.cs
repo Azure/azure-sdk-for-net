@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    scheduleBasedConfig = ScheduleBasedConfig.DeserializeScheduleBasedConfig(property.Value);
+                    scheduleBasedConfig = ScheduleBasedConfig.DeserializeScheduleBasedConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("loadBasedConfig"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    loadBasedConfig = LoadBasedConfig.DeserializeLoadBasedConfig(property.Value);
+                    loadBasedConfig = LoadBasedConfig.DeserializeLoadBasedConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

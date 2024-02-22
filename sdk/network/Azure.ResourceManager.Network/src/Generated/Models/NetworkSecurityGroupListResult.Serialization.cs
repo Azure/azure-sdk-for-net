@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkSecurityGroupData> array = new List<NetworkSecurityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(item));
+                        array.Add(NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(item, options));
                     }
                     value = array;
                     continue;

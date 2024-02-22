@@ -55,7 +55,10 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="setupInfo"/> is null. </exception>
         internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, MultivariateBatchDetectionOptions setupInfo)
         {
-            Argument.AssertNotNull(setupInfo, nameof(setupInfo));
+            if (setupInfo == null)
+            {
+                throw new ArgumentNullException(nameof(setupInfo));
+            }
 
             Status = status;
             Errors = new ChangeTrackingList<ErrorResponse>();

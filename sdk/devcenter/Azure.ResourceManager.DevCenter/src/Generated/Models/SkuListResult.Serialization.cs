@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterSkuDetails> array = new List<DevCenterSkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterSkuDetails.DeserializeDevCenterSkuDetails(item));
+                        array.Add(DevCenterSkuDetails.DeserializeDevCenterSkuDetails(item, options));
                     }
                     value = array;
                     continue;

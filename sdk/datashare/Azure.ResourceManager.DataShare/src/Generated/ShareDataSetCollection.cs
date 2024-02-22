@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ShareDataSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataSetName, ShareDataSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSetName, nameof(dataSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (dataSetName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetName));
+            }
+            if (dataSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ShareDataSetResource> CreateOrUpdate(WaitUntil waitUntil, string dataSetName, ShareDataSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSetName, nameof(dataSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (dataSetName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetName));
+            }
+            if (dataSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
         public virtual async Task<Response<ShareDataSetResource>> GetAsync(string dataSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSetName, nameof(dataSetName));
+            if (dataSetName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetName));
+            }
+            if (dataSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetName));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
         public virtual Response<ShareDataSetResource> Get(string dataSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSetName, nameof(dataSetName));
+            if (dataSetName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetName));
+            }
+            if (dataSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetName));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.Get");
             scope.Start();
@@ -334,7 +368,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSetName, nameof(dataSetName));
+            if (dataSetName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetName));
+            }
+            if (dataSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetName));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSetName, nameof(dataSetName));
+            if (dataSetName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetName));
+            }
+            if (dataSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetName));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
         public virtual async Task<NullableResponse<ShareDataSetResource>> GetIfExistsAsync(string dataSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSetName, nameof(dataSetName));
+            if (dataSetName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetName));
+            }
+            if (dataSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetName));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
         public virtual NullableResponse<ShareDataSetResource> GetIfExists(string dataSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataSetName, nameof(dataSetName));
+            if (dataSetName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetName));
+            }
+            if (dataSetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetName));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.GetIfExists");
             scope.Start();

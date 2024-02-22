@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<CaCertificateData> array = new List<CaCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CaCertificateData.DeserializeCaCertificateData(item));
+                        array.Add(CaCertificateData.DeserializeCaCertificateData(item, options));
                     }
                     value = array;
                     continue;

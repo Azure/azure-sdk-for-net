@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<OperationalizationClusterData> array = new List<OperationalizationClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalizationClusterData.DeserializeOperationalizationClusterData(item));
+                        array.Add(OperationalizationClusterData.DeserializeOperationalizationClusterData(item, options));
                     }
                     value = array;
                     continue;

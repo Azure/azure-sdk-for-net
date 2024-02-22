@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = TelegramChannelProperties.DeserializeTelegramChannelProperties(property.Value);
+                    properties = TelegramChannelProperties.DeserializeTelegramChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

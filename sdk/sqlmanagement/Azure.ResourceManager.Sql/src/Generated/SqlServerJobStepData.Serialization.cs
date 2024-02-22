@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            action = JobStepAction.DeserializeJobStepAction(property0.Value);
+                            action = JobStepAction.DeserializeJobStepAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("output"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            output = JobStepOutput.DeserializeJobStepOutput(property0.Value);
+                            output = JobStepOutput.DeserializeJobStepOutput(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("executionOptions"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            executionOptions = JobStepExecutionOptions.DeserializeJobStepExecutionOptions(property0.Value);
+                            executionOptions = JobStepExecutionOptions.DeserializeJobStepExecutionOptions(property0.Value, options);
                             continue;
                         }
                     }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultPrivateLinkResourceData> array = new List<KeyVaultPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(item));
+                        array.Add(KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

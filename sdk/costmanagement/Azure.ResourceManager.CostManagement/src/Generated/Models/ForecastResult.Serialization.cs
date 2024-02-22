@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             List<ForecastColumn> array = new List<ForecastColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ForecastColumn.DeserializeForecastColumn(item));
+                                array.Add(ForecastColumn.DeserializeForecastColumn(item, options));
                             }
                             columns = array;
                             continue;

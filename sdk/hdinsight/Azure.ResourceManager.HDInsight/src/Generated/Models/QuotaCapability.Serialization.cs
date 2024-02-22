@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RegionalQuotaCapability> array = new List<RegionalQuotaCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item));
+                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item, options));
                     }
                     regionalQuotas = array;
                     continue;

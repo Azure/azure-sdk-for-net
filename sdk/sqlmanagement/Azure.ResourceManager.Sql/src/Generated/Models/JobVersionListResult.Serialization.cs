@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerJobVersionData> array = new List<SqlServerJobVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerJobVersionData.DeserializeSqlServerJobVersionData(item));
+                        array.Add(SqlServerJobVersionData.DeserializeSqlServerJobVersionData(item, options));
                     }
                     value = array;
                     continue;

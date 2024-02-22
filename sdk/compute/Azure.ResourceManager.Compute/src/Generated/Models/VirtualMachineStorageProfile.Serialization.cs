@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(property.Value);
+                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osDisk"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDisk = VirtualMachineOSDisk.DeserializeVirtualMachineOSDisk(property.Value);
+                    osDisk = VirtualMachineOSDisk.DeserializeVirtualMachineOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineDataDisk> array = new List<VirtualMachineDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineDataDisk.DeserializeVirtualMachineDataDisk(item));
+                        array.Add(VirtualMachineDataDisk.DeserializeVirtualMachineDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;

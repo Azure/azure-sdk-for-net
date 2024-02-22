@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RoutingIntentData> array = new List<RoutingIntentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingIntentData.DeserializeRoutingIntentData(item));
+                        array.Add(RoutingIntentData.DeserializeRoutingIntentData(item, options));
                     }
                     value = array;
                     continue;

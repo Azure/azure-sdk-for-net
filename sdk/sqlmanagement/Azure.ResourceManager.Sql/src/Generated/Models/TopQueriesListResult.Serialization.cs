@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<TopQueries> array = new List<TopQueries>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopQueries.DeserializeTopQueries(item));
+                        array.Add(TopQueries.DeserializeTopQueries(item, options));
                     }
                     value = array;
                     continue;

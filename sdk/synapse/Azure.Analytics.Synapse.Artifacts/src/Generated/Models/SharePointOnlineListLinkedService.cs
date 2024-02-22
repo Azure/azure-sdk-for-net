@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -26,10 +25,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="siteUrl"/>, <paramref name="tenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
         public SharePointOnlineListLinkedService(object siteUrl, object tenantId, object servicePrincipalId, SecretBase servicePrincipalKey)
         {
-            Argument.AssertNotNull(siteUrl, nameof(siteUrl));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
+            if (siteUrl == null)
+            {
+                throw new ArgumentNullException(nameof(siteUrl));
+            }
+            if (tenantId == null)
+            {
+                throw new ArgumentNullException(nameof(tenantId));
+            }
+            if (servicePrincipalId == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalId));
+            }
+            if (servicePrincipalKey == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalKey));
+            }
 
             SiteUrl = siteUrl;
             TenantId = tenantId;

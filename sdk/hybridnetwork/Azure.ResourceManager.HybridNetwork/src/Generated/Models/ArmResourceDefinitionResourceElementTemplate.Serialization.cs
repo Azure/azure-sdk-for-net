@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = NSDArtifactProfile.DeserializeNSDArtifactProfile(property.Value);
+                    artifactProfile = NSDArtifactProfile.DeserializeNSDArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

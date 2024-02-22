@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionData> array = new List<RecommendedActionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionData.DeserializeRecommendedActionData(item));
+                                array.Add(RecommendedActionData.DeserializeRecommendedActionData(item, options));
                             }
                             recommendedActions = array;
                             continue;

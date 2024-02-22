@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -56,11 +55,26 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="errorManagement"/>, <paramref name="format"/>, <paramref name="availability"/>, <paramref name="structure"/> or <paramref name="completeOperation"/> is null. </exception>
         public ConnectorMappingProperties(ConnectorMappingErrorManagement errorManagement, ConnectorMappingFormat format, ConnectorMappingAvailability availability, IEnumerable<ConnectorMappingStructure> structure, ConnectorMappingCompleteOperation completeOperation)
         {
-            Argument.AssertNotNull(errorManagement, nameof(errorManagement));
-            Argument.AssertNotNull(format, nameof(format));
-            Argument.AssertNotNull(availability, nameof(availability));
-            Argument.AssertNotNull(structure, nameof(structure));
-            Argument.AssertNotNull(completeOperation, nameof(completeOperation));
+            if (errorManagement == null)
+            {
+                throw new ArgumentNullException(nameof(errorManagement));
+            }
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+            if (availability == null)
+            {
+                throw new ArgumentNullException(nameof(availability));
+            }
+            if (structure == null)
+            {
+                throw new ArgumentNullException(nameof(structure));
+            }
+            if (completeOperation == null)
+            {
+                throw new ArgumentNullException(nameof(completeOperation));
+            }
 
             ErrorManagement = errorManagement;
             Format = format;

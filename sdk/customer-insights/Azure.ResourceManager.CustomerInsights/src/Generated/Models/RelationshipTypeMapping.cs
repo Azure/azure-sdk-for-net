@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fieldMappings"/> is null. </exception>
         public RelationshipTypeMapping(IEnumerable<RelationshipTypeFieldMapping> fieldMappings)
         {
-            Argument.AssertNotNull(fieldMappings, nameof(fieldMappings));
+            if (fieldMappings == null)
+            {
+                throw new ArgumentNullException(nameof(fieldMappings));
+            }
 
             FieldMappings = fieldMappings.ToList();
         }

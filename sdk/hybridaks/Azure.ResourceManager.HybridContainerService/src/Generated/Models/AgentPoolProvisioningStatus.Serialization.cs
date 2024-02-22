@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<AgentPoolUpdateProfile> array = new List<AgentPoolUpdateProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item));
+                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item, options));
                     }
                     readyReplicas = array;
                     continue;

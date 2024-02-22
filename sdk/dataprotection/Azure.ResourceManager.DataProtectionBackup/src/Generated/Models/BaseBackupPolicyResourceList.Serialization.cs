@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupPolicyData> array = new List<DataProtectionBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(item));
+                        array.Add(DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(item, options));
                     }
                     value = array;
                     continue;

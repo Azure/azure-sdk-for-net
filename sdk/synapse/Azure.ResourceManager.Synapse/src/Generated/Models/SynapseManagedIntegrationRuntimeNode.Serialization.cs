@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseManagedIntegrationRuntimeError> array = new List<SynapseManagedIntegrationRuntimeError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseManagedIntegrationRuntimeError.DeserializeSynapseManagedIntegrationRuntimeError(item));
+                        array.Add(SynapseManagedIntegrationRuntimeError.DeserializeSynapseManagedIntegrationRuntimeError(item, options));
                     }
                     errors = array;
                     continue;

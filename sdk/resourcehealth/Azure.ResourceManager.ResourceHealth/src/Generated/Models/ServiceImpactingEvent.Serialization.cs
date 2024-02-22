@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    status = ServiceImpactingEventStatus.DeserializeServiceImpactingEventStatus(property.Value);
+                    status = ServiceImpactingEventStatus.DeserializeServiceImpactingEventStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("incidentProperties"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value);
+                    incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

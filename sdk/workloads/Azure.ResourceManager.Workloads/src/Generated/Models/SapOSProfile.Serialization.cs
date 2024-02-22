@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    osConfiguration = SapOSConfiguration.DeserializeSapOSConfiguration(property.Value);
+                    osConfiguration = SapOSConfiguration.DeserializeSapOSConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

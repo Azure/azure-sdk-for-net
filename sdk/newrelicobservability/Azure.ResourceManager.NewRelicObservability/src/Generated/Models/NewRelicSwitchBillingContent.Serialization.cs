@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property.Value);
+                    planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userEmail"u8))

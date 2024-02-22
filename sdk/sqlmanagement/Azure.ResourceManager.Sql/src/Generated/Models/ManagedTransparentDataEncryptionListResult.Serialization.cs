@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedTransparentDataEncryptionData> array = new List<ManagedTransparentDataEncryptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(item));
+                        array.Add(ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(item, options));
                     }
                     value = array;
                     continue;

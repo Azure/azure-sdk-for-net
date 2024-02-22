@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -20,7 +19,10 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="sessions"/> is null. </exception>
         internal SessionsList(IEnumerable<RenderingSession> sessions)
         {
-            Argument.AssertNotNull(sessions, nameof(sessions));
+            if (sessions == null)
+            {
+                throw new ArgumentNullException(nameof(sessions));
+            }
 
             Sessions = sessions.ToList();
         }

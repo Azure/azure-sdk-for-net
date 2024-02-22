@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebJobData> array = new List<WebJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebJobData.DeserializeWebJobData(item));
+                        array.Add(WebJobData.DeserializeWebJobData(item, options));
                     }
                     value = array;
                     continue;

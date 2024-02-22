@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public NetworkCloudClusterMetricsConfigurationData(AzureLocation location, ExtendedLocation extendedLocation, long collectionInterval) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
 
             ExtendedLocation = extendedLocation;
             CollectionInterval = collectionInterval;

@@ -26,12 +26,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/> or <paramref name="filePaths"/> is null. </exception>
         public HDInsightStreamingActivity(string name, DataFactoryElement<string> mapper, DataFactoryElement<string> reducer, DataFactoryElement<string> input, DataFactoryElement<string> output, IEnumerable<BinaryData> filePaths) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(mapper, nameof(mapper));
-            Argument.AssertNotNull(reducer, nameof(reducer));
-            Argument.AssertNotNull(input, nameof(input));
-            Argument.AssertNotNull(output, nameof(output));
-            Argument.AssertNotNull(filePaths, nameof(filePaths));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (mapper == null)
+            {
+                throw new ArgumentNullException(nameof(mapper));
+            }
+            if (reducer == null)
+            {
+                throw new ArgumentNullException(nameof(reducer));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+            if (output == null)
+            {
+                throw new ArgumentNullException(nameof(output));
+            }
+            if (filePaths == null)
+            {
+                throw new ArgumentNullException(nameof(filePaths));
+            }
 
             StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();

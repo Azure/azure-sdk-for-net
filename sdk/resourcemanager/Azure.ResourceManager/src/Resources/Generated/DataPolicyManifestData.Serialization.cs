@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Resources
                             List<ResourceTypeAliases> array = new List<ResourceTypeAliases>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ResourceTypeAliases.DeserializeResourceTypeAliases(item));
+                                array.Add(Models.ResourceTypeAliases.DeserializeResourceTypeAliases(item, options));
                             }
                             resourceTypeAliases = array;
                             continue;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources
                             List<DataPolicyManifestEffect> array = new List<DataPolicyManifestEffect>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataPolicyManifestEffect.DeserializeDataPolicyManifestEffect(item));
+                                array.Add(DataPolicyManifestEffect.DeserializeDataPolicyManifestEffect(item, options));
                             }
                             effects = array;
                             continue;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Resources
                                     List<DataManifestCustomResourceFunctionDefinition> array = new List<DataManifestCustomResourceFunctionDefinition>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(DataManifestCustomResourceFunctionDefinition.DeserializeDataManifestCustomResourceFunctionDefinition(item));
+                                        array.Add(DataManifestCustomResourceFunctionDefinition.DeserializeDataManifestCustomResourceFunctionDefinition(item, options));
                                     }
                                     custom = array;
                                     continue;

@@ -77,7 +77,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("queueSelector"u8))
                 {
-                    queueSelector = RouterQueueSelector.DeserializeRouterQueueSelector(property.Value);
+                    queueSelector = RouterQueueSelector.DeserializeRouterQueueSelector(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

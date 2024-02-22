@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaLiveOutputResource>> UpdateAsync(WaitUntil waitUntil, MediaLiveOutputData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MediaLiveOutputResource> Update(WaitUntil waitUntil, MediaLiveOutputData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputResource.Update");
             scope.Start();

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationJobScheduleData> array = new List<AutomationJobScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationJobScheduleData.DeserializeAutomationJobScheduleData(item));
+                        array.Add(AutomationJobScheduleData.DeserializeAutomationJobScheduleData(item, options));
                     }
                     value = array;
                     continue;

@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
         public CustomRolloutSpecification(TrafficRegions canary)
         {
-            Argument.AssertNotNull(canary, nameof(canary));
+            if (canary == null)
+            {
+                throw new ArgumentNullException(nameof(canary));
+            }
 
             Canary = canary;
             ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();

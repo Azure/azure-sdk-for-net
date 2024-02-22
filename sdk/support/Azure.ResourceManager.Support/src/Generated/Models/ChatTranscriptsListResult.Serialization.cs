@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<ChatTranscriptDetailData> array = new List<ChatTranscriptDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(item));
+                        array.Add(ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(item, options));
                     }
                     value = array;
                     continue;

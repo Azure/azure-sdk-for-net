@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<RegistryAcrDetails> array = new List<RegistryAcrDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item));
+                        array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item, options));
                     }
                     acrDetails = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<StorageAccountDetails> array = new List<StorageAccountDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StorageAccountDetails.DeserializeStorageAccountDetails(item));
+                        array.Add(Models.StorageAccountDetails.DeserializeStorageAccountDetails(item, options));
                     }
                     storageAccountDetails = array;
                     continue;

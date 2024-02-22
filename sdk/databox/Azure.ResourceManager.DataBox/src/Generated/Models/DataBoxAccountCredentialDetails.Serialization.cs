@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<ShareCredentialDetails> array = new List<ShareCredentialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ShareCredentialDetails.DeserializeShareCredentialDetails(item));
+                        array.Add(Models.ShareCredentialDetails.DeserializeShareCredentialDetails(item, options));
                     }
                     shareCredentialDetails = array;
                     continue;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    name = ServiceAccountUsageMetricName.DeserializeServiceAccountUsageMetricName(property.Value);
+                    name = ServiceAccountUsageMetricName.DeserializeServiceAccountUsageMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"u8))

@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupRecoveryPointBasedRestoreRequest": return BackupRecoveryPointBasedRestoreContent.DeserializeBackupRecoveryPointBasedRestoreContent(element);
-                    case "AzureBackupRecoveryTimeBasedRestoreRequest": return BackupRecoveryTimeBasedRestoreContent.DeserializeBackupRecoveryTimeBasedRestoreContent(element);
-                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element);
+                    case "AzureBackupRecoveryPointBasedRestoreRequest": return BackupRecoveryPointBasedRestoreContent.DeserializeBackupRecoveryPointBasedRestoreContent(element, options);
+                    case "AzureBackupRecoveryTimeBasedRestoreRequest": return BackupRecoveryTimeBasedRestoreContent.DeserializeBackupRecoveryTimeBasedRestoreContent(element, options);
+                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element, options);
                 }
             }
-            return UnknownAzureBackupRestoreRequest.DeserializeUnknownAzureBackupRestoreRequest(element);
+            return UnknownAzureBackupRestoreRequest.DeserializeUnknownAzureBackupRestoreRequest(element, options);
         }
 
         BinaryData IPersistableModel<BackupRestoreContent>.Write(ModelReaderWriterOptions options)

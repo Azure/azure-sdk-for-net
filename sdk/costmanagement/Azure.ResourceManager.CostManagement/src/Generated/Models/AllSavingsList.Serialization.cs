@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<AllSavingsBenefitDetails> array = new List<AllSavingsBenefitDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(item));
+                        array.Add(AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(item, options));
                     }
                     value = array;
                     continue;

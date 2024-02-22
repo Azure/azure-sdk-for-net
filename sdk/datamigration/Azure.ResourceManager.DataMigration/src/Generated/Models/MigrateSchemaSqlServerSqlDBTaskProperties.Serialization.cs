@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MigrateSchemaSqlServerSqlDBTaskInput.DeserializeMigrateSchemaSqlServerSqlDBTaskInput(property.Value);
+                    input = MigrateSchemaSqlServerSqlDBTaskInput.DeserializeMigrateSchemaSqlServerSqlDBTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSchemaSqlServerSqlDBTaskOutput> array = new List<MigrateSchemaSqlServerSqlDBTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSchemaSqlServerSqlDBTaskOutput.DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(item));
+                        array.Add(MigrateSchemaSqlServerSqlDBTaskOutput.DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;

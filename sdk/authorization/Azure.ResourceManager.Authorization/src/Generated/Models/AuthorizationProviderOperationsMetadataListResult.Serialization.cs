@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<AuthorizationProviderOperationsMetadataData> array = new List<AuthorizationProviderOperationsMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(item));
+                        array.Add(AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(item, options));
                     }
                     value = array;
                     continue;

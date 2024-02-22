@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SyncMigrationDatabaseErrorEvent> array = new List<SyncMigrationDatabaseErrorEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncMigrationDatabaseErrorEvent.DeserializeSyncMigrationDatabaseErrorEvent(item));
+                        array.Add(SyncMigrationDatabaseErrorEvent.DeserializeSyncMigrationDatabaseErrorEvent(item, options));
                     }
                     events = array;
                     continue;

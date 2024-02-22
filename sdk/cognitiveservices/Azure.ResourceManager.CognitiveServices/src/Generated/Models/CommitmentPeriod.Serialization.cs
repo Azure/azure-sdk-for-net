@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value);
+                    quota = CommitmentQuota.DeserializeCommitmentQuota(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))

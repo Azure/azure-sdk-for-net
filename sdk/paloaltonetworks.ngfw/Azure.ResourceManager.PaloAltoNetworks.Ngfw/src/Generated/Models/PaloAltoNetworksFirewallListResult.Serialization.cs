@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<PaloAltoNetworksFirewallData> array = new List<PaloAltoNetworksFirewallData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(item));
+                        array.Add(PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(item, options));
                     }
                     value = array;
                     continue;

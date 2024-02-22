@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageQueueData> array = new List<StorageQueueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageQueueData.DeserializeStorageQueueData(item));
+                        array.Add(StorageQueueData.DeserializeStorageQueueData(item, options));
                     }
                     value = array;
                     continue;

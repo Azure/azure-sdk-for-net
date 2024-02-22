@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolUsage> array = new List<InstancePoolUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolUsage.DeserializeInstancePoolUsage(item));
+                        array.Add(InstancePoolUsage.DeserializeInstancePoolUsage(item, options));
                     }
                     value = array;
                     continue;

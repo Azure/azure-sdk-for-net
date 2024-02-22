@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<CsmPublishingCredentialsPoliciesEntityData> array = new List<CsmPublishingCredentialsPoliciesEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CsmPublishingCredentialsPoliciesEntityData.DeserializeCsmPublishingCredentialsPoliciesEntityData(item));
+                        array.Add(CsmPublishingCredentialsPoliciesEntityData.DeserializeCsmPublishingCredentialsPoliciesEntityData(item, options));
                     }
                     value = array;
                     continue;

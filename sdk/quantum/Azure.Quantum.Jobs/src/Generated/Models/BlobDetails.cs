@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Quantum.Jobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public BlobDetails(string containerName)
         {
-            Argument.AssertNotNull(containerName, nameof(containerName));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
 
             ContainerName = containerName;
         }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureArcKubernetesNetworkFunctionApplication> array = new List<AzureArcKubernetesNetworkFunctionApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureArcKubernetesNetworkFunctionApplication.DeserializeAzureArcKubernetesNetworkFunctionApplication(item));
+                        array.Add(AzureArcKubernetesNetworkFunctionApplication.DeserializeAzureArcKubernetesNetworkFunctionApplication(item, options));
                     }
                     networkFunctionApplications = array;
                     continue;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
         public StreamAnalyticsTestOutput(StreamingJobOutputData output)
         {
-            Argument.AssertNotNull(output, nameof(output));
+            if (output == null)
+            {
+                throw new ArgumentNullException(nameof(output));
+            }
 
             Output = output;
         }

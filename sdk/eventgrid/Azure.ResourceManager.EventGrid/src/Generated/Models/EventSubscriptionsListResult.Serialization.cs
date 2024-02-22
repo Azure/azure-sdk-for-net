@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridSubscriptionData> array = new List<EventGridSubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridSubscriptionData.DeserializeEventGridSubscriptionData(item));
+                        array.Add(EventGridSubscriptionData.DeserializeEventGridSubscriptionData(item, options));
                     }
                     value = array;
                     continue;

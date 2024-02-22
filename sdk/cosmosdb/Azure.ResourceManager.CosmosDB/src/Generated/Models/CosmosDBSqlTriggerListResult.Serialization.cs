@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlTriggerData> array = new List<CosmosDBSqlTriggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(item));
+                        array.Add(CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(item, options));
                     }
                     value = array;
                     continue;

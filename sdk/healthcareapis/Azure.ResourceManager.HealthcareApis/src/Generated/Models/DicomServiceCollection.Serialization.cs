@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<DicomServiceData> array = new List<DicomServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DicomServiceData.DeserializeDicomServiceData(item));
+                        array.Add(DicomServiceData.DeserializeDicomServiceData(item, options));
                     }
                     value = array;
                     continue;

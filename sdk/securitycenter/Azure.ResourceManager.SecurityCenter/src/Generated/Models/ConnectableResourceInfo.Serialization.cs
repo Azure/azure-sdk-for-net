@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ConnectedResourceInfo> array = new List<ConnectedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item, options));
                     }
                     inboundConnectedResources = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ConnectedResourceInfo> array = new List<ConnectedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item, options));
                     }
                     outboundConnectedResources = array;
                     continue;

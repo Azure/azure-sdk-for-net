@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nodeProfileType"/> or <paramref name="vmSize"/> is null. </exception>
         public ClusterComputeNodeProfile(string nodeProfileType, string vmSize, int count)
         {
-            Argument.AssertNotNull(nodeProfileType, nameof(nodeProfileType));
-            Argument.AssertNotNull(vmSize, nameof(vmSize));
+            if (nodeProfileType == null)
+            {
+                throw new ArgumentNullException(nameof(nodeProfileType));
+            }
+            if (vmSize == null)
+            {
+                throw new ArgumentNullException(nameof(vmSize));
+            }
 
             NodeProfileType = nodeProfileType;
             VmSize = vmSize;

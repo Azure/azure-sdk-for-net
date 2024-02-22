@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeData> array = new List<NetAppVolumeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeData.DeserializeNetAppVolumeData(item));
+                        array.Add(NetAppVolumeData.DeserializeNetAppVolumeData(item, options));
                     }
                     value = array;
                     continue;

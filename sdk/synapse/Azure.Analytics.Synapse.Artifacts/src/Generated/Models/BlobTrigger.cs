@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
         public BlobTrigger(string folderPath, int maxConcurrency, LinkedServiceReference linkedService)
         {
-            Argument.AssertNotNull(folderPath, nameof(folderPath));
-            Argument.AssertNotNull(linkedService, nameof(linkedService));
+            if (folderPath == null)
+            {
+                throw new ArgumentNullException(nameof(folderPath));
+            }
+            if (linkedService == null)
+            {
+                throw new ArgumentNullException(nameof(linkedService));
+            }
 
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;

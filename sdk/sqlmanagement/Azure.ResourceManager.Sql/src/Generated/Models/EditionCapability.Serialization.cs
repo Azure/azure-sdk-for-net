@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServiceObjectiveCapability> array = new List<ServiceObjectiveCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceObjectiveCapability.DeserializeServiceObjectiveCapability(item));
+                        array.Add(ServiceObjectiveCapability.DeserializeServiceObjectiveCapability(item, options));
                     }
                     supportedServiceLevelObjectives = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    readScale = ReadScaleCapability.DeserializeReadScaleCapability(property.Value);
+                    readScale = ReadScaleCapability.DeserializeReadScaleCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedStorageCapabilities"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<StorageCapability> array = new List<StorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCapability.DeserializeStorageCapability(item));
+                        array.Add(StorageCapability.DeserializeStorageCapability(item, options));
                     }
                     supportedStorageCapabilities = array;
                     continue;

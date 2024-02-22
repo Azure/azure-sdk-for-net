@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterPoolVersion> array = new List<ClusterPoolVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterPoolVersion.DeserializeClusterPoolVersion(item));
+                        array.Add(ClusterPoolVersion.DeserializeClusterPoolVersion(item, options));
                     }
                     value = array;
                     continue;

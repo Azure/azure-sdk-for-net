@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value);
+                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

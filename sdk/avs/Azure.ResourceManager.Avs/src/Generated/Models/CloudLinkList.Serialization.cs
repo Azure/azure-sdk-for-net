@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsCloudLinkData> array = new List<AvsCloudLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsCloudLinkData.DeserializeAvsCloudLinkData(item));
+                        array.Add(AvsCloudLinkData.DeserializeAvsCloudLinkData(item, options));
                     }
                     value = array;
                     continue;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="commitId"/> is null. </exception>
         public SourceControlSyncJobCreateContent(string commitId)
         {
-            Argument.AssertNotNull(commitId, nameof(commitId));
+            if (commitId == null)
+            {
+                throw new ArgumentNullException(nameof(commitId));
+            }
 
             CommitId = commitId;
         }

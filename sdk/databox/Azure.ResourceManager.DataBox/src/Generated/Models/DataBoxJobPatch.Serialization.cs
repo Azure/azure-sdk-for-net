@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            details = UpdateJobDetails.DeserializeUpdateJobDetails(property0.Value);
+                            details = UpdateJobDetails.DeserializeUpdateJobDetails(property0.Value, options);
                             continue;
                         }
                     }

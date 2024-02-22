@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<IPv6FirewallRuleData> array = new List<IPv6FirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(item));
+                        array.Add(IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

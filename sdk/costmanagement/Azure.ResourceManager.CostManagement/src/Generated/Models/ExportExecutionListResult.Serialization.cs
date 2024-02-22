@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ExportRun> array = new List<ExportRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExportRun.DeserializeExportRun(item));
+                        array.Add(ExportRun.DeserializeExportRun(item, options));
                     }
                     value = array;
                     continue;

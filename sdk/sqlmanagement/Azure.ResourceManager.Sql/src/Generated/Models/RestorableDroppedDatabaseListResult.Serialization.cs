@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<RestorableDroppedDatabaseData> array = new List<RestorableDroppedDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableDroppedDatabaseData.DeserializeRestorableDroppedDatabaseData(item));
+                        array.Add(RestorableDroppedDatabaseData.DeserializeRestorableDroppedDatabaseData(item, options));
                     }
                     value = array;
                     continue;

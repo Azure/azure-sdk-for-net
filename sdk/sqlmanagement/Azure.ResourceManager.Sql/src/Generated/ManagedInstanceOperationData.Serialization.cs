@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            operationParameters = ManagedInstanceOperationParametersPair.DeserializeManagedInstanceOperationParametersPair(property0.Value);
+                            operationParameters = ManagedInstanceOperationParametersPair.DeserializeManagedInstanceOperationParametersPair(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("operationSteps"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            operationSteps = ManagedInstanceOperationSteps.DeserializeManagedInstanceOperationSteps(property0.Value);
+                            operationSteps = ManagedInstanceOperationSteps.DeserializeManagedInstanceOperationSteps(property0.Value, options);
                             continue;
                         }
                     }

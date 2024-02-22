@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string streamingPolicyName, StreamingPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (streamingPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingPolicyName));
+            }
+            if (streamingPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingPolicyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StreamingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string streamingPolicyName, StreamingPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (streamingPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingPolicyName));
+            }
+            if (streamingPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingPolicyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
         public virtual async Task<Response<StreamingPolicyResource>> GetAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+            if (streamingPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingPolicyName));
+            }
+            if (streamingPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingPolicyName));
+            }
 
             using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
         public virtual Response<StreamingPolicyResource> Get(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+            if (streamingPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingPolicyName));
+            }
+            if (streamingPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingPolicyName));
+            }
 
             using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.Get");
             scope.Start();
@@ -334,7 +368,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+            if (streamingPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingPolicyName));
+            }
+            if (streamingPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingPolicyName));
+            }
 
             using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+            if (streamingPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingPolicyName));
+            }
+            if (streamingPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingPolicyName));
+            }
 
             using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<StreamingPolicyResource>> GetIfExistsAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+            if (streamingPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingPolicyName));
+            }
+            if (streamingPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingPolicyName));
+            }
 
             using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
         public virtual NullableResponse<StreamingPolicyResource> GetIfExists(string streamingPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+            if (streamingPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(streamingPolicyName));
+            }
+            if (streamingPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamingPolicyName));
+            }
 
             using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.GetIfExists");
             scope.Start();

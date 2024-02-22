@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<CsmOperationDescription> array = new List<CsmOperationDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CsmOperationDescription.DeserializeCsmOperationDescription(item));
+                        array.Add(CsmOperationDescription.DeserializeCsmOperationDescription(item, options));
                     }
                     value = array;
                     continue;

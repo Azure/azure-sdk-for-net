@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlFirewallRuleData> array = new List<SqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlFirewallRuleData.DeserializeSqlFirewallRuleData(item));
+                        array.Add(SqlFirewallRuleData.DeserializeSqlFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeStorageInstanceData> array = new List<LargeStorageInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeStorageInstanceData.DeserializeLargeStorageInstanceData(item));
+                        array.Add(LargeStorageInstanceData.DeserializeLargeStorageInstanceData(item, options));
                     }
                     value = array;
                     continue;

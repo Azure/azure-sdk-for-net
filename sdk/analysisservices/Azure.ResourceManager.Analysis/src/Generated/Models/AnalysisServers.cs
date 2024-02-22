@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="analysisResources"/> is null. </exception>
         internal AnalysisServers(IEnumerable<AnalysisServerData> analysisResources)
         {
-            Argument.AssertNotNull(analysisResources, nameof(analysisResources));
+            if (analysisResources == null)
+            {
+                throw new ArgumentNullException(nameof(analysisResources));
+            }
 
             AnalysisResources = analysisResources.ToList();
         }

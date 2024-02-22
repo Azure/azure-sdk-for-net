@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Communication.MediaComposition.Models;
-using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -21,9 +20,18 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="streamKey"/>, <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
         public RtmpOutput(string streamKey, LayoutResolution resolution, string streamUrl)
         {
-            Argument.AssertNotNull(streamKey, nameof(streamKey));
-            Argument.AssertNotNull(resolution, nameof(resolution));
-            Argument.AssertNotNull(streamUrl, nameof(streamUrl));
+            if (streamKey == null)
+            {
+                throw new ArgumentNullException(nameof(streamKey));
+            }
+            if (resolution == null)
+            {
+                throw new ArgumentNullException(nameof(resolution));
+            }
+            if (streamUrl == null)
+            {
+                throw new ArgumentNullException(nameof(streamUrl));
+            }
 
             StreamKey = streamKey;
             Resolution = resolution;

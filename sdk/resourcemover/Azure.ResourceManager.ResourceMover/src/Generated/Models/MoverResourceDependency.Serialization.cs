@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    manualResolution = ManualResolutionProperties.DeserializeManualResolutionProperties(property.Value);
+                    manualResolution = ManualResolutionProperties.DeserializeManualResolutionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("automaticResolution"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    automaticResolution = AutomaticResolutionProperties.DeserializeAutomaticResolutionProperties(property.Value);
+                    automaticResolution = AutomaticResolutionProperties.DeserializeAutomaticResolutionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isOptional"u8))

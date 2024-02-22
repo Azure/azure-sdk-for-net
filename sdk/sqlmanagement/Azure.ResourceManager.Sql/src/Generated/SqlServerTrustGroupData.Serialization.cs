@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
                             List<ServerTrustGroupServerInfo> array = new List<ServerTrustGroupServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerTrustGroupServerInfo.DeserializeServerTrustGroupServerInfo(item));
+                                array.Add(ServerTrustGroupServerInfo.DeserializeServerTrustGroupServerInfo(item, options));
                             }
                             groupMembers = array;
                             continue;

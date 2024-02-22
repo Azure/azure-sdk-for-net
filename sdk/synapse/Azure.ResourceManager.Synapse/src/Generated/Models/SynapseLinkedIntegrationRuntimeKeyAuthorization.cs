@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public SynapseLinkedIntegrationRuntimeKeyAuthorization(SynapseSecureString key)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             Key = key;
             AuthorizationType = "Key";

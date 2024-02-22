@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricInterval> array = new List<QueryMetricInterval>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item));
+                        array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item, options));
                     }
                     intervals = array;
                     continue;

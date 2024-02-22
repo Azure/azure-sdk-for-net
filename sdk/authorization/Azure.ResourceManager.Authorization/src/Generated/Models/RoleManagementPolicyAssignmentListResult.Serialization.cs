@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementPolicyAssignmentData> array = new List<RoleManagementPolicyAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(item));
+                        array.Add(RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(item, options));
                     }
                     value = array;
                     continue;

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value);
+                    provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

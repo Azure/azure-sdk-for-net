@@ -6,7 +6,7 @@
     <AssemblyTitle>Azure Client SDK integration Microsoft.Extensions</AssemblyTitle>
     <Version>1.8.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.7.1</ApiCompatVersion>
+    <ApiCompatVersion>1.7.2</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline AspNetCore Extensions</PackageTags>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)\EventSourceEventFormatting.cs" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 </Project>

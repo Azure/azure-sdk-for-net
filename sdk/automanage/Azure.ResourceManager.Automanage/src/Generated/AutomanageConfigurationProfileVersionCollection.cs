@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomanageConfigurationProfileVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutomanageConfigurationProfileVersionResource> CreateOrUpdate(WaitUntil waitUntil, string versionName, AutomanageConfigurationProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<Response<AutomanageConfigurationProfileVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual Response<AutomanageConfigurationProfileVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual Response<bool> Exists(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomanageConfigurationProfileVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         public virtual NullableResponse<AutomanageConfigurationProfileVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var scope = _automanageConfigurationProfileVersionConfigurationProfilesVersionsClientDiagnostics.CreateScope("AutomanageConfigurationProfileVersionCollection.GetIfExists");
             scope.Start();

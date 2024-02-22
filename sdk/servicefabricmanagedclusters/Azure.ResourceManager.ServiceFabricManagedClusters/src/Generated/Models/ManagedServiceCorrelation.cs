@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public ManagedServiceCorrelation(ManagedServiceCorrelationScheme scheme, string serviceName)
         {
-            Argument.AssertNotNull(serviceName, nameof(serviceName));
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
 
             Scheme = scheme;
             ServiceName = serviceName;

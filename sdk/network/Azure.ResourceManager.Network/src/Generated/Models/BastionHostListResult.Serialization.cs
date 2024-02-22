@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BastionHostData> array = new List<BastionHostData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BastionHostData.DeserializeBastionHostData(item));
+                        array.Add(BastionHostData.DeserializeBastionHostData(item, options));
                     }
                     value = array;
                     continue;

@@ -53,9 +53,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="sourceIPAddress"/> or <paramref name="destinationIPAddress"/> is null. </exception>
         public NextHopContent(ResourceIdentifier targetResourceId, string sourceIPAddress, string destinationIPAddress)
         {
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(sourceIPAddress, nameof(sourceIPAddress));
-            Argument.AssertNotNull(destinationIPAddress, nameof(destinationIPAddress));
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+            if (sourceIPAddress == null)
+            {
+                throw new ArgumentNullException(nameof(sourceIPAddress));
+            }
+            if (destinationIPAddress == null)
+            {
+                throw new ArgumentNullException(nameof(destinationIPAddress));
+            }
 
             TargetResourceId = targetResourceId;
             SourceIPAddress = sourceIPAddress;

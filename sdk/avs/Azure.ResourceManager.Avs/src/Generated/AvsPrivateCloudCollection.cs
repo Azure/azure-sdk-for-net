@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AvsPrivateCloudResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateCloudName, AvsPrivateCloudData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AvsPrivateCloudResource> CreateOrUpdate(WaitUntil waitUntil, string privateCloudName, AvsPrivateCloudData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         public virtual async Task<Response<AvsPrivateCloudResource>> GetAsync(string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         public virtual Response<AvsPrivateCloudResource> Get(string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         public virtual async Task<NullableResponse<AvsPrivateCloudResource>> GetIfExistsAsync(string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         public virtual NullableResponse<AvsPrivateCloudResource> GetIfExists(string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudCollection.GetIfExists");
             scope.Start();

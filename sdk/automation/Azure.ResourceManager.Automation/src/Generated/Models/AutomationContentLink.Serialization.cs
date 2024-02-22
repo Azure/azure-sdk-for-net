@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    contentHash = AutomationContentHash.DeserializeAutomationContentHash(property.Value);
+                    contentHash = AutomationContentHash.DeserializeAutomationContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))

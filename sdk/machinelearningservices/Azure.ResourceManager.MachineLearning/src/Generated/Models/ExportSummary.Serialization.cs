@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element);
-                    case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element);
-                    case "Dataset": return DatasetExportSummary.DeserializeDatasetExportSummary(element);
+                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element, options);
+                    case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element, options);
+                    case "Dataset": return DatasetExportSummary.DeserializeDatasetExportSummary(element, options);
                 }
             }
-            return UnknownExportSummary.DeserializeUnknownExportSummary(element);
+            return UnknownExportSummary.DeserializeUnknownExportSummary(element, options);
         }
 
         BinaryData IPersistableModel<ExportSummary>.Write(ModelReaderWriterOptions options)

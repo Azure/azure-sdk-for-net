@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<EventDataInfo> array = new List<EventDataInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventDataInfo.DeserializeEventDataInfo(item));
+                        array.Add(EventDataInfo.DeserializeEventDataInfo(item, options));
                     }
                     value = array;
                     continue;

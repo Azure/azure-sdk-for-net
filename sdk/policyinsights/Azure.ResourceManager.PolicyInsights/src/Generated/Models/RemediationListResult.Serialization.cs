@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyRemediationData> array = new List<PolicyRemediationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyRemediationData.DeserializePolicyRemediationData(item));
+                        array.Add(PolicyRemediationData.DeserializePolicyRemediationData(item, options));
                     }
                     value = array;
                     continue;

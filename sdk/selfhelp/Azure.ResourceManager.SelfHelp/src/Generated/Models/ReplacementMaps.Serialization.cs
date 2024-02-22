@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<WebResult> array = new List<WebResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebResult.DeserializeWebResult(item));
+                        array.Add(WebResult.DeserializeWebResult(item, options));
                     }
                     webResults = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SolutionsDiagnostic> array = new List<SolutionsDiagnostic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionsDiagnostic.DeserializeSolutionsDiagnostic(item));
+                        array.Add(SolutionsDiagnostic.DeserializeSolutionsDiagnostic(item, options));
                     }
                     diagnostics = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SolutionsTroubleshooters> array = new List<SolutionsTroubleshooters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionsTroubleshooters.DeserializeSolutionsTroubleshooters(item));
+                        array.Add(SolutionsTroubleshooters.DeserializeSolutionsTroubleshooters(item, options));
                     }
                     troubleshooters = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<MetricsBasedChart> array = new List<MetricsBasedChart>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsBasedChart.DeserializeMetricsBasedChart(item));
+                        array.Add(MetricsBasedChart.DeserializeMetricsBasedChart(item, options));
                     }
                     metricsBasedCharts = array;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpVideo> array = new List<SelfHelpVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpVideo.DeserializeSelfHelpVideo(item));
+                        array.Add(SelfHelpVideo.DeserializeSelfHelpVideo(item, options));
                     }
                     videos = array;
                     continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<VideoGroup> array = new List<VideoGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroup.DeserializeVideoGroup(item));
+                        array.Add(VideoGroup.DeserializeVideoGroup(item, options));
                     }
                     videoGroups = array;
                     continue;

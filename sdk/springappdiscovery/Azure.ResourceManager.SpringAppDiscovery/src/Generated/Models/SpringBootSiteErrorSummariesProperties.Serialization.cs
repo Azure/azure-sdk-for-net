@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteErrorSummaryModel> array = new List<SpringBootSiteErrorSummaryModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteErrorSummaryModel.DeserializeSpringBootSiteErrorSummaryModel(item));
+                        array.Add(SpringBootSiteErrorSummaryModel.DeserializeSpringBootSiteErrorSummaryModel(item, options));
                     }
                     discoveryScopeErrorSummaries = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteError> array = new List<SpringBootSiteError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item, options));
                     }
                     errors = array;
                     continue;

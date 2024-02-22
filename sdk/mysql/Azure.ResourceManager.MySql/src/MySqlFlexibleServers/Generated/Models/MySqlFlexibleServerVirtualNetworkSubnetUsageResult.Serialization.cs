@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerDelegatedSubnetUsage> array = new List<MySqlFlexibleServerDelegatedSubnetUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerDelegatedSubnetUsage.DeserializeMySqlFlexibleServerDelegatedSubnetUsage(item));
+                        array.Add(MySqlFlexibleServerDelegatedSubnetUsage.DeserializeMySqlFlexibleServerDelegatedSubnetUsage(item, options));
                     }
                     delegatedSubnetsUsage = array;
                     continue;

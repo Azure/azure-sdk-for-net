@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<DomainTopicData> array = new List<DomainTopicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DomainTopicData.DeserializeDomainTopicData(item));
+                        array.Add(DomainTopicData.DeserializeDomainTopicData(item, options));
                     }
                     value = array;
                     continue;

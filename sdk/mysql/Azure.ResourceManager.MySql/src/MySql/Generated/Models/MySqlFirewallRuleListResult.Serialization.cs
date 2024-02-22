@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlFirewallRuleData> array = new List<MySqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(item));
+                        array.Add(MySqlFirewallRuleData.DeserializeMySqlFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

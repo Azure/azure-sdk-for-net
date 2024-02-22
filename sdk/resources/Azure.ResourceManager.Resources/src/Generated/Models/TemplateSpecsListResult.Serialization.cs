@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<TemplateSpecData> array = new List<TemplateSpecData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TemplateSpecData.DeserializeTemplateSpecData(item));
+                        array.Add(TemplateSpecData.DeserializeTemplateSpecData(item, options));
                     }
                     value = array;
                     continue;

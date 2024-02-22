@@ -59,8 +59,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="targetDnsServers"/> is null. </exception>
         public DnsForwardingRuleData(string domainName, IEnumerable<TargetDnsServer> targetDnsServers)
         {
-            Argument.AssertNotNull(domainName, nameof(domainName));
-            Argument.AssertNotNull(targetDnsServers, nameof(targetDnsServers));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (targetDnsServers == null)
+            {
+                throw new ArgumentNullException(nameof(targetDnsServers));
+            }
 
             DomainName = domainName;
             TargetDnsServers = targetDnsServers.ToList();

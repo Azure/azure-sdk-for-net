@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionTag> array = new List<ConsumptionTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionTag.DeserializeConsumptionTag(item));
+                                array.Add(ConsumptionTag.DeserializeConsumptionTag(item, options));
                             }
                             tags = array;
                             continue;

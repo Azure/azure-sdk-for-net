@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.AppService
                             List<ProcessThreadInfo> array = new List<ProcessThreadInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item));
+                                array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item, options));
                             }
                             threads = array;
                             continue;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.AppService
                             List<ProcessModuleInfoData> array = new List<ProcessModuleInfoData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProcessModuleInfoData.DeserializeProcessModuleInfoData(item));
+                                array.Add(ProcessModuleInfoData.DeserializeProcessModuleInfoData(item, options));
                             }
                             modules = array;
                             continue;

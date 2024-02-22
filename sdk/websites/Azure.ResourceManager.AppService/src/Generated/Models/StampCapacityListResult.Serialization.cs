@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StampCapacity> array = new List<StampCapacity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StampCapacity.DeserializeStampCapacity(item));
+                        array.Add(StampCapacity.DeserializeStampCapacity(item, options));
                     }
                     value = array;
                     continue;

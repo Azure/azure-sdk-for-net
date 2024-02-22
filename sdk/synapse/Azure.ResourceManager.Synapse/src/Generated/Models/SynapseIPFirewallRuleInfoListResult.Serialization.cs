@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIPFirewallRuleInfoData> array = new List<SynapseIPFirewallRuleInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(item));
+                        array.Add(SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(item, options));
                     }
                     value = array;
                     continue;

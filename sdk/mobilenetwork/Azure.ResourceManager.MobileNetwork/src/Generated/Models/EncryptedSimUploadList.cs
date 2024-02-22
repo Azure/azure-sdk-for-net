@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -57,10 +56,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vendorKeyFingerprint"/>, <paramref name="encryptedTransportKey"/>, <paramref name="signedTransportKey"/> or <paramref name="sims"/> is null. </exception>
         public EncryptedSimUploadList(int version, int azureKeyIdentifier, string vendorKeyFingerprint, string encryptedTransportKey, string signedTransportKey, IEnumerable<SimNameAndEncryptedProperties> sims)
         {
-            Argument.AssertNotNull(vendorKeyFingerprint, nameof(vendorKeyFingerprint));
-            Argument.AssertNotNull(encryptedTransportKey, nameof(encryptedTransportKey));
-            Argument.AssertNotNull(signedTransportKey, nameof(signedTransportKey));
-            Argument.AssertNotNull(sims, nameof(sims));
+            if (vendorKeyFingerprint == null)
+            {
+                throw new ArgumentNullException(nameof(vendorKeyFingerprint));
+            }
+            if (encryptedTransportKey == null)
+            {
+                throw new ArgumentNullException(nameof(encryptedTransportKey));
+            }
+            if (signedTransportKey == null)
+            {
+                throw new ArgumentNullException(nameof(signedTransportKey));
+            }
+            if (sims == null)
+            {
+                throw new ArgumentNullException(nameof(sims));
+            }
 
             Version = version;
             AzureKeyIdentifier = azureKeyIdentifier;

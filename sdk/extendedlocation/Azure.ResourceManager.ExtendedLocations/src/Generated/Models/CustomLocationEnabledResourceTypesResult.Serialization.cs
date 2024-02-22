@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     List<CustomLocationEnabledResourceType> array = new List<CustomLocationEnabledResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType(item));
+                        array.Add(CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType(item, options));
                     }
                     value = array;
                     continue;

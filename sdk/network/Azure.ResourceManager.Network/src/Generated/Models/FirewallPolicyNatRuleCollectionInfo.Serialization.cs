@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    action = FirewallPolicyNatRuleCollectionAction.DeserializeFirewallPolicyNatRuleCollectionAction(property.Value);
+                    action = FirewallPolicyNatRuleCollectionAction.DeserializeFirewallPolicyNatRuleCollectionAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rules"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyRule> array = new List<FirewallPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyRule.DeserializeFirewallPolicyRule(item));
+                        array.Add(FirewallPolicyRule.DeserializeFirewallPolicyRule(item, options));
                     }
                     rules = array;
                     continue;

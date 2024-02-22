@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<LabVirtualMachineImageData> array = new List<LabVirtualMachineImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(item));
+                        array.Add(LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(item, options));
                     }
                     value = array;
                     continue;

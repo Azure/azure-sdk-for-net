@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConnectorResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectorName, ConnectorResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (connectorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectorName));
+            }
+            if (connectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConnectorResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string connectorName, ConnectorResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (connectorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectorName));
+            }
+            if (connectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual async Task<Response<ConnectorResourceFormatResource>> GetAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            if (connectorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectorName));
+            }
+            if (connectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
+            }
 
             using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual Response<ConnectorResourceFormatResource> Get(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            if (connectorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectorName));
+            }
+            if (connectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
+            }
 
             using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            if (connectorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectorName));
+            }
+            if (connectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
+            }
 
             using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            if (connectorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectorName));
+            }
+            if (connectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
+            }
 
             using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConnectorResourceFormatResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            if (connectorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectorName));
+            }
+            if (connectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
+            }
 
             using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         public virtual NullableResponse<ConnectorResourceFormatResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            if (connectorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectorName));
+            }
+            if (connectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
+            }
 
             using var scope = _connectorResourceFormatConnectorsClientDiagnostics.CreateScope("ConnectorResourceFormatCollection.GetIfExists");
             scope.Start();

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<FunctionAppStack> array = new List<FunctionAppStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionAppStack.DeserializeFunctionAppStack(item));
+                        array.Add(FunctionAppStack.DeserializeFunctionAppStack(item, options));
                     }
                     value = array;
                     continue;

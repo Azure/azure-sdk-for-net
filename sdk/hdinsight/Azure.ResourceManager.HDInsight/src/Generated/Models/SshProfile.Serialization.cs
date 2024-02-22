@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightSshPublicKey> array = new List<HDInsightSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item));
+                        array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;

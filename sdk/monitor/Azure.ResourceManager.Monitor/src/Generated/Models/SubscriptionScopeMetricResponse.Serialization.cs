@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<SubscriptionMonitorMetric> array = new List<SubscriptionMonitorMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(item));
+                        array.Add(SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(item, options));
                     }
                     value = array;
                     continue;

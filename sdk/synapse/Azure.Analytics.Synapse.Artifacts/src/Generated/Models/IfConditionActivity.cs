@@ -20,8 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="expression"/> is null. </exception>
         public IfConditionActivity(string name, Expression expression) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(expression, nameof(expression));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
 
             Expression = expression;
             IfTrueActivities = new ChangeTrackingList<Activity>();

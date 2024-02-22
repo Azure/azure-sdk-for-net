@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            edgeProfile = EdgeProfilePatch.DeserializeEdgeProfilePatch(property0.Value);
+                            edgeProfile = EdgeProfilePatch.DeserializeEdgeProfilePatch(property0.Value, options);
                             continue;
                         }
                     }

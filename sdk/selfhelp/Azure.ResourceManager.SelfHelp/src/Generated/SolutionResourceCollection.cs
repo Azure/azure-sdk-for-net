@@ -69,8 +69,18 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionResourceName, SolutionResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (solutionResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionResourceName));
+            }
+            if (solutionResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionResourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +128,18 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SolutionResource> CreateOrUpdate(WaitUntil waitUntil, string solutionResourceName, SolutionResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (solutionResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionResourceName));
+            }
+            if (solutionResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionResourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         public virtual async Task<Response<SolutionResource>> GetAsync(string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+            if (solutionResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionResourceName));
+            }
+            if (solutionResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionResourceName));
+            }
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.Get");
             scope.Start();
@@ -210,7 +237,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         public virtual Response<SolutionResource> Get(string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+            if (solutionResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionResourceName));
+            }
+            if (solutionResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionResourceName));
+            }
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.Get");
             scope.Start();
@@ -255,7 +289,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+            if (solutionResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionResourceName));
+            }
+            if (solutionResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionResourceName));
+            }
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.Exists");
             scope.Start();
@@ -298,7 +339,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+            if (solutionResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionResourceName));
+            }
+            if (solutionResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionResourceName));
+            }
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.Exists");
             scope.Start();
@@ -341,7 +389,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SolutionResource>> GetIfExistsAsync(string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+            if (solutionResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionResourceName));
+            }
+            if (solutionResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionResourceName));
+            }
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.GetIfExists");
             scope.Start();
@@ -386,7 +441,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         public virtual NullableResponse<SolutionResource> GetIfExists(string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+            if (solutionResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(solutionResourceName));
+            }
+            if (solutionResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionResourceName));
+            }
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResourceCollection.GetIfExists");
             scope.Start();
