@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 gitRepository = null;
                                 continue;
                             }
-                            gitRepository = KubernetesGitRepositoryUpdateContent.DeserializeKubernetesGitRepositoryUpdateContent(property0.Value);
+                            gitRepository = KubernetesGitRepositoryUpdateContent.DeserializeKubernetesGitRepositoryUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bucket"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 bucket = null;
                                 continue;
                             }
-                            bucket = KubernetesBucketUpdateContent.DeserializeKubernetesBucketUpdateContent(property0.Value);
+                            bucket = KubernetesBucketUpdateContent.DeserializeKubernetesBucketUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureBlob"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                                 azureBlob = null;
                                 continue;
                             }
-                            azureBlob = KubernetesAzureBlobUpdateContent.DeserializeKubernetesAzureBlobUpdateContent(property0.Value);
+                            azureBlob = KubernetesAzureBlobUpdateContent.DeserializeKubernetesAzureBlobUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kustomizations"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                             Dictionary<string, KustomizationUpdateContent> dictionary = new Dictionary<string, KustomizationUpdateContent>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, KustomizationUpdateContent.DeserializeKustomizationUpdateContent(property1.Value));
+                                dictionary.Add(property1.Name, KustomizationUpdateContent.DeserializeKustomizationUpdateContent(property1.Value, options));
                             }
                             kustomizations = dictionary;
                             continue;

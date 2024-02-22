@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<DesktopVirtualizationPrivateLinkResourceData> array = new List<DesktopVirtualizationPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData(item));
+                        array.Add(DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

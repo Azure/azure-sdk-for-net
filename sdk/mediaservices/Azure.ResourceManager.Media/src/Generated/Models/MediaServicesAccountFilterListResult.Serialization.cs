@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaServicesAccountFilterData> array = new List<MediaServicesAccountFilterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesAccountFilterData.DeserializeMediaServicesAccountFilterData(item));
+                        array.Add(MediaServicesAccountFilterData.DeserializeMediaServicesAccountFilterData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BackendAddressPoolData> array = new List<BackendAddressPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item));
+                        array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item, options));
                     }
                     value = array;
                     continue;

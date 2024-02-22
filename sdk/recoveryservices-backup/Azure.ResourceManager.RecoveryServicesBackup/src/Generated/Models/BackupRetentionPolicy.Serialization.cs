@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "LongTermRetentionPolicy": return LongTermRetentionPolicy.DeserializeLongTermRetentionPolicy(element);
-                    case "SimpleRetentionPolicy": return SimpleRetentionPolicy.DeserializeSimpleRetentionPolicy(element);
+                    case "LongTermRetentionPolicy": return LongTermRetentionPolicy.DeserializeLongTermRetentionPolicy(element, options);
+                    case "SimpleRetentionPolicy": return SimpleRetentionPolicy.DeserializeSimpleRetentionPolicy(element, options);
                 }
             }
-            return UnknownRetentionPolicy.DeserializeUnknownRetentionPolicy(element);
+            return UnknownRetentionPolicy.DeserializeUnknownRetentionPolicy(element, options);
         }
 
         BinaryData IPersistableModel<BackupRetentionPolicy>.Write(ModelReaderWriterOptions options)

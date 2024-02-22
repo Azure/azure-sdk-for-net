@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ResourceItem> array = new List<ResourceItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceItem.DeserializeResourceItem(item));
+                        array.Add(ResourceItem.DeserializeResourceItem(item, options));
                     }
                     resourceList = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ComplianceReportItem> array = new List<ComplianceReportItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceReportItem.DeserializeComplianceReportItem(item));
+                        array.Add(ComplianceReportItem.DeserializeComplianceReportItem(item, options));
                     }
                     complianceReport = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    compliancePdfReport = DownloadResponseCompliancePdfReport.DeserializeDownloadResponseCompliancePdfReport(property.Value);
+                    compliancePdfReport = DownloadResponseCompliancePdfReport.DeserializeDownloadResponseCompliancePdfReport(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("complianceDetailedPdfReport"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    complianceDetailedPdfReport = DownloadResponseComplianceDetailedPdfReport.DeserializeDownloadResponseComplianceDetailedPdfReport(property.Value);
+                    complianceDetailedPdfReport = DownloadResponseComplianceDetailedPdfReport.DeserializeDownloadResponseComplianceDetailedPdfReport(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

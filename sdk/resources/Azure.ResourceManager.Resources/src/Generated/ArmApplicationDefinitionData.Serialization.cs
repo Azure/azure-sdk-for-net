@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value);
+                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Resources
                             List<ArmApplicationAuthorization> array = new List<ArmApplicationAuthorization>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item));
+                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item, options));
                             }
                             authorizations = array;
                             continue;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Resources
                             List<ArmApplicationDefinitionArtifact> array = new List<ArmApplicationDefinitionArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationDefinitionArtifact.DeserializeArmApplicationDefinitionArtifact(item));
+                                array.Add(ArmApplicationDefinitionArtifact.DeserializeArmApplicationDefinitionArtifact(item, options));
                             }
                             artifacts = array;
                             continue;
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            notificationPolicy = ArmApplicationNotificationPolicy.DeserializeArmApplicationNotificationPolicy(property0.Value);
+                            notificationPolicy = ArmApplicationNotificationPolicy.DeserializeArmApplicationNotificationPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lockingPolicy"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            lockingPolicy = ArmApplicationPackageLockingPolicy.DeserializeArmApplicationPackageLockingPolicy(property0.Value);
+                            lockingPolicy = ArmApplicationPackageLockingPolicy.DeserializeArmApplicationPackageLockingPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deploymentPolicy"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            deploymentPolicy = ArmApplicationDeploymentPolicy.DeserializeArmApplicationDeploymentPolicy(property0.Value);
+                            deploymentPolicy = ArmApplicationDeploymentPolicy.DeserializeArmApplicationDeploymentPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementPolicy"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            managementPolicy = ArmApplicationManagementPolicy.DeserializeArmApplicationManagementPolicy(property0.Value);
+                            managementPolicy = ArmApplicationManagementPolicy.DeserializeArmApplicationManagementPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Resources
                             List<ArmApplicationPolicy> array = new List<ArmApplicationPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationPolicy.DeserializeArmApplicationPolicy(item));
+                                array.Add(ArmApplicationPolicy.DeserializeArmApplicationPolicy(item, options));
                             }
                             policies = array;
                             continue;

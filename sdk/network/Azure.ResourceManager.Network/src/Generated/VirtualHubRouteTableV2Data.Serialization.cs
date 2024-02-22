@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualHubRouteV2> array = new List<VirtualHubRouteV2>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualHubRouteV2.DeserializeVirtualHubRouteV2(item));
+                                array.Add(VirtualHubRouteV2.DeserializeVirtualHubRouteV2(item, options));
                             }
                             routes = array;
                             continue;

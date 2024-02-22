@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RuntimeScriptActionDetail> array = new List<RuntimeScriptActionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail(item));
+                        array.Add(RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail(item, options));
                     }
                     value = array;
                     continue;

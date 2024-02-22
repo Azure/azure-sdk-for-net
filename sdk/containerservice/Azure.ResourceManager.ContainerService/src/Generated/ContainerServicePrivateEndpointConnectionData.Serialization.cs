@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ContainerServicePrivateLinkServiceConnectionState.DeserializeContainerServicePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ContainerServicePrivateLinkServiceConnectionState.DeserializeContainerServicePrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }

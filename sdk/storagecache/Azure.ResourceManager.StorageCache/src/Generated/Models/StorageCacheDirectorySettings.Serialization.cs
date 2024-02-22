@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    activeDirectory = StorageCacheActiveDirectorySettings.DeserializeStorageCacheActiveDirectorySettings(property.Value);
+                    activeDirectory = StorageCacheActiveDirectorySettings.DeserializeStorageCacheActiveDirectorySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("usernameDownload"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    usernameDownload = StorageCacheUsernameDownloadSettings.DeserializeStorageCacheUsernameDownloadSettings(property.Value);
+                    usernameDownload = StorageCacheUsernameDownloadSettings.DeserializeStorageCacheUsernameDownloadSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

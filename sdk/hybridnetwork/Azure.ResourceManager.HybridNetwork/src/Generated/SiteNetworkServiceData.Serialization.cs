@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    properties = SiteNetworkServicePropertiesFormat.DeserializeSiteNetworkServicePropertiesFormat(property.Value);
+                    properties = SiteNetworkServicePropertiesFormat.DeserializeSiteNetworkServicePropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    sku = HybridNetworkSku.DeserializeHybridNetworkSku(property.Value);
+                    sku = HybridNetworkSku.DeserializeHybridNetworkSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

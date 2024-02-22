@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item, options));
                     }
                     succeeded = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item, options));
                     }
                     failed = array;
                     continue;

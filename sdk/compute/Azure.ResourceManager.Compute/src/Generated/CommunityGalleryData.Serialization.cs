@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            communityMetadata = CommunityGalleryMetadata.DeserializeCommunityGalleryMetadata(property0.Value);
+                            communityMetadata = CommunityGalleryMetadata.DeserializeCommunityGalleryMetadata(property0.Value, options);
                             continue;
                         }
                     }

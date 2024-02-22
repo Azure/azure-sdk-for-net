@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<ManagedIntegrationRuntimeNode> array = new List<ManagedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedIntegrationRuntimeNode.DeserializeManagedIntegrationRuntimeNode(item));
+                                array.Add(ManagedIntegrationRuntimeNode.DeserializeManagedIntegrationRuntimeNode(item, options));
                             }
                             nodes = array;
                             continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<ManagedIntegrationRuntimeError> array = new List<ManagedIntegrationRuntimeError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item));
+                                array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item, options));
                             }
                             otherErrors = array;
                             continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            lastOperation = ManagedIntegrationRuntimeOperationResult.DeserializeManagedIntegrationRuntimeOperationResult(property0.Value);
+                            lastOperation = ManagedIntegrationRuntimeOperationResult.DeserializeManagedIntegrationRuntimeOperationResult(property0.Value, options);
                             continue;
                         }
                     }

@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Sql/Server/Database": return SqlReferenceInputDataSource.DeserializeSqlReferenceInputDataSource(element);
-                    case "Microsoft.Storage/Blob": return BlobReferenceInputDataSource.DeserializeBlobReferenceInputDataSource(element);
-                    case "Raw": return RawReferenceInputDataSource.DeserializeRawReferenceInputDataSource(element);
+                    case "Microsoft.Sql/Server/Database": return SqlReferenceInputDataSource.DeserializeSqlReferenceInputDataSource(element, options);
+                    case "Microsoft.Storage/Blob": return BlobReferenceInputDataSource.DeserializeBlobReferenceInputDataSource(element, options);
+                    case "Raw": return RawReferenceInputDataSource.DeserializeRawReferenceInputDataSource(element, options);
                 }
             }
-            return UnknownReferenceInputDataSource.DeserializeUnknownReferenceInputDataSource(element);
+            return UnknownReferenceInputDataSource.DeserializeUnknownReferenceInputDataSource(element, options);
         }
 
         BinaryData IPersistableModel<ReferenceInputDataSource>.Write(ModelReaderWriterOptions options)

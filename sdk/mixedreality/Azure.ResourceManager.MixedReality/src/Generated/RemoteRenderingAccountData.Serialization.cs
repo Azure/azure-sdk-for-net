@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    sku = MixedRealitySku.DeserializeMixedRealitySku(property.Value);
+                    sku = MixedRealitySku.DeserializeMixedRealitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    kind = MixedRealitySku.DeserializeMixedRealitySku(property.Value);
+                    kind = MixedRealitySku.DeserializeMixedRealitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

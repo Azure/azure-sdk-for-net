@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("jobDefinition"u8))
                 {
-                    jobDefinition = MachineLearningJobProperties.DeserializeMachineLearningJobProperties(property.Value);
+                    jobDefinition = MachineLearningJobProperties.DeserializeMachineLearningJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actionType"u8))

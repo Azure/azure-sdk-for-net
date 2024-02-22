@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeUsage> array = new List<ComputeUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeUsage.DeserializeComputeUsage(item));
+                        array.Add(ComputeUsage.DeserializeComputeUsage(item, options));
                     }
                     value = array;
                     continue;

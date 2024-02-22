@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<ImageVersionData> array = new List<ImageVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageVersionData.DeserializeImageVersionData(item));
+                        array.Add(ImageVersionData.DeserializeImageVersionData(item, options));
                     }
                     value = array;
                     continue;

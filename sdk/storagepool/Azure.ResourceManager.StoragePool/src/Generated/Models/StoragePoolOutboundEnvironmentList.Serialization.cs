@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolOutboundEnvironment> array = new List<StoragePoolOutboundEnvironment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment(item));
+                        array.Add(StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment(item, options));
                     }
                     value = array;
                     continue;

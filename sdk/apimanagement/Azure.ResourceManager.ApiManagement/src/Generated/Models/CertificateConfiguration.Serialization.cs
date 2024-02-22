@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value);
+                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeOperationStatusResult(item));
+                        array.Add(DeserializeOperationStatusResult(item, options));
                     }
                     operations = array;
                     continue;

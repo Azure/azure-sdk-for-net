@@ -305,7 +305,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     requestedWorkerSelectors = array;
                     continue;
@@ -319,7 +319,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     attachedWorkerSelectors = array;
                     continue;
@@ -354,7 +354,7 @@ namespace Azure.Communication.JobRouter
                     Dictionary<string, RouterJobAssignment> dictionary = new Dictionary<string, RouterJobAssignment>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RouterJobAssignment.DeserializeRouterJobAssignment(property0.Value));
+                        dictionary.Add(property0.Name, RouterJobAssignment.DeserializeRouterJobAssignment(property0.Value, options));
                     }
                     assignments = dictionary;
                     continue;
@@ -389,7 +389,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterJobNote> array = new List<RouterJobNote>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterJobNote.DeserializeRouterJobNote(item));
+                        array.Add(RouterJobNote.DeserializeRouterJobNote(item, options));
                     }
                     notes = array;
                     continue;
@@ -409,7 +409,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value);
+                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    attributeReference = MapperAttributeReference.DeserializeMapperAttributeReference(property.Value);
+                    attributeReference = MapperAttributeReference.DeserializeMapperAttributeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("attributeReferences"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperAttributeReference> array = new List<MapperAttributeReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperAttributeReference.DeserializeMapperAttributeReference(item));
+                        array.Add(MapperAttributeReference.DeserializeMapperAttributeReference(item, options));
                     }
                     attributeReferences = array;
                     continue;

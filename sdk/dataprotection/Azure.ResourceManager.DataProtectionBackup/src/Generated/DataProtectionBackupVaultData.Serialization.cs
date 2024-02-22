@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataProtectionBackupVaultProperties.DeserializeDataProtectionBackupVaultProperties(property.Value);
+                    properties = DataProtectionBackupVaultProperties.DeserializeDataProtectionBackupVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

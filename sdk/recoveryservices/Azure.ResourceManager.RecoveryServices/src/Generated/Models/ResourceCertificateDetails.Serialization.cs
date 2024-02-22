@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AccessControlService": return ResourceCertificateAndAcsDetails.DeserializeResourceCertificateAndAcsDetails(element);
-                    case "AzureActiveDirectory": return ResourceCertificateAndAadDetails.DeserializeResourceCertificateAndAadDetails(element);
+                    case "AccessControlService": return ResourceCertificateAndAcsDetails.DeserializeResourceCertificateAndAcsDetails(element, options);
+                    case "AzureActiveDirectory": return ResourceCertificateAndAadDetails.DeserializeResourceCertificateAndAadDetails(element, options);
                 }
             }
-            return UnknownResourceCertificateDetails.DeserializeUnknownResourceCertificateDetails(element);
+            return UnknownResourceCertificateDetails.DeserializeUnknownResourceCertificateDetails(element, options);
         }
 
         BinaryData IPersistableModel<ResourceCertificateDetails>.Write(ModelReaderWriterOptions options)

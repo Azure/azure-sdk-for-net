@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureMonitor": return AzMonMonitoringAlertNotificationSettings.DeserializeAzMonMonitoringAlertNotificationSettings(element);
-                    case "Email": return EmailMonitoringAlertNotificationSettings.DeserializeEmailMonitoringAlertNotificationSettings(element);
+                    case "AzureMonitor": return AzMonMonitoringAlertNotificationSettings.DeserializeAzMonMonitoringAlertNotificationSettings(element, options);
+                    case "Email": return EmailMonitoringAlertNotificationSettings.DeserializeEmailMonitoringAlertNotificationSettings(element, options);
                 }
             }
-            return UnknownMonitoringAlertNotificationSettingsBase.DeserializeUnknownMonitoringAlertNotificationSettingsBase(element);
+            return UnknownMonitoringAlertNotificationSettingsBase.DeserializeUnknownMonitoringAlertNotificationSettingsBase(element, options);
         }
 
         BinaryData IPersistableModel<MonitoringAlertNotificationSettingsBase>.Write(ModelReaderWriterOptions options)

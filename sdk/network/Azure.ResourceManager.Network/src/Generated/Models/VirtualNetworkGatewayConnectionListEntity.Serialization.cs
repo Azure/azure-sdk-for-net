@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<TunnelConnectionHealth> array = new List<TunnelConnectionHealth>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TunnelConnectionHealth.DeserializeTunnelConnectionHealth(item));
+                                array.Add(TunnelConnectionHealth.DeserializeTunnelConnectionHealth(item, options));
                             }
                             tunnelConnectionStatus = array;
                             continue;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<GatewayCustomBgpIPAddressIPConfiguration> array = new List<GatewayCustomBgpIPAddressIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item));
+                                array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item, options));
                             }
                             gatewayCustomBgpIPAddresses = array;
                             continue;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                             }
                             ipsecPolicies = array;
                             continue;
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<TrafficSelectorPolicy> array = new List<TrafficSelectorPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item));
+                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item, options));
                             }
                             trafficSelectorPolicies = array;
                             continue;

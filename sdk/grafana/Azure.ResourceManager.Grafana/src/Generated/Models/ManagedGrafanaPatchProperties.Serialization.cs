@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    grafanaIntegrations = GrafanaIntegrations.DeserializeGrafanaIntegrations(property.Value);
+                    grafanaIntegrations = GrafanaIntegrations.DeserializeGrafanaIntegrations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enterpriseConfigurations"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    enterpriseConfigurations = EnterpriseConfigurations.DeserializeEnterpriseConfigurations(property.Value);
+                    enterpriseConfigurations = EnterpriseConfigurations.DeserializeEnterpriseConfigurations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("grafanaConfigurations"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    grafanaConfigurations = GrafanaConfigurations.DeserializeGrafanaConfigurations(property.Value);
+                    grafanaConfigurations = GrafanaConfigurations.DeserializeGrafanaConfigurations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("grafanaPlugins"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     Dictionary<string, GrafanaPlugin> dictionary = new Dictionary<string, GrafanaPlugin>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(property0.Value));
+                        dictionary.Add(property0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(property0.Value, options));
                     }
                     grafanaPlugins = dictionary;
                     continue;

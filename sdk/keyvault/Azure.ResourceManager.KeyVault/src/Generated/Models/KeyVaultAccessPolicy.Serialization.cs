@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("permissions"u8))
                 {
-                    permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value);
+                    permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

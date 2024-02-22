@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationJobStream> array = new List<AutomationJobStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationJobStream.DeserializeAutomationJobStream(item));
+                        array.Add(AutomationJobStream.DeserializeAutomationJobStream(item, options));
                     }
                     value = array;
                     continue;

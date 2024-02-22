@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseExtendedSqlPoolBlobAuditingPolicyData> array = new List<SynapseExtendedSqlPoolBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseExtendedSqlPoolBlobAuditingPolicyData.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(item));
+                        array.Add(SynapseExtendedSqlPoolBlobAuditingPolicyData.DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(item, options));
                     }
                     value = array;
                     continue;

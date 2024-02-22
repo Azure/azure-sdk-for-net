@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    metadata = ContainerAppDiagnosticsMetadata.DeserializeContainerAppDiagnosticsMetadata(property.Value);
+                    metadata = ContainerAppDiagnosticsMetadata.DeserializeContainerAppDiagnosticsMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticsDataApiResult> array = new List<ContainerAppDiagnosticsDataApiResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticsDataApiResult.DeserializeContainerAppDiagnosticsDataApiResult(item));
+                        array.Add(ContainerAppDiagnosticsDataApiResult.DeserializeContainerAppDiagnosticsDataApiResult(item, options));
                     }
                     dataset = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    status = ContainerAppDiagnosticsStatus.DeserializeContainerAppDiagnosticsStatus(property.Value);
+                    status = ContainerAppDiagnosticsStatus.DeserializeContainerAppDiagnosticsStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataProviderMetadata"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    dataProviderMetadata = ContainerAppDiagnosticDataProviderMetadata.DeserializeContainerAppDiagnosticDataProviderMetadata(property.Value);
+                    dataProviderMetadata = ContainerAppDiagnosticDataProviderMetadata.DeserializeContainerAppDiagnosticDataProviderMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     List<MaintenanceConfigurationAssignmentData> array = new List<MaintenanceConfigurationAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(item));
+                        array.Add(MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(item, options));
                     }
                     value = array;
                     continue;

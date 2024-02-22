@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value);
+                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("order"u8))

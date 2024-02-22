@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    properties = DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(property.Value);
+                    properties = DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

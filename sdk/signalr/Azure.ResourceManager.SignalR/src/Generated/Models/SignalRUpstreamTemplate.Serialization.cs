@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    auth = SignalRUpstreamAuthSettings.DeserializeSignalRUpstreamAuthSettings(property.Value);
+                    auth = SignalRUpstreamAuthSettings.DeserializeSignalRUpstreamAuthSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

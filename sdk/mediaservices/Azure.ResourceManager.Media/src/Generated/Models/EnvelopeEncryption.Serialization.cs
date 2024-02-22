@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     clearTracks = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
+                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customKeyAcquisitionUrlTemplate"u8))

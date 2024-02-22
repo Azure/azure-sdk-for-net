@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<MonitoringMetricConfigurationData> array = new List<MonitoringMetricConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringMetricConfigurationData.DeserializeMonitoringMetricConfigurationData(item));
+                        array.Add(MonitoringMetricConfigurationData.DeserializeMonitoringMetricConfigurationData(item, options));
                     }
                     value = array;
                     continue;

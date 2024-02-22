@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<OutstandingCondition> array = new List<OutstandingCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item));
+                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item, options));
                     }
                     conditions = array;
                     continue;

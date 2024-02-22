@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> array = new List<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item));
+                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;

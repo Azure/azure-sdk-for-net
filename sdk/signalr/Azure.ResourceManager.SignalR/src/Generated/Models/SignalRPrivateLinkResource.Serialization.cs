@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SignalR.Models
                             List<ShareablePrivateLinkResourceType> array = new List<ShareablePrivateLinkResourceType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareablePrivateLinkResourceType.DeserializeShareablePrivateLinkResourceType(item));
+                                array.Add(ShareablePrivateLinkResourceType.DeserializeShareablePrivateLinkResourceType(item, options));
                             }
                             shareablePrivateLinkResourceTypes = array;
                             continue;

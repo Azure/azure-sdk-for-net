@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value);
+                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    cookieExpiration = ContainerAppCookieExpiration.DeserializeContainerAppCookieExpiration(property.Value);
+                    cookieExpiration = ContainerAppCookieExpiration.DeserializeContainerAppCookieExpiration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nonce"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    nonce = ContainerAppLoginNonce.DeserializeContainerAppLoginNonce(property.Value);
+                    nonce = ContainerAppLoginNonce.DeserializeContainerAppLoginNonce(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

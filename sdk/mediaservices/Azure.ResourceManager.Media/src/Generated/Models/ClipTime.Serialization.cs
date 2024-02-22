@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.AbsoluteClipTime": return AbsoluteClipTime.DeserializeAbsoluteClipTime(element);
-                    case "#Microsoft.Media.UtcClipTime": return UtcClipTime.DeserializeUtcClipTime(element);
+                    case "#Microsoft.Media.AbsoluteClipTime": return AbsoluteClipTime.DeserializeAbsoluteClipTime(element, options);
+                    case "#Microsoft.Media.UtcClipTime": return UtcClipTime.DeserializeUtcClipTime(element, options);
                 }
             }
-            return UnknownClipTime.DeserializeUnknownClipTime(element);
+            return UnknownClipTime.DeserializeUnknownClipTime(element, options);
         }
 
         BinaryData IPersistableModel<ClipTime>.Write(ModelReaderWriterOptions options)

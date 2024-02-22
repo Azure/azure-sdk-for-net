@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuantumWorkspaceData> array = new List<QuantumWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuantumWorkspaceData.DeserializeQuantumWorkspaceData(item));
+                        array.Add(QuantumWorkspaceData.DeserializeQuantumWorkspaceData(item, options));
                     }
                     value = array;
                     continue;

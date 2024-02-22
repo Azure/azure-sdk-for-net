@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxCertificateData> array = new List<NginxCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxCertificateData.DeserializeNginxCertificateData(item));
+                        array.Add(NginxCertificateData.DeserializeNginxCertificateData(item, options));
                     }
                     value = array;
                     continue;

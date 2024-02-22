@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<EdgeNode> array = new List<EdgeNode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeNode.DeserializeEdgeNode(item));
+                        array.Add(EdgeNode.DeserializeEdgeNode(item, options));
                     }
                     value = array;
                     continue;

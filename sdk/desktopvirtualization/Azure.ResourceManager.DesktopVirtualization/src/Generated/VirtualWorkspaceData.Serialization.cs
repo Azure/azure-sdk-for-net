@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             List<DesktopVirtualizationPrivateEndpointConnection> array = new List<DesktopVirtualizationPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DesktopVirtualizationPrivateEndpointConnection.DeserializeDesktopVirtualizationPrivateEndpointConnection(item));
+                                array.Add(DesktopVirtualizationPrivateEndpointConnection.DeserializeDesktopVirtualizationPrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

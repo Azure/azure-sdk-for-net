@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDiskDetails.DeserializeSiteRecoveryOSDiskDetails(property.Value);
+                    osDetails = SiteRecoveryOSDiskDetails.DeserializeSiteRecoveryOSDiskDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectionStage"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value);
+                    resyncDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionWindowStart"u8))
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageProtectedDiskDetails> array = new List<InMageProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageProtectedDiskDetails.DeserializeInMageProtectedDiskDetails(item));
+                        array.Add(InMageProtectedDiskDetails.DeserializeInMageProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentDetails = InMageAgentDetails.DeserializeInMageAgentDetails(property.Value);
+                    agentDetails = InMageAgentDetails.DeserializeInMageAgentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vCenterInfrastructureId"u8))
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;

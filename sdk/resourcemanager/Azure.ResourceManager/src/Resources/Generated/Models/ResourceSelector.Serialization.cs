@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceSelectorExpression> array = new List<ResourceSelectorExpression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSelectorExpression.DeserializeResourceSelectorExpression(item));
+                        array.Add(ResourceSelectorExpression.DeserializeResourceSelectorExpression(item, options));
                     }
                     selectors = array;
                     continue;

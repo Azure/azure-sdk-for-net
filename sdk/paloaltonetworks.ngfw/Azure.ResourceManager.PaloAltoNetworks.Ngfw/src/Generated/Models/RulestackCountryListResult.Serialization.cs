@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<RulestackCountry> array = new List<RulestackCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulestackCountry.DeserializeRulestackCountry(item));
+                        array.Add(RulestackCountry.DeserializeRulestackCountry(item, options));
                     }
                     value = array;
                     continue;

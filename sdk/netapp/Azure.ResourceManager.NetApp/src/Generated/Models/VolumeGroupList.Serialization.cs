@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeGroupResult> array = new List<NetAppVolumeGroupResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult(item));
+                        array.Add(NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult(item, options));
                     }
                     value = array;
                     continue;

@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }

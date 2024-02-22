@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    settings = LogFilesDataSourceSettings.DeserializeLogFilesDataSourceSettings(property.Value);
+                    settings = LogFilesDataSourceSettings.DeserializeLogFilesDataSourceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

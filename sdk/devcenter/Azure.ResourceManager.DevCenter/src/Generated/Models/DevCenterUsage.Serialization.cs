@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    name = DevCenterUsageName.DeserializeDevCenterUsageName(property.Value);
+                    name = DevCenterUsageName.DeserializeDevCenterUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value);
+                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

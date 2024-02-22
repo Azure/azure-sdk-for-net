@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
                             List<RouteData> array = new List<RouteData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RouteData.DeserializeRouteData(item));
+                                array.Add(RouteData.DeserializeRouteData(item, options));
                             }
                             routes = array;
                             continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                             List<SubnetData> array = new List<SubnetData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubnetData.DeserializeSubnetData(item));
+                                array.Add(SubnetData.DeserializeSubnetData(item, options));
                             }
                             subnets = array;
                             continue;

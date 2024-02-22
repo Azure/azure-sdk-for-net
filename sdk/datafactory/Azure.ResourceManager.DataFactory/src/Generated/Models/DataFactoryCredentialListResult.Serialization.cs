@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryManagedIdentityCredentialData> array = new List<DataFactoryManagedIdentityCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(item));
+                        array.Add(DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(item, options));
                     }
                     value = array;
                     continue;

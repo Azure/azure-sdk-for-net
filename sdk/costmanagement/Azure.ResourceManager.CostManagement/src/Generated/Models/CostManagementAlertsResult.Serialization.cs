@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementAlertData> array = new List<CostManagementAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementAlertData.DeserializeCostManagementAlertData(item));
+                        array.Add(CostManagementAlertData.DeserializeCostManagementAlertData(item, options));
                     }
                     value = array;
                     continue;

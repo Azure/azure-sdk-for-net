@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportTicketData> array = new List<SupportTicketData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportTicketData.DeserializeSupportTicketData(item));
+                        array.Add(SupportTicketData.DeserializeSupportTicketData(item, options));
                     }
                     value = array;
                     continue;

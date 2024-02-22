@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value);
+                    arcAutoProvisioning = DefenderForDatabasesGcpOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesGcpOfferingArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defenderForDatabasesArcAutoProvisioning"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value);
+                    defenderForDatabasesArcAutoProvisioning = GcpDefenderForDatabasesArcAutoProvisioning.DeserializeGcpDefenderForDatabasesArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))

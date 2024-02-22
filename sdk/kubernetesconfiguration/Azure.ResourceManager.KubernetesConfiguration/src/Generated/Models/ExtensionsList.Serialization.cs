@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     List<KubernetesClusterExtensionData> array = new List<KubernetesClusterExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(item));
+                        array.Add(KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(item, options));
                     }
                     value = array;
                     continue;

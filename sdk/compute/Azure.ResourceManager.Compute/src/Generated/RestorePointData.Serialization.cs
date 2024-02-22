@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sourceMetadata = RestorePointSourceMetadata.DeserializeRestorePointSourceMetadata(property0.Value);
+                            sourceMetadata = RestorePointSourceMetadata.DeserializeRestorePointSourceMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = RestorePointInstanceView.DeserializeRestorePointInstanceView(property0.Value);
+                            instanceView = RestorePointInstanceView.DeserializeRestorePointInstanceView(property0.Value, options);
                             continue;
                         }
                     }

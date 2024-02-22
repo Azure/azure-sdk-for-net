@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            configurationAccess = DataCollectionEndpointConfigurationAccess.DeserializeDataCollectionEndpointConfigurationAccess(property0.Value);
+                            configurationAccess = DataCollectionEndpointConfigurationAccess.DeserializeDataCollectionEndpointConfigurationAccess(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logsIngestion"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            logsIngestion = DataCollectionEndpointLogsIngestion.DeserializeDataCollectionEndpointLogsIngestion(property0.Value);
+                            logsIngestion = DataCollectionEndpointLogsIngestion.DeserializeDataCollectionEndpointLogsIngestion(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metricsIngestion"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metricsIngestion = DataCollectionEndpointMetricsIngestion.DeserializeDataCollectionEndpointMetricsIngestion(property0.Value);
+                            metricsIngestion = DataCollectionEndpointMetricsIngestion.DeserializeDataCollectionEndpointMetricsIngestion(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            networkAcls = DataCollectionEndpointNetworkAcls.DeserializeDataCollectionEndpointNetworkAcls(property0.Value);
+                            networkAcls = DataCollectionEndpointNetworkAcls.DeserializeDataCollectionEndpointNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Monitor
                             List<DataCollectionRulePrivateLinkScopedResourceInfo> array = new List<DataCollectionRulePrivateLinkScopedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataCollectionRulePrivateLinkScopedResourceInfo.DeserializeDataCollectionRulePrivateLinkScopedResourceInfo(item));
+                                array.Add(DataCollectionRulePrivateLinkScopedResourceInfo.DeserializeDataCollectionRulePrivateLinkScopedResourceInfo(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            failoverConfiguration = DataCollectionEndpointFailoverConfiguration.DeserializeDataCollectionEndpointFailoverConfiguration(property0.Value);
+                            failoverConfiguration = DataCollectionEndpointFailoverConfiguration.DeserializeDataCollectionEndpointFailoverConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metadata = DataCollectionEndpointMetadata.DeserializeDataCollectionEndpointMetadata(property0.Value);
+                            metadata = DataCollectionEndpointMetadata.DeserializeDataCollectionEndpointMetadata(property0.Value, options);
                             continue;
                         }
                     }

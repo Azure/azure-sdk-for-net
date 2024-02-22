@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPolicyData> array = new List<StreamingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPolicyData.DeserializeStreamingPolicyData(item));
+                        array.Add(StreamingPolicyData.DeserializeStreamingPolicyData(item, options));
                     }
                     value = array;
                     continue;

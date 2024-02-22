@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    ssl = SslConfiguration.DeserializeSslConfiguration(property.Value);
+                    ssl = SslConfiguration.DeserializeSslConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceAuth"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value);
+                    serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoScale"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    autoScale = AutoScaleConfiguration.DeserializeAutoScaleConfiguration(property.Value);
+                    autoScale = AutoScaleConfiguration.DeserializeAutoScaleConfiguration(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

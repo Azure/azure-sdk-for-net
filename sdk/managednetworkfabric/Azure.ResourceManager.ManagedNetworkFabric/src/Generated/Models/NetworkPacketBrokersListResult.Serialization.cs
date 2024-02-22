@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkPacketBrokerData> array = new List<NetworkPacketBrokerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(item));
+                        array.Add(NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(item, options));
                     }
                     value = array;
                     continue;

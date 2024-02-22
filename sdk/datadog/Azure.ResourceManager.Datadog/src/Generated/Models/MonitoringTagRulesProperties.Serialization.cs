@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    logRules = LogRules.DeserializeLogRules(property.Value);
+                    logRules = LogRules.DeserializeLogRules(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricRules"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    metricRules = MetricRules.DeserializeMetricRules(property.Value);
+                    metricRules = MetricRules.DeserializeMetricRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

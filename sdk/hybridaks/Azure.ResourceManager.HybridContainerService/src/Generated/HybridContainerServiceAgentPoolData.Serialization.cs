@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            status = AgentPoolProvisioningStatus.DeserializeAgentPoolProvisioningStatus(property0.Value);
+                            status = AgentPoolProvisioningStatus.DeserializeAgentPoolProvisioningStatus(property0.Value, options);
                             continue;
                         }
                     }

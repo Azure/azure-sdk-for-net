@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property.Value);
+                    appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("renew"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value);
+                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

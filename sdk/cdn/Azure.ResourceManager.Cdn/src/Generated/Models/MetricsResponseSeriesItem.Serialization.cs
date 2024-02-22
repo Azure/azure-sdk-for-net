@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<MetricsResponseSeriesPropertiesItemsItem> array = new List<MetricsResponseSeriesPropertiesItemsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsResponseSeriesPropertiesItemsItem.DeserializeMetricsResponseSeriesPropertiesItemsItem(item));
+                        array.Add(MetricsResponseSeriesPropertiesItemsItem.DeserializeMetricsResponseSeriesPropertiesItemsItem(item, options));
                     }
                     groups = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> array = new List<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.DeserializeComponents1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(item));
+                        array.Add(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems.DeserializeComponents1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(item, options));
                     }
                     data = array;
                     continue;

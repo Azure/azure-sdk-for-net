@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = VirtualMachineDiskSecurityProfile.DeserializeVirtualMachineDiskSecurityProfile(property.Value);
+                    securityProfile = VirtualMachineDiskSecurityProfile.DeserializeVirtualMachineDiskSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

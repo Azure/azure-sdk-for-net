@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("virtualNetwork"u8))
                 {
-                    virtualNetwork = AppServiceVirtualNetworkProfile.DeserializeAppServiceVirtualNetworkProfile(property.Value);
+                    virtualNetwork = AppServiceVirtualNetworkProfile.DeserializeAppServiceVirtualNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("internalLoadBalancingMode"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item, options));
                     }
                     clusterSettings = array;
                     continue;

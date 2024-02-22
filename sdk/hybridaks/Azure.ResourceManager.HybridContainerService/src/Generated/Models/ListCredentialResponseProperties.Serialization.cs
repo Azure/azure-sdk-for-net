@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceCredential> array = new List<HybridContainerServiceCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceCredential.DeserializeHybridContainerServiceCredential(item));
+                        array.Add(HybridContainerServiceCredential.DeserializeHybridContainerServiceCredential(item, options));
                     }
                     kubeconfigs = array;
                     continue;

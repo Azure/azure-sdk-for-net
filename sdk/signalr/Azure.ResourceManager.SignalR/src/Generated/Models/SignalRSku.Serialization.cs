@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value);
+                    sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    capacity = SignalRSkuCapacity.DeserializeSignalRSkuCapacity(property.Value);
+                    capacity = SignalRSkuCapacity.DeserializeSignalRSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewAccountData> array = new List<PurviewAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewAccountData.DeserializePurviewAccountData(item));
+                        array.Add(PurviewAccountData.DeserializePurviewAccountData(item, options));
                     }
                     value = array;
                     continue;

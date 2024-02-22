@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecureScoreControlDefinitionItem> array = new List<SecureScoreControlDefinitionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(item));
+                        array.Add(SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(item, options));
                     }
                     value = array;
                     continue;

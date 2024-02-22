@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<MeshRevisionProfileData> array = new List<MeshRevisionProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MeshRevisionProfileData.DeserializeMeshRevisionProfileData(item));
+                        array.Add(MeshRevisionProfileData.DeserializeMeshRevisionProfileData(item, options));
                     }
                     value = array;
                     continue;

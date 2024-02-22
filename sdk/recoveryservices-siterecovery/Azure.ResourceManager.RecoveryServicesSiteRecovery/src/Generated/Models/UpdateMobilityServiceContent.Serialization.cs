@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = UpdateMobilityServiceRequestProperties.DeserializeUpdateMobilityServiceRequestProperties(property.Value);
+                    properties = UpdateMobilityServiceRequestProperties.DeserializeUpdateMobilityServiceRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

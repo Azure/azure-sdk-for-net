@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                        array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item, options));
                     }
                     value = array;
                     continue;

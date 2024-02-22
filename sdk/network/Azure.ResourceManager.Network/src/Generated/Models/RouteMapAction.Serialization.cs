@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteMapActionParameter> array = new List<RouteMapActionParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteMapActionParameter.DeserializeRouteMapActionParameter(item));
+                        array.Add(RouteMapActionParameter.DeserializeRouteMapActionParameter(item, options));
                     }
                     parameters = array;
                     continue;

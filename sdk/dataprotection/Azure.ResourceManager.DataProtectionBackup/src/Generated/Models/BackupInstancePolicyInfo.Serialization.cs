@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    policyParameters = BackupInstancePolicySettings.DeserializeBackupInstancePolicySettings(property.Value);
+                    policyParameters = BackupInstancePolicySettings.DeserializeBackupInstancePolicySettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

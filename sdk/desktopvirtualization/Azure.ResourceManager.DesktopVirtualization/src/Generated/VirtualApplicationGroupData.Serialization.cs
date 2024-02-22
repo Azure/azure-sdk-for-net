@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))

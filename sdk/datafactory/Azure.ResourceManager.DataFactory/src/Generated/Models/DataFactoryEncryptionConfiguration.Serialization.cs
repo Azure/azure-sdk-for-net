@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    identity = DataFactoryCmkIdentity.DeserializeDataFactoryCmkIdentity(property.Value);
+                    identity = DataFactoryCmkIdentity.DeserializeDataFactoryCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

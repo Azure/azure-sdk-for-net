@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityCenterCloudOffering> array = new List<SecurityCenterCloudOffering>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityCenterCloudOffering.DeserializeSecurityCenterCloudOffering(item));
+                                array.Add(SecurityCenterCloudOffering.DeserializeSecurityCenterCloudOffering(item, options));
                             }
                             offerings = array;
                             continue;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            environmentData = SecurityConnectorEnvironment.DeserializeSecurityConnectorEnvironment(property0.Value);
+                            environmentData = SecurityConnectorEnvironment.DeserializeSecurityConnectorEnvironment(property0.Value, options);
                             continue;
                         }
                     }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskEncryptionSetData> array = new List<DiskEncryptionSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskEncryptionSetData.DeserializeDiskEncryptionSetData(item));
+                        array.Add(DiskEncryptionSetData.DeserializeDiskEncryptionSetData(item, options));
                     }
                     value = array;
                     continue;

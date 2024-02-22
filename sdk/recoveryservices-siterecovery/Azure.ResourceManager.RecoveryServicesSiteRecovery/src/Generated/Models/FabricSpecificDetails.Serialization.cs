@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Azure": return SiteRecoveryFabricProviderSpecificDetails.DeserializeSiteRecoveryFabricProviderSpecificDetails(element);
-                    case "HyperVSite": return HyperVSiteDetails.DeserializeHyperVSiteDetails(element);
-                    case "InMageRcm": return InMageRcmFabricSpecificDetails.DeserializeInMageRcmFabricSpecificDetails(element);
-                    case "VMM": return VmmFabricDetails.DeserializeVmmFabricDetails(element);
-                    case "VMware": return VMwareDetails.DeserializeVMwareDetails(element);
-                    case "VMwareV2": return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element);
+                    case "Azure": return SiteRecoveryFabricProviderSpecificDetails.DeserializeSiteRecoveryFabricProviderSpecificDetails(element, options);
+                    case "HyperVSite": return HyperVSiteDetails.DeserializeHyperVSiteDetails(element, options);
+                    case "InMageRcm": return InMageRcmFabricSpecificDetails.DeserializeInMageRcmFabricSpecificDetails(element, options);
+                    case "VMM": return VmmFabricDetails.DeserializeVmmFabricDetails(element, options);
+                    case "VMware": return VMwareDetails.DeserializeVMwareDetails(element, options);
+                    case "VMwareV2": return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element, options);
                 }
             }
-            return UnknownFabricSpecificDetails.DeserializeUnknownFabricSpecificDetails(element);
+            return UnknownFabricSpecificDetails.DeserializeUnknownFabricSpecificDetails(element, options);
         }
 
         BinaryData IPersistableModel<FabricSpecificDetails>.Write(ModelReaderWriterOptions options)

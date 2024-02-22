@@ -104,18 +104,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
-                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
-                    case "Fail": return FailActivity.DeserializeFailActivity(element);
-                    case "Filter": return FilterActivity.DeserializeFilterActivity(element);
-                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
-                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
-                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
-                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
-                    case "Until": return UntilActivity.DeserializeUntilActivity(element);
-                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
-                    case "Wait": return WaitActivity.DeserializeWaitActivity(element);
-                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
+                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
+                    case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element, options);
+                    case "Fail": return FailActivity.DeserializeFailActivity(element, options);
+                    case "Filter": return FilterActivity.DeserializeFilterActivity(element, options);
+                    case "ForEach": return ForEachActivity.DeserializeForEachActivity(element, options);
+                    case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element, options);
+                    case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element, options);
+                    case "Switch": return SwitchActivity.DeserializeSwitchActivity(element, options);
+                    case "Until": return UntilActivity.DeserializeUntilActivity(element, options);
+                    case "Validation": return ValidationActivity.DeserializeValidationActivity(element, options);
+                    case "Wait": return WaitActivity.DeserializeWaitActivity(element, options);
+                    case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element, options);
                 }
             }
             string name = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;

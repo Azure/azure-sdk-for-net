@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = AtaSolutionProperties.DeserializeAtaSolutionProperties(property.Value);
+                    properties = AtaSolutionProperties.DeserializeAtaSolutionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    setting = RoleManagementApprovalSettings.DeserializeRoleManagementApprovalSettings(property.Value);
+                    setting = RoleManagementApprovalSettings.DeserializeRoleManagementApprovalSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

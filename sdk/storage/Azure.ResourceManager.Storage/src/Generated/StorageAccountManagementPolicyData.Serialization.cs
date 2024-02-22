@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            policy = ManagementPolicySchema.DeserializeManagementPolicySchema(property0.Value);
+                            policy = ManagementPolicySchema.DeserializeManagementPolicySchema(property0.Value, options);
                             continue;
                         }
                     }

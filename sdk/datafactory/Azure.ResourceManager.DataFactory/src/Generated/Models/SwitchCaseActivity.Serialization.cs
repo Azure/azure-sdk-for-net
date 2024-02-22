@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivity> array = new List<PipelineActivity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivity.DeserializePipelineActivity(item));
+                        array.Add(PipelineActivity.DeserializePipelineActivity(item, options));
                     }
                     activities = array;
                     continue;

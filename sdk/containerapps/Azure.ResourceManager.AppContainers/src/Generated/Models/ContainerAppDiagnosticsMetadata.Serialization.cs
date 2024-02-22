@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticSupportTopic> array = new List<ContainerAppDiagnosticSupportTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticSupportTopic.DeserializeContainerAppDiagnosticSupportTopic(item));
+                        array.Add(ContainerAppDiagnosticSupportTopic.DeserializeContainerAppDiagnosticSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;

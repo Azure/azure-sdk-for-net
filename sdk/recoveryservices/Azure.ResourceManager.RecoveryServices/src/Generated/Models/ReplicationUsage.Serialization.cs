@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value);
+                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobsSummary"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value);
+                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemCount"u8))

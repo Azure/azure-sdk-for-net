@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisData> array = new List<RedisData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisData.DeserializeRedisData(item));
+                        array.Add(RedisData.DeserializeRedisData(item, options));
                     }
                     value = array;
                     continue;

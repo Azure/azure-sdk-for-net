@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    autoUser = BatchAutoUserSpecification.DeserializeBatchAutoUserSpecification(property.Value);
+                    autoUser = BatchAutoUserSpecification.DeserializeBatchAutoUserSpecification(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

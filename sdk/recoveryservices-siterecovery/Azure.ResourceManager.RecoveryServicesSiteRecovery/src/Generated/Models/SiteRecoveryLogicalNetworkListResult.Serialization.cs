@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryLogicalNetworkData> array = new List<SiteRecoveryLogicalNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(item));
+                        array.Add(SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(item, options));
                     }
                     value = array;
                     continue;

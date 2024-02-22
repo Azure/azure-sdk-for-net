@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceOutboundEnvironmentEndpoint> array = new List<ContainerServiceOutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint(item));
+                        array.Add(ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint(item, options));
                     }
                     value = array;
                     continue;

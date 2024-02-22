@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementPortalRevisionData> array = new List<ApiManagementPortalRevisionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(item));
+                        array.Add(ApiManagementPortalRevisionData.DeserializeApiManagementPortalRevisionData(item, options));
                     }
                     value = array;
                     continue;

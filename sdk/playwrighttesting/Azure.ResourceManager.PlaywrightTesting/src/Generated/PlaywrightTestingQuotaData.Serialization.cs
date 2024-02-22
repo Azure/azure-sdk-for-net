@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                             {
                                 continue;
                             }
-                            freeTrial = FreeTrialProperties.DeserializeFreeTrialProperties(property0.Value);
+                            freeTrial = FreeTrialProperties.DeserializeFreeTrialProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

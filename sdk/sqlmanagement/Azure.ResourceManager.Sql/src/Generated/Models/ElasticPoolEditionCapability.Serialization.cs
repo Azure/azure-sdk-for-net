@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerformanceLevelCapability> array = new List<ElasticPoolPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerformanceLevelCapability.DeserializeElasticPoolPerformanceLevelCapability(item));
+                        array.Add(ElasticPoolPerformanceLevelCapability.DeserializeElasticPoolPerformanceLevelCapability(item, options));
                     }
                     supportedElasticPoolPerformanceLevels = array;
                     continue;

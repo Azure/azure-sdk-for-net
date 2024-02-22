@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VaultCertificate> array = new List<VaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultCertificate.DeserializeVaultCertificate(item));
+                        array.Add(VaultCertificate.DeserializeVaultCertificate(item, options));
                     }
                     vaultCertificates = array;
                     continue;

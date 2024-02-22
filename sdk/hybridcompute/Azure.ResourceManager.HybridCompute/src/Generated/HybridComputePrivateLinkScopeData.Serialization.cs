@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    properties = HybridComputePrivateLinkScopeProperties.DeserializeHybridComputePrivateLinkScopeProperties(property.Value);
+                    properties = HybridComputePrivateLinkScopeProperties.DeserializeHybridComputePrivateLinkScopeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

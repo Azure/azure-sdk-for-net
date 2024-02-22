@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<RecommendedSecurityRule> array = new List<RecommendedSecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item));
+                                array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item, options));
                             }
                             rules = array;
                             continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<EffectiveNetworkSecurityGroups> array = new List<EffectiveNetworkSecurityGroups>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.EffectiveNetworkSecurityGroups.DeserializeEffectiveNetworkSecurityGroups(item));
+                                array.Add(Models.EffectiveNetworkSecurityGroups.DeserializeEffectiveNetworkSecurityGroups(item, options));
                             }
                             effectiveNetworkSecurityGroups = array;
                             continue;

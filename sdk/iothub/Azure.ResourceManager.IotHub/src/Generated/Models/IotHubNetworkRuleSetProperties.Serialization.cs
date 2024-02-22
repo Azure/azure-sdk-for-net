@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubNetworkRuleSetIPRule> array = new List<IotHubNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubNetworkRuleSetIPRule.DeserializeIotHubNetworkRuleSetIPRule(item));
+                        array.Add(IotHubNetworkRuleSetIPRule.DeserializeIotHubNetworkRuleSetIPRule(item, options));
                     }
                     ipRules = array;
                     continue;

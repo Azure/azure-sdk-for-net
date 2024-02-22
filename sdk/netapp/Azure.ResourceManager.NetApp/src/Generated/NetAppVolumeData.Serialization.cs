@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            exportPolicy = VolumePropertiesExportPolicy.DeserializeVolumePropertiesExportPolicy(property0.Value);
+                            exportPolicy = VolumePropertiesExportPolicy.DeserializeVolumePropertiesExportPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("protocolTypes"u8))
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumeMountTarget> array = new List<NetAppVolumeMountTarget>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeMountTarget.DeserializeNetAppVolumeMountTarget(item));
+                                array.Add(NetAppVolumeMountTarget.DeserializeNetAppVolumeMountTarget(item, options));
                             }
                             mountTargets = array;
                             continue;
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value);
+                            dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isRestoring"u8))
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                                array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item, options));
                             }
                             placementRules = array;
                             continue;

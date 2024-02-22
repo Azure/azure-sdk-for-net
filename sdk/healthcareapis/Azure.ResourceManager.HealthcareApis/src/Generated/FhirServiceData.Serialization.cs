@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            acrConfiguration = FhirServiceAcrConfiguration.DeserializeFhirServiceAcrConfiguration(property0.Value);
+                            acrConfiguration = FhirServiceAcrConfiguration.DeserializeFhirServiceAcrConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authenticationConfiguration"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            authenticationConfiguration = FhirServiceAuthenticationConfiguration.DeserializeFhirServiceAuthenticationConfiguration(property0.Value);
+                            authenticationConfiguration = FhirServiceAuthenticationConfiguration.DeserializeFhirServiceAuthenticationConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("corsConfiguration"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            corsConfiguration = FhirServiceCorsConfiguration.DeserializeFhirServiceCorsConfiguration(property0.Value);
+                            corsConfiguration = FhirServiceCorsConfiguration.DeserializeFhirServiceCorsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportConfiguration"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            exportConfiguration = FhirServiceExportConfiguration.DeserializeFhirServiceExportConfiguration(property0.Value);
+                            exportConfiguration = FhirServiceExportConfiguration.DeserializeFhirServiceExportConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
+                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            resourceVersionPolicyConfiguration = FhirServiceResourceVersionPolicyConfiguration.DeserializeFhirServiceResourceVersionPolicyConfiguration(property0.Value);
+                            resourceVersionPolicyConfiguration = FhirServiceResourceVersionPolicyConfiguration.DeserializeFhirServiceResourceVersionPolicyConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("importConfiguration"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            importConfiguration = FhirServiceImportConfiguration.DeserializeFhirServiceImportConfiguration(property0.Value);
+                            importConfiguration = FhirServiceImportConfiguration.DeserializeFhirServiceImportConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("implementationGuidesConfiguration"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            implementationGuidesConfiguration = ImplementationGuidesConfiguration.DeserializeImplementationGuidesConfiguration(property0.Value);
+                            implementationGuidesConfiguration = ImplementationGuidesConfiguration.DeserializeImplementationGuidesConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = Encryption.DeserializeEncryption(property0.Value, options);
                             continue;
                         }
                     }

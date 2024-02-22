@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<FilesNotTieringError> array = new List<FilesNotTieringError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilesNotTieringError.DeserializeFilesNotTieringError(item));
+                        array.Add(FilesNotTieringError.DeserializeFilesNotTieringError(item, options));
                     }
                     errors = array;
                     continue;

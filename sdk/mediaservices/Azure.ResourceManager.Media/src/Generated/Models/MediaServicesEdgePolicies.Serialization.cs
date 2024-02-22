@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    usageDataCollectionPolicy = EdgeUsageDataCollectionPolicy.DeserializeEdgeUsageDataCollectionPolicy(property.Value);
+                    usageDataCollectionPolicy = EdgeUsageDataCollectionPolicy.DeserializeEdgeUsageDataCollectionPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

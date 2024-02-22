@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databaseNameOverride"u8))

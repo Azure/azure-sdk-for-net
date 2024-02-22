@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CdnOriginGroupData> array = new List<CdnOriginGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnOriginGroupData.DeserializeCdnOriginGroupData(item));
+                        array.Add(CdnOriginGroupData.DeserializeCdnOriginGroupData(item, options));
                     }
                     value = array;
                     continue;

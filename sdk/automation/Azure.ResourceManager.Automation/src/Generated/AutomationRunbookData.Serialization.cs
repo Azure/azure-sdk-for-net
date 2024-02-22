@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Automation
                             Dictionary<string, RunbookParameterDefinition> dictionary = new Dictionary<string, RunbookParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property1.Value));
+                                dictionary.Add(property1.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value);
+                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

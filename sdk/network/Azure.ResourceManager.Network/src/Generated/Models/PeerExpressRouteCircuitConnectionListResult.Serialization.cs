@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PeerExpressRouteCircuitConnectionData> array = new List<PeerExpressRouteCircuitConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item));
+                        array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item, options));
                     }
                     value = array;
                     continue;

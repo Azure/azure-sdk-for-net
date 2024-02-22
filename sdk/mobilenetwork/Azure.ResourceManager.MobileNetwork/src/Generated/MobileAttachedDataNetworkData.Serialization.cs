@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("userPlaneDataInterface"u8))
                         {
-                            userPlaneDataInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
+                            userPlaneDataInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dnsAddresses"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            naptConfiguration = NaptConfiguration.DeserializeNaptConfiguration(property0.Value);
+                            naptConfiguration = NaptConfiguration.DeserializeNaptConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userEquipmentAddressPoolPrefix"u8))

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bounds = VirtualNetworkGatewayAutoScaleBounds.DeserializeVirtualNetworkGatewayAutoScaleBounds(property.Value);
+                    bounds = VirtualNetworkGatewayAutoScaleBounds.DeserializeVirtualNetworkGatewayAutoScaleBounds(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

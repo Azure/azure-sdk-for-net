@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    explicitAnalogTelevisionOutputRestriction = ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(property.Value);
+                    explicitAnalogTelevisionOutputRestriction = ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("digitalVideoOnlyContentRestriction"u8))

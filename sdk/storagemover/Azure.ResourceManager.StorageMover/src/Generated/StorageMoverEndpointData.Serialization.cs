@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = EndpointBaseProperties.DeserializeEndpointBaseProperties(property.Value);
+                    properties = EndpointBaseProperties.DeserializeEndpointBaseProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

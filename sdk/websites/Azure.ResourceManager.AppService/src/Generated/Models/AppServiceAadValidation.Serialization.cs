@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value);
+                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value);
+                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

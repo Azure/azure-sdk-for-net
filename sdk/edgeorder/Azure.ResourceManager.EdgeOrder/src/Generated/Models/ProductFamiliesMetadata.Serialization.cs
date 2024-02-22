@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            description = ProductDescription.DeserializeProductDescription(property0.Value);
+                            description = ProductDescription.DeserializeProductDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("imageInformation"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<EdgeOrderProductImageInformation> array = new List<EdgeOrderProductImageInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item));
+                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item, options));
                             }
                             imageInformation = array;
                             continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value);
+                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilityInformation"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
+                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hierarchyInformation"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value);
+                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filterableProperties"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<FilterableProperty> array = new List<FilterableProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FilterableProperty.DeserializeFilterableProperty(item));
+                                array.Add(FilterableProperty.DeserializeFilterableProperty(item, options));
                             }
                             filterableProperties = array;
                             continue;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<ProductLine> array = new List<ProductLine>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProductLine.DeserializeProductLine(item));
+                                array.Add(ProductLine.DeserializeProductLine(item, options));
                             }
                             productLines = array;
                             continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ResourceProviderDetails.DeserializeResourceProviderDetails(item));
+                                array.Add(Models.ResourceProviderDetails.DeserializeResourceProviderDetails(item, options));
                             }
                             resourceProviderDetails = array;
                             continue;

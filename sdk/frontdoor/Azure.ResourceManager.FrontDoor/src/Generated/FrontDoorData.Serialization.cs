@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<RoutingRuleData> array = new List<RoutingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutingRuleData.DeserializeRoutingRuleData(item));
+                                array.Add(RoutingRuleData.DeserializeRoutingRuleData(item, options));
                             }
                             routingRules = array;
                             continue;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorLoadBalancingSettingsData> array = new List<FrontDoorLoadBalancingSettingsData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorLoadBalancingSettingsData.DeserializeFrontDoorLoadBalancingSettingsData(item));
+                                array.Add(FrontDoorLoadBalancingSettingsData.DeserializeFrontDoorLoadBalancingSettingsData(item, options));
                             }
                             loadBalancingSettings = array;
                             continue;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorHealthProbeSettingsData> array = new List<FrontDoorHealthProbeSettingsData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorHealthProbeSettingsData.DeserializeFrontDoorHealthProbeSettingsData(item));
+                                array.Add(FrontDoorHealthProbeSettingsData.DeserializeFrontDoorHealthProbeSettingsData(item, options));
                             }
                             healthProbeSettings = array;
                             continue;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorBackendPool> array = new List<FrontDoorBackendPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorBackendPool.DeserializeFrontDoorBackendPool(item));
+                                array.Add(FrontDoorBackendPool.DeserializeFrontDoorBackendPool(item, options));
                             }
                             backendPools = array;
                             continue;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontendEndpointData> array = new List<FrontendEndpointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item));
+                                array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item, options));
                             }
                             frontendEndpoints = array;
                             continue;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            backendPoolsSettings = BackendPoolsSettings.DeserializeBackendPoolsSettings(property0.Value);
+                            backendPoolsSettings = BackendPoolsSettings.DeserializeBackendPoolsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorRulesEngineData> array = new List<FrontDoorRulesEngineData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item));
+                                array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item, options));
                             }
                             rulesEngines = array;
                             continue;

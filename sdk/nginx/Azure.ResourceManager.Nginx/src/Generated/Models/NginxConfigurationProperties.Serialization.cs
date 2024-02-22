@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
                     }
                     files = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
                     }
                     protectedFiles = array;
                     continue;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value);
+                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rootFile"u8))

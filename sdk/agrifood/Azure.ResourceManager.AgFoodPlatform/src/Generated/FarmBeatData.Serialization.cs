@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                             {
                                 continue;
                             }
-                            sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property0.Value);
+                            sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                             {
                                 continue;
                             }
-                            privateEndpointConnections = AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(property0.Value);
+                            privateEndpointConnections = AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(property0.Value, options);
                             continue;
                         }
                     }

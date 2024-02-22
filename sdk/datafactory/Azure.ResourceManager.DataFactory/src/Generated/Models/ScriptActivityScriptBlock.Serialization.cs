@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<ScriptActivityParameter> array = new List<ScriptActivityParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActivityParameter.DeserializeScriptActivityParameter(item));
+                        array.Add(ScriptActivityParameter.DeserializeScriptActivityParameter(item, options));
                     }
                     parameters = array;
                     continue;

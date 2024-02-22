@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSupportedRuntimeVersion> array = new List<AppPlatformSupportedRuntimeVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(item));
+                        array.Add(AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(item, options));
                     }
                     value = array;
                     continue;
