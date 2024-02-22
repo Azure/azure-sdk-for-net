@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Succeeded))
+            if (!(Succeeded is ChangeTrackingList<PrivateStoreCollectionDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("succeeded"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Failed))
+            if (!(Failed is ChangeTrackingList<PrivateStoreCollectionDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("failed"u8);
                 writer.WriteStartArray();

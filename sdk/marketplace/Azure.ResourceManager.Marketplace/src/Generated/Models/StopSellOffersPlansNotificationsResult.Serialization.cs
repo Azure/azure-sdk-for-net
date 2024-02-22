@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Plans))
+            if (options.Format != "W" && !(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("publicContext"u8);
                 writer.WriteBooleanValue(HasPublicContext.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SubscriptionsIds))
+            if (options.Format != "W" && !(SubscriptionsIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subscriptionsIds"u8);
                 writer.WriteStartArray();

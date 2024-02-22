@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storedProcedure");
                 }
             }
-            if (Optional.IsCollectionDefined(StoredProcedureParams))
+            if (!(StoredProcedureParams is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
             {
                 if (StoredProcedureParams != null)
                 {

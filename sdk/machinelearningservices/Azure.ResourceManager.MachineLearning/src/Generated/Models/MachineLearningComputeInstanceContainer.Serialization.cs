@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("environment"u8);
                 writer.WriteObjectValue(Environment);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Services))
+            if (options.Format != "W" && !(Services is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteStartArray();

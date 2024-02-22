@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
-            if (Optional.IsCollectionDefined(Administrators))
+            if (!(Administrators is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();

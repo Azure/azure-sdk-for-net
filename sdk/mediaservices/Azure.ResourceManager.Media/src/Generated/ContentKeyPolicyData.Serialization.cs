@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Options))
+            if (!(Options is ChangeTrackingList<ContentKeyPolicyOption> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartArray();

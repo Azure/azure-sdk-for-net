@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WritePropertyName("orchestratorProperties"u8);
                 writer.WriteObjectValue(OrchestratorProperties);
             }
-            if (Optional.IsCollectionDefined(SystemServices))
+            if (!(SystemServices is ChangeTrackingList<SystemService> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("systemServices"u8);
                 writer.WriteStartArray();

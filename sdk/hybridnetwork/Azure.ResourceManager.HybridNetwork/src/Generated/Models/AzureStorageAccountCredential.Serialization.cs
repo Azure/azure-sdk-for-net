@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsCollectionDefined(ContainerCredentials))
+            if (!(ContainerCredentials is ChangeTrackingList<AzureStorageAccountContainerCredential> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containerCredentials"u8);
                 writer.WriteStartArray();

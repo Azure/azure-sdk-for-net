@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(LinkedResources))
+            if (!(LinkedResources is ChangeTrackingList<MapsLinkedResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkedResources"u8);
                 writer.WriteStartArray();

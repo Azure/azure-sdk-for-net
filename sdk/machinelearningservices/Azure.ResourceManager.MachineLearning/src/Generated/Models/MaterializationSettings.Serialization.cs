@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (Optional.IsCollectionDefined(SparkConfiguration))
+            if (!(SparkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (SparkConfiguration != null)
                 {

@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Dimension))
+            if (!(Dimension is ChangeTrackingList<DataFeedDimension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimension"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("rollUpMethod"u8);
                 writer.WriteStringValue(RollUpMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RollUpColumns))
+            if (!(RollUpColumns is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("rollUpColumns"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("viewMode"u8);
                 writer.WriteStringValue(ViewMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Admins))
+            if (!(Admins is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
@@ -136,7 +136,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Viewers))
+            if (!(Viewers is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("viewers"u8);
                 writer.WriteStartArray();

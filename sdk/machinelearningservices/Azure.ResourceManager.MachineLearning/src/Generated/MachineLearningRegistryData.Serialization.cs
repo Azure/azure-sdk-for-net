@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("mlFlowRegistryUri");
                 }
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<RegistryPrivateEndpointConnection> collection0 && collection0.IsUndefined))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (Optional.IsCollectionDefined(RegionDetails))
+            if (!(RegionDetails is ChangeTrackingList<RegistryRegionArmDetails> collection1 && collection1.IsUndefined))
             {
                 if (RegionDetails != null)
                 {

@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Desired))
+            if (!(Desired is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Reported))
+            if (!(Reported is ChangeTrackingDictionary<string, object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("reported"u8);
                 writer.WriteStartObject();

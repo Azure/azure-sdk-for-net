@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("allocationStateTransitionTime"u8);
                 writer.WriteStringValue(AllocationStateTransitionOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<MachineLearningError> collection && collection.IsUndefined))
             {
                 if (Errors != null)
                 {

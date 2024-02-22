@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(StatusMessages))
+            if (!(StatusMessages is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusMessages"u8);
                 writer.WriteStartArray();

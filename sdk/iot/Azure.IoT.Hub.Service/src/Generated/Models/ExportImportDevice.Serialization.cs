@@ -55,7 +55,7 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("twinETag"u8);
                 writer.WriteStringValue(TwinETag);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

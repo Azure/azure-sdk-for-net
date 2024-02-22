@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Subexpressions))
+            if (!(Subexpressions is ChangeTrackingList<LogicExpression> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subexpressions"u8);
                 writer.WriteStartArray();

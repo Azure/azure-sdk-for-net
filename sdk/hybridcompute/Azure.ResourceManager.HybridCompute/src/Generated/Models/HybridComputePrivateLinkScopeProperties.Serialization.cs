@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("privateLinkScopeId"u8);
                 writer.WriteStringValue(PrivateLinkScopeId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<PrivateEndpointConnectionDataModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

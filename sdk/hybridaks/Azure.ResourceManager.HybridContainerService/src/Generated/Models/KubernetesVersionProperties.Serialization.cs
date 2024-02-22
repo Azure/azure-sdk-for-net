@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PatchVersions))
+            if (options.Format != "W" && !(PatchVersions is ChangeTrackingDictionary<string, KubernetesPatchVersions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patchVersions"u8);
                 writer.WriteStartObject();

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WritePropertyName("hub"u8);
                 JsonSerializer.Serialize(writer, Hub);
             }
-            if (Optional.IsCollectionDefined(Spokes))
+            if (!(Spokes is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("spokes"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Mesh))
+            if (!(Mesh is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("mesh"u8);
                 writer.WriteStartArray();

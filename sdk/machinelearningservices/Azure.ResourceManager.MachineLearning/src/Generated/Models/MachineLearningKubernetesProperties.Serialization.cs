@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("defaultInstanceType"u8);
                 writer.WriteStringValue(DefaultInstanceType);
             }
-            if (Optional.IsCollectionDefined(InstanceTypes))
+            if (!(InstanceTypes is ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instanceTypes"u8);
                 writer.WriteStartObject();

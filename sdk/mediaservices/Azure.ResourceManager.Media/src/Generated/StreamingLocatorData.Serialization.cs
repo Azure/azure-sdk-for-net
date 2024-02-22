@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
             }
-            if (Optional.IsCollectionDefined(ContentKeys))
+            if (!(ContentKeys is ChangeTrackingList<StreamingLocatorContentKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();

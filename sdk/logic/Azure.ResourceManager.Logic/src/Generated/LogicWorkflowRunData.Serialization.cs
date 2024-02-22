@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteObjectValue(Trigger);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Outputs))
+            if (options.Format != "W" && !(Outputs is ChangeTrackingDictionary<string, LogicWorkflowOutputParameterInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartObject();

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("approveAllItemsModifiedAt"u8);
                 writer.WriteStringValue(ApproveAllItemsModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(SubscriptionsList))
+            if (!(SubscriptionsList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptionsList"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("numberOfOffers"u8);
                 writer.WriteNumberValue(NumberOfOffers.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedRules))
+            if (options.Format != "W" && !(AppliedRules is ChangeTrackingList<MarketplaceRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("appliedRules"u8);
                 writer.WriteStartArray();

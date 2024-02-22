@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("fadeOut"u8);
                 writer.WriteObjectValue(FadeOut);
             }
-            if (Optional.IsCollectionDefined(Overlays))
+            if (!(Overlays is ChangeTrackingList<MediaOverlayBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("overlays"u8);
                 writer.WriteStartArray();

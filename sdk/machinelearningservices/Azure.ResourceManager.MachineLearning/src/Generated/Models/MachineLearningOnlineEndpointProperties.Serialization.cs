@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute");
                 }
             }
-            if (Optional.IsCollectionDefined(MirrorTraffic))
+            if (!(MirrorTraffic is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
             {
                 if (MirrorTraffic != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Traffic))
+            if (!(Traffic is ChangeTrackingDictionary<string, int> collection0 && collection0.IsUndefined))
             {
                 if (Traffic != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keys");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Properties != null)
                 {

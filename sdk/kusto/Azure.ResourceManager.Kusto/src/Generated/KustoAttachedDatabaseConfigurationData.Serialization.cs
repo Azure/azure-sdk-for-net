@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(ClusterResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedDatabaseNames))
+            if (options.Format != "W" && !(AttachedDatabaseNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attachedDatabaseNames"u8);
                 writer.WriteStartArray();

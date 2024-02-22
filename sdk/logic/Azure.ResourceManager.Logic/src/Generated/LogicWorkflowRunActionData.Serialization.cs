@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(RetryHistory))
+            if (!(RetryHistory is ChangeTrackingList<LogicWorkRetryHistory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("retryHistory"u8);
                 writer.WriteStartArray();

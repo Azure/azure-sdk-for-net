@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("featureLags"u8);
                 writer.WriteStringValue(FeatureLags.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(FeaturesUnknownAtForecastTime))
+            if (!(FeaturesUnknownAtForecastTime is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (FeaturesUnknownAtForecastTime != null)
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeColumnName");
                 }
             }
-            if (Optional.IsCollectionDefined(TimeSeriesIdColumnNames))
+            if (!(TimeSeriesIdColumnNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (TimeSeriesIdColumnNames != null)
                 {

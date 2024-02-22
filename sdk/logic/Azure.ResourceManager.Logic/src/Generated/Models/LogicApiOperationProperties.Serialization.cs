@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("inputsDefinition"u8);
                 writer.WriteObjectValue(InputsDefinition);
             }
-            if (Optional.IsCollectionDefined(ResponsesDefinition))
+            if (!(ResponsesDefinition is ChangeTrackingDictionary<string, SwaggerSchema> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("responsesDefinition"u8);
                 writer.WriteStartObject();

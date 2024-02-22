@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (Optional.IsCollectionDefined(OutboundRules))
+            if (!(OutboundRules is ChangeTrackingDictionary<string, MachineLearningOutboundRule> collection && collection.IsUndefined))
             {
                 if (OutboundRules != null)
                 {

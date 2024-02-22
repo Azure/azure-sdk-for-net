@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(SearchSpace))
+            if (!(SearchSpace is ChangeTrackingList<ImageModelDistributionSettingsClassification> collection && collection.IsUndefined))
             {
                 if (SearchSpace != null)
                 {

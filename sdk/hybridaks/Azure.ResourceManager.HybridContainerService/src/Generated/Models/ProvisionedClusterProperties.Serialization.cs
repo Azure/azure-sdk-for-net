@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("clusterVMAccessProfile"u8);
                 writer.WriteObjectValue(ClusterVmAccessProfile);
             }
-            if (Optional.IsCollectionDefined(AgentPoolProfiles))
+            if (!(AgentPoolProfiles is ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("agentPoolProfiles"u8);
                 writer.WriteStartArray();

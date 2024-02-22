@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("wrapped"u8);
                 writer.WriteBooleanValue(IsWrapped.Value);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();

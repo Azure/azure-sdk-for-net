@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("maximumServerCount"u8);
                 writer.WriteNumberValue(MaximumServerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVersions))
+            if (options.Format != "W" && !(SupportedVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();

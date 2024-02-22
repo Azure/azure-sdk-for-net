@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(WindowEnd, "O");
             writer.WritePropertyName("windowStart"u8);
             writer.WriteStringValue(WindowStart, "O");
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Columns != null)
                 {

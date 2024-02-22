@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("networkServiceDesignVersionResourceReference"u8);
                 writer.WriteObjectValue(NetworkServiceDesignVersionResourceReference);
             }
-            if (Optional.IsCollectionDefined(DesiredStateConfigurationGroupValueReferences))
+            if (!(DesiredStateConfigurationGroupValueReferences is ChangeTrackingDictionary<string, WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("desiredStateConfigurationGroupValueReferences"u8);
                 writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("lastStateNetworkServiceDesignVersionName"u8);
                 writer.WriteStringValue(LastStateNetworkServiceDesignVersionName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LastStateConfigurationGroupValueReferences))
+            if (options.Format != "W" && !(LastStateConfigurationGroupValueReferences is ChangeTrackingDictionary<string, WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("lastStateConfigurationGroupValueReferences"u8);
                 writer.WriteStartObject();

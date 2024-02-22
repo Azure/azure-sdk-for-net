@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("operatorParams"u8);
                 writer.WriteStringValue(OperatorParams);
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationProtectedSettings"u8);
                 writer.WriteStartObject();

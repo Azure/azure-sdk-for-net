@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
+            if (!(AllowedTrainingAlgorithms is ChangeTrackingList<ClassificationModel> collection && collection.IsUndefined))
             {
                 if (AllowedTrainingAlgorithms != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("allowedTrainingAlgorithms");
                 }
             }
-            if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
+            if (!(BlockedTrainingAlgorithms is ChangeTrackingList<ClassificationModel> collection0 && collection0.IsUndefined))
             {
                 if (BlockedTrainingAlgorithms != null)
                 {

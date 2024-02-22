@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("adminAction"u8);
                 writer.WriteStringValue(AdminAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ApprovedPlans))
+            if (!(ApprovedPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("approvedPlans"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("administrator"u8);
                 writer.WriteStringValue(Administrator);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Plans))
+            if (options.Format != "W" && !(Plans is ChangeTrackingList<PlanRequesterDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CollectionIds))
+            if (!(CollectionIds is ChangeTrackingList<Guid> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();

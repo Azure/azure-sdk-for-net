@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("sharedGalleryId"u8);
                 writer.WriteStringValue(SharedGalleryId);
             }
-            if (Optional.IsCollectionDefined(AvailableRegions))
+            if (!(AvailableRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availableRegions"u8);
                 writer.WriteStartArray();

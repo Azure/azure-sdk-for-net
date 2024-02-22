@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(CvSplitColumnNames))
+            if (!(CvSplitColumnNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (CvSplitColumnNames != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nCrossValidations");
                 }
             }
-            if (Optional.IsCollectionDefined(SearchSpace))
+            if (!(SearchSpace is ChangeTrackingList<TableParameterSubspace> collection0 && collection0.IsUndefined))
             {
                 if (SearchSpace != null)
                 {

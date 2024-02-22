@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("componentId"u8);
             writer.WriteStringValue(ComponentId);
-            if (Optional.IsCollectionDefined(InputAssets))
+            if (!(InputAssets is ChangeTrackingDictionary<string, MonitoringInputDataBase> collection && collection.IsUndefined))
             {
                 if (InputAssets != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputAssets");
                 }
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingDictionary<string, MachineLearningJobInput> collection0 && collection0.IsUndefined))
             {
                 if (Inputs != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Properties != null)
                 {

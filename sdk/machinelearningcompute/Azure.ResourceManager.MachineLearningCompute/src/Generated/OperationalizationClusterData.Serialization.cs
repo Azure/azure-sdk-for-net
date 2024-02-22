@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
+            if (options.Format != "W" && !(ProvisioningErrors is ChangeTrackingList<ErrorResponseWrapper> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("provisioningErrors"u8);
                 writer.WriteStartArray();

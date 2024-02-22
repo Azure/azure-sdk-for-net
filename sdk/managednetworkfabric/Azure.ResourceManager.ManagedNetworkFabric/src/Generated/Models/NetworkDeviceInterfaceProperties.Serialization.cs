@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("interfaceType"u8);
                 writer.WriteStringValue(InterfaceType);
             }
-            if (Optional.IsCollectionDefined(SupportedConnectorTypes))
+            if (!(SupportedConnectorTypes is ChangeTrackingList<SupportedConnectorProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedConnectorTypes"u8);
                 writer.WriteStartArray();

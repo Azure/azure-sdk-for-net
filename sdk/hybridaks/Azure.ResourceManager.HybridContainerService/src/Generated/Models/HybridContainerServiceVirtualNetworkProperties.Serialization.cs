@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("infraVnetProfile"u8);
                 writer.WriteObjectValue(InfraVnetProfile);
             }
-            if (Optional.IsCollectionDefined(VipPool))
+            if (!(VipPool is ChangeTrackingList<KubernetesVirtualIPItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vipPool"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmipPool))
+            if (!(VmipPool is ChangeTrackingList<VirtualMachineIPItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vmipPool"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();

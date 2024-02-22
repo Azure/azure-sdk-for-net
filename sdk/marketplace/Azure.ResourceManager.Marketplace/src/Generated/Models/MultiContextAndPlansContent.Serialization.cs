@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PlansContext))
+            if (!(PlansContext is ChangeTrackingList<ContextAndPlansDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plansContext"u8);
                 writer.WriteStartArray();

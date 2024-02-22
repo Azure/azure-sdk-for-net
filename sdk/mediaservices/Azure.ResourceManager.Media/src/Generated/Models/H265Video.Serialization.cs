@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Layers))
+            if (!(Layers is ChangeTrackingList<H265Layer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();

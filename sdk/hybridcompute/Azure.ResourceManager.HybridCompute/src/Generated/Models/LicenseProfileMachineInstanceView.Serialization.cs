@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ProductFeatures))
+            if (!(ProductFeatures is ChangeTrackingList<HybridComputeProductFeature> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("productFeatures"u8);
                 writer.WriteStartArray();

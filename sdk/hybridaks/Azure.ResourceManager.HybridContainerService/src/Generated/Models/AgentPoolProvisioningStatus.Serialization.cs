@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsCollectionDefined(ReadyReplicas))
+            if (!(ReadyReplicas is ChangeTrackingList<AgentPoolUpdateProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("readyReplicas"u8);
                 writer.WriteStartArray();

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
-            if (Optional.IsCollectionDefined(DelegatedRoleDefinitionIds))
+            if (!(DelegatedRoleDefinitionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delegatedRoleDefinitionIds"u8);
                 writer.WriteStartArray();

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("removeOffer"u8);
                 writer.WriteBooleanValue(IsRemoveOfferActionFlagEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AddPlans))
+            if (!(AddPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addPlans"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RemovePlans))
+            if (!(RemovePlans is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("removePlans"u8);
                 writer.WriteStartArray();

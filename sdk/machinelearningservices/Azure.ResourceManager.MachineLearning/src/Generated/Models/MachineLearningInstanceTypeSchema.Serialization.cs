@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NodeSelector))
+            if (!(NodeSelector is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (NodeSelector != null)
                 {
