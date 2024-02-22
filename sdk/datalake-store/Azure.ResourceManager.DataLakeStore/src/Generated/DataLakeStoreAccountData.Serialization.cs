@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WritePropertyName("encryptionProvisioningState"u8);
                 writer.WriteStringValue(EncryptionProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FirewallRules))
+            if (options.Format != "W" && !(FirewallRules is ChangeTrackingList<DataLakeStoreFirewallRuleData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (options.Format != "W" && !(VirtualNetworkRules is ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TrustedIdProviders))
+            if (options.Format != "W" && !(TrustedIdProviders is ChangeTrackingList<DataLakeStoreTrustedIdProviderData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("trustedIdProviders"u8);
                 writer.WriteStartArray();

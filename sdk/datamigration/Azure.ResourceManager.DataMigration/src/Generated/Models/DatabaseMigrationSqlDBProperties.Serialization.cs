@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("offlineConfiguration"u8);
                 writer.WriteObjectValue(OfflineConfiguration);
             }
-            if (Optional.IsCollectionDefined(TableList))
+            if (!(TableList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tableList"u8);
                 writer.WriteStartArray();

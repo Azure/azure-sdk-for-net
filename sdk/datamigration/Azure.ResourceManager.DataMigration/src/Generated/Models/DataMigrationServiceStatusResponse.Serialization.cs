@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsCollectionDefined(SupportedTaskTypes))
+            if (!(SupportedTaskTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedTaskTypes"u8);
                 writer.WriteStartArray();

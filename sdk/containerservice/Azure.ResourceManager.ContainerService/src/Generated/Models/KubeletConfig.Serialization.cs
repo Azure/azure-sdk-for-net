@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("topologyManagerPolicy"u8);
                 writer.WriteStringValue(TopologyManagerPolicy);
             }
-            if (Optional.IsCollectionDefined(AllowedUnsafeSysctls))
+            if (!(AllowedUnsafeSysctls is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedUnsafeSysctls"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("lookBackUnitType"u8);
                 writer.WriteStringValue(LookBackUnitType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UsageData))
+            if (options.Format != "W" && !(UsageData is ChangeTrackingList<float> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("usageData"u8);
                 writer.WriteStartArray();

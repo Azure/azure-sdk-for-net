@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("searchFilterTemplate"u8);
                 writer.WriteStringValue(SearchFilterTemplate);
             }
-            if (Optional.IsCollectionDefined(ServerCertificates))
+            if (!(ServerCertificates is ChangeTrackingList<CassandraCertificate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serverCertificates"u8);
                 writer.WriteStartArray();

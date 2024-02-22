@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(VmPlacementResults))
+            if (!(VmPlacementResults is ChangeTrackingList<VmPlacementRequestResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmPlacementResults"u8);
                 writer.WriteStartArray();

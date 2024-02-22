@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("azureFileFilterDetails"u8);
                 writer.WriteObjectValue(AzureFileFilterDetails);
             }
-            if (Optional.IsCollectionDefined(FilterFileDetails))
+            if (!(FilterFileDetails is ChangeTrackingList<FilterFileDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filterFileDetails"u8);
                 writer.WriteStartArray();

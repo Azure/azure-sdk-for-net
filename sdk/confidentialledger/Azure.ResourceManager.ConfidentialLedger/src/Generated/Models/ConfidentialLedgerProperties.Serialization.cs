@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
+            if (!(AadBasedSecurityPrincipals is ChangeTrackingList<AadBasedSecurityPrincipal> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aadBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CertBasedSecurityPrincipals))
+            if (!(CertBasedSecurityPrincipals is ChangeTrackingList<CertBasedSecurityPrincipal> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("certBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ContactRoles))
+            if (!(ContactRoles is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContactGroups))
+            if (!(ContactGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();

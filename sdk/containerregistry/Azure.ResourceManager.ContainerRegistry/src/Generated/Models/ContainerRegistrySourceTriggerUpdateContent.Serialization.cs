@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("sourceRepository"u8);
                 writer.WriteObjectValue(SourceRepository);
             }
-            if (Optional.IsCollectionDefined(SourceTriggerEvents))
+            if (!(SourceTriggerEvents is ChangeTrackingList<ContainerRegistrySourceTriggerEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceTriggerEvents"u8);
                 writer.WriteStartArray();

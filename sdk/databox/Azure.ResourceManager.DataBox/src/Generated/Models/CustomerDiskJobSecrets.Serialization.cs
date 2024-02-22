@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DiskSecrets))
+            if (options.Format != "W" && !(DiskSecrets is ChangeTrackingList<DataBoxDiskSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskSecrets"u8);
                 writer.WriteStartArray();

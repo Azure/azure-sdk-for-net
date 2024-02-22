@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("totalNegatives"u8);
                 writer.WriteNumberValue(TotalNegatives.Value);
             }
-            if (Optional.IsCollectionDefined(Distributions))
+            if (!(Distributions is ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("distributions"u8);
                 writer.WriteStartArray();

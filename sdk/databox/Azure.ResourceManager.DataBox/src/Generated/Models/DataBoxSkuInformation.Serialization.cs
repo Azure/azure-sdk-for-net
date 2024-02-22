@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataLocationToServiceLocationMap))
+            if (options.Format != "W" && !(DataLocationToServiceLocationMap is ChangeTrackingList<DataLocationToServiceLocationMap> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataLocationToServiceLocationMap"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
+            if (options.Format != "W" && !(Costs is ChangeTrackingList<DataBoxSkuCost> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
+            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("requiredFeature"u8);
                 writer.WriteStringValue(RequiredFeature);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CountriesWithinCommerceBoundary))
+            if (options.Format != "W" && !(CountriesWithinCommerceBoundary is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("countriesWithinCommerceBoundary"u8);
                 writer.WriteStartArray();

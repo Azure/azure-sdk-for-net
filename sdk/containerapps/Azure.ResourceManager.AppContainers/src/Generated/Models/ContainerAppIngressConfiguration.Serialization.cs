@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Traffic))
+            if (!(Traffic is ChangeTrackingList<ContainerAppRevisionTrafficWeight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("traffic"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomDomains))
+            if (!(CustomDomains is ChangeTrackingList<ContainerAppCustomDomain> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("allowInsecure"u8);
                 writer.WriteBooleanValue(AllowInsecure.Value);
             }
-            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
+            if (!(IPSecurityRestrictions is ChangeTrackingList<ContainerAppIPSecurityRestrictionRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipSecurityRestrictions"u8);
                 writer.WriteStartArray();

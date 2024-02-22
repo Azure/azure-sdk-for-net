@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("secureScore"u8);
                 writer.WriteStringValue(SecureScore.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ReplicatedRegions))
+            if (!(ReplicatedRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replicatedRegions"u8);
                 writer.WriteStartArray();

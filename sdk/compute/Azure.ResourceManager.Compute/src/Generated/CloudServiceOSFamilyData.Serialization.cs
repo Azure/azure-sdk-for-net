@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Versions))
+            if (options.Format != "W" && !(Versions is ChangeTrackingList<OSVersionPropertiesBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartArray();

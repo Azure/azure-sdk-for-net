@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Attributes))
+            if (!(Attributes is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(LocalizedAttributes))
+            if (!(LocalizedAttributes is ChangeTrackingDictionary<string, IDictionary<string, string>> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("localizedAttributes"u8);
                 writer.WriteStartObject();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Fields))
+            if (!(Fields is ChangeTrackingList<PropertyDefinition> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (Optional.IsCollectionDefined(StrongIds))
+            if (!(StrongIds is ChangeTrackingList<StrongId> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("strongIds"u8);
                 writer.WriteStartArray();

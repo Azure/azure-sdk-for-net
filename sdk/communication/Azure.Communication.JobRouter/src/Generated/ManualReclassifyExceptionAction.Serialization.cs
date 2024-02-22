@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(WorkerSelectors))
+            if (!(WorkerSelectors is ChangeTrackingList<RouterWorkerSelector> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();

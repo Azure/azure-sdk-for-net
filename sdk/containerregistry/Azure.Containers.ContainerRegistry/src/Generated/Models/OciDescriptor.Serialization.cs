@@ -32,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
-            if (Optional.IsCollectionDefined(Urls))
+            if (!(Urls is ChangeTrackingList<Uri> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupFiles))
+            if (options.Format != "W" && !(BackupFiles is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupFiles"u8);
                 writer.WriteStartArray();

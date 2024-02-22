@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("interactionName"u8);
                 writer.WriteStringValue(InteractionName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SuggestedRelationships))
+            if (options.Format != "W" && !(SuggestedRelationships is ChangeTrackingList<RelationshipsLookup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("suggestedRelationships"u8);
                 writer.WriteStartArray();

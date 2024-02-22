@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (Optional.IsCollectionDefined(_labelsToUpsert))
+            if (!(_labelsToUpsert is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labelsToUpsert"u8);
                 writer.WriteStartObject();

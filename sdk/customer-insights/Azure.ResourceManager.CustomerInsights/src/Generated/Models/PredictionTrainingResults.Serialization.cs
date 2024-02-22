@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("predictionDistribution"u8);
                 writer.WriteObjectValue(PredictionDistribution);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CanonicalProfiles))
+            if (options.Format != "W" && !(CanonicalProfiles is ChangeTrackingList<CanonicalProfileDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("canonicalProfiles"u8);
                 writer.WriteStartArray();

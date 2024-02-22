@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("restorePointCollectionId"u8);
                 writer.WriteStringValue(RestorePointGroupId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RestorePoints))
+            if (options.Format != "W" && !(RestorePoints is ChangeTrackingList<RestorePointData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("restorePoints"u8);
                 writer.WriteStartArray();

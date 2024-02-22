@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("distributionPolicyId"u8);
                 writer.WriteStringValue(DistributionPolicyId);
             }
-            if (Optional.IsCollectionDefined(_labels))
+            if (!(_labels is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();

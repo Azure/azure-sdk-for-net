@@ -29,7 +29,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("number"u8);
                 writer.WriteStringValue(Number);
             }
-            if (Optional.IsCollectionDefined(ReviewNotes))
+            if (!(ReviewNotes is ChangeTrackingList<ReviewNote> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reviewNotes"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Costs))
+            if (!(Costs is ChangeTrackingList<ShortCodeCost> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();

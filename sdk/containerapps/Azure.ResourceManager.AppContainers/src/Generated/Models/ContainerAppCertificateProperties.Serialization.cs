@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SubjectAlternativeNames))
+            if (options.Format != "W" && !(SubjectAlternativeNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();

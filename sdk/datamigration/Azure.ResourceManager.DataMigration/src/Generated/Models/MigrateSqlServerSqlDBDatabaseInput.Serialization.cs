@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("makeSourceDbReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceDBReadOnly.Value);
             }
-            if (Optional.IsCollectionDefined(TableMap))
+            if (!(TableMap is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();

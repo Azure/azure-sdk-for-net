@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CalculatedSavings))
+            if (!(CalculatedSavings is ChangeTrackingList<ConsumptionCalculatedSavingsProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("calculatedSavings"u8);
                 writer.WriteStartArray();

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("currentStatus"u8);
                 writer.WriteObjectValue(CurrentStatus);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrderHistory))
+            if (options.Format != "W" && !(OrderHistory is ChangeTrackingList<DataBoxEdgeOrderStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orderHistory"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DeliveryTrackingInfo))
+            if (options.Format != "W" && !(DeliveryTrackingInfo is ChangeTrackingList<DataBoxEdgeTrackingInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("deliveryTrackingInfo"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReturnTrackingInfo))
+            if (options.Format != "W" && !(ReturnTrackingInfo is ChangeTrackingList<DataBoxEdgeTrackingInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("returnTrackingInfo"u8);
                 writer.WriteStartArray();

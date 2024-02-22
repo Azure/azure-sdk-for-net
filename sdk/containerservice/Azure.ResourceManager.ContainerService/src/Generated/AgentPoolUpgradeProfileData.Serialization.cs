@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStringValue(KubernetesVersion);
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (!(Upgrades is ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();

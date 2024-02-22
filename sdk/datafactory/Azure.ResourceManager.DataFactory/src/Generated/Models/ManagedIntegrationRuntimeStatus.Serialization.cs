@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && !(Nodes is ChangeTrackingList<ManagedIntegrationRuntimeNode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OtherErrors))
+            if (options.Format != "W" && !(OtherErrors is ChangeTrackingList<ManagedIntegrationRuntimeError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("otherErrors"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("identityServiceUri"u8);
                 writer.WriteStringValue(IdentityServiceUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(MemberIdentityCertificates))
+            if (!(MemberIdentityCertificates is ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("memberIdentityCertificates"u8);
                 writer.WriteStartArray();

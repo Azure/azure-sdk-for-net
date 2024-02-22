@@ -30,7 +30,7 @@ namespace Azure.Communication.Rooms
                 writer.WritePropertyName("pstnDialOutEnabled"u8);
                 writer.WriteBooleanValue(PstnDialOutEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Participants))
+            if (!(Participants is ChangeTrackingDictionary<string, ParticipantProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartObject();

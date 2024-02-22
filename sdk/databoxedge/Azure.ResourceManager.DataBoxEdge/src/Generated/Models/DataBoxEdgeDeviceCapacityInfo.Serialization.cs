@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterComputeCapacityInfo);
             }
-            if (Optional.IsCollectionDefined(NodeCapacityInfos))
+            if (!(NodeCapacityInfos is ChangeTrackingDictionary<string, HostCapacity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodeCapacityInfos"u8);
                 writer.WriteStartObject();

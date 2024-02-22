@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Rules))
+            if (options.Format != "W" && !(Rules is ChangeTrackingList<ContainerServiceTrustedAccessRoleRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

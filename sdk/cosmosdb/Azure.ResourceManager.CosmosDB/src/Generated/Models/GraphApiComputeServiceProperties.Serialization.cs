@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("graphApiComputeEndpoint"u8);
                 writer.WriteStringValue(GraphApiComputeEndpoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<GraphApiComputeRegionalService> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();

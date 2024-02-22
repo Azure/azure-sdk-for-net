@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("sdkVersion"u8);
                 writer.WriteStringValue(SdkVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIds))
+            if (options.Format != "W" && !(PrivateIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateIds"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<ResourceInstanceViewStatus> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

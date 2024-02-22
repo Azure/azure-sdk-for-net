@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreMode"u8);
                 writer.WriteStringValue(RestoreMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DatabasesToRestore))
+            if (!(DatabasesToRestore is ChangeTrackingList<DatabaseRestoreResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databasesToRestore"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(GremlinDatabasesToRestore))
+            if (!(GremlinDatabasesToRestore is ChangeTrackingList<GremlinDatabaseRestoreResourceInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("gremlinDatabasesToRestore"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TablesToRestore))
+            if (!(TablesToRestore is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tablesToRestore"u8);
                 writer.WriteStartArray();

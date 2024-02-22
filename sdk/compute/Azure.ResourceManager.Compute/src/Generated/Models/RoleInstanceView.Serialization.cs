@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("privateId"u8);
                 writer.WriteStringValue(PrivateId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<ResourceInstanceViewStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

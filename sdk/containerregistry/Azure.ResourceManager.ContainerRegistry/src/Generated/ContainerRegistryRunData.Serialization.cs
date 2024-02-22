@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("finishTime"u8);
                 writer.WriteStringValue(FinishOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(OutputImages))
+            if (!(OutputImages is ChangeTrackingList<ContainerRegistryImageDescriptor> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outputImages"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("sourceRegistryAuth"u8);
                 writer.WriteStringValue(SourceRegistryAuth);
             }
-            if (Optional.IsCollectionDefined(CustomRegistries))
+            if (!(CustomRegistries is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartArray();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ListOfBackupFiles))
+            if (options.Format != "W" && !(ListOfBackupFiles is ChangeTrackingList<SqlBackupFileInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("listOfBackupFiles"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("familyCount"u8);
                 writer.WriteNumberValue(FamilyCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IgnoreReasons))
+            if (options.Format != "W" && !(IgnoreReasons is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ignoreReasons"u8);
                 writer.WriteStartArray();

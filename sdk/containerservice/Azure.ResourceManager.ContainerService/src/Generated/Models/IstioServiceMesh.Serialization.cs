@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteObjectValue(CertificateAuthority);
             }
-            if (Optional.IsCollectionDefined(Revisions))
+            if (!(Revisions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("revisions"u8);
                 writer.WriteStartArray();

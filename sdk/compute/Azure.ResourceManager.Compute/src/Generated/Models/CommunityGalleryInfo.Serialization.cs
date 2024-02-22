@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("communityGalleryEnabled"u8);
                 writer.WriteBooleanValue(CommunityGalleryEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicNames))
+            if (options.Format != "W" && !(PublicNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publicNames"u8);
                 writer.WriteStartArray();

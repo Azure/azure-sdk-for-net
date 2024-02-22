@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
                 writer.WriteObjectValue(IotEdgeDeviceDetails);
             }
-            if (Optional.IsCollectionDefined(ShareMappings))
+            if (!(ShareMappings is ChangeTrackingList<DataBoxEdgeMountPointMap> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();

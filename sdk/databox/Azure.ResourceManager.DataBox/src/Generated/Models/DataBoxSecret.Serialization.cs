@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("devicePassword"u8);
                 writer.WriteStringValue(DevicePassword);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkConfigurations))
+            if (options.Format != "W" && !(NetworkConfigurations is ChangeTrackingList<ApplianceNetworkConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkConfigurations"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("encodedValidationCertPubKey"u8);
                 writer.WriteStringValue(EncodedValidationCertPubKey);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AccountCredentialDetails))
+            if (options.Format != "W" && !(AccountCredentialDetails is ChangeTrackingList<DataBoxAccountCredentialDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("accountCredentialDetails"u8);
                 writer.WriteStartArray();

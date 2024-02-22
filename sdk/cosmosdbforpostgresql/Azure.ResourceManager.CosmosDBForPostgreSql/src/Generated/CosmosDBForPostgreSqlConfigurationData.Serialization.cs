@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("requiresRestart"u8);
                 writer.WriteBooleanValue(IsRestartRequired.Value);
             }
-            if (Optional.IsCollectionDefined(ServerRoleGroupConfigurations))
+            if (!(ServerRoleGroupConfigurations is ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serverRoleGroupConfigurations"u8);
                 writer.WriteStartArray();

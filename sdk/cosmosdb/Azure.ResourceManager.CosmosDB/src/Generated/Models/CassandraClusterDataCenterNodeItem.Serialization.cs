@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("load"u8);
                 writer.WriteStringValue(Load);
             }
-            if (Optional.IsCollectionDefined(Tokens))
+            if (!(Tokens is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tokens"u8);
                 writer.WriteStartArray();

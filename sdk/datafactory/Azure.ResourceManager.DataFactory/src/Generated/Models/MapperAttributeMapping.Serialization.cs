@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("attributeReference"u8);
                 writer.WriteObjectValue(AttributeReference);
             }
-            if (Optional.IsCollectionDefined(AttributeReferences))
+            if (!(AttributeReferences is ChangeTrackingList<MapperAttributeReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attributeReferences"u8);
                 writer.WriteStartArray();

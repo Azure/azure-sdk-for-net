@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailablePatches))
+            if (options.Format != "W" && !(AvailablePatches is ChangeTrackingList<VirtualMachineSoftwarePatchProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availablePatches"u8);
                 writer.WriteStartArray();

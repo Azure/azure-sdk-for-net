@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("vmAgentVersion"u8);
                 writer.WriteStringValue(VmAgentVersion);
             }
-            if (Optional.IsCollectionDefined(ExtensionHandlers))
+            if (!(ExtensionHandlers is ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensionHandlers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

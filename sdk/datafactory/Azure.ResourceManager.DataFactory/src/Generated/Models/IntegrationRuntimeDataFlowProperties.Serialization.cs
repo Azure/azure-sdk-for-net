@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(ShouldCleanupAfterTtl.Value);
             }
-            if (Optional.IsCollectionDefined(CustomProperties))
+            if (!(CustomProperties is ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartArray();

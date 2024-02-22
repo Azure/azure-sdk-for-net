@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("allowedPrincipals"u8);
                 writer.WriteObjectValue(AllowedPrincipals);
             }
-            if (Optional.IsCollectionDefined(AllowedApplications))
+            if (!(AllowedApplications is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedApplications"u8);
                 writer.WriteStartArray();

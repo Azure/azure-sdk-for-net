@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();

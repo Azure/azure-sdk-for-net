@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsCollectionDefined(HttpHeaders))
+            if (!(HttpHeaders is ChangeTrackingList<ContainerAppHttpHeaderInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();

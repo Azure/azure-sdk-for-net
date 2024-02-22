@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ConnectorProperties))
+            if (!(ConnectorProperties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectorProperties"u8);
                 writer.WriteStartObject();

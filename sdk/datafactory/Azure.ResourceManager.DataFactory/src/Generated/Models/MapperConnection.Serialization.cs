@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("isInlineDataset"u8);
                 writer.WriteBooleanValue(IsInlineDataset.Value);
             }
-            if (Optional.IsCollectionDefined(CommonDslConnectorProperties))
+            if (!(CommonDslConnectorProperties is ChangeTrackingList<MapperDslConnectorProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("commonDslConnectorProperties"u8);
                 writer.WriteStartArray();

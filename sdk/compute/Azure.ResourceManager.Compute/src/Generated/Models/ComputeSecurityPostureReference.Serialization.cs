@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(ExcludeExtensions))
+            if (!(ExcludeExtensions is ChangeTrackingList<VirtualMachineExtensionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludeExtensions"u8);
                 writer.WriteStartArray();

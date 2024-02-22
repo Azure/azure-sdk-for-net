@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
             }
-            if (Optional.IsCollectionDefined(WorkloadProfiles))
+            if (!(WorkloadProfiles is ChangeTrackingList<ContainerAppWorkloadProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("workloadProfiles"u8);
                 writer.WriteStartArray();

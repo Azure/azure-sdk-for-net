@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("targetConnectionInfo"u8);
                 writer.WriteObjectValue(TargetConnectionInfo);
             }
-            if (Optional.IsCollectionDefined(DatabasesInfo))
+            if (!(DatabasesInfo is ChangeTrackingList<DatabaseInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("databasesInfo"u8);
                 writer.WriteStartArray();

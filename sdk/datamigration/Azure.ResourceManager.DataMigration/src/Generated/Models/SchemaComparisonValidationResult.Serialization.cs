@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteObjectValue(ValidationErrors);
             }
-            if (Optional.IsCollectionDefined(SourceDatabaseObjectCount))
+            if (!(SourceDatabaseObjectCount is ChangeTrackingDictionary<string, long> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceDatabaseObjectCount"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetDatabaseObjectCount))
+            if (!(TargetDatabaseObjectCount is ChangeTrackingDictionary<string, long> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("targetDatabaseObjectCount"u8);
                 writer.WriteStartObject();

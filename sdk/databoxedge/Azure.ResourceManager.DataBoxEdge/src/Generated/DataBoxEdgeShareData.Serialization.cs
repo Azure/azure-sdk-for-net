@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
-            if (Optional.IsCollectionDefined(UserAccessRights))
+            if (!(UserAccessRights is ChangeTrackingList<UserAccessRight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userAccessRights"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientAccessRights))
+            if (!(ClientAccessRights is ChangeTrackingList<ClientAccessRight> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clientAccessRights"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("refreshDetails"u8);
                 writer.WriteObjectValue(RefreshDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
+            if (options.Format != "W" && !(ShareMappings is ChangeTrackingList<DataBoxEdgeMountPointMap> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
-            if (Optional.IsCollectionDefined(BackupFilePaths))
+            if (!(BackupFilePaths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupFilePaths"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("sendResourceLogs"u8);
                 writer.WriteBooleanValue(SendResourceLogs.Value);
             }
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<FilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();

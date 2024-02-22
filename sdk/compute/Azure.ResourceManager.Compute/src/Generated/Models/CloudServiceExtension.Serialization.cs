@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(RolesAppliedTo))
+            if (!(RolesAppliedTo is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rolesAppliedTo"u8);
                 writer.WriteStartArray();

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(ClusterIdentity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("azurePortalFQDN"u8);
                 writer.WriteStringValue(AzurePortalFqdn);
             }
-            if (Optional.IsCollectionDefined(AgentPoolProfiles))
+            if (!(AgentPoolProfiles is ChangeTrackingList<ManagedClusterAgentPoolProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("agentPoolProfiles"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("servicePrincipalProfile"u8);
                 writer.WriteObjectValue(ServicePrincipalProfile);
             }
-            if (Optional.IsCollectionDefined(AddonProfiles))
+            if (!(AddonProfiles is ChangeTrackingDictionary<string, ManagedClusterAddonProfile> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("addonProfiles"u8);
                 writer.WriteStartObject();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("diskEncryptionSetID"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsCollectionDefined(IdentityProfile))
+            if (!(IdentityProfile is ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("identityProfile"u8);
                 writer.WriteStartObject();
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PrivateLinkResources))
+            if (!(PrivateLinkResources is ChangeTrackingList<ContainerServicePrivateLinkResourceData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("privateLinkResources"u8);
                 writer.WriteStartArray();

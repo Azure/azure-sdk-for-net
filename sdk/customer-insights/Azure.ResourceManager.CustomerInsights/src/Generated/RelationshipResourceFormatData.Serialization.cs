@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("cardinality"u8);
                 writer.WriteStringValue(Cardinality.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("expiryDateTimeUtc"u8);
                 writer.WriteStringValue(ExpiryDateTimeUtc.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Fields))
+            if (!(Fields is ChangeTrackingList<PropertyDefinition> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LookupMappings))
+            if (!(LookupMappings is ChangeTrackingList<RelationshipTypeMapping> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("lookupMappings"u8);
                 writer.WriteStartArray();

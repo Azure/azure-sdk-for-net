@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("ipv6LinkLocalAddress"u8);
                 writer.WriteStringValue(IPv6LinkLocalAddress);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DnsServers))
+            if (options.Format != "W" && !(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();

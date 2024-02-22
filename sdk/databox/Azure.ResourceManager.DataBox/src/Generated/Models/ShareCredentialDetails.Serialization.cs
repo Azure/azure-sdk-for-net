@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedAccessProtocols))
+            if (options.Format != "W" && !(SupportedAccessProtocols is ChangeTrackingList<DataBoxAccessProtocol> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedAccessProtocols"u8);
                 writer.WriteStartArray();

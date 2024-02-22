@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Optional.IsCollectionDefined(AdvancedSettings))
+            if (!(AdvancedSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("advancedSettings"u8);
                 writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("enableHealthCheck"u8);
                 writer.WriteBooleanValue(EnableHealthCheck.Value);
             }
-            if (Optional.IsCollectionDefined(CustomActions))
+            if (!(CustomActions is ChangeTrackingList<GalleryApplicationCustomAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TargetRegions))
+            if (!(TargetRegions is ChangeTrackingList<TargetRegion> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TargetExtendedLocations))
+            if (!(TargetExtendedLocations is ChangeTrackingList<GalleryTargetExtendedLocation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();

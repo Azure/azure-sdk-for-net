@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExcludeDisks))
+            if (!(ExcludeDisks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludeDisks"u8);
                 writer.WriteStartArray();

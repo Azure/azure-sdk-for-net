@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("inProgressInstallJobStartedDateTime"u8);
                 writer.WriteStringValue(InProgressInstallJobStartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UpdateTitles))
+            if (options.Format != "W" && !(UpdateTitles is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("updateTitles"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Updates))
+            if (options.Format != "W" && !(Updates is ChangeTrackingList<DataBoxEdgeUpdateDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("updates"u8);
                 writer.WriteStartArray();

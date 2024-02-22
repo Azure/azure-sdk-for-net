@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("deviceHcsVersion"u8);
                 writer.WriteStringValue(DeviceHcsVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfiguredRoleTypes))
+            if (options.Format != "W" && !(ConfiguredRoleTypes is ChangeTrackingList<DataBoxEdgeRoleType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configuredRoleTypes"u8);
                 writer.WriteStartArray();

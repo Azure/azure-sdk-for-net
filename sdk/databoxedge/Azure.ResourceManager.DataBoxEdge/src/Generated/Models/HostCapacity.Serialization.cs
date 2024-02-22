@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("availableGpuCount"u8);
                 writer.WriteNumberValue(AvailableGpuCount.Value);
             }
-            if (Optional.IsCollectionDefined(VmUsedMemory))
+            if (!(VmUsedMemory is ChangeTrackingDictionary<string, DataBoxEdgeVmMemory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmUsedMemory"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
-            if (Optional.IsCollectionDefined(NumaNodesData))
+            if (!(NumaNodesData is ChangeTrackingList<NumaNodeInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("numaNodesData"u8);
                 writer.WriteStartArray();

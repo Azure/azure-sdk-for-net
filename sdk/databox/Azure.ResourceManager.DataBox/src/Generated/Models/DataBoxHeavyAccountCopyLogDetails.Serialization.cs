@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogLink))
+            if (options.Format != "W" && !(CopyLogLink is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("copyLogLink"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CopyVerboseLogLink))
+            if (options.Format != "W" && !(CopyVerboseLogLink is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("copyVerboseLogLink"u8);
                 writer.WriteStartArray();

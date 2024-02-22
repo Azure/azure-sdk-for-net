@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("assignmentName"u8);
                 writer.WriteStringValue(AssignmentName);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Principals))
+            if (!(Principals is ChangeTrackingList<AssignmentPrincipal> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("principals"u8);
                 writer.WriteStartArray();

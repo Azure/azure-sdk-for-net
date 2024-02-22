@@ -21,7 +21,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("contentCategory"u8);
                 writer.WriteStringValue(ContentCategory.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Examples))
+            if (!(Examples is ChangeTrackingList<MessageExampleSequence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartArray();

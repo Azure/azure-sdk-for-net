@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AuthorizedIPRanges))
+            if (!(AuthorizedIPRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizedIPRanges"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("maxExecutions"u8);
                 writer.WriteNumberValue(MaxExecutions.Value);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<ContainerAppJobScaleRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
                 writer.WriteObjectValue(LastRestoredBackupSetInfo);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
+            if (options.Format != "W" && !(ActiveBackupSets is ChangeTrackingList<SqlBackupSetInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activeBackupSets"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InvalidFiles))
+            if (options.Format != "W" && !(InvalidFiles is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("invalidFiles"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("completeRestoreErrorMessage"u8);
                 writer.WriteStringValue(CompleteRestoreErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FileUploadBlockingErrors))
+            if (options.Format != "W" && !(FileUploadBlockingErrors is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("fileUploadBlockingErrors"u8);
                 writer.WriteStartArray();

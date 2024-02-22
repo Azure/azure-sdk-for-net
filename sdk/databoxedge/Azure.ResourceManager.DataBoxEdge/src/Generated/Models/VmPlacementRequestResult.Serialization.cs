@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VmSize))
+            if (!(VmSize is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStartArray();

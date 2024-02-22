@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("resultPrefix"u8);
                 writer.WriteStringValue(ResultPrefix);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();

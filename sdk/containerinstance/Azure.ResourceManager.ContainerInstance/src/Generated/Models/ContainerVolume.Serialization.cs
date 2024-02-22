@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Secret))
+            if (!(Secret is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStartObject();

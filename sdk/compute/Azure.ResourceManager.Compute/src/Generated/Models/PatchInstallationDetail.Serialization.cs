@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("kbId"u8);
                 writer.WriteStringValue(KbId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Classifications))
+            if (options.Format != "W" && !(Classifications is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();

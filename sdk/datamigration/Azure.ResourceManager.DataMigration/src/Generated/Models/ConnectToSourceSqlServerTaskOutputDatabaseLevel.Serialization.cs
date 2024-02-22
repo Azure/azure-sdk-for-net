@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("sizeMB"u8);
                 writer.WriteNumberValue(SizeMB.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DatabaseFiles))
+            if (options.Format != "W" && !(DatabaseFiles is ChangeTrackingList<DatabaseFileInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databaseFiles"u8);
                 writer.WriteStartArray();
