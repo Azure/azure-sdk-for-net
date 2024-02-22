@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="sessionId">The new session ID. Null if the session has stopped.</param>
-        private void OnSessionIdChanged(object sender, string? sessionId)
+        private void OnSessionIdChanged(object? sender, string? sessionId)
         {
             // We don't write the resource attributes here because this may be
             // called early in startup, before the ParentProvider has been
