@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("automaticResolution"u8);
                 writer.WriteObjectValue(AutomaticResolution);
             }
-            if (Optional.IsDefined(IsOptional))
+            if (Optional.IsDefined(IsDependencyOptional))
             {
                 writer.WritePropertyName("isOptional"u8);
-                writer.WriteBooleanValue(IsOptional.Value);
+                writer.WriteStringValue(IsDependencyOptional);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<MoverDependencyType> dependencyType = default;
             Optional<ManualResolutionProperties> manualResolution = default;
             Optional<AutomaticResolutionProperties> automaticResolution = default;
-            Optional<bool> isOptional = default;
+            Optional<string> isOptional = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,11 +162,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (property.NameEquals("isOptional"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isOptional = property.Value.GetBoolean();
+                    isOptional = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +171,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Optional.ToNullable(isOptional), serializedAdditionalRawData);
+            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, isOptional.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceDependency>.Write(ModelReaderWriterOptions options)
