@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("creatorRoleAssignment"u8);
                 writer.WriteObjectValue(CreatorRoleAssignment);
             }
-            if (Optional.IsCollectionDefined(UserRoleAssignments))
+            if (!(UserRoleAssignments is ChangeTrackingDictionary<string, DevCenterUserRoleAssignments> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userRoleAssignments"u8);
                 writer.WriteStartObject();

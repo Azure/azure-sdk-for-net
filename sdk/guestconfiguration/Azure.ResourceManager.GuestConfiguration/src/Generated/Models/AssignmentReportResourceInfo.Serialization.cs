@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(AssignmentResourceSettingName);
             }
-            if (Optional.IsCollectionDefined(Reasons))
+            if (!(Reasons is ChangeTrackingList<AssignmentReportResourceComplianceReason> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reasons"u8);
                 writer.WriteStartArray();

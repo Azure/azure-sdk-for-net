@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Backends))
+            if (!(Backends is ChangeTrackingList<FrontDoorBackend> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backends"u8);
                 writer.WriteStartArray();

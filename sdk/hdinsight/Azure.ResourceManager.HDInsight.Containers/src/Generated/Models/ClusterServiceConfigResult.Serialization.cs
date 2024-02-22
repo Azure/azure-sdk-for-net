@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(CustomKeys))
+            if (!(CustomKeys is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customKeys"u8);
                 writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(DefaultKeys))
+            if (!(DefaultKeys is ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("defaultKeys"u8);
                 writer.WriteStartObject();

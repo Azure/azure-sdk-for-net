@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
+            if (!(DeliveryAttributeMappings is ChangeTrackingList<DeliveryAttributeMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();

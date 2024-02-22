@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rights))
+            if (!(Rights is ChangeTrackingList<EventHubsAccessRight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();

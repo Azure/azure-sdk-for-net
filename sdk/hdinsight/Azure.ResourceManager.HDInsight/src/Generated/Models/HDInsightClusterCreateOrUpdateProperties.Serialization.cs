@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("computeIsolationProperties"u8);
                 writer.WriteObjectValue(ComputeIsolationProperties);
             }
-            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            if (!(PrivateLinkConfigurations is ChangeTrackingList<HDInsightPrivateLinkConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();

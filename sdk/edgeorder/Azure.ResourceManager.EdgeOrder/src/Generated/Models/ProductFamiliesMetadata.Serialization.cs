@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteObjectValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
+            if (options.Format != "W" && !(ImageInformation is ChangeTrackingList<EdgeOrderProductImageInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("imageInformation"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("hierarchyInformation"u8);
                 writer.WriteObjectValue(HierarchyInformation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
+            if (options.Format != "W" && !(FilterableProperties is ChangeTrackingList<FilterableProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("filterableProperties"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProductLines))
+            if (options.Format != "W" && !(ProductLines is ChangeTrackingList<ProductLine> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("productLines"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResourceProviderDetails))
+            if (!(ResourceProviderDetails is ChangeTrackingList<ResourceProviderDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("resourceProviderDetails"u8);
                 writer.WriteStartArray();

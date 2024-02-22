@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("numberOfRecordSets"u8);
                 writer.WriteNumberValue(NumberOfRecords.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NameServers))
+            if (options.Format != "W" && !(NameServers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nameServers"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("zoneType"u8);
                 writer.WriteStringValue(ZoneType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(RegistrationVirtualNetworks))
+            if (!(RegistrationVirtualNetworks is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("registrationVirtualNetworks"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResolutionVirtualNetworks))
+            if (!(ResolutionVirtualNetworks is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("resolutionVirtualNetworks"u8);
                 writer.WriteStartArray();

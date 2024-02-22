@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<AssignmentReportResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();

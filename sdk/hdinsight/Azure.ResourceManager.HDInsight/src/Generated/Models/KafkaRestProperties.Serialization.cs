@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("clientGroupInfo"u8);
                 writer.WriteObjectValue(ClientGroupInfo);
             }
-            if (Optional.IsCollectionDefined(ConfigurationOverride))
+            if (!(ConfigurationOverride is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationOverride"u8);
                 writer.WriteStartObject();

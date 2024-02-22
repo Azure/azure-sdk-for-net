@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ActionGroups))
+            if (!(ActionGroups is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();

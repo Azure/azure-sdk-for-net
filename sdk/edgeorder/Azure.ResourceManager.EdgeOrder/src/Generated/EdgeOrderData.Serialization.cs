@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemIds))
+            if (options.Format != "W" && !(OrderItemIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orderItemIds"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 writer.WritePropertyName("currentStage"u8);
                 writer.WriteObjectValue(CurrentStage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrderStageHistory))
+            if (options.Format != "W" && !(OrderStageHistory is ChangeTrackingList<EdgeOrderStageDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("orderStageHistory"u8);
                 writer.WriteStartArray();

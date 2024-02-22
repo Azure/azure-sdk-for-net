@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (Optional.IsCollectionDefined(Evidence))
+            if (!(Evidence is ChangeTrackingList<TrialMatcherInferenceEvidence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthStatusDetails))
+            if (options.Format != "W" && !(HealthStatusDetails is ChangeTrackingList<DevCenterHealthStatusDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthStatusDetails"u8);
                 writer.WriteStartArray();

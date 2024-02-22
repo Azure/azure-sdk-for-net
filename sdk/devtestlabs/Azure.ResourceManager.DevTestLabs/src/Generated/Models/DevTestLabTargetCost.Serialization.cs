@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (Optional.IsCollectionDefined(CostThresholds))
+            if (!(CostThresholds is ChangeTrackingList<DevTestLabCostThreshold> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("costThresholds"u8);
                 writer.WriteStartArray();

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("ruleSetAction"u8);
                 writer.WriteStringValue(RuleSetAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Exclusions))
+            if (!(Exclusions is ChangeTrackingList<ManagedRuleExclusion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RuleGroupOverrides))
+            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverride> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();

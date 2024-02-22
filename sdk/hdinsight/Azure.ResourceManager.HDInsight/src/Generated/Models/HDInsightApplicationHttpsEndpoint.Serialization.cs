@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AccessModes))
+            if (!(AccessModes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("accessModes"u8);
                 writer.WriteStartArray();

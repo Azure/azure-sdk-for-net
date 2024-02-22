@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WritePropertyName("securityDomain"u8);
                 writer.WriteObjectValue(SecurityDomain);
             }
-            if (Optional.IsCollectionDefined(Hsms))
+            if (!(Hsms is ChangeTrackingList<CloudHsmProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hsms"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<HardwareSecurityModulesPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

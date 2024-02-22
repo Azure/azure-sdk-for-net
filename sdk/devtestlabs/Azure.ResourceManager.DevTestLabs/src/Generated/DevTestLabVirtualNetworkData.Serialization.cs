@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedSubnets))
+            if (!(AllowedSubnets is ChangeTrackingList<DevTestLabSubnet> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedSubnets"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("externalProviderResourceId"u8);
                 writer.WriteStringValue(ExternalProviderResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalSubnets))
+            if (options.Format != "W" && !(ExternalSubnets is ChangeTrackingList<DevTestLabExternalSubnet> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("externalSubnets"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubnetOverrides))
+            if (!(SubnetOverrides is ChangeTrackingList<DevTestLabSubnetOverride> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("subnetOverrides"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteBooleanValue(SendActivityLogs.Value);
             }
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<FilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();

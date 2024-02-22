@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Weekdays))
+            if (!(Weekdays is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("weekdays"u8);
                 writer.WriteStartArray();

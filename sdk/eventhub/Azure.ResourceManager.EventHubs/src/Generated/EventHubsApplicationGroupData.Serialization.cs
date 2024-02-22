@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("clientAppGroupIdentifier"u8);
                 writer.WriteStringValue(ClientAppGroupIdentifier);
             }
-            if (Optional.IsCollectionDefined(Policies))
+            if (!(Policies is ChangeTrackingList<EventHubsApplicationGroupPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();

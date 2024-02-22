@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AlternativeAuthenticationNameSources))
+            if (!(AlternativeAuthenticationNameSources is ChangeTrackingList<AlternativeAuthenticationNameSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alternativeAuthenticationNameSources"u8);
                 writer.WriteStartArray();

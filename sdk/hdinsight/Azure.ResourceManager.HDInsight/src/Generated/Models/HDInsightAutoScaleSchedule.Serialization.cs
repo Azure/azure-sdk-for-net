@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Days))
+            if (!(Days is ChangeTrackingList<HDInsightDayOfWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteStartArray();

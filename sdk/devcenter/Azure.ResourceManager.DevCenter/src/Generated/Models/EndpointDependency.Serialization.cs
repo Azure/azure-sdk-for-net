@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointDetails))
+            if (options.Format != "W" && !(EndpointDetails is ChangeTrackingList<DevCenterEndpointDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();

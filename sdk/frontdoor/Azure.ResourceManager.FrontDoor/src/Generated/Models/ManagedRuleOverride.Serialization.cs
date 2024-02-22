@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Exclusions))
+            if (!(Exclusions is ChangeTrackingList<ManagedRuleExclusion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();

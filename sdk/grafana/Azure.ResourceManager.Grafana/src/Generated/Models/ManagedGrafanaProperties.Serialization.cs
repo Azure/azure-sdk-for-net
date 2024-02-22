@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("deterministicOutboundIP"u8);
                 writer.WriteStringValue(DeterministicOutboundIP.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPs))
+            if (options.Format != "W" && !(OutboundIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<GrafanaPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("grafanaConfigurations"u8);
                 writer.WriteObjectValue(GrafanaConfigurations);
             }
-            if (Optional.IsCollectionDefined(GrafanaPlugins))
+            if (!(GrafanaPlugins is ChangeTrackingDictionary<string, GrafanaPlugin> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("grafanaPlugins"u8);
                 writer.WriteStartObject();

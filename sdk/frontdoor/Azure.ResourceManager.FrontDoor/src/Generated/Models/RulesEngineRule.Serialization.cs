@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (Optional.IsCollectionDefined(MatchConditions))
+            if (!(MatchConditions is ChangeTrackingList<RulesEngineMatchCondition> collection && collection.IsUndefined))
             {
                 if (MatchConditions != null)
                 {

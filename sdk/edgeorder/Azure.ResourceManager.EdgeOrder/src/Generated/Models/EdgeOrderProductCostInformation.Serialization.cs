@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(BillingMeterDetails))
+            if (options.Format != "W" && !(BillingMeterDetails is ChangeTrackingList<EdgeOrderProductBillingMeterDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("billingMeterDetails"u8);
                 writer.WriteStartArray();

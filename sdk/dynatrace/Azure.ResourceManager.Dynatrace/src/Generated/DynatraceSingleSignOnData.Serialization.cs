@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dynatrace
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(AadDomains))
+            if (!(AadDomains is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();

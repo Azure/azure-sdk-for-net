@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("labStorageType"u8);
                 writer.WriteStringValue(LabStorageType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsLinux))
+            if (!(MandatoryArtifactsResourceIdsLinux is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("mandatoryArtifactsResourceIdsLinux"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MandatoryArtifactsResourceIdsWindows))
+            if (!(MandatoryArtifactsResourceIdsWindows is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mandatoryArtifactsResourceIdsWindows"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();

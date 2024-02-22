@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (Optional.IsCollectionDefined(PackageDependencies))
+            if (!(PackageDependencies is ChangeTrackingList<MsixPackageDependencies> collection && collection.IsUndefined))
             {
                 if (PackageDependencies != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(PackageApplications))
+            if (!(PackageApplications is ChangeTrackingList<MsixPackageApplications> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("packageApplications"u8);
                 writer.WriteStartArray();

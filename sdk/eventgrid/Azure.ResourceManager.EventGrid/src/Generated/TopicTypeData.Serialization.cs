@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SupportedLocations))
+            if (!(SupportedLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedLocations"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("sourceResourceFormat"u8);
                 writer.WriteStringValue(SourceResourceFormat);
             }
-            if (Optional.IsCollectionDefined(SupportedScopesForSource))
+            if (!(SupportedScopesForSource is ChangeTrackingList<TopicTypeSourceScope> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedScopesForSource"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
                 writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
             }
-            if (Optional.IsCollectionDefined(AdditionalEnforcedPermissions))
+            if (!(AdditionalEnforcedPermissions is ChangeTrackingList<TopicTypeAdditionalEnforcedPermission> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("additionalEnforcedPermissions"u8);
                 writer.WriteStartArray();

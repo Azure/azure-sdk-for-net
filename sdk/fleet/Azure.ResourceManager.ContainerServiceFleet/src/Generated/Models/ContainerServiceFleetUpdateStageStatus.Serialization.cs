@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
+            if (options.Format != "W" && !(Groups is ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();

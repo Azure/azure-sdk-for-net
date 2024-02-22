@@ -47,7 +47,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Paragraphs))
+            if (!(Paragraphs is ChangeTrackingList<DocumentParagraph> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paragraphs"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tables))
+            if (!(Tables is ChangeTrackingList<DocumentTable> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Figures))
+            if (!(Figures is ChangeTrackingList<DocumentFigure> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("figures"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Lists))
+            if (!(Lists is ChangeTrackingList<DocumentList> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("lists"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sections))
+            if (!(Sections is ChangeTrackingList<DocumentSection> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("sections"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KeyValuePairs))
+            if (!(KeyValuePairs is ChangeTrackingList<DocumentKeyValuePair> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("keyValuePairs"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Styles))
+            if (!(Styles is ChangeTrackingList<DocumentStyle> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("styles"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Languages))
+            if (!(Languages is ChangeTrackingList<DocumentLanguage> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("languages"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Documents))
+            if (!(Documents is ChangeTrackingList<AnalyzedDocument> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("documents"u8);
                 writer.WriteStartArray();

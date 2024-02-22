@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InlineEventTypes))
+            if (!(InlineEventTypes is ChangeTrackingDictionary<string, InlineEventProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inlineEventTypes"u8);
                 writer.WriteStartObject();

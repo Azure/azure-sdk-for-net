@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(FieldConfidence))
+            if (!(FieldConfidence is ChangeTrackingDictionary<string, float> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldConfidence"u8);
                 writer.WriteStartObject();

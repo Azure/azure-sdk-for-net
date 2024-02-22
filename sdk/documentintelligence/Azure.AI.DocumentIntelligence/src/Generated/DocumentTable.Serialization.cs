@@ -38,7 +38,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("caption"u8);
                 writer.WriteObjectValue(Caption);
             }
-            if (Optional.IsCollectionDefined(Footnotes))
+            if (!(Footnotes is ChangeTrackingList<DocumentFootnote> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("footnotes"u8);
                 writer.WriteStartArray();

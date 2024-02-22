@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthChecks))
+            if (options.Format != "W" && !(HealthChecks is ChangeTrackingList<DevCenterHealthCheck> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthChecks"u8);
                 writer.WriteStartArray();

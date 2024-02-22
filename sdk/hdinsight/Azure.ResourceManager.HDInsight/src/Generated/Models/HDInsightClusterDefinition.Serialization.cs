@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(ComponentVersion))
+            if (!(ComponentVersion is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("componentVersion"u8);
                 writer.WriteStartObject();

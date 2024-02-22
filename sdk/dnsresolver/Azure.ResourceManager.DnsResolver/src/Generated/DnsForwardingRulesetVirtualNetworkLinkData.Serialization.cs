@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetwork"u8);
             JsonSerializer.Serialize(writer, VirtualNetwork);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

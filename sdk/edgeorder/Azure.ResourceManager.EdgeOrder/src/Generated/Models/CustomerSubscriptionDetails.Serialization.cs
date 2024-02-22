@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RegisteredFeatures))
+            if (!(RegisteredFeatures is ChangeTrackingList<CustomerSubscriptionRegisteredFeatures> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("registeredFeatures"u8);
                 writer.WriteStartArray();

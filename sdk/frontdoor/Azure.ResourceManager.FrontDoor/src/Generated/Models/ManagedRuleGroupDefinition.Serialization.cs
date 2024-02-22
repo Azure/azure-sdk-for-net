@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Rules))
+            if (options.Format != "W" && !(Rules is ChangeTrackingList<ManagedRuleDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

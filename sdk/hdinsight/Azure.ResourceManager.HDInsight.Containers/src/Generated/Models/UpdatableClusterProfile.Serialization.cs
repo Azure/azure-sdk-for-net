@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
+            if (!(ServiceConfigsProfiles is ChangeTrackingList<ClusterServiceConfigsProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceConfigsProfiles"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("prometheusProfile"u8);
                 writer.WriteObjectValue(PrometheusProfile);
             }
-            if (Optional.IsCollectionDefined(ScriptActionProfiles))
+            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();

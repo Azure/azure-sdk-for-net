@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Members))
+            if (options.Format != "W" && !(Members is ChangeTrackingList<MemberUpdateStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();

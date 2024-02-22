@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(ClusterVersion);
             writer.WritePropertyName("ossVersion"u8);
             writer.WriteStringValue(OssVersion);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Components))
+            if (options.Format != "W" && !(Components is ChangeTrackingList<ClusterComponentItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("secretsProfile"u8);
                 writer.WriteObjectValue(SecretsProfile);
             }
-            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
+            if (!(ServiceConfigsProfiles is ChangeTrackingList<ClusterServiceConfigsProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceConfigsProfiles"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("autoscaleProfile"u8);
                 writer.WriteObjectValue(AutoscaleProfile);
             }
-            if (Optional.IsCollectionDefined(KafkaProfile))
+            if (!(KafkaProfile is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("kafkaProfile"u8);
                 writer.WriteStartObject();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("trinoProfile"u8);
                 writer.WriteObjectValue(TrinoProfile);
             }
-            if (Optional.IsCollectionDefined(LlapProfile))
+            if (!(LlapProfile is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("llapProfile"u8);
                 writer.WriteStartObject();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("sparkProfile"u8);
                 writer.WriteObjectValue(SparkProfile);
             }
-            if (Optional.IsCollectionDefined(StubProfile))
+            if (!(StubProfile is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("stubProfile"u8);
                 writer.WriteStartObject();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ScriptActionProfiles))
+            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();

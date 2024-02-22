@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("updateErrorMessage"u8);
                 writer.WriteStringValue(UpdateErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SessionHostHealthCheckResults))
+            if (options.Format != "W" && !(SessionHostHealthCheckResults is ChangeTrackingList<SessionHostHealthCheckReport> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sessionHostHealthCheckResults"u8);
                 writer.WriteStartArray();
