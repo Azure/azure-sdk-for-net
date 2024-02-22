@@ -1,5 +1,15 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.2.0 (2024-02-21)
 
 Stable release of the 2023-04-01 api version, specifically for the support of Managed Identity in Azure Communication services.
