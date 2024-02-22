@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AppServicePrivateLinkResourceProperties.DeserializeAppServicePrivateLinkResourceProperties(property.Value, options);
+                    properties = AppServicePrivateLinkResourceProperties.DeserializeAppServicePrivateLinkResourceProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

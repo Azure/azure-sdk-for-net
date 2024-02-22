@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebSiteInstanceStatusData> array = new List<WebSiteInstanceStatusData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebSiteInstanceStatusData.DeserializeWebSiteInstanceStatusData(item, options));
+                        array.Add(WebSiteInstanceStatusData.DeserializeWebSiteInstanceStatusData(item));
                     }
                     value = array;
                     continue;

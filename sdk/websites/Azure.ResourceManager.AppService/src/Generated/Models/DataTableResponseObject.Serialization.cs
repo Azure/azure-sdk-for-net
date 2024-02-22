@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataTableResponseColumn> array = new List<DataTableResponseColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item, options));
+                        array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item));
                     }
                     columns = array;
                     continue;

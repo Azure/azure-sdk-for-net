@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value, options);
+                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value);
                             continue;
                         }
                     }

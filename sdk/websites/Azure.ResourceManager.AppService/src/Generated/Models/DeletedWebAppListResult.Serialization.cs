@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DeletedSiteData> array = new List<DeletedSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedSiteData.DeserializeDeletedSiteData(item, options));
+                        array.Add(DeletedSiteData.DeserializeDeletedSiteData(item));
                     }
                     value = array;
                     continue;

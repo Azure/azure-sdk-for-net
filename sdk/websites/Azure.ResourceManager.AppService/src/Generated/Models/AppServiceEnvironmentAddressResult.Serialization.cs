@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<VirtualIPMapping> array = new List<VirtualIPMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualIPMapping.DeserializeVirtualIPMapping(item, options));
+                                array.Add(VirtualIPMapping.DeserializeVirtualIPMapping(item));
                             }
                             vipMappings = array;
                             continue;

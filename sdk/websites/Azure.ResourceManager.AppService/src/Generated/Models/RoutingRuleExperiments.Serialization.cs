@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<RampUpRule> array = new List<RampUpRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RampUpRule.DeserializeRampUpRule(item, options));
+                        array.Add(RampUpRule.DeserializeRampUpRule(item));
                     }
                     rampUpRules = array;
                     continue;

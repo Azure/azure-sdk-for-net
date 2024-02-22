@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item, options));
+                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
                             }
                             databases = array;
                             continue;

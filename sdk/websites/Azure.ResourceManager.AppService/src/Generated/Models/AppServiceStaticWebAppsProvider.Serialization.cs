@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = AppServiceStaticWebAppsRegistration.DeserializeAppServiceStaticWebAppsRegistration(property.Value, options);
+                    registration = AppServiceStaticWebAppsRegistration.DeserializeAppServiceStaticWebAppsRegistration(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

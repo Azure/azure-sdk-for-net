@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = OpenIdConnectRegistration.DeserializeOpenIdConnectRegistration(property.Value, options);
+                    registration = OpenIdConnectRegistration.DeserializeOpenIdConnectRegistration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = OpenIdConnectLogin.DeserializeOpenIdConnectLogin(property.Value, options);
+                    login = OpenIdConnectLogin.DeserializeOpenIdConnectLogin(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

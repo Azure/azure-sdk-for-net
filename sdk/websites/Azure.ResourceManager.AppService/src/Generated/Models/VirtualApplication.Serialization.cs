@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<VirtualDirectory> array = new List<VirtualDirectory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDirectory.DeserializeVirtualDirectory(item, options));
+                        array.Add(VirtualDirectory.DeserializeVirtualDirectory(item));
                     }
                     virtualDirectories = array;
                     continue;

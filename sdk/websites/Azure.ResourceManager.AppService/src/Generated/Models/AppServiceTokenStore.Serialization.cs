@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    fileSystem = FileSystemTokenStore.DeserializeFileSystemTokenStore(property.Value, options);
+                    fileSystem = FileSystemTokenStore.DeserializeFileSystemTokenStore(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlobStorage"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AppServiceBlobStorageTokenStore.DeserializeAppServiceBlobStorageTokenStore(property.Value, options);
+                    azureBlobStorage = AppServiceBlobStorageTokenStore.DeserializeAppServiceBlobStorageTokenStore(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

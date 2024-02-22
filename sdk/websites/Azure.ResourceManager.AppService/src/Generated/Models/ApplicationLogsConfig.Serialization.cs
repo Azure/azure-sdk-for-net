@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    fileSystem = FileSystemApplicationLogsConfig.DeserializeFileSystemApplicationLogsConfig(property.Value, options);
+                    fileSystem = FileSystemApplicationLogsConfig.DeserializeFileSystemApplicationLogsConfig(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureTableStorage"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureTableStorage = AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(property.Value, options);
+                    azureTableStorage = AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureBlobStorage"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(property.Value, options);
+                    azureBlobStorage = AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

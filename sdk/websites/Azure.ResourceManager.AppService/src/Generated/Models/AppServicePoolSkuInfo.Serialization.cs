@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value, options);
+                    capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

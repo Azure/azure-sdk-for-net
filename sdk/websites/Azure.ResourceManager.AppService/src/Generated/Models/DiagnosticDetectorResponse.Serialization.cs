@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value, options);
+                            detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metrics"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DiagnosticMetricSet> array = new List<DiagnosticMetricSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item, options));
+                                array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item));
                             }
                             metrics = array;
                             continue;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorAbnormalTimePeriod> array = new List<DetectorAbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item, options));
+                                array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item));
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppService.Models
                                     List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                                     foreach (var item0 in item.EnumerateArray())
                                     {
-                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
+                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
                                     }
                                     array.Add(array0);
                                 }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value, options);
+                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value);
                             continue;
                         }
                     }

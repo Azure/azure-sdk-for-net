@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value, options);
+                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateBytesInKB"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StatusCodesBasedTrigger> array = new List<StatusCodesBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item, options));
+                        array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item));
                     }
                     statusCodes = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value, options);
+                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value);
                     continue;
                 }
                 if (property.NameEquals("slowRequestsWithPath"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SlowRequestsBasedTrigger> array = new List<SlowRequestsBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item, options));
+                        array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item));
                     }
                     slowRequestsWithPath = array;
                     continue;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StatusCodesRangeBasedTrigger> array = new List<StatusCodesRangeBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item, options));
+                        array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item));
                     }
                     statusCodesRange = array;
                     continue;

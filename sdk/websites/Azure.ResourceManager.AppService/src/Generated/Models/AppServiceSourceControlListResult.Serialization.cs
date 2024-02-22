@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceSourceControlData> array = new List<AppServiceSourceControlData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceSourceControlData.DeserializeAppServiceSourceControlData(item, options));
+                        array.Add(AppServiceSourceControlData.DeserializeAppServiceSourceControlData(item));
                     }
                     value = array;
                     continue;

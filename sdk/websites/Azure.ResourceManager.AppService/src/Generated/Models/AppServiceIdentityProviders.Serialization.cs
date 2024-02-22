@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value, options);
+                    azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("facebook"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value, options);
+                    facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHub"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value, options);
+                    gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("google"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value, options);
+                    google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("legacyMicrosoftAccount"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value, options);
+                    legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value);
                     continue;
                 }
                 if (property.NameEquals("twitter"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value, options);
+                    twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apple"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value, options);
+                    apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value, options);
+                    azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customOpenIdConnectProviders"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, CustomOpenIdConnectProvider> dictionary = new Dictionary<string, CustomOpenIdConnectProvider>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CustomOpenIdConnectProvider.DeserializeCustomOpenIdConnectProvider(property0.Value, options));
+                        dictionary.Add(property0.Name, CustomOpenIdConnectProvider.DeserializeCustomOpenIdConnectProvider(property0.Value));
                     }
                     customOpenIdConnectProviders = dictionary;
                     continue;

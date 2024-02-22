@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StackMajorVersion> array = new List<StackMajorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StackMajorVersion.DeserializeStackMajorVersion(item, options));
+                        array.Add(StackMajorVersion.DeserializeStackMajorVersion(item));
                     }
                     majorVersions = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStack> array = new List<ApplicationStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeApplicationStack(item, options));
+                        array.Add(DeserializeApplicationStack(item));
                     }
                     frameworks = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStack> array = new List<ApplicationStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeApplicationStack(item, options));
+                        array.Add(DeserializeApplicationStack(item));
                     }
                     isDeprecated = array;
                     continue;

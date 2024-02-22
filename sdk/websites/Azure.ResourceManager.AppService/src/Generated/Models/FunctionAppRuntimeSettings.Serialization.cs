@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    appInsightsSettings = AppInsightsWebAppStackSettings.DeserializeAppInsightsWebAppStackSettings(property.Value, options);
+                    appInsightsSettings = AppInsightsWebAppStackSettings.DeserializeAppInsightsWebAppStackSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHubActionSettings"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    gitHubActionSettings = GitHubActionWebAppStackSettings.DeserializeGitHubActionWebAppStackSettings(property.Value, options);
+                    gitHubActionSettings = GitHubActionWebAppStackSettings.DeserializeGitHubActionWebAppStackSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("appSettingsDictionary"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    siteConfigPropertiesDictionary = SiteConfigPropertiesDictionary.DeserializeSiteConfigPropertiesDictionary(property.Value, options);
+                    siteConfigPropertiesDictionary = SiteConfigPropertiesDictionary.DeserializeSiteConfigPropertiesDictionary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedFunctionsExtensionVersions"u8))

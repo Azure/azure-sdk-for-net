@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    routes = AppServiceHttpSettingsRoutes.DeserializeAppServiceHttpSettingsRoutes(property.Value, options);
+                    routes = AppServiceHttpSettingsRoutes.DeserializeAppServiceHttpSettingsRoutes(property.Value);
                     continue;
                 }
                 if (property.NameEquals("forwardProxy"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    forwardProxy = AppServiceForwardProxy.DeserializeAppServiceForwardProxy(property.Value, options);
+                    forwardProxy = AppServiceForwardProxy.DeserializeAppServiceForwardProxy(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

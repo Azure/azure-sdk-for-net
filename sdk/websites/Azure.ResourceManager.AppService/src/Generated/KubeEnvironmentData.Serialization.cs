@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value, options);
+                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("appLogsConfiguration"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value, options);
+                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("aksResourceID"u8))

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PerfMonSample> array = new List<PerfMonSample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PerfMonSample.DeserializePerfMonSample(item, options));
+                        array.Add(PerfMonSample.DeserializePerfMonSample(item));
                     }
                     values = array;
                     continue;
