@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -32,10 +31,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddressStringValue))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WriteStringValue(PrivateIPAddressStringValue);
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IPAddress> privateIPAddress = default;
+            Optional<string> privateIPAddress = default;
             Optional<string> privateIPAllocationMethod = default;
             Optional<SubnetReferenceInfo> subnet = default;
             Optional<bool> primary = default;
@@ -134,11 +133,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"u8))
