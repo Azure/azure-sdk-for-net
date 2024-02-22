@@ -1,6 +1,6 @@
 
-resource storageAccount_Rx5iuerhh 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: 'photoacct8cb90ee591ac46d'
+resource storageAccount_uVkMHo5HI 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+  name: 'photoacctedca28ca81d643d'
   location: 'westus'
   sku: {
     name: 'Premium_LRS'
@@ -10,12 +10,10 @@ resource storageAccount_Rx5iuerhh 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_RdulWdFAE 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccount_Rx5iuerhh
+resource blobService_z01YdOOpK 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+  parent: storageAccount_uVkMHo5HI
   name: 'default'
   properties: {
-    cors: {
-    }
     deleteRetentionPolicy: {
       enabled: true
     }

@@ -229,7 +229,7 @@ namespace Azure.Provisioning
 
             foreach (var resource in GetResources(false))
             {
-                if (resource is Tenant || resource is Subscription)
+                if (resource is Tenant)
                 {
                     continue;
                 }

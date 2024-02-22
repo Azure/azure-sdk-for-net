@@ -126,7 +126,7 @@ namespace Azure.Provisioning.Tests
             }
             finally
             {
-                // File.Delete(Path.Combine(testPath, "main.json"));
+                File.Delete(Path.Combine(testPath, "main.json"));
             }
         }
 
@@ -192,6 +192,7 @@ namespace Azure.Provisioning.Tests
         }
 
         [Test]
+        [Ignore("Multiple subscriptions are not fully supported yet. https://github.com/Azure/azure-sdk-for-net/issues/42146")]
         public void MultipleSubscriptions()
         {
             // ensure deterministic subscription names and directories

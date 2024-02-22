@@ -6,9 +6,6 @@ param sqlAdminPassword string = 'password'
 @description('Application user password')
 param appUserPassword string = 'password'
 
-@description('')
-param workaround string = '/subscriptions/subscription()/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
-
 
 resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
@@ -80,17 +77,13 @@ resource keyVaultSecret_7eiFxkj0r 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
 resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
-  identity: {
-  }
   kind: 'app,linux'
   properties: {
-    serverFarmId: workaround
+    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
       appCommandLine: './entrypoint.sh -o ./env-config.js && pm2 serve /home/site/wwwroot --no-daemon --spa'
-      experiments: {
-      }
       cors: {
         allowedOrigins: [
           'https://portal.azure.com'
@@ -216,8 +209,6 @@ SCRIPT_END
 resource webSite_4pzZqR2OO 'Microsoft.Web/sites@2021-02-01' = {
   name: 'backEnd-TEST'
   location: 'westus'
-  identity: {
-  }
   kind: 'app,linux'
   properties: {
     serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
@@ -225,8 +216,6 @@ resource webSite_4pzZqR2OO 'Microsoft.Web/sites@2021-02-01' = {
       linuxFxVersion: 'dotnetcore|6.0'
       alwaysOn: true
       appCommandLine: ''
-      experiments: {
-      }
       cors: {
         allowedOrigins: [
           'https://portal.azure.com'

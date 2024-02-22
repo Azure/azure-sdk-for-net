@@ -11,12 +11,19 @@ namespace Azure.Provisioning
         public ModuleConstruct(ModuleResource resource)
             : base(
                 resource.Scope,
-                resource.Resource is Subscription ? resource.Resource.Name : resource.Resource.Id.Name.Replace('-', '_'),
+                GetScopeName(resource.Resource),
                 ResourceToConstructScope(resource.Resource),
                 tenant: GetTenant(resource.Resource),
                 subscription: GetSubscription(resource.Resource),
                 resourceGroup: resource.Resource as ResourceGroup)
         {
+        }
+
+        private static string GetScopeName(Resource resource)
+        {
+            // for subscriptions we cannot use the Id.Name as 
+            var prefix = resource is Subscription ? resource.Name : resource.Id.Name.Replace('-', '_');
+            return $"{prefix}_module";
         }
 
         public bool IsRoot { get; set; }
