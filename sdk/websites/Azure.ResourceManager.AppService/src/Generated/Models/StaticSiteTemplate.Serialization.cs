@@ -156,35 +156,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateRepositoryUri), out propertyOverride);
             if (Optional.IsDefined(TemplateRepositoryUri) || hasPropertyOverride)
             {
-                builder.Append("  templateRepositoryUrl:");
+                builder.Append("  templateRepositoryUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TemplateRepositoryUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{TemplateRepositoryUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Owner), out propertyOverride);
             if (Optional.IsDefined(Owner) || hasPropertyOverride)
             {
-                builder.Append("  owner:");
+                builder.Append("  owner: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Owner.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Owner}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Owner}'");
+                        builder.AppendLine($"'{Owner}'");
                     }
                 }
             }
@@ -192,21 +192,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryName), out propertyOverride);
             if (Optional.IsDefined(RepositoryName) || hasPropertyOverride)
             {
-                builder.Append("  repositoryName:");
+                builder.Append("  repositoryName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (RepositoryName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{RepositoryName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{RepositoryName}'");
+                        builder.AppendLine($"'{RepositoryName}'");
                     }
                 }
             }
@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
             if (Optional.IsDefined(Description) || hasPropertyOverride)
             {
-                builder.Append("  description:");
+                builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Description.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Description}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Description}'");
+                        builder.AppendLine($"'{Description}'");
                     }
                 }
             }
@@ -236,15 +236,15 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPrivate), out propertyOverride);
             if (Optional.IsDefined(IsPrivate) || hasPropertyOverride)
             {
-                builder.Append("  isPrivate:");
+                builder.Append("  isPrivate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsPrivate.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -252,12 +252,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -278,12 +281,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

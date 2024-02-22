@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
             if (Optional.IsDefined(TenantId) || hasPropertyOverride)
             {
-                builder.Append("  tenantId:");
+                builder.Append("  tenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TenantId.Value.ToString()}'");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
                 }
             }
 
@@ -167,18 +167,18 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (UserAssignedIdentities.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  userAssignedIdentities:");
+                    builder.Append("  userAssignedIdentities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" {");
+                        builder.AppendLine("{");
                         foreach (var item in UserAssignedIdentities)
                         {
-                            builder.Append($"    '{item.Key}':");
-                            AppendChildObject(builder, item.Value, options, 4, false);
+                            builder.Append($"    '{item.Key}': ");
+                            AppendChildObject(builder, item.Value, options, 4, false, "  userAssignedIdentities: ");
                         }
                         builder.AppendLine("  }");
                     }
@@ -189,12 +189,15 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -215,12 +218,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

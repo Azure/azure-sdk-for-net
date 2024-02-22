@@ -168,70 +168,70 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutSeconds), out propertyOverride);
             if (Optional.IsDefined(TimeoutSeconds) || hasPropertyOverride)
             {
-                builder.Append("  timeoutSeconds:");
+                builder.Append("  timeoutSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {TimeoutSeconds.Value}");
+                    builder.AppendLine($"{TimeoutSeconds.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryAttempts), out propertyOverride);
             if (Optional.IsDefined(RetryAttempts) || hasPropertyOverride)
             {
-                builder.Append("  retryAttempts:");
+                builder.Append("  retryAttempts: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {RetryAttempts.Value}");
+                    builder.AppendLine($"{RetryAttempts.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialRetryIntervalSeconds), out propertyOverride);
             if (Optional.IsDefined(InitialRetryIntervalSeconds) || hasPropertyOverride)
             {
-                builder.Append("  initialRetryIntervalSeconds:");
+                builder.Append("  initialRetryIntervalSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {InitialRetryIntervalSeconds.Value}");
+                    builder.AppendLine($"{InitialRetryIntervalSeconds.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumRetryIntervalSeconds), out propertyOverride);
             if (Optional.IsDefined(MaximumRetryIntervalSeconds) || hasPropertyOverride)
             {
-                builder.Append("  maximumRetryIntervalSeconds:");
+                builder.Append("  maximumRetryIntervalSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {MaximumRetryIntervalSeconds.Value}");
+                    builder.AppendLine($"{MaximumRetryIntervalSeconds.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryIntervalBackoffMultiplier), out propertyOverride);
             if (Optional.IsDefined(RetryIntervalBackoffMultiplier) || hasPropertyOverride)
             {
-                builder.Append("  retryIntervalBackoffMultiplier:");
+                builder.Append("  retryIntervalBackoffMultiplier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RetryIntervalBackoffMultiplier.Value.ToString()}'");
+                    builder.AppendLine($"'{RetryIntervalBackoffMultiplier.Value.ToString()}'");
                 }
             }
 
@@ -239,12 +239,15 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -265,12 +268,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

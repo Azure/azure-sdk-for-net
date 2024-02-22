@@ -318,21 +318,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -340,28 +340,28 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
             if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
+                builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
@@ -370,92 +370,92 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseType), out propertyOverride);
             if (Optional.IsDefined(DatabaseType) || hasPropertyOverride)
             {
-                builder.Append("    databaseType:");
+                builder.Append("    databaseType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DatabaseType.Value.ToString()}'");
+                    builder.AppendLine($"'{DatabaseType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncAgentId), out propertyOverride);
             if (Optional.IsDefined(SyncAgentId) || hasPropertyOverride)
             {
-                builder.Append("    syncAgentId:");
+                builder.Append("    syncAgentId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SyncAgentId.ToString()}'");
+                    builder.AppendLine($"'{SyncAgentId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlServerDatabaseId), out propertyOverride);
             if (Optional.IsDefined(SqlServerDatabaseId) || hasPropertyOverride)
             {
-                builder.Append("    sqlServerDatabaseId:");
+                builder.Append("    sqlServerDatabaseId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SqlServerDatabaseId.Value.ToString()}'");
+                    builder.AppendLine($"'{SqlServerDatabaseId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncMemberAzureDatabaseResourceId), out propertyOverride);
             if (Optional.IsDefined(SyncMemberAzureDatabaseResourceId) || hasPropertyOverride)
             {
-                builder.Append("    syncMemberAzureDatabaseResourceId:");
+                builder.Append("    syncMemberAzureDatabaseResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SyncMemberAzureDatabaseResourceId.ToString()}'");
+                    builder.AppendLine($"'{SyncMemberAzureDatabaseResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UsePrivateLinkConnection), out propertyOverride);
             if (Optional.IsDefined(UsePrivateLinkConnection) || hasPropertyOverride)
             {
-                builder.Append("    usePrivateLinkConnection:");
+                builder.Append("    usePrivateLinkConnection: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = UsePrivateLinkConnection.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointName), out propertyOverride);
             if (Optional.IsDefined(PrivateEndpointName) || hasPropertyOverride)
             {
-                builder.Append("    privateEndpointName:");
+                builder.Append("    privateEndpointName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PrivateEndpointName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PrivateEndpointName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PrivateEndpointName}'");
+                        builder.AppendLine($"'{PrivateEndpointName}'");
                     }
                 }
             }
@@ -463,21 +463,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
             if (Optional.IsDefined(ServerName) || hasPropertyOverride)
             {
-                builder.Append("    serverName:");
+                builder.Append("    serverName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ServerName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ServerName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ServerName}'");
+                        builder.AppendLine($"'{ServerName}'");
                     }
                 }
             }
@@ -485,21 +485,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
             if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
             {
-                builder.Append("    databaseName:");
+                builder.Append("    databaseName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DatabaseName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DatabaseName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DatabaseName}'");
+                        builder.AppendLine($"'{DatabaseName}'");
                     }
                 }
             }
@@ -507,21 +507,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserName), out propertyOverride);
             if (Optional.IsDefined(UserName) || hasPropertyOverride)
             {
-                builder.Append("    userName:");
+                builder.Append("    userName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (UserName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{UserName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{UserName}'");
+                        builder.AppendLine($"'{UserName}'");
                     }
                 }
             }
@@ -529,21 +529,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
             if (Optional.IsDefined(Password) || hasPropertyOverride)
             {
-                builder.Append("    password:");
+                builder.Append("    password: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Password.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Password}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Password}'");
+                        builder.AppendLine($"'{Password}'");
                     }
                 }
             }
@@ -551,28 +551,28 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncDirection), out propertyOverride);
             if (Optional.IsDefined(SyncDirection) || hasPropertyOverride)
             {
-                builder.Append("    syncDirection:");
+                builder.Append("    syncDirection: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SyncDirection.Value.ToString()}'");
+                    builder.AppendLine($"'{SyncDirection.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncState), out propertyOverride);
             if (Optional.IsDefined(SyncState) || hasPropertyOverride)
             {
-                builder.Append("    syncState:");
+                builder.Append("    syncState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SyncState.Value.ToString()}'");
+                    builder.AppendLine($"'{SyncState.Value.ToString()}'");
                 }
             }
 
@@ -581,12 +581,15 @@ namespace Azure.ResourceManager.Sql
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -607,12 +610,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

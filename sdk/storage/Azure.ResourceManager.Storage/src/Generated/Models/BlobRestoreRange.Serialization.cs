@@ -109,21 +109,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartRange), out propertyOverride);
             if (Optional.IsDefined(StartRange) || hasPropertyOverride)
             {
-                builder.Append("  startRange:");
+                builder.Append("  startRange: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (StartRange.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{StartRange}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{StartRange}'");
+                        builder.AppendLine($"'{StartRange}'");
                     }
                 }
             }
@@ -131,21 +131,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndRange), out propertyOverride);
             if (Optional.IsDefined(EndRange) || hasPropertyOverride)
             {
-                builder.Append("  endRange:");
+                builder.Append("  endRange: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (EndRange.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{EndRange}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{EndRange}'");
+                        builder.AppendLine($"'{EndRange}'");
                     }
                 }
             }
@@ -154,12 +154,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -180,12 +183,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 
