@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class SavedFilterData : IUtf8JsonSerializable, IJsonModel<SavedFilterData>
+    public partial class SavedFilterPayload : IUtf8JsonSerializable, IJsonModel<SavedFilterPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavedFilterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavedFilterPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<SavedFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SavedFilterPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SavedFilterData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SavedFilterPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavedFilterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavedFilterPayload)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteEndObject();
         }
 
-        SavedFilterData IJsonModel<SavedFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SavedFilterPayload IJsonModel<SavedFilterPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SavedFilterData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SavedFilterPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavedFilterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavedFilterPayload)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSavedFilterData(document.RootElement, options);
+            return DeserializeSavedFilterPayload(document.RootElement, options);
         }
 
-        internal static SavedFilterData DeserializeSavedFilterData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SavedFilterPayload DeserializeSavedFilterPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -91,46 +91,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavedFilterData(filter, description, serializedAdditionalRawData);
+            return new SavedFilterPayload(filter, description, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SavedFilterData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SavedFilterPayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SavedFilterData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SavedFilterPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavedFilterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavedFilterPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        SavedFilterData IPersistableModel<SavedFilterData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SavedFilterPayload IPersistableModel<SavedFilterPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SavedFilterData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SavedFilterPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSavedFilterData(document.RootElement, options);
+                        return DeserializeSavedFilterPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavedFilterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavedFilterPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SavedFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SavedFilterPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SavedFilterData FromResponse(Response response)
+        internal static SavedFilterPayload FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSavedFilterData(document.RootElement);
+            return DeserializeSavedFilterPayload(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

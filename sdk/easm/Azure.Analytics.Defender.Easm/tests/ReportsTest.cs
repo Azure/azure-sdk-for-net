@@ -20,9 +20,9 @@ namespace Azure.Analytics.Defender.Easm.Tests
         [RecordedTest]
         public async System.Threading.Tasks.Task ReportsBillableTest()
         {
-            ReportAssetSnapshotRequest reportAssetSnapshotRequest = new ReportAssetSnapshotRequest();
-            reportAssetSnapshotRequest.Metric = metric;
-            var response = await client.GetSnapshotAsync(reportAssetSnapshotRequest);
+            ReportAssetSnapshotPayload ReportAssetSnapshotPayload = new ReportAssetSnapshotPayload();
+            ReportAssetSnapshotPayload.Metric = metric;
+            var response = await client.GetSnapshotAsync(ReportAssetSnapshotPayload);
             ReportAssetSnapshotResult reportAssetSnapshotResult = response.Value;
             Assert.IsNotNull(reportAssetSnapshotResult);
             Assert.AreEqual(metric, reportAssetSnapshotResult.Metric);
@@ -31,9 +31,9 @@ namespace Azure.Analytics.Defender.Easm.Tests
         [RecordedTest]
         public async System.Threading.Tasks.Task ReportsSnapshotTest()
         {
-            ReportAssetSnapshotRequest reportAssetSnapshotRequest = new ReportAssetSnapshotRequest();
-            reportAssetSnapshotRequest.Metric = metric;
-            var response = await client.GetSnapshotAsync(reportAssetSnapshotRequest);
+            ReportAssetSnapshotPayload ReportAssetSnapshotPayload = new ReportAssetSnapshotPayload();
+            ReportAssetSnapshotPayload.Metric = metric;
+            var response = await client.GetSnapshotAsync(ReportAssetSnapshotPayload);
             ReportAssetSnapshotResult reportAssetSnapshotResult = response.Value;
             Assert.IsNotNull(reportAssetSnapshotResult.DisplayName);
             Assert.AreEqual(metric, reportAssetSnapshotResult.Metric);
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
         [RecordedTest]
         public async System.Threading.Tasks.Task ReportsSummaryTest()
         {
-            ReportAssetSummaryRequest reportAssetSummaryRequest = new ReportAssetSummaryRequest();
+            ReportAssetSummaryPayload reportAssetSummaryRequest = new ReportAssetSummaryPayload();
             reportAssetSummaryRequest.Metrics.Add(metric);
             var response = await client.GetSummaryAsync(reportAssetSummaryRequest);
             Assert.IsTrue(response.Value.AssetSummaries.Count > 0);

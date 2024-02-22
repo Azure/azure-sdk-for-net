@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> A request body used to update an asset. </summary>
-    public partial class AssetUpdateData
+    /// <summary> A request body used to retrieve an asset report snapshot. </summary>
+    public partial class ReportAssetSnapshotPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +45,33 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssetUpdateData"/>. </summary>
-        public AssetUpdateData()
+        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotPayload"/>. </summary>
+        public ReportAssetSnapshotPayload()
         {
-            Labels = new ChangeTrackingDictionary<string, bool>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetUpdateData"/>. </summary>
-        /// <param name="state"> The state to update the asset to. </param>
-        /// <param name="externalId"> A string which can be used to identify the asset in external systems. </param>
-        /// <param name="labels"> Any Labels to update the asset with. </param>
-        /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
+        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotPayload"/>. </summary>
+        /// <param name="metric"> The metric to retrieve a snapshot for. </param>
+        /// <param name="labelName"> The name of the label to retrieve a snapshot for. </param>
+        /// <param name="size"> The number of assets per page. </param>
+        /// <param name="page"> The page to retrieve. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetUpdateData(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReportAssetSnapshotPayload(string metric, string labelName, int? size, int? page, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            State = state;
-            ExternalId = externalId;
-            Labels = labels;
-            Transfers = transfers;
+            Metric = metric;
+            LabelName = labelName;
+            Size = size;
+            Page = page;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The state to update the asset to. </summary>
-        public AssetUpdateState? State { get; set; }
-        /// <summary> A string which can be used to identify the asset in external systems. </summary>
-        public string ExternalId { get; set; }
-        /// <summary> Any Labels to update the asset with. </summary>
-        public IDictionary<string, bool> Labels { get; }
-        /// <summary> A list of asset types to cascade the updates to. </summary>
-        public AssetUpdateTransfers? Transfers { get; set; }
+        /// <summary> The metric to retrieve a snapshot for. </summary>
+        public string Metric { get; set; }
+        /// <summary> The name of the label to retrieve a snapshot for. </summary>
+        public string LabelName { get; set; }
+        /// <summary> The number of assets per page. </summary>
+        public int? Size { get; set; }
+        /// <summary> The page to retrieve. </summary>
+        public int? Page { get; set; }
     }
 }

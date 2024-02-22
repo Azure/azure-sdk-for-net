@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             #endregion
             #region Snippet:Sample3_DiscoTemplates_Run_Disco_Group
             string groupName = "Discovery Group from Template";
-            DiscoveryGroupData discoGroupRequest = new DiscoveryGroupData();
+            DiscoveryGroupPayload discoGroupRequest = new DiscoveryGroupPayload();
             discoGroupRequest.TemplateId = templateId;
             client.CreateOrReplaceDiscoveryGroup(groupName, discoGroupRequest);
             client.RunDiscoveryGroup(groupName);

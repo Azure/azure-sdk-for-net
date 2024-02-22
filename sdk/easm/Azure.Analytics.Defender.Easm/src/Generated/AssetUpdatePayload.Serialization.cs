@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class AssetUpdateData : IUtf8JsonSerializable, IJsonModel<AssetUpdateData>
+    public partial class AssetUpdatePayload : IUtf8JsonSerializable, IJsonModel<AssetUpdatePayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetUpdateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetUpdatePayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AssetUpdateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AssetUpdatePayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetUpdateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteEndObject();
         }
 
-        AssetUpdateData IJsonModel<AssetUpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AssetUpdatePayload IJsonModel<AssetUpdatePayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetUpdateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetUpdateData(document.RootElement, options);
+            return DeserializeAssetUpdatePayload(document.RootElement, options);
         }
 
-        internal static AssetUpdateData DeserializeAssetUpdateData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AssetUpdatePayload DeserializeAssetUpdatePayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -142,46 +142,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetUpdateData(Optional.ToNullable(state), externalId.Value, Optional.ToDictionary(labels), Optional.ToNullable(transfers), serializedAdditionalRawData);
+            return new AssetUpdatePayload(Optional.ToNullable(state), externalId.Value, Optional.ToDictionary(labels), Optional.ToNullable(transfers), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AssetUpdateData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AssetUpdatePayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssetUpdateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support '{options.Format}' format.");
             }
         }
 
-        AssetUpdateData IPersistableModel<AssetUpdateData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AssetUpdatePayload IPersistableModel<AssetUpdatePayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssetUpdatePayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAssetUpdateData(document.RootElement, options);
+                        return DeserializeAssetUpdatePayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetUpdateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetUpdatePayload)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AssetUpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AssetUpdatePayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AssetUpdateData FromResponse(Response response)
+        internal static AssetUpdatePayload FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAssetUpdateData(document.RootElement);
+            return DeserializeAssetUpdatePayload(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

@@ -31,7 +31,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             #endregion
             #region Snippet:Sample4_SavedFilters_Create_Saved_Filter
             string savedFilterName = "Sample saved filter";
-            SavedFilterData savedFilterRequest = new SavedFilterData("IP Address = 1.1.1.1", "Monitored Addresses");
+            SavedFilterPayload savedFilterRequest = new SavedFilterPayload("IP Address = 1.1.1.1", "Monitored Addresses");
             client.CreateOrReplaceSavedFilter(savedFilterName, savedFilterRequest);
             #endregion
             #region Snippet:Sample4_SavedFilters_Monitor_Assets
@@ -48,12 +48,12 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             }
             #endregion
             #region Snippet:Sample4_SavedFilters_Update_Monitored_Assets
-            AssetUpdateData assetUpdateRequest = new AssetUpdateData();
+            AssetUpdatePayload assetUpdateRequest = new AssetUpdatePayload();
             assetUpdateRequest.State = AssetUpdateState.Confirmed;
             client.UpdateAssets(monitorFilter, assetUpdateRequest);
             #endregion
             #region Snippet:Sample4_SavedFilters_New_Saved_Filter
-            SavedFilterData newSavedFilterData = new SavedFilterData("IP Address = 0.0.0.0", "Monitoring Addresses");
+            SavedFilterPayload newSavedFilterData = new SavedFilterPayload("IP Address = 0.0.0.0", "Monitoring Addresses");
             client.CreateOrReplaceSavedFilter(savedFilterName, newSavedFilterData);
             #endregion
         }

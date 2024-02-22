@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to retrieve summary asset information. One and only one collection of summary identifiers must be provided: filters, metrics, or metricCategories. </summary>
-    public partial class ReportAssetSummaryRequest
+    public partial class ReportAssetSummaryPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,15 +46,15 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryRequest"/>. </summary>
-        public ReportAssetSummaryRequest()
+        /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryPayload"/>. </summary>
+        public ReportAssetSummaryPayload()
         {
             MetricCategories = new ChangeTrackingList<string>();
             Metrics = new ChangeTrackingList<string>();
             Filters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportAssetSummaryPayload"/>. </summary>
         /// <param name="metricCategories"> Categories to retrieve risk reporting data for. </param>
         /// <param name="metrics"> Metrics to retrieve risk reporting data for. </param>
         /// <param name="filters"> Query filters to apply to the asset summary. </param>
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="segmentBy"> A parameter to segment the assets by (second level facet field), only used when the chosen summary identifier is filters. </param>
         /// <param name="labelName"> Currently unused. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSummaryRequest(IList<string> metricCategories, IList<string> metrics, IList<string> filters, string groupBy, string segmentBy, string labelName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReportAssetSummaryPayload(IList<string> metricCategories, IList<string> metrics, IList<string> filters, string groupBy, string segmentBy, string labelName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricCategories = metricCategories;
             Metrics = metrics;

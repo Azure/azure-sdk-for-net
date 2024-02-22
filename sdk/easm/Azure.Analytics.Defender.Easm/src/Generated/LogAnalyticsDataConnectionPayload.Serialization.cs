@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class LogAnalyticsDataConnectionData : IUtf8JsonSerializable, IJsonModel<LogAnalyticsDataConnectionData>
+    public partial class LogAnalyticsDataConnectionPayload : IUtf8JsonSerializable, IJsonModel<LogAnalyticsDataConnectionPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsDataConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsDataConnectionPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<LogAnalyticsDataConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LogAnalyticsDataConnectionPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionPayload)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,19 +69,19 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteEndObject();
         }
 
-        LogAnalyticsDataConnectionData IJsonModel<LogAnalyticsDataConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LogAnalyticsDataConnectionPayload IJsonModel<LogAnalyticsDataConnectionPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionPayload)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogAnalyticsDataConnectionData(document.RootElement, options);
+            return DeserializeLogAnalyticsDataConnectionPayload(document.RootElement, options);
         }
 
-        internal static LogAnalyticsDataConnectionData DeserializeLogAnalyticsDataConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LogAnalyticsDataConnectionPayload DeserializeLogAnalyticsDataConnectionPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -147,46 +147,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsDataConnectionData(kind, name.Value, Optional.ToNullable(content), Optional.ToNullable(frequency), Optional.ToNullable(frequencyOffset), serializedAdditionalRawData, properties);
+            return new LogAnalyticsDataConnectionPayload(kind, name.Value, Optional.ToNullable(content), Optional.ToNullable(frequency), Optional.ToNullable(frequencyOffset), serializedAdditionalRawData, properties);
         }
 
-        BinaryData IPersistableModel<LogAnalyticsDataConnectionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LogAnalyticsDataConnectionPayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        LogAnalyticsDataConnectionData IPersistableModel<LogAnalyticsDataConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LogAnalyticsDataConnectionPayload IPersistableModel<LogAnalyticsDataConnectionPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeLogAnalyticsDataConnectionData(document.RootElement, options);
+                        return DeserializeLogAnalyticsDataConnectionPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnectionPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LogAnalyticsDataConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LogAnalyticsDataConnectionPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new LogAnalyticsDataConnectionData FromResponse(Response response)
+        internal static new LogAnalyticsDataConnectionPayload FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeLogAnalyticsDataConnectionData(document.RootElement);
+            return DeserializeLogAnalyticsDataConnectionPayload(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

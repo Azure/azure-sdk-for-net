@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Defender.Easm
 {
+    /// <summary> The validation type of a Ssl certificate. </summary>
     public readonly partial struct SslCertAssetValidationType : IEquatable<SslCertAssetValidationType>
     {
         private readonly string _value;

@@ -1,4 +1,4 @@
-# Create and Manage Discovery Groups
+# Create and manage Discovery Groups
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/easm/Azure.Analytics.Defender.Easm/README.md#getting-started) for details.
 

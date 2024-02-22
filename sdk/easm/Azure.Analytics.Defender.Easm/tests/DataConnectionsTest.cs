@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             properties.ClusterName = ClusterName;
             properties.DatabaseName = DatabaseName;
             properties.Region = "eastus";
-            AzureDataExplorerDataConnectionData request = new AzureDataExplorerDataConnectionData(properties);
+            AzureDataExplorerDataConnectionPayload request = new AzureDataExplorerDataConnectionPayload(properties);
             request.Name = DatabaseName;
             request.Content = DataConnectionContent.Assets;
             request.Frequency = DataConnectionFrequency.Daily;
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             properties.ClusterName = ClusterName;
             properties.DatabaseName = DatabaseName;
             properties.Region = "eastus";
-            AzureDataExplorerDataConnectionData request = new AzureDataExplorerDataConnectionData(properties);
+            AzureDataExplorerDataConnectionPayload request = new AzureDataExplorerDataConnectionPayload(properties);
             request.Name = NewDataConnectionName;
             request.Content = DataConnectionContent.Assets;
             request.Frequency = DataConnectionFrequency.Daily;

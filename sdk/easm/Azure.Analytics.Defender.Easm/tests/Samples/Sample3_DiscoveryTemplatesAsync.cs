@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
                 Console.WriteLine($"{seed.Kind}: {seed.Name}");
             }
             string groupName = "Discovery Group from Template";
-            DiscoveryGroupData discoGroupRequest = new DiscoveryGroupData();
+            DiscoveryGroupPayload discoGroupRequest = new DiscoveryGroupPayload();
             discoGroupRequest.TemplateId = templateId;
             await client.CreateOrReplaceDiscoveryGroupAsync(groupName, discoGroupRequest);
             await client.RunDiscoveryGroupAsync(groupName);

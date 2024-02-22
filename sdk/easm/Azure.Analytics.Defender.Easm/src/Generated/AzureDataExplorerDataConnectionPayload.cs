@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The AzureDataExplorerDataConnectionData. </summary>
-    public partial class AzureDataExplorerDataConnectionData : DataConnectionData
+    /// <summary> The AzureDataExplorerDataConnectionPayload. </summary>
+    public partial class AzureDataExplorerDataConnectionPayload : DataConnectionPayload
     {
-        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionPayload"/>. </summary>
         /// <param name="properties"> properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public AzureDataExplorerDataConnectionData(AzureDataExplorerDataConnectionProperties properties)
+        public AzureDataExplorerDataConnectionPayload(AzureDataExplorerDataConnectionProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Defender.Easm
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionPayload"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="name"> The name of data connection. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
@@ -33,13 +33,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> properties. </param>
-        internal AzureDataExplorerDataConnectionData(string kind, string name, DataConnectionContent? content, DataConnectionFrequency? frequency, int? frequencyOffset, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureDataExplorerDataConnectionProperties properties) : base(kind, name, content, frequency, frequencyOffset, serializedAdditionalRawData)
+        internal AzureDataExplorerDataConnectionPayload(string kind, string name, DataConnectionContent? content, DataConnectionFrequency? frequency, int? frequencyOffset, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureDataExplorerDataConnectionProperties properties) : base(kind, name, content, frequency, frequencyOffset, serializedAdditionalRawData)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionData"/> for deserialization. </summary>
-        internal AzureDataExplorerDataConnectionData()
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerDataConnectionPayload"/> for deserialization. </summary>
+        internal AzureDataExplorerDataConnectionPayload()
         {
         }
 

@@ -41,7 +41,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             string[] hosts = TestEnvironment.Hosts.Split(',');
             string[] domains = TestEnvironment.Domains.Split(',');
             #endif
-            DiscoveryGroupData request = new DiscoveryGroupData();
+            DiscoveryGroupPayload request = new DiscoveryGroupPayload();
             foreach (var host in hosts)
             {
                 DiscoverySource seed = new DiscoverySource();

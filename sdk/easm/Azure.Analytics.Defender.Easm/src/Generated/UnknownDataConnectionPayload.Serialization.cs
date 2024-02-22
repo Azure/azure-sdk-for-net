@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    internal partial class UnknownDataConnectionData : IUtf8JsonSerializable, IJsonModel<DataConnectionData>
+    internal partial class UnknownDataConnectionPayload : IUtf8JsonSerializable, IJsonModel<DataConnectionPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectionPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<DataConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataConnectionPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataConnectionPayload)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteEndObject();
         }
 
-        DataConnectionData IJsonModel<DataConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataConnectionPayload IJsonModel<DataConnectionPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataConnectionPayload)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataConnectionData(document.RootElement, options);
+            return DeserializeUnknownDataConnectionPayload(document.RootElement, options);
         }
 
-        internal static UnknownDataConnectionData DeserializeUnknownDataConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownDataConnectionPayload DeserializeUnknownDataConnectionPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -139,46 +139,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataConnectionData(kind, name.Value, Optional.ToNullable(content), Optional.ToNullable(frequency), Optional.ToNullable(frequencyOffset), serializedAdditionalRawData);
+            return new UnknownDataConnectionPayload(kind, name.Value, Optional.ToNullable(content), Optional.ToNullable(frequency), Optional.ToNullable(frequencyOffset), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataConnectionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataConnectionPayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataConnectionPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        DataConnectionData IPersistableModel<DataConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataConnectionPayload IPersistableModel<DataConnectionPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataConnectionData(document.RootElement, options);
+                        return DeserializeUnknownDataConnectionPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataConnectionPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataConnectionPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownDataConnectionData FromResponse(Response response)
+        internal static new UnknownDataConnectionPayload FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeUnknownDataConnectionData(document.RootElement);
+            return DeserializeUnknownDataConnectionPayload(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

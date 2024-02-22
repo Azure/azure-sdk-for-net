@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> A request body used to create a saved filter. </summary>
-    public partial class SavedFilterData
+    /// <summary> A request body used to update an asset. </summary>
+    public partial class AssetUpdatePayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,38 +46,34 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SavedFilterData"/>. </summary>
-        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
-        /// <param name="description"> A human readable description of the saved filter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="description"/> is null. </exception>
-        public SavedFilterData(string filter, string description)
+        /// <summary> Initializes a new instance of <see cref="AssetUpdatePayload"/>. </summary>
+        public AssetUpdatePayload()
         {
-            Argument.AssertNotNull(filter, nameof(filter));
-            Argument.AssertNotNull(description, nameof(description));
-
-            Filter = filter;
-            Description = description;
+            Labels = new ChangeTrackingDictionary<string, bool>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SavedFilterData"/>. </summary>
-        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
-        /// <param name="description"> A human readable description of the saved filter. </param>
+        /// <summary> Initializes a new instance of <see cref="AssetUpdatePayload"/>. </summary>
+        /// <param name="state"> The state to update the asset to. </param>
+        /// <param name="externalId"> A string which can be used to identify the asset in external systems. </param>
+        /// <param name="labels"> Any Labels to update the asset with. </param>
+        /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SavedFilterData(string filter, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetUpdatePayload(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Filter = filter;
-            Description = description;
+            State = state;
+            ExternalId = externalId;
+            Labels = labels;
+            Transfers = transfers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SavedFilterData"/> for deserialization. </summary>
-        internal SavedFilterData()
-        {
-        }
-
-        /// <summary> An expression on the resource type that selects the resources to be returned. </summary>
-        public string Filter { get; }
-        /// <summary> A human readable description of the saved filter. </summary>
-        public string Description { get; }
+        /// <summary> The state to update the asset to. </summary>
+        public AssetUpdateState? State { get; set; }
+        /// <summary> A string which can be used to identify the asset in external systems. </summary>
+        public string ExternalId { get; set; }
+        /// <summary> Any Labels to update the asset with. </summary>
+        public IDictionary<string, bool> Labels { get; }
+        /// <summary> A list of asset types to cascade the updates to. </summary>
+        public AssetUpdateTransfers? Transfers { get; set; }
     }
 }

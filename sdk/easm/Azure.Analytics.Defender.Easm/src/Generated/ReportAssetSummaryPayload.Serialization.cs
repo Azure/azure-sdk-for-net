@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class ReportAssetSummaryRequest : IUtf8JsonSerializable, IJsonModel<ReportAssetSummaryRequest>
+    public partial class ReportAssetSummaryPayload : IUtf8JsonSerializable, IJsonModel<ReportAssetSummaryPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportAssetSummaryRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportAssetSummaryPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ReportAssetSummaryRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReportAssetSummaryPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportAssetSummaryRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,19 +90,19 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteEndObject();
         }
 
-        ReportAssetSummaryRequest IJsonModel<ReportAssetSummaryRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReportAssetSummaryPayload IJsonModel<ReportAssetSummaryPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportAssetSummaryRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReportAssetSummaryRequest(document.RootElement, options);
+            return DeserializeReportAssetSummaryPayload(document.RootElement, options);
         }
 
-        internal static ReportAssetSummaryRequest DeserializeReportAssetSummaryRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ReportAssetSummaryPayload DeserializeReportAssetSummaryPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -183,46 +183,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportAssetSummaryRequest(Optional.ToList(metricCategories), Optional.ToList(metrics), Optional.ToList(filters), groupBy.Value, segmentBy.Value, labelName.Value, serializedAdditionalRawData);
+            return new ReportAssetSummaryPayload(Optional.ToList(metricCategories), Optional.ToList(metrics), Optional.ToList(filters), groupBy.Value, segmentBy.Value, labelName.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReportAssetSummaryRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReportAssetSummaryPayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportAssetSummaryRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        ReportAssetSummaryRequest IPersistableModel<ReportAssetSummaryRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ReportAssetSummaryPayload IPersistableModel<ReportAssetSummaryPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSummaryPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReportAssetSummaryRequest(document.RootElement, options);
+                        return DeserializeReportAssetSummaryPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportAssetSummaryRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportAssetSummaryPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReportAssetSummaryRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReportAssetSummaryPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ReportAssetSummaryRequest FromResponse(Response response)
+        internal static ReportAssetSummaryPayload FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeReportAssetSummaryRequest(document.RootElement);
+            return DeserializeReportAssetSummaryPayload(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

@@ -14,7 +14,7 @@ dotnet add package Azure.Analytics.Defender.Easm --prerelease
 ```
 
 ### Prerequisites
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [EASM workspace](https://learn.microsoft.com/azure/external-attack-surface-management/deploying-the-defender-easm-azure-resource). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [EASM workspace](https://learn.microsoft.com/azure/external-attack-surface-management/deploying-the-defender-easm-azure-resource). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK using a language version of `preview`.
 
 ### Authenticate the client
 
@@ -39,9 +39,24 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+### [Assets][assets_documentation]
+Defender EASM includes the discovery of the following kinds of assets:
+-   Domains
+-   Hosts
+-   Pages
+-   IP Blocks
+-   IP Addresses
+-   Autonomous System Numbers (ASNs)
+-   SSL Certificates
+-   WHOIS Contacts
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+These asset types comprise your attack surface inventory in Defender EASM. This solution discovers externally facing assets that are exposed to the open internet outside of traditional firewall protection; they need to be monitored and maintained to minimize risk and improve an organization’s security posture. Microsoft Defender External Attack Surface Management (Defender EASM) actively discovers and monitors these assets, then surfacing key insights that help customers efficiently address any vulnerabilities in their organization.
+
+### [Discovery][discovery_documentation]
+Microsoft Defender External Attack Surface Management (Defender EASM) relies on our proprietary discovery technology to continuously define your organization’s unique Internet-exposed attack surface. Discovery scans known assets owned by your organization to uncover previously unknown and unmonitored properties. Discovered assets are indexed in a customer’s inventory, providing a dynamic system of record of web applications, third party dependencies, and web infrastructure under the organization’s management through a single pane of glass.
+
+#### [Discovery Groups][discovery_groups_documentation]
+Custom discoveries are organized into Discovery Groups. They are independent seed clusters that comprise a single discovery run and operate on their own recurrence schedules. Users can elect to organize their Discovery Groups to delineate assets in whatever way best benefits their company and workflows. Common options include organizing by responsible team/business unit, brands or subsidiaries.
 
 ### Thread safety
 
@@ -136,7 +151,10 @@ foreach (DiscoveryGroup discoGroup in response)
 
 
 ## Troubleshooting
-
+### Enabling Logging
+Azure SDKs for .NET offer a consistent logging story to help aid in troubleshooting application errors and expedite
+their resolution. The logs produced will capture the flow of an application before reaching the terminal state to help
+locate the root issue. View the [logging][logging] wiki for guidance about enabling logging.
 ## Next steps
 
 ## Contributing

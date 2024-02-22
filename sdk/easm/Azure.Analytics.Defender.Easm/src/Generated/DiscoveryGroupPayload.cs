@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to create a discovery group. </summary>
-    public partial class DiscoveryGroupData
+    public partial class DiscoveryGroupPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,15 +46,15 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupData"/>. </summary>
-        public DiscoveryGroupData()
+        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupPayload"/>. </summary>
+        public DiscoveryGroupPayload()
         {
             Seeds = new ChangeTrackingList<DiscoverySource>();
             Names = new ChangeTrackingList<string>();
             Excludes = new ChangeTrackingList<DiscoverySource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryGroupPayload"/>. </summary>
         /// <param name="name"> The name for a disco group. </param>
         /// <param name="description"> The description for a disco group. </param>
         /// <param name="tier"> The tier for the disco group which will affect the algorithm used for the disco runs in this group. </param>
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="excludes"> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryGroupData(string name, string description, string tier, long? frequencyMilliseconds, IList<DiscoverySource> seeds, IList<string> names, IList<DiscoverySource> excludes, string templateId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiscoveryGroupPayload(string name, string description, string tier, long? frequencyMilliseconds, IList<DiscoverySource> seeds, IList<string> names, IList<DiscoverySource> excludes, string templateId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;

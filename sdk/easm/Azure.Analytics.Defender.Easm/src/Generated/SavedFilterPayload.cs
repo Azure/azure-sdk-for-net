@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> A request body used to retrieve an asset report snapshot. </summary>
-    public partial class ReportAssetSnapshotRequest
+    /// <summary> A request body used to create a saved filter. </summary>
+    public partial class SavedFilterPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +46,38 @@ namespace Azure.Analytics.Defender.Easm
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotRequest"/>. </summary>
-        public ReportAssetSnapshotRequest()
+        /// <summary> Initializes a new instance of <see cref="SavedFilterPayload"/>. </summary>
+        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
+        /// <param name="description"> A human readable description of the saved filter. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="description"/> is null. </exception>
+        public SavedFilterPayload(string filter, string description)
         {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(description, nameof(description));
+
+            Filter = filter;
+            Description = description;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReportAssetSnapshotRequest"/>. </summary>
-        /// <param name="metric"> The metric to retrieve a snapshot for. </param>
-        /// <param name="labelName"> The name of the label to retrieve a snapshot for. </param>
-        /// <param name="size"> The number of assets per page. </param>
-        /// <param name="page"> The page to retrieve. </param>
+        /// <summary> Initializes a new instance of <see cref="SavedFilterPayload"/>. </summary>
+        /// <param name="filter"> An expression on the resource type that selects the resources to be returned. </param>
+        /// <param name="description"> A human readable description of the saved filter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSnapshotRequest(string metric, string labelName, int? size, int? page, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SavedFilterPayload(string filter, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Metric = metric;
-            LabelName = labelName;
-            Size = size;
-            Page = page;
+            Filter = filter;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The metric to retrieve a snapshot for. </summary>
-        public string Metric { get; set; }
-        /// <summary> The name of the label to retrieve a snapshot for. </summary>
-        public string LabelName { get; set; }
-        /// <summary> The number of assets per page. </summary>
-        public int? Size { get; set; }
-        /// <summary> The page to retrieve. </summary>
-        public int? Page { get; set; }
+        /// <summary> Initializes a new instance of <see cref="SavedFilterPayload"/> for deserialization. </summary>
+        internal SavedFilterPayload()
+        {
+        }
+
+        /// <summary> An expression on the resource type that selects the resources to be returned. </summary>
+        public string Filter { get; }
+        /// <summary> A human readable description of the saved filter. </summary>
+        public string Description { get; }
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
         [Test]
         public async System.Threading.Tasks.Task AssetUpdateTest()
         {
-            AssetUpdateData assetUpdateData = new AssetUpdateData();
+            AssetUpdatePayload assetUpdateData = new AssetUpdatePayload();
             assetUpdateData.ExternalId = "EXT040";
 
             Response<TaskResource> result = await client.UpdateAssetsAsync(filter, assetUpdateData);

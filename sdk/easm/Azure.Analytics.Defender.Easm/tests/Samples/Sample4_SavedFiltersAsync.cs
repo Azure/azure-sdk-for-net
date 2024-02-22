@@ -16,7 +16,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
                 TestEnvironment.Credential);
 
             string savedFilterName = "Sample saved filter";
-            SavedFilterData savedFilterRequest = new SavedFilterData("IP Address = 1.1.1.1", "Monitored Addresses");
+            SavedFilterPayload savedFilterRequest = new SavedFilterPayload("IP Address = 1.1.1.1", "Monitored Addresses");
             await client.CreateOrReplaceSavedFilterAsync(savedFilterName, savedFilterRequest);
 
             Response<SavedFilter> savedFilterResponse = await client.GetSavedFilterAsync(savedFilterName);
@@ -27,11 +27,11 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             {
                 monitor(savedFilter);
             }
-            AssetUpdateData assetUpdateRequest = new AssetUpdateData();
+            AssetUpdatePayload assetUpdateRequest = new AssetUpdatePayload();
             assetUpdateRequest.State = AssetUpdateState.Confirmed;
             await client.UpdateAssetsAsync(monitorFilter, assetUpdateRequest);
-            SavedFilterData newSavedFilterData = new SavedFilterData("IP Address = 0.0.0.0", "Monitoring Addresses");
-            await client.CreateOrReplaceSavedFilterAsync(savedFilterName, newSavedFilterData);
+            SavedFilterPayload newSavedFilterPayload = new SavedFilterPayload("IP Address = 0.0.0.0", "Monitoring Addresses");
+            await client.CreateOrReplaceSavedFilterAsync(savedFilterName, newSavedFilterPayload);
         }
     }
 }

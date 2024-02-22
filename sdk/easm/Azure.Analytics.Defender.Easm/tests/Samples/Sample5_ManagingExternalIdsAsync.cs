@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             mapping.ForEach(async asset =>
             {
                 externalIds.Add(asset["external_id"]);
-                AssetUpdateData assetUpdateRequest = new AssetUpdateData();
+                AssetUpdatePayload assetUpdateRequest = new AssetUpdatePayload();
                 assetUpdateRequest.ExternalId = asset["external_id"];
                 string filter = $"kind = {asset["kind"]} AND name = {asset["name"]}";
                 var taskResponse = await client.UpdateAssetsAsync(filter, assetUpdateRequest);

@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    public partial class DiscoveryGroupData : IUtf8JsonSerializable, IJsonModel<DiscoveryGroupData>
+    public partial class DiscoveryGroupPayload : IUtf8JsonSerializable, IJsonModel<DiscoveryGroupPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryGroupPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<DiscoveryGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscoveryGroupPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveryGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryGroupPayload)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -100,19 +100,19 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteEndObject();
         }
 
-        DiscoveryGroupData IJsonModel<DiscoveryGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiscoveryGroupPayload IJsonModel<DiscoveryGroupPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveryGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryGroupPayload)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiscoveryGroupData(document.RootElement, options);
+            return DeserializeDiscoveryGroupPayload(document.RootElement, options);
         }
 
-        internal static DiscoveryGroupData DeserializeDiscoveryGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiscoveryGroupPayload DeserializeDiscoveryGroupPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -209,46 +209,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoveryGroupData(name.Value, description.Value, tier.Value, Optional.ToNullable(frequencyMilliseconds), Optional.ToList(seeds), Optional.ToList(names), Optional.ToList(excludes), templateId.Value, serializedAdditionalRawData);
+            return new DiscoveryGroupPayload(name.Value, description.Value, tier.Value, Optional.ToNullable(frequencyMilliseconds), Optional.ToList(seeds), Optional.ToList(names), Optional.ToList(excludes), templateId.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DiscoveryGroupData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DiscoveryGroupPayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryGroupPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        DiscoveryGroupData IPersistableModel<DiscoveryGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiscoveryGroupPayload IPersistableModel<DiscoveryGroupPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryGroupPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDiscoveryGroupData(document.RootElement, options);
+                        return DeserializeDiscoveryGroupPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryGroupPayload)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DiscoveryGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscoveryGroupPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DiscoveryGroupData FromResponse(Response response)
+        internal static DiscoveryGroupPayload FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDiscoveryGroupData(document.RootElement);
+            return DeserializeDiscoveryGroupPayload(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

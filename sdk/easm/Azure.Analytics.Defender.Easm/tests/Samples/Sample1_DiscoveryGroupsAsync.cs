@@ -24,7 +24,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             string discoveryGroupDescription = "This is a sample discovery group generated from C#";
             string[] hosts = TestEnvironment.Hosts.Split(',');
             string[] domains = TestEnvironment.Domains.Split(',');
-            DiscoveryGroupData request = new DiscoveryGroupData();
+            DiscoveryGroupPayload request = new DiscoveryGroupPayload();
             foreach (string host in hosts)
             {
                 DiscoverySource seed = new DiscoverySource();

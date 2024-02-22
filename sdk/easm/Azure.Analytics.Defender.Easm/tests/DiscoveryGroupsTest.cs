@@ -48,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             DiscoverySource seed = new DiscoverySource();
             seed.Kind = seedKind;
             seed.Name = seedName;
-            DiscoveryGroupData request = new DiscoveryGroupData();
+            DiscoveryGroupPayload request = new DiscoveryGroupPayload();
             request.Seeds.Add(seed);
             request.Name = newGroupName;
             request.Description = newGroupDescription;
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             DiscoverySource seed = new DiscoverySource();
             seed.Kind = seedKind;
             seed.Name = seedName;
-            DiscoveryGroupData request = new DiscoveryGroupData();
+            DiscoveryGroupPayload request = new DiscoveryGroupPayload();
             request.Seeds.Add(seed);
             request.Name = newGroupName;
             request.Description = newGroupDescription;
