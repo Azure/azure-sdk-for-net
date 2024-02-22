@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NamespaceTopicEventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, NamespaceTopicEventSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (eventSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(eventSubscriptionName));
+            }
+            if (eventSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NamespaceTopicEventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, NamespaceTopicEventSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (eventSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(eventSubscriptionName));
+            }
+            if (eventSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> GetAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            if (eventSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(eventSubscriptionName));
+            }
+            if (eventSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
+            }
 
             using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual Response<NamespaceTopicEventSubscriptionResource> Get(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            if (eventSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(eventSubscriptionName));
+            }
+            if (eventSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
+            }
 
             using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            if (eventSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(eventSubscriptionName));
+            }
+            if (eventSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
+            }
 
             using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual Response<bool> Exists(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            if (eventSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(eventSubscriptionName));
+            }
+            if (eventSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
+            }
 
             using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual async Task<NullableResponse<NamespaceTopicEventSubscriptionResource>> GetIfExistsAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            if (eventSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(eventSubscriptionName));
+            }
+            if (eventSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
+            }
 
             using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
         public virtual NullableResponse<NamespaceTopicEventSubscriptionResource> GetIfExists(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            if (eventSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(eventSubscriptionName));
+            }
+            if (eventSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventSubscriptionName));
+            }
 
             using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.GetIfExists");
             scope.Start();

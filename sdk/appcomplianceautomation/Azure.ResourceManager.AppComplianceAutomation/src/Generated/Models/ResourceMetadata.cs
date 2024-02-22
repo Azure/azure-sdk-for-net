@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ResourceMetadata(string resourceId)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             ResourceId = resourceId;
             Tags = new ChangeTrackingDictionary<string, string>();

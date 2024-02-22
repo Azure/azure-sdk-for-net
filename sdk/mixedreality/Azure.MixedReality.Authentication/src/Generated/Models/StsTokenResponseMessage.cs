@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.MixedReality.Authentication
 {
@@ -18,7 +17,10 @@ namespace Azure.MixedReality.Authentication
         /// <exception cref="ArgumentNullException"> <paramref name="accessToken"/> is null. </exception>
         internal StsTokenResponseMessage(string accessToken)
         {
-            Argument.AssertNotNull(accessToken, nameof(accessToken));
+            if (accessToken == null)
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
 
             AccessToken = accessToken;
         }

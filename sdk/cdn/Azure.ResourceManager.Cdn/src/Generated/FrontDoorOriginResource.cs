@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorOriginResource>> UpdateAsync(WaitUntil waitUntil, FrontDoorOriginPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<FrontDoorOriginResource> Update(WaitUntil waitUntil, FrontDoorOriginPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _frontDoorOriginClientDiagnostics.CreateScope("FrontDoorOriginResource.Update");
             scope.Start();

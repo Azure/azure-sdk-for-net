@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, ContainerRegistryAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerRegistryAgentPoolAgentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerRegistryAgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, ContainerRegistryAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerRegistryAgentPoolAgentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryAgentPoolResource>> GetAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _containerRegistryAgentPoolAgentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual Response<ContainerRegistryAgentPoolResource> Get(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _containerRegistryAgentPoolAgentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _containerRegistryAgentPoolAgentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _containerRegistryAgentPoolAgentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryAgentPoolResource>> GetIfExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _containerRegistryAgentPoolAgentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual NullableResponse<ContainerRegistryAgentPoolResource> GetIfExists(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            if (agentPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(agentPoolName));
+            }
+            if (agentPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
+            }
 
             using var scope = _containerRegistryAgentPoolAgentPoolsClientDiagnostics.CreateScope("ContainerRegistryAgentPoolCollection.GetIfExists");
             scope.Start();

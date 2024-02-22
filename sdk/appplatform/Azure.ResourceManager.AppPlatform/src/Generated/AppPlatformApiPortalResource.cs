@@ -351,7 +351,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformApiPortalResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformApiPortalData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalResource.Update");
             scope.Start();
@@ -397,7 +400,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformApiPortalResource> Update(WaitUntil waitUntil, AppPlatformApiPortalData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalResource.Update");
             scope.Start();
@@ -442,7 +448,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AppPlatformCustomDomainValidateResult>> ValidateDomainAsync(AppPlatformCustomDomainValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalResource.ValidateDomain");
             scope.Start();
@@ -484,7 +493,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AppPlatformCustomDomainValidateResult> ValidateDomain(AppPlatformCustomDomainValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalResource.ValidateDomain");
             scope.Start();

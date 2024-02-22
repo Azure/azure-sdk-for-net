@@ -142,7 +142,10 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataLakeStoreAccountNameAvailabilityResult>> CheckDataLakeStoreAccountNameAvailabilityAsync(AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("MockableDataLakeStoreSubscriptionResource.CheckDataLakeStoreAccountNameAvailability");
             scope.Start();
@@ -185,7 +188,10 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataLakeStoreAccountNameAvailabilityResult> CheckDataLakeStoreAccountNameAvailability(AzureLocation location, DataLakeStoreAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DataLakeStoreAccountAccountsClientDiagnostics.CreateScope("MockableDataLakeStoreSubscriptionResource.CheckDataLakeStoreAccountNameAvailability");
             scope.Start();

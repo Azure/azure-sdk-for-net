@@ -83,7 +83,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<TenantAccessInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
             scope.Start();
@@ -131,7 +134,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<TenantAccessInfoResource> CreateOrUpdate(WaitUntil waitUntil, AccessName accessName, ETag ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _tenantAccessInfoTenantAccessClientDiagnostics.CreateScope("TenantAccessInfoCollection.CreateOrUpdate");
             scope.Start();

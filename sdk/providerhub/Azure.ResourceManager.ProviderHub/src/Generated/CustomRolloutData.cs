@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public CustomRolloutData(CustomRolloutProperties properties)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
             Properties = properties;
         }

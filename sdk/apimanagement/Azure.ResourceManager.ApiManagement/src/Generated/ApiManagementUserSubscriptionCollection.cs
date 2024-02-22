@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         public virtual async Task<Response<ApiManagementUserSubscriptionResource>> GetAsync(string sid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+            if (sid == null)
+            {
+                throw new ArgumentNullException(nameof(sid));
+            }
+            if (sid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sid));
+            }
 
             using var scope = _apiManagementUserSubscriptionUserSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         public virtual Response<ApiManagementUserSubscriptionResource> Get(string sid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+            if (sid == null)
+            {
+                throw new ArgumentNullException(nameof(sid));
+            }
+            if (sid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sid));
+            }
 
             using var scope = _apiManagementUserSubscriptionUserSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionCollection.Get");
             scope.Start();
@@ -236,7 +250,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+            if (sid == null)
+            {
+                throw new ArgumentNullException(nameof(sid));
+            }
+            if (sid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sid));
+            }
 
             using var scope = _apiManagementUserSubscriptionUserSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionCollection.Exists");
             scope.Start();
@@ -279,7 +300,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         public virtual Response<bool> Exists(string sid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+            if (sid == null)
+            {
+                throw new ArgumentNullException(nameof(sid));
+            }
+            if (sid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sid));
+            }
 
             using var scope = _apiManagementUserSubscriptionUserSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionCollection.Exists");
             scope.Start();
@@ -322,7 +350,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementUserSubscriptionResource>> GetIfExistsAsync(string sid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+            if (sid == null)
+            {
+                throw new ArgumentNullException(nameof(sid));
+            }
+            if (sid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sid));
+            }
 
             using var scope = _apiManagementUserSubscriptionUserSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -367,7 +402,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
         public virtual NullableResponse<ApiManagementUserSubscriptionResource> GetIfExists(string sid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+            if (sid == null)
+            {
+                throw new ArgumentNullException(nameof(sid));
+            }
+            if (sid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sid));
+            }
 
             using var scope = _apiManagementUserSubscriptionUserSubscriptionClientDiagnostics.CreateScope("ApiManagementUserSubscriptionCollection.GetIfExists");
             scope.Start();

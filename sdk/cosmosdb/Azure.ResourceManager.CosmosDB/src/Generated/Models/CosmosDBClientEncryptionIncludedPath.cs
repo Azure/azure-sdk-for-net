@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -54,10 +53,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/>, <paramref name="clientEncryptionKeyId"/>, <paramref name="encryptionType"/> or <paramref name="encryptionAlgorithm"/> is null. </exception>
         public CosmosDBClientEncryptionIncludedPath(string path, string clientEncryptionKeyId, string encryptionType, string encryptionAlgorithm)
         {
-            Argument.AssertNotNull(path, nameof(path));
-            Argument.AssertNotNull(clientEncryptionKeyId, nameof(clientEncryptionKeyId));
-            Argument.AssertNotNull(encryptionType, nameof(encryptionType));
-            Argument.AssertNotNull(encryptionAlgorithm, nameof(encryptionAlgorithm));
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+            if (clientEncryptionKeyId == null)
+            {
+                throw new ArgumentNullException(nameof(clientEncryptionKeyId));
+            }
+            if (encryptionType == null)
+            {
+                throw new ArgumentNullException(nameof(encryptionType));
+            }
+            if (encryptionAlgorithm == null)
+            {
+                throw new ArgumentNullException(nameof(encryptionAlgorithm));
+            }
 
             Path = path;
             ClientEncryptionKeyId = clientEncryptionKeyId;

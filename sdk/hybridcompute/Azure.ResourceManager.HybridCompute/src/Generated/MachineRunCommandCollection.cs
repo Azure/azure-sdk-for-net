@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineRunCommandResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string runCommandName, MachineRunCommandData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (runCommandName == null)
+            {
+                throw new ArgumentNullException(nameof(runCommandName));
+            }
+            if (runCommandName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineRunCommandResource> CreateOrUpdate(WaitUntil waitUntil, string runCommandName, MachineRunCommandData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (runCommandName == null)
+            {
+                throw new ArgumentNullException(nameof(runCommandName));
+            }
+            if (runCommandName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual async Task<Response<MachineRunCommandResource>> GetAsync(string runCommandName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            if (runCommandName == null)
+            {
+                throw new ArgumentNullException(nameof(runCommandName));
+            }
+            if (runCommandName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
+            }
 
             using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual Response<MachineRunCommandResource> Get(string runCommandName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            if (runCommandName == null)
+            {
+                throw new ArgumentNullException(nameof(runCommandName));
+            }
+            if (runCommandName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
+            }
 
             using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string runCommandName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            if (runCommandName == null)
+            {
+                throw new ArgumentNullException(nameof(runCommandName));
+            }
+            if (runCommandName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
+            }
 
             using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual Response<bool> Exists(string runCommandName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            if (runCommandName == null)
+            {
+                throw new ArgumentNullException(nameof(runCommandName));
+            }
+            if (runCommandName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
+            }
 
             using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineRunCommandResource>> GetIfExistsAsync(string runCommandName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            if (runCommandName == null)
+            {
+                throw new ArgumentNullException(nameof(runCommandName));
+            }
+            if (runCommandName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
+            }
 
             using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         public virtual NullableResponse<MachineRunCommandResource> GetIfExists(string runCommandName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+            if (runCommandName == null)
+            {
+                throw new ArgumentNullException(nameof(runCommandName));
+            }
+            if (runCommandName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runCommandName));
+            }
 
             using var scope = _machineRunCommandClientDiagnostics.CreateScope("MachineRunCommandCollection.GetIfExists");
             scope.Start();

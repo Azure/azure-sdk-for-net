@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual async Task<Response<RecoverableManagedDatabaseResource>> GetAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
+            if (recoverableDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(recoverableDatabaseName));
+            }
+            if (recoverableDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoverableDatabaseName));
+            }
 
             using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual Response<RecoverableManagedDatabaseResource> Get(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
+            if (recoverableDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(recoverableDatabaseName));
+            }
+            if (recoverableDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoverableDatabaseName));
+            }
 
             using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
+            if (recoverableDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(recoverableDatabaseName));
+            }
+            if (recoverableDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoverableDatabaseName));
+            }
 
             using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual Response<bool> Exists(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
+            if (recoverableDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(recoverableDatabaseName));
+            }
+            if (recoverableDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoverableDatabaseName));
+            }
 
             using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual async Task<NullableResponse<RecoverableManagedDatabaseResource>> GetIfExistsAsync(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
+            if (recoverableDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(recoverableDatabaseName));
+            }
+            if (recoverableDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoverableDatabaseName));
+            }
 
             using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="recoverableDatabaseName"/> is null. </exception>
         public virtual NullableResponse<RecoverableManagedDatabaseResource> GetIfExists(string recoverableDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoverableDatabaseName, nameof(recoverableDatabaseName));
+            if (recoverableDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(recoverableDatabaseName));
+            }
+            if (recoverableDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoverableDatabaseName));
+            }
 
             using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetIfExists");
             scope.Start();

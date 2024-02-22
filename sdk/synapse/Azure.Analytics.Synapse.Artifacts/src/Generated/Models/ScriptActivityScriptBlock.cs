@@ -20,7 +20,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public ScriptActivityScriptBlock(object text, ScriptType type)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
 
             Text = text;
             Type = type;

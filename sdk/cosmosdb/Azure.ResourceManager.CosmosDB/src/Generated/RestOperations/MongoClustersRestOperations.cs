@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MongoClusterListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -86,7 +93,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MongoClusterListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -131,8 +145,22 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MongoClusterListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -158,8 +186,22 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MongoClusterListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -211,10 +253,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, MongoClusterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, mongoClusterName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -238,10 +304,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string mongoClusterName, MongoClusterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, mongoClusterName, data);
             _pipeline.Send(message, cancellationToken);
@@ -284,9 +374,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MongoClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, mongoClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -315,9 +426,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MongoClusterData> Get(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, mongoClusterName);
             _pipeline.Send(message, cancellationToken);
@@ -366,9 +498,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, mongoClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -391,9 +544,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, mongoClusterName);
             _pipeline.Send(message, cancellationToken);
@@ -441,10 +615,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, MongoClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, mongoClusterName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -468,10 +666,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string mongoClusterName, MongoClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, mongoClusterName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -522,11 +744,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mongoClusterName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateFirewallRuleAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, string firewallRuleName, CosmosDBFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateFirewallRuleRequest(subscriptionId, resourceGroupName, mongoClusterName, firewallRuleName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -551,11 +804,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mongoClusterName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdateFirewallRule(string subscriptionId, string resourceGroupName, string mongoClusterName, string firewallRuleName, CosmosDBFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateFirewallRuleRequest(subscriptionId, resourceGroupName, mongoClusterName, firewallRuleName, data);
             _pipeline.Send(message, cancellationToken);
@@ -601,10 +885,38 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mongoClusterName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteFirewallRuleAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var message = CreateDeleteFirewallRuleRequest(subscriptionId, resourceGroupName, mongoClusterName, firewallRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -628,10 +940,38 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mongoClusterName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteFirewallRule(string subscriptionId, string resourceGroupName, string mongoClusterName, string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var message = CreateDeleteFirewallRuleRequest(subscriptionId, resourceGroupName, mongoClusterName, firewallRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -677,10 +1017,38 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mongoClusterName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CosmosDBFirewallRuleData>> GetFirewallRuleAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var message = CreateGetFirewallRuleRequest(subscriptionId, resourceGroupName, mongoClusterName, firewallRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -710,10 +1078,38 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mongoClusterName"/> or <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CosmosDBFirewallRuleData> GetFirewallRule(string subscriptionId, string resourceGroupName, string mongoClusterName, string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var message = CreateGetFirewallRuleRequest(subscriptionId, resourceGroupName, mongoClusterName, firewallRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -763,9 +1159,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FirewallRuleListResult>> ListFirewallRulesAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateListFirewallRulesRequest(subscriptionId, resourceGroupName, mongoClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -792,9 +1209,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FirewallRuleListResult> ListFirewallRules(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateListFirewallRulesRequest(subscriptionId, resourceGroupName, mongoClusterName);
             _pipeline.Send(message, cancellationToken);
@@ -844,8 +1282,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CheckCosmosDBNameAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -872,8 +1320,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CheckCosmosDBNameAvailabilityResponse> CheckNameAvailability(string subscriptionId, AzureLocation location, CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
@@ -921,9 +1379,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListConnectionStringsResult>> ListConnectionStringsAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateListConnectionStringsRequest(subscriptionId, resourceGroupName, mongoClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -950,9 +1429,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListConnectionStringsResult> ListConnectionStrings(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateListConnectionStringsRequest(subscriptionId, resourceGroupName, mongoClusterName);
             _pipeline.Send(message, cancellationToken);
@@ -992,8 +1492,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MongoClusterListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1019,8 +1529,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MongoClusterListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -1061,9 +1581,26 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MongoClusterListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1090,9 +1627,26 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MongoClusterListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -1134,10 +1688,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FirewallRuleListResult>> ListFirewallRulesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateListFirewallRulesNextPageRequest(nextLink, subscriptionId, resourceGroupName, mongoClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1165,10 +1743,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FirewallRuleListResult> ListFirewallRulesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (mongoClusterName == null)
+            {
+                throw new ArgumentNullException(nameof(mongoClusterName));
+            }
+            if (mongoClusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(mongoClusterName));
+            }
 
             using var message = CreateListFirewallRulesNextPageRequest(nextLink, subscriptionId, resourceGroupName, mongoClusterName);
             _pipeline.Send(message, cancellationToken);

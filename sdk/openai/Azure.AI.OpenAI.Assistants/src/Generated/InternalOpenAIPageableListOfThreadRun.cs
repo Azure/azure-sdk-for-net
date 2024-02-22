@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -55,9 +54,18 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="data"/>, <paramref name="firstId"/> or <paramref name="lastId"/> is null. </exception>
         internal InternalOpenAIPageableListOfThreadRun(IEnumerable<ThreadRun> data, string firstId, string lastId, bool hasMore)
         {
-            Argument.AssertNotNull(data, nameof(data));
-            Argument.AssertNotNull(firstId, nameof(firstId));
-            Argument.AssertNotNull(lastId, nameof(lastId));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            if (firstId == null)
+            {
+                throw new ArgumentNullException(nameof(firstId));
+            }
+            if (lastId == null)
+            {
+                throw new ArgumentNullException(nameof(lastId));
+            }
 
             Data = data.ToList();
             FirstId = firstId;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public FileSourceInternal(string uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             Uri = uri;
         }

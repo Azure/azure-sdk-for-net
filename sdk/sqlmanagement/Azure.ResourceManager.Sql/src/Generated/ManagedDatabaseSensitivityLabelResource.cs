@@ -286,7 +286,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedDatabaseSensitivityLabelResource>> UpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.Update");
             scope.Start();
@@ -332,7 +335,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedDatabaseSensitivityLabelResource> Update(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.Update");
             scope.Start();

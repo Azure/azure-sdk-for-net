@@ -84,11 +84,42 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/> or <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, DnsResolverOutboundEndpointData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
+            if (outboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(outboundEndpointName));
+            }
+            if (outboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundEndpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -116,11 +147,42 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/> or <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, DnsResolverOutboundEndpointData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
+            if (outboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(outboundEndpointName));
+            }
+            if (outboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundEndpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
@@ -177,11 +239,42 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/> or <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, DnsResolverOutboundEndpointPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
+            if (outboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(outboundEndpointName));
+            }
+            if (outboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundEndpointName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, patch, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -207,11 +300,42 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/> or <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, DnsResolverOutboundEndpointPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
+            if (outboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(outboundEndpointName));
+            }
+            if (outboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundEndpointName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, patch, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -262,10 +386,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/> or <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
+            if (outboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(outboundEndpointName));
+            }
+            if (outboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundEndpointName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -291,10 +443,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/> or <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
+            if (outboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(outboundEndpointName));
+            }
+            if (outboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundEndpointName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -341,10 +521,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/> or <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsResolverOutboundEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
+            if (outboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(outboundEndpointName));
+            }
+            if (outboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundEndpointName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -374,10 +582,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsResolverName"/> or <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsResolverOutboundEndpointData> Get(string subscriptionId, string resourceGroupName, string dnsResolverName, string outboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
+            if (outboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(outboundEndpointName));
+            }
+            if (outboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(outboundEndpointName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, dnsResolverName, outboundEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -432,9 +668,30 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OutboundEndpointListResult>> ListAsync(string subscriptionId, string resourceGroupName, string dnsResolverName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, dnsResolverName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -462,9 +719,30 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OutboundEndpointListResult> List(string subscriptionId, string resourceGroupName, string dnsResolverName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, dnsResolverName, top);
             _pipeline.Send(message, cancellationToken);
@@ -507,10 +785,34 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OutboundEndpointListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string dnsResolverName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, dnsResolverName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -539,10 +841,34 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OutboundEndpointListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string dnsResolverName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dnsResolverName == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverName));
+            }
+            if (dnsResolverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsResolverName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, dnsResolverName, top);
             _pipeline.Send(message, cancellationToken);

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -55,10 +54,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/>, <paramref name="label"/>, <paramref name="targetNetworkId"/> or <paramref name="testNetworkId"/> is null. </exception>
         public VMwareToAzStackHciNicInput(string nicId, string label, string targetNetworkId, string testNetworkId, VmNicSelection selectionTypeForFailover)
         {
-            Argument.AssertNotNull(nicId, nameof(nicId));
-            Argument.AssertNotNull(label, nameof(label));
-            Argument.AssertNotNull(targetNetworkId, nameof(targetNetworkId));
-            Argument.AssertNotNull(testNetworkId, nameof(testNetworkId));
+            if (nicId == null)
+            {
+                throw new ArgumentNullException(nameof(nicId));
+            }
+            if (label == null)
+            {
+                throw new ArgumentNullException(nameof(label));
+            }
+            if (targetNetworkId == null)
+            {
+                throw new ArgumentNullException(nameof(targetNetworkId));
+            }
+            if (testNetworkId == null)
+            {
+                throw new ArgumentNullException(nameof(testNetworkId));
+            }
 
             NicId = nicId;
             Label = label;

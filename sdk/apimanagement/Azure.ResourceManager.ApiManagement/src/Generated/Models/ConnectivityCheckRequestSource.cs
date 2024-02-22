@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         public ConnectivityCheckRequestSource(string region)
         {
-            Argument.AssertNotNull(region, nameof(region));
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
 
             Region = region;
         }

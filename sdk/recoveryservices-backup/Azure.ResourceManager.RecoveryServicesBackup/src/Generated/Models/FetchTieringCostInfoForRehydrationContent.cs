@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -24,9 +23,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointId"/> is null. </exception>
         public FetchTieringCostInfoForRehydrationContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string containerName, string protectedItemName, string recoveryPointId, RehydrationPriority rehydrationPriority) : base(sourceTierType, targetTierType)
         {
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(protectedItemName, nameof(protectedItemName));
-            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (protectedItemName == null)
+            {
+                throw new ArgumentNullException(nameof(protectedItemName));
+            }
+            if (recoveryPointId == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointId));
+            }
 
             ContainerName = containerName;
             ProtectedItemName = protectedItemName;

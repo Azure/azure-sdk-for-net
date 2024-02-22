@@ -1,6 +1,6 @@
 # Release History
 
-## 4.6.0-beta.3 (Unreleased)
+## 4.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,31 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.6.0 (2024-02-14)
+
+Changes from both the last release and the last beta include:
+
+### Features Added
+
+- Added `CertificateProperties.X509ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
+  `CertificateProperties.X509Thumbprint` has been hidden but is still available.
+
+### Breaking Changes
+
+- Renamed tags reported on `CertificateClient` activities to following OpenTelemetry attribute naming conventions:
+  - `certificate` to `az.keyvault.certificate.name`
+  - `version` to `az.keyvault.certificate.version`
+  - `issuer` to `az.keyvault.certificate.issuer.name`
+
+### Bugs Fixed
+
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
+
+### Other Changes
+
+- The default service version is now "7.5".
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
 ## 4.6.0-beta.2 (2023-11-13)
 

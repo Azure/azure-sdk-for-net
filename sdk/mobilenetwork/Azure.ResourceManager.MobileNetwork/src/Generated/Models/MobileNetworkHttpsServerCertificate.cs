@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateUri"/> is null. </exception>
         public MobileNetworkHttpsServerCertificate(Uri certificateUri)
         {
-            Argument.AssertNotNull(certificateUri, nameof(certificateUri));
+            if (certificateUri == null)
+            {
+                throw new ArgumentNullException(nameof(certificateUri));
+            }
 
             CertificateUri = certificateUri;
         }

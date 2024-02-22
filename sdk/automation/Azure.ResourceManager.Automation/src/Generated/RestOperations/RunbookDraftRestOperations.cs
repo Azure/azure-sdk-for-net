@@ -71,10 +71,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<string>> GetContentAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (runbookName == null)
+            {
+                throw new ArgumentNullException(nameof(runbookName));
+            }
+            if (runbookName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
+            }
 
             using var message = CreateGetContentRequest(subscriptionId, resourceGroupName, automationAccountName, runbookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,10 +129,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<string> GetContent(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (runbookName == null)
+            {
+                throw new ArgumentNullException(nameof(runbookName));
+            }
+            if (runbookName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
+            }
 
             using var message = CreateGetContentRequest(subscriptionId, resourceGroupName, automationAccountName, runbookName);
             _pipeline.Send(message, cancellationToken);
@@ -132,11 +188,42 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ReplaceContentAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
-            Argument.AssertNotNull(runbookContent, nameof(runbookContent));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (runbookName == null)
+            {
+                throw new ArgumentNullException(nameof(runbookName));
+            }
+            if (runbookName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
+            }
+            if (runbookContent == null)
+            {
+                throw new ArgumentNullException(nameof(runbookContent));
+            }
 
             using var message = CreateReplaceContentRequest(subscriptionId, resourceGroupName, automationAccountName, runbookName, runbookContent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -161,11 +248,42 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ReplaceContent(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, Stream runbookContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
-            Argument.AssertNotNull(runbookContent, nameof(runbookContent));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (runbookName == null)
+            {
+                throw new ArgumentNullException(nameof(runbookName));
+            }
+            if (runbookName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
+            }
+            if (runbookContent == null)
+            {
+                throw new ArgumentNullException(nameof(runbookContent));
+            }
 
             using var message = CreateReplaceContentRequest(subscriptionId, resourceGroupName, automationAccountName, runbookName, runbookContent);
             _pipeline.Send(message, cancellationToken);
@@ -212,10 +330,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationRunbookDraft>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (runbookName == null)
+            {
+                throw new ArgumentNullException(nameof(runbookName));
+            }
+            if (runbookName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, runbookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -243,10 +389,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationRunbookDraft> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (runbookName == null)
+            {
+                throw new ArgumentNullException(nameof(runbookName));
+            }
+            if (runbookName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, runbookName);
             _pipeline.Send(message, cancellationToken);
@@ -297,10 +471,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RunbookDraftUndoEditResult>> UndoEditAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (runbookName == null)
+            {
+                throw new ArgumentNullException(nameof(runbookName));
+            }
+            if (runbookName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
+            }
 
             using var message = CreateUndoEditRequest(subscriptionId, resourceGroupName, automationAccountName, runbookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -328,10 +530,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RunbookDraftUndoEditResult> UndoEdit(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (runbookName == null)
+            {
+                throw new ArgumentNullException(nameof(runbookName));
+            }
+            if (runbookName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
+            }
 
             using var message = CreateUndoEditRequest(subscriptionId, resourceGroupName, automationAccountName, runbookName);
             _pipeline.Send(message, cancellationToken);

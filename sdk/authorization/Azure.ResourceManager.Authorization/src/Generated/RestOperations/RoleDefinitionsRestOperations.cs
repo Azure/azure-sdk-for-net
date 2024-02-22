@@ -62,8 +62,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
         public async Task<Response<AuthorizationRoleDefinitionData>> DeleteAsync(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
 
             using var message = CreateDeleteRequest(scope, roleDefinitionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -90,8 +96,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
         public Response<AuthorizationRoleDefinitionData> Delete(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
 
             using var message = CreateDeleteRequest(scope, roleDefinitionId);
             _pipeline.Send(message, cancellationToken);
@@ -136,8 +148,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
         public async Task<Response<AuthorizationRoleDefinitionData>> GetAsync(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
 
             using var message = CreateGetRequest(scope, roleDefinitionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -164,8 +182,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionId"/> is null. </exception>
         public Response<AuthorizationRoleDefinitionData> Get(string scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
 
             using var message = CreateGetRequest(scope, roleDefinitionId);
             _pipeline.Send(message, cancellationToken);
@@ -215,9 +239,18 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response<AuthorizationRoleDefinitionData>> CreateOrUpdateAsync(string scope, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(scope, roleDefinitionId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -243,9 +276,18 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
         public Response<AuthorizationRoleDefinitionData> CreateOrUpdate(string scope, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(scope, roleDefinitionId, data);
             _pipeline.Send(message, cancellationToken);
@@ -291,7 +333,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleDefinitionListResult>> ListAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -316,7 +361,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<RoleDefinitionListResult> List(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope, filter);
             _pipeline.Send(message, cancellationToken);
@@ -356,8 +404,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleDefinitionListResult>> ListNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -383,8 +437,14 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<RoleDefinitionListResult> ListNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, scope, filter);
             _pipeline.Send(message, cancellationToken);

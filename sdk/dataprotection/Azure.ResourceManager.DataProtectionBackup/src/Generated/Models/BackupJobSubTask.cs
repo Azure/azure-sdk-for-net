@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> or <paramref name="taskStatus"/> is null. </exception>
         internal BackupJobSubTask(int taskId, string taskName, string taskStatus)
         {
-            Argument.AssertNotNull(taskName, nameof(taskName));
-            Argument.AssertNotNull(taskStatus, nameof(taskStatus));
+            if (taskName == null)
+            {
+                throw new ArgumentNullException(nameof(taskName));
+            }
+            if (taskStatus == null)
+            {
+                throw new ArgumentNullException(nameof(taskStatus));
+            }
 
             AdditionalDetails = new ChangeTrackingDictionary<string, string>();
             TaskId = taskId;

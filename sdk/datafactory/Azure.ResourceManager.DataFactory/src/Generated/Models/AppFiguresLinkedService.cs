@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -22,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="password"/> or <paramref name="clientKey"/> is null. </exception>
         public AppFiguresLinkedService(DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactorySecretBaseDefinition clientKey)
         {
-            Argument.AssertNotNull(userName, nameof(userName));
-            Argument.AssertNotNull(password, nameof(password));
-            Argument.AssertNotNull(clientKey, nameof(clientKey));
+            if (userName == null)
+            {
+                throw new ArgumentNullException(nameof(userName));
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
+            if (clientKey == null)
+            {
+                throw new ArgumentNullException(nameof(clientKey));
+            }
 
             UserName = userName;
             Password = password;

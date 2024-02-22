@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteSlotDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(data, nameof(data));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteSlotDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string id, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(data, nameof(data));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<SiteSlotDeploymentResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<SiteSlotDeploymentResource> Get(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteSlotDeploymentResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual NullableResponse<SiteSlotDeploymentResource> GetIfExists(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.GetIfExists");
             scope.Start();

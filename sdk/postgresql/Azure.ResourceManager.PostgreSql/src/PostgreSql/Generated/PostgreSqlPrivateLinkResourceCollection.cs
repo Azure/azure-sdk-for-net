@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlPrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PostgreSqlPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<PostgreSqlPrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PostgreSqlPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PostgreSqlPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<bool> Exists(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PostgreSqlPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<NullableResponse<PostgreSqlPrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PostgreSqlPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual NullableResponse<PostgreSqlPrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
 
             using var scope = _postgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PostgreSqlPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

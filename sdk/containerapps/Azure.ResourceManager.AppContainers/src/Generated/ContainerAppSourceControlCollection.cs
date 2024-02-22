@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlName, ContainerAppSourceControlData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlName, ContainerAppSourceControlData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppSourceControlResource>> GetAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual Response<ContainerAppSourceControlResource> Get(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual Response<bool> Exists(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppSourceControlResource>> GetIfExistsAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppSourceControlResource> GetIfExists(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.GetIfExists");
             scope.Start();

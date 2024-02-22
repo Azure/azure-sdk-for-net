@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CassandraTableResourceInfo(string tableName)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
 
             TableName = tableName;
         }

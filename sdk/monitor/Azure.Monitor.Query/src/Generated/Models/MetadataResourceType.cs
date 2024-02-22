@@ -20,8 +20,14 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="type"/> is null. </exception>
         internal MetadataResourceType(string id, string type)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(type, nameof(type));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
 
             Id = id;
             Type = type;

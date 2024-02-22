@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ArcExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string extensionName, ArcExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ArcExtensionResource> CreateOrUpdate(WaitUntil waitUntil, string extensionName, ArcExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<Response<ArcExtensionResource>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<ArcExtensionResource> Get(string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<bool> Exists(string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ArcExtensionResource>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual NullableResponse<ArcExtensionResource> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetIfExists");
             scope.Start();

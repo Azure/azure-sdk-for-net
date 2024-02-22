@@ -20,8 +20,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="file"/> is null. </exception>
         public SparkBatchJobOptions(string name, string file)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(file, nameof(file));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Name = name;

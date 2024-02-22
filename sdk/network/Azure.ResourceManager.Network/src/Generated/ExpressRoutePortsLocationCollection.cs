@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual async Task<Response<ExpressRoutePortsLocationResource>> GetAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Get");
             scope.Start();
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual Response<ExpressRoutePortsLocationResource> Get(string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Get");
             scope.Start();
@@ -231,7 +245,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Exists");
             scope.Start();
@@ -274,7 +295,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual Response<bool> Exists(string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.Exists");
             scope.Start();
@@ -317,7 +345,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRoutePortsLocationResource>> GetIfExistsAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
             scope.Start();
@@ -362,7 +397,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual NullableResponse<ExpressRoutePortsLocationResource> GetIfExists(string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             using var scope = _expressRoutePortsLocationClientDiagnostics.CreateScope("ExpressRoutePortsLocationCollection.GetIfExists");
             scope.Start();

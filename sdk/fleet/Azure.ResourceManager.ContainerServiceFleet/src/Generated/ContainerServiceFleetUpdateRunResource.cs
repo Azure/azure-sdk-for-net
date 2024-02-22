@@ -285,7 +285,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunResource.Update");
             scope.Start();
@@ -333,7 +336,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> Update(WaitUntil waitUntil, ContainerServiceFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunResource.Update");
             scope.Start();

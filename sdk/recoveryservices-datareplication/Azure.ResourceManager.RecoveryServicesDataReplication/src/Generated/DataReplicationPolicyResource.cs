@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationPolicyResource>> UpdateAsync(WaitUntil waitUntil, DataReplicationPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataReplicationPolicyPolicyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationPolicyResource> Update(WaitUntil waitUntil, DataReplicationPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataReplicationPolicyPolicyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Update");
             scope.Start();

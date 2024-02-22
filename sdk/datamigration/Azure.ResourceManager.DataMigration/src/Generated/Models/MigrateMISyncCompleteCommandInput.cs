@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceDatabaseName"/> is null. </exception>
         public MigrateMISyncCompleteCommandInput(string sourceDatabaseName)
         {
-            Argument.AssertNotNull(sourceDatabaseName, nameof(sourceDatabaseName));
+            if (sourceDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceDatabaseName));
+            }
 
             SourceDatabaseName = sourceDatabaseName;
         }

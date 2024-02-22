@@ -267,7 +267,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformBuildResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformBuildData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformBuildBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResource.Update");
             scope.Start();
@@ -313,7 +316,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformBuildResource> Update(WaitUntil waitUntil, AppPlatformBuildData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformBuildBuildServiceClientDiagnostics.CreateScope("AppPlatformBuildResource.Update");
             scope.Start();

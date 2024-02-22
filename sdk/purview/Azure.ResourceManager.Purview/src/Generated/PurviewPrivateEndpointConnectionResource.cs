@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PurviewPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, PurviewPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PurviewPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, PurviewPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Update");
             scope.Start();

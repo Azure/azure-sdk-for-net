@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fieldDefinitionType"/> is null. </exception>
         public AutomationConnectionFieldDefinition(string fieldDefinitionType)
         {
-            Argument.AssertNotNull(fieldDefinitionType, nameof(fieldDefinitionType));
+            if (fieldDefinitionType == null)
+            {
+                throw new ArgumentNullException(nameof(fieldDefinitionType));
+            }
 
             FieldDefinitionType = fieldDefinitionType;
         }

@@ -71,10 +71,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BackupProtectionPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, policyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,10 +135,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BackupProtectionPolicyData> Get(string subscriptionId, string resourceGroupName, string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, policyName);
             _pipeline.Send(message, cancellationToken);
@@ -170,11 +226,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BackupProtectionPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, policyName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -208,11 +295,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BackupProtectionPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, policyName, data);
             _pipeline.Send(message, cancellationToken);
@@ -267,10 +385,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName, policyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -297,10 +443,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (vaultName == null)
+            {
+                throw new ArgumentNullException(nameof(vaultName));
+            }
+            if (vaultName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
+            }
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vaultName, policyName);
             _pipeline.Send(message, cancellationToken);

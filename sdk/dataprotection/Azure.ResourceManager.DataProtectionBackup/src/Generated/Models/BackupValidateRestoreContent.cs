@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -55,7 +54,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequestObject"/> is null. </exception>
         public BackupValidateRestoreContent(BackupRestoreContent restoreRequestObject)
         {
-            Argument.AssertNotNull(restoreRequestObject, nameof(restoreRequestObject));
+            if (restoreRequestObject == null)
+            {
+                throw new ArgumentNullException(nameof(restoreRequestObject));
+            }
 
             RestoreRequestObject = restoreRequestObject;
         }

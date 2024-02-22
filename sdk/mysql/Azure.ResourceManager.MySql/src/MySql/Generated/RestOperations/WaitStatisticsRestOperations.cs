@@ -69,10 +69,38 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MySqlWaitStatisticData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string waitStatisticsId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (waitStatisticsId == null)
+            {
+                throw new ArgumentNullException(nameof(waitStatisticsId));
+            }
+            if (waitStatisticsId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(waitStatisticsId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, waitStatisticsId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,10 +130,38 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MySqlWaitStatisticData> Get(string subscriptionId, string resourceGroupName, string serverName, string waitStatisticsId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(waitStatisticsId, nameof(waitStatisticsId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (waitStatisticsId == null)
+            {
+                throw new ArgumentNullException(nameof(waitStatisticsId));
+            }
+            if (waitStatisticsId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(waitStatisticsId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, waitStatisticsId);
             _pipeline.Send(message, cancellationToken);
@@ -160,10 +216,34 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MySqlWaitStatisticsListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, MySqlWaitStatisticsInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(input, nameof(input));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var message = CreateListByServerRequest(subscriptionId, resourceGroupName, serverName, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -191,10 +271,34 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MySqlWaitStatisticsListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, MySqlWaitStatisticsInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(input, nameof(input));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var message = CreateListByServerRequest(subscriptionId, resourceGroupName, serverName, input);
             _pipeline.Send(message, cancellationToken);
@@ -237,11 +341,38 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MySqlWaitStatisticsListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, MySqlWaitStatisticsInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(input, nameof(input));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var message = CreateListByServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -270,11 +401,38 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MySqlWaitStatisticsListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, MySqlWaitStatisticsInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(input, nameof(input));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
 
             using var message = CreateListByServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, input);
             _pipeline.Send(message, cancellationToken);

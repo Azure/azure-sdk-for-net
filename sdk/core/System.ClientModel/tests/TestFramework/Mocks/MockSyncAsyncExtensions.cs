@@ -84,4 +84,16 @@ public static class MockSyncAsyncExtensions
             policy.DoWait(delay, cancellationToken);
         }
     }
+
+    public static async Task<BinaryData> BufferContentSyncOrAsync(this PipelineResponse response, CancellationToken cancellationToken, bool isAsync)
+    {
+        if (isAsync)
+        {
+            return await response.BufferContentAsync(cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            return response.BufferContent(cancellationToken);
+        }
+    }
 }

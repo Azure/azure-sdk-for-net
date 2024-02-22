@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SignalRNameAvailabilityContent(ResourceType resourceType, string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             ResourceType = resourceType;
             Name = name;

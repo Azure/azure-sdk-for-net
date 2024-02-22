@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactoryExpression(DataFactoryExpressionType expressionType, string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             ExpressionType = expressionType;
             Value = value;

@@ -60,7 +60,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByResourceAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
 
             using var message = CreateListByResourceRequest(resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByResource(string resourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
 
             using var message = CreateListByResourceRequest(resourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -132,9 +138,30 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByRuleAsync(string subscriptionId, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dataCollectionRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataCollectionRuleName));
+            }
+            if (dataCollectionRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
+            }
 
             using var message = CreateListByRuleRequest(subscriptionId, resourceGroupName, dataCollectionRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -161,9 +188,30 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByRule(string subscriptionId, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dataCollectionRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataCollectionRuleName));
+            }
+            if (dataCollectionRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
+            }
 
             using var message = CreateListByRuleRequest(subscriptionId, resourceGroupName, dataCollectionRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -211,9 +259,30 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByDataCollectionEndpointAsync(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dataCollectionEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
+            }
+            if (dataCollectionEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
+            }
 
             using var message = CreateListByDataCollectionEndpointRequest(subscriptionId, resourceGroupName, dataCollectionEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -240,9 +309,30 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByDataCollectionEndpoint(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dataCollectionEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
+            }
+            if (dataCollectionEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
+            }
 
             using var message = CreateListByDataCollectionEndpointRequest(subscriptionId, resourceGroupName, dataCollectionEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -286,8 +376,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataCollectionRuleAssociationData>> GetAsync(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var message = CreateGetRequest(resourceUri, associationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -315,8 +415,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataCollectionRuleAssociationData> Get(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var message = CreateGetRequest(resourceUri, associationName);
             _pipeline.Send(message, cancellationToken);
@@ -367,9 +477,22 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataCollectionRuleAssociationData>> CreateAsync(string resourceUri, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(resourceUri, associationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -397,9 +520,22 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataCollectionRuleAssociationData> Create(string resourceUri, string associationName, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(resourceUri, associationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -444,8 +580,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var message = CreateDeleteRequest(resourceUri, associationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -467,8 +613,18 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string resourceUri, string associationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
+            if (associationName == null)
+            {
+                throw new ArgumentNullException(nameof(associationName));
+            }
+            if (associationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(associationName));
+            }
 
             using var message = CreateDeleteRequest(resourceUri, associationName);
             _pipeline.Send(message, cancellationToken);
@@ -503,8 +659,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByResourceNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
 
             using var message = CreateListByResourceNextPageRequest(nextLink, resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -529,8 +691,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByResourceNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(resourceUri));
+            }
 
             using var message = CreateListByResourceNextPageRequest(nextLink, resourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -572,10 +740,34 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByRuleNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dataCollectionRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataCollectionRuleName));
+            }
+            if (dataCollectionRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
+            }
 
             using var message = CreateListByRuleNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataCollectionRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -603,10 +795,34 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByRuleNextPage(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dataCollectionRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataCollectionRuleName));
+            }
+            if (dataCollectionRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
+            }
 
             using var message = CreateListByRuleNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataCollectionRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -648,10 +864,34 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataCollectionRuleAssociationProxyOnlyResourceListResult>> ListByDataCollectionEndpointNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dataCollectionEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
+            }
+            if (dataCollectionEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
+            }
 
             using var message = CreateListByDataCollectionEndpointNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataCollectionEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -679,10 +919,34 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataCollectionEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataCollectionRuleAssociationProxyOnlyResourceListResult> ListByDataCollectionEndpointNextPage(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (dataCollectionEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
+            }
+            if (dataCollectionEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
+            }
 
             using var message = CreateListByDataCollectionEndpointNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataCollectionEndpointName);
             _pipeline.Send(message, cancellationToken);
