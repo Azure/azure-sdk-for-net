@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         internal WhatIfPropertyChange(string path, WhatIfPropertyChangeType propertyChangeType)
         {
-            Argument.AssertNotNull(path, nameof(path));
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
 
             Path = path;
             PropertyChangeType = propertyChangeType;

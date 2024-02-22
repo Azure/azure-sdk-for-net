@@ -196,7 +196,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AseV3NetworkingConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AseV3NetworkingConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateScope("AseV3NetworkingConfigurationResource.CreateOrUpdate");
             scope.Start();
@@ -242,7 +245,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AseV3NetworkingConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, AseV3NetworkingConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _aseV3NetworkingConfigurationAppServiceEnvironmentsClientDiagnostics.CreateScope("AseV3NetworkingConfigurationResource.CreateOrUpdate");
             scope.Start();

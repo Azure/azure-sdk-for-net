@@ -211,14 +211,7 @@ namespace Azure.ResourceManager.AppService.Models
                         builder.AppendLine("[");
                         foreach (var item in Columns)
                         {
-                            int currentIndent = 4;
-                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                            int length = builder.Length;
-                            AppendChildObject(builder, item, options, currentIndent, true);
-                            if (builder.Length == length + emptyObjectLength)
-                            {
-                                builder.Length = builder.Length - emptyObjectLength - "  columns: ".Length;
-                            }
+                            AppendChildObject(builder, item, options, 4, true, "  columns: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -274,12 +267,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -306,6 +302,10 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

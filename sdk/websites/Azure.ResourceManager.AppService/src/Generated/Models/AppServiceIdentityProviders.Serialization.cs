@@ -247,14 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 else
                 {
-                    int currentIndent = 2;
-                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                    int length = builder.Length;
-                    AppendChildObject(builder, AzureActiveDirectory, options, currentIndent, false);
-                    if (builder.Length == length + emptyObjectLength)
-                    {
-                        builder.Length = builder.Length - emptyObjectLength - "  azureActiveDirectory: ".Length;
-                    }
+                    AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
                 }
             }
 
@@ -268,14 +261,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 else
                 {
-                    int currentIndent = 2;
-                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                    int length = builder.Length;
-                    AppendChildObject(builder, Facebook, options, currentIndent, false);
-                    if (builder.Length == length + emptyObjectLength)
-                    {
-                        builder.Length = builder.Length - emptyObjectLength - "  facebook: ".Length;
-                    }
+                    AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
                 }
             }
 
@@ -289,14 +275,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 else
                 {
-                    int currentIndent = 2;
-                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                    int length = builder.Length;
-                    AppendChildObject(builder, GitHub, options, currentIndent, false);
-                    if (builder.Length == length + emptyObjectLength)
-                    {
-                        builder.Length = builder.Length - emptyObjectLength - "  gitHub: ".Length;
-                    }
+                    AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
                 }
             }
 
@@ -310,14 +289,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 else
                 {
-                    int currentIndent = 2;
-                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                    int length = builder.Length;
-                    AppendChildObject(builder, Google, options, currentIndent, false);
-                    if (builder.Length == length + emptyObjectLength)
-                    {
-                        builder.Length = builder.Length - emptyObjectLength - "  google: ".Length;
-                    }
+                    AppendChildObject(builder, Google, options, 2, false, "  google: ");
                 }
             }
 
@@ -331,14 +303,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 else
                 {
-                    int currentIndent = 2;
-                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                    int length = builder.Length;
-                    AppendChildObject(builder, LegacyMicrosoftAccount, options, currentIndent, false);
-                    if (builder.Length == length + emptyObjectLength)
-                    {
-                        builder.Length = builder.Length - emptyObjectLength - "  legacyMicrosoftAccount: ".Length;
-                    }
+                    AppendChildObject(builder, LegacyMicrosoftAccount, options, 2, false, "  legacyMicrosoftAccount: ");
                 }
             }
 
@@ -352,14 +317,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 else
                 {
-                    int currentIndent = 2;
-                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                    int length = builder.Length;
-                    AppendChildObject(builder, Twitter, options, currentIndent, false);
-                    if (builder.Length == length + emptyObjectLength)
-                    {
-                        builder.Length = builder.Length - emptyObjectLength - "  twitter: ".Length;
-                    }
+                    AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
                 }
             }
 
@@ -373,14 +331,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 else
                 {
-                    int currentIndent = 2;
-                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                    int length = builder.Length;
-                    AppendChildObject(builder, Apple, options, currentIndent, false);
-                    if (builder.Length == length + emptyObjectLength)
-                    {
-                        builder.Length = builder.Length - emptyObjectLength - "  apple: ".Length;
-                    }
+                    AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
                 }
             }
 
@@ -394,14 +345,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 else
                 {
-                    int currentIndent = 2;
-                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                    int length = builder.Length;
-                    AppendChildObject(builder, AzureStaticWebApps, options, currentIndent, false);
-                    if (builder.Length == length + emptyObjectLength)
-                    {
-                        builder.Length = builder.Length - emptyObjectLength - "  azureStaticWebApps: ".Length;
-                    }
+                    AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
                 }
             }
 
@@ -421,14 +365,7 @@ namespace Azure.ResourceManager.AppService.Models
                         foreach (var item in CustomOpenIdConnectProviders)
                         {
                             builder.Append($"    '{item.Key}': ");
-                            int currentIndent = 4;
-                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
-                            int length = builder.Length;
-                            AppendChildObject(builder, item.Value, options, currentIndent, false);
-                            if (builder.Length == length + emptyObjectLength)
-                            {
-                                builder.Length = builder.Length - emptyObjectLength - "  customOpenIdConnectProviders: ".Length;
-                            }
+                            AppendChildObject(builder, item.Value, options, 4, false, "  customOpenIdConnectProviders: ");
                         }
                         builder.AppendLine("  }");
                     }
@@ -439,12 +376,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -471,6 +411,10 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

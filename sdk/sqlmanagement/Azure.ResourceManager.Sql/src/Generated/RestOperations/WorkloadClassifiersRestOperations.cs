@@ -75,12 +75,54 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadClassifierData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -112,12 +154,54 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadClassifierData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
             _pipeline.Send(message, cancellationToken);
@@ -180,13 +264,58 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -214,13 +343,58 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, WorkloadClassifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName, data);
             _pipeline.Send(message, cancellationToken);
@@ -272,12 +446,54 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -304,12 +520,54 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="workloadGroupName"/> or <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, string workloadClassifierName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
-            Argument.AssertNotNullOrEmpty(workloadClassifierName, nameof(workloadClassifierName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
+            if (workloadClassifierName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadClassifierName));
+            }
+            if (workloadClassifierName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadClassifierName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName, workloadClassifierName);
             _pipeline.Send(message, cancellationToken);
@@ -360,11 +618,46 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadClassifierListResult>> ListByWorkloadGroupAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
 
             using var message = CreateListByWorkloadGroupRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -393,11 +686,46 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadClassifierListResult> ListByWorkloadGroup(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
 
             using var message = CreateListByWorkloadGroupRequest(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -441,12 +769,50 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadClassifierListResult>> ListByWorkloadGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
 
             using var message = CreateListByWorkloadGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -476,12 +842,50 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadClassifierListResult> ListByWorkloadGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string databaseName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (workloadGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(workloadGroupName));
+            }
+            if (workloadGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
+            }
 
             using var message = CreateListByWorkloadGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
             _pipeline.Send(message, cancellationToken);

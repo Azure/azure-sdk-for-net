@@ -203,7 +203,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataMaskingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DataMaskingPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyResource.CreateOrUpdate");
             scope.Start();
@@ -249,7 +252,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataMaskingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, DataMaskingPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyResource.CreateOrUpdate");
             scope.Start();
@@ -292,8 +298,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="dataMaskingRule"/> is null. </exception>
         public virtual async Task<Response<DataMaskingRule>> CreateOrUpdateDataMaskingRuleAsync(string dataMaskingRuleName, DataMaskingRule dataMaskingRule, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
-            Argument.AssertNotNull(dataMaskingRule, nameof(dataMaskingRule));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRule == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRule));
+            }
 
             using var scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicyResource.CreateOrUpdateDataMaskingRule");
             scope.Start();
@@ -333,8 +349,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="dataMaskingRule"/> is null. </exception>
         public virtual Response<DataMaskingRule> CreateOrUpdateDataMaskingRule(string dataMaskingRuleName, DataMaskingRule dataMaskingRule, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
-            Argument.AssertNotNull(dataMaskingRule, nameof(dataMaskingRule));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRule == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRule));
+            }
 
             using var scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicyResource.CreateOrUpdateDataMaskingRule");
             scope.Start();

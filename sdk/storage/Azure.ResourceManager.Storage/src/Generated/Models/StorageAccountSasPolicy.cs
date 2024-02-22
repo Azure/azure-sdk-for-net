@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasExpirationPeriod"/> is null. </exception>
         public StorageAccountSasPolicy(string sasExpirationPeriod, ExpirationAction expirationAction)
         {
-            Argument.AssertNotNull(sasExpirationPeriod, nameof(sasExpirationPeriod));
+            if (sasExpirationPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(sasExpirationPeriod));
+            }
 
             SasExpirationPeriod = sasExpirationPeriod;
             ExpirationAction = expirationAction;

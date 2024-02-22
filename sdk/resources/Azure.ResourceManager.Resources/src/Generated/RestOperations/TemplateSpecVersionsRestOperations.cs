@@ -74,11 +74,42 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TemplateSpecVersionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -108,11 +139,42 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TemplateSpecVersionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, data);
             _pipeline.Send(message, cancellationToken);
@@ -168,11 +230,42 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TemplateSpecVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -201,11 +294,42 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TemplateSpecVersionData> Update(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion, patch);
             _pipeline.Send(message, cancellationToken);
@@ -255,10 +379,38 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TemplateSpecVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -288,10 +440,38 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TemplateSpecVersionData> Get(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion);
             _pipeline.Send(message, cancellationToken);
@@ -343,10 +523,38 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -370,10 +578,38 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="templateSpecName"/> or <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, templateSpecName, templateSpecVersion);
             _pipeline.Send(message, cancellationToken);
@@ -417,9 +653,30 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TemplateSpecVersionsListResult>> ListAsync(string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, templateSpecName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -446,9 +703,30 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TemplateSpecVersionsListResult> List(string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, templateSpecName);
             _pipeline.Send(message, cancellationToken);
@@ -490,10 +768,34 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TemplateSpecVersionsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, templateSpecName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -521,10 +823,34 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TemplateSpecVersionsListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (templateSpecName == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecName));
+            }
+            if (templateSpecName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, templateSpecName);
             _pipeline.Send(message, cancellationToken);
