@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<OrbitalContactProfileLink> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();

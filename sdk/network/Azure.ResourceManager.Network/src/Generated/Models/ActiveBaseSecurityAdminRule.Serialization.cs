@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ruleCollectionDescription"u8);
                 writer.WriteStringValue(RuleCollectionDescription);
             }
-            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            if (!(RuleCollectionAppliesToGroups is ChangeTrackingList<NetworkManagerSecurityGroupItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RuleGroups))
+            if (!(RuleGroups is ChangeTrackingList<NetworkConfigurationGroup> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();

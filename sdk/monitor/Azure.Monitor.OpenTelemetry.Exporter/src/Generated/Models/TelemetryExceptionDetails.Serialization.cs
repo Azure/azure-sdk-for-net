@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WritePropertyName("stack"u8);
                 writer.WriteStringValue(Stack);
             }
-            if (Optional.IsCollectionDefined(ParsedStack))
+            if (!(ParsedStack is ChangeTrackingList<StackFrame> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parsedStack"u8);
                 writer.WriteStartArray();

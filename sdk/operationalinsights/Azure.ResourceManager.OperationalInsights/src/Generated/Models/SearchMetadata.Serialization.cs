@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(CoreSummaries))
+            if (!(CoreSummaries is ChangeTrackingList<OperationalInsightsSearchCoreSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("coreSummaries"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Sort))
+            if (!(Sort is ChangeTrackingList<SearchSort> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sort"u8);
                 writer.WriteStartArray();

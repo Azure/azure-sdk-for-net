@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(LoadBalancingRules))
+            if (options.Format != "W" && !(LoadBalancingRules is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();

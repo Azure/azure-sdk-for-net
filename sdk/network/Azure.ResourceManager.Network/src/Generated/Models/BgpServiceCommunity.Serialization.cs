@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (Optional.IsCollectionDefined(BgpCommunities))
+            if (!(BgpCommunities is ChangeTrackingList<BgpCommunity> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteStartArray();

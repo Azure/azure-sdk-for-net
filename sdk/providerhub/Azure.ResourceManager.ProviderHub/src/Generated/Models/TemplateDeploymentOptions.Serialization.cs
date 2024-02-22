@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("preflightSupported"u8);
                 writer.WriteBooleanValue(IsPreflightSupported.Value);
             }
-            if (Optional.IsCollectionDefined(PreflightOptions))
+            if (!(PreflightOptions is ChangeTrackingList<PreflightOption> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("preflightOptions"u8);
                 writer.WriteStartArray();

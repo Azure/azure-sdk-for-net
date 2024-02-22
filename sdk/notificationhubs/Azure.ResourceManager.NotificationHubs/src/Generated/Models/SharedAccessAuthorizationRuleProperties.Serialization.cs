@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rights))
+            if (!(Rights is ChangeTrackingList<AuthorizationRuleAccessRight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();

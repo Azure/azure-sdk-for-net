@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Functions))
+            if (!(Functions is ChangeTrackingList<FunctionDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
-            if (Optional.IsCollectionDefined(TokenSelectionBiases))
+            if (!(TokenSelectionBiases is ChangeTrackingDictionary<int, int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("logit_bias"u8);
                 SerializeTokenSelectionBiases(writer);
@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("n"u8);
                 writer.WriteNumberValue(ChoiceCount.Value);
             }
-            if (Optional.IsCollectionDefined(StopSequences))
+            if (!(StopSequences is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("stop"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
+            if (!(InternalAzureExtensionsDataSources is ChangeTrackingList<AzureChatExtensionConfiguration> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("dataSources"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteObjectValue(ResponseFormat);
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (!(Tools is ChangeTrackingList<ChatCompletionsToolDefinition> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();

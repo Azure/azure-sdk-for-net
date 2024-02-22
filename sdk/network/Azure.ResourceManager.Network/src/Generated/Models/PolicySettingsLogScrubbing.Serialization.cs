@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ScrubbingRules))
+            if (!(ScrubbingRules is ChangeTrackingList<WebApplicationFirewallScrubbingRules> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scrubbingRules"u8);
                 writer.WriteStartArray();

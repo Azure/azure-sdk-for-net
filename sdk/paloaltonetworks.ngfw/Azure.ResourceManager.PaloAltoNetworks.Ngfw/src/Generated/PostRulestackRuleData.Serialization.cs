@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("negateDestination"u8);
                 writer.WriteStringValue(NegateDestination.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Applications))
+            if (!(Applications is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applications"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (Optional.IsCollectionDefined(ProtocolPortList))
+            if (!(ProtocolPortList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protocolPortList"u8);
                 writer.WriteStartArray();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("decryptionRuleType"u8);
                 writer.WriteStringValue(DecryptionRuleType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<RulestackTagInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();

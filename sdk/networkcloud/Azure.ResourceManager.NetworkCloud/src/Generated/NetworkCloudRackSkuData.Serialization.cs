@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComputeMachines))
+            if (options.Format != "W" && !(ComputeMachines is ChangeTrackingList<MachineSkuSlot> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("computeMachines"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ControllerMachines))
+            if (options.Format != "W" && !(ControllerMachines is ChangeTrackingList<MachineSkuSlot> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("controllerMachines"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("rackType"u8);
                 writer.WriteStringValue(RackType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageAppliances))
+            if (options.Format != "W" && !(StorageAppliances is ChangeTrackingList<StorageApplianceSkuSlot> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("storageAppliances"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedRackSkuIds))
+            if (options.Format != "W" && !(SupportedRackSkuIds is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("supportedRackSkuIds"u8);
                 writer.WriteStartArray();

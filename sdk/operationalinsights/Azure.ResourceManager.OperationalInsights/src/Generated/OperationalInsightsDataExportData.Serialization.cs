@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("dataExportId"u8);
                 writer.WriteStringValue(DataExportId.Value);
             }
-            if (Optional.IsCollectionDefined(TableNames))
+            if (!(TableNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tableNames"u8);
                 writer.WriteStartArray();

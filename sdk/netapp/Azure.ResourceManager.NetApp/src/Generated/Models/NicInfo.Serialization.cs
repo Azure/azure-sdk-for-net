@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsCollectionDefined(VolumeResourceIds))
+            if (!(VolumeResourceIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("volumeResourceIds"u8);
                 writer.WriteStartArray();

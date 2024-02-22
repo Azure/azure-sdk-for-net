@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("peerWeight"u8);
                 writer.WriteNumberValue(PeerWeight.Value);
             }
-            if (Optional.IsCollectionDefined(BgpPeeringAddresses))
+            if (!(BgpPeeringAddresses is ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bgpPeeringAddresses"u8);
                 writer.WriteStartArray();

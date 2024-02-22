@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("tleLine2"u8);
                 writer.WriteStringValue(TleLine2);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<OrbitalSpacecraftLink> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("cpuSockets"u8);
                 writer.WriteNumberValue(CpuSockets.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            if (options.Format != "W" && !(Disks is ChangeTrackingList<MachineDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
+            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkCloudNetworkInterface> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();

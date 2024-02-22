@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("isTestSuccessful"u8);
                 writer.WriteBooleanValue(IsTestSuccessful.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Path))
+            if (options.Format != "W" && !(Path is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStartArray();

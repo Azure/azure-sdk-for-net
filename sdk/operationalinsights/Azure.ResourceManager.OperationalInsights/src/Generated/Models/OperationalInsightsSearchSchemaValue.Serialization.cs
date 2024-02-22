@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteBooleanValue(Stored);
             writer.WritePropertyName("facet"u8);
             writer.WriteBooleanValue(Facet);
-            if (Optional.IsCollectionDefined(OwnerType))
+            if (!(OwnerType is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ownerType"u8);
                 writer.WriteStartArray();

@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WritePropertyName("FullException"u8);
                 writer.WriteStringValue(FullException);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<KeyValuePairString> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Data"u8);
                 writer.WriteStartArray();

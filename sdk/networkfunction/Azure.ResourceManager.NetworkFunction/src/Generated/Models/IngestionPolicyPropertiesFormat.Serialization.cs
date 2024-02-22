@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WritePropertyName("ingestionType"u8);
                 writer.WriteStringValue(IngestionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IngestionSources))
+            if (!(IngestionSources is ChangeTrackingList<IngestionSourcesPropertiesFormat> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ingestionSources"u8);
                 writer.WriteStartArray();

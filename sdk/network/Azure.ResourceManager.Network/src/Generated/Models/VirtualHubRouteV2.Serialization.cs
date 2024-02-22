@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (!(Destinations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType);
             }
-            if (Optional.IsCollectionDefined(NextHops))
+            if (!(NextHops is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nextHops"u8);
                 writer.WriteStartArray();

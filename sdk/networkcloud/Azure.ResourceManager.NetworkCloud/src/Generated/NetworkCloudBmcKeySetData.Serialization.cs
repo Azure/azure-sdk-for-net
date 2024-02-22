@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsCollectionDefined(UserListStatus))
+            if (options.Format != "W" && !(UserListStatus is ChangeTrackingList<KeySetUserStatus> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userListStatus"u8);
                 writer.WriteStartArray();

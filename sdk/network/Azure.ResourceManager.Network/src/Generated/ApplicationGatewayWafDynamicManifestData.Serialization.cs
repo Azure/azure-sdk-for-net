@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AvailableRuleSets))
+            if (!(AvailableRuleSets is ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availableRuleSets"u8);
                 writer.WriteStartArray();

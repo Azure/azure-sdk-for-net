@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("contact"u8);
                 writer.WriteStringValue(Contact);
             }
-            if (Optional.IsCollectionDefined(AvailableBandwidths))
+            if (!(AvailableBandwidths is ChangeTrackingList<ExpressRoutePortsLocationBandwidths> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availableBandwidths"u8);
                 writer.WriteStartArray();

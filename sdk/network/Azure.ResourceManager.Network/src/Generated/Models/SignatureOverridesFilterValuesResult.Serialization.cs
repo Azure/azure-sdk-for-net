@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FilterValues))
+            if (!(FilterValues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filterValues"u8);
                 writer.WriteStartArray();

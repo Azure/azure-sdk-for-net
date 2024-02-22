@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (!(UserAssignedIdentities is ChangeTrackingDictionary<string, UserAssignedIdentity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();

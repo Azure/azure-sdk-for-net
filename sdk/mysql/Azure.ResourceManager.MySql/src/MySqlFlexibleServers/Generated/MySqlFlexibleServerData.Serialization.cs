@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("network"u8);
                 writer.WriteObjectValue(Network);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

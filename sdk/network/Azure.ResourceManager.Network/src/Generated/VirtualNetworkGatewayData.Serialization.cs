@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("autoScaleConfiguration"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (!(IPConfigurations is ChangeTrackingList<VirtualNetworkGatewayIPConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("vpnClientConfiguration"u8);
                 writer.WriteObjectValue(VpnClientConfiguration);
             }
-            if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
+            if (!(VirtualNetworkGatewayPolicyGroups is ChangeTrackingList<VirtualNetworkGatewayPolicyGroup> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkGatewayPolicyGroups"u8);
                 writer.WriteStartArray();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("vNetExtendedLocationResourceId"u8);
                 writer.WriteStringValue(VNetExtendedLocationResourceId);
             }
-            if (Optional.IsCollectionDefined(NatRules))
+            if (!(NatRules is ChangeTrackingList<VirtualNetworkGatewayNatRuleData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("natRules"u8);
                 writer.WriteStartArray();

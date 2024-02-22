@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DisabledMetrics))
+            if (options.Format != "W" && !(DisabledMetrics is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("disabledMetrics"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnabledMetrics))
+            if (!(EnabledMetrics is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("enabledMetrics"u8);
                 writer.WriteStartArray();

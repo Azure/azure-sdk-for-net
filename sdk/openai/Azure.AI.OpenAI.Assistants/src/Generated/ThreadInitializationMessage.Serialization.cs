@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(FileIds))
+            if (!(FileIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Metadata != null)
                 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (!(ApiVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();

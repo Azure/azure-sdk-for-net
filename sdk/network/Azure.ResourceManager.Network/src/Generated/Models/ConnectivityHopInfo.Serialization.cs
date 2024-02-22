@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NextHopIds))
+            if (options.Format != "W" && !(NextHopIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nextHopIds"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousHopIds))
+            if (options.Format != "W" && !(PreviousHopIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("previousHopIds"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
+            if (options.Format != "W" && !(Links is ChangeTrackingList<HopLink> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousLinks))
+            if (options.Format != "W" && !(PreviousLinks is ChangeTrackingList<HopLink> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("previousLinks"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            if (options.Format != "W" && !(Issues is ChangeTrackingList<ConnectivityIssueInfo> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();

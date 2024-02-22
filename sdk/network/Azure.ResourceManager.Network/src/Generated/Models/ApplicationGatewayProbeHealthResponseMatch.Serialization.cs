@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(StatusCodes))
+            if (!(StatusCodes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();

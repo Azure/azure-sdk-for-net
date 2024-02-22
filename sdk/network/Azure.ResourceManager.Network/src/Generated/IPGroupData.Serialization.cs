@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (!(IPAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Firewalls))
+            if (options.Format != "W" && !(Firewalls is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("firewalls"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FirewallPolicies))
+            if (options.Format != "W" && !(FirewallPolicies is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("firewallPolicies"u8);
                 writer.WriteStartArray();

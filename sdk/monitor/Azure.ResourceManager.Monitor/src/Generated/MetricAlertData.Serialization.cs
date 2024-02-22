@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<MetricAlertAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();

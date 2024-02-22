@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("storageLocation"u8);
             writer.WriteObjectValue(StorageLocation);
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<PacketCaptureFilter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();

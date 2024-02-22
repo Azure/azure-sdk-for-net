@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);
             }
-            if (Optional.IsCollectionDefined(PolicyAssignments))
+            if (!(PolicyAssignments is ChangeTrackingList<PolicyAssignmentSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyAssignments"u8);
                 writer.WriteStartArray();

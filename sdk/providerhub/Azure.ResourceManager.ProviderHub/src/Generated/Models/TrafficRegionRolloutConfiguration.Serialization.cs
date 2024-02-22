@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();

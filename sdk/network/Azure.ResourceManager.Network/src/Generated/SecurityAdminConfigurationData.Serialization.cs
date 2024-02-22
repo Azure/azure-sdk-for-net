@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ApplyOnNetworkIntentPolicyBasedServices))
+            if (!(ApplyOnNetworkIntentPolicyBasedServices is ChangeTrackingList<NetworkIntentPolicyBasedService> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applyOnNetworkIntentPolicyBasedServices"u8);
                 writer.WriteStartArray();

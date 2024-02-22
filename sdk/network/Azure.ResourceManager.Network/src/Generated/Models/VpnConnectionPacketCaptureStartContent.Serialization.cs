@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("filterData"u8);
                 writer.WriteStringValue(FilterData);
             }
-            if (Optional.IsCollectionDefined(LinkConnectionNames))
+            if (!(LinkConnectionNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkConnectionNames"u8);
                 writer.WriteStartArray();

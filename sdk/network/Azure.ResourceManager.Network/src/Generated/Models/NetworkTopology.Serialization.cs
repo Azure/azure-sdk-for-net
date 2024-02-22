@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<TopologyResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();

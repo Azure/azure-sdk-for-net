@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(SecurityRules))
+            if (!(SecurityRules is ChangeTrackingList<SecurityRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();

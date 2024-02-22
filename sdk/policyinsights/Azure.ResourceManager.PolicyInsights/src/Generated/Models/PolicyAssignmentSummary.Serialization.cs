@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitions))
+            if (!(PolicyDefinitions is ChangeTrackingList<PolicyDefinitionSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyGroups))
+            if (!(PolicyGroups is ChangeTrackingList<PolicyGroupSummary> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("policyGroups"u8);
                 writer.WriteStartArray();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(ExtensionCategories))
+            if (!(ExtensionCategories is ChangeTrackingList<ResourceTypeExtensionCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensionCategories"u8);
                 writer.WriteStartArray();

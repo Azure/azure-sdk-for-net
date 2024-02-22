@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RewriteRules))
+            if (!(RewriteRules is ChangeTrackingList<ApplicationGatewayRewriteRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rewriteRules"u8);
                 writer.WriteStartArray();

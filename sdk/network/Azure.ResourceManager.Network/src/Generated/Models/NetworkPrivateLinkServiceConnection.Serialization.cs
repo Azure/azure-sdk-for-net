@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();

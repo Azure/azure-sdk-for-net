@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("vpnClientAddressPool"u8);
                 writer.WriteObjectValue(VpnClientAddressPool);
             }
-            if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
+            if (!(VirtualNetworkGatewayPolicyGroups is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkGatewayPolicyGroups"u8);
                 writer.WriteStartArray();

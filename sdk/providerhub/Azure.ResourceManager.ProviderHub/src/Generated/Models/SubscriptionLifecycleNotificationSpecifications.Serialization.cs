@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
+            if (!(SubscriptionStateOverrideActions is ChangeTrackingList<SubscriptionStateOverrideAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptionStateOverrideActions"u8);
                 writer.WriteStartArray();

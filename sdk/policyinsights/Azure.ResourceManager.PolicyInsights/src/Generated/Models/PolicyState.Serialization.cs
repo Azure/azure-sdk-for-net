@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("policyEvaluationDetails"u8);
                 writer.WriteObjectValue(PolicyEvaluationDetails);
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitionGroupNames))
+            if (!(PolicyDefinitionGroupNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitionGroupNames"u8);
                 writer.WriteStartArray();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Components))
+            if (!(Components is ChangeTrackingList<ComponentStateDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();

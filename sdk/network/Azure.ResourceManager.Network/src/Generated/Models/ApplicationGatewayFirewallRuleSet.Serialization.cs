@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
             }
-            if (Optional.IsCollectionDefined(RuleGroups))
+            if (!(RuleGroups is ChangeTrackingList<ApplicationGatewayFirewallRuleGroup> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tiers))
+            if (!(Tiers is ChangeTrackingList<ApplicationGatewayTierType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tiers"u8);
                 writer.WriteStartArray();

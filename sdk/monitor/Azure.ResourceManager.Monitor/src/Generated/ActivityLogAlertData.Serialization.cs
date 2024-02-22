@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();

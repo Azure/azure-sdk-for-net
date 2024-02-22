@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("vpnClientConnectionsCount"u8);
                 writer.WriteNumberValue(VpnClientConnectionsCount.Value);
             }
-            if (Optional.IsCollectionDefined(AllocatedIPAddresses))
+            if (!(AllocatedIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allocatedIpAddresses"u8);
                 writer.WriteStartArray();

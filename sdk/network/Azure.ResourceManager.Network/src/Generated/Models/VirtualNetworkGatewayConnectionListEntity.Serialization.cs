@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelConnectionStatus))
+            if (options.Format != "W" && !(TunnelConnectionStatus is ChangeTrackingList<TunnelConnectionHealth> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tunnelConnectionStatus"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
+            if (!(GatewayCustomBgpIPAddresses is ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IPsecPolicies))
+            if (!(IPsecPolicies is ChangeTrackingList<IPsecPolicy> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
+            if (!(TrafficSelectorPolicies is ChangeTrackingList<TrafficSelectorPolicy> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("trafficSelectorPolicies"u8);
                 writer.WriteStartArray();

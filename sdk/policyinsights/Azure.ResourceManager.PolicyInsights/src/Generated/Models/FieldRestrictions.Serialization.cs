@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Optional.IsCollectionDefined(Restrictions))
+            if (!(Restrictions is ChangeTrackingList<FieldRestriction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();

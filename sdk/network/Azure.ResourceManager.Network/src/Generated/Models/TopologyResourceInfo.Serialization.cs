@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Associations))
+            if (!(Associations is ChangeTrackingList<TopologyAssociation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();

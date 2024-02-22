@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(PromptFilterResults))
+            if (!(PromptFilterResults is ChangeTrackingList<ContentFilterResultsForPrompt> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
                 writer.WriteStartArray();

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("networkManagerScopes"u8);
                 writer.WriteObjectValue(NetworkManagerScopes);
             }
-            if (Optional.IsCollectionDefined(NetworkManagerScopeAccesses))
+            if (!(NetworkManagerScopeAccesses is ChangeTrackingList<NetworkConfigurationDeploymentType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkManagerScopeAccesses"u8);
                 writer.WriteStartArray();

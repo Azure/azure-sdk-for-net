@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WritePropertyName("iKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

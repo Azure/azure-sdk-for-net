@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PrivateRanges))
+            if (!(PrivateRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateRanges"u8);
                 writer.WriteStartArray();

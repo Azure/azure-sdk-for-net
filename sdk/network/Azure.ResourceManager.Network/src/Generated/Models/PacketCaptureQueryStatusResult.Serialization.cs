@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("stopReason"u8);
                 writer.WriteStringValue(StopReason);
             }
-            if (Optional.IsCollectionDefined(PacketCaptureError))
+            if (!(PacketCaptureError is ChangeTrackingList<PcError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("packetCaptureError"u8);
                 writer.WriteStartArray();

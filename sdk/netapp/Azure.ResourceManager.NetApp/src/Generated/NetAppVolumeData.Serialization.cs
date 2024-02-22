@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
-            if (Optional.IsCollectionDefined(ProtocolTypes))
+            if (!(ProtocolTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("storageToNetworkProximity"u8);
                 writer.WriteStringValue(StorageToNetworkProximity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MountTargets))
+            if (options.Format != "W" && !(MountTargets is ChangeTrackingList<NetAppVolumeMountTarget> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("mountTargets"u8);
                 writer.WriteStartArray();
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("avsDataStore"u8);
                 writer.WriteStringValue(AvsDataStore.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataStoreResourceId))
+            if (options.Format != "W" && !(DataStoreResourceId is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("dataStoreResourceId"u8);
                 writer.WriteStartArray();
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("encrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
-            if (Optional.IsCollectionDefined(PlacementRules))
+            if (!(PlacementRules is ChangeTrackingList<NetAppVolumePlacementRule> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("placementRules"u8);
                 writer.WriteStartArray();

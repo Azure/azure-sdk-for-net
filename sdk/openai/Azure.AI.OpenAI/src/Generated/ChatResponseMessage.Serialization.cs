@@ -38,7 +38,7 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("content");
             }
-            if (Optional.IsCollectionDefined(ToolCalls))
+            if (!(ToolCalls is ChangeTrackingList<ChatCompletionsToolCall> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tool_calls"u8);
                 writer.WriteStartArray();

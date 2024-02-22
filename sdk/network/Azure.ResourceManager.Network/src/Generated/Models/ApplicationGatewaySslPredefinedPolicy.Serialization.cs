@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CipherSuites))
+            if (!(CipherSuites is ChangeTrackingList<ApplicationGatewaySslCipherSuite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("cipherSuites"u8);
                 writer.WriteStartArray();

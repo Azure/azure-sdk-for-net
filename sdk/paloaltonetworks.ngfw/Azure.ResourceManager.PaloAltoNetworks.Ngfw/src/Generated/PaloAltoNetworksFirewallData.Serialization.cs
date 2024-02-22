@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
             writer.WritePropertyName("dnsSettings"u8);
             writer.WriteObjectValue(DnsSettings);
-            if (Optional.IsCollectionDefined(FrontEndSettings))
+            if (!(FrontEndSettings is ChangeTrackingList<FirewallFrontendSetting> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();

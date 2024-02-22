@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("captureStartTime"u8);
                 writer.WriteStringValue(CaptureStartOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("timeLimitInSeconds"u8);
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutputFiles))
+            if (options.Format != "W" && !(OutputFiles is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();

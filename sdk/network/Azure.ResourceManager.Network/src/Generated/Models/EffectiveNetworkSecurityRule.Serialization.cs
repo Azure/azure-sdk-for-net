@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (!(SourcePortRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (!(DestinationPortRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
-            if (Optional.IsCollectionDefined(SourceAddressPrefixes))
+            if (!(SourceAddressPrefixes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationAddressPrefixes))
+            if (!(DestinationAddressPrefixes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("destinationAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExpandedSourceAddressPrefix))
+            if (!(ExpandedSourceAddressPrefix is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("expandedSourceAddressPrefix"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExpandedDestinationAddressPrefix))
+            if (!(ExpandedDestinationAddressPrefix is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("expandedDestinationAddressPrefix"u8);
                 writer.WriteStartArray();

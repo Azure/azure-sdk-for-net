@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRulesPortMapping))
+            if (options.Format != "W" && !(InboundNatRulesPortMapping is ChangeTrackingList<NatRulePortMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatRulesPortMapping"u8);
                 writer.WriteStartArray();

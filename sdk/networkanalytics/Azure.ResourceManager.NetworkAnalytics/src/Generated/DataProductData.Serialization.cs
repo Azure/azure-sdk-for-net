@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("majorVersion"u8);
                 writer.WriteStringValue(MajorVersion);
             }
-            if (Optional.IsCollectionDefined(Owners))
+            if (!(Owners is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableMinorVersions))
+            if (options.Format != "W" && !(AvailableMinorVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("availableMinorVersions"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(ConfigurationGroups))
+            if (!(ConfigurationGroups is ChangeTrackingList<NetworkConfigurationGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationGroups"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("connectivityTopology"u8);
                 writer.WriteStringValue(ConnectivityTopology.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Hubs))
+            if (!(Hubs is ChangeTrackingList<ConnectivityHub> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hubs"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AppliesToGroups))
+            if (!(AppliesToGroups is ChangeTrackingList<ConnectivityGroupItem> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();

@@ -44,7 +44,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(Convert.ToDouble(Duration.Value.ToString("s\\.fff")));
             }
-            if (Optional.IsCollectionDefined(Segments))
+            if (!(Segments is ChangeTrackingList<AudioTranscriptionSegment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteStartArray();

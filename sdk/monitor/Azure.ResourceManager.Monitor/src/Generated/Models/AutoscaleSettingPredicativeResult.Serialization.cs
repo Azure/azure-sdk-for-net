@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<PredictiveValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

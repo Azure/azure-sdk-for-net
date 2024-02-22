@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(GroupByUserSession))
+            if (!(GroupByUserSession is ChangeTrackingList<GroupByUserSession> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupByUserSession"u8);
                 writer.WriteStartArray();

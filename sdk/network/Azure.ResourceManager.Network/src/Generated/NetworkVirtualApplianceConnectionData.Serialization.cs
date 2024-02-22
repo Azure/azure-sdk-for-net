@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("tunnelIdentifier"u8);
                 writer.WriteNumberValue(TunnelIdentifier.Value);
             }
-            if (Optional.IsCollectionDefined(BgpPeerAddress))
+            if (!(BgpPeerAddress is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bgpPeerAddress"u8);
                 writer.WriteStartArray();

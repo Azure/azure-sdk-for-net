@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("flushConnection"u8);
                 writer.WriteBooleanValue(FlushConnection.Value);
             }
-            if (Optional.IsCollectionDefined(SecurityRules))
+            if (!(SecurityRules is ChangeTrackingList<SecurityRuleData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultSecurityRules))
+            if (options.Format != "W" && !(DefaultSecurityRules is ChangeTrackingList<SecurityRuleData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("defaultSecurityRules"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
+            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkInterfaceData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Subnets))
+            if (options.Format != "W" && !(Subnets is ChangeTrackingList<SubnetData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FlowLogs))
+            if (options.Format != "W" && !(FlowLogs is ChangeTrackingList<FlowLogData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("flowLogs"u8);
                 writer.WriteStartArray();

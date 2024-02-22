@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
-            if (Optional.IsCollectionDefined(TokenSelectionBiases))
+            if (!(TokenSelectionBiases is ChangeTrackingDictionary<int, int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("logit_bias"u8);
                 SerializeTokenSelectionBiases(writer);
@@ -74,7 +74,7 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("echo"u8);
                 writer.WriteBooleanValue(Echo.Value);
             }
-            if (Optional.IsCollectionDefined(StopSequences))
+            if (!(StopSequences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("stop"u8);
                 writer.WriteStartArray();

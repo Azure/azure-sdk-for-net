@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("probesFailed"u8);
                 writer.WriteNumberValue(ProbesFailed.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Hops))
+            if (options.Format != "W" && !(Hops is ChangeTrackingList<ConnectivityHopInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hops"u8);
                 writer.WriteStartArray();

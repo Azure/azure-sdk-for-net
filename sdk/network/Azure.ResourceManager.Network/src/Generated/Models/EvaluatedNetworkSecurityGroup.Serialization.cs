@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("matchedRule"u8);
                 writer.WriteObjectValue(MatchedRule);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RulesEvaluationResult))
+            if (options.Format != "W" && !(RulesEvaluationResult is ChangeTrackingList<NetworkSecurityRulesEvaluationResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rulesEvaluationResult"u8);
                 writer.WriteStartArray();

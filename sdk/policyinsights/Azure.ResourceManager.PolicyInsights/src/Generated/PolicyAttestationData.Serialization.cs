@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsCollectionDefined(Evidence))
+            if (!(Evidence is ChangeTrackingList<AttestationEvidence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();

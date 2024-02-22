@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<AzureFirewallApplicationRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

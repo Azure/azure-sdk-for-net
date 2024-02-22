@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VolumeBackups))
+            if (options.Format != "W" && !(VolumeBackups is ChangeTrackingList<NetAppVolumeBackupDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("volumeBackups"u8);
                 writer.WriteStartArray();

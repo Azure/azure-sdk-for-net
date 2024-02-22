@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("defaultStorageSizeMb"u8);
                 writer.WriteNumberValue(DefaultStorageSizeMb.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
+            if (options.Format != "W" && !(SupportedStorageCapabilities is ChangeTrackingList<PostgreSqlFlexibleServerStorageCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageMb"u8);
                 writer.WriteStartArray();

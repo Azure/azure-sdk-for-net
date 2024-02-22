@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Paths))
+            if (!(Paths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();

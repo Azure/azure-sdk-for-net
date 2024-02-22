@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("isAvailiable"u8);
                 writer.WriteBooleanValue(IsAvailiable.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

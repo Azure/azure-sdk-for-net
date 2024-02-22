@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AllowedActions))
+            if (!(AllowedActions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedActions"u8);
                 writer.WriteStartArray();

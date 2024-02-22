@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
                 writer.WriteStringValue(AnalyticsWorkspaceId);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ClusterVersions))
+            if (options.Format != "W" && !(ClusterVersions is ChangeTrackingList<ClusterAvailableVersion> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("clusterVersions"u8);
                 writer.WriteStartArray();

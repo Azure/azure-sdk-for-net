@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(PolicyMembers))
+            if (!(PolicyMembers is ChangeTrackingList<VpnServerConfigurationPolicyGroupMember> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyMembers"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(P2SConnectionConfigurations))
+            if (options.Format != "W" && !(P2SConnectionConfigurations is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("p2SConnectionConfigurations"u8);
                 writer.WriteStartArray();

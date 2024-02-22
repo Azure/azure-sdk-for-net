@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Servers))
+            if (!(Servers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();

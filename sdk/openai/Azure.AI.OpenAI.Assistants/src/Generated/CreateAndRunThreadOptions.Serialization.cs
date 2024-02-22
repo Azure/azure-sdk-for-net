@@ -44,7 +44,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(OverrideInstructions);
             }
-            if (Optional.IsCollectionDefined(OverrideTools))
+            if (!(OverrideTools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Metadata != null)
                 {

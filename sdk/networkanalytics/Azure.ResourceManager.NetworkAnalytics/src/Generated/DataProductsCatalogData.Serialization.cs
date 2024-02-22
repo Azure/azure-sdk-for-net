@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Publishers))
+            if (!(Publishers is ChangeTrackingList<PublisherInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publishers"u8);
                 writer.WriteStartArray();

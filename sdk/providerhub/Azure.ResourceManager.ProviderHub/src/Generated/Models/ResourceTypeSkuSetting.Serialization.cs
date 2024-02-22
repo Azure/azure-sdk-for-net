@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocationInfo))
+            if (!(LocationInfo is ChangeTrackingList<ResourceTypeSkuLocationInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredQuotaIds))
+            if (!(RequiredQuotaIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("requiredQuotaIds"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredFeatures))
+            if (!(RequiredFeatures is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Optional.IsCollectionDefined(Costs))
+            if (!(Costs is ChangeTrackingList<ResourceTypeSkuCost> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<ResourceSkuCapability> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();

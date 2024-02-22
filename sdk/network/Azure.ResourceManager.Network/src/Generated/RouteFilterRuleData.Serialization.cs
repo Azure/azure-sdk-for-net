@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("routeFilterRuleType"u8);
                 writer.WriteStringValue(RouteFilterRuleType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Communities))
+            if (!(Communities is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("communities"u8);
                 writer.WriteStartArray();

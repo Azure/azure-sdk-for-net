@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("recommendationType"u8);
                 writer.WriteStringValue(RecommendationType);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();

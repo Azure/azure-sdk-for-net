@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RequestHeaderConfigurations))
+            if (!(RequestHeaderConfigurations is ChangeTrackingList<ApplicationGatewayHeaderConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requestHeaderConfigurations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResponseHeaderConfigurations))
+            if (!(ResponseHeaderConfigurations is ChangeTrackingList<ApplicationGatewayHeaderConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("responseHeaderConfigurations"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (!(Streams is ChangeTrackingList<ExtensionDataSourceStream> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(InputDataSources))
+            if (!(InputDataSources is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputDataSources"u8);
                 writer.WriteStartArray();

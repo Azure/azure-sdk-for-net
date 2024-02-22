@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IPsecPolicies))
+            if (!(IPsecPolicies is ChangeTrackingList<IPsecPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
+            if (!(TrafficSelectorPolicies is ChangeTrackingList<TrafficSelectorPolicy> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trafficSelectorPolicies"u8);
                 writer.WriteStartArray();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(VpnLinkConnections))
+            if (!(VpnLinkConnections is ChangeTrackingList<VpnSiteLinkConnectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vpnLinkConnections"u8);
                 writer.WriteStartArray();

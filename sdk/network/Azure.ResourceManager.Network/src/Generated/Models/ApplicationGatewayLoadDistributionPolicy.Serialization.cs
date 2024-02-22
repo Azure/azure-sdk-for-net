@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoadDistributionTargets))
+            if (!(LoadDistributionTargets is ChangeTrackingList<ApplicationGatewayLoadDistributionTarget> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loadDistributionTargets"u8);
                 writer.WriteStartArray();

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("defaultLoadDistributionPolicy"u8);
                 JsonSerializer.Serialize(writer, DefaultLoadDistributionPolicy);
             }
-            if (Optional.IsCollectionDefined(PathRules))
+            if (!(PathRules is ChangeTrackingList<ApplicationGatewayPathRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("pathRules"u8);
                 writer.WriteStartArray();

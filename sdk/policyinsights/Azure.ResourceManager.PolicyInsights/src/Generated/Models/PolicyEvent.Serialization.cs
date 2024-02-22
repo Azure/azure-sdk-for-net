@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("principalOid"u8);
                 writer.WriteStringValue(PrincipalOid);
             }
-            if (Optional.IsCollectionDefined(Components))
+            if (!(Components is ChangeTrackingList<ComponentEventDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();

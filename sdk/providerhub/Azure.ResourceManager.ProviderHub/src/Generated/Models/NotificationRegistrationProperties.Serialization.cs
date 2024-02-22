@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("messageScope"u8);
                 writer.WriteStringValue(MessageScope.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IncludedEvents))
+            if (!(IncludedEvents is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedEvents"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotificationEndpoints))
+            if (!(NotificationEndpoints is ChangeTrackingList<NotificationEndpoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notificationEndpoints"u8);
                 writer.WriteStartArray();

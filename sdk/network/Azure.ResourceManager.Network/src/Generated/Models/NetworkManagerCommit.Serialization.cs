@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ConfigurationIds))
+            if (!(ConfigurationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationIds"u8);
                 writer.WriteStartArray();

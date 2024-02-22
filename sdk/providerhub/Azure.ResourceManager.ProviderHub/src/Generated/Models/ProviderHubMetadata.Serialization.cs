@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ProviderAuthorizations))
+            if (!(ProviderAuthorizations is ChangeTrackingList<ResourceProviderAuthorization> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();

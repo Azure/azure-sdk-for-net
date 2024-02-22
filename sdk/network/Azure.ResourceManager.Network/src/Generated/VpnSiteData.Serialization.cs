@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("isSecuritySite"u8);
                 writer.WriteBooleanValue(IsSecuritySite.Value);
             }
-            if (Optional.IsCollectionDefined(VpnSiteLinks))
+            if (!(VpnSiteLinks is ChangeTrackingList<VpnSiteLinkData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vpnSiteLinks"u8);
                 writer.WriteStartArray();

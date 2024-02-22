@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("storageToNetworkProximity"u8);
                 writer.WriteStringValue(StorageToNetworkProximity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
+            if (!(AvailabilityZoneMappings is ChangeTrackingList<AvailabilityZoneMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZoneMappings"u8);
                 writer.WriteStartArray();

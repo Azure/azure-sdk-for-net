@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
-            if (Optional.IsCollectionDefined(ContainsAny))
+            if (!(ContainsAny is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();

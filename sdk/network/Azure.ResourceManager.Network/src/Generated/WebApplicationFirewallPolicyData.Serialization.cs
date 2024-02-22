@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsCollectionDefined(CustomRules))
+            if (!(CustomRules is ChangeTrackingList<WebApplicationFirewallCustomRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationGateways))
+            if (options.Format != "W" && !(ApplicationGateways is ChangeTrackingList<ApplicationGatewayData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("applicationGateways"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HttpListeners))
+            if (options.Format != "W" && !(HttpListeners is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("httpListeners"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PathBasedRules))
+            if (options.Format != "W" && !(PathBasedRules is ChangeTrackingList<WritableSubResource> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("pathBasedRules"u8);
                 writer.WriteStartArray();

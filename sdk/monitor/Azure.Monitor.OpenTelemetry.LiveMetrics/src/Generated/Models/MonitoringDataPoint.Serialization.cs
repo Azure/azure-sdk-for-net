@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WritePropertyName("PerformanceCollectionSupported"u8);
                 writer.WriteBooleanValue(PerformanceCollectionSupported.Value);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<MetricPoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Metrics"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Documents))
+            if (!(Documents is ChangeTrackingList<DocumentIngress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("Documents"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TopCpuProcesses))
+            if (!(TopCpuProcesses is ChangeTrackingList<ProcessCpuData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("TopCpuProcesses"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CollectionConfigurationErrors))
+            if (!(CollectionConfigurationErrors is ChangeTrackingList<CollectionConfigurationError> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("CollectionConfigurationErrors"u8);
                 writer.WriteStartArray();

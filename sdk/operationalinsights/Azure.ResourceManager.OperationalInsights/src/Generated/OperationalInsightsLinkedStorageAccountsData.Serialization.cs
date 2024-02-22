@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("dataSourceType"u8);
                 writer.WriteStringValue(DataSourceType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(StorageAccountIds))
+            if (!(StorageAccountIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageAccountIds"u8);
                 writer.WriteStartArray();

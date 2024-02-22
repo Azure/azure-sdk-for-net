@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("memorySizeGB"u8);
             writer.WriteNumberValue(MemorySizeInGB);
-            if (Optional.IsCollectionDefined(NetworkAttachments))
+            if (!(NetworkAttachments is ChangeTrackingList<NetworkAttachment> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkAttachments"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("networkData"u8);
                 writer.WriteStringValue(NetworkData);
             }
-            if (Optional.IsCollectionDefined(PlacementHints))
+            if (!(PlacementHints is ChangeTrackingList<VirtualMachinePlacementHint> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("placementHints"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SshPublicKeys))
+            if (!(SshPublicKeys is ChangeTrackingList<NetworkCloudSshPublicKey> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sshPublicKeys"u8);
                 writer.WriteStartArray();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
                 writer.WriteObjectValue(VmImageRepositoryCredentials);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Volumes))
+            if (options.Format != "W" && !(Volumes is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();

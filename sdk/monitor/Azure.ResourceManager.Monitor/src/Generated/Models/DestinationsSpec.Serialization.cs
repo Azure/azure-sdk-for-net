@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LogAnalytics))
+            if (!(LogAnalytics is ChangeTrackingList<LogAnalyticsDestination> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonitoringAccounts))
+            if (!(MonitoringAccounts is ChangeTrackingList<MonitoringAccountDestination> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("monitoringAccounts"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("azureMonitorMetrics"u8);
                 writer.WriteObjectValue(AzureMonitorMetrics);
             }
-            if (Optional.IsCollectionDefined(EventHubs))
+            if (!(EventHubs is ChangeTrackingList<DataCollectionRuleEventHubDestination> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventHubsDirect))
+            if (!(EventHubsDirect is ChangeTrackingList<DataCollectionRuleEventHubDirectDestination> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("eventHubsDirect"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StorageBlobsDirect))
+            if (!(StorageBlobsDirect is ChangeTrackingList<DataCollectionRuleStorageBlobDestination> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("storageBlobsDirect"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StorageTablesDirect))
+            if (!(StorageTablesDirect is ChangeTrackingList<DataCollectionRuleStorageTableDestination> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("storageTablesDirect"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<DataCollectionRuleStorageBlobDestination> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();

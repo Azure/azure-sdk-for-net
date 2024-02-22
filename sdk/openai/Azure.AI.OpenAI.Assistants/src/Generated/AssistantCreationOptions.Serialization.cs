@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("instructions");
                 }
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (!(Tools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FileIds))
+            if (!(FileIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Metadata != null)
                 {

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
+            if (options.Format != "W" && !(Events is ChangeTrackingList<PeeringServicePrefixEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();

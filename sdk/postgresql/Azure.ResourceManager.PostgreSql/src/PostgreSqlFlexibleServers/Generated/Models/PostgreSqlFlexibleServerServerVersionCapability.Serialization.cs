@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVersionsToUpgrade))
+            if (options.Format != "W" && !(SupportedVersionsToUpgrade is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedVersionsToUpgrade"u8);
                 writer.WriteStartArray();

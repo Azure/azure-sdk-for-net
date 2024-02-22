@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Workspaces))
+            if (!(Workspaces is ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();

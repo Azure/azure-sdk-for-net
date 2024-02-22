@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AddressPrefix))
+            if (!(AddressPrefix is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NextHopIPAddress))
+            if (!(NextHopIPAddress is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStartArray();

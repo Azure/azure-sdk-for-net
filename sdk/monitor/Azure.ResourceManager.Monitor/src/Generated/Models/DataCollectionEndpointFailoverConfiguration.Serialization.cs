@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("activeLocation"u8);
                 writer.WriteStringValue(ActiveLocation);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<DataCollectionRuleBcdrLocationSpec> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();

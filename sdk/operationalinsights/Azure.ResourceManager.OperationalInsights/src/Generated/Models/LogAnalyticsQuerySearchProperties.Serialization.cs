@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("related"u8);
                 writer.WriteObjectValue(Related);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

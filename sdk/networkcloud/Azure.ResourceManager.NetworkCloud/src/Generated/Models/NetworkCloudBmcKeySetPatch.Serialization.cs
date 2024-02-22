@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(UserList))
+            if (!(UserList is ChangeTrackingList<KeySetUser> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userList"u8);
                 writer.WriteStartArray();

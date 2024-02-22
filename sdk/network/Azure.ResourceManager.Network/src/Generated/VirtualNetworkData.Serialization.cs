@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("flowTimeoutInMinutes"u8);
                 writer.WriteNumberValue(FlowTimeoutInMinutes.Value);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<SubnetData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VirtualNetworkPeerings))
+            if (!(VirtualNetworkPeerings is ChangeTrackingList<VirtualNetworkPeeringData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkPeerings"u8);
                 writer.WriteStartArray();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(IPAllocations))
+            if (!(IPAllocations is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FlowLogs))
+            if (options.Format != "W" && !(FlowLogs is ChangeTrackingList<FlowLogData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("flowLogs"u8);
                 writer.WriteStartArray();

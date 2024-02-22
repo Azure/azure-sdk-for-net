@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Optional.IsCollectionDefined(FrontEndSettings))
+            if (!(FrontEndSettings is ChangeTrackingList<FirewallFrontendSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();

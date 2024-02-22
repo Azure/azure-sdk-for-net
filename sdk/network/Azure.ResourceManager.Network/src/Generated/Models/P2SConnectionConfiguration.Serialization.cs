@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationPolicyGroupAssociations))
+            if (options.Format != "W" && !(ConfigurationPolicyGroupAssociations is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationPolicyGroupAssociations"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousConfigurationPolicyGroupAssociations))
+            if (options.Format != "W" && !(PreviousConfigurationPolicyGroupAssociations is ChangeTrackingList<VpnServerConfigurationPolicyGroupData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("previousConfigurationPolicyGroupAssociations"u8);
                 writer.WriteStartArray();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("detail"u8);
                 writer.WriteStringValue(Detail);
             }
-            if (Optional.IsCollectionDefined(RecommendedActions))
+            if (!(RecommendedActions is ChangeTrackingList<TroubleshootingRecommendedActions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();

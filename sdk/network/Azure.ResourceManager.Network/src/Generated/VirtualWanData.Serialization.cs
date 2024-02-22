@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("disableVpnEncryption"u8);
                 writer.WriteBooleanValue(DisableVpnEncryption.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualHubs))
+            if (options.Format != "W" && !(VirtualHubs is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("virtualHubs"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VpnSites))
+            if (options.Format != "W" && !(VpnSites is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vpnSites"u8);
                 writer.WriteStartArray();

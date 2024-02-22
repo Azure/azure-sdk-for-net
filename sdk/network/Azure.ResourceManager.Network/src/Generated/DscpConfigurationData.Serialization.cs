@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Markings))
+            if (!(Markings is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIPRanges))
+            if (!(SourceIPRanges is ChangeTrackingList<QosIPRange> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIPRanges))
+            if (!(DestinationIPRanges is ChangeTrackingList<QosIPRange> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (!(SourcePortRanges is ChangeTrackingList<QosPortRange> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (!(DestinationPortRanges is ChangeTrackingList<QosPortRange> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(QosDefinitionCollection))
+            if (!(QosDefinitionCollection is ChangeTrackingList<DscpQosDefinition> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("qosDefinitionCollection"u8);
                 writer.WriteStartArray();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("qosCollectionId"u8);
                 writer.WriteStringValue(QosCollectionId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedNetworkInterfaces))
+            if (options.Format != "W" && !(AssociatedNetworkInterfaces is ChangeTrackingList<NetworkInterfaceData> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("associatedNetworkInterfaces"u8);
                 writer.WriteStartArray();

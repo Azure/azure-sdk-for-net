@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();

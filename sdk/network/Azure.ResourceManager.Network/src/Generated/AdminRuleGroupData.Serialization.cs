@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(AppliesToGroups))
+            if (!(AppliesToGroups is ChangeTrackingList<NetworkManagerSecurityGroupItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();

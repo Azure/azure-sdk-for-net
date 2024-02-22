@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("defaultSessionType"u8);
                 writer.WriteStringValue(DefaultSessionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AdditionalAllowedSessionTypes))
+            if (!(AdditionalAllowedSessionTypes is ChangeTrackingList<MobileNetworkPduSessionType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalAllowedSessionTypes"u8);
                 writer.WriteStartArray();

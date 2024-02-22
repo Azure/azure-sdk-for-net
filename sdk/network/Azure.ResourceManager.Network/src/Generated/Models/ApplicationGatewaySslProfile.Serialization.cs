@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TrustedClientCertificates))
+            if (!(TrustedClientCertificates is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("trustedClientCertificates"u8);
                 writer.WriteStartArray();

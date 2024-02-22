@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();

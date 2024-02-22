@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("container"u8);
                 JsonSerializer.Serialize(writer, Container);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
+            if (options.Format != "W" && !(IPConfigurations is ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();

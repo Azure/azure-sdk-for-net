@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsSearchSchemaValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

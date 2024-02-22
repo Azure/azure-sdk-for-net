@@ -22,7 +22,7 @@ namespace Azure.Monitor.Query.Models
                 writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan);
             }
-            if (Optional.IsCollectionDefined(Workspaces))
+            if (!(Workspaces is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(RuleCollections))
+            if (!(RuleCollections is ChangeTrackingList<FirewallPolicyRuleCollectionInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleCollections"u8);
                 writer.WriteStartArray();

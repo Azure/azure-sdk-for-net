@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<RouteMapActionParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

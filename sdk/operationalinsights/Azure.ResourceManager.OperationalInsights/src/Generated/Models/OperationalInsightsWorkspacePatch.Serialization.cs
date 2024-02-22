@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("forceCmkForQuery"u8);
                 writer.WriteBooleanValue(ForceCmkForQuery.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
+            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateLinkScopedResources"u8);
                 writer.WriteStartArray();

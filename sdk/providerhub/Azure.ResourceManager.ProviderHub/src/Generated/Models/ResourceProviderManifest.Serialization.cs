@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("providerAuthentication"u8);
                 writer.WriteObjectValue(ProviderAuthentication);
             }
-            if (Optional.IsCollectionDefined(ProviderAuthorizations))
+            if (!(ProviderAuthorizations is ChangeTrackingList<ResourceProviderAuthorization> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RequiredFeatures))
+            if (!(RequiredFeatures is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("requestHeaderOptions"u8);
                 writer.WriteObjectValue(RequestHeaderOptions);
             }
-            if (Optional.IsCollectionDefined(ResourceTypes))
+            if (!(ResourceTypes is ChangeTrackingList<ProviderResourceType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("management"u8);
                 writer.WriteObjectValue(Management);
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<ResourceProviderCapabilities> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(GlobalNotificationEndpoints))
+            if (!(GlobalNotificationEndpoints is ChangeTrackingList<ResourceProviderEndpoint> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("globalNotificationEndpoints"u8);
                 writer.WriteStartArray();

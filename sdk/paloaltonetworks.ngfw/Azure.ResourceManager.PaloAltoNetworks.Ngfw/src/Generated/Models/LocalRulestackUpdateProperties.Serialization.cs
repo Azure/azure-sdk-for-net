@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AssociatedSubscriptions))
+            if (!(AssociatedSubscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("associatedSubscriptions"u8);
                 writer.WriteStartArray();

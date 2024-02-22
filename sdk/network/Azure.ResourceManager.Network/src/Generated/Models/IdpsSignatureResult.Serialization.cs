@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (Optional.IsCollectionDefined(SourcePorts))
+            if (!(SourcePorts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourcePorts"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPorts))
+            if (!(DestinationPorts is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();

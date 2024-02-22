@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
+            if (!(AdvertisedPublicPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("advertisedPublicPrefixes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdvertisedCommunities))
+            if (!(AdvertisedCommunities is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("advertisedCommunities"u8);
                 writer.WriteStartArray();

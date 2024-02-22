@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DelegatedSubnetsUsage))
+            if (options.Format != "W" && !(DelegatedSubnetsUsage is ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delegatedSubnetsUsage"u8);
                 writer.WriteStartArray();

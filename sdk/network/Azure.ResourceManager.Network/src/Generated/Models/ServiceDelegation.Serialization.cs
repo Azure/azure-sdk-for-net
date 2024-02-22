@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
+            if (options.Format != "W" && !(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();

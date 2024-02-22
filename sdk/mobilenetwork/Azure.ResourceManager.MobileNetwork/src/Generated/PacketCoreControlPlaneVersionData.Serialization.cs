@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Platforms))
+            if (!(Platforms is ChangeTrackingList<MobileNetworkPlatform> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("platforms"u8);
                 writer.WriteStartArray();

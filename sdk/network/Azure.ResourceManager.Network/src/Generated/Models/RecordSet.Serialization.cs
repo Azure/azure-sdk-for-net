@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (!(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
