@@ -124,50 +124,6 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SuppressionListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SuppressionListResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionListResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetSuppressionListResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SuppressionListResource"/> object. </returns>
-        public static SuppressionListResource GetSuppressionListResource(this ArmClient client, ResourceIdentifier id)
-        {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-
-            return GetMockableCommunicationArmClient(client).GetSuppressionListResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SuppressionListAddressResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SuppressionListAddressResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionListAddressResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetSuppressionListAddressResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SuppressionListAddressResource"/> object. </returns>
-        public static SuppressionListAddressResource GetSuppressionListAddressResource(this ArmClient client, ResourceIdentifier id)
-        {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-
-            return GetMockableCommunicationArmClient(client).GetSuppressionListAddressResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of CommunicationServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -200,7 +156,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -241,7 +197,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,7 +258,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -343,7 +299,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -384,7 +340,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -423,7 +379,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,7 +418,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -501,7 +457,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -540,7 +496,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -579,7 +535,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -618,7 +574,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -657,7 +613,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
