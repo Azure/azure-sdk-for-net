@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("locked"u8);
                 writer.WriteBooleanValue(IsLocked.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

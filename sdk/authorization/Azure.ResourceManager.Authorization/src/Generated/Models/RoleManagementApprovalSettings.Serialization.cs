@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("approvalMode"u8);
                 writer.WriteStringValue(ApprovalMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ApprovalStages))
+            if (!(ApprovalStages is ChangeTrackingList<RoleManagementApprovalStage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("approvalStages"u8);
                 writer.WriteStartArray();

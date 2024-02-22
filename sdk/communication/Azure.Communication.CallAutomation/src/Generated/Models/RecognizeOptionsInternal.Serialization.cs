@@ -42,7 +42,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);
             }
-            if (Optional.IsCollectionDefined(Choices))
+            if (!(Choices is ChangeTrackingList<RecognitionChoice> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("choices"u8);
                 writer.WriteStartArray();

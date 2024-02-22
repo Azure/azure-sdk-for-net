@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState);
             }
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (!(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();

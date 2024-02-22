@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("scriptName"u8);
                 writer.WriteStringValue(ScriptName);
             }
-            if (Optional.IsCollectionDefined(ScriptParameters))
+            if (!(ScriptParameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scriptParameters"u8);
                 writer.WriteStartObject();

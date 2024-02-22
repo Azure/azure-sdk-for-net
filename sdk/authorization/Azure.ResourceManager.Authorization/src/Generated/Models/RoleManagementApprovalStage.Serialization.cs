@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("escalationTimeInMinutes"u8);
                 writer.WriteNumberValue(EscalationTimeInMinutes.Value);
             }
-            if (Optional.IsCollectionDefined(PrimaryApprovers))
+            if (!(PrimaryApprovers is ChangeTrackingList<RoleManagementUserInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("primaryApprovers"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("isEscalationEnabled"u8);
                 writer.WriteBooleanValue(IsEscalationEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(EscalationApprovers))
+            if (!(EscalationApprovers is ChangeTrackingList<RoleManagementUserInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("escalationApprovers"u8);
                 writer.WriteStartArray();

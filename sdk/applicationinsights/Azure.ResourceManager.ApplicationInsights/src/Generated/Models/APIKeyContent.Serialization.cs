@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(LinkedReadProperties))
+            if (!(LinkedReadProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkedReadProperties"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedWriteProperties))
+            if (!(LinkedWriteProperties is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linkedWriteProperties"u8);
                 writer.WriteStartArray();

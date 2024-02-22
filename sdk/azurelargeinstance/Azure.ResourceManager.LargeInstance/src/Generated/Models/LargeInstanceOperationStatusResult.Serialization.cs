@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<LargeInstanceOperationStatusResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();

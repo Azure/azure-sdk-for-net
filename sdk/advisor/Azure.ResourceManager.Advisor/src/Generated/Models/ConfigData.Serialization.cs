@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("lowCpuThreshold"u8);
                 writer.WriteStringValue(LowCpuThreshold.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Digests))
+            if (!(Digests is ChangeTrackingList<DigestConfig> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("digests"u8);
                 writer.WriteStartArray();

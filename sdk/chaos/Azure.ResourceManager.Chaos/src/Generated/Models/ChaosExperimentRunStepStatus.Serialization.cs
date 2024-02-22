@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Branches))
+            if (options.Format != "W" && !(Branches is ChangeTrackingList<ChaosExperimentRunBranchStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("branches"u8);
                 writer.WriteStartArray();

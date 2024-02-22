@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (Optional.IsCollectionDefined(Identities))
+            if (!(Identities is ChangeTrackingList<UserIdentityContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("registrationDate"u8);
                 writer.WriteStringValue(RegistriesOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
+            if (options.Format != "W" && !(Groups is ChangeTrackingList<GroupContractProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();

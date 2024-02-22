@@ -32,7 +32,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (Optional.IsCollectionDefined(IsChangePoint))
+            if (!(IsChangePoint is ChangeTrackingList<bool> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("isChangePoint"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfidenceScores))
+            if (!(ConfidenceScores is ChangeTrackingList<float> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("confidenceScores"u8);
                 writer.WriteStartArray();

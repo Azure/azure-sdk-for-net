@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Credentials))
+            if (!(Credentials is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteStartObject();

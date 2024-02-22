@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteNumberValue(Frequency.Value);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<Category> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();

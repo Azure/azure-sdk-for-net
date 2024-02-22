@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("openidProviderId"u8);
                 writer.WriteStringValue(OpenIdProviderId);
             }
-            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
+            if (!(BearerTokenSendingMethods is ChangeTrackingList<BearerTokenSendingMethod> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();

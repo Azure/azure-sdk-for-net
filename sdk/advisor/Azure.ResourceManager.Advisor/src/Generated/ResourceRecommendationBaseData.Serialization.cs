@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("shortDescription"u8);
                 writer.WriteObjectValue(ShortDescription);
             }
-            if (Optional.IsCollectionDefined(SuppressionIds))
+            if (!(SuppressionIds is ChangeTrackingList<Guid> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("suppressionIds"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("potentialBenefits"u8);
                 writer.WriteStringValue(PotentialBenefits);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<IDictionary<string, BinaryData>> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Remediation))
+            if (!(Remediation is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStartObject();
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ExposedMetadataProperties))
+            if (!(ExposedMetadataProperties is ChangeTrackingDictionary<string, BinaryData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("exposedMetadataProperties"u8);
                 writer.WriteStartObject();

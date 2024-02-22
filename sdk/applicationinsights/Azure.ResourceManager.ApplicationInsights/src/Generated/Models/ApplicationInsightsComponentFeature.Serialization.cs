@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<ApplicationInsightsComponentFeatureCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Capabilities"u8);
                 writer.WriteStartArray();

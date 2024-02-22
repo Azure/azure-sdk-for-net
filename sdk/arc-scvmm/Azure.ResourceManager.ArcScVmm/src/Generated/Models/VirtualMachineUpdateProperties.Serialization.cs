@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsCollectionDefined(AvailabilitySets))
+            if (!(AvailabilitySets is ChangeTrackingList<AvailabilitySetListItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();

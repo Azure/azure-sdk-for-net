@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ETag))
+            if (!(ETag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStartObject();

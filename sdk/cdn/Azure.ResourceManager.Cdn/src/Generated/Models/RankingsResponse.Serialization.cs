@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("dateTimeEnd"u8);
                 writer.WriteStringValue(DateTimeEnd.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Tables))
+            if (!(Tables is ChangeTrackingList<RankingsResponseTablesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();

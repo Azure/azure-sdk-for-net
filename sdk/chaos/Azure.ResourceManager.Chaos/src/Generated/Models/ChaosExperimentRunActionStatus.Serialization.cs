@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Targets))
+            if (options.Format != "W" && !(Targets is ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();

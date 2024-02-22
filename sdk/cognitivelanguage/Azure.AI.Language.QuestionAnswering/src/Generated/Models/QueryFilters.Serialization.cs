@@ -20,7 +20,7 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WritePropertyName("metadataFilter"u8);
                 writer.WriteObjectValue(MetadataFilter);
             }
-            if (Optional.IsCollectionDefined(SourceFilter))
+            if (!(SourceFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceFilter"u8);
                 writer.WriteStartArray();

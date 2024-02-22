@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("includedUpdateClassifications"u8);
                 writer.WriteStringValue(IncludedUpdateClassifications.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludedKBNumbers))
+            if (!(ExcludedKBNumbers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedKbNumbers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedKBNumbers))
+            if (!(IncludedKBNumbers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("includedKbNumbers"u8);
                 writer.WriteStartArray();

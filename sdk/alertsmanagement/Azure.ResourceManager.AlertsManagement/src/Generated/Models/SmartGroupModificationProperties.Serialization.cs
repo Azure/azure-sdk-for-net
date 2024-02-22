@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("smartGroupId"u8);
                 writer.WriteStringValue(SmartGroupId.Value);
             }
-            if (Optional.IsCollectionDefined(Modifications))
+            if (!(Modifications is ChangeTrackingList<SmartGroupModificationItemInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();

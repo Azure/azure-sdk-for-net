@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (Optional.IsCollectionDefined(FormParameters))
+            if (!(FormParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("formParameters"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Examples))
+            if (!(Examples is ChangeTrackingDictionary<string, ParameterExampleContract> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartObject();

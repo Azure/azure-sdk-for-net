@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("anomalyScore"u8);
                 writer.WriteNumberValue(AnomalyScore.Value);
             }
-            if (Optional.IsCollectionDefined(RuleGroupOverrides))
+            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverrideSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();

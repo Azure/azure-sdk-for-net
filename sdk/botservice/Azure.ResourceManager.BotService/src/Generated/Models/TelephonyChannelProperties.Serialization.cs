@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PhoneNumbers))
+            if (!(PhoneNumbers is ChangeTrackingList<TelephonyPhoneNumbers> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApiConfigurations))
+            if (!(ApiConfigurations is ChangeTrackingList<TelephonyChannelResourceApiConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apiConfigurations"u8);
                 writer.WriteStartArray();

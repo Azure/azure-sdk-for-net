@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("isValid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (Optional.IsCollectionDefined(GitReposValidationResult))
+            if (!(GitReposValidationResult is ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("gitReposValidationResult"u8);
                 writer.WriteStartArray();

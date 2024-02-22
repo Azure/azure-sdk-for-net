@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Settings))
+            if (!(Settings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();

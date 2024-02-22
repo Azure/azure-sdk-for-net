@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("marketplaceSkuId"u8);
                 writer.WriteStringValue(MarketplaceSkuId);
             }
-            if (Optional.IsCollectionDefined(MarketplaceSkuVersions))
+            if (!(MarketplaceSkuVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("marketplaceSkuVersions"u8);
                 writer.WriteStartArray();

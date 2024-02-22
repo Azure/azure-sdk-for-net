@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("callRateLimit"u8);
                 writer.WriteObjectValue(CallRateLimit);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
+            if (options.Format != "W" && !(RateLimits is ChangeTrackingList<ServiceAccountThrottlingRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("rateLimits"u8);
                 writer.WriteStartArray();

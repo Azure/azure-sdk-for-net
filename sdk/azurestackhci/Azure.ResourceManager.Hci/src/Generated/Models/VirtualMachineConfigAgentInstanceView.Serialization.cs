@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("vmConfigAgentVersion"u8);
                 writer.WriteStringValue(VmConfigAgentVersion);
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

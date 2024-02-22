@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BillingPolicies))
+            if (options.Format != "W" && !(BillingPolicies is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("billingPolicies"u8);
                 writer.WriteStartObject();
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SuspensionReasons))
+            if (options.Format != "W" && !(SuspensionReasons is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("suspensionReasons"u8);
                 writer.WriteStartArray();

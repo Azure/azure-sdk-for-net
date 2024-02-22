@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(AzureRbacActions))
+            if (!(AzureRbacActions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureRbacActions"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Chaos
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureRbacDataActions))
+            if (!(AzureRbacDataActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("azureRbacDataActions"u8);
                 writer.WriteStartArray();

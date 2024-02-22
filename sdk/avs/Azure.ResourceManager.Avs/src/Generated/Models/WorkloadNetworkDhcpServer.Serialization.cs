@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Segments))
+            if (options.Format != "W" && !(Segments is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteStartArray();

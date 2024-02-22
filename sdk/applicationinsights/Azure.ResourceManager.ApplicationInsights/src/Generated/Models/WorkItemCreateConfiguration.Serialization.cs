@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("ValidateOnly"u8);
                 writer.WriteBooleanValue(IsValidateOnly.Value);
             }
-            if (Optional.IsCollectionDefined(WorkItemProperties))
+            if (!(WorkItemProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("WorkItemProperties"u8);
                 writer.WriteStartObject();

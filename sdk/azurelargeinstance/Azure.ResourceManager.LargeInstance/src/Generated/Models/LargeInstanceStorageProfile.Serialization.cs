@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WritePropertyName("nfsIpAddress"u8);
                 writer.WriteStringValue(NfsIPAddress);
             }
-            if (Optional.IsCollectionDefined(OSDisks))
+            if (!(OSDisks is ChangeTrackingList<LargeInstanceDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("osDisks"u8);
                 writer.WriteStartArray();

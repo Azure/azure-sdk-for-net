@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ParameterNameOverride))
+            if (!(ParameterNameOverride is ChangeTrackingList<UriSigningParamIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameterNameOverride"u8);
                 writer.WriteStartArray();

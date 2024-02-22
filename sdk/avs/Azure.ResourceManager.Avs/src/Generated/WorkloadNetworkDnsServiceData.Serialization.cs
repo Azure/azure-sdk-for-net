@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("defaultDnsZone"u8);
                 writer.WriteStringValue(DefaultDnsZone);
             }
-            if (Optional.IsCollectionDefined(FqdnZones))
+            if (!(FqdnZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fqdnZones"u8);
                 writer.WriteStartArray();

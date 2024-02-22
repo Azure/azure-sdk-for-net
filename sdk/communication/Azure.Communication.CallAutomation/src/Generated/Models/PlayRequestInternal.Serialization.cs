@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -22,7 +23,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(PlayTo))
+            if (!(PlayTo is ChangeTrackingList<CommunicationIdentifierModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();

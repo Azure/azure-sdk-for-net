@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FieldDefinitions))
+            if (options.Format != "W" && !(FieldDefinitions is ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldDefinitions"u8);
                 writer.WriteStartObject();

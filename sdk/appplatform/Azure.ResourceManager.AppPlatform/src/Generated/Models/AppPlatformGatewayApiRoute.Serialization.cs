@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("tokenRelay"u8);
                 writer.WriteBooleanValue(IsTokenRelayed.Value);
             }
-            if (Optional.IsCollectionDefined(Predicates))
+            if (!(Predicates is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("predicates"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();

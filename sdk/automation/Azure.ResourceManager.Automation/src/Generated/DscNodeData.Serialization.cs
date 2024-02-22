@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
             }
-            if (Optional.IsCollectionDefined(ExtensionHandler))
+            if (!(ExtensionHandler is ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensionHandler"u8);
                 writer.WriteStartArray();

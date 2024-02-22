@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("serviceProviderDisplayName"u8);
                 writer.WriteStringValue(ServiceProviderDisplayName);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<BotConnectionSettingParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

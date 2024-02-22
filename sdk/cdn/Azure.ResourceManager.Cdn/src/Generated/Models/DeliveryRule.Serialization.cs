@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
-            if (Optional.IsCollectionDefined(Conditions))
+            if (!(Conditions is ChangeTrackingList<DeliveryRuleCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();

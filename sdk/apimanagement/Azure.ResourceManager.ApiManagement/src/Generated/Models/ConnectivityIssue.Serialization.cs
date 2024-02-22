@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IssueType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Context))
+            if (options.Format != "W" && !(Context is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartArray();

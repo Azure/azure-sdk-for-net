@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
                 writer.WriteBooleanValue(IsDynamicThrottlingEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(MatchPatterns))
+            if (!(MatchPatterns is ChangeTrackingList<ServiceAccountThrottlingMatchPattern> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("matchPatterns"u8);
                 writer.WriteStartArray();

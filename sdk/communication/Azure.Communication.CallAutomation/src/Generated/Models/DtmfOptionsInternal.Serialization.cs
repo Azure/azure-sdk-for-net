@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("maxTonesToCollect"u8);
                 writer.WriteNumberValue(MaxTonesToCollect.Value);
             }
-            if (Optional.IsCollectionDefined(StopTones))
+            if (!(StopTones is ChangeTrackingList<DtmfTone> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stopTones"u8);
                 writer.WriteStartArray();

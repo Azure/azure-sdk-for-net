@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("extensionKey2"u8);
                 writer.WriteStringValue(ExtensionKey2);
             }
-            if (Optional.IsCollectionDefined(Sites))
+            if (!(Sites is ChangeTrackingList<BotChannelSite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();

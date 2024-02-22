@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
                 writer.WriteObjectValue(TaskSchedulingPolicy);
             }
-            if (Optional.IsCollectionDefined(UserAccounts))
+            if (!(UserAccounts is ChangeTrackingList<BatchUserAccount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userAccounts"u8);
                 writer.WriteStartArray();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingList<BatchAccountPoolMetadataItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask);
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingList<BatchCertificateReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicationPackages))
+            if (!(ApplicationPackages is ChangeTrackingList<BatchApplicationPackageReference> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("applicationPackages"u8);
                 writer.WriteStartArray();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicationLicenses))
+            if (!(ApplicationLicenses is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("applicationLicenses"u8);
                 writer.WriteStartArray();
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("resizeOperationStatus"u8);
                 writer.WriteObjectValue(ResizeOperationStatus);
             }
-            if (Optional.IsCollectionDefined(MountConfiguration))
+            if (!(MountConfiguration is ChangeTrackingList<BatchMountConfiguration> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("mountConfiguration"u8);
                 writer.WriteStartArray();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("currentNodeCommunicationMode");
                 }
             }
-            if (Optional.IsCollectionDefined(ResourceTags))
+            if (!(ResourceTags is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("resourceTags"u8);
                 writer.WriteStartObject();

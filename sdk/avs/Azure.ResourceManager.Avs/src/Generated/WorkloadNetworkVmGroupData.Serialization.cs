@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Members))
+            if (!(Members is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();

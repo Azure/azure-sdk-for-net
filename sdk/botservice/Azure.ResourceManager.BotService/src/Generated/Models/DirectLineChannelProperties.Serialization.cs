@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sites))
+            if (!(Sites is ChangeTrackingList<DirectLineSite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();

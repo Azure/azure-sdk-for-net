@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("wafPolicy"u8);
                 JsonSerializer.Serialize(writer, WafPolicy);
             }
-            if (Optional.IsCollectionDefined(Associations))
+            if (!(Associations is ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();

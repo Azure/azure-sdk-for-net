@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Prerequisites))
+            if (!(Prerequisites is ChangeTrackingList<UpdatePrerequisite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("prerequisites"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ComponentVersions))
+            if (!(ComponentVersions is ChangeTrackingList<HciPackageVersionInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("componentVersions"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HealthCheckResult))
+            if (!(HealthCheckResult is ChangeTrackingList<HciPrecheckResult> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();

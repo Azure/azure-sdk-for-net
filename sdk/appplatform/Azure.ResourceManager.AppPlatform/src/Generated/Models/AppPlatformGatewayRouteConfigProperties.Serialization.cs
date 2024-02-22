@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Routes))
+            if (!(Routes is ChangeTrackingList<AppPlatformGatewayApiRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Series))
+            if (!(Series is ChangeTrackingList<MetricsResponseSeriesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("series"u8);
                 writer.WriteStartArray();

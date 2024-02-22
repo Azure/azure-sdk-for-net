@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
-            if (Optional.IsCollectionDefined(X5C))
+            if (!(X5C is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsCollectionDefined(BindingParameters))
+            if (!(BindingParameters is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bindingParameters"u8);
                 writer.WriteStartObject();

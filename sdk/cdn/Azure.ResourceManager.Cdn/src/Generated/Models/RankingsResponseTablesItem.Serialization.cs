@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("ranking"u8);
                 writer.WriteStringValue(Ranking);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("checkpointType"u8);
                 writer.WriteStringValue(CheckpointType);
             }
-            if (Optional.IsCollectionDefined(Checkpoints))
+            if (!(Checkpoints is ChangeTrackingList<Checkpoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("checkpoints"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AvailabilitySets))
+            if (!(AvailabilitySets is ChangeTrackingList<AvailabilitySetListItem> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("networkProfile");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<BatchPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("lowPriorityCoreQuota");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedCoreQuotaPerVmFamily))
+            if (options.Format != "W" && !(DedicatedCoreQuotaPerVmFamily is ChangeTrackingList<BatchVmFamilyCoreQuota> collection1 && collection1.IsUndefined))
             {
                 if (DedicatedCoreQuotaPerVmFamily != null)
                 {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("activeJobAndJobScheduleQuota"u8);
                 writer.WriteNumberValue(ActiveJobAndJobScheduleQuota.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedAuthenticationModes))
+            if (options.Format != "W" && !(AllowedAuthenticationModes is ChangeTrackingList<BatchAuthenticationMode> collection2 && collection2.IsUndefined))
             {
                 if (AllowedAuthenticationModes != null)
                 {

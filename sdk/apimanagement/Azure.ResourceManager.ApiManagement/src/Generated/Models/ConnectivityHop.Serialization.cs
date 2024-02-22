@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NextHopIds))
+            if (options.Format != "W" && !(NextHopIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nextHopIds"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            if (options.Format != "W" && !(Issues is ChangeTrackingList<ConnectivityIssue> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();

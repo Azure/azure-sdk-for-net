@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPAddressGroups))
+            if (!(IPAddressGroups is ChangeTrackingList<IPAddressGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddressGroups"u8);
                 writer.WriteStartArray();

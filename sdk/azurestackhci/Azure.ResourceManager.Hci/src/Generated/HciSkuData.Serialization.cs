@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (Optional.IsCollectionDefined(SkuMappings))
+            if (!(SkuMappings is ChangeTrackingList<HciSkuMappings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skuMappings"u8);
                 writer.WriteStartArray();

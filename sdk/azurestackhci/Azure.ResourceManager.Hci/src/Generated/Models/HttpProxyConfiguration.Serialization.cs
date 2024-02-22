@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
-            if (Optional.IsCollectionDefined(NoProxy))
+            if (!(NoProxy is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();

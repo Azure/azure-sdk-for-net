@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("last"u8);
                 writer.WriteObjectValue(Last);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
+            if (options.Format != "W" && !(ProvisioningIssues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();

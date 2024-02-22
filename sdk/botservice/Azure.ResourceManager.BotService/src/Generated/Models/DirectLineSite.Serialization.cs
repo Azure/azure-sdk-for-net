@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("isSecureSiteEnabled"u8);
                 writer.WriteBooleanValue(IsSecureSiteEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(TrustedOrigins))
+            if (!(TrustedOrigins is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("trustedOrigins"u8);
                 writer.WriteStartArray();

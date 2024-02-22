@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (!(Permissions is ChangeTrackingList<DenyAssignmentPermission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("doNotApplyToChildScopes"u8);
                 writer.WriteBooleanValue(IsAppliedToChildScopes.Value);
             }
-            if (Optional.IsCollectionDefined(Principals))
+            if (!(Principals is ChangeTrackingList<RoleManagementPrincipal> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("principals"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludePrincipals))
+            if (!(ExcludePrincipals is ChangeTrackingList<RoleManagementPrincipal> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("excludePrincipals"u8);
                 writer.WriteStartArray();

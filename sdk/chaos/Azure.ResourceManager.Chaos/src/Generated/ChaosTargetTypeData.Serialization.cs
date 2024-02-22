@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("propertiesSchema"u8);
                 writer.WriteStringValue(PropertiesSchema);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
+            if (options.Format != "W" && !(ResourceTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();

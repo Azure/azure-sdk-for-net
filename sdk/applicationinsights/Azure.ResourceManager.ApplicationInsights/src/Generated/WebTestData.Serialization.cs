@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("RetryEnabled"u8);
                 writer.WriteBooleanValue(IsRetryEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<WebTestGeolocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("Locations"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Galleries))
+            if (!(Galleries is ChangeTrackingList<WorkbookTemplateGallery> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocalizedGalleries))
+            if (!(LocalizedGalleries is ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("localized"u8);
                 writer.WriteStartObject();

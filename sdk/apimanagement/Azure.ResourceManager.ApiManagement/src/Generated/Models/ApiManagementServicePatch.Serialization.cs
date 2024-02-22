@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("developerPortalUrl"u8);
                 writer.WriteStringValue(DeveloperPortalUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(HostnameConfigurations))
+            if (!(HostnameConfigurations is ChangeTrackingList<HostnameConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostnameConfigurations"u8);
                 writer.WriteStartArray();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPAddresses))
+            if (options.Format != "W" && !(PublicIPAddresses is ChangeTrackingList<IPAddress> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIPAddresses))
+            if (options.Format != "W" && !(PrivateIPAddresses is ChangeTrackingList<IPAddress> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (Optional.IsCollectionDefined(AdditionalLocations))
+            if (!(AdditionalLocations is ChangeTrackingList<AdditionalLocation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("additionalLocations"u8);
                 writer.WriteStartArray();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomProperties))
+            if (!(CustomProperties is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingList<CertificateConfiguration> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<RemotePrivateEndpointConnectionWrapper> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

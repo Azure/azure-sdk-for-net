@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("webChatEmbedCode"u8);
                 writer.WriteStringValue(WebChatEmbedCode);
             }
-            if (Optional.IsCollectionDefined(Sites))
+            if (!(Sites is ChangeTrackingList<WebChatSite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
