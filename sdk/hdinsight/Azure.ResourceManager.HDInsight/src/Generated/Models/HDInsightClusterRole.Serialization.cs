@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(DataDisksGroups))
+            if (!(DataDisksGroups is ChangeTrackingList<HDInsightClusterDataDiskGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDisksGroups"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScriptActions))
+            if (!(ScriptActions is ChangeTrackingList<ScriptAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();

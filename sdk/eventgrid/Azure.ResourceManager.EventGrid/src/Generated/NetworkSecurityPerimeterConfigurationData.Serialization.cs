@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ProvisioningIssues))
+            if (!(ProvisioningIssues is ChangeTrackingList<NetworkSecurityPerimeterConfigurationIssues> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NotificationPreferences))
+            if (!(NotificationPreferences is ChangeTrackingList<NotificationPreference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notificationPreferences"u8);
                 writer.WriteStartArray();

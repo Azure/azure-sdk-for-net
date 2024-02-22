@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(PartitionIds))
+            if (options.Format != "W" && !(PartitionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("partitionIds"u8);
                 writer.WriteStartArray();

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExecutionSummary))
+            if (options.Format != "W" && !(ExecutionSummary is ChangeTrackingList<ScriptActionExecutionSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("executionSummary"u8);
                 writer.WriteStartArray();

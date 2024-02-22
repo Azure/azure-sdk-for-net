@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("maxCoresAllowed"u8);
                 writer.WriteNumberValue(MaxCoresAllowed.Value);
             }
-            if (Optional.IsCollectionDefined(RegionalQuotas))
+            if (!(RegionalQuotas is ChangeTrackingList<RegionalQuotaCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regionalQuotas"u8);
                 writer.WriteStartArray();

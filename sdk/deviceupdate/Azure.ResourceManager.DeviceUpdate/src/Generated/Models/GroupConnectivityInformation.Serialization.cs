@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
-            if (Optional.IsCollectionDefined(CustomerVisibleFqdns))
+            if (!(CustomerVisibleFqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customerVisibleFqdns"u8);
                 writer.WriteStartArray();

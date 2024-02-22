@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("errorResource"u8);
                 writer.WriteStringValue(ErrorResource);
             }
-            if (Optional.IsCollectionDefined(MessageArguments))
+            if (!(MessageArguments is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messageArguments"u8);
                 writer.WriteStartArray();

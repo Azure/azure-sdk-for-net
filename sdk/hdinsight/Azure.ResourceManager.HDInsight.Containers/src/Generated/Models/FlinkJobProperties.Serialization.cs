@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(FlinkConfiguration))
+            if (!(FlinkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("flinkConfiguration"u8);
                 writer.WriteStartObject();

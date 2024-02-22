@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("productDoubleEncryptionStatus"u8);
                 writer.WriteStringValue(ProductDoubleEncryptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceDetails))
+            if (options.Format != "W" && !(DeviceDetails is ChangeTrackingList<EdgeOrderProductDeviceDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deviceDetails"u8);
                 writer.WriteStartArray();

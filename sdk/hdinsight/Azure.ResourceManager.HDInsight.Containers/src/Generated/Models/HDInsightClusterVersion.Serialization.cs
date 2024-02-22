@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Components))
+            if (options.Format != "W" && !(Components is ChangeTrackingList<ClusterComponentItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();

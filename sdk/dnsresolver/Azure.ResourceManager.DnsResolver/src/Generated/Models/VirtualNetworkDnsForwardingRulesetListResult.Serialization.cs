@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<VirtualNetworkDnsForwardingRuleset> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

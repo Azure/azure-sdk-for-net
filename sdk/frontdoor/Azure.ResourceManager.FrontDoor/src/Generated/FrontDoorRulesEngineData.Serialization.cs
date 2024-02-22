@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<RulesEngineRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

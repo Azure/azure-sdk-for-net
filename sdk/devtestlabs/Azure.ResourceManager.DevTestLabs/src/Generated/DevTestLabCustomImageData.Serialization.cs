@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("managedSnapshotId"u8);
                 writer.WriteStringValue(ManagedSnapshotId);
             }
-            if (Optional.IsCollectionDefined(DataDiskStorageInfo))
+            if (!(DataDiskStorageInfo is ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskStorageInfo"u8);
                 writer.WriteStartArray();

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("organizationalUnitDN"u8);
                 writer.WriteStringValue(OrganizationalUnitDN);
             }
-            if (Optional.IsCollectionDefined(LdapUris))
+            if (!(LdapUris is ChangeTrackingList<Uri> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ldapsUrls"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("domainUserPassword"u8);
                 writer.WriteStringValue(DomainUserPassword);
             }
-            if (Optional.IsCollectionDefined(ClusterUsersGroupDNs))
+            if (!(ClusterUsersGroupDNs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clusterUsersGroupDNs"u8);
                 writer.WriteStartArray();

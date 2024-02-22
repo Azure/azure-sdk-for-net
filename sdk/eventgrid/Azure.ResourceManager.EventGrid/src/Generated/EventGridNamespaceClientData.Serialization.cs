@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Attributes))
+            if (!(Attributes is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();

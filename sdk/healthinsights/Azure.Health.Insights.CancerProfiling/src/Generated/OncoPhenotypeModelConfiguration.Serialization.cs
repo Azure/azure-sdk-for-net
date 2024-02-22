@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WritePropertyName("includeEvidence"u8);
                 writer.WriteBooleanValue(IncludeEvidence.Value);
             }
-            if (Optional.IsCollectionDefined(InferenceTypes))
+            if (!(InferenceTypes is ChangeTrackingList<OncoPhenotypeInferenceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inferenceTypes"u8);
                 writer.WriteStartArray();

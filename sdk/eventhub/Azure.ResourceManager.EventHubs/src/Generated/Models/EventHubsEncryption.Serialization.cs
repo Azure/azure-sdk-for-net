@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(KeyVaultProperties))
+            if (!(KeyVaultProperties is ChangeTrackingList<EventHubsKeyVaultProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (Optional.IsCollectionDefined(NotificationEmailList))
+            if (!(NotificationEmailList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notificationEmailList"u8);
                 writer.WriteStartArray();

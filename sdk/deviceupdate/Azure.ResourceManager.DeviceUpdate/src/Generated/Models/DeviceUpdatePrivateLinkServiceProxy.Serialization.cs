@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WritePropertyName("remotePrivateEndpointConnection"u8);
                 JsonSerializer.Serialize(writer, RemotePrivateEndpointConnection);
             }
-            if (Optional.IsCollectionDefined(GroupConnectivityInformation))
+            if (!(GroupConnectivityInformation is ChangeTrackingList<GroupConnectivityInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupConnectivityInformation"u8);
                 writer.WriteStartArray();

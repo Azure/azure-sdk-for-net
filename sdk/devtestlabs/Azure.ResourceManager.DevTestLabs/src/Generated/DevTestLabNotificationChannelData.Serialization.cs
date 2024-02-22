@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Events))
+            if (!(Events is ChangeTrackingList<DevTestLabNotificationChannelEvent> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();

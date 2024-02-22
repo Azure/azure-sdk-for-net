@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AccessPolicies))
+            if (!(AccessPolicies is ChangeTrackingList<HealthcareApisServiceAccessPolicyEntry> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("exportConfiguration"u8);
                 writer.WriteObjectValue(ExportConfiguration);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

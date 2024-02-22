@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
+            if (!(DeliveryAttributeMappings is ChangeTrackingList<DeliveryAttributeMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();

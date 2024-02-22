@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Stages))
+            if (options.Format != "W" && !(Stages is ChangeTrackingList<ContainerServiceFleetUpdateStageStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stages"u8);
                 writer.WriteStartArray();

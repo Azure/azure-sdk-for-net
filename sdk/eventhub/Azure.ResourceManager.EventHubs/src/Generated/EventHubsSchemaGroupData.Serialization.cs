@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(GroupProperties))
+            if (!(GroupProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupProperties"u8);
                 writer.WriteStartObject();

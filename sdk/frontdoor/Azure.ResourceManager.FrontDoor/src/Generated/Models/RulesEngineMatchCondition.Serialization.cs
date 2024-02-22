@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (!(Transforms is ChangeTrackingList<RulesEngineMatchTransform> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();

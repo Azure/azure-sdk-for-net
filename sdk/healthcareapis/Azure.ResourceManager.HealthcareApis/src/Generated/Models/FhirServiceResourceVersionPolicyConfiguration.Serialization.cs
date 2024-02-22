@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ResourceTypeOverrides))
+            if (!(ResourceTypeOverrides is ChangeTrackingDictionary<string, FhirResourceVersionPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypeOverrides"u8);
                 writer.WriteStartObject();

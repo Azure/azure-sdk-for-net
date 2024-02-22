@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();

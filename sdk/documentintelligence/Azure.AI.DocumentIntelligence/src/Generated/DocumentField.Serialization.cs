@@ -74,7 +74,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueCountryRegion"u8);
                 writer.WriteStringValue(ValueCountryRegion);
             }
-            if (Optional.IsCollectionDefined(ValueArray))
+            if (!(ValueArray is ChangeTrackingList<DocumentField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValueObject))
+            if (!(ValueObject is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Spans))
+            if (!(Spans is ChangeTrackingList<DocumentSpan> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("spans"u8);
                 writer.WriteStartArray();

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("grafanaConfigurations"u8);
                 writer.WriteObjectValue(GrafanaConfigurations);
             }
-            if (Optional.IsCollectionDefined(GrafanaPlugins))
+            if (!(GrafanaPlugins is ChangeTrackingDictionary<string, GrafanaPlugin> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("grafanaPlugins"u8);
                 writer.WriteStartObject();

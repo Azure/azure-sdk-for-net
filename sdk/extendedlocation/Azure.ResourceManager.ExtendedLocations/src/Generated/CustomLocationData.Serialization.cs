@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsCollectionDefined(ClusterExtensionIds))
+            if (!(ClusterExtensionIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clusterExtensionIds"u8);
                 writer.WriteStartArray();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsCollectionDefined(LatencyMetrics))
+            if (!(LatencyMetrics is ChangeTrackingList<LatencyMetric> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("latencyMetrics"u8);
                 writer.WriteStartArray();

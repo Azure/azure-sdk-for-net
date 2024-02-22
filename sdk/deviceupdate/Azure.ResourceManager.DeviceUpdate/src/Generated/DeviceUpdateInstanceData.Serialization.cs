@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsCollectionDefined(IotHubs))
+            if (!(IotHubs is ChangeTrackingList<DeviceUpdateIotHubSettings> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();

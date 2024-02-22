@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("contentType");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationParameters))
+            if (!(ConfigurationParameters is ChangeTrackingList<GuestConfigurationParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationParameter"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
+            if (!(ConfigurationProtectedParameters is ChangeTrackingList<GuestConfigurationParameter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configurationProtectedParameter"u8);
                 writer.WriteStartArray();

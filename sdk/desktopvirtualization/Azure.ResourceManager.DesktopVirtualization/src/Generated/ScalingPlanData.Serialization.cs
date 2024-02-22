@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("exclusionTag"u8);
                 writer.WriteStringValue(ExclusionTag);
             }
-            if (Optional.IsCollectionDefined(Schedules))
+            if (!(Schedules is ChangeTrackingList<ScalingSchedule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("schedules"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostPoolReferences))
+            if (!(HostPoolReferences is ChangeTrackingList<ScalingHostPoolReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostPoolReferences"u8);
                 writer.WriteStartArray();

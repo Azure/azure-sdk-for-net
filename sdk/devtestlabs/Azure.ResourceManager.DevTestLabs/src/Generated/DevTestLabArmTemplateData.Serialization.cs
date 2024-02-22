@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ParametersValueFilesInfo))
+            if (options.Format != "W" && !(ParametersValueFilesInfo is ChangeTrackingList<DevTestLabParametersValueFileInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parametersValueFilesInfo"u8);
                 writer.WriteStartArray();

@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("azureBlobFileListSource"u8);
                 writer.WriteObjectValue(AzureBlobFileListSource);
             }
-            if (Optional.IsCollectionDefined(DocTypes))
+            if (!(DocTypes is ChangeTrackingDictionary<string, DocumentTypeDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("docTypes"u8);
                 writer.WriteStartObject();

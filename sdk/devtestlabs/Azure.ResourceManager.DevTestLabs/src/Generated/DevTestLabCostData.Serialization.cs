@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("labCostSummary"u8);
                 writer.WriteObjectValue(LabCostSummary);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
+            if (options.Format != "W" && !(LabCostDetails is ChangeTrackingList<DevTestLabCostDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("labCostDetails"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceCosts))
+            if (options.Format != "W" && !(ResourceCosts is ChangeTrackingList<DevTestLabResourceCost> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resourceCosts"u8);
                 writer.WriteStartArray();

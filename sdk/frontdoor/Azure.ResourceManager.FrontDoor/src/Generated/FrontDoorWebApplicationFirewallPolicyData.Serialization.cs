@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FrontendEndpointLinks))
+            if (options.Format != "W" && !(FrontendEndpointLinks is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("frontendEndpointLinks"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RoutingRuleLinks))
+            if (options.Format != "W" && !(RoutingRuleLinks is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("routingRuleLinks"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SecurityPolicyLinks))
+            if (options.Format != "W" && !(SecurityPolicyLinks is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("securityPolicyLinks"u8);
                 writer.WriteStartArray();

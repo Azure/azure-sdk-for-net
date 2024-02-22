@@ -56,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Words))
+            if (!(Words is ChangeTrackingList<DocumentWord> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("words"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SelectionMarks))
+            if (!(SelectionMarks is ChangeTrackingList<DocumentSelectionMark> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("selectionMarks"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Lines))
+            if (!(Lines is ChangeTrackingList<DocumentLine> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("lines"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Barcodes))
+            if (!(Barcodes is ChangeTrackingList<DocumentBarcode> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("barcodes"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Formulas))
+            if (!(Formulas is ChangeTrackingList<DocumentFormula> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("formulas"u8);
                 writer.WriteStartArray();

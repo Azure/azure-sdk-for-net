@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("filterMode"u8);
                 writer.WriteStringValue(FilterMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClusterFlavors))
+            if (!(ClusterFlavors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clusterFlavors"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NodeTypes))
+            if (!(NodeTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClusterVersions))
+            if (!(ClusterVersions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("clusterVersions"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OSType))
+            if (!(OSType is ChangeTrackingList<HDInsightOSType> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmSizes))
+            if (!(VmSizes is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();

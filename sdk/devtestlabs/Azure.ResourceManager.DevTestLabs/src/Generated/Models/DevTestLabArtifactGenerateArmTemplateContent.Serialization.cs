@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("virtualMachineName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<DevTestLabParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

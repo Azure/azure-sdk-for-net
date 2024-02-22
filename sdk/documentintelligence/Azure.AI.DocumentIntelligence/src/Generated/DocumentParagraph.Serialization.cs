@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();

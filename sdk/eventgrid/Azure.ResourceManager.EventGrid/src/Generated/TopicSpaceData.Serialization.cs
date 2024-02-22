@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(TopicTemplates))
+            if (!(TopicTemplates is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("topicTemplates"u8);
                 writer.WriteStartArray();

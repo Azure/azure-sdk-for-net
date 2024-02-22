@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FrontendEndpoints))
+            if (!(FrontendEndpoints is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AcceptedProtocols))
+            if (!(AcceptedProtocols is ChangeTrackingList<FrontDoorProtocol> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("acceptedProtocols"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PatternsToMatch))
+            if (!(PatternsToMatch is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();

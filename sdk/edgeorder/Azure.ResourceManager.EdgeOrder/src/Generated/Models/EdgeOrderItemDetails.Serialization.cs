@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("currentStage"u8);
                 writer.WriteObjectValue(CurrentStage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemStageHistory))
+            if (options.Format != "W" && !(OrderItemStageHistory is ChangeTrackingList<EdgeOrderStageDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orderItemStageHistory"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (Optional.IsCollectionDefined(NotificationEmailList))
+            if (!(NotificationEmailList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notificationEmailList"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("managementRpDetails"u8);
                 writer.WriteObjectValue(FirstOrDefaultManagement);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
+            if (options.Format != "W" && !(ManagementRPDetailsList is ChangeTrackingList<ResourceProviderDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("managementRpDetailsList"u8);
                 writer.WriteStartArray();

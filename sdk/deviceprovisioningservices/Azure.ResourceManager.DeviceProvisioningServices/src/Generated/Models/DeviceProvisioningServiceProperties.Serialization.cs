@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPFilterRules))
+            if (!(IPFilterRules is ChangeTrackingList<DeviceProvisioningServicesIPFilterRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(IotHubs))
+            if (!(IotHubs is ChangeTrackingList<IotHubDefinitionDescription> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("idScope"u8);
                 writer.WriteStringValue(IdScope);
             }
-            if (Optional.IsCollectionDefined(AuthorizationPolicies))
+            if (!(AuthorizationPolicies is ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("authorizationPolicies"u8);
                 writer.WriteStartArray();

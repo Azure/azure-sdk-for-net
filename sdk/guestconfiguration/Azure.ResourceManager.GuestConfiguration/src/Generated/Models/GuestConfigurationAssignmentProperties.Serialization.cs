@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("resourceType");
                 }
             }
-            if (Optional.IsCollectionDefined(VmssVmList))
+            if (!(VmssVmList is ChangeTrackingList<GuestConfigurationVmssVmInfo> collection && collection.IsUndefined))
             {
                 if (VmssVmList != null)
                 {

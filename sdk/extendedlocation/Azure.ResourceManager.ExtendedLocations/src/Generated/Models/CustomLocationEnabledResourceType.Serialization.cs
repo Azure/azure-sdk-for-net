@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Optional.IsCollectionDefined(TypesMetadata))
+            if (!(TypesMetadata is ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("typesMetadata"u8);
                 writer.WriteStartArray();

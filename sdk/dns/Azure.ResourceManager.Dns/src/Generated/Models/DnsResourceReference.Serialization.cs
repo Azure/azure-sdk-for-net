@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsResources))
+            if (!(DnsResources is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsResources"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("disallowPublicIpAddress"u8);
                 writer.WriteBooleanValue(DisallowPublicIPAddress.Value);
             }
-            if (Optional.IsCollectionDefined(Artifacts))
+            if (!(Artifacts is ChangeTrackingList<DevTestLabArtifactInstallInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsCollectionDefined(DataDiskParameters))
+            if (!(DataDiskParameters is ChangeTrackingList<DevTestLabDataDiskProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskParameters"u8);
                 writer.WriteStartArray();
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScheduleParameters))
+            if (!(ScheduleParameters is ChangeTrackingList<DevTestLabScheduleCreationParameter> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("scheduleParameters"u8);
                 writer.WriteStartArray();

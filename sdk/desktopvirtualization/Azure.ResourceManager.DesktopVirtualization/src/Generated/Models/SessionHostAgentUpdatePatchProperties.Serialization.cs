@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("maintenanceWindowTimeZone"u8);
                 writer.WriteStringValue(MaintenanceWindowTimeZone);
             }
-            if (Optional.IsCollectionDefined(MaintenanceWindows))
+            if (!(MaintenanceWindows is ChangeTrackingList<MaintenanceWindowPatchProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("maintenanceWindows"u8);
                 writer.WriteStartArray();
