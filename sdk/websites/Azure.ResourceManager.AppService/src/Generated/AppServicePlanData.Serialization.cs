@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.AppService
                                 hostingEnvironmentProfile = null;
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
+                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maximumNumberOfWorkers"u8))
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.AppService
                                 kubeEnvironmentProfile = null;
                                 continue;
                             }
-                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value, options);
+                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))

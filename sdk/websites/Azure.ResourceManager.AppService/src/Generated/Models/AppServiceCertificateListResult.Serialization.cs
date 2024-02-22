@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceCertificateData> array = new List<AppServiceCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceCertificateData.DeserializeAppServiceCertificateData(item, options));
+                        array.Add(AppServiceCertificateData.DeserializeAppServiceCertificateData(item));
                     }
                     value = array;
                     continue;

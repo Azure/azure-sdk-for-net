@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ProcessThreadInfo> array = new List<ProcessThreadInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item, options));
+                        array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item));
                     }
                     value = array;
                     continue;

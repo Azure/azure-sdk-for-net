@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
                                 gitHubActionConfiguration = null;
                                 continue;
                             }
-                            gitHubActionConfiguration = GitHubActionConfiguration.DeserializeGitHubActionConfiguration(property0.Value, options);
+                            gitHubActionConfiguration = GitHubActionConfiguration.DeserializeGitHubActionConfiguration(property0.Value);
                             continue;
                         }
                     }

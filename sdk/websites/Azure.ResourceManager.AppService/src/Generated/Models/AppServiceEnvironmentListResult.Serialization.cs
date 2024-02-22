@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceEnvironmentData> array = new List<AppServiceEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(item, options));
+                        array.Add(AppServiceEnvironmentData.DeserializeAppServiceEnvironmentData(item));
                     }
                     value = array;
                     continue;

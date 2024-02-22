@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value, options);
+                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("overwrite"u8))

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<OutboundEnvironmentEndpoint> array = new List<OutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item, options));
+                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item));
                     }
                     value = array;
                     continue;

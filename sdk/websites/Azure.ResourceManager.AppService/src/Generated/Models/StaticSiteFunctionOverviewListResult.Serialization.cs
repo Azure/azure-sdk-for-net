@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StaticSiteFunctionOverview> array = new List<StaticSiteFunctionOverview>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview(item, options));
+                        array.Add(StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview(item));
                     }
                     value = array;
                     continue;

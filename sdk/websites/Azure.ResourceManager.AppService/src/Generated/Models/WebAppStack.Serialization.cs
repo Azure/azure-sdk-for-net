@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<WebAppMajorVersion> array = new List<WebAppMajorVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppMajorVersion.DeserializeWebAppMajorVersion(item, options));
+                                array.Add(WebAppMajorVersion.DeserializeWebAppMajorVersion(item));
                             }
                             majorVersions = array;
                             continue;

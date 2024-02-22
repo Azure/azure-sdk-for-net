@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticCategoryData> array = new List<DiagnosticCategoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticCategoryData.DeserializeDiagnosticCategoryData(item, options));
+                        array.Add(DiagnosticCategoryData.DeserializeDiagnosticCategoryData(item));
                     }
                     value = array;
                     continue;

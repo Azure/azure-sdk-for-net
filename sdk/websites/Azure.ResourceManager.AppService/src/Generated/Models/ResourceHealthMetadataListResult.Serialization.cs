@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ResourceHealthMetadataData> array = new List<ResourceHealthMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(item, options));
+                        array.Add(ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(item));
                     }
                     value = array;
                     continue;

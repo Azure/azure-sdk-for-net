@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    plan = AppServiceArmPlan.DeserializeAppServiceArmPlan(property.Value, options);
+                    plan = AppServiceArmPlan.DeserializeAppServiceArmPlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = RemotePrivateEndpointConnection.DeserializeRemotePrivateEndpointConnection(property.Value, options);
+                    properties = RemotePrivateEndpointConnection.DeserializeRemotePrivateEndpointConnection(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

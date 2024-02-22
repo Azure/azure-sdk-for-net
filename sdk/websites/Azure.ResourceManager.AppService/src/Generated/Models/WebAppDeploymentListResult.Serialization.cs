@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebAppDeploymentData> array = new List<WebAppDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebAppDeploymentData.DeserializeWebAppDeploymentData(item, options));
+                        array.Add(WebAppDeploymentData.DeserializeWebAppDeploymentData(item));
                     }
                     value = array;
                     continue;

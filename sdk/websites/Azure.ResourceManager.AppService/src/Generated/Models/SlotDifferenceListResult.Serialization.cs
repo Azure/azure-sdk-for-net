@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SlotDifference> array = new List<SlotDifference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SlotDifference.DeserializeSlotDifference(item, options));
+                        array.Add(SlotDifference.DeserializeSlotDifference(item));
                     }
                     value = array;
                     continue;

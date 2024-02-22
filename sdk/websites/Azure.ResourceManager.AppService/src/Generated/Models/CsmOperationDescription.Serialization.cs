@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    display = CsmOperationDisplay.DeserializeCsmOperationDisplay(property.Value, options);
+                    display = CsmOperationDisplay.DeserializeCsmOperationDisplay(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    properties = CsmOperationDescriptionProperties.DeserializeCsmOperationDescriptionProperties(property.Value, options);
+                    properties = CsmOperationDescriptionProperties.DeserializeCsmOperationDescriptionProperties(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

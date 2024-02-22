@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PremierAddOnOffer> array = new List<PremierAddOnOffer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PremierAddOnOffer.DeserializePremierAddOnOffer(item, options));
+                        array.Add(PremierAddOnOffer.DeserializePremierAddOnOffer(item));
                     }
                     value = array;
                     continue;

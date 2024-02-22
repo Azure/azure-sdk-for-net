@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<VirtualNetworkValidationTestFailure> array = new List<VirtualNetworkValidationTestFailure>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item, options));
+                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item));
                             }
                             failedTests = array;
                             continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<VirtualNetworkValidationTestFailure> array = new List<VirtualNetworkValidationTestFailure>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item, options));
+                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item));
                             }
                             warnings = array;
                             continue;

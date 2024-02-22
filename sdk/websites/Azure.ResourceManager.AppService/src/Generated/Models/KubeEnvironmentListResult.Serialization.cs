@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<KubeEnvironmentData> array = new List<KubeEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubeEnvironmentData.DeserializeKubeEnvironmentData(item, options));
+                        array.Add(KubeEnvironmentData.DeserializeKubeEnvironmentData(item));
                     }
                     value = array;
                     continue;

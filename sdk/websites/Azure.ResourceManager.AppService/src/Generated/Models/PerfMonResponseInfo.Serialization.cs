@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    data = PerfMonSet.DeserializePerfMonSet(property.Value, options);
+                    data = PerfMonSet.DeserializePerfMonSet(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            latestRun = TriggeredJobRun.DeserializeTriggeredJobRun(property0.Value, options);
+                            latestRun = TriggeredJobRun.DeserializeTriggeredJobRun(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("history_url"u8))

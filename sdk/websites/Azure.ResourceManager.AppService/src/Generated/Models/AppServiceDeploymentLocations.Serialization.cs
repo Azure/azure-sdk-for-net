@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceGeoRegion> array = new List<AppServiceGeoRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item, options));
+                        array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item));
                     }
                     locations = array;
                     continue;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceEnvironmentProperties> array = new List<AppServiceEnvironmentProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(item, options));
+                        array.Add(AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(item));
                     }
                     hostingEnvironments = array;
                     continue;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<HostingEnvironmentDeploymentInfo> array = new List<HostingEnvironmentDeploymentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HostingEnvironmentDeploymentInfo.DeserializeHostingEnvironmentDeploymentInfo(item, options));
+                        array.Add(HostingEnvironmentDeploymentInfo.DeserializeHostingEnvironmentDeploymentInfo(item));
                     }
                     hostingEnvironmentDeploymentInfos = array;
                     continue;

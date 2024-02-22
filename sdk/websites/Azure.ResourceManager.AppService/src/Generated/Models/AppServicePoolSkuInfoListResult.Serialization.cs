@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServicePoolSkuInfo> array = new List<AppServicePoolSkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo(item, options));
+                        array.Add(AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo(item));
                     }
                     value = array;
                     continue;

@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                             Dictionary<string, AppServiceCertificateProperties> dictionary = new Dictionary<string, AppServiceCertificateProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value, options));
+                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value));
                             }
                             certificates = dictionary;
                             continue;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("csr"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("root"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
+                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serialNumber"u8))
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value, options);
+                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value);
                             continue;
                         }
                     }

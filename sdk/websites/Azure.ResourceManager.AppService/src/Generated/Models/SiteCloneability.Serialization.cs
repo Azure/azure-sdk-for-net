@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item, options));
+                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
                     }
                     blockingFeatures = array;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item, options));
+                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
                     }
                     unsupportedFeatures = array;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item, options));
+                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
                     }
                     blockingCharacteristics = array;
                     continue;
