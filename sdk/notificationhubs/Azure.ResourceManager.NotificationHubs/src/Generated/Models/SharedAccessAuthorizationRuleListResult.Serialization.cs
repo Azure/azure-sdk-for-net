@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     List<NotificationHubAuthorizationRuleData> array = new List<NotificationHubAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(item));
+                        array.Add(NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(item, options));
                     }
                     value = array;
                     continue;

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudKubernetesClusterData> array = new List<NetworkCloudKubernetesClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(item));
+                        array.Add(NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(item, options));
                     }
                     value = array;
                     continue;

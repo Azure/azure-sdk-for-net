@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "RoleManagementPolicyApprovalRule": return RoleManagementPolicyApprovalRule.DeserializeRoleManagementPolicyApprovalRule(element);
-                    case "RoleManagementPolicyAuthenticationContextRule": return RoleManagementPolicyAuthenticationContextRule.DeserializeRoleManagementPolicyAuthenticationContextRule(element);
-                    case "RoleManagementPolicyEnablementRule": return RoleManagementPolicyEnablementRule.DeserializeRoleManagementPolicyEnablementRule(element);
-                    case "RoleManagementPolicyExpirationRule": return RoleManagementPolicyExpirationRule.DeserializeRoleManagementPolicyExpirationRule(element);
-                    case "RoleManagementPolicyNotificationRule": return RoleManagementPolicyNotificationRule.DeserializeRoleManagementPolicyNotificationRule(element);
+                    case "RoleManagementPolicyApprovalRule": return RoleManagementPolicyApprovalRule.DeserializeRoleManagementPolicyApprovalRule(element, options);
+                    case "RoleManagementPolicyAuthenticationContextRule": return RoleManagementPolicyAuthenticationContextRule.DeserializeRoleManagementPolicyAuthenticationContextRule(element, options);
+                    case "RoleManagementPolicyEnablementRule": return RoleManagementPolicyEnablementRule.DeserializeRoleManagementPolicyEnablementRule(element, options);
+                    case "RoleManagementPolicyExpirationRule": return RoleManagementPolicyExpirationRule.DeserializeRoleManagementPolicyExpirationRule(element, options);
+                    case "RoleManagementPolicyNotificationRule": return RoleManagementPolicyNotificationRule.DeserializeRoleManagementPolicyNotificationRule(element, options);
                 }
             }
-            return UnknownRoleManagementPolicyRule.DeserializeUnknownRoleManagementPolicyRule(element);
+            return UnknownRoleManagementPolicyRule.DeserializeUnknownRoleManagementPolicyRule(element, options);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyRule>.Write(ModelReaderWriterOptions options)

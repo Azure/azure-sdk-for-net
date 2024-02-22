@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            properties = ScaleSettingsInformation.DeserializeScaleSettingsInformation(property0.Value);
+                            properties = ScaleSettingsInformation.DeserializeScaleSettingsInformation(property0.Value, options);
                             continue;
                         }
                     }

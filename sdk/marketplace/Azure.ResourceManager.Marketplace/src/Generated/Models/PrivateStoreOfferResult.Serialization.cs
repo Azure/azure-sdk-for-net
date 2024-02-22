@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStorePlan> array = new List<PrivateStorePlan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item));
+                        array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item, options));
                     }
                     plans = array;
                     continue;

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value);
+                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("remotePrivateEndpointConnection"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<GroupConnectivityInformation> array = new List<GroupConnectivityInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item));
+                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item, options));
                     }
                     groupConnectivityInformation = array;
                     continue;

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -54,7 +53,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpointNames"/> is null. </exception>
         public IotHubFallbackRouteProperties(IotHubRoutingSource source, IEnumerable<string> endpointNames, bool isEnabled)
         {
-            Argument.AssertNotNull(endpointNames, nameof(endpointNames));
+            if (endpointNames == null)
+            {
+                throw new ArgumentNullException(nameof(endpointNames));
+            }
 
             Source = source;
             EndpointNames = endpointNames.ToList();

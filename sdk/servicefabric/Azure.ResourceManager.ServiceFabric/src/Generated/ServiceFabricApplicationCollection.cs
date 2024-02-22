@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceFabricApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, ServiceFabricApplicationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceFabricApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, ServiceFabricApplicationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricApplicationResource>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<ServiceFabricApplicationResource> Get(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceFabricApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual NullableResponse<ServiceFabricApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            if (applicationName == null)
+            {
+                throw new ArgumentNullException(nameof(applicationName));
+            }
+            if (applicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
+            }
 
             using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.GetIfExists");
             scope.Start();

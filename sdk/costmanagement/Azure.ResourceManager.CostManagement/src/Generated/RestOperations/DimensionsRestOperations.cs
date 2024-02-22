@@ -80,7 +80,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<CostManagementDimensionsListResult>> ListAsync(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope, filter, expand, skiptoken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -110,7 +113,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<CostManagementDimensionsListResult> List(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             using var message = CreateListRequest(scope, filter, expand, skiptoken, top);
             _pipeline.Send(message, cancellationToken);
@@ -177,7 +183,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementDimensionsListResult>> ByExternalCloudProviderTypeAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            if (externalCloudProviderId == null)
+            {
+                throw new ArgumentNullException(nameof(externalCloudProviderId));
+            }
+            if (externalCloudProviderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
+            }
 
             using var message = CreateByExternalCloudProviderTypeRequest(externalCloudProviderType, externalCloudProviderId, filter, expand, skiptoken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -207,7 +220,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementDimensionsListResult> ByExternalCloudProviderType(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
+            if (externalCloudProviderId == null)
+            {
+                throw new ArgumentNullException(nameof(externalCloudProviderId));
+            }
+            if (externalCloudProviderId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
+            }
 
             using var message = CreateByExternalCloudProviderTypeRequest(externalCloudProviderType, externalCloudProviderId, filter, expand, skiptoken, top);
             _pipeline.Send(message, cancellationToken);

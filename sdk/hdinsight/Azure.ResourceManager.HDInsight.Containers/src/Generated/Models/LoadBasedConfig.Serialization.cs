@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ScalingRule> array = new List<ScalingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScalingRule.DeserializeScalingRule(item));
+                        array.Add(ScalingRule.DeserializeScalingRule(item, options));
                     }
                     scalingRules = array;
                     continue;

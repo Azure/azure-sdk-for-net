@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<InboundEnvironmentEndpoint> array = new List<InboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundEnvironmentEndpoint.DeserializeInboundEnvironmentEndpoint(item));
+                        array.Add(InboundEnvironmentEndpoint.DeserializeInboundEnvironmentEndpoint(item, options));
                     }
                     value = array;
                     continue;

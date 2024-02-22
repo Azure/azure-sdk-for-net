@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         internal CreateRunResponse(string runId)
         {
-            Argument.AssertNotNull(runId, nameof(runId));
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
 
             RunId = runId;
         }

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    properties = Models.VmSize.DeserializeVmSize(property.Value);
+                    properties = Models.VmSize.DeserializeVmSize(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableHybridConnectivityArmClient(client).GetEndpointResources(scope);
         }
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         [ForwardsClientCalls]
         public static async Task<Response<EndpointResource>> GetEndpointResourceAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableHybridConnectivityArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
@@ -112,7 +118,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         [ForwardsClientCalls]
         public static Response<EndpointResource> GetEndpointResource(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableHybridConnectivityArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
         }
@@ -131,7 +140,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
         public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableHybridConnectivityArmClient(client).GetEndpointResource(id);
         }

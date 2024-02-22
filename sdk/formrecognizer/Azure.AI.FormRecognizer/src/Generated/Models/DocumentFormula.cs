@@ -22,7 +22,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DocumentFormula(DocumentFormulaKind kind, string value, DocumentSpan span, float confidence)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Kind = kind;
             Value = value;

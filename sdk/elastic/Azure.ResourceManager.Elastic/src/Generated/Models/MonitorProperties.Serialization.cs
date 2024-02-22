@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticProperties = ElasticProperties.DeserializeElasticProperties(property.Value);
+                    elasticProperties = ElasticProperties.DeserializeElasticProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    userInfo = UserInfo.DeserializeUserInfo(property.Value);
+                    userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("liftrResourceCategory"u8))

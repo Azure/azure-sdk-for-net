@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = AppRegistration.DeserializeAppRegistration(property.Value);
+                    registration = AppRegistration.DeserializeAppRegistration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("graphApiVersion"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
+                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

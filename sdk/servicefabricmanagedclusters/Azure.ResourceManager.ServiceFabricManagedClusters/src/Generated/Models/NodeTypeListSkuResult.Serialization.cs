@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeAvailableSku> array = new List<NodeTypeAvailableSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item));
+                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item, options));
                     }
                     value = array;
                     continue;

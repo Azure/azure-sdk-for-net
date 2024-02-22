@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value);
+                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value, options);
                             continue;
                         }
                     }

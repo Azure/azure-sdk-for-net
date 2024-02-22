@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GraphApiComputeRegionalService> array = new List<GraphApiComputeRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphApiComputeRegionalService.DeserializeGraphApiComputeRegionalService(item));
+                        array.Add(GraphApiComputeRegionalService.DeserializeGraphApiComputeRegionalService(item, options));
                     }
                     locations = array;
                     continue;

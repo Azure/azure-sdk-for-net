@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = DataFactoryDataPlaneUserAccessPolicy.DeserializeDataFactoryDataPlaneUserAccessPolicy(property.Value);
+                    policy = DataFactoryDataPlaneUserAccessPolicy.DeserializeDataFactoryDataPlaneUserAccessPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessToken"u8))

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -20,7 +19,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
         internal RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls)
         {
-            Argument.AssertNotNull(toolCalls, nameof(toolCalls));
+            if (toolCalls == null)
+            {
+                throw new ArgumentNullException(nameof(toolCalls));
+            }
 
             Type = RunStepType.ToolCalls;
             ToolCalls = toolCalls.ToList();

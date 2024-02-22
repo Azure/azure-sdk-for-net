@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafPolicyManagedRuleSet> array = new List<WafPolicyManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item));
+                        array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item, options));
                     }
                     managedRuleSets = array;
                     continue;

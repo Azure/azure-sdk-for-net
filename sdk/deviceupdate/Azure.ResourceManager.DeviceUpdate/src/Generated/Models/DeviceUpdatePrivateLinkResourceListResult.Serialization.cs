@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkData> array = new List<DeviceUpdatePrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkData.DeserializeDeviceUpdatePrivateLinkData(item));
+                        array.Add(DeviceUpdatePrivateLinkData.DeserializeDeviceUpdatePrivateLinkData(item, options));
                     }
                     value = array;
                     continue;

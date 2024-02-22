@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    name = SignalRUsageName.DeserializeSignalRUsageName(property.Value);
+                    name = SignalRUsageName.DeserializeSignalRUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

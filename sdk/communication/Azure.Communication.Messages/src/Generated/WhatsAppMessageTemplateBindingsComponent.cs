@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Messages.Models.Channels
 {
@@ -51,7 +50,10 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
         public WhatsAppMessageTemplateBindingsComponent(string refValue)
         {
-            Argument.AssertNotNull(refValue, nameof(refValue));
+            if (refValue == null)
+            {
+                throw new ArgumentNullException(nameof(refValue));
+            }
 
             RefValue = refValue;
         }

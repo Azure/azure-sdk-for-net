@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         error = null;
                         continue;
                     }
-                    error = MoverOperationStatusError.DeserializeMoverOperationStatusError(property.Value);
+                    error = MoverOperationStatusError.DeserializeMoverOperationStatusError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

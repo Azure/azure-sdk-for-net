@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = BackupJobExtendedInfo.DeserializeBackupJobExtendedInfo(property.Value);
+                    extendedInfo = BackupJobExtendedInfo.DeserializeBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isUserTriggered"u8))

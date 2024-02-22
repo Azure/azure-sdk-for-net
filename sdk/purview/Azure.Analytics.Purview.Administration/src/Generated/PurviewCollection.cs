@@ -128,7 +128,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='CreateOrUpdateCollectionAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateCollectionAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();
@@ -162,7 +165,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewCollection.xml" path="doc/members/member[@name='CreateOrUpdateCollection(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateCollection(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.CreateOrUpdateCollection");
             scope.Start();

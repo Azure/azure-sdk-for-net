@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<ArcExtensionData> array = new List<ArcExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArcExtensionData.DeserializeArcExtensionData(item));
+                        array.Add(ArcExtensionData.DeserializeArcExtensionData(item, options));
                     }
                     value = array;
                     continue;

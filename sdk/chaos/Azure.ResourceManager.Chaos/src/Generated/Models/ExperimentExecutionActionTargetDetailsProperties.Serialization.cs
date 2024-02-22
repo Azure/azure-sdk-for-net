@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         error = null;
                         continue;
                     }
-                    error = ExperimentExecutionActionTargetDetailsError.DeserializeExperimentExecutionActionTargetDetailsError(property.Value);
+                    error = ExperimentExecutionActionTargetDetailsError.DeserializeExperimentExecutionActionTargetDetailsError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

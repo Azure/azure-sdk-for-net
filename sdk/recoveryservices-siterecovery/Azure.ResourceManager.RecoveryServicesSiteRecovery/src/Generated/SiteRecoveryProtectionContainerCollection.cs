@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryProtectionContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectionContainerName, SiteRecoveryProtectionContainerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryProtectionContainerResource> CreateOrUpdate(WaitUntil waitUntil, string protectionContainerName, SiteRecoveryProtectionContainerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryProtectionContainerResource>> GetAsync(string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
         public virtual Response<SiteRecoveryProtectionContainerResource> Get(string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
         public virtual Response<bool> Exists(string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryProtectionContainerResource>> GetIfExistsAsync(string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectionContainerName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryProtectionContainerResource> GetIfExists(string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            if (protectionContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(protectionContainerName));
+            }
+            if (protectionContainerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
+            }
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerCollection.GetIfExists");
             scope.Start();

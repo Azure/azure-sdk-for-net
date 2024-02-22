@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<IngestionSourcesPropertiesFormat> array = new List<IngestionSourcesPropertiesFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IngestionSourcesPropertiesFormat.DeserializeIngestionSourcesPropertiesFormat(item));
+                        array.Add(IngestionSourcesPropertiesFormat.DeserializeIngestionSourcesPropertiesFormat(item, options));
                     }
                     ingestionSources = array;
                     continue;

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<WorkbookTemplateGallery> array = new List<WorkbookTemplateGallery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                        array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item, options));
                     }
                     galleries = array;
                     continue;

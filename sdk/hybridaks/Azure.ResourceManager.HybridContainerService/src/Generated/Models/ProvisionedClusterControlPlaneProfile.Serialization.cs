@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    controlPlaneEndpoint = ControlPlaneProfileControlPlaneEndpoint.DeserializeControlPlaneProfileControlPlaneEndpoint(property.Value);
+                    controlPlaneEndpoint = ControlPlaneProfileControlPlaneEndpoint.DeserializeControlPlaneProfileControlPlaneEndpoint(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

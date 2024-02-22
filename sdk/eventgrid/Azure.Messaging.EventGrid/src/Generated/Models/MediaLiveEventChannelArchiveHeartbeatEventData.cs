@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,8 +18,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <exception cref="ArgumentNullException"> <paramref name="channelLatencyMsInternal"/> or <paramref name="latencyResultCode"/> is null. </exception>
         internal MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMsInternal, string latencyResultCode)
         {
-            Argument.AssertNotNull(channelLatencyMsInternal, nameof(channelLatencyMsInternal));
-            Argument.AssertNotNull(latencyResultCode, nameof(latencyResultCode));
+            if (channelLatencyMsInternal == null)
+            {
+                throw new ArgumentNullException(nameof(channelLatencyMsInternal));
+            }
+            if (latencyResultCode == null)
+            {
+                throw new ArgumentNullException(nameof(latencyResultCode));
+            }
 
             ChannelLatencyMsInternal = channelLatencyMsInternal;
             LatencyResultCode = latencyResultCode;

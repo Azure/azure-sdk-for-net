@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFunctionProperties(document.RootElement, options);
+            return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
         }
 
         internal static UnknownFunctionProperties DeserializeUnknownFunctionProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item, options));
                             }
                             inputs = array;
                             continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value);
+                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("binding"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value);
+                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value, options);
                             continue;
                         }
                     }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFunctionProperties(document.RootElement, options);
+                        return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{options.Format}' format.");

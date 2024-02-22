@@ -52,7 +52,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         internal DocumentModelDetails(string modelId, DateTimeOffset createdDateTime)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
 
             ModelId = modelId;
             CreatedDateTime = createdDateTime;

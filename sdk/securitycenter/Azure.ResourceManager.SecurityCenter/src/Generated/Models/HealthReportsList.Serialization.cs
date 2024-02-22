@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityHealthReportData> array = new List<SecurityHealthReportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityHealthReportData.DeserializeSecurityHealthReportData(item));
+                        array.Add(SecurityHealthReportData.DeserializeSecurityHealthReportData(item, options));
                     }
                     value = array;
                     continue;

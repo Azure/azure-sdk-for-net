@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBDatabaseInfo> array = new List<MongoDBDatabaseInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBDatabaseInfo.DeserializeMongoDBDatabaseInfo(item));
+                        array.Add(MongoDBDatabaseInfo.DeserializeMongoDBDatabaseInfo(item, options));
                     }
                     databases = array;
                     continue;

@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            if (virtualMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineId));
+            }
+            if (virtualMachineId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
+            }
 
             using var scope = _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual Response<WorkloadNetworkVirtualMachineResource> Get(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            if (virtualMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineId));
+            }
+            if (virtualMachineId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
+            }
 
             using var scope = _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            if (virtualMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineId));
+            }
+            if (virtualMachineId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
+            }
 
             using var scope = _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            if (virtualMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineId));
+            }
+            if (virtualMachineId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
+            }
 
             using var scope = _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkVirtualMachineResource>> GetIfExistsAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            if (virtualMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineId));
+            }
+            if (virtualMachineId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
+            }
 
             using var scope = _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkVirtualMachineResource> GetIfExists(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            if (virtualMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineId));
+            }
+            if (virtualMachineId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
+            }
 
             using var scope = _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVirtualMachineCollection.GetIfExists");
             scope.Start();

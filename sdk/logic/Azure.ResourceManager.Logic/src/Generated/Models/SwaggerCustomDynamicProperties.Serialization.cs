@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerCustomDynamicProperties> dictionary = new Dictionary<string, SwaggerCustomDynamicProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeSwaggerCustomDynamicProperties(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeSwaggerCustomDynamicProperties(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -52,8 +51,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> or <paramref name="fileList"/> is null. </exception>
         public AzureBlobFileListContentSource(Uri containerUrl, string fileList)
         {
-            Argument.AssertNotNull(containerUrl, nameof(containerUrl));
-            Argument.AssertNotNull(fileList, nameof(fileList));
+            if (containerUrl == null)
+            {
+                throw new ArgumentNullException(nameof(containerUrl));
+            }
+            if (fileList == null)
+            {
+                throw new ArgumentNullException(nameof(fileList));
+            }
 
             ContainerUrl = containerUrl;
             FileList = fileList;

@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string registryName, ContainerRegistryData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerRegistryResource> CreateOrUpdate(WaitUntil waitUntil, string registryName, ContainerRegistryData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryResource>> GetAsync(string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual Response<ContainerRegistryResource> Get(string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual Response<bool> Exists(string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryResource>> GetIfExistsAsync(string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         public virtual NullableResponse<ContainerRegistryResource> GetIfExists(string registryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            if (registryName == null)
+            {
+                throw new ArgumentNullException(nameof(registryName));
+            }
+            if (registryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
+            }
 
             using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.GetIfExists");
             scope.Start();

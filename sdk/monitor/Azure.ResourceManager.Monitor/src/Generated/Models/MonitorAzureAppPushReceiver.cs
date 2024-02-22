@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="emailAddress"/> is null. </exception>
         public MonitorAzureAppPushReceiver(string name, string emailAddress)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(emailAddress, nameof(emailAddress));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (emailAddress == null)
+            {
+                throw new ArgumentNullException(nameof(emailAddress));
+            }
 
             Name = name;
             EmailAddress = emailAddress;

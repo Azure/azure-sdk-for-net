@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = CalculatePriceResultPropertiesBillingCurrencyTotal.DeserializeCalculatePriceResultPropertiesBillingCurrencyTotal(property.Value);
+                    billingCurrencyTotal = CalculatePriceResultPropertiesBillingCurrencyTotal.DeserializeCalculatePriceResultPropertiesBillingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("netTotal"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = CalculatePriceResultPropertiesPricingCurrencyTotal.DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(property.Value);
+                    pricingCurrencyTotal = CalculatePriceResultPropertiesPricingCurrencyTotal.DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("paymentSchedule"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<PaymentDetail> array = new List<PaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentDetail.DeserializePaymentDetail(item));
+                        array.Add(PaymentDetail.DeserializePaymentDetail(item, options));
                     }
                     paymentSchedule = array;
                     continue;

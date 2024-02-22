@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceInstanceViewStatus> array = new List<ResourceInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;

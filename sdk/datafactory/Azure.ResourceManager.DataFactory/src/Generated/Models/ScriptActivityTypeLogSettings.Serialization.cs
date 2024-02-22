@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
+                    logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

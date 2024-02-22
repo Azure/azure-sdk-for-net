@@ -290,7 +290,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<AutomationSourceControlResource>> UpdateAsync(AutomationSourceControlPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlResource.Update");
             scope.Start();
@@ -332,7 +335,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<AutomationSourceControlResource> Update(AutomationSourceControlPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlResource.Update");
             scope.Start();
@@ -371,7 +377,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SourceControlSyncJob>> CreateSourceControlSyncJobAsync(Guid sourceControlSyncJobId, SourceControlSyncJobCreateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.CreateSourceControlSyncJob");
             scope.Start();
@@ -410,7 +419,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SourceControlSyncJob> CreateSourceControlSyncJob(Guid sourceControlSyncJobId, SourceControlSyncJobCreateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.CreateSourceControlSyncJob");
             scope.Start();
@@ -630,7 +642,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="streamId"/> is null. </exception>
         public virtual async Task<Response<SourceControlSyncJobStreamResult>> GetSourceControlSyncJobStreamAsync(Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamId, nameof(streamId));
+            if (streamId == null)
+            {
+                throw new ArgumentNullException(nameof(streamId));
+            }
+            if (streamId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamId));
+            }
 
             using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStream");
             scope.Start();
@@ -670,7 +689,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="streamId"/> is null. </exception>
         public virtual Response<SourceControlSyncJobStreamResult> GetSourceControlSyncJobStream(Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(streamId, nameof(streamId));
+            if (streamId == null)
+            {
+                throw new ArgumentNullException(nameof(streamId));
+            }
+            if (streamId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(streamId));
+            }
 
             using var scope = _sourceControlSyncJobStreamsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJobStream");
             scope.Start();

@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal DeviceProvisioningServicesPrivateLinkResourceData(DeviceProvisioningServicesPrivateLinkResourceProperties properties)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
             Properties = properties;
         }

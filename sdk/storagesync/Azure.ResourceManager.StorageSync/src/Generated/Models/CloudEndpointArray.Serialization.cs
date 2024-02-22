@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<CloudEndpointData> array = new List<CloudEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudEndpointData.DeserializeCloudEndpointData(item));
+                        array.Add(CloudEndpointData.DeserializeCloudEndpointData(item, options));
                     }
                     value = array;
                     continue;

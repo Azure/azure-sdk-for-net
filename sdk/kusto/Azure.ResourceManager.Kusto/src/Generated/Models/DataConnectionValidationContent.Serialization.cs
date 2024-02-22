@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    properties = KustoDataConnectionData.DeserializeKustoDataConnectionData(property.Value);
+                    properties = KustoDataConnectionData.DeserializeKustoDataConnectionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

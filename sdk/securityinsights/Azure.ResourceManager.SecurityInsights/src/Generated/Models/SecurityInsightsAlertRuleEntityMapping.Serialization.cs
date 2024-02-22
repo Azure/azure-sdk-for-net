@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsFieldMapping> array = new List<SecurityInsightsFieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsFieldMapping.DeserializeSecurityInsightsFieldMapping(item));
+                        array.Add(SecurityInsightsFieldMapping.DeserializeSecurityInsightsFieldMapping(item, options));
                     }
                     fieldMappings = array;
                     continue;

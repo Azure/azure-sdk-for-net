@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBShardKeyField> array = new List<MongoDBShardKeyField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBShardKeyField.DeserializeMongoDBShardKeyField(item));
+                        array.Add(MongoDBShardKeyField.DeserializeMongoDBShardKeyField(item, options));
                     }
                     fields = array;
                     continue;

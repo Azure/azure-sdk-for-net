@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = EncryptionKeyVaultUpdateProperties.DeserializeEncryptionKeyVaultUpdateProperties(property.Value);
+                    keyVaultProperties = EncryptionKeyVaultUpdateProperties.DeserializeEncryptionKeyVaultUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationAdvancedScheduleMonthlyOccurrence> array = new List<AutomationAdvancedScheduleMonthlyOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationAdvancedScheduleMonthlyOccurrence.DeserializeAutomationAdvancedScheduleMonthlyOccurrence(item));
+                        array.Add(AutomationAdvancedScheduleMonthlyOccurrence.DeserializeAutomationAdvancedScheduleMonthlyOccurrence(item, options));
                     }
                     monthlyOccurrences = array;
                     continue;

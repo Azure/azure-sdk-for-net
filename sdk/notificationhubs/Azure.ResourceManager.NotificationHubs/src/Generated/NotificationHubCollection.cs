@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NotificationHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string notificationHubName, NotificationHubCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException(nameof(notificationHubName));
+            }
+            if (notificationHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationHubName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NotificationHubResource> CreateOrUpdate(WaitUntil waitUntil, string notificationHubName, NotificationHubCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException(nameof(notificationHubName));
+            }
+            if (notificationHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationHubName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
         public virtual async Task<Response<NotificationHubResource>> GetAsync(string notificationHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException(nameof(notificationHubName));
+            }
+            if (notificationHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationHubName));
+            }
 
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
         public virtual Response<NotificationHubResource> Get(string notificationHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException(nameof(notificationHubName));
+            }
+            if (notificationHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationHubName));
+            }
 
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string notificationHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException(nameof(notificationHubName));
+            }
+            if (notificationHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationHubName));
+            }
 
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
         public virtual Response<bool> Exists(string notificationHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException(nameof(notificationHubName));
+            }
+            if (notificationHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationHubName));
+            }
 
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
         public virtual async Task<NullableResponse<NotificationHubResource>> GetIfExistsAsync(string notificationHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException(nameof(notificationHubName));
+            }
+            if (notificationHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationHubName));
+            }
 
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
         public virtual NullableResponse<NotificationHubResource> GetIfExists(string notificationHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
+            if (notificationHubName == null)
+            {
+                throw new ArgumentNullException(nameof(notificationHubName));
+            }
+            if (notificationHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(notificationHubName));
+            }
 
             using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.GetIfExists");
             scope.Start();

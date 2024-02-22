@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LinkResourceFormatResource>> UpdateAsync(WaitUntil waitUntil, LinkResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LinkResourceFormatResource> Update(WaitUntil waitUntil, LinkResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatResource.Update");
             scope.Start();

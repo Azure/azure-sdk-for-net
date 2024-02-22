@@ -79,8 +79,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteSlotHybridConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            if (entityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -128,8 +138,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSiteSlotHybridConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            if (entityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -175,7 +195,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotHybridConnectionResource>> GetAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            if (entityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
+            }
 
             using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.Get");
             scope.Start();
@@ -220,7 +247,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual Response<WebSiteSlotHybridConnectionResource> Get(string entityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            if (entityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
+            }
 
             using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.Get");
             scope.Start();
@@ -265,7 +299,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            if (entityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
+            }
 
             using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.Exists");
             scope.Start();
@@ -308,7 +349,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual Response<bool> Exists(string entityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            if (entityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
+            }
 
             using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.Exists");
             scope.Start();
@@ -351,7 +399,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteSlotHybridConnectionResource>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            if (entityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
+            }
 
             using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.GetIfExists");
             scope.Start();
@@ -396,7 +451,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual NullableResponse<WebSiteSlotHybridConnectionResource> GetIfExists(string entityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            if (entityName == null)
+            {
+                throw new ArgumentNullException(nameof(entityName));
+            }
+            if (entityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
+            }
 
             using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.GetIfExists");
             scope.Start();

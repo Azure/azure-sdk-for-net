@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, KpiResourceHealthDetails> dictionary = new Dictionary<string, KpiResourceHealthDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value));
+                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value, options));
                     }
                     kpisHealths = dictionary;
                     continue;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = FileshareProtectedItemExtendedInfo.DeserializeFileshareProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = FileshareProtectedItemExtendedInfo.DeserializeFileshareProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))

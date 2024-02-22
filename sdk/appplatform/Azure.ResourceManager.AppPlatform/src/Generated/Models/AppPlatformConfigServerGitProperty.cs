@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AppPlatformConfigServerGitProperty(Uri uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             Repositories = new ChangeTrackingList<ConfigServerGitPatternRepository>();
             Uri = uri;

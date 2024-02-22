@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkIntentPolicyConfiguration> array = new List<NetworkIntentPolicyConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkIntentPolicyConfiguration.DeserializeNetworkIntentPolicyConfiguration(item));
+                        array.Add(NetworkIntentPolicyConfiguration.DeserializeNetworkIntentPolicyConfiguration(item, options));
                     }
                     networkIntentPolicyConfigurations = array;
                     continue;

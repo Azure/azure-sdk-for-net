@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CustomRuleMatchCondition> array = new List<CustomRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item));
+                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;

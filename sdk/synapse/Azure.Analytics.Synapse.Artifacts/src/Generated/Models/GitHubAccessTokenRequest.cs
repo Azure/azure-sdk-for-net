@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,9 +19,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubClientId"/>, <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUrl"/> is null. </exception>
         public GitHubAccessTokenRequest(string gitHubClientId, string gitHubAccessCode, string gitHubAccessTokenBaseUrl)
         {
-            Argument.AssertNotNull(gitHubClientId, nameof(gitHubClientId));
-            Argument.AssertNotNull(gitHubAccessCode, nameof(gitHubAccessCode));
-            Argument.AssertNotNull(gitHubAccessTokenBaseUrl, nameof(gitHubAccessTokenBaseUrl));
+            if (gitHubClientId == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubClientId));
+            }
+            if (gitHubAccessCode == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubAccessCode));
+            }
+            if (gitHubAccessTokenBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubAccessTokenBaseUrl));
+            }
 
             GitHubClientId = gitHubClientId;
             GitHubAccessCode = gitHubAccessCode;

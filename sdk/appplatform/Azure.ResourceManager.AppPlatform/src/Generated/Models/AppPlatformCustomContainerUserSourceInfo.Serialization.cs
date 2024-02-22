@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    customContainer = AppPlatformCustomContainer.DeserializeAppPlatformCustomContainer(property.Value);
+                    customContainer = AppPlatformCustomContainer.DeserializeAppPlatformCustomContainer(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

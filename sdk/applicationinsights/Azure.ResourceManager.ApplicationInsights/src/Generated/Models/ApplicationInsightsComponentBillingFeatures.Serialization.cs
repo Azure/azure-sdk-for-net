@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value);
+                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("CurrentBillingFeatures"u8))

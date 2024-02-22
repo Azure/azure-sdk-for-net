@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    inputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    inputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    outputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    outputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduledTime"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    correlation = Correlation.DeserializeCorrelation(property.Value);
+                    correlation = Correlation.DeserializeCorrelation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("code"u8))

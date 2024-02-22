@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogApiKey> array = new List<DatadogApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogApiKey.DeserializeDatadogApiKey(item));
+                        array.Add(DatadogApiKey.DeserializeDatadogApiKey(item, options));
                     }
                     value = array;
                     continue;

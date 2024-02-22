@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> or <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseBigDataPoolInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bigDataPoolName, SynapseBigDataPoolInfoData info, bool? force = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
-            Argument.AssertNotNull(info, nameof(info));
+            if (bigDataPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(bigDataPoolName));
+            }
+            if (bigDataPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bigDataPoolName));
+            }
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> or <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<SynapseBigDataPoolInfoResource> CreateOrUpdate(WaitUntil waitUntil, string bigDataPoolName, SynapseBigDataPoolInfoData info, bool? force = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
-            Argument.AssertNotNull(info, nameof(info));
+            if (bigDataPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(bigDataPoolName));
+            }
+            if (bigDataPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bigDataPoolName));
+            }
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
         public virtual async Task<Response<SynapseBigDataPoolInfoResource>> GetAsync(string bigDataPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
+            if (bigDataPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(bigDataPoolName));
+            }
+            if (bigDataPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bigDataPoolName));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
         public virtual Response<SynapseBigDataPoolInfoResource> Get(string bigDataPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
+            if (bigDataPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(bigDataPoolName));
+            }
+            if (bigDataPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bigDataPoolName));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bigDataPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
+            if (bigDataPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(bigDataPoolName));
+            }
+            if (bigDataPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bigDataPoolName));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string bigDataPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
+            if (bigDataPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(bigDataPoolName));
+            }
+            if (bigDataPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bigDataPoolName));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseBigDataPoolInfoResource>> GetIfExistsAsync(string bigDataPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
+            if (bigDataPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(bigDataPoolName));
+            }
+            if (bigDataPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bigDataPoolName));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
         public virtual NullableResponse<SynapseBigDataPoolInfoResource> GetIfExists(string bigDataPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
+            if (bigDataPoolName == null)
+            {
+                throw new ArgumentNullException(nameof(bigDataPoolName));
+            }
+            if (bigDataPoolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bigDataPoolName));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.GetIfExists");
             scope.Start();

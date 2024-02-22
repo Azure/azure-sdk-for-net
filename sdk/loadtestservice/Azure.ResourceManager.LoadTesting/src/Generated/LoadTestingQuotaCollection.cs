@@ -84,7 +84,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
         public virtual async Task<Response<LoadTestingQuotaResource>> GetAsync(string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+            if (quotaBucketName == null)
+            {
+                throw new ArgumentNullException(nameof(quotaBucketName));
+            }
+            if (quotaBucketName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
+            }
 
             using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Get");
             scope.Start();
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
         public virtual Response<LoadTestingQuotaResource> Get(string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+            if (quotaBucketName == null)
+            {
+                throw new ArgumentNullException(nameof(quotaBucketName));
+            }
+            if (quotaBucketName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
+            }
 
             using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Get");
             scope.Start();
@@ -234,7 +248,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+            if (quotaBucketName == null)
+            {
+                throw new ArgumentNullException(nameof(quotaBucketName));
+            }
+            if (quotaBucketName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
+            }
 
             using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Exists");
             scope.Start();
@@ -277,7 +298,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
         public virtual Response<bool> Exists(string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+            if (quotaBucketName == null)
+            {
+                throw new ArgumentNullException(nameof(quotaBucketName));
+            }
+            if (quotaBucketName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
+            }
 
             using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.Exists");
             scope.Start();
@@ -320,7 +348,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
         public virtual async Task<NullableResponse<LoadTestingQuotaResource>> GetIfExistsAsync(string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+            if (quotaBucketName == null)
+            {
+                throw new ArgumentNullException(nameof(quotaBucketName));
+            }
+            if (quotaBucketName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
+            }
 
             using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetIfExists");
             scope.Start();
@@ -365,7 +400,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="quotaBucketName"/> is null. </exception>
         public virtual NullableResponse<LoadTestingQuotaResource> GetIfExists(string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+            if (quotaBucketName == null)
+            {
+                throw new ArgumentNullException(nameof(quotaBucketName));
+            }
+            if (quotaBucketName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
+            }
 
             using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetIfExists");
             scope.Start();

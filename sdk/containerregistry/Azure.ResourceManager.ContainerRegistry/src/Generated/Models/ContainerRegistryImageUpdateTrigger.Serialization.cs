@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryImageDescriptor> array = new List<ContainerRegistryImageDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(item));
+                        array.Add(ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(item, options));
                     }
                     images = array;
                     continue;

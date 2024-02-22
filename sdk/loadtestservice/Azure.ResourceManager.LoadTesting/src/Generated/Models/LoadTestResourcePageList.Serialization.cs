@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingResourceData> array = new List<LoadTestingResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingResourceData.DeserializeLoadTestingResourceData(item));
+                        array.Add(LoadTestingResourceData.DeserializeLoadTestingResourceData(item, options));
                     }
                     value = array;
                     continue;

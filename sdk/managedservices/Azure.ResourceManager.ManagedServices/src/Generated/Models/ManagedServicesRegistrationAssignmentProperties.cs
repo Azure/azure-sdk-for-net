@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId)
         {
-            Argument.AssertNotNull(registrationId, nameof(registrationId));
+            if (registrationId == null)
+            {
+                throw new ArgumentNullException(nameof(registrationId));
+            }
 
             RegistrationId = registrationId;
         }

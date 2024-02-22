@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AUpdateReplicationProtectedItemContent.DeserializeA2AUpdateReplicationProtectedItemContent(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureUpdateReplicationProtectedItemContent.DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(element);
-                    case "InMageAzureV2": return InMageAzureV2UpdateReplicationProtectedItemContent.DeserializeInMageAzureV2UpdateReplicationProtectedItemContent(element);
-                    case "InMageRcm": return InMageRcmUpdateReplicationProtectedItemContent.DeserializeInMageRcmUpdateReplicationProtectedItemContent(element);
+                    case "A2A": return A2AUpdateReplicationProtectedItemContent.DeserializeA2AUpdateReplicationProtectedItemContent(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureUpdateReplicationProtectedItemContent.DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(element, options);
+                    case "InMageAzureV2": return InMageAzureV2UpdateReplicationProtectedItemContent.DeserializeInMageAzureV2UpdateReplicationProtectedItemContent(element, options);
+                    case "InMageRcm": return InMageRcmUpdateReplicationProtectedItemContent.DeserializeInMageRcmUpdateReplicationProtectedItemContent(element, options);
                 }
             }
-            return UnknownUpdateReplicationProtectedItemProviderContent.DeserializeUnknownUpdateReplicationProtectedItemProviderContent(element);
+            return UnknownUpdateReplicationProtectedItemProviderContent.DeserializeUnknownUpdateReplicationProtectedItemProviderContent(element, options);
         }
 
         BinaryData IPersistableModel<UpdateReplicationProtectedItemProviderContent>.Write(ModelReaderWriterOptions options)

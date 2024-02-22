@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public BotChannelSite(string siteName, bool isEnabled)
         {
-            Argument.AssertNotNull(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
 
             SiteName = siteName;
             IsEnabled = isEnabled;

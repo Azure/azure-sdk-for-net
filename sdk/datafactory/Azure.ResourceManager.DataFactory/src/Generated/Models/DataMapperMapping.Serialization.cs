@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value);
+                    sourceConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("attributeMappingInfo"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    attributeMappingInfo = MapperAttributeMappings.DeserializeMapperAttributeMappings(property.Value);
+                    attributeMappingInfo = MapperAttributeMappings.DeserializeMapperAttributeMappings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDenormalizeInfo"u8))

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    linuxProfile = LinuxProfileProperties.DeserializeLinuxProfileProperties(property.Value);
+                    linuxProfile = LinuxProfileProperties.DeserializeLinuxProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("controlPlane"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    controlPlane = ProvisionedClusterControlPlaneProfile.DeserializeProvisionedClusterControlPlaneProfile(property.Value);
+                    controlPlane = ProvisionedClusterControlPlaneProfile.DeserializeProvisionedClusterControlPlaneProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    networkProfile = ProvisionedClusterNetworkProfile.DeserializeProvisionedClusterNetworkProfile(property.Value);
+                    networkProfile = ProvisionedClusterNetworkProfile.DeserializeProvisionedClusterNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value);
+                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clusterVMAccessProfile"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    clusterVmAccessProfile = ClusterVmAccessProfile.DeserializeClusterVmAccessProfile(property.Value);
+                    clusterVmAccessProfile = ClusterVmAccessProfile.DeserializeClusterVmAccessProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("agentPoolProfiles"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceNamedAgentPoolProfile> array = new List<HybridContainerServiceNamedAgentPoolProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceNamedAgentPoolProfile.DeserializeHybridContainerServiceNamedAgentPoolProfile(item));
+                        array.Add(HybridContainerServiceNamedAgentPoolProfile.DeserializeHybridContainerServiceNamedAgentPoolProfile(item, options));
                     }
                     agentPoolProfiles = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    cloudProviderProfile = ProvisionedClusterCloudProviderProfile.DeserializeProvisionedClusterCloudProviderProfile(property.Value);
+                    cloudProviderProfile = ProvisionedClusterCloudProviderProfile.DeserializeProvisionedClusterCloudProviderProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    status = ProvisionedClusterStatus.DeserializeProvisionedClusterStatus(property.Value);
+                    status = ProvisionedClusterStatus.DeserializeProvisionedClusterStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseProfile"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    licenseProfile = ProvisionedClusterLicenseProfile.DeserializeProvisionedClusterLicenseProfile(property.Value);
+                    licenseProfile = ProvisionedClusterLicenseProfile.DeserializeProvisionedClusterLicenseProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoScalerProfile"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    autoScalerProfile = ProvisionedClusterPropertiesAutoScalerProfile.DeserializeProvisionedClusterPropertiesAutoScalerProfile(property.Value);
+                    autoScalerProfile = ProvisionedClusterPropertiesAutoScalerProfile.DeserializeProvisionedClusterPropertiesAutoScalerProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

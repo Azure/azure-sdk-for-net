@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraColumn> array = new List<CassandraColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraColumn.DeserializeCassandraColumn(item));
+                        array.Add(CassandraColumn.DeserializeCassandraColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraPartitionKey> array = new List<CassandraPartitionKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraPartitionKey.DeserializeCassandraPartitionKey(item));
+                        array.Add(CassandraPartitionKey.DeserializeCassandraPartitionKey(item, options));
                     }
                     partitionKeys = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterKey> array = new List<CassandraClusterKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item));
+                        array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item, options));
                     }
                     clusterKeys = array;
                     continue;

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureAD": return AzureADPartnerClientAuthentication.DeserializeAzureADPartnerClientAuthentication(element);
+                    case "AzureAD": return AzureADPartnerClientAuthentication.DeserializeAzureADPartnerClientAuthentication(element, options);
                 }
             }
-            return UnknownPartnerClientAuthentication.DeserializeUnknownPartnerClientAuthentication(element);
+            return UnknownPartnerClientAuthentication.DeserializeUnknownPartnerClientAuthentication(element, options);
         }
 
         BinaryData IPersistableModel<PartnerClientAuthentication>.Write(ModelReaderWriterOptions options)

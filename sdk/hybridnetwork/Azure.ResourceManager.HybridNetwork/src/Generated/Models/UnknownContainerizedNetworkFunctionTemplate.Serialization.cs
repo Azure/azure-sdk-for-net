@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownContainerizedNetworkFunctionTemplate(document.RootElement, options);
+            return DeserializeContainerizedNetworkFunctionTemplate(document.RootElement, options);
         }
 
         internal static UnknownContainerizedNetworkFunctionTemplate DeserializeUnknownContainerizedNetworkFunctionTemplate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownContainerizedNetworkFunctionTemplate(document.RootElement, options);
+                        return DeserializeContainerizedNetworkFunctionTemplate(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ContainerizedNetworkFunctionTemplate)} does not support '{options.Format}' format.");

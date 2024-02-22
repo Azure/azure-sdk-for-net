@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = AppServiceAadRegistration.DeserializeAppServiceAadRegistration(property.Value);
+                    registration = AppServiceAadRegistration.DeserializeAppServiceAadRegistration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = AppServiceAadLoginFlow.DeserializeAppServiceAadLoginFlow(property.Value);
+                    login = AppServiceAadLoginFlow.DeserializeAppServiceAadLoginFlow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    validation = AppServiceAadValidation.DeserializeAppServiceAadValidation(property.Value);
+                    validation = AppServiceAadValidation.DeserializeAppServiceAadValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAutoProvisioned"u8))

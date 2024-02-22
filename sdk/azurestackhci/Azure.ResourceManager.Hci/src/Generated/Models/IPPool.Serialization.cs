@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    info = IPPoolInfo.DeserializeIPPoolInfo(property.Value);
+                    info = IPPoolInfo.DeserializeIPPoolInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

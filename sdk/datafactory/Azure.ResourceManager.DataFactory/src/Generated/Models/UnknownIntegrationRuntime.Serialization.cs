@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownIntegrationRuntime(document.RootElement, options);
+            return DeserializeDataFactoryIntegrationRuntimeProperties(document.RootElement, options);
         }
 
         internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownIntegrationRuntime(document.RootElement, options);
+                        return DeserializeDataFactoryIntegrationRuntimeProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeProperties)} does not support '{options.Format}' format.");

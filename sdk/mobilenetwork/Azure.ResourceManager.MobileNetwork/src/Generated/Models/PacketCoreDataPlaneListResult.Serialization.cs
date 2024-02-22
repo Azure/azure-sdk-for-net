@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<PacketCoreDataPlaneData> array = new List<PacketCoreDataPlaneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(item));
+                        array.Add(PacketCoreDataPlaneData.DeserializePacketCoreDataPlaneData(item, options));
                     }
                     value = array;
                     continue;

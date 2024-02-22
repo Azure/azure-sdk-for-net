@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -52,8 +51,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> or <paramref name="customNeuralDocumentModelBuilds"/> is null. </exception>
         internal ResourceDetails(CustomDocumentModelsDetails customDocumentModels, QuotaDetails customNeuralDocumentModelBuilds)
         {
-            Argument.AssertNotNull(customDocumentModels, nameof(customDocumentModels));
-            Argument.AssertNotNull(customNeuralDocumentModelBuilds, nameof(customNeuralDocumentModelBuilds));
+            if (customDocumentModels == null)
+            {
+                throw new ArgumentNullException(nameof(customDocumentModels));
+            }
+            if (customNeuralDocumentModelBuilds == null)
+            {
+                throw new ArgumentNullException(nameof(customNeuralDocumentModelBuilds));
+            }
 
             CustomDocumentModels = customDocumentModels;
             CustomNeuralDocumentModelBuilds = customNeuralDocumentModelBuilds;

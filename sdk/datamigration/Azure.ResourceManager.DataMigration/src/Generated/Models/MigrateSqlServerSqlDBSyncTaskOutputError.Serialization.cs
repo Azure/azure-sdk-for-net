@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    error = ReportableException.DeserializeReportableException(property.Value);
+                    error = ReportableException.DeserializeReportableException(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

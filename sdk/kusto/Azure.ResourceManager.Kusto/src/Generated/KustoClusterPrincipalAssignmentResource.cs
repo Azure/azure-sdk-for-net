@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoClusterPrincipalAssignmentResource>> UpdateAsync(WaitUntil waitUntil, KustoClusterPrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoClusterPrincipalAssignmentResource> Update(WaitUntil waitUntil, KustoClusterPrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentResource.Update");
             scope.Start();

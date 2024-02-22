@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                             }
                             inboundIPRules = array;
                             continue;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value);
+                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value, options);
                             continue;
                         }
                     }

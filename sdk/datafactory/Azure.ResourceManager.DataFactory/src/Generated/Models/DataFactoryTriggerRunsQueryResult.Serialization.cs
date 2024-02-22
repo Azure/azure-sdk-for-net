@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryTriggerRun> array = new List<DataFactoryTriggerRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun(item));
+                        array.Add(DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun(item, options));
                     }
                     value = array;
                     continue;

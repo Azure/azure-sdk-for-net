@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -56,7 +55,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public ImageGenerations(DateTimeOffset created, IEnumerable<ImageGenerationData> data)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             Created = created;
             Data = data.ToList();

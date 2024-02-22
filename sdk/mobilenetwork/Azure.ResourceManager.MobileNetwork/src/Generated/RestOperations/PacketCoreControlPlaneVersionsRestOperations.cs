@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PacketCoreControlPlaneVersionData>> GetAsync(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var message = CreateGetRequest(versionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PacketCoreControlPlaneVersionData> Get(string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var message = CreateGetRequest(versionName);
             _pipeline.Send(message, cancellationToken);
@@ -188,8 +202,22 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PacketCoreControlPlaneVersionData>> GetBySubscriptionAsync(string subscriptionId, string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var message = CreateGetBySubscriptionRequest(subscriptionId, versionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -217,8 +245,22 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PacketCoreControlPlaneVersionData> GetBySubscription(string subscriptionId, string versionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (versionName == null)
+            {
+                throw new ArgumentNullException(nameof(versionName));
+            }
+            if (versionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(versionName));
+            }
 
             using var message = CreateGetBySubscriptionRequest(subscriptionId, versionName);
             _pipeline.Send(message, cancellationToken);
@@ -262,7 +304,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PacketCoreControlPlaneVersionListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -287,7 +336,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PacketCoreControlPlaneVersionListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -325,7 +381,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<PacketCoreControlPlaneVersionListResult>> ListNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -349,7 +408,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<PacketCoreControlPlaneVersionListResult> ListNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
@@ -389,8 +451,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PacketCoreControlPlaneVersionListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -416,8 +488,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PacketCoreControlPlaneVersionListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

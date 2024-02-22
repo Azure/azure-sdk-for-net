@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -54,8 +53,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetPhysicalPartitionThroughputInfo"/> or <paramref name="sourcePhysicalPartitionThroughputInfo"/> is null. </exception>
         public RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy, IEnumerable<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo, IEnumerable<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo)
         {
-            Argument.AssertNotNull(targetPhysicalPartitionThroughputInfo, nameof(targetPhysicalPartitionThroughputInfo));
-            Argument.AssertNotNull(sourcePhysicalPartitionThroughputInfo, nameof(sourcePhysicalPartitionThroughputInfo));
+            if (targetPhysicalPartitionThroughputInfo == null)
+            {
+                throw new ArgumentNullException(nameof(targetPhysicalPartitionThroughputInfo));
+            }
+            if (sourcePhysicalPartitionThroughputInfo == null)
+            {
+                throw new ArgumentNullException(nameof(sourcePhysicalPartitionThroughputInfo));
+            }
 
             ThroughputPolicy = throughputPolicy;
             TargetPhysicalPartitionThroughputInfo = targetPhysicalPartitionThroughputInfo.ToList();

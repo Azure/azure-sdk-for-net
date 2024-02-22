@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyTrackedResourceRecord> array = new List<PolicyTrackedResourceRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(item));
+                        array.Add(PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(item, options));
                     }
                     value = array;
                     continue;

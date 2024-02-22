@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricValues"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PercentileMetricValue> array = new List<PercentileMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PercentileMetricValue.DeserializePercentileMetricValue(item));
+                        array.Add(PercentileMetricValue.DeserializePercentileMetricValue(item, options));
                     }
                     metricValues = array;
                     continue;

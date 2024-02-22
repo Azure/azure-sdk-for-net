@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceAddressPrefix"/> is null. </exception>
         public BatchNetworkSecurityGroupRule(int priority, BatchNetworkSecurityGroupRuleAccess access, string sourceAddressPrefix)
         {
-            Argument.AssertNotNull(sourceAddressPrefix, nameof(sourceAddressPrefix));
+            if (sourceAddressPrefix == null)
+            {
+                throw new ArgumentNullException(nameof(sourceAddressPrefix));
+            }
 
             Priority = priority;
             Access = access;

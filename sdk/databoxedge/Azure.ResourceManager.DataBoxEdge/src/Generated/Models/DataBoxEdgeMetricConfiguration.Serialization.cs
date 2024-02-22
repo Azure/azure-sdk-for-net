@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricCounterSet> array = new List<DataBoxEdgeMetricCounterSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricCounterSet.DeserializeDataBoxEdgeMetricCounterSet(item));
+                        array.Add(DataBoxEdgeMetricCounterSet.DeserializeDataBoxEdgeMetricCounterSet(item, options));
                     }
                     counterSets = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkUsage> array = new List<NetworkUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkUsage.DeserializeNetworkUsage(item));
+                        array.Add(NetworkUsage.DeserializeNetworkUsage(item, options));
                     }
                     value = array;
                     continue;

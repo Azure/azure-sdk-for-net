@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mipInformation = GetSensitivitySettingsResponsePropertiesMipInformation.DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(property.Value);
+                    mipInformation = GetSensitivitySettingsResponsePropertiesMipInformation.DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

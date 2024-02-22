@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         public ObjectTrackingProcessor(string name, IEnumerable<NodeInput> inputs) : base(name, inputs)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (inputs == null)
+            {
+                throw new ArgumentNullException(nameof(inputs));
+            }
 
             Type = "#Microsoft.VideoAnalyzer.ObjectTrackingProcessor";
         }

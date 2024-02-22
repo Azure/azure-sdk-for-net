@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             List<ColumnTransformer> array = new List<ColumnTransformer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ColumnTransformer.DeserializeColumnTransformer(item));
+                                array.Add(ColumnTransformer.DeserializeColumnTransformer(item, options));
                             }
                             dictionary.Add(property0.Name, array);
                         }

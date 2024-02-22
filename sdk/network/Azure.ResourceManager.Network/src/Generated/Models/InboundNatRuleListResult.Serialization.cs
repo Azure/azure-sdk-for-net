@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<InboundNatRuleData> array = new List<InboundNatRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item));
+                        array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item, options));
                     }
                     value = array;
                     continue;

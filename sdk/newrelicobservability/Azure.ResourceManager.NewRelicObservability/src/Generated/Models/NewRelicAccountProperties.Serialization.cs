@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    accountInfo = NewRelicObservabilityAccountInfo.DeserializeNewRelicObservabilityAccountInfo(property.Value);
+                    accountInfo = NewRelicObservabilityAccountInfo.DeserializeNewRelicObservabilityAccountInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("organizationInfo"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    organizationInfo = NewRelicObservabilityOrganizationInfo.DeserializeNewRelicObservabilityOrganizationInfo(property.Value);
+                    organizationInfo = NewRelicObservabilityOrganizationInfo.DeserializeNewRelicObservabilityOrganizationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = NewRelicSingleSignOnProperties.DeserializeNewRelicSingleSignOnProperties(property.Value);
+                    singleSignOnProperties = NewRelicSingleSignOnProperties.DeserializeNewRelicSingleSignOnProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<SandboxCustomImageData> array = new List<SandboxCustomImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SandboxCustomImageData.DeserializeSandboxCustomImageData(item));
+                        array.Add(SandboxCustomImageData.DeserializeSandboxCustomImageData(item, options));
                     }
                     value = array;
                     continue;

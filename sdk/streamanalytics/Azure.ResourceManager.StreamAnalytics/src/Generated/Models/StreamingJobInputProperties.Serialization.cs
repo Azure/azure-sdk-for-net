@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Reference": return ReferenceInputProperties.DeserializeReferenceInputProperties(element);
-                    case "Stream": return StreamInputProperties.DeserializeStreamInputProperties(element);
+                    case "Reference": return ReferenceInputProperties.DeserializeReferenceInputProperties(element, options);
+                    case "Stream": return StreamInputProperties.DeserializeStreamInputProperties(element, options);
                 }
             }
-            return UnknownInputProperties.DeserializeUnknownInputProperties(element);
+            return UnknownInputProperties.DeserializeUnknownInputProperties(element, options);
         }
 
         BinaryData IPersistableModel<StreamingJobInputProperties>.Write(ModelReaderWriterOptions options)

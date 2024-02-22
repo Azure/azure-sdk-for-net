@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOnYourDataVectorizationSource(document.RootElement, options);
+            return DeserializeOnYourDataVectorizationSource(document.RootElement, options);
         }
 
         internal static UnknownOnYourDataVectorizationSource DeserializeUnknownOnYourDataVectorizationSource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOnYourDataVectorizationSource(document.RootElement, options);
+                        return DeserializeOnYourDataVectorizationSource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(OnYourDataVectorizationSource)} does not support '{options.Format}' format.");

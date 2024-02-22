@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningAccountKeyDatastoreSecrets.DeserializeMachineLearningAccountKeyDatastoreSecrets(property.Value);
+                    secrets = MachineLearningAccountKeyDatastoreSecrets.DeserializeMachineLearningAccountKeyDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))

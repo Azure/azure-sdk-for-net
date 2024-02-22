@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
         public virtual async Task<Response<IotSecurityAggregatedAlertResource>> GetAsync(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
         public virtual Response<IotSecurityAggregatedAlertResource> Get(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
         public virtual Response<bool> Exists(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
         public virtual async Task<NullableResponse<IotSecurityAggregatedAlertResource>> GetIfExistsAsync(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatedAlertName"/> is null. </exception>
         public virtual NullableResponse<IotSecurityAggregatedAlertResource> GetIfExists(string aggregatedAlertName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aggregatedAlertName, nameof(aggregatedAlertName));
+            if (aggregatedAlertName == null)
+            {
+                throw new ArgumentNullException(nameof(aggregatedAlertName));
+            }
+            if (aggregatedAlertName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(aggregatedAlertName));
+            }
 
             using var scope = _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertClientDiagnostics.CreateScope("IotSecurityAggregatedAlertCollection.GetIfExists");
             scope.Start();

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<HealthCheckStatusDetailData> array = new List<HealthCheckStatusDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthCheckStatusDetailData.DeserializeHealthCheckStatusDetailData(item));
+                        array.Add(HealthCheckStatusDetailData.DeserializeHealthCheckStatusDetailData(item, options));
                     }
                     value = array;
                     continue;

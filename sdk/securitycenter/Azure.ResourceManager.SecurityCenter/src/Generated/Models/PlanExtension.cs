@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PlanExtension(string name, IsExtensionEnabled isEnabled)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             IsEnabled = isEnabled;

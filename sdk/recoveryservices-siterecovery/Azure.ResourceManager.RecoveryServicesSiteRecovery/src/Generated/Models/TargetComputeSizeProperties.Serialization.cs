@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryComputeSizeErrorDetails> array = new List<SiteRecoveryComputeSizeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item));
+                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item, options));
                     }
                     errors = array;
                     continue;

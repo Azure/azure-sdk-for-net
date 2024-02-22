@@ -52,7 +52,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public BuildDocumentModelContent(string modelId, DocumentBuildMode buildMode)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
 
             ModelId = modelId;
             BuildMode = buildMode;

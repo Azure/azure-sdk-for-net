@@ -117,7 +117,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value);
+                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logprobs"u8))
@@ -127,7 +127,7 @@ namespace Azure.AI.OpenAI
                         logprobs = null;
                         continue;
                     }
-                    logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
+                    logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("finish_reason"u8))

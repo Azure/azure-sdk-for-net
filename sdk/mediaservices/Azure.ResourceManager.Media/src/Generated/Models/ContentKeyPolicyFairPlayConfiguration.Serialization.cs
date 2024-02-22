@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    offlineRentalConfiguration = ContentKeyPolicyFairPlayOfflineRentalConfiguration.DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(property.Value);
+                    offlineRentalConfiguration = ContentKeyPolicyFairPlayOfflineRentalConfiguration.DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

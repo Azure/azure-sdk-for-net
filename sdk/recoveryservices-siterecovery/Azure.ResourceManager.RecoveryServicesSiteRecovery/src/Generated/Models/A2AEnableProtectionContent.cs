@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fabricObjectId"/> is null. </exception>
         public A2AEnableProtectionContent(ResourceIdentifier fabricObjectId)
         {
-            Argument.AssertNotNull(fabricObjectId, nameof(fabricObjectId));
+            if (fabricObjectId == null)
+            {
+                throw new ArgumentNullException(nameof(fabricObjectId));
+            }
 
             FabricObjectId = fabricObjectId;
             VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();

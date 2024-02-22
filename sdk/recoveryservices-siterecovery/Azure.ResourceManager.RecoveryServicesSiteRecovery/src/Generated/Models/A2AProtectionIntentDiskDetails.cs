@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskUri"/> is null. </exception>
         public A2AProtectionIntentDiskDetails(Uri diskUri)
         {
-            Argument.AssertNotNull(diskUri, nameof(diskUri));
+            if (diskUri == null)
+            {
+                throw new ArgumentNullException(nameof(diskUri));
+            }
 
             DiskUri = diskUri;
         }

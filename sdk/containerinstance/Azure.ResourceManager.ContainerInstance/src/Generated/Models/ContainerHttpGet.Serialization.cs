@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerHttpHeader> array = new List<ContainerHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerHttpHeader.DeserializeContainerHttpHeader(item));
+                        array.Add(ContainerHttpHeader.DeserializeContainerHttpHeader(item, options));
                     }
                     httpHeaders = array;
                     continue;

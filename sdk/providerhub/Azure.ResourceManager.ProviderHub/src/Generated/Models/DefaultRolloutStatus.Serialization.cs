@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     Dictionary<string, ExtendedErrorInfo> dictionary = new Dictionary<string, ExtendedErrorInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ExtendedErrorInfo.DeserializeExtendedErrorInfo(property0.Value));
+                        dictionary.Add(property0.Name, ExtendedErrorInfo.DeserializeExtendedErrorInfo(property0.Value, options));
                     }
                     failedOrSkippedRegions = dictionary;
                     continue;

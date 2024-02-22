@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DigitalTwinsPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DigitalTwinsPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DigitalTwinsPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DigitalTwinsPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DigitalTwinsPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _digitalTwinsPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DigitalTwinsPrivateEndpointConnectionResource.Update");
             scope.Start();

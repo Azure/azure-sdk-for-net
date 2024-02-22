@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -75,7 +75,10 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CommunicationNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("MockableCommunicationSubscriptionResource.CheckCommunicationNameAvailability");
             scope.Start();
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -117,7 +120,10 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CommunicationNameAvailabilityResult> CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("MockableCommunicationSubscriptionResource.CheckCommunicationNameAvailability");
             scope.Start();
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -206,7 +212,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -236,7 +242,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,7 +272,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +301,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

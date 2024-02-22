@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="message"/> is null. </exception>
         internal EnrichmentStatus(DateTimeOffset timestamp, string status, string message)
         {
-            Argument.AssertNotNull(status, nameof(status));
-            Argument.AssertNotNull(message, nameof(message));
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Timestamp = timestamp;
             Status = status;

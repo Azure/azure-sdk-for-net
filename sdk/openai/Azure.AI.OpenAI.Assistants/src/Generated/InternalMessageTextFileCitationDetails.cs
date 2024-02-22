@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -52,8 +51,14 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="quote"/> is null. </exception>
         internal InternalMessageTextFileCitationDetails(string fileId, string quote)
         {
-            Argument.AssertNotNull(fileId, nameof(fileId));
-            Argument.AssertNotNull(quote, nameof(quote));
+            if (fileId == null)
+            {
+                throw new ArgumentNullException(nameof(fileId));
+            }
+            if (quote == null)
+            {
+                throw new ArgumentNullException(nameof(quote));
+            }
 
             FileId = fileId;
             Quote = quote;

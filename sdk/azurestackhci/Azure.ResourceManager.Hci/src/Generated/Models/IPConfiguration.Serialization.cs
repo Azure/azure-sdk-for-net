@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = IPConfigurationProperties.DeserializeIPConfigurationProperties(property.Value);
+                    properties = IPConfigurationProperties.DeserializeIPConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

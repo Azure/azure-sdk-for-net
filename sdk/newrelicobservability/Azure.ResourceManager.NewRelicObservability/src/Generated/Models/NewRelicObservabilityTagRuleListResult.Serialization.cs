@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicObservabilityTagRuleData> array = new List<NewRelicObservabilityTagRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(item));
+                        array.Add(NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseRestorePointData> array = new List<SynapseRestorePointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseRestorePointData.DeserializeSynapseRestorePointData(item));
+                        array.Add(SynapseRestorePointData.DeserializeSynapseRestorePointData(item, options));
                     }
                     value = array;
                     continue;

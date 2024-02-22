@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         public virtual async Task<Response<StorageClassificationResource>> GetAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
+            if (storageClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(storageClassificationName));
+            }
+            if (storageClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationName));
+            }
 
             using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         public virtual Response<StorageClassificationResource> Get(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
+            if (storageClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(storageClassificationName));
+            }
+            if (storageClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationName));
+            }
 
             using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
+            if (storageClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(storageClassificationName));
+            }
+            if (storageClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationName));
+            }
 
             using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
+            if (storageClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(storageClassificationName));
+            }
+            if (storageClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationName));
+            }
 
             using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageClassificationResource>> GetIfExistsAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
+            if (storageClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(storageClassificationName));
+            }
+            if (storageClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationName));
+            }
 
             using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
         public virtual NullableResponse<StorageClassificationResource> GetIfExists(string storageClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
+            if (storageClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(storageClassificationName));
+            }
+            if (storageClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(storageClassificationName));
+            }
 
             using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.GetIfExists");
             scope.Start();

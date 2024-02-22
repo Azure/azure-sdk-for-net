@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<ExtensionsResourceStatus> array = new List<ExtensionsResourceStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item));
+                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item, options));
                     }
                     statuses = array;
                     continue;

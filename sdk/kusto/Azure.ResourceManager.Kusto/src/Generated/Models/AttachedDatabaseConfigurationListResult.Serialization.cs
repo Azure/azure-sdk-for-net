@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoAttachedDatabaseConfigurationData> array = new List<KustoAttachedDatabaseConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(item));
+                        array.Add(KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(item, options));
                     }
                     value = array;
                     continue;

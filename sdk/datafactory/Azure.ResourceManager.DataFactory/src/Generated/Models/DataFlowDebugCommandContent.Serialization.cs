@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    commandPayload = DataFlowDebugCommandPayload.DeserializeDataFlowDebugCommandPayload(property.Value);
+                    commandPayload = DataFlowDebugCommandPayload.DeserializeDataFlowDebugCommandPayload(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

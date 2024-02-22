@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FlowLogData> array = new List<FlowLogData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowLogData.DeserializeFlowLogData(item));
+                        array.Add(FlowLogData.DeserializeFlowLogData(item, options));
                     }
                     value = array;
                     continue;

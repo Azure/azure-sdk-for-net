@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    policyEvaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value);
+                    policyEvaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyDefinitionGroupNames"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComponentStateDetails> array = new List<ComponentStateDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentStateDetails.DeserializeComponentStateDetails(item));
+                        array.Add(ComponentStateDetails.DeserializeComponentStateDetails(item, options));
                     }
                     components = array;
                     continue;

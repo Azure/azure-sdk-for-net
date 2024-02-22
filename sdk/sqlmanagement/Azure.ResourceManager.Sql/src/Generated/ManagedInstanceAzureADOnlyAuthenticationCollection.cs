@@ -82,7 +82,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AuthenticationName authenticationName, ManagedInstanceAzureADOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +132,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource> CreateOrUpdate(WaitUntil waitUntil, AuthenticationName authenticationName, ManagedInstanceAzureADOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();

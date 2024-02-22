@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NicInfo> array = new List<NicInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicInfo.DeserializeNicInfo(item));
+                        array.Add(NicInfo.DeserializeNicInfo(item, options));
                     }
                     nicInfoList = array;
                     continue;

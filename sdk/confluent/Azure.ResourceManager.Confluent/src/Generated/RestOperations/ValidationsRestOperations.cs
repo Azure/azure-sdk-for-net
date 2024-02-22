@@ -71,10 +71,34 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentOrganizationData>> ValidateOrganizationAsync(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateValidateOrganizationRequest(subscriptionId, resourceGroupName, organizationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,10 +126,34 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentOrganizationData> ValidateOrganization(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateValidateOrganizationRequest(subscriptionId, resourceGroupName, organizationName, data);
             _pipeline.Send(message, cancellationToken);

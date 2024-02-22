@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    properties = ResourceHealthAvailabilityStatusProperties.DeserializeResourceHealthAvailabilityStatusProperties(property.Value);
+                    properties = ResourceHealthAvailabilityStatusProperties.DeserializeResourceHealthAvailabilityStatusProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

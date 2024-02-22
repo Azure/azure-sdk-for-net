@@ -350,7 +350,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevCenterGalleryResource>> UpdateAsync(WaitUntil waitUntil, DevCenterGalleryData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _devCenterGalleryGalleriesClientDiagnostics.CreateScope("DevCenterGalleryResource.Update");
             scope.Start();
@@ -396,7 +399,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevCenterGalleryResource> Update(WaitUntil waitUntil, DevCenterGalleryData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _devCenterGalleryGalleriesClientDiagnostics.CreateScope("DevCenterGalleryResource.Update");
             scope.Start();

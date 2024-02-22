@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
+                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
                     }
                     insights = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    error = SelfHelpError.DeserializeSelfHelpError(property.Value);
+                    error = SelfHelpError.DeserializeSelfHelpError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

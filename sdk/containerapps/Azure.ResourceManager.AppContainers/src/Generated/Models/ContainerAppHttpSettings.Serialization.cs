@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value);
+                    routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("forwardProxy"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    forwardProxy = ContainerAppForwardProxy.DeserializeContainerAppForwardProxy(property.Value);
+                    forwardProxy = ContainerAppForwardProxy.DeserializeContainerAppForwardProxy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

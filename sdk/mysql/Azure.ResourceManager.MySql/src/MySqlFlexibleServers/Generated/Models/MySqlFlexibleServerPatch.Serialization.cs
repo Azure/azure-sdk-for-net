@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(property.Value);
+                    sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            storage = MySqlFlexibleServerStorage.DeserializeMySqlFlexibleServerStorage(property0.Value);
+                            storage = MySqlFlexibleServerStorage.DeserializeMySqlFlexibleServerStorage(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backup"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            backup = MySqlFlexibleServerBackupProperties.DeserializeMySqlFlexibleServerBackupProperties(property0.Value);
+                            backup = MySqlFlexibleServerBackupProperties.DeserializeMySqlFlexibleServerBackupProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("highAvailability"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            highAvailability = MySqlFlexibleServerHighAvailability.DeserializeMySqlFlexibleServerHighAvailability(property0.Value);
+                            highAvailability = MySqlFlexibleServerHighAvailability.DeserializeMySqlFlexibleServerHighAvailability(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            maintenanceWindow = MySqlFlexibleServerMaintenanceWindow.DeserializeMySqlFlexibleServerMaintenanceWindow(property0.Value);
+                            maintenanceWindow = MySqlFlexibleServerMaintenanceWindow.DeserializeMySqlFlexibleServerMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            dataEncryption = MySqlFlexibleServerDataEncryption.DeserializeMySqlFlexibleServerDataEncryption(property0.Value);
+                            dataEncryption = MySqlFlexibleServerDataEncryption.DeserializeMySqlFlexibleServerDataEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("network"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            network = MySqlFlexibleServerNetwork.DeserializeMySqlFlexibleServerNetwork(property0.Value);
+                            network = MySqlFlexibleServerNetwork.DeserializeMySqlFlexibleServerNetwork(property0.Value, options);
                             continue;
                         }
                     }

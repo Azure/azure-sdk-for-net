@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFeatureSetJob> array = new List<MachineLearningFeatureSetJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(item));
+                        array.Add(MachineLearningFeatureSetJob.DeserializeMachineLearningFeatureSetJob(item, options));
                     }
                     value = array;
                     continue;

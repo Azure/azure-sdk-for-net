@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string imageName, SphereImageData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (imageName == null)
+            {
+                throw new ArgumentNullException(nameof(imageName));
+            }
+            if (imageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sphereImageImagesClientDiagnostics.CreateScope("SphereImageCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereImageResource> CreateOrUpdate(WaitUntil waitUntil, string imageName, SphereImageData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (imageName == null)
+            {
+                throw new ArgumentNullException(nameof(imageName));
+            }
+            if (imageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sphereImageImagesClientDiagnostics.CreateScope("SphereImageCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<Response<SphereImageResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            if (imageName == null)
+            {
+                throw new ArgumentNullException(nameof(imageName));
+            }
+            if (imageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
+            }
 
             using var scope = _sphereImageImagesClientDiagnostics.CreateScope("SphereImageCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual Response<SphereImageResource> Get(string imageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            if (imageName == null)
+            {
+                throw new ArgumentNullException(nameof(imageName));
+            }
+            if (imageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
+            }
 
             using var scope = _sphereImageImagesClientDiagnostics.CreateScope("SphereImageCollection.Get");
             scope.Start();
@@ -336,7 +370,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            if (imageName == null)
+            {
+                throw new ArgumentNullException(nameof(imageName));
+            }
+            if (imageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
+            }
 
             using var scope = _sphereImageImagesClientDiagnostics.CreateScope("SphereImageCollection.Exists");
             scope.Start();
@@ -379,7 +420,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual Response<bool> Exists(string imageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            if (imageName == null)
+            {
+                throw new ArgumentNullException(nameof(imageName));
+            }
+            if (imageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
+            }
 
             using var scope = _sphereImageImagesClientDiagnostics.CreateScope("SphereImageCollection.Exists");
             scope.Start();
@@ -422,7 +470,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<NullableResponse<SphereImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            if (imageName == null)
+            {
+                throw new ArgumentNullException(nameof(imageName));
+            }
+            if (imageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
+            }
 
             using var scope = _sphereImageImagesClientDiagnostics.CreateScope("SphereImageCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual NullableResponse<SphereImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            if (imageName == null)
+            {
+                throw new ArgumentNullException(nameof(imageName));
+            }
+            if (imageName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
+            }
 
             using var scope = _sphereImageImagesClientDiagnostics.CreateScope("SphereImageCollection.GetIfExists");
             scope.Start();

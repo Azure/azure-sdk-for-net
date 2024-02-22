@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEarlyTerminationPolicy(document.RootElement, options);
+            return DeserializeMachineLearningEarlyTerminationPolicy(document.RootElement, options);
         }
 
         internal static UnknownEarlyTerminationPolicy DeserializeUnknownEarlyTerminationPolicy(JsonElement element, ModelReaderWriterOptions options = null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEarlyTerminationPolicy(document.RootElement, options);
+                        return DeserializeMachineLearningEarlyTerminationPolicy(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningEarlyTerminationPolicy)} does not support '{options.Format}' format.");

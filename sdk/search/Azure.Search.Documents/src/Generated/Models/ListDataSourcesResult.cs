@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSources"/> is null. </exception>
         internal ListDataSourcesResult(IEnumerable<SearchIndexerDataSourceConnection> dataSources)
         {
-            Argument.AssertNotNull(dataSources, nameof(dataSources));
+            if (dataSources == null)
+            {
+                throw new ArgumentNullException(nameof(dataSources));
+            }
 
             DataSources = dataSources.ToList();
         }

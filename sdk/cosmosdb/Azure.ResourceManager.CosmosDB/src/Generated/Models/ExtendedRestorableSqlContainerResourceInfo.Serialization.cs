@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    container = RestorableSqlContainerPropertiesResourceContainer.DeserializeRestorableSqlContainerPropertiesResourceContainer(property.Value);
+                    container = RestorableSqlContainerPropertiesResourceContainer.DeserializeRestorableSqlContainerPropertiesResourceContainer(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

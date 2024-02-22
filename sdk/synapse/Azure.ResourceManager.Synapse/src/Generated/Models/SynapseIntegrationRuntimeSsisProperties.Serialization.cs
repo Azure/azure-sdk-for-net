@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    catalogInfo = SynapseIntegrationRuntimeSsisCatalogInfo.DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(property.Value);
+                    catalogInfo = SynapseIntegrationRuntimeSsisCatalogInfo.DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value);
+                    customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value);
+                    dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edition"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseCustomSetupBase> array = new List<SynapseCustomSetupBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseCustomSetupBase.DeserializeSynapseCustomSetupBase(item));
+                        array.Add(SynapseCustomSetupBase.DeserializeSynapseCustomSetupBase(item, options));
                     }
                     expressCustomSetupProperties = array;
                     continue;

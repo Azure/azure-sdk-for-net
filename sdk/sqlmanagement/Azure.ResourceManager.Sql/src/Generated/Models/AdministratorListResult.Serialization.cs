@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerAzureADAdministratorData> array = new List<SqlServerAzureADAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(item));
+                        array.Add(SqlServerAzureADAdministratorData.DeserializeSqlServerAzureADAdministratorData(item, options));
                     }
                     value = array;
                     continue;

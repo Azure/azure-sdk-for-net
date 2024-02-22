@@ -285,7 +285,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerServiceFleetMemberResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberResource.Update");
             scope.Start();
@@ -332,7 +335,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ContainerServiceFleetMemberResource> Update(WaitUntil waitUntil, ContainerServiceFleetMemberPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberResource.Update");
             scope.Start();

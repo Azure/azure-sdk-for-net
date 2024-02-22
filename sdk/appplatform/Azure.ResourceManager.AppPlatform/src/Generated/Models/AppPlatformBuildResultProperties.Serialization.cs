@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformBuildStageProperties> array = new List<AppPlatformBuildStageProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformBuildStageProperties.DeserializeAppPlatformBuildStageProperties(item));
+                        array.Add(AppPlatformBuildStageProperties.DeserializeAppPlatformBuildStageProperties(item, options));
                     }
                     buildStages = array;
                     continue;

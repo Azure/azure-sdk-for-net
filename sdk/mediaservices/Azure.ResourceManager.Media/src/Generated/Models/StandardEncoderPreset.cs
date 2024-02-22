@@ -29,8 +29,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="codecs"/> or <paramref name="formats"/> is null. </exception>
         public StandardEncoderPreset(IEnumerable<MediaCodecBase> codecs, IEnumerable<MediaFormatBase> formats)
         {
-            Argument.AssertNotNull(codecs, nameof(codecs));
-            Argument.AssertNotNull(formats, nameof(formats));
+            if (codecs == null)
+            {
+                throw new ArgumentNullException(nameof(codecs));
+            }
+            if (formats == null)
+            {
+                throw new ArgumentNullException(nameof(formats));
+            }
 
             ExperimentalOptions = new ChangeTrackingDictionary<string, string>();
             Codecs = codecs.ToList();

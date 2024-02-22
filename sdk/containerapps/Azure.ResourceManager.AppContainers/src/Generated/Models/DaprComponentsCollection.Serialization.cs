@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDaprComponentData> array = new List<ContainerAppDaprComponentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(item));
+                        array.Add(ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(item, options));
                     }
                     value = array;
                     continue;

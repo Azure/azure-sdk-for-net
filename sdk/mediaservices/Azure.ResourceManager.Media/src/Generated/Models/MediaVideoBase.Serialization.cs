@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element);
-                    case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element);
-                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element);
-                    case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element);
-                    case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element);
+                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element, options);
+                    case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element, options);
+                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element, options);
+                    case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element, options);
+                    case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element, options);
                 }
             }
             Optional<TimeSpan> keyFrameInterval = default;

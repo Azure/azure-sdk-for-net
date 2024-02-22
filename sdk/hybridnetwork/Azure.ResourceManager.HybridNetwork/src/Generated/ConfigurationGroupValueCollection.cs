@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConfigurationGroupValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationGroupValueName, ConfigurationGroupValueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationGroupValueName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupValueName));
+            }
+            if (configurationGroupValueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupValueName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConfigurationGroupValueResource> CreateOrUpdate(WaitUntil waitUntil, string configurationGroupValueName, ConfigurationGroupValueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationGroupValueName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupValueName));
+            }
+            if (configurationGroupValueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupValueName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
         public virtual async Task<Response<ConfigurationGroupValueResource>> GetAsync(string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+            if (configurationGroupValueName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupValueName));
+            }
+            if (configurationGroupValueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupValueName));
+            }
 
             using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
         public virtual Response<ConfigurationGroupValueResource> Get(string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+            if (configurationGroupValueName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupValueName));
+            }
+            if (configurationGroupValueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupValueName));
+            }
 
             using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+            if (configurationGroupValueName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupValueName));
+            }
+            if (configurationGroupValueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupValueName));
+            }
 
             using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+            if (configurationGroupValueName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupValueName));
+            }
+            if (configurationGroupValueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupValueName));
+            }
 
             using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConfigurationGroupValueResource>> GetIfExistsAsync(string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+            if (configurationGroupValueName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupValueName));
+            }
+            if (configurationGroupValueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupValueName));
+            }
 
             using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
         public virtual NullableResponse<ConfigurationGroupValueResource> GetIfExists(string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+            if (configurationGroupValueName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupValueName));
+            }
+            if (configurationGroupValueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupValueName));
+            }
 
             using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.GetIfExists");
             scope.Start();

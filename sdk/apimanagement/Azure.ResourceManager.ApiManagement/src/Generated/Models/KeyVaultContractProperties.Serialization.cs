@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    lastStatus = KeyVaultLastAccessStatusContractProperties.DeserializeKeyVaultLastAccessStatusContractProperties(property.Value);
+                    lastStatus = KeyVaultLastAccessStatusContractProperties.DeserializeKeyVaultLastAccessStatusContractProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretIdentifier"u8))

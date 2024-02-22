@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotServiceProviderParameter> array = new List<BotServiceProviderParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServiceProviderParameter.DeserializeBotServiceProviderParameter(item));
+                        array.Add(BotServiceProviderParameter.DeserializeBotServiceProviderParameter(item, options));
                     }
                     parameters = array;
                     continue;
