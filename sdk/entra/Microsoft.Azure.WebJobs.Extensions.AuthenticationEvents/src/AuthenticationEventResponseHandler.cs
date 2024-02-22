@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
@@ -93,13 +94,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                 if (Response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    Response.Validate();
-                    Response.Invalidate();
+                    try
+                    {
+                        Response.Validate();
+                        Response.Invalidate();
+                    }
+                    catch (ValidationException exception)
+                    {
+                        throw new AuthenticationEventTriggerResponseValidationException(exception.Message);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Response = Request.Failed(ex, true).Result;
+                Response = Request.Failed(ex).Result;
             }
 
             return Task.CompletedTask;
@@ -112,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             //If the request was unsuccessful we return the IActionResult based on the error and do no further processing.
             if (Request.RequestStatus != RequestStatusType.Successful)
             {
-                return Request.Failed(null, true).Result;
+                return Request.Failed(null).Result;
             }
             else if (result is string strResult)//A string was returned from the function execution
             {

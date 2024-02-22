@@ -42,7 +42,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 if (RequestStatus == RequestStatusType.Failed || RequestStatus == RequestStatusType.ValidationError)
                 {
-                    Response.MarkAsFailed(new Exception(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), false);
+                    // Response.MarkAsFailed(new AuthenticationEventTriggerRequestValidationException(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage));
+                    return await Failed(new AuthenticationEventTriggerRequestValidationException(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage)).ConfigureAwait(false);
                 }
                 else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
@@ -51,21 +52,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             }
             catch (Exception ex)
             {
-                return await Failed(ex, true).ConfigureAwait(false);
+                return await Failed(new AuthenticationEventTriggerRequestValidationException(ex.Message)).ConfigureAwait(false);
             }
 
             return Response;
         }
 
-        internal override Task<AuthenticationEventResponse> Failed(Exception exception, bool internalError)
+        /// <summary>
+        /// Sets the response statuscode, reason phrase and body when we want to return failed.
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public override Task<AuthenticationEventResponse> Failed(Exception exception)
         {
             if (Response == null)
             {
                 Response = new TResponse();
             }
 
-            Response.MarkAsFailed(exception, internalError);
-            return Task.FromResult<AuthenticationEventResponse>((TResponse)Response);
+            Response.StatusCode = exception is AuthenticationEventTriggerValidationException ex ?
+                ex.ExceptionStatusCode
+                : System.Net.HttpStatusCode.InternalServerError;
+            Response.ReasonPhrase = string.Empty;
+            Response.Body = Helpers.GetFailedRequestPayload(exception);
+
+            return Task.FromResult<AuthenticationEventResponse>(Response);
         }
     }
 }
