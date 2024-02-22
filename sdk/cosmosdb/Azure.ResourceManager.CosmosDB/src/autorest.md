@@ -376,6 +376,13 @@ directive:
     {
         delete $[param];
     }
+- from: managedCassandra.json
+  where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync']
+  transform: >
+    for (var path in $)
+    {
+        delete $[path];
+    }
 
 # This API is returning a collection wrapping by the model 'DatabaseAccountListConnectionStringsResult', adding this directive so that the content could be automatically flattened
 - from: swagger-document
