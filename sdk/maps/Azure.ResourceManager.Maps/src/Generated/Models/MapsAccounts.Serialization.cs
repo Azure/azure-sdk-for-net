@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsAccountData> array = new List<MapsAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsAccountData.DeserializeMapsAccountData(item));
+                        array.Add(MapsAccountData.DeserializeMapsAccountData(item, options));
                     }
                     value = array;
                     continue;

@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(property.Value);
+                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

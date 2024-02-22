@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    properties = RecoveryServicesPrivateEndpointConnection.DeserializeRecoveryServicesPrivateEndpointConnection(property.Value);
+                    properties = RecoveryServicesPrivateEndpointConnection.DeserializeRecoveryServicesPrivateEndpointConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

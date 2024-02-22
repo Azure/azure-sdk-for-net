@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity.DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(property.Value);
+                    keyEncryptionKeyIdentity = RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity.DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))

@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("sshPublicKey"u8))
                         {
-                            sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property0.Value);
+                            sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineAccessId"u8))

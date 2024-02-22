@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("partitionDescription"u8))
                 {
-                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value);
+                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("servicePackageActivationMode"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ManagedServiceCorrelation> array = new List<ManagedServiceCorrelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceCorrelation.DeserializeManagedServiceCorrelation(item));
+                        array.Add(ManagedServiceCorrelation.DeserializeManagedServiceCorrelation(item, options));
                     }
                     correlationScheme = array;
                     continue;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ManagedServiceLoadMetric> array = new List<ManagedServiceLoadMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceLoadMetric.DeserializeManagedServiceLoadMetric(item));
+                        array.Add(ManagedServiceLoadMetric.DeserializeManagedServiceLoadMetric(item, options));
                     }
                     serviceLoadMetrics = array;
                     continue;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ManagedServicePlacementPolicy> array = new List<ManagedServicePlacementPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicePlacementPolicy.DeserializeManagedServicePlacementPolicy(item));
+                        array.Add(ManagedServicePlacementPolicy.DeserializeManagedServicePlacementPolicy(item, options));
                     }
                     servicePlacementPolicies = array;
                     continue;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ManagedServiceScalingPolicy> array = new List<ManagedServiceScalingPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceScalingPolicy.DeserializeManagedServiceScalingPolicy(item));
+                        array.Add(ManagedServiceScalingPolicy.DeserializeManagedServiceScalingPolicy(item, options));
                     }
                     scalingPolicies = array;
                     continue;

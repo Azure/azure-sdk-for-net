@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetric> array = new List<MonitorMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetric.DeserializeMonitorMetric(item));
+                        array.Add(MonitorMetric.DeserializeMonitorMetric(item, options));
                     }
                     value = array;
                     continue;

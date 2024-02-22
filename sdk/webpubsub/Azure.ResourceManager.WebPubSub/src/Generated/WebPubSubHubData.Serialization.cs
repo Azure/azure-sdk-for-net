@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = WebPubSubHubProperties.DeserializeWebPubSubHubProperties(property.Value);
+                    properties = WebPubSubHubProperties.DeserializeWebPubSubHubProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EnergyServices
                     {
                         continue;
                     }
-                    properties = EnergyServiceProperties.DeserializeEnergyServiceProperties(property.Value);
+                    properties = EnergyServiceProperties.DeserializeEnergyServiceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

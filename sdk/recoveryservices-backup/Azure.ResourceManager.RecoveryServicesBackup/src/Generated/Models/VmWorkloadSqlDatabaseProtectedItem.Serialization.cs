@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    lastBackupErrorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    lastBackupErrorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemDataSourceId"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = VmWorkloadProtectedItemExtendedInfo.DeserializeVmWorkloadProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = VmWorkloadProtectedItemExtendedInfo.DeserializeVmWorkloadProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kpisHealths"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, KpiResourceHealthDetails> dictionary = new Dictionary<string, KpiResourceHealthDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value));
+                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value, options));
                     }
                     kpisHealths = dictionary;
                     continue;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item, options));
                     }
                     nodesList = array;
                     continue;

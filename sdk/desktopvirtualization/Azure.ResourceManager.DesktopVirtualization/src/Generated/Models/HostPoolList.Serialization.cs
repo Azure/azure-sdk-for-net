@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<HostPoolData> array = new List<HostPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HostPoolData.DeserializeHostPoolData(item));
+                        array.Add(HostPoolData.DeserializeHostPoolData(item, options));
                     }
                     value = array;
                     continue;

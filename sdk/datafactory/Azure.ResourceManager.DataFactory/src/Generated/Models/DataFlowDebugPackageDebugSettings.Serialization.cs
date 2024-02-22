@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFlowSourceSetting> array = new List<DataFlowSourceSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item));
+                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item, options));
                     }
                     sourceSettings = array;
                     continue;

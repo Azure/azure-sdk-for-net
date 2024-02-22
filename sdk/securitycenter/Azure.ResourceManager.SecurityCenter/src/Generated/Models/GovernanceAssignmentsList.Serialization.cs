@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<GovernanceAssignmentData> array = new List<GovernanceAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GovernanceAssignmentData.DeserializeGovernanceAssignmentData(item));
+                        array.Add(GovernanceAssignmentData.DeserializeGovernanceAssignmentData(item, options));
                     }
                     value = array;
                     continue;

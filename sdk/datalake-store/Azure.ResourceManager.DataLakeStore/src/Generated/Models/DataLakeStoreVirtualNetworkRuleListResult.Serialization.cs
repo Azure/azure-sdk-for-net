@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreVirtualNetworkRuleData> array = new List<DataLakeStoreVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item));
+                        array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item, options));
                     }
                     value = array;
                     continue;

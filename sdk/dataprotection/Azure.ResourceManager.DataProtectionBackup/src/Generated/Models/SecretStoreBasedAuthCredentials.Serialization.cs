@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    secretStoreResource = SecretStoreResourceInfo.DeserializeSecretStoreResourceInfo(property.Value);
+                    secretStoreResource = SecretStoreResourceInfo.DeserializeSecretStoreResourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

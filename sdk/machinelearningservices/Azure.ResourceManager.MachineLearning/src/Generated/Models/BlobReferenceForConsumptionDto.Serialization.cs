@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         credential = null;
                         continue;
                     }
-                    credential = PendingUploadCredentialDto.DeserializePendingUploadCredentialDto(property.Value);
+                    credential = PendingUploadCredentialDto.DeserializePendingUploadCredentialDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountArmId"u8))

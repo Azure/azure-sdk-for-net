@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapsePrivateLinkResourceData> array = new List<SynapsePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapsePrivateLinkResourceData.DeserializeSynapsePrivateLinkResourceData(item));
+                        array.Add(SynapsePrivateLinkResourceData.DeserializeSynapsePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

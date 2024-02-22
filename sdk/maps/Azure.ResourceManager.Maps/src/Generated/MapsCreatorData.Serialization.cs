@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Maps
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MapsCreatorProperties.DeserializeMapsCreatorProperties(property.Value);
+                    properties = MapsCreatorProperties.DeserializeMapsCreatorProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

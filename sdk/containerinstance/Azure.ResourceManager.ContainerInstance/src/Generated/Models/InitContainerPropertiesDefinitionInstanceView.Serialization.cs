@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    currentState = ContainerState.DeserializeContainerState(property.Value);
+                    currentState = ContainerState.DeserializeContainerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previousState"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    previousState = ContainerState.DeserializeContainerState(property.Value);
+                    previousState = ContainerState.DeserializeContainerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("events"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerEvent> array = new List<ContainerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEvent.DeserializeContainerEvent(item));
+                        array.Add(ContainerEvent.DeserializeContainerEvent(item, options));
                     }
                     events = array;
                     continue;

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    credentials = StorageCacheActiveDirectorySettingsCredentials.DeserializeStorageCacheActiveDirectorySettingsCredentials(property.Value);
+                    credentials = StorageCacheActiveDirectorySettingsCredentials.DeserializeStorageCacheActiveDirectorySettingsCredentials(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

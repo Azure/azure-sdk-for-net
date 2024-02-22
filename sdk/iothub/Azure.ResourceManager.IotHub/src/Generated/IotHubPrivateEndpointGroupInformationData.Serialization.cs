@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = IotHubPrivateEndpointGroupInformationProperties.DeserializeIotHubPrivateEndpointGroupInformationProperties(property.Value);
+                    properties = IotHubPrivateEndpointGroupInformationProperties.DeserializeIotHubPrivateEndpointGroupInformationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

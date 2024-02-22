@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             List<PublisherInformation> array = new List<PublisherInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PublisherInformation.DeserializePublisherInformation(item));
+                                array.Add(PublisherInformation.DeserializePublisherInformation(item, options));
                             }
                             publishers = array;
                             continue;

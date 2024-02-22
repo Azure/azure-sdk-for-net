@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item));
+                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item, options));
                             }
                             alternateAddresses = array;
                             continue;

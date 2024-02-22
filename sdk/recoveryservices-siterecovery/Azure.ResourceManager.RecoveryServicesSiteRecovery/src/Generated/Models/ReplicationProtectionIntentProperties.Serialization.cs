@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ReplicationProtectionIntentProviderSpecificSettings.DeserializeReplicationProtectionIntentProviderSpecificSettings(property.Value);
+                    providerSpecificDetails = ReplicationProtectionIntentProviderSpecificSettings.DeserializeReplicationProtectionIntentProviderSpecificSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

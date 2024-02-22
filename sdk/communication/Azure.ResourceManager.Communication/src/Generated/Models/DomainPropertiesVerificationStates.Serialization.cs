@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    domain = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    domain = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("SPF"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    spf = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    spf = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("DKIM"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dkim = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    dkim = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("DKIM2"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dkiM2 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    dkiM2 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("DMARC"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dmarc = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    dmarc = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

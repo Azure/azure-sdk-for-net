@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value);
+                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

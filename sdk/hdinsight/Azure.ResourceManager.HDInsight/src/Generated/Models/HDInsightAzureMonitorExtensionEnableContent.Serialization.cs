@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    selectedConfigurations = HDInsightAzureMonitorSelectedConfigurations.DeserializeHDInsightAzureMonitorSelectedConfigurations(property.Value);
+                    selectedConfigurations = HDInsightAzureMonitorSelectedConfigurations.DeserializeHDInsightAzureMonitorSelectedConfigurations(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

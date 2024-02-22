@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    current = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value);
+                    current = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoRenew"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    next = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value);
+                    next = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("last"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    last = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value);
+                    last = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningIssues"u8))

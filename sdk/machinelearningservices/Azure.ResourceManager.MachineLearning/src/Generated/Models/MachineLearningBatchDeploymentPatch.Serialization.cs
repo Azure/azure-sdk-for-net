@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = PartialBatchDeployment.DeserializePartialBatchDeployment(property.Value);
+                    properties = PartialBatchDeployment.DeserializePartialBatchDeployment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

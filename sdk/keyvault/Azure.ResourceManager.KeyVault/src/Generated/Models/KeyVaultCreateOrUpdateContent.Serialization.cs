@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    properties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
+                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

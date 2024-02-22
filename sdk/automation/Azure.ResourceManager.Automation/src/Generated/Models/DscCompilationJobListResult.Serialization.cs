@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscCompilationJobData> array = new List<DscCompilationJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscCompilationJobData.DeserializeDscCompilationJobData(item));
+                        array.Add(DscCompilationJobData.DeserializeDscCompilationJobData(item, options));
                     }
                     value = array;
                     continue;

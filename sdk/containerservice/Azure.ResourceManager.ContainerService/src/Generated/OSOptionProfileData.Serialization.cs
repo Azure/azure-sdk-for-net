@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceOSOptionProperty> array = new List<ContainerServiceOSOptionProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceOSOptionProperty.DeserializeContainerServiceOSOptionProperty(item));
+                                array.Add(ContainerServiceOSOptionProperty.DeserializeContainerServiceOSOptionProperty(item, options));
                             }
                             osOptionPropertyList = array;
                             continue;

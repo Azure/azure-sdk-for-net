@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = Correlation.DeserializeCorrelation(property0.Value);
+                            correlation = Correlation.DeserializeCorrelation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("inputsLink"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputsLink"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fired"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            run = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            run = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                     }

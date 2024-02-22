@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            metadata = LogicApiResourceMetadata.DeserializeLogicApiResourceMetadata(property0.Value);
+                            metadata = LogicApiResourceMetadata.DeserializeLogicApiResourceMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runtimeUrls"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            generalInformation = LogicApiResourceGeneralInformation.DeserializeLogicApiResourceGeneralInformation(property0.Value);
+                            generalInformation = LogicApiResourceGeneralInformation.DeserializeLogicApiResourceGeneralInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("capabilities"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            backendService = LogicApiResourceBackendService.DeserializeLogicApiResourceBackendService(property0.Value);
+                            backendService = LogicApiResourceBackendService.DeserializeLogicApiResourceBackendService(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            policies = LogicApiResourcePolicies.DeserializeLogicApiResourcePolicies(property0.Value);
+                            policies = LogicApiResourcePolicies.DeserializeLogicApiResourcePolicies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("apiDefinitionUrl"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            apiDefinitions = LogicApiResourceDefinitions.DeserializeLogicApiResourceDefinitions(property0.Value);
+                            apiDefinitions = LogicApiResourceDefinitions.DeserializeLogicApiResourceDefinitions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("integrationServiceEnvironment"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            deploymentParameters = IntegrationServiceEnvironmentManagedApiDeploymentParameters.DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(property0.Value);
+                            deploymentParameters = IntegrationServiceEnvironmentManagedApiDeploymentParameters.DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(property0.Value, options);
                             continue;
                         }
                     }

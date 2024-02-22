@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<OutboundEndpointDependency> array = new List<OutboundEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEndpointDependency.DeserializeOutboundEndpointDependency(item));
+                        array.Add(OutboundEndpointDependency.DeserializeOutboundEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;

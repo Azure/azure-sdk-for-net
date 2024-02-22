@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value);
+                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

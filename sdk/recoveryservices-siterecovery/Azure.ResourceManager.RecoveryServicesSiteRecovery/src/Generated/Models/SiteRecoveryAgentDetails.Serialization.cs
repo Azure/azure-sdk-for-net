@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryAgentDiskDetails> array = new List<SiteRecoveryAgentDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryAgentDiskDetails.DeserializeSiteRecoveryAgentDiskDetails(item));
+                        array.Add(SiteRecoveryAgentDiskDetails.DeserializeSiteRecoveryAgentDiskDetails(item, options));
                     }
                     disks = array;
                     continue;

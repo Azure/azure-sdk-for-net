@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    sshProfile = SshProfile.DeserializeSshProfile(property.Value);
+                    sshProfile = SshProfile.DeserializeSshProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

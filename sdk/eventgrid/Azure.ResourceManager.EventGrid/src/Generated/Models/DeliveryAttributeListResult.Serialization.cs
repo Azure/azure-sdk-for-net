@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item));
+                        array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item, options));
                     }
                     value = array;
                     continue;

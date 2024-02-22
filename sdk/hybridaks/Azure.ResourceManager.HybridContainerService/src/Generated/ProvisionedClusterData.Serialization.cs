@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    properties = ProvisionedClusterProperties.DeserializeProvisionedClusterProperties(property.Value);
+                    properties = ProvisionedClusterProperties.DeserializeProvisionedClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

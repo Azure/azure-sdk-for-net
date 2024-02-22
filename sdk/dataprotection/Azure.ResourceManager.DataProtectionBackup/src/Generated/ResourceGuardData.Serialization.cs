@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    properties = ResourceGuardProperties.DeserializeResourceGuardProperties(property.Value);
+                    properties = ResourceGuardProperties.DeserializeResourceGuardProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

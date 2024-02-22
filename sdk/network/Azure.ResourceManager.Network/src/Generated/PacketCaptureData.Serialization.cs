@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value);
+                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetType"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value);
+                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filters"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
                             List<PacketCaptureFilter> array = new List<PacketCaptureFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item));
+                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item, options));
                             }
                             filters = array;
                             continue;

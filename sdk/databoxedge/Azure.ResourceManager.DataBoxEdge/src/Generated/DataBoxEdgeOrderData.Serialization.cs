@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value);
+                            contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("shippingAddress"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            shippingAddress = DataBoxEdgeShippingAddress.DeserializeDataBoxEdgeShippingAddress(property0.Value);
+                            shippingAddress = DataBoxEdgeShippingAddress.DeserializeDataBoxEdgeShippingAddress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("currentStatus"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            currentStatus = DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(property0.Value);
+                            currentStatus = DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("orderHistory"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeOrderStatus> array = new List<DataBoxEdgeOrderStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(item));
+                                array.Add(DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(item, options));
                             }
                             orderHistory = array;
                             continue;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
+                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item, options));
                             }
                             deliveryTrackingInfo = array;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
+                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item, options));
                             }
                             returnTrackingInfo = array;
                             continue;

@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Avs
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AvsSku.DeserializeAvsSku(property.Value);
+                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value);
+                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("internet"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Avs
                             List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item));
+                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item, options));
                             }
                             identitySources = array;
                             continue;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value);
+                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value);
+                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("extendedNetworkBlocks"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            circuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value);
+                            circuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("endpoints"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            endpoints = AvsPrivateCloudEndpoints.DeserializeAvsPrivateCloudEndpoints(property0.Value);
+                            endpoints = AvsPrivateCloudEndpoints.DeserializeAvsPrivateCloudEndpoints(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkBlock"u8))
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            secondaryCircuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value);
+                            secondaryCircuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("nsxPublicIpQuotaRaised"u8))

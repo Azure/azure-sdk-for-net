@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                     {
                                         continue;
                                     }
-                                    operationStatus = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value);
+                                    operationStatus = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value, options);
                                     continue;
                                 }
                             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                     {
                                         continue;
                                     }
-                                    operationStatus0 = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value);
+                                    operationStatus0 = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value, options);
                                     continue;
                                 }
                                 if (property1.NameEquals("onUpload"u8))

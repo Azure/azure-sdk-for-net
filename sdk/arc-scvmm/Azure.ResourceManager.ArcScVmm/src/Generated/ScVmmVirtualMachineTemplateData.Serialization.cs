@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<NetworkInterfaces> array = new List<NetworkInterfaces>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item));
+                                array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<VirtualDisk> array = new List<VirtualDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualDisk.DeserializeVirtualDisk(item));
+                                array.Add(VirtualDisk.DeserializeVirtualDisk(item, options));
                             }
                             disks = array;
                             continue;

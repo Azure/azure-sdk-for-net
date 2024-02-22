@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureFirewallFqdnTag> array = new List<AzureFirewallFqdnTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallFqdnTag.DeserializeAzureFirewallFqdnTag(item));
+                        array.Add(AzureFirewallFqdnTag.DeserializeAzureFirewallFqdnTag(item, options));
                     }
                     value = array;
                     continue;

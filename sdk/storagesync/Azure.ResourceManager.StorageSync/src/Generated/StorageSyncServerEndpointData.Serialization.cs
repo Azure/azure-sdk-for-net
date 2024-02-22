@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            syncStatus = ServerEndpointSyncStatus.DeserializeServerEndpointSyncStatus(property0.Value);
+                            syncStatus = ServerEndpointSyncStatus.DeserializeServerEndpointSyncStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("offlineDataTransfer"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            cloudTieringStatus = ServerEndpointCloudTieringStatus.DeserializeServerEndpointCloudTieringStatus(property0.Value);
+                            cloudTieringStatus = ServerEndpointCloudTieringStatus.DeserializeServerEndpointCloudTieringStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("recallStatus"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.StorageSync
                             {
                                 continue;
                             }
-                            recallStatus = ServerEndpointRecallStatus.DeserializeServerEndpointRecallStatus(property0.Value);
+                            recallStatus = ServerEndpointRecallStatus.DeserializeServerEndpointRecallStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("initialDownloadPolicy"u8))

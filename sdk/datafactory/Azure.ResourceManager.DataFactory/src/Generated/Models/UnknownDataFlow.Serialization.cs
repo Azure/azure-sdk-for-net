@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryAgentPoolData> array = new List<ContainerRegistryAgentPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(item));
+                        array.Add(ContainerRegistryAgentPoolData.DeserializeContainerRegistryAgentPoolData(item, options));
                     }
                     value = array;
                     continue;

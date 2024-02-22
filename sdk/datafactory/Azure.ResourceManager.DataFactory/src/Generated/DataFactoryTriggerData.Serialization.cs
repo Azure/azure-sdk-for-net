@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryTriggerProperties.DeserializeDataFactoryTriggerProperties(property.Value);
+                    properties = DataFactoryTriggerProperties.DeserializeDataFactoryTriggerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

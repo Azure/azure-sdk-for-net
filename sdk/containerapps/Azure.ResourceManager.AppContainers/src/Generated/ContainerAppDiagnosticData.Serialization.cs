@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    properties = ContainerAppDiagnosticsProperties.DeserializeContainerAppDiagnosticsProperties(property.Value);
+                    properties = ContainerAppDiagnosticsProperties.DeserializeContainerAppDiagnosticsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

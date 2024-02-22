@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<LocalRulestackPrefixData> array = new List<LocalRulestackPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocalRulestackPrefixData.DeserializeLocalRulestackPrefixData(item));
+                        array.Add(LocalRulestackPrefixData.DeserializeLocalRulestackPrefixData(item, options));
                     }
                     value = array;
                     continue;

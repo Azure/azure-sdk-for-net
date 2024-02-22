@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value);
+                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

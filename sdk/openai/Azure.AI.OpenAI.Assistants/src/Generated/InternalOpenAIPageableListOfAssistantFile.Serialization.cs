@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<AssistantFile> array = new List<AssistantFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssistantFile.DeserializeAssistantFile(item));
+                        array.Add(AssistantFile.DeserializeAssistantFile(item, options));
                     }
                     data = array;
                     continue;

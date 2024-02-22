@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureFirewallApplicationRuleProtocol> array = new List<AzureFirewallApplicationRuleProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallApplicationRuleProtocol.DeserializeAzureFirewallApplicationRuleProtocol(item));
+                        array.Add(AzureFirewallApplicationRuleProtocol.DeserializeAzureFirewallApplicationRuleProtocol(item, options));
                     }
                     protocols = array;
                     continue;

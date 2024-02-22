@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventUpdate> array = new List<ResourceHealthEventUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventUpdate.DeserializeResourceHealthEventUpdate(item));
+                        array.Add(ResourceHealthEventUpdate.DeserializeResourceHealthEventUpdate(item, options));
                     }
                     updates = array;
                     continue;

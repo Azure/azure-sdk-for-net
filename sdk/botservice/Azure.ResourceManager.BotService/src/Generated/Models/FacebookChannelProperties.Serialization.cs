@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<FacebookPage> array = new List<FacebookPage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacebookPage.DeserializeFacebookPage(item));
+                        array.Add(FacebookPage.DeserializeFacebookPage(item, options));
                     }
                     pages = array;
                     continue;

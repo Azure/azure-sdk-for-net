@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    properties = SpringBootSiteProperties.DeserializeSpringBootSiteProperties(property.Value);
+                    properties = SpringBootSiteProperties.DeserializeSpringBootSiteProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    extendedLocation = SpringBootSiteModelExtendedLocation.DeserializeSpringBootSiteModelExtendedLocation(property.Value);
+                    extendedLocation = SpringBootSiteModelExtendedLocation.DeserializeSpringBootSiteModelExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

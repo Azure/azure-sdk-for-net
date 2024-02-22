@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value);
+                    identity = MobileNetworkManagedServiceIdentity.DeserializeMobileNetworkManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            encryptionKey = KeyVaultKey.DeserializeKeyVaultKey(property0.Value);
+                            encryptionKey = KeyVaultKey.DeserializeKeyVaultKey(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mobileNetwork"u8))

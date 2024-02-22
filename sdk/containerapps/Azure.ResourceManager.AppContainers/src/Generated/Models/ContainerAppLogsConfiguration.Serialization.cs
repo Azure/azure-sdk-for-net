@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    logAnalyticsConfiguration = ContainerAppLogAnalyticsConfiguration.DeserializeContainerAppLogAnalyticsConfiguration(property.Value);
+                    logAnalyticsConfiguration = ContainerAppLogAnalyticsConfiguration.DeserializeContainerAppLogAnalyticsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

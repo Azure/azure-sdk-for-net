@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AutoscaleSettingData> array = new List<AutoscaleSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleSettingData.DeserializeAutoscaleSettingData(item));
+                        array.Add(AutoscaleSettingData.DeserializeAutoscaleSettingData(item, options));
                     }
                     value = array;
                     continue;

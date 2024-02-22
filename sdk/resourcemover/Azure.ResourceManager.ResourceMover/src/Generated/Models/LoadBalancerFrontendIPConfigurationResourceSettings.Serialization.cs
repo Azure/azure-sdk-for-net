@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
+                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))

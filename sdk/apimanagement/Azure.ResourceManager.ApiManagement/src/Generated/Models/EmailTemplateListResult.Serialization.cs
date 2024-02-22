@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementEmailTemplateData> array = new List<ApiManagementEmailTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(item));
+                        array.Add(ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(item, options));
                     }
                     value = array;
                     continue;

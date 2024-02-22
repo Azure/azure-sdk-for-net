@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformApiPortalData> array = new List<AppPlatformApiPortalData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(item));
+                        array.Add(AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(item, options));
                     }
                     value = array;
                     continue;

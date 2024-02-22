@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Relay
                             List<RelayNetworkRuleSetIPRule> array = new List<RelayNetworkRuleSetIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayNetworkRuleSetIPRule.DeserializeRelayNetworkRuleSetIPRule(item));
+                                array.Add(RelayNetworkRuleSetIPRule.DeserializeRelayNetworkRuleSetIPRule(item, options));
                             }
                             ipRules = array;
                             continue;

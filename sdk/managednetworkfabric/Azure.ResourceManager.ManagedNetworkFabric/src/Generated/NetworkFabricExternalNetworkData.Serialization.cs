@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkToNetworkInterconnectId"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value);
+                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("optionAProperties"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            optionAProperties = ExternalNetworkOptionAProperties.DeserializeExternalNetworkOptionAProperties(property0.Value);
+                            optionAProperties = ExternalNetworkOptionAProperties.DeserializeExternalNetworkOptionAProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))

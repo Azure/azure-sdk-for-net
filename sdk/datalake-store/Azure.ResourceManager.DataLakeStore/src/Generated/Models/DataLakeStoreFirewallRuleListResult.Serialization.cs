@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreFirewallRuleData> array = new List<DataLakeStoreFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(item));
+                        array.Add(DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

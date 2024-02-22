@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = ClientRegistration.DeserializeClientRegistration(property.Value);
+                    registration = ClientRegistration.DeserializeClientRegistration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
+                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    validation = AllowedAudiencesValidation.DeserializeAllowedAudiencesValidation(property.Value);
+                    validation = AllowedAudiencesValidation.DeserializeAllowedAudiencesValidation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<UpdateData> array = new List<UpdateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateData.DeserializeUpdateData(item));
+                        array.Add(UpdateData.DeserializeUpdateData(item, options));
                     }
                     value = array;
                     continue;

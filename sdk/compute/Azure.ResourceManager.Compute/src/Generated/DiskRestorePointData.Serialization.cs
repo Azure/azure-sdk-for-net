@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value);
+                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportedCapabilities"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value);
+                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("familyId"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportsHibernation"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value);
+                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value, options);
                             continue;
                         }
                     }

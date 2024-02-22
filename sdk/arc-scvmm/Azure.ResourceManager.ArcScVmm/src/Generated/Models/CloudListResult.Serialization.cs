@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<ScVmmCloudData> array = new List<ScVmmCloudData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScVmmCloudData.DeserializeScVmmCloudData(item));
+                        array.Add(ScVmmCloudData.DeserializeScVmmCloudData(item, options));
                     }
                     value = array;
                     continue;

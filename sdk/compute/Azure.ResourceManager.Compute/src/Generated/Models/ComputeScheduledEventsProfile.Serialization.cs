@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value);
+                    terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osImageNotificationProfile"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osImageNotificationProfile = OSImageNotificationProfile.DeserializeOSImageNotificationProfile(property.Value);
+                    osImageNotificationProfile = OSImageNotificationProfile.DeserializeOSImageNotificationProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

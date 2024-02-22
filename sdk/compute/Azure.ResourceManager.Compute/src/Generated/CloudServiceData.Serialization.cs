@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            roleProfile = CloudServiceRoleProfile.DeserializeCloudServiceRoleProfile(property0.Value);
+                            roleProfile = CloudServiceRoleProfile.DeserializeCloudServiceRoleProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            osProfile = CloudServiceOSProfile.DeserializeCloudServiceOSProfile(property0.Value);
+                            osProfile = CloudServiceOSProfile.DeserializeCloudServiceOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            networkProfile = CloudServiceNetworkProfile.DeserializeCloudServiceNetworkProfile(property0.Value);
+                            networkProfile = CloudServiceNetworkProfile.DeserializeCloudServiceNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("extensionProfile"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            extensionProfile = CloudServiceExtensionProfile.DeserializeCloudServiceExtensionProfile(property0.Value);
+                            extensionProfile = CloudServiceExtensionProfile.DeserializeCloudServiceExtensionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

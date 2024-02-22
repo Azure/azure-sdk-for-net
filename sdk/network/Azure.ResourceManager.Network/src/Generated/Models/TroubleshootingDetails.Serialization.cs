@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<TroubleshootingRecommendedActions> array = new List<TroubleshootingRecommendedActions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item));
+                        array.Add(TroubleshootingRecommendedActions.DeserializeTroubleshootingRecommendedActions(item, options));
                     }
                     recommendedActions = array;
                     continue;

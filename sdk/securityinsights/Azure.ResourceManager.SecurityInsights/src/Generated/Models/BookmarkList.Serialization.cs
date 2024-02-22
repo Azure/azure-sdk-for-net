@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsBookmarkData> array = new List<SecurityInsightsBookmarkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(item));
+                        array.Add(SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(item, options));
                     }
                     value = array;
                     continue;

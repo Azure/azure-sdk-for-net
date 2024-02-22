@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI
                     List<ImageGenerationData> array = new List<ImageGenerationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageGenerationData.DeserializeImageGenerationData(item));
+                        array.Add(ImageGenerationData.DeserializeImageGenerationData(item, options));
                     }
                     data = array;
                     continue;

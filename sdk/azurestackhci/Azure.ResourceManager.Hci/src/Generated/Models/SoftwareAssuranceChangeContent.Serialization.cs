@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = SoftwareAssuranceChangeRequestProperties.DeserializeSoftwareAssuranceChangeRequestProperties(property.Value);
+                    properties = SoftwareAssuranceChangeRequestProperties.DeserializeSoftwareAssuranceChangeRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

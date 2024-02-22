@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("computeIdentity"u8))
                 {
-                    computeIdentity = MonitorComputeIdentityBase.DeserializeMonitorComputeIdentityBase(property.Value);
+                    computeIdentity = MonitorComputeIdentityBase.DeserializeMonitorComputeIdentityBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

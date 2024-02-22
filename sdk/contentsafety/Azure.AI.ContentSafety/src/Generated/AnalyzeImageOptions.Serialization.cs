@@ -91,7 +91,7 @@ namespace Azure.AI.ContentSafety
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value);
+                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))

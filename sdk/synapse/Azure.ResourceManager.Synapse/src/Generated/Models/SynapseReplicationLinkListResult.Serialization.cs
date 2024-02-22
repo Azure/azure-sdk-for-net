@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseReplicationLinkData> array = new List<SynapseReplicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(item));
+                        array.Add(SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(item, options));
                     }
                     value = array;
                     continue;

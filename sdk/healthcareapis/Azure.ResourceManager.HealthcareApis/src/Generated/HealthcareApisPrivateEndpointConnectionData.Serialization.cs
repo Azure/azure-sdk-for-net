@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = HealthcareApisPrivateLinkServiceConnectionState.DeserializeHealthcareApisPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = HealthcareApisPrivateLinkServiceConnectionState.DeserializeHealthcareApisPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

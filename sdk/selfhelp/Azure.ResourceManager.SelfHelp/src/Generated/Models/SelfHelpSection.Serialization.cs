@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value);
+                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

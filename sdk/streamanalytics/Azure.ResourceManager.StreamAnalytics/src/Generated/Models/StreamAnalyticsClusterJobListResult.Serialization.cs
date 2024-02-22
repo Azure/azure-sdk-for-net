@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsClusterJob> array = new List<StreamAnalyticsClusterJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob(item));
+                        array.Add(StreamAnalyticsClusterJob.DeserializeStreamAnalyticsClusterJob(item, options));
                     }
                     value = array;
                     continue;

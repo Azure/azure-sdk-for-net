@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<MabBackupJobTaskDetails> array = new List<MabBackupJobTaskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MabBackupJobTaskDetails.DeserializeMabBackupJobTaskDetails(item));
+                        array.Add(MabBackupJobTaskDetails.DeserializeMabBackupJobTaskDetails(item, options));
                     }
                     tasksList = array;
                     continue;

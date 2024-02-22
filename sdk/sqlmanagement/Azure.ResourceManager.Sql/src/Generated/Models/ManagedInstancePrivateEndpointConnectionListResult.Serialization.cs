@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstancePrivateEndpointConnectionData> array = new List<ManagedInstancePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(item));
+                        array.Add(ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

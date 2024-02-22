@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    properties = ApplianceUpgradeGraphProperties.DeserializeApplianceUpgradeGraphProperties(property.Value);
+                    properties = ApplianceUpgradeGraphProperties.DeserializeApplianceUpgradeGraphProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

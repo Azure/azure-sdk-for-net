@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    components = IstioComponents.DeserializeIstioComponents(property.Value);
+                    components = IstioComponents.DeserializeIstioComponents(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateAuthority"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    certificateAuthority = IstioCertificateAuthority.DeserializeIstioCertificateAuthority(property.Value);
+                    certificateAuthority = IstioCertificateAuthority.DeserializeIstioCertificateAuthority(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("revisions"u8))

@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            condition = AlertRuleAllOfCondition.DeserializeAlertRuleAllOfCondition(property0.Value);
+                            condition = AlertRuleAllOfCondition.DeserializeAlertRuleAllOfCondition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("actions"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            actions = ActionList.DeserializeActionList(property0.Value);
+                            actions = ActionList.DeserializeActionList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))

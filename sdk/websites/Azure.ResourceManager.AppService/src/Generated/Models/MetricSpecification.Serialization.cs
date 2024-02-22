@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(MetricDimension.DeserializeMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricAvailability> array = new List<MetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAvailability.DeserializeMetricAvailability(item));
+                        array.Add(MetricAvailability.DeserializeMetricAvailability(item, options));
                     }
                     availabilities = array;
                     continue;

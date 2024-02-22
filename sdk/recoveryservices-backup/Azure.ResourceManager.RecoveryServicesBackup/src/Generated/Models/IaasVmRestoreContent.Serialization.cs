@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element);
+                    case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element, options);
                 }
             }
             Optional<string> recoveryPointId = default;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    encryptionDetails = VmEncryptionDetails.DeserializeVmEncryptionDetails(property.Value);
+                    encryptionDetails = VmEncryptionDetails.DeserializeVmEncryptionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restoreDiskLunList"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    identityInfo = BackupIdentityInfo.DeserializeBackupIdentityInfo(property.Value);
+                    identityInfo = BackupIdentityInfo.DeserializeBackupIdentityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identityBasedRestoreDetails"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    identityBasedRestoreDetails = IdentityBasedRestoreDetails.DeserializeIdentityBasedRestoreDetails(property.Value);
+                    identityBasedRestoreDetails = IdentityBasedRestoreDetails.DeserializeIdentityBasedRestoreDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    securedVmDetails = SecuredVmDetails.DeserializeSecuredVmDetails(property.Value);
+                    securedVmDetails = SecuredVmDetails.DeserializeSecuredVmDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDiskNetworkAccessSettings"u8))
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetDiskNetworkAccessSettings = BackupTargetDiskNetworkAccessSettings.DeserializeBackupTargetDiskNetworkAccessSettings(property.Value);
+                    targetDiskNetworkAccessSettings = BackupTargetDiskNetworkAccessSettings.DeserializeBackupTargetDiskNetworkAccessSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

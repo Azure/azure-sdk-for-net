@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkToNetworkInterconnectData> array = new List<NetworkToNetworkInterconnectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(item));
+                        array.Add(NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(item, options));
                     }
                     value = array;
                     continue;

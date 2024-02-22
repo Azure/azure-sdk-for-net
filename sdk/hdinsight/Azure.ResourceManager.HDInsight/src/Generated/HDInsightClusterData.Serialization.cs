@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HDInsight
                     {
                         continue;
                     }
-                    properties = HDInsightClusterProperties.DeserializeHDInsightClusterProperties(property.Value);
+                    properties = HDInsightClusterProperties.DeserializeHDInsightClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

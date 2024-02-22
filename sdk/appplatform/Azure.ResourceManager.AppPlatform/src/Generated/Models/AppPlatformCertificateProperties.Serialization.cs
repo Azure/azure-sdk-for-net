@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ContentCertificate": return AppPlatformContentCertificateProperties.DeserializeAppPlatformContentCertificateProperties(element);
-                    case "KeyVaultCertificate": return AppPlatformKeyVaultCertificateProperties.DeserializeAppPlatformKeyVaultCertificateProperties(element);
+                    case "ContentCertificate": return AppPlatformContentCertificateProperties.DeserializeAppPlatformContentCertificateProperties(element, options);
+                    case "KeyVaultCertificate": return AppPlatformKeyVaultCertificateProperties.DeserializeAppPlatformKeyVaultCertificateProperties(element, options);
                 }
             }
-            return UnknownCertificateProperties.DeserializeUnknownCertificateProperties(element);
+            return UnknownCertificateProperties.DeserializeUnknownCertificateProperties(element, options);
         }
 
         BinaryData IPersistableModel<AppPlatformCertificateProperties>.Write(ModelReaderWriterOptions options)

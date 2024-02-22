@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(property.Value);
+                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("advancedDiagnosticConsent"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SecondaryConsent> array = new List<SecondaryConsent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item));
+                        array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item, options));
                     }
                     secondaryConsent = array;
                     continue;

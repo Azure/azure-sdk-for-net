@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                             {
                                 continue;
                             }
-                            clusterProfile = UpdatableClusterProfile.DeserializeUpdatableClusterProfile(property0.Value);
+                            clusterProfile = UpdatableClusterProfile.DeserializeUpdatableClusterProfile(property0.Value, options);
                             continue;
                         }
                     }

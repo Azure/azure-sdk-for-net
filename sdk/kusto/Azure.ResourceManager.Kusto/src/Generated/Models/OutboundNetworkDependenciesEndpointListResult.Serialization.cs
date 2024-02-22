@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<OutboundNetworkDependenciesEndpoint> array = new List<OutboundNetworkDependenciesEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint(item));
+                        array.Add(OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint(item, options));
                     }
                     value = array;
                     continue;

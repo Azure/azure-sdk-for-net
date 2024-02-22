@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerLogFile> array = new List<PostgreSqlFlexibleServerLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(item));
+                        array.Add(PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(item, options));
                     }
                     value = array;
                     continue;

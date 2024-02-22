@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountLocalUserData> array = new List<StorageAccountLocalUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(item));
+                        array.Add(StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(item, options));
                     }
                     value = array;
                     continue;

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ReportProperties.DeserializeReportProperties(property.Value);
+                    properties = ReportProperties.DeserializeReportProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

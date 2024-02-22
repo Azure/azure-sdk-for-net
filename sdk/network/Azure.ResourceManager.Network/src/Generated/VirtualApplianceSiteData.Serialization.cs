@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            o365Policy = Office365PolicyProperties.DeserializeOffice365PolicyProperties(property0.Value);
+                            o365Policy = Office365PolicyProperties.DeserializeOffice365PolicyProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

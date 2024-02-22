@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value);
+                    sku = CloudHsmClusterSku.DeserializeCloudHsmClusterSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            securityDomain = CloudHsmClusterSecurityDomainProperties.DeserializeCloudHsmClusterSecurityDomainProperties(property0.Value);
+                            securityDomain = CloudHsmClusterSecurityDomainProperties.DeserializeCloudHsmClusterSecurityDomainProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hsms"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             List<CloudHsmProperties> array = new List<CloudHsmProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CloudHsmProperties.DeserializeCloudHsmProperties(item));
+                                array.Add(CloudHsmProperties.DeserializeCloudHsmProperties(item, options));
                             }
                             hsms = array;
                             continue;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             List<HardwareSecurityModulesPrivateEndpointConnectionData> array = new List<HardwareSecurityModulesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HardwareSecurityModulesPrivateEndpointConnectionData.DeserializeHardwareSecurityModulesPrivateEndpointConnectionData(item));
+                                array.Add(HardwareSecurityModulesPrivateEndpointConnectionData.DeserializeHardwareSecurityModulesPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            restoreProperties = RestoreProperties.DeserializeRestoreProperties(property0.Value);
+                            restoreProperties = RestoreProperties.DeserializeRestoreProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backupProperties"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            backupProperties = BackupProperties.DeserializeBackupProperties(property0.Value);
+                            backupProperties = BackupProperties.DeserializeBackupProperties(property0.Value, options);
                             continue;
                         }
                     }

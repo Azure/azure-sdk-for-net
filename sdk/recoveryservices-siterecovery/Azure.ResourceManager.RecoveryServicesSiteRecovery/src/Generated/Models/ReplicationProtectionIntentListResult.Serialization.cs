@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationProtectionIntentData> array = new List<ReplicationProtectionIntentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(item));
+                        array.Add(ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(item, options));
                     }
                     value = array;
                     continue;

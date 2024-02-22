@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<UserIdentityContract> array = new List<UserIdentityContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserIdentityContract.DeserializeUserIdentityContract(item));
+                        array.Add(UserIdentityContract.DeserializeUserIdentityContract(item, options));
                     }
                     value = array;
                     continue;

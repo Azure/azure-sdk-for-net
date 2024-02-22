@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryDatasetProperties.DeserializeDataFactoryDatasetProperties(property.Value);
+                    properties = DataFactoryDatasetProperties.DeserializeDataFactoryDatasetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

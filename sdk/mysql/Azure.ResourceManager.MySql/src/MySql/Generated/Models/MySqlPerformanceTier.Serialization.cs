@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlPerformanceTierServiceLevelObjectives> array = new List<MySqlPerformanceTierServiceLevelObjectives>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlPerformanceTierServiceLevelObjectives.DeserializeMySqlPerformanceTierServiceLevelObjectives(item));
+                        array.Add(MySqlPerformanceTierServiceLevelObjectives.DeserializeMySqlPerformanceTierServiceLevelObjectives(item, options));
                     }
                     serviceLevelObjectives = array;
                     continue;

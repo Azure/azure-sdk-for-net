@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     provisioningErrors = array;
                     continue;

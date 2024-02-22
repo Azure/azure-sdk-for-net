@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value);
+                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value);
+                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value);
+                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value);
+                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MobilityServiceUpdate> array = new List<MobilityServiceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobilityServiceUpdate.DeserializeMobilityServiceUpdate(item));
+                        array.Add(MobilityServiceUpdate.DeserializeMobilityServiceUpdate(item, options));
                     }
                     mobilityServiceUpdates = array;
                     continue;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("health"u8))

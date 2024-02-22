@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmDiskDetails> array = new List<A2AVmDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item));
+                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item, options));
                     }
                     vmDisks = array;
                     continue;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmManagedDiskDetails> array = new List<A2AVmManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmManagedDiskDetails.DeserializeA2AVmManagedDiskDetails(item));
+                        array.Add(A2AVmManagedDiskDetails.DeserializeA2AVmManagedDiskDetails(item, options));
                     }
                     vmManagedDisks = array;
                     continue;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryAvailabilityZone"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryAzureNetworkId"u8))

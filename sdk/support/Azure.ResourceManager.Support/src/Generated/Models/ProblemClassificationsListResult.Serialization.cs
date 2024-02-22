@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<ProblemClassificationData> array = new List<ProblemClassificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProblemClassificationData.DeserializeProblemClassificationData(item));
+                        array.Add(ProblemClassificationData.DeserializeProblemClassificationData(item, options));
                     }
                     value = array;
                     continue;

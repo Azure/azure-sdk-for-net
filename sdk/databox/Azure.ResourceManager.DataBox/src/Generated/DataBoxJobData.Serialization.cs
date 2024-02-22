@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
+                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value);
+                            details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cancellationReason"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value);
+                            deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isCancellableWithoutFee"u8))

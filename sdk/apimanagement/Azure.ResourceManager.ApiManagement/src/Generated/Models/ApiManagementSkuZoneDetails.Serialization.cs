@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuCapabilities> array = new List<ApiManagementSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item));
+                        array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    stackSettings = FunctionAppRuntimes.DeserializeFunctionAppRuntimes(property.Value);
+                    stackSettings = FunctionAppRuntimes.DeserializeFunctionAppRuntimes(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
