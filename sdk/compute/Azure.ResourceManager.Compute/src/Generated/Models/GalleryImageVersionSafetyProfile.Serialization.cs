@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("reportedForPolicyViolation"u8);
                 writer.WriteBooleanValue(IsReportedForPolicyViolation.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PolicyViolations))
+            if (options.Format != "W" && !(PolicyViolations is ChangeTrackingList<GalleryImageVersionPolicyViolation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyViolations"u8);
                 writer.WriteStartArray();

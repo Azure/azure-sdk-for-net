@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Kpis))
+            if (!(Kpis is ChangeTrackingList<ViewKpiProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kpis"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Pivots))
+            if (!(Pivots is ChangeTrackingList<ViewPivotProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("pivots"u8);
                 writer.WriteStartArray();

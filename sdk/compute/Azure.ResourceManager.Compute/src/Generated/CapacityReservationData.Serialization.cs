@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
+            if (options.Format != "W" && !(VirtualMachinesAssociated is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAssociated"u8);
                 writer.WriteStartArray();

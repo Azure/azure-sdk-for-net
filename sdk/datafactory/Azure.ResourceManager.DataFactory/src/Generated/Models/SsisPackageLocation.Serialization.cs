@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
-            if (Optional.IsCollectionDefined(ChildPackages))
+            if (!(ChildPackages is ChangeTrackingList<SsisChildPackage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("childPackages"u8);
                 writer.WriteStartArray();

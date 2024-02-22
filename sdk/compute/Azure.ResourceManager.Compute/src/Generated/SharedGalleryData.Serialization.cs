@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ArtifactTags))
+            if (options.Format != "W" && !(ArtifactTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("artifactTags"u8);
                 writer.WriteStartObject();

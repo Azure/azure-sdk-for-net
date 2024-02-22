@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Ids))
+            if (!(Ids is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();

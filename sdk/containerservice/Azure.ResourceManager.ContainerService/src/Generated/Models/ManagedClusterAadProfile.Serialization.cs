@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableAzureRBAC"u8);
                 writer.WriteBooleanValue(IsAzureRbacEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
+            if (!(AdminGroupObjectIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();

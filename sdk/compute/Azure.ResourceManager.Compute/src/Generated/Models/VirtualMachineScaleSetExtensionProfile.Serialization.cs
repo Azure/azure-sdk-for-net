@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<VirtualMachineScaleSetExtensionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();

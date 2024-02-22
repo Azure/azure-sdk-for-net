@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("serverProperties"u8);
                 writer.WriteObjectValue(ServerProperties);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
+            if (options.Format != "W" && !(Databases is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

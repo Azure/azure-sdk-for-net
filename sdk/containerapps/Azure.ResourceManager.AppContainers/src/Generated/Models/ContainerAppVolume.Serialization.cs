@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("storageName"u8);
                 writer.WriteStringValue(StorageName);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<SecretVolumeItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();

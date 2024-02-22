@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
+            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LocationInfo))
+            if (options.Format != "W" && !(LocationInfo is ChangeTrackingList<DataBoxEdgeSkuLocationInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
+            if (options.Format != "W" && !(Costs is ChangeTrackingList<DataBoxEdgeSkuCost> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShipmentTypes))
+            if (options.Format != "W" && !(ShipmentTypes is ChangeTrackingList<DataBoxEdgeShipmentType> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("shipmentTypes"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<DataBoxEdgeSkuCapability> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (!(InitContainers is ChangeTrackingList<ContainerAppInitContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingList<ContainerAppContainer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
             }
-            if (Optional.IsCollectionDefined(Volumes))
+            if (!(Volumes is ChangeTrackingList<ContainerAppVolume> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceBinds))
+            if (!(ServiceBinds is ChangeTrackingList<ContainerAppServiceBind> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("serviceBinds"u8);
                 writer.WriteStartArray();

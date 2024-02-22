@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsCollectionDefined(CollectionNames))
+            if (!(CollectionNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("collectionNames"u8);
                 writer.WriteStartArray();

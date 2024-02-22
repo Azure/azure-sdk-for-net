@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("connectVia"u8);
             writer.WriteObjectValue(ConnectVia);
-            if (Optional.IsCollectionDefined(ProjectParameters))
+            if (!(ProjectParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("projectParameters"u8);
                 writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PackageParameters))
+            if (!(PackageParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("packageParameters"u8);
                 writer.WriteStartObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProjectConnectionManagers))
+            if (!(ProjectConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("projectConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PackageConnectionManagers))
+            if (!(PackageConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("packageConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PropertyOverrides))
+            if (!(PropertyOverrides is ChangeTrackingDictionary<string, SsisPropertyOverride> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("propertyOverrides"u8);
                 writer.WriteStartObject();

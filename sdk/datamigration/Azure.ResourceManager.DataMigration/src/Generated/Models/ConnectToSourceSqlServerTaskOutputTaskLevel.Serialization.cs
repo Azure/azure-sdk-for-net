@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("sourceServerBrandVersion"u8);
                 writer.WriteStringValue(SourceServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

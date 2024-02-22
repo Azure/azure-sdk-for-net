@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
+            if (options.Format != "W" && !(CapacityReservations is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("capacityReservations"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
+            if (options.Format != "W" && !(VirtualMachinesAssociated is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAssociated"u8);
                 writer.WriteStartArray();

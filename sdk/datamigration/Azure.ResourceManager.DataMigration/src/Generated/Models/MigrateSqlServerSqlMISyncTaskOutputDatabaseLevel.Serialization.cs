@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
                 writer.WriteObjectValue(LastRestoredBackupSetInfo);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
+            if (options.Format != "W" && !(ActiveBackupSets is ChangeTrackingList<BackupSetInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activeBackupSets"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("isFullBackupRestored"u8);
                 writer.WriteBooleanValue(IsFullBackupRestored.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();

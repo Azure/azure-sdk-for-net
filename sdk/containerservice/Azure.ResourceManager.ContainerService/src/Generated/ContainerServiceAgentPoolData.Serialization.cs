@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteObjectValue(PowerState);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("spotMaxPrice"u8);
                 writer.WriteNumberValue(SpotMaxPrice.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NodeLabels))
+            if (!(NodeLabels is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NodeTaints))
+            if (!(NodeTaints is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();

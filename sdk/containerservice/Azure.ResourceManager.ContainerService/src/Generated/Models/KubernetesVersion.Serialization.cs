@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (Optional.IsCollectionDefined(PatchVersions))
+            if (!(PatchVersions is ChangeTrackingDictionary<string, KubernetesPatchVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patchVersions"u8);
                 writer.WriteStartObject();

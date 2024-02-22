@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SqlDataCopyErrors))
+            if (options.Format != "W" && !(SqlDataCopyErrors is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sqlDataCopyErrors"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ListOfCopyProgressDetails))
+            if (options.Format != "W" && !(ListOfCopyProgressDetails is ChangeTrackingList<CopyProgressDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("listOfCopyProgressDetails"u8);
                 writer.WriteStartArray();

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);
             }
-            if (Optional.IsCollectionDefined(GlobalParameters))
+            if (!(GlobalParameters is ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("globalParameters"u8);
                 writer.WriteStartObject();

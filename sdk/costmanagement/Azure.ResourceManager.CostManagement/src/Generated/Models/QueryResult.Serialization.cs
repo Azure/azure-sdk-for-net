@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<QueryColumn> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Rows))
+            if (!(Rows is ChangeTrackingList<IList<BinaryData>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();

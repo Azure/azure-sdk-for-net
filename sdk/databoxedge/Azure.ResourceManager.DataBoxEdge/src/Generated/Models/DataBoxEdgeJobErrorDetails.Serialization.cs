@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
+            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<DataBoxEdgeJobErrorItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();

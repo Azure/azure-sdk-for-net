@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("encryptedPassword"u8);
                 writer.WriteObjectValue(EncryptedPassword);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShareAccessRights))
+            if (options.Format != "W" && !(ShareAccessRights is ChangeTrackingList<ShareAccessRight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("shareAccessRights"u8);
                 writer.WriteStartArray();

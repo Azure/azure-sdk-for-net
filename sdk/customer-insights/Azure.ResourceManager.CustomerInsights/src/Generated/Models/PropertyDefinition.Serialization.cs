@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("arrayValueSeparator"u8);
                 writer.WriteStringValue(ArrayValueSeparator);
             }
-            if (Optional.IsCollectionDefined(EnumValidValues))
+            if (!(EnumValidValues is ChangeTrackingList<ProfileEnumValidValuesFormat> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("enumValidValues"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("isAvailableInGraph"u8);
                 writer.WriteBooleanValue(IsAvailableInGraph.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataSourcePrecedenceRules))
+            if (options.Format != "W" && !(DataSourcePrecedenceRules is ChangeTrackingList<DataSourcePrecedence> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataSourcePrecedenceRules"u8);
                 writer.WriteStartArray();

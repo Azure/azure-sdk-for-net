@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("trackingInformation"u8);
                 writer.WriteObjectValue(TrackingInformation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalOrderDetails))
+            if (options.Format != "W" && !(AdditionalOrderDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalOrderDetails"u8);
                 writer.WriteStartObject();

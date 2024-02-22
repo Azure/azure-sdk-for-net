@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("linkName"u8);
                 writer.WriteStringValue(LinkName);
             }
-            if (Optional.IsCollectionDefined(Mappings))
+            if (!(Mappings is ChangeTrackingList<RelationshipLinkFieldMapping> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProfilePropertyReferences))
+            if (!(ProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
+            if (!(RelatedProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();

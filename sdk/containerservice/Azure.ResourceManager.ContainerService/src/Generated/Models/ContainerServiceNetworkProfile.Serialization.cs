@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("natGatewayProfile"u8);
                 writer.WriteObjectValue(NatGatewayProfile);
             }
-            if (Optional.IsCollectionDefined(PodCidrs))
+            if (!(PodCidrs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceCidrs))
+            if (!(ServiceCidrs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPFamilies))
+            if (!(IPFamilies is ChangeTrackingList<IPFamily> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipFamilies"u8);
                 writer.WriteStartArray();

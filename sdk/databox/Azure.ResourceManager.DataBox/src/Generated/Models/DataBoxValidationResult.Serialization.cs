@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IndividualResponseDetails))
+            if (options.Format != "W" && !(IndividualResponseDetails is ChangeTrackingList<DataBoxValidationInputResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("individualResponseDetails"u8);
                 writer.WriteStartArray();

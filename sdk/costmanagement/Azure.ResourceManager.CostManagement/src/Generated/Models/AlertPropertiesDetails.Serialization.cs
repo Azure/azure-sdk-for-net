@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("triggeredBy"u8);
                 writer.WriteStringValue(TriggeredBy);
             }
-            if (Optional.IsCollectionDefined(ResourceGroupFilter))
+            if (!(ResourceGroupFilter is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGroupFilter"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResourceFilter))
+            if (!(ResourceFilter is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceFilter"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MeterFilter))
+            if (!(MeterFilter is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("meterFilter"u8);
                 writer.WriteStartArray();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("currentSpend"u8);
                 writer.WriteNumberValue(CurrentSpend.Value);
             }
-            if (Optional.IsCollectionDefined(ContactEmails))
+            if (!(ContactEmails is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("contactEmails"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContactGroups))
+            if (!(ContactGroups is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContactRoles))
+            if (!(ContactRoles is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();

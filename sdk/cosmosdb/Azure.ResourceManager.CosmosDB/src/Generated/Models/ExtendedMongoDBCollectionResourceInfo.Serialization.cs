@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(CollectionName);
-            if (Optional.IsCollectionDefined(ShardKey))
+            if (!(ShardKey is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Indexes))
+            if (!(Indexes is ChangeTrackingList<MongoDBIndex> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();

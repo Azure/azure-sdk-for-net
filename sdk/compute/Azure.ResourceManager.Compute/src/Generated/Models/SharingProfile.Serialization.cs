@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permission.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
+            if (options.Format != "W" && !(Groups is ChangeTrackingList<SharingProfileGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();

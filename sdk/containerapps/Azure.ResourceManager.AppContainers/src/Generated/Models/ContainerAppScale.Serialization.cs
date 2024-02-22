@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<ContainerAppScaleRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

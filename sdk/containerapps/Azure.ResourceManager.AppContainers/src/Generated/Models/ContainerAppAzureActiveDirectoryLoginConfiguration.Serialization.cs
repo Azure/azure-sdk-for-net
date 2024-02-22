@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoginParameters))
+            if (!(LoginParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loginParameters"u8);
                 writer.WriteStartArray();

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("availableCapacity"u8);
                 writer.WriteObjectValue(AvailableCapacity);
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);
             }
-            if (Optional.IsCollectionDefined(SelectedLogins))
+            if (!(SelectedLogins is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("selectedLogins"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SelectedAgentJobs))
+            if (!(SelectedAgentJobs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("selectedAgentJobs"u8);
                 writer.WriteStartArray();

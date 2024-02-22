@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
+            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<VMwareNetworkInterface> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            if (options.Format != "W" && !(Disks is ChangeTrackingList<VMwareVirtualDisk> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

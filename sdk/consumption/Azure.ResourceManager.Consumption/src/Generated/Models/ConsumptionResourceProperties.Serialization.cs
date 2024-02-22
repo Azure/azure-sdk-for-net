@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedScopes))
+            if (options.Format != "W" && !(AppliedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appliedScopes"u8);
                 writer.WriteStartArray();

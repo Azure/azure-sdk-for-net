@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(File);
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<ContainerRegistryRunArgument> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();

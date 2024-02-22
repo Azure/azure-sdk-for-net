@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Indexes))
+            if (!(Indexes is ChangeTrackingList<CosmosDBPathIndexes> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();

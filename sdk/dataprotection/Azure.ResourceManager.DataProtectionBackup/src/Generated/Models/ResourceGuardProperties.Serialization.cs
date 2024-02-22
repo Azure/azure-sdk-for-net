@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("allowAutoApprovals"u8);
                 writer.WriteBooleanValue(IsAutoApprovalsAllowed.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceGuardOperations))
+            if (options.Format != "W" && !(ResourceGuardOperations is ChangeTrackingList<ResourceGuardOperationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
+            if (!(VaultCriticalOperationExclusionList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vaultCriticalOperationExclusionList"u8);
                 writer.WriteStartArray();

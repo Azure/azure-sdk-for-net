@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("elapsedTimeMs"u8);
                 writer.WriteNumberValue(ElapsedTimeMs.Value);
             }
-            if (Optional.IsCollectionDefined(WaitStats))
+            if (!(WaitStats is ChangeTrackingDictionary<string, WaitStatistics> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("waitStats"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("hasErrors"u8);
                 writer.WriteBooleanValue(HasErrors.Value);
             }
-            if (Optional.IsCollectionDefined(SqlErrors))
+            if (!(SqlErrors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sqlErrors"u8);
                 writer.WriteStartArray();

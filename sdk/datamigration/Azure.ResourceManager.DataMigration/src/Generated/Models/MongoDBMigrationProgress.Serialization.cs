@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Databases))
+            if (!(Databases is ChangeTrackingDictionary<string, MongoDBDatabaseProgress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartObject();

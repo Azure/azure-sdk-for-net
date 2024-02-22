@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("canonicalProfileId"u8);
                 writer.WriteNumberValue(CanonicalProfileId.Value);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartArray();

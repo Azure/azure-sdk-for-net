@@ -27,7 +27,7 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("layout"u8);
                 writer.WriteObjectValue(Layout);
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingDictionary<string, MediaInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.Communication.MediaComposition
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingDictionary<string, MediaOutput> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartObject();

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();

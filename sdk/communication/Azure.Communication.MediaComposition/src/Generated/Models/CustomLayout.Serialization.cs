@@ -17,7 +17,7 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Layers))
+            if (!(Layers is ChangeTrackingDictionary<string, LayoutLayer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartObject();

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("disclaimer"u8);
                 writer.WriteStringValue(Disclaimer);
             }
-            if (Optional.IsCollectionDefined(ArtifactTags))
+            if (!(ArtifactTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("artifactTags"u8);
                 writer.WriteStartObject();

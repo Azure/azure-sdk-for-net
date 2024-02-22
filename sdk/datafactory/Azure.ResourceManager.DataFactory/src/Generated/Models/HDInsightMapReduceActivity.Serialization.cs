@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageLinkedServices))
+            if (!(StorageLinkedServices is ChangeTrackingList<DataFactoryLinkedServiceReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("storageLinkedServices"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("jarLinkedService"u8);
                 JsonSerializer.Serialize(writer, JarLinkedService);
             }
-            if (Optional.IsCollectionDefined(JarLibs))
+            if (!(JarLibs is ChangeTrackingList<BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("jarLibs"u8);
                 writer.WriteStartArray();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Defines))
+            if (!(Defines is ChangeTrackingDictionary<string, BinaryData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("defines"u8);
                 writer.WriteStartObject();

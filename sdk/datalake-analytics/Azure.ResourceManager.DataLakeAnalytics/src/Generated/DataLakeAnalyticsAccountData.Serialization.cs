@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WritePropertyName("defaultDataLakeStoreAccount"u8);
                 writer.WriteStringValue(DefaultDataLakeStoreAccount);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataLakeStoreAccounts))
+            if (options.Format != "W" && !(DataLakeStoreAccounts is ChangeTrackingList<DataLakeStoreAccountInformationData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataLakeStoreAccounts"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PublicDataLakeStoreAccounts))
+            if (!(PublicDataLakeStoreAccounts is ChangeTrackingList<DataLakeStoreAccountInformationData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("publicDataLakeStoreAccounts"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageAccounts))
+            if (options.Format != "W" && !(StorageAccounts is ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComputePolicies))
+            if (options.Format != "W" && !(ComputePolicies is ChangeTrackingList<DataLakeAnalyticsComputePolicyData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("computePolicies"u8);
                 writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HiveMetastores))
+            if (options.Format != "W" && !(HiveMetastores is ChangeTrackingList<DataLakeAnalyticsHiveMetastore> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("hiveMetastores"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (options.Format != "W" && !(VirtualNetworkRules is ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FirewallRules))
+            if (options.Format != "W" && !(FirewallRules is ChangeTrackingList<DataLakeAnalyticsFirewallRuleData> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();

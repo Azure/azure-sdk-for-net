@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Logins))
+            if (options.Format != "W" && !(Logins is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("logins"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AgentJobs))
+            if (options.Format != "W" && !(AgentJobs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("agentJobs"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MetricValues))
+            if (options.Format != "W" && !(MetricValues is ChangeTrackingList<CosmosDBMetricValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricValues"u8);
                 writer.WriteStartArray();

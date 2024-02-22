@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RemoteSupportSettingsList))
+            if (!(RemoteSupportSettingsList is ChangeTrackingList<EdgeRemoteSupportSettings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("remoteSupportSettingsList"u8);
                 writer.WriteStartArray();

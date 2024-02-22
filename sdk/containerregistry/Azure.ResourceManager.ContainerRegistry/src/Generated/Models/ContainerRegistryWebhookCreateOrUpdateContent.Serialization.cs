@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(CustomHeaders))
+            if (!(CustomHeaders is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<ContainerRegistryWebhookAction> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();

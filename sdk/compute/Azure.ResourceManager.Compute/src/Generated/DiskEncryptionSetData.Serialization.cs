@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("activeKey"u8);
                 writer.WriteObjectValue(ActiveKey);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousKeys))
+            if (options.Format != "W" && !(PreviousKeys is ChangeTrackingList<KeyForDiskEncryptionSet> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("previousKeys"u8);
                 writer.WriteStartArray();

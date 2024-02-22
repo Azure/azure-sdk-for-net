@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProfilePropertyReferences))
+            if (options.Format != "W" && !(ProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("relatedProfileName"u8);
                 writer.WriteStringValue(RelatedProfileName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
+            if (options.Format != "W" && !(RelatedProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("repairEnabled"u8);
                 writer.WriteBooleanValue(IsRepairEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(ClientCertificates))
+            if (!(ClientCertificates is ChangeTrackingList<CassandraCertificate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clientCertificates"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalGossipCertificates))
+            if (!(ExternalGossipCertificates is ChangeTrackingList<CassandraCertificate> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("externalGossipCertificates"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GossipCertificates))
+            if (options.Format != "W" && !(GossipCertificates is ChangeTrackingList<CassandraCertificate> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("gossipCertificates"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalSeedNodes))
+            if (!(ExternalSeedNodes is ChangeTrackingList<CassandraDataCenterSeedNode> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("externalSeedNodes"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SeedNodes))
+            if (options.Format != "W" && !(SeedNodes is ChangeTrackingList<CassandraDataCenterSeedNode> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("seedNodes"u8);
                 writer.WriteStartArray();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackupSchedules))
+            if (!(BackupSchedules is ChangeTrackingList<CassandraClusterBackupSchedule> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("backupSchedules"u8);
                 writer.WriteStartArray();

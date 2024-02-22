@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("allocationMethod"u8);
                 writer.WriteStringValue(AllocationMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Gateway))
+            if (!(Gateway is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("secondaryWinsServer"u8);
                 writer.WriteStringValue(SecondaryWinsServer);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddressInfo))
+            if (options.Format != "W" && !(IPAddressInfo is ChangeTrackingList<NicIPAddressSettings> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipAddressInfo"u8);
                 writer.WriteStartArray();

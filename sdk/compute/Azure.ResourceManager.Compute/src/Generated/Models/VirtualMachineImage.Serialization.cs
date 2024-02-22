@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
-            if (Optional.IsCollectionDefined(DataDiskImages))
+            if (!(DataDiskImages is ChangeTrackingList<DataDiskImage> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("disallowed"u8);
                 writer.WriteObjectValue(Disallowed);
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (!(Features is ChangeTrackingList<VirtualMachineImageFeature> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();

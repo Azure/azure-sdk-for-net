@@ -77,7 +77,7 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
-            if (Optional.IsCollectionDefined(RequestedWorkerSelectors))
+            if (!(RequestedWorkerSelectors is ChangeTrackingList<RouterWorkerSelector> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requestedWorkerSelectors"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedWorkerSelectors))
+            if (options.Format != "W" && !(AttachedWorkerSelectors is ChangeTrackingList<RouterWorkerSelector> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("attachedWorkerSelectors"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(_labels))
+            if (!(_labels is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Assignments))
+            if (options.Format != "W" && !(Assignments is ChangeTrackingDictionary<string, RouterJobAssignment> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("assignments"u8);
                 writer.WriteStartObject();
@@ -131,7 +131,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(_tags))
+            if (!(_tags is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -154,7 +154,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Notes))
+            if (!(Notes is ChangeTrackingList<RouterJobNote> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStartArray();

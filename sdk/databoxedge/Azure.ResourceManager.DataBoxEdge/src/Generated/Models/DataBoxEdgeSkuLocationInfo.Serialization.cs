@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Sites))
+            if (options.Format != "W" && !(Sites is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();

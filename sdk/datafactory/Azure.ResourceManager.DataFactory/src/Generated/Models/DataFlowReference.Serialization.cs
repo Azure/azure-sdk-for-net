@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

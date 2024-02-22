@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("accountConnectionString"u8);
                 writer.WriteStringValue(AccountConnectionString);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShareCredentialDetails))
+            if (options.Format != "W" && !(ShareCredentialDetails is ChangeTrackingList<ShareCredentialDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("shareCredentialDetails"u8);
                 writer.WriteStartArray();

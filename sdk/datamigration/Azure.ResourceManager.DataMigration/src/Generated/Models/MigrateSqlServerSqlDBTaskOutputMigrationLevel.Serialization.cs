@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();

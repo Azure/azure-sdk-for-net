@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (Optional.IsCollectionDefined(LocalizedValueNames))
+            if (!(LocalizedValueNames is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("localizedValueNames"u8);
                 writer.WriteStartObject();

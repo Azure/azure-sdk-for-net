@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("datacenterAddressType"u8);
             writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
+            if (options.Format != "W" && !(SupportedCarriersForReturnShipment is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
                 writer.WriteStartArray();

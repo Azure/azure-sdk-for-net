@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
+            if (!(LoadBalancerConfigurations is ChangeTrackingList<CloudServiceLoadBalancerConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();

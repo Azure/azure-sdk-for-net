@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("groupingEnabled"u8);
                 writer.WriteBooleanValue(IsGroupingEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

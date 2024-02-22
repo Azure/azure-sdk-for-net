@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (Optional.IsCollectionDefined(ScoringParameters))
+            if (!(ScoringParameters is ChangeTrackingList<ScoringRuleParameterSelector> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scoringParameters"u8);
                 writer.WriteStartArray();

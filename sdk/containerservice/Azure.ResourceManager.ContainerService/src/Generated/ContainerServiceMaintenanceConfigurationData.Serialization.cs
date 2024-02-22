@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimesInWeek))
+            if (!(TimesInWeek is ChangeTrackingList<ContainerServiceTimeInWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("timeInWeek"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotAllowedTimes))
+            if (!(NotAllowedTimes is ChangeTrackingList<ContainerServiceTimeSpan> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notAllowedTime"u8);
                 writer.WriteStartArray();

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
-            if (Optional.IsCollectionDefined(NotAllowedDates))
+            if (!(NotAllowedDates is ChangeTrackingList<ContainerServiceDateSpan> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notAllowedDates"u8);
                 writer.WriteStartArray();

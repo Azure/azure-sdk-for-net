@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("initTimeout"u8);
                 writer.WriteStringValue(InitTimeout);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("secretStoreComponent"u8);
                 writer.WriteStringValue(SecretStoreComponent);
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingList<ContainerAppDaprMetadata> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();

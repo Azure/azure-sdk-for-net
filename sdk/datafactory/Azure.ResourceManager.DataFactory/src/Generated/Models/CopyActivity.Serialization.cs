@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<DatasetReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<DatasetReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("logSettings"u8);
                 writer.WriteObjectValue(LogSettings);
             }
-            if (Optional.IsCollectionDefined(PreserveRules))
+            if (!(PreserveRules is ChangeTrackingList<BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("preserveRules"u8);
                 writer.WriteStartArray();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Preserve))
+            if (!(Preserve is ChangeTrackingList<BinaryData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("preserve"u8);
                 writer.WriteStartArray();

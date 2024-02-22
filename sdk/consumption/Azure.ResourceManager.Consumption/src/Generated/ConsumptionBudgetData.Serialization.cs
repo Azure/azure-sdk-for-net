@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Consumption
                 writer.WritePropertyName("currentSpend"u8);
                 writer.WriteObjectValue(CurrentSpend);
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (!(Notifications is ChangeTrackingDictionary<string, BudgetAssociatedNotification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notifications"u8);
                 writer.WriteStartObject();

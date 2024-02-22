@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(Dataset))
+            if (!(Dataset is ChangeTrackingList<ContainerAppDiagnosticsDataApiResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();

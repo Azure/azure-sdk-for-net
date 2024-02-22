@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
+            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
+            if (options.Format != "W" && !(Costs is ChangeTrackingList<ResourceSkuCosts> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<ResourceSkuCapabilities> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
+            if (options.Format != "W" && !(Restrictions is ChangeTrackingList<ResourceSkuRestrictions> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

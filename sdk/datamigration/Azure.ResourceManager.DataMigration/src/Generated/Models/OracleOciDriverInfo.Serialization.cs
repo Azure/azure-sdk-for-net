@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("assemblyVersion"u8);
                 writer.WriteStringValue(AssemblyVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedOracleVersions))
+            if (options.Format != "W" && !(SupportedOracleVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedOracleVersions"u8);
                 writer.WriteStartArray();

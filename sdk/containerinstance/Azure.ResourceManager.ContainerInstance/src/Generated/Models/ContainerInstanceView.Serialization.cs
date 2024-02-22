@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("previousState"u8);
                 writer.WriteObjectValue(PreviousState);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
+            if (options.Format != "W" && !(Events is ChangeTrackingList<ContainerEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();

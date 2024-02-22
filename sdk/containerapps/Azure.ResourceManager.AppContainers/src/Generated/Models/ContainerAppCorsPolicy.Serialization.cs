@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(AllowedMethods))
+            if (!(AllowedMethods is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedHeaders))
+            if (!(AllowedHeaders is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExposeHeaders))
+            if (!(ExposeHeaders is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("exposeHeaders"u8);
                 writer.WriteStartArray();

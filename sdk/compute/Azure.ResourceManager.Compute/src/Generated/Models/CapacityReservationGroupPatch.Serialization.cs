@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
+            if (options.Format != "W" && !(CapacityReservations is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capacityReservations"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
+            if (options.Format != "W" && !(VirtualMachinesAssociated is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAssociated"u8);
                 writer.WriteStartArray();

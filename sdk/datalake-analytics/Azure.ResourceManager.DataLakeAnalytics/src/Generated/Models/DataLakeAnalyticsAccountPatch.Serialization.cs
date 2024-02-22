@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataLakeStoreAccounts))
+            if (!(DataLakeStoreAccounts is ChangeTrackingList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataLakeStoreAccounts"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountUpdateContent> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ComputePolicies))
+            if (!(ComputePolicies is ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("computePolicies"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FirewallRules))
+            if (!(FirewallRules is ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();

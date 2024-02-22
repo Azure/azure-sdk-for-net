@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("nodeEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsNodePublicIPAccessEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServerNames))
+            if (options.Format != "W" && !(ServerNames is ChangeTrackingList<CosmosDBForPostgreSqlServerNameItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serverNames"u8);
                 writer.WriteStartArray();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReadReplicas))
+            if (options.Format != "W" && !(ReadReplicas is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("readReplicas"u8);
                 writer.WriteStartArray();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("earliestRestoreTime"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

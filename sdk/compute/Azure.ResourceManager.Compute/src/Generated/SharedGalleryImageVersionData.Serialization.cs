@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsCollectionDefined(ArtifactTags))
+            if (!(ArtifactTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("artifactTags"u8);
                 writer.WriteStartObject();

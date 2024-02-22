@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddressList))
+            if (options.Format != "W" && !(OutboundIPAddressList is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();

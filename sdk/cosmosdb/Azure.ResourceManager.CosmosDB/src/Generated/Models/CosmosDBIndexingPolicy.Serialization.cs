@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("indexingMode"u8);
                 writer.WriteStringValue(IndexingMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IncludedPaths))
+            if (!(IncludedPaths is ChangeTrackingList<CosmosDBIncludedPath> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedPaths"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedPaths))
+            if (!(ExcludedPaths is ChangeTrackingList<CosmosDBExcludedPath> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CompositeIndexes))
+            if (!(CompositeIndexes is ChangeTrackingList<IList<CosmosDBCompositePath>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("compositeIndexes"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SpatialIndexes))
+            if (!(SpatialIndexes is ChangeTrackingList<SpatialSpec> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("spatialIndexes"u8);
                 writer.WriteStartArray();

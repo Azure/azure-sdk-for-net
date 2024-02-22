@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("proximityPlacementGroupType"u8);
                 writer.WriteStringValue(ProximityPlacementGroupType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachines))
+            if (options.Format != "W" && !(VirtualMachines is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachineScaleSets))
+            if (options.Format != "W" && !(VirtualMachineScaleSets is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachineScaleSets"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailabilitySets))
+            if (options.Format != "W" && !(AvailabilitySets is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();

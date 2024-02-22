@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("queueLength"u8);
                 writer.WriteNumberValue(QueueLength.Value);
             }
-            if (Optional.IsCollectionDefined(Auth))
+            if (!(Auth is ChangeTrackingList<ContainerAppScaleRuleAuth> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();

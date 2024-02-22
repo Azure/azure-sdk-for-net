@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsCollectionDefined(Config))
+            if (!(Config is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("config"u8);
                 writer.WriteStartObject();

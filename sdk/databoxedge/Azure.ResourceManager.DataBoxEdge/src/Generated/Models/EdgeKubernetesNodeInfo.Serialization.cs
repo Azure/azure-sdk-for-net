@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(NodeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPConfiguration))
+            if (!(IPConfiguration is ChangeTrackingList<EdgeKubernetesIPConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 writer.WriteStartArray();

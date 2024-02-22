@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("serializedDetails"u8);
                 writer.WriteStringValue(SerializedDetails);
             }
-            if (Optional.IsCollectionDefined(RegisteredFeatures))
+            if (!(RegisteredFeatures is ChangeTrackingList<SubscriptionRegisteredFeatures> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("registeredFeatures"u8);
                 writer.WriteStartArray();

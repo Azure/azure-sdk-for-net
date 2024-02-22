@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsCollectionDefined(TableMap))
+            if (!(TableMap is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(MetricAvailabilities))
+            if (options.Format != "W" && !(MetricAvailabilities is ChangeTrackingList<CosmosDBMetricAvailability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();

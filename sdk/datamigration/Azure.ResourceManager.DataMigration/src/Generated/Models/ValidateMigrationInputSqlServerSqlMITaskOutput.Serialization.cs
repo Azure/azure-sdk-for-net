@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RestoreDatabaseNameErrors))
+            if (options.Format != "W" && !(RestoreDatabaseNameErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreDatabaseNameErrors"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupFolderErrors))
+            if (options.Format != "W" && !(BackupFolderErrors is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("backupFolderErrors"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupShareCredentialsErrors))
+            if (options.Format != "W" && !(BackupShareCredentialsErrors is ChangeTrackingList<ReportableException> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("backupShareCredentialsErrors"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupStorageAccountErrors))
+            if (options.Format != "W" && !(BackupStorageAccountErrors is ChangeTrackingList<ReportableException> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("backupStorageAccountErrors"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExistingBackupErrors))
+            if (options.Format != "W" && !(ExistingBackupErrors is ChangeTrackingList<ReportableException> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("existingBackupErrors"u8);
                 writer.WriteStartArray();

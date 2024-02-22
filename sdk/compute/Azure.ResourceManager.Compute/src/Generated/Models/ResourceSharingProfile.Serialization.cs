@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SubscriptionIds))
+            if (!(SubscriptionIds is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();

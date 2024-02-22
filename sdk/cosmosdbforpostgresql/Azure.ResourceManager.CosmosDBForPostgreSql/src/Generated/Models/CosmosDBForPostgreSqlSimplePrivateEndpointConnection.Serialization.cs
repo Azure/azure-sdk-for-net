@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();

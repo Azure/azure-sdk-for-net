@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            if (options.Format != "W" && !(Resources is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();

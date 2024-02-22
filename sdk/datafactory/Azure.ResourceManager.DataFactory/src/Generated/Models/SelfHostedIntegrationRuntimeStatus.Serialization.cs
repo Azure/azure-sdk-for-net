@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<SelfHostedIntegrationRuntimeNode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("localTimeZoneOffset"u8);
                 writer.WriteStringValue(LocalTimeZoneOffset.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceUriStringList))
+            if (options.Format != "W" && !(ServiceUriStringList is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceUrls"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<LinkedIntegrationRuntime> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();

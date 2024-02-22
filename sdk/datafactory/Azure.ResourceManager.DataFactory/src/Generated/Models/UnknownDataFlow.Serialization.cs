@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Verbs))
+            if (options.Format != "W" && !(Verbs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("verbs"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiGroups))
+            if (options.Format != "W" && !(ApiGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apiGroups"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            if (options.Format != "W" && !(Resources is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceNames))
+            if (options.Format != "W" && !(ResourceNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("resourceNames"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NonResourceUrls))
+            if (options.Format != "W" && !(NonResourceUrls is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("nonResourceURLs"u8);
                 writer.WriteStartArray();

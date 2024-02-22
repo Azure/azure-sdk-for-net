@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
+            if (options.Format != "W" && !(Events is ChangeTrackingList<ContainerEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();

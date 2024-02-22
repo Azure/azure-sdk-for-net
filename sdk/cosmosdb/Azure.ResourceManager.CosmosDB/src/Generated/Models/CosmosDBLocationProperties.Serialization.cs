@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("isResidencyRestricted"u8);
                 writer.WriteBooleanValue(IsResidencyRestricted.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupStorageRedundancies))
+            if (options.Format != "W" && !(BackupStorageRedundancies is ChangeTrackingList<CosmosDBBackupStorageRedundancy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupStorageRedundancies"u8);
                 writer.WriteStartArray();

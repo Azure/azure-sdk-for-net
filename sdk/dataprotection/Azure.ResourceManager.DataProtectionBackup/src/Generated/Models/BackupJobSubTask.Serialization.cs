@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdditionalDetails))
+            if (!(AdditionalDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStartObject();

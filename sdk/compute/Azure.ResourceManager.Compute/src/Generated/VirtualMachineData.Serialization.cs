@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            if (options.Format != "W" && !(Resources is ChangeTrackingList<VirtualMachineExtensionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

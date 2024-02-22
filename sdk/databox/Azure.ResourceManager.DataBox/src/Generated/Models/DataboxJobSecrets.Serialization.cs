@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PodSecrets))
+            if (!(PodSecrets is ChangeTrackingList<DataBoxSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("podSecrets"u8);
                 writer.WriteStartArray();

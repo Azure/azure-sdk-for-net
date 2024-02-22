@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<IntegrationRuntimeNodeMonitoringData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(And))
+            if (!(And is ChangeTrackingList<BudgetFilterProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();

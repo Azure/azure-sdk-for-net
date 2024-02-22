@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();

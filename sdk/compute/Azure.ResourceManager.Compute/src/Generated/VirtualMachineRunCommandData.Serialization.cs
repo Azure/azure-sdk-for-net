@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<RunCommandInputParameter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProtectedParameters))
+            if (!(ProtectedParameters is ChangeTrackingList<RunCommandInputParameter> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("protectedParameters"u8);
                 writer.WriteStartArray();

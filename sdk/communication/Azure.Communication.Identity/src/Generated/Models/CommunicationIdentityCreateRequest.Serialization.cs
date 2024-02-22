@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Identity;
 using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
@@ -15,7 +16,7 @@ namespace Azure.Communication.Identity.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CreateTokenWithScopes))
+            if (!(CreateTokenWithScopes is ChangeTrackingList<CommunicationTokenScope> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("createTokenWithScopes"u8);
                 writer.WriteStartArray();

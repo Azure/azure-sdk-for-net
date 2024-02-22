@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("currentCapacity"u8);
                 writer.WriteNumberValue(CurrentCapacity.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAllocated))
+            if (options.Format != "W" && !(VirtualMachinesAllocated is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAllocated"u8);
                 writer.WriteStartArray();

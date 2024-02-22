@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Auth))
+            if (!(Auth is ChangeTrackingList<ContainerAppScaleRuleAuth> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();

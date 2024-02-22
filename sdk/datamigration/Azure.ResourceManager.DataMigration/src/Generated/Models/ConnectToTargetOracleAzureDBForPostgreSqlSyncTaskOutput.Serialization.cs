@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
+            if (options.Format != "W" && !(Databases is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DatabaseSchemaMap))
+            if (!(DatabaseSchemaMap is ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("databaseSchemaMap"u8);
                 writer.WriteStartArray();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("supportedOSType"u8);
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(CustomActions))
+            if (!(CustomActions is ChangeTrackingList<GalleryApplicationCustomAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();

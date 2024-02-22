@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedHosts))
+            if (options.Format != "W" && !(DedicatedHosts is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();

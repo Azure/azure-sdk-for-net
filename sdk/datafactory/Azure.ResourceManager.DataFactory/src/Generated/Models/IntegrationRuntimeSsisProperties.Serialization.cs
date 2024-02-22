@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
+            if (!(ExpressCustomSetupProperties is ChangeTrackingList<CustomSetupBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PackageStores))
+            if (!(PackageStores is ChangeTrackingList<DataFactoryPackageStore> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("packageStores"u8);
                 writer.WriteStartArray();

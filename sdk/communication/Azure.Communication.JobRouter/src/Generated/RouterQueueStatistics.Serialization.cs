@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(QueueId);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (Optional.IsCollectionDefined(EstimatedWaitTimes))
+            if (!(EstimatedWaitTimes is ChangeTrackingDictionary<int, TimeSpan> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
                 WriteEstimatedWaitTimes(writer);

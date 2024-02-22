@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("targetEntityTypeName"u8);
                 writer.WriteStringValue(TargetEntityTypeName);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Mappings))
+            if (!(Mappings is ChangeTrackingList<TypePropertiesMapping> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ParticipantPropertyReferences))
+            if (!(ParticipantPropertyReferences is ChangeTrackingList<ParticipantPropertyReference> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("participantPropertyReferences"u8);
                 writer.WriteStartArray();

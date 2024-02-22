@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Communication
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("immutableResourceId"u8);
                 writer.WriteStringValue(ImmutableResourceId.Value);
             }
-            if (Optional.IsCollectionDefined(LinkedDomains))
+            if (!(LinkedDomains is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linkedDomains"u8);
                 writer.WriteStartArray();

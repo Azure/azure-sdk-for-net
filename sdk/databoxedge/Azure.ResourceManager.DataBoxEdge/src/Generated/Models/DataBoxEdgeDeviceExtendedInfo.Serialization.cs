@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("keyVaultSyncStatus"u8);
                 writer.WriteStringValue(KeyVaultSyncStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceSecrets))
+            if (options.Format != "W" && !(DeviceSecrets is ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deviceSecrets"u8);
                 writer.WriteStartObject();

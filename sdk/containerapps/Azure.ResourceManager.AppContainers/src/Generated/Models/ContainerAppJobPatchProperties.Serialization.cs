@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (Optional.IsCollectionDefined(OutboundIPAddresses))
+            if (!(OutboundIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();

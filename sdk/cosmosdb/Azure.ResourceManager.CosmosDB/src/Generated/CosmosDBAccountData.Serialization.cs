@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("databaseAccountOfferType"u8);
                 writer.WriteStringValue(DatabaseAccountOfferType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPRules))
+            if (!(IPRules is ChangeTrackingList<CosmosDBIPAddressOrRange> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("consistencyPolicy"u8);
                 writer.WriteObjectValue(ConsistencyPolicy);
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<CosmosDBAccountCapability> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(WriteLocations))
+            if (options.Format != "W" && !(WriteLocations is ChangeTrackingList<CosmosDBAccountLocation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("writeLocations"u8);
                 writer.WriteStartArray();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReadLocations))
+            if (options.Format != "W" && !(ReadLocations is ChangeTrackingList<CosmosDBAccountLocation> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("readLocations"u8);
                 writer.WriteStartArray();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<CosmosDBAccountLocation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FailoverPolicies))
+            if (options.Format != "W" && !(FailoverPolicies is ChangeTrackingList<CosmosDBFailoverPolicy> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("failoverPolicies"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (!(VirtualNetworkRules is ChangeTrackingList<CosmosDBVirtualNetworkRule> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<CosmosDBPrivateEndpointConnectionData> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("backupPolicy"u8);
                 writer.WriteObjectValue(BackupPolicy);
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (!(Cors is ChangeTrackingList<CosmosDBAccountCorsPolicy> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteStartArray();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("networkAclBypass"u8);
                 writer.WriteStringValue(NetworkAclBypass.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(NetworkAclBypassResourceIds))
+            if (!(NetworkAclBypassResourceIds is ChangeTrackingList<ResourceIdentifier> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("networkAclBypassResourceIds"u8);
                 writer.WriteStartArray();

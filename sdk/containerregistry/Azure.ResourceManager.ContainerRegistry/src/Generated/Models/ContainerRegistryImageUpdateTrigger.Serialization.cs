@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Images))
+            if (!(Images is ChangeTrackingList<ContainerRegistryImageDescriptor> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("images"u8);
                 writer.WriteStartArray();

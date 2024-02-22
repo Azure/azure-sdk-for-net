@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SkuProperties))
+            if (options.Format != "W" && !(SkuProperties is ChangeTrackingList<ConsumptionSkuProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("skuProperties"u8);
                 writer.WriteStartArray();

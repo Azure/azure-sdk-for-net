@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
+            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();

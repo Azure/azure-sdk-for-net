@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(OptionalAgentSettings))
+            if (!(OptionalAgentSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("optionalAgentSettings"u8);
                 writer.WriteStartObject();

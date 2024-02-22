@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("eventTriggerConfig"u8);
                 writer.WriteObjectValue(EventTriggerConfig);
             }
-            if (Optional.IsCollectionDefined(Registries))
+            if (!(Registries is ChangeTrackingList<ContainerAppRegistryCredentials> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("registries"u8);
                 writer.WriteStartArray();

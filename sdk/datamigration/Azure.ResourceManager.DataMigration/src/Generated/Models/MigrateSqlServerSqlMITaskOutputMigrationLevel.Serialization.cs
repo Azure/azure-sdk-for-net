@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("serverRoleResults"u8);
                 writer.WriteStringValue(ServerRoleResults);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrphanedUsersInfo))
+            if (options.Format != "W" && !(OrphanedUsersInfo is ChangeTrackingList<OrphanedUserInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orphanedUsersInfo"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();

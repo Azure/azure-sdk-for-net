@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
-            if (Optional.IsCollectionDefined(ExcludedPaths))
+            if (!(ExcludedPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();

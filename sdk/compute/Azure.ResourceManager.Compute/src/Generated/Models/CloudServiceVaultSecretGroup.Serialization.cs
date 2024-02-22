@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
             }
-            if (Optional.IsCollectionDefined(VaultCertificates))
+            if (!(VaultCertificates is ChangeTrackingList<CloudServiceVaultCertificate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vaultCertificates"u8);
                 writer.WriteStartArray();

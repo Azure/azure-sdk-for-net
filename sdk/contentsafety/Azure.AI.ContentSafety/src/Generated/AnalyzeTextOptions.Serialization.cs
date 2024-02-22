@@ -29,7 +29,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<TextCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BlocklistNames))
+            if (!(BlocklistNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("blocklistNames"u8);
                 writer.WriteStartArray();

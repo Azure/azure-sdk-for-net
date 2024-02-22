@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (!(Upgrades is ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();

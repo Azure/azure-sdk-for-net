@@ -22,7 +22,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("isVanity"u8);
                 writer.WriteBooleanValue(IsVanity.Value);
             }
-            if (Optional.IsCollectionDefined(PreferredVanityNumbers))
+            if (!(PreferredVanityNumbers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("preferredVanityNumbers"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(SignUpTypes))
+            if (!(SignUpTypes is ChangeTrackingList<ProgramSignUpType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("signUpTypes"u8);
                 writer.WriteStartArray();

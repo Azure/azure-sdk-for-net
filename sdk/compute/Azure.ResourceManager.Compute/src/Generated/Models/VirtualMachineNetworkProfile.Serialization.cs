@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<VirtualMachineNetworkInterfaceReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
+            if (!(NetworkInterfaceConfigurations is ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("apiType"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RestorableLocations))
+            if (options.Format != "W" && !(RestorableLocations is ChangeTrackingList<RestorableLocationResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restorableLocations"u8);
                 writer.WriteStartArray();

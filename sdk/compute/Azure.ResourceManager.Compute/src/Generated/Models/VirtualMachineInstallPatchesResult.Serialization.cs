@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("failedPatchCount"u8);
                 writer.WriteNumberValue(FailedPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Patches))
+            if (options.Format != "W" && !(Patches is ChangeTrackingList<PatchInstallationDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patches"u8);
                 writer.WriteStartArray();

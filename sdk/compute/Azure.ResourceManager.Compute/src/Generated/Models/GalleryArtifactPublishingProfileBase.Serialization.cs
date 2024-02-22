@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TargetRegions))
+            if (!(TargetRegions is ChangeTrackingList<TargetRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TargetExtendedLocations))
+            if (!(TargetExtendedLocations is ChangeTrackingList<GalleryTargetExtendedLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();

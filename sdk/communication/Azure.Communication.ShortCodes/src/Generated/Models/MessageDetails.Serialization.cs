@@ -16,7 +16,7 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportedProtocols))
+            if (!(SupportedProtocols is ChangeTrackingList<MessageProtocol> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("directionality"u8);
                 writer.WriteStringValue(Directionality.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(UseCases))
+            if (!(UseCases is ChangeTrackingList<UseCase> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("useCases"u8);
                 writer.WriteStartArray();

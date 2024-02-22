@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AgentPoolVersions))
+            if (!(AgentPoolVersions is ChangeTrackingList<AgentPoolAvailableVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("agentPoolVersions"u8);
                 writer.WriteStartArray();

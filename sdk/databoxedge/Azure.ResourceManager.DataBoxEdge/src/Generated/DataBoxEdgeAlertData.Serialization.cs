@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
+            if (options.Format != "W" && !(DetailedInformation is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("detailedInformation"u8);
                 writer.WriteStartObject();

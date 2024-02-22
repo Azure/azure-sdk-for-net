@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (!(Permissions is ChangeTrackingList<PermissionType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();

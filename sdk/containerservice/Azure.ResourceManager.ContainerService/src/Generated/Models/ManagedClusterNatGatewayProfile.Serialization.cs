@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
                 writer.WriteObjectValue(ManagedOutboundIPProfile);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (!(EffectiveOutboundIPs is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();

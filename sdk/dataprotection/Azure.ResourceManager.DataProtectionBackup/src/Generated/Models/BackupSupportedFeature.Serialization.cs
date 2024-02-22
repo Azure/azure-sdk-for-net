@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExposureControlledFeatures))
+            if (!(ExposureControlledFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exposureControlledFeatures"u8);
                 writer.WriteStartArray();

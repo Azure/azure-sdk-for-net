@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(NotificationPreference))
+            if (!(NotificationPreference is ChangeTrackingList<NotificationPreference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notificationPreference"u8);
                 writer.WriteStartArray();

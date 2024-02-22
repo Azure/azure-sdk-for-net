@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(SelectedLogins))
+            if (!(SelectedLogins is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("selectedLogins"u8);
                 writer.WriteStartArray();

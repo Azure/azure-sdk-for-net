@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("aggregatedState"u8);
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Summary))
+            if (!(Summary is ChangeTrackingList<RegionalSharingStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();

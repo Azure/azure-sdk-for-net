@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ImageRegistryCredentials))
+            if (!(ImageRegistryCredentials is ChangeTrackingList<ContainerGroupImageRegistryCredential> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("imageRegistryCredentials"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Volumes))
+            if (!(Volumes is ChangeTrackingList<ContainerVolume> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteObjectValue(Diagnostics);
             }
-            if (Optional.IsCollectionDefined(SubnetIds))
+            if (!(SubnetIds is ChangeTrackingList<ContainerGroupSubnetId> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("subnetIds"u8);
                 writer.WriteStartArray();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("encryptionProperties"u8);
                 writer.WriteObjectValue(EncryptionProperties);
             }
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (!(InitContainers is ChangeTrackingList<InitContainerDefinitionContent> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<DeploymentExtensionSpec> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("functionName"u8);
             JsonSerializer.Serialize(writer, FunctionName);
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, DataFactoryElement<string>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();

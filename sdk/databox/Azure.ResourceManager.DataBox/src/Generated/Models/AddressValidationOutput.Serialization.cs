@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("validationStatus"u8);
                 writer.WriteStringValue(ValidationStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AlternateAddresses))
+            if (options.Format != "W" && !(AlternateAddresses is ChangeTrackingList<DataBoxShippingAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("alternateAddresses"u8);
                 writer.WriteStartArray();

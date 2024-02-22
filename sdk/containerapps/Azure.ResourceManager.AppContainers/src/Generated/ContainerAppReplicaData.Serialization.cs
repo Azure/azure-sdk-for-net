@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("runningStateDetails"u8);
                 writer.WriteStringValue(RunningStateDetails);
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingList<ContainerAppReplicaContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (!(InitContainers is ChangeTrackingList<ContainerAppReplicaContainer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();

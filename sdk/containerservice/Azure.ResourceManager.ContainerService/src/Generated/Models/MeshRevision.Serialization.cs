@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("revision"u8);
                 writer.WriteStringValue(Revision);
             }
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (!(Upgrades is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CompatibleWith))
+            if (!(CompatibleWith is ChangeTrackingList<CompatibleVersions> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("compatibleWith"u8);
                 writer.WriteStartArray();

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (!(IPConfigurations is ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("pipelineName"u8);
                 writer.WriteStringValue(PipelineName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Parameters))
+            if (options.Format != "W" && !(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RunDimensions))
+            if (options.Format != "W" && !(RunDimensions is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingList<MongoDBRole> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();

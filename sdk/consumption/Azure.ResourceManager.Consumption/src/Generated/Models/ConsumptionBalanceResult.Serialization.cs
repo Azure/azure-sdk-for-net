@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("priceHidden"u8);
                 writer.WriteBooleanValue(IsPriceHidden.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NewPurchasesDetails))
+            if (options.Format != "W" && !(NewPurchasesDetails is ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("newPurchasesDetails"u8);
                 writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdjustmentDetails))
+            if (options.Format != "W" && !(AdjustmentDetails is ChangeTrackingList<ConsumptionBalanceAdjustmentDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("adjustmentDetails"u8);
                 writer.WriteStartArray();

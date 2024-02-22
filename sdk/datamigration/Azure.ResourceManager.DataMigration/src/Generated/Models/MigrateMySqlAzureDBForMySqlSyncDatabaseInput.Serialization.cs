@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsCollectionDefined(MigrationSetting))
+            if (!(MigrationSetting is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("migrationSetting"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SourceSetting))
+            if (!(SourceSetting is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sourceSetting"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetSetting))
+            if (!(TargetSetting is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetSetting"u8);
                 writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TableMap))
+            if (!(TableMap is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("clusterStatus"u8);
                 writer.WriteStringValue(ClusterStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NodeGroupSpecs))
+            if (!(NodeGroupSpecs is ChangeTrackingList<NodeGroupSpec> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nodeGroupSpecs"u8);
                 writer.WriteStartArray();

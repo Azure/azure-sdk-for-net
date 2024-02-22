@@ -24,7 +24,7 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WritePropertyName("config"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsCollectionDefined(Layers))
+            if (!(Layers is ChangeTrackingList<OciDescriptor> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
