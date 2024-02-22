@@ -132,25 +132,9 @@ namespace System.ClientModel.Primitives
                 return false;
             }
         }
-        /// <summary>
-        ///  Add HTTP content to a collection of Content objects that
-        ///  get serialized to multipart/form-data MIME type.
-        /// </summary>
-        /// <param name="content">The content to add to the collection.</param>
-        public virtual void Add(object content)
+        public virtual void Add(MultipartBodyPart part)
         {
-            AddInternal(content, null);
-        }
-
-        /// <summary>
-        ///  Add HTTP content to a collection of binary data objects that
-        ///  get serialized to multipart/form-data MIME type.
-        /// </summary>
-        /// <param name="content">The content to add to the collection.</param>
-        /// <param name="headers">The headers to add to the collection.</param>
-        public virtual void Add(object content, Dictionary<string, string> headers)
-        {
-            AddInternal(content, headers);
+            _nestedContent.Add(part);
         }
 
         /// <summary>
@@ -176,7 +160,7 @@ namespace System.ClientModel.Primitives
                 {
                     // Write divider, headers, and content.
                     object content = _nestedContent[contentIndex].Content;
-                    Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
+                    IDictionary<string, string> headers = _nestedContent[contentIndex].Headers;
                     EncodeStringToStream(stream, SerializeHeadersToString(output, contentIndex, headers));
                     byte[] buffer;
                     switch (content)
@@ -197,21 +181,29 @@ namespace System.ClientModel.Primitives
                             buffer = BitConverter.GetBytes(int32Data);
                             stream.Write(buffer, 0, buffer.Length);
                             break;
-                        case Stream streamData:
-                            buffer = new byte[BufferSize];
-                            int numBytesToRead = BufferSize;
-                            long numBytesRemaining = streamData.Length;
-                            while (numBytesRemaining > 0)
+                        case MultipartFile file:
+                            if (file.FilePath != null)
                             {
-                                // Read may return anything from 0 to numBytesToRead.
-                                int n = streamData.Read(buffer, 0, numBytesToRead);
+                                using FileStream fileStream = File.OpenRead(file.FilePath);
+                                buffer = new byte[BufferSize];
+                                int numBytesToRead = BufferSize;
+                                long numBytesRemaining = fileStream.Length;
+                                while (numBytesRemaining > 0)
+                                {
+                                    // Read may return anything from 0 to numBytesToRead.
+                                    int n = fileStream.Read(buffer, 0, numBytesToRead);
 
-                                // Break when the end of the file is reached.
-                                if (n == 0)
-                                    break;
+                                    // Break when the end of the file is reached.
+                                    if (n == 0)
+                                        break;
 
-                                numBytesRemaining -= n;
-                                stream.Write(buffer, 0, n);
+                                    numBytesRemaining -= n;
+                                    stream.Write(buffer, 0, n);
+                                }
+                            } else if (file.Content != null)
+                            {
+                                buffer = file.Content.ToArray();
+                                stream.Write(buffer, 0, buffer.Length);
                             }
                             break;
                         default:
@@ -252,8 +244,10 @@ namespace System.ClientModel.Primitives
                 {
                     // Write divider, headers, and content.
                     //BinaryData content = _nestedContent[contentIndex].Content;
-                    Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
+                    IDictionary<string, string> headers = _nestedContent[contentIndex].Headers;
                     EncodeStringToStream(stream, SerializeHeadersToString(output, contentIndex, headers));
+                    (_nestedContent[contentIndex] as IPersistableStreamModel<MultipartBodyPart>).Write(stream, ModelReaderWriterOptions.MultipartFormData);
+                    /*
                     byte[] buffer;
                     switch (_nestedContent[contentIndex].Content)
                     {
@@ -293,6 +287,7 @@ namespace System.ClientModel.Primitives
                         default:
                             throw new InvalidOperationException("Unsupported content type");
                     }
+                    */
                 }
 
                 // Write footer boundary.
@@ -331,9 +326,11 @@ namespace System.ClientModel.Primitives
                 for (int contentIndex = 0; contentIndex < _nestedContent.Count; contentIndex++)
                 {
                     // Write divider, headers, and content.
-                    Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
+                    IDictionary<string, string> headers = _nestedContent[contentIndex].Headers;
                     await EncodeStringToStreamAsync(stream, SerializeHeadersToString(output, contentIndex, headers), cancellationToken).ConfigureAwait(false);
+                    await (_nestedContent[contentIndex] as IPersistableStreamModel<MultipartBodyPart>).WriteAsync(stream, ModelReaderWriterOptions.MultipartFormData, cancellationToken).ConfigureAwait(false);
                     //byte[] buffer = _nestedContent[contentIndex].Content.ToArray();
+                    /*
                     byte[] buffer;
                     switch (_nestedContent[contentIndex].Content)
                     {
@@ -373,6 +370,7 @@ namespace System.ClientModel.Primitives
                         default:
                             throw new InvalidOperationException("Unsupported content type");
                     }
+                    */
                 }
 
                 // Write footer boundary.
@@ -527,12 +525,12 @@ namespace System.ClientModel.Primitives
             return Read(data.ToStream(), subType, boundary);
         }
 
-        private void AddInternal(object content, Dictionary<string, string> headers)
+        private void AddInternal(BinaryData content, Dictionary<string, string> headers)
         {
             var part = new MultipartBodyPart(content, headers);
             _nestedContent.Add(part);
         }
-        private string SerializeHeadersToString(StringBuilder scratch, int contentIndex, Dictionary<string, string> headers)
+        private string SerializeHeadersToString(StringBuilder scratch, int contentIndex, IDictionary<string, string> headers)
         {
             scratch.Clear();
             // Add divider.

@@ -43,35 +43,23 @@ namespace System.ClientModel.Primitives
         public MultipartFormData(string boundary, IReadOnlyList<MultipartBodyPart> nestedContent) : base(FormData, boundary, nestedContent)
         { }
         #endregion Construction
+        public override void Add(MultipartBodyPart part) => AddInternal(part, null, null);
         /// <summary>
         ///  Add a content part.
         /// </summary>
-        /// <param name="content">The Request content to add to the collection.</param>
+        /// <param name="part">The Request content to add to the collection.</param>
         /// <param name="name">The name for the request content to add.</param>
-        public void Add(object content, string name)
-        {
-            AddInternal(content, null, name, null);
-        }
+        public void Add(MultipartBodyPart part, string name) => AddInternal(part, name, null);
+
         /// <summary>
         ///  Add a content part.
         /// </summary>
-        /// <param name="content">The Request content to add to the collection.</param>
-        /// <param name="name">The name for the request content to add.</param>
-        /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(object content, string name, Dictionary<string, string> headers)
-        {
-            AddInternal(content, headers, name, null);
-        }
-        /// <summary>
-        ///  Add a content part.
-        /// </summary>
-        /// <param name="content">The Request content to add to the collection.</param>
+        /// <param name="part">The Request content to add to the collection.</param>
         /// <param name="name">The name for the request content to add.</param>
         /// <param name="fileName">The file name for the request content to add to the collection.</param>
-        /// <param name="headers">The headers to add to the collection.</param>
-        public void Add(object content, string name, string fileName, Dictionary<string, string> headers)
+        public void Add(MultipartBodyPart part, string name, string fileName)
         {
-            AddInternal(content, headers, name, fileName);
+            AddInternal(part, name, fileName);
         }
         /// <summary>
         ///  Combine all the parts to BinaryData Content.
@@ -150,15 +138,9 @@ namespace System.ClientModel.Primitives
         {
             return ContentType;
         }
-
-        private void AddInternal(object content, Dictionary<string, string> headers, string name, string fileName)
+        private void AddInternal(MultipartBodyPart part, string name, string fileName)
         {
-            if (headers == null)
-            {
-                headers = new Dictionary<string, string>();
-            }
-
-            if (!headers.ContainsKey("Content-Disposition"))
+            if (!part.Headers.ContainsKey("Content-Disposition"))
             {
                 var value = FormData;
 
@@ -171,28 +153,17 @@ namespace System.ClientModel.Primitives
                     value = value + "; filename=" + fileName;
                 }
 
-                headers.Add("Content-Disposition", value);
+                part.Headers.Add("Content-Disposition", value);
             }
-            if (!headers.ContainsKey("Content-Type"))
+            if (!part.Headers.ContainsKey("Content-Type"))
             {
-                /*
-                var value = content.MediaType;
+                var value = part.ContentType;
                 if (value != null)
                 {
-                    headers.Add("Content-Type", value);
-                }
-                */
-                switch (content)
-                {
-                    case BinaryData binaryData:
-                        headers.Add("Content-Type", binaryData.MediaType);
-                        break;
-                    case byte[] b:
-                        headers.Add("Content-Type", "application/octet-stream");
-                        break;
+                    part.Headers.Add("Content-Type", value);
                 }
             }
-            base.Add(content, headers);
+            base.Add(part);
         }
         string IPersistableModel<MultipartFormData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MPFD";
     }
