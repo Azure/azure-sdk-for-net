@@ -54,7 +54,14 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
-                writer.WriteBase64StringValue(ParametersSchema.ToArray(), "D");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ParametersSchema);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ParametersSchema))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(TemplatePath))
             {
@@ -150,7 +157,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    parametersSchema = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    parametersSchema = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("templatePath"u8))
