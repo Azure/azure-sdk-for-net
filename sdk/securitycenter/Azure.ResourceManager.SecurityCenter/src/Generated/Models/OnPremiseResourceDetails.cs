@@ -26,9 +26,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="sourceComputerId"/> or <paramref name="machineName"/> is null. </exception>
         public OnPremiseResourceDetails(ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName)
         {
-            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNull(sourceComputerId, nameof(sourceComputerId));
-            Argument.AssertNotNull(machineName, nameof(machineName));
+            if (workspaceId == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceId));
+            }
+            if (sourceComputerId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceComputerId));
+            }
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
 
             WorkspaceId = workspaceId;
             VmUuid = vmUuid;

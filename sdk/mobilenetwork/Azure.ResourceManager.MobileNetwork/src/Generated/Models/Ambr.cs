@@ -6,24 +6,78 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Aggregate maximum bit rate. </summary>
     public partial class Ambr
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
         /// <param name="uplink"> Uplink bit rate. </param>
         /// <param name="downlink"> Downlink bit rate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>
         public Ambr(string uplink, string downlink)
         {
-            Argument.AssertNotNull(uplink, nameof(uplink));
-            Argument.AssertNotNull(downlink, nameof(downlink));
+            if (uplink == null)
+            {
+                throw new ArgumentNullException(nameof(uplink));
+            }
+            if (downlink == null)
+            {
+                throw new ArgumentNullException(nameof(downlink));
+            }
 
             Uplink = uplink;
             Downlink = downlink;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
+        /// <param name="uplink"> Uplink bit rate. </param>
+        /// <param name="downlink"> Downlink bit rate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Ambr(string uplink, string downlink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Uplink = uplink;
+            Downlink = downlink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Ambr"/> for deserialization. </summary>
+        internal Ambr()
+        {
         }
 
         /// <summary> Uplink bit rate. </summary>

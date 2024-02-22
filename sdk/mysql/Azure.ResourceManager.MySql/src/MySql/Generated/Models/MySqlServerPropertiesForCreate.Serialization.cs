@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlServerPropertiesForCreate : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownServerPropertiesForCreate))]
+    public partial class MySqlServerPropertiesForCreate : IUtf8JsonSerializable, IJsonModel<MySqlServerPropertiesForCreate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPropertiesForCreate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlServerPropertiesForCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForCreate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForCreate)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Version))
             {
@@ -47,7 +58,86 @@ namespace Azure.ResourceManager.MySql.Models
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MySqlServerPropertiesForCreate IJsonModel<MySqlServerPropertiesForCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForCreate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForCreate)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlServerPropertiesForCreate(document.RootElement, options);
+        }
+
+        internal static MySqlServerPropertiesForCreate DeserializeMySqlServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("createMode", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Default": return MySqlServerPropertiesForDefaultCreate.DeserializeMySqlServerPropertiesForDefaultCreate(element);
+                    case "GeoRestore": return MySqlServerPropertiesForGeoRestore.DeserializeMySqlServerPropertiesForGeoRestore(element);
+                    case "PointInTimeRestore": return MySqlServerPropertiesForRestore.DeserializeMySqlServerPropertiesForRestore(element);
+                    case "Replica": return MySqlServerPropertiesForReplica.DeserializeMySqlServerPropertiesForReplica(element);
+                }
+            }
+            return UnknownServerPropertiesForCreate.DeserializeUnknownServerPropertiesForCreate(element);
+        }
+
+        BinaryData IPersistableModel<MySqlServerPropertiesForCreate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForCreate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MySqlServerPropertiesForCreate IPersistableModel<MySqlServerPropertiesForCreate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForCreate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlServerPropertiesForCreate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlServerPropertiesForCreate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
         public TumblingWindowTrigger(TriggerPipelineReference pipeline, TumblingWindowFrequency frequency, int interval, DateTimeOffset startOn, int maxConcurrency)
         {
-            Argument.AssertNotNull(pipeline, nameof(pipeline));
+            if (pipeline == null)
+            {
+                throw new ArgumentNullException(nameof(pipeline));
+            }
 
             Pipeline = pipeline;
             Frequency = frequency;
@@ -66,6 +69,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             RetryPolicy = retryPolicy;
             DependsOn = dependsOn;
             TriggerType = triggerType ?? "TumblingWindowTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTrigger"/> for deserialization. </summary>
+        internal TumblingWindowTrigger()
+        {
         }
 
         /// <summary> Pipeline for which runs are created when an event is fired for trigger window that is ready. </summary>

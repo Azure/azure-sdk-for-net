@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ShareDataSetResource>> UpdateAsync(WaitUntil waitUntil, ShareDataSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ShareDataSetResource> Update(WaitUntil waitUntil, ShareDataSetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetResource.Update");
             scope.Start();

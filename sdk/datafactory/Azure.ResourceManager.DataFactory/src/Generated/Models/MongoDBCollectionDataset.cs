@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
         public MongoDBCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-            Argument.AssertNotNull(collectionName, nameof(collectionName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
 
             CollectionName = collectionName;
             DatasetType = "MongoDbCollection";
@@ -43,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             CollectionName = collectionName;
             DatasetType = datasetType ?? "MongoDbCollection";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionDataset"/> for deserialization. </summary>
+        internal MongoDBCollectionDataset()
+        {
         }
 
         /// <summary> The table name of the MongoDB database. Type: string (or Expression with resultType string). </summary>

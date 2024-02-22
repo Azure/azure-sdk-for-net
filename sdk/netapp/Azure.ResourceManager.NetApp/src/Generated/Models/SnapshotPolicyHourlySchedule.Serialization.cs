@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class SnapshotPolicyHourlySchedule : IUtf8JsonSerializable
+    public partial class SnapshotPolicyHourlySchedule : IUtf8JsonSerializable, IJsonModel<SnapshotPolicyHourlySchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotPolicyHourlySchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SnapshotPolicyHourlySchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotPolicyHourlySchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SnapshotPolicyHourlySchedule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SnapshotsToKeep))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SnapshotPolicyHourlySchedule DeserializeSnapshotPolicyHourlySchedule(JsonElement element)
+        SnapshotPolicyHourlySchedule IJsonModel<SnapshotPolicyHourlySchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotPolicyHourlySchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SnapshotPolicyHourlySchedule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnapshotPolicyHourlySchedule(document.RootElement, options);
+        }
+
+        internal static SnapshotPolicyHourlySchedule DeserializeSnapshotPolicyHourlySchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<int> snapshotsToKeep = default;
             Optional<int> minute = default;
             Optional<long> usedBytes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshotsToKeep"u8))
@@ -71,8 +113,44 @@ namespace Azure.ResourceManager.NetApp.Models
                     usedBytes = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SnapshotPolicyHourlySchedule(Optional.ToNullable(snapshotsToKeep), Optional.ToNullable(minute), Optional.ToNullable(usedBytes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SnapshotPolicyHourlySchedule(Optional.ToNullable(snapshotsToKeep), Optional.ToNullable(minute), Optional.ToNullable(usedBytes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SnapshotPolicyHourlySchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotPolicyHourlySchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SnapshotPolicyHourlySchedule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SnapshotPolicyHourlySchedule IPersistableModel<SnapshotPolicyHourlySchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotPolicyHourlySchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSnapshotPolicyHourlySchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SnapshotPolicyHourlySchedule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SnapshotPolicyHourlySchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

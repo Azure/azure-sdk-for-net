@@ -15,14 +15,52 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> SIM name and encrypted properties. </summary>
     public partial class SimNameAndEncryptedProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SimNameAndEncryptedProperties"/>. </summary>
         /// <param name="name"> The name of the SIM. </param>
         /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="internationalMobileSubscriberIdentity"/> is null. </exception>
         public SimNameAndEncryptedProperties(string name, string internationalMobileSubscriberIdentity)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(internationalMobileSubscriberIdentity, nameof(internationalMobileSubscriberIdentity));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (internationalMobileSubscriberIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(internationalMobileSubscriberIdentity));
+            }
 
             Name = name;
             SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
@@ -43,7 +81,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
         /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
         /// <param name="encryptedCredentials"> The encrypted SIM credentials. </param>
-        internal SimNameAndEncryptedProperties(string name, MobileNetworkProvisioningState? provisioningState, MobileNetworkSimState? simState, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState, string internationalMobileSubscriberIdentity, string integratedCircuitCardIdentifier, string deviceType, WritableSubResource simPolicy, IList<SimStaticIPProperties> staticIPConfiguration, string vendorName, string vendorKeyFingerprint, string encryptedCredentials)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SimNameAndEncryptedProperties(string name, MobileNetworkProvisioningState? provisioningState, MobileNetworkSimState? simState, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState, string internationalMobileSubscriberIdentity, string integratedCircuitCardIdentifier, string deviceType, WritableSubResource simPolicy, IList<SimStaticIPProperties> staticIPConfiguration, string vendorName, string vendorKeyFingerprint, string encryptedCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ProvisioningState = provisioningState;
@@ -57,6 +96,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             VendorName = vendorName;
             VendorKeyFingerprint = vendorKeyFingerprint;
             EncryptedCredentials = encryptedCredentials;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SimNameAndEncryptedProperties"/> for deserialization. </summary>
+        internal SimNameAndEncryptedProperties()
+        {
         }
 
         /// <summary> The name of the SIM. </summary>

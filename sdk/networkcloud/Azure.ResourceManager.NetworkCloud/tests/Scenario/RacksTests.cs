@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public RacksTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task Racks()
         {
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterManagedRG);

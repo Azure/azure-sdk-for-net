@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="VMwareV2FabricSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="migrationSolutionId"> The Migration solution ARM Id. </param>
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="serviceResourceId"> The service resource Id. </param>
         /// <param name="serviceContainerId"> The service container Id. </param>
         /// <param name="processServers"> The list of process servers. </param>
-        internal VMwareV2FabricSpecificDetails(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId, string serviceEndpoint, ResourceIdentifier serviceResourceId, string serviceContainerId, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers) : base(instanceType)
+        internal VMwareV2FabricSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId, string serviceEndpoint, ResourceIdentifier serviceResourceId, string serviceContainerId, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers) : base(instanceType, serializedAdditionalRawData)
         {
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;

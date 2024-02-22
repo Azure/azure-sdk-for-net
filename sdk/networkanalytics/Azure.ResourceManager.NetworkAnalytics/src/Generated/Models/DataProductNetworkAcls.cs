@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     /// <summary> Data Product Network rule set. </summary>
     public partial class DataProductNetworkAcls
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataProductNetworkAcls"/>. </summary>
         /// <param name="virtualNetworkRule"> Virtual Network Rule. </param>
         /// <param name="ipRules"> IP rule with specific IP or IP range in CIDR format. </param>
@@ -23,9 +54,18 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRule"/>, <paramref name="ipRules"/> or <paramref name="allowedQueryIPRangeList"/> is null. </exception>
         public DataProductNetworkAcls(IEnumerable<NetworkAnalyticsVirtualNetworkRule> virtualNetworkRule, IEnumerable<NetworkAnalyticsIPRules> ipRules, IEnumerable<string> allowedQueryIPRangeList, NetworkAclDefaultAction defaultAction)
         {
-            Argument.AssertNotNull(virtualNetworkRule, nameof(virtualNetworkRule));
-            Argument.AssertNotNull(ipRules, nameof(ipRules));
-            Argument.AssertNotNull(allowedQueryIPRangeList, nameof(allowedQueryIPRangeList));
+            if (virtualNetworkRule == null)
+            {
+                throw new ArgumentNullException(nameof(virtualNetworkRule));
+            }
+            if (ipRules == null)
+            {
+                throw new ArgumentNullException(nameof(ipRules));
+            }
+            if (allowedQueryIPRangeList == null)
+            {
+                throw new ArgumentNullException(nameof(allowedQueryIPRangeList));
+            }
 
             VirtualNetworkRule = virtualNetworkRule.ToList();
             IPRules = ipRules.ToList();
@@ -38,12 +78,19 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="ipRules"> IP rule with specific IP or IP range in CIDR format. </param>
         /// <param name="allowedQueryIPRangeList"> The list of query ips in the format of CIDR allowed to connect to query/visualization endpoint. </param>
         /// <param name="defaultAction"> Default Action. </param>
-        internal DataProductNetworkAcls(IList<NetworkAnalyticsVirtualNetworkRule> virtualNetworkRule, IList<NetworkAnalyticsIPRules> ipRules, IList<string> allowedQueryIPRangeList, NetworkAclDefaultAction defaultAction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProductNetworkAcls(IList<NetworkAnalyticsVirtualNetworkRule> virtualNetworkRule, IList<NetworkAnalyticsIPRules> ipRules, IList<string> allowedQueryIPRangeList, NetworkAclDefaultAction defaultAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualNetworkRule = virtualNetworkRule;
             IPRules = ipRules;
             AllowedQueryIPRangeList = allowedQueryIPRangeList;
             DefaultAction = defaultAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProductNetworkAcls"/> for deserialization. </summary>
+        internal DataProductNetworkAcls()
+        {
         }
 
         /// <summary> Virtual Network Rule. </summary>

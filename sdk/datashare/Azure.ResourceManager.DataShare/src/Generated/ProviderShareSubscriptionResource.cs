@@ -197,7 +197,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ProviderShareSubscriptionResource>> AdjustAsync(ProviderShareSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionResource.Adjust");
             scope.Start();
@@ -239,7 +242,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ProviderShareSubscriptionResource> Adjust(ProviderShareSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionResource.Adjust");
             scope.Start();
@@ -281,7 +287,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ProviderShareSubscriptionResource>> ReinstateAsync(ProviderShareSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionResource.Reinstate");
             scope.Start();
@@ -323,7 +332,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ProviderShareSubscriptionResource> Reinstate(ProviderShareSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionResource.Reinstate");
             scope.Start();

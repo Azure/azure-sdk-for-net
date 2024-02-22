@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkPortMirroringProfileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string portMirroringId, WorkloadNetworkPortMirroringProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkPortMirroringProfileResource> CreateOrUpdate(WaitUntil waitUntil, string portMirroringId, WorkloadNetworkPortMirroringProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkPortMirroringProfileResource>> GetAsync(string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         public virtual Response<WorkloadNetworkPortMirroringProfileResource> Get(string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         public virtual Response<bool> Exists(string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkPortMirroringProfileResource>> GetIfExistsAsync(string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkPortMirroringProfileResource> GetIfExists(string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetIfExists");
             scope.Start();

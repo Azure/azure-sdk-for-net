@@ -20,8 +20,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal LogicExpressionErrorInfo(string code, string message) : base(code)
         {
-            Argument.AssertNotNull(code, nameof(code));
-            Argument.AssertNotNull(message, nameof(message));
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Message = message;
             Details = new ChangeTrackingList<LogicExpressionErrorInfo>();
@@ -29,15 +35,18 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <summary> Initializes a new instance of <see cref="LogicExpressionErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
-        internal LogicExpressionErrorInfo(string code, string message, IReadOnlyList<LogicExpressionErrorInfo> details) : base(code)
+        internal LogicExpressionErrorInfo(string code, IDictionary<string, BinaryData> serializedAdditionalRawData, string message, IReadOnlyList<LogicExpressionErrorInfo> details) : base(code, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(code, nameof(code));
-
             Message = message;
             Details = details;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicExpressionErrorInfo"/> for deserialization. </summary>
+        internal LogicExpressionErrorInfo()
+        {
         }
 
         /// <summary> The error message. </summary>

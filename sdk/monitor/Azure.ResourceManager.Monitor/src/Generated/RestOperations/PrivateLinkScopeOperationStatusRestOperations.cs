@@ -66,9 +66,30 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetAsync(string subscriptionId, string resourceGroupName, string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (asyncOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(asyncOperationId));
+            }
+            if (asyncOperationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(asyncOperationId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, asyncOperationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -95,9 +116,30 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorPrivateLinkScopeOperationStatus> Get(string subscriptionId, string resourceGroupName, string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (asyncOperationId == null)
+            {
+                throw new ArgumentNullException(nameof(asyncOperationId));
+            }
+            if (asyncOperationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(asyncOperationId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, asyncOperationId);
             _pipeline.Send(message, cancellationToken);

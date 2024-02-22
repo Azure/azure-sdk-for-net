@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanListResult> List(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
@@ -148,10 +190,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, commitmentPlanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -181,10 +251,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanData> Get(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, commitmentPlanName);
             _pipeline.Send(message, cancellationToken);
@@ -241,11 +339,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CommitmentPlanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, accountName, commitmentPlanName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -275,11 +404,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CommitmentPlanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, accountName, commitmentPlanName, data);
             _pipeline.Send(message, cancellationToken);
@@ -330,10 +490,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, commitmentPlanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -358,10 +546,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, commitmentPlanName);
             _pipeline.Send(message, cancellationToken);
@@ -410,10 +626,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdatePlanAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, CommitmentPlanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdatePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -437,10 +677,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdatePlan(string subscriptionId, string resourceGroupName, string commitmentPlanName, CommitmentPlanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdatePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName, data);
             _pipeline.Send(message, cancellationToken);
@@ -488,10 +752,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdatePlanAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, CognitiveServicesCommitmentPlanPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdatePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -515,10 +803,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdatePlan(string subscriptionId, string resourceGroupName, string commitmentPlanName, CognitiveServicesCommitmentPlanPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdatePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -561,9 +873,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeletePlanAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateDeletePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -587,9 +920,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeletePlan(string subscriptionId, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateDeletePlanRequest(subscriptionId, resourceGroupName, commitmentPlanName);
             _pipeline.Send(message, cancellationToken);
@@ -633,9 +987,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanData>> GetPlanAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateGetPlanRequest(subscriptionId, resourceGroupName, commitmentPlanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -664,9 +1039,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanData> GetPlan(string subscriptionId, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateGetPlanRequest(subscriptionId, resourceGroupName, commitmentPlanName);
             _pipeline.Send(message, cancellationToken);
@@ -713,8 +1109,22 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanListResult>> ListPlansByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListPlansByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -740,8 +1150,22 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanListResult> ListPlansByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListPlansByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -783,7 +1207,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanListResult>> ListPlansBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListPlansBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -808,7 +1239,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanListResult> ListPlansBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListPlansBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -856,9 +1294,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanAccountAssociationListResult>> ListAssociationsAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateListAssociationsRequest(subscriptionId, resourceGroupName, commitmentPlanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -885,9 +1344,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanAccountAssociationListResult> ListAssociations(string subscriptionId, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateListAssociationsRequest(subscriptionId, resourceGroupName, commitmentPlanName);
             _pipeline.Send(message, cancellationToken);
@@ -937,10 +1417,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanAccountAssociationData>> GetAssociationAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (commitmentPlanAssociationName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanAssociationName));
+            }
+            if (commitmentPlanAssociationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanAssociationName));
+            }
 
             using var message = CreateGetAssociationRequest(subscriptionId, resourceGroupName, commitmentPlanName, commitmentPlanAssociationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -970,10 +1478,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanAccountAssociationData> GetAssociation(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (commitmentPlanAssociationName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanAssociationName));
+            }
+            if (commitmentPlanAssociationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanAssociationName));
+            }
 
             using var message = CreateGetAssociationRequest(subscriptionId, resourceGroupName, commitmentPlanName, commitmentPlanAssociationName);
             _pipeline.Send(message, cancellationToken);
@@ -1030,11 +1566,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAssociationAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (commitmentPlanAssociationName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanAssociationName));
+            }
+            if (commitmentPlanAssociationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanAssociationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateAssociationRequest(subscriptionId, resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1059,11 +1626,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdateAssociation(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (commitmentPlanAssociationName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanAssociationName));
+            }
+            if (commitmentPlanAssociationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanAssociationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateAssociationRequest(subscriptionId, resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -1109,10 +1707,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAssociationAsync(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (commitmentPlanAssociationName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanAssociationName));
+            }
+            if (commitmentPlanAssociationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanAssociationName));
+            }
 
             using var message = CreateDeleteAssociationRequest(subscriptionId, resourceGroupName, commitmentPlanName, commitmentPlanAssociationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1137,10 +1763,38 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="commitmentPlanName"/> or <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteAssociation(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
+            if (commitmentPlanAssociationName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanAssociationName));
+            }
+            if (commitmentPlanAssociationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanAssociationName));
+            }
 
             using var message = CreateDeleteAssociationRequest(subscriptionId, resourceGroupName, commitmentPlanName, commitmentPlanAssociationName);
             _pipeline.Send(message, cancellationToken);
@@ -1179,10 +1833,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1210,10 +1888,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
@@ -1254,9 +1956,26 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanListResult>> ListPlansByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListPlansByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1283,9 +2002,26 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanListResult> ListPlansByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListPlansByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -1325,8 +2061,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanListResult>> ListPlansBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListPlansBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1352,8 +2098,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanListResult> ListPlansBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListPlansBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -1395,10 +2151,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommitmentPlanAccountAssociationListResult>> ListAssociationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateListAssociationsNextPageRequest(nextLink, subscriptionId, resourceGroupName, commitmentPlanName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1426,10 +2206,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommitmentPlanAccountAssociationListResult> ListAssociationsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (commitmentPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(commitmentPlanName));
+            }
+            if (commitmentPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(commitmentPlanName));
+            }
 
             using var message = CreateListAssociationsNextPageRequest(nextLink, subscriptionId, resourceGroupName, commitmentPlanName);
             _pipeline.Send(message, cancellationToken);

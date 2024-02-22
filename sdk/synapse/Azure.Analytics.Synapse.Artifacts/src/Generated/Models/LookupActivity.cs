@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -25,9 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="source"/> or <paramref name="dataset"/> is null. </exception>
         public LookupActivity(string name, CopySource source, DatasetReference dataset) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(dataset, nameof(dataset));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (dataset == null)
+            {
+                throw new ArgumentNullException(nameof(dataset));
+            }
 
             Source = source;
             Dataset = dataset;

@@ -24,8 +24,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="codeId"/> or <paramref name="entry"/> is null. </exception>
         public SparkJob(string codeId, SparkJobEntry entry)
         {
-            Argument.AssertNotNull(codeId, nameof(codeId));
-            Argument.AssertNotNull(entry, nameof(entry));
+            if (codeId == null)
+            {
+                throw new ArgumentNullException(nameof(codeId));
+            }
+            if (entry == null)
+            {
+                throw new ArgumentNullException(nameof(entry));
+            }
 
             Archives = new ChangeTrackingList<string>();
             CodeId = codeId;
@@ -43,6 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
@@ -87,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="pyFiles"> Python files used in the job. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal SparkJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IList<string> archives, string args, string codeId, IDictionary<string, string> conf, SparkJobEntry entry, string environmentId, IList<string> files, IDictionary<string, MachineLearningJobInput> inputs, IList<string> jars, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, JobQueueSettings queueSettings, SparkResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal SparkJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IList<string> archives, string args, string codeId, IDictionary<string, string> conf, SparkJobEntry entry, string environmentId, IList<string> files, IDictionary<string, MachineLearningJobInput> inputs, IList<string> jars, IDictionary<string, MachineLearningJobOutput> outputs, IList<string> pyFiles, JobQueueSettings queueSettings, SparkResourceConfiguration resources) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             Archives = archives;
             Args = args;
@@ -103,6 +110,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             QueueSettings = queueSettings;
             Resources = resources;
             JobType = jobType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkJob"/> for deserialization. </summary>
+        internal SparkJob()
+        {
         }
 
         /// <summary> Archive files used in the job. </summary>

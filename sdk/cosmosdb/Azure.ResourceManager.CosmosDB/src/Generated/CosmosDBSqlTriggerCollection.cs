@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlTriggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string triggerName, CosmosDBSqlTriggerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlTriggerResource> CreateOrUpdate(WaitUntil waitUntil, string triggerName, CosmosDBSqlTriggerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlTriggerResource>> GetAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<CosmosDBSqlTriggerResource> Get(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<bool> Exists(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBSqlTriggerResource>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual NullableResponse<CosmosDBSqlTriggerResource> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _cosmosDBSqlTriggerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlTriggerCollection.GetIfExists");
             scope.Start();

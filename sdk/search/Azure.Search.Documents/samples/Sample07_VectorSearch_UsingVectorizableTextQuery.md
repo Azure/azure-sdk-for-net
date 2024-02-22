@@ -130,7 +130,7 @@ public static Hotel[] GetHotelDocuments()
             Description = "Cheapest hotel in town. Infact, a motel.",
             DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
             Category = "Budget",
-            CategoryVector = GetEmbeddings("Luxury")
+            CategoryVector = GetEmbeddings("Budget")
         },
         // Add more hotel documents here...
     };

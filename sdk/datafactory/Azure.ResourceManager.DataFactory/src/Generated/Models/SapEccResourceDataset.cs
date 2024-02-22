@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
         public SapEccResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-            Argument.AssertNotNull(path, nameof(path));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
 
             Path = path;
             DatasetType = "SapEccResource";
@@ -43,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Path = path;
             DatasetType = datasetType ?? "SapEccResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapEccResourceDataset"/> for deserialization. </summary>
+        internal SapEccResourceDataset()
+        {
         }
 
         /// <summary> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </summary>

@@ -5,22 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class StateUpdateCommonPostActionResult
+    public partial class StateUpdateCommonPostActionResult : IUtf8JsonSerializable, IJsonModel<StateUpdateCommonPostActionResult>
     {
-        internal static StateUpdateCommonPostActionResult DeserializeStateUpdateCommonPostActionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StateUpdateCommonPostActionResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StateUpdateCommonPostActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StateUpdateCommonPostActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StateUpdateCommonPostActionResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
+            {
+                writer.WritePropertyName("configurationState"u8);
+                writer.WriteStringValue(ConfigurationState.Value.ToString());
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StateUpdateCommonPostActionResult IJsonModel<StateUpdateCommonPostActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StateUpdateCommonPostActionResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StateUpdateCommonPostActionResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStateUpdateCommonPostActionResult(document.RootElement, options);
+        }
+
+        internal static StateUpdateCommonPostActionResult DeserializeStateUpdateCommonPostActionResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<ResponseError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationState"u8))
@@ -41,8 +99,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StateUpdateCommonPostActionResult(error.Value, Optional.ToNullable(configurationState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StateUpdateCommonPostActionResult(error.Value, serializedAdditionalRawData, Optional.ToNullable(configurationState));
         }
+
+        BinaryData IPersistableModel<StateUpdateCommonPostActionResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StateUpdateCommonPostActionResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StateUpdateCommonPostActionResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StateUpdateCommonPostActionResult IPersistableModel<StateUpdateCommonPostActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StateUpdateCommonPostActionResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStateUpdateCommonPostActionResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StateUpdateCommonPostActionResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StateUpdateCommonPostActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

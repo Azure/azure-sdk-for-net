@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
         public virtual async Task<Response<ProblemClassificationResource>> GetAsync(string problemClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
+            if (problemClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(problemClassificationName));
+            }
+            if (problemClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(problemClassificationName));
+            }
 
             using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
         public virtual Response<ProblemClassificationResource> Get(string problemClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
+            if (problemClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(problemClassificationName));
+            }
+            if (problemClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(problemClassificationName));
+            }
 
             using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.Get");
             scope.Start();
@@ -228,7 +242,14 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string problemClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
+            if (problemClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(problemClassificationName));
+            }
+            if (problemClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(problemClassificationName));
+            }
 
             using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.Exists");
             scope.Start();
@@ -271,7 +292,14 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
         public virtual Response<bool> Exists(string problemClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
+            if (problemClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(problemClassificationName));
+            }
+            if (problemClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(problemClassificationName));
+            }
 
             using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.Exists");
             scope.Start();
@@ -314,7 +342,14 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
         public virtual async Task<NullableResponse<ProblemClassificationResource>> GetIfExistsAsync(string problemClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
+            if (problemClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(problemClassificationName));
+            }
+            if (problemClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(problemClassificationName));
+            }
 
             using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.GetIfExists");
             scope.Start();
@@ -359,7 +394,14 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
         public virtual NullableResponse<ProblemClassificationResource> GetIfExists(string problemClassificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
+            if (problemClassificationName == null)
+            {
+                throw new ArgumentNullException(nameof(problemClassificationName));
+            }
+            if (problemClassificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(problemClassificationName));
+            }
 
             using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.GetIfExists");
             scope.Start();

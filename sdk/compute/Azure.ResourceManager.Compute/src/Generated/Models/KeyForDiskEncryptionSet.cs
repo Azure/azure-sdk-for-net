@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> is null. </exception>
         public KeyForDiskEncryptionSet(Uri keyUri)
         {
-            Argument.AssertNotNull(keyUri, nameof(keyUri));
+            if (keyUri == null)
+            {
+                throw new ArgumentNullException(nameof(keyUri));
+            }
 
             KeyUri = keyUri;
         }

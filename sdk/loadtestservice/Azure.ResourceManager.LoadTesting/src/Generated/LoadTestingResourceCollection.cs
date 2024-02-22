@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LoadTestingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loadTestName, LoadTestingResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (loadTestName == null)
+            {
+                throw new ArgumentNullException(nameof(loadTestName));
+            }
+            if (loadTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadTestName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LoadTestingResource> CreateOrUpdate(WaitUntil waitUntil, string loadTestName, LoadTestingResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (loadTestName == null)
+            {
+                throw new ArgumentNullException(nameof(loadTestName));
+            }
+            if (loadTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadTestName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual async Task<Response<LoadTestingResource>> GetAsync(string loadTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+            if (loadTestName == null)
+            {
+                throw new ArgumentNullException(nameof(loadTestName));
+            }
+            if (loadTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadTestName));
+            }
 
             using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual Response<LoadTestingResource> Get(string loadTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+            if (loadTestName == null)
+            {
+                throw new ArgumentNullException(nameof(loadTestName));
+            }
+            if (loadTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadTestName));
+            }
 
             using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string loadTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+            if (loadTestName == null)
+            {
+                throw new ArgumentNullException(nameof(loadTestName));
+            }
+            if (loadTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadTestName));
+            }
 
             using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual Response<bool> Exists(string loadTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+            if (loadTestName == null)
+            {
+                throw new ArgumentNullException(nameof(loadTestName));
+            }
+            if (loadTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadTestName));
+            }
 
             using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual async Task<NullableResponse<LoadTestingResource>> GetIfExistsAsync(string loadTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+            if (loadTestName == null)
+            {
+                throw new ArgumentNullException(nameof(loadTestName));
+            }
+            if (loadTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadTestName));
+            }
 
             using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual NullableResponse<LoadTestingResource> GetIfExists(string loadTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
+            if (loadTestName == null)
+            {
+                throw new ArgumentNullException(nameof(loadTestName));
+            }
+            if (loadTestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loadTestName));
+            }
 
             using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetIfExists");
             scope.Start();

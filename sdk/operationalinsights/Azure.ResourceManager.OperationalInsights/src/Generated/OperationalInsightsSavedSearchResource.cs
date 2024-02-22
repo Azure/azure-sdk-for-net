@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsSavedSearchResource>> UpdateAsync(WaitUntil waitUntil, OperationalInsightsSavedSearchData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsSavedSearchResource> Update(WaitUntil waitUntil, OperationalInsightsSavedSearchData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchResource.Update");
             scope.Start();

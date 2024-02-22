@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class HttpRequestHandlerMapping : IUtf8JsonSerializable
+    public partial class HttpRequestHandlerMapping : IUtf8JsonSerializable, IJsonModel<HttpRequestHandlerMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpRequestHandlerMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HttpRequestHandlerMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpRequestHandlerMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HttpRequestHandlerMapping)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Extension))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HttpRequestHandlerMapping DeserializeHttpRequestHandlerMapping(JsonElement element)
+        HttpRequestHandlerMapping IJsonModel<HttpRequestHandlerMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpRequestHandlerMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HttpRequestHandlerMapping)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpRequestHandlerMapping(document.RootElement, options);
+        }
+
+        internal static HttpRequestHandlerMapping DeserializeHttpRequestHandlerMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> extension = default;
             Optional<string> scriptProcessor = default;
             Optional<string> arguments = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extension"u8))
@@ -59,8 +101,44 @@ namespace Azure.ResourceManager.AppService.Models
                     arguments = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HttpRequestHandlerMapping(extension.Value, scriptProcessor.Value, arguments.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HttpRequestHandlerMapping(extension.Value, scriptProcessor.Value, arguments.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HttpRequestHandlerMapping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpRequestHandlerMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HttpRequestHandlerMapping)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HttpRequestHandlerMapping IPersistableModel<HttpRequestHandlerMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HttpRequestHandlerMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHttpRequestHandlerMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HttpRequestHandlerMapping)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HttpRequestHandlerMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

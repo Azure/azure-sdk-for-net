@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         public virtual AsyncPageable<AvailableCluster> GetAvailableClusterRegionClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsClusterClustersRestClient.CreateListAvailableClusterRegionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AvailableCluster.DeserializeAvailableCluster, EventHubsClusterClustersClientDiagnostics, Pipeline, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AvailableCluster.DeserializeAvailableCluster(e), EventHubsClusterClustersClientDiagnostics, Pipeline, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         public virtual Pageable<AvailableCluster> GetAvailableClusterRegionClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsClusterClustersRestClient.CreateListAvailableClusterRegionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AvailableCluster.DeserializeAvailableCluster, EventHubsClusterClustersClientDiagnostics, Pipeline, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AvailableCluster.DeserializeAvailableCluster(e), EventHubsClusterClustersClientDiagnostics, Pipeline, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,10 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<EventHubsNameAvailabilityResult>> CheckEventHubsNamespaceNameAvailabilityAsync(EventHubsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = EventHubsNamespaceNamespacesClientDiagnostics.CreateScope("MockableEventHubsSubscriptionResource.CheckEventHubsNamespaceNameAvailability");
             scope.Start();
@@ -295,7 +298,10 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<EventHubsNameAvailabilityResult> CheckEventHubsNamespaceNameAvailability(EventHubsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = EventHubsNamespaceNamespacesClientDiagnostics.CreateScope("MockableEventHubsSubscriptionResource.CheckEventHubsNamespaceNameAvailability");
             scope.Start();

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var sourcePublicServer = sourcePublicServerOperation.Value;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Network = new PostgreSqlFlexibleServerNetwork()
                 {
                     DelegatedSubnetResourceId = subnetID,
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             };
             if (vnetEnabled)
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = sourceVersion,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var server = serverOperation.Value;
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var server = serverOperation.Value;
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() } },
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
                 AuthConfig = new PostgreSqlFlexibleServerAuthConfig()
                 {
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             {
                 Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,

@@ -5,16 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class TopQueries
+    public partial class TopQueries : IUtf8JsonSerializable, IJsonModel<TopQueries>
     {
-        internal static TopQueries DeserializeTopQueries(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopQueries>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TopQueries>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TopQueries)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(NumberOfQueries))
+            {
+                writer.WritePropertyName("numberOfQueries"u8);
+                writer.WriteNumberValue(NumberOfQueries.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AggregationFunction))
+            {
+                writer.WritePropertyName("aggregationFunction"u8);
+                writer.WriteStringValue(AggregationFunction);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ObservationMetric))
+            {
+                writer.WritePropertyName("observationMetric"u8);
+                writer.WriteStringValue(ObservationMetric);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IntervalType))
+            {
+                writer.WritePropertyName("intervalType"u8);
+                writer.WriteStringValue(IntervalType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartTime);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndTime);
+            }
+            if (Optional.IsCollectionDefined(Queries))
+            {
+                writer.WritePropertyName("queries"u8);
+                writer.WriteStartArray();
+                foreach (var item in Queries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TopQueries IJsonModel<TopQueries>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TopQueries)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTopQueries(document.RootElement, options);
+        }
+
+        internal static TopQueries DeserializeTopQueries(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +111,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> startTime = default;
             Optional<string> endTime = default;
             Optional<IReadOnlyList<QueryStatisticsProperties>> queries = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfQueries"u8))
@@ -80,8 +167,44 @@ namespace Azure.ResourceManager.Sql.Models
                     queries = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TopQueries(Optional.ToNullable(numberOfQueries), aggregationFunction.Value, observationMetric.Value, Optional.ToNullable(intervalType), startTime.Value, endTime.Value, Optional.ToList(queries));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TopQueries(Optional.ToNullable(numberOfQueries), aggregationFunction.Value, observationMetric.Value, Optional.ToNullable(intervalType), startTime.Value, endTime.Value, Optional.ToList(queries), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TopQueries>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TopQueries)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TopQueries IPersistableModel<TopQueries>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTopQueries(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TopQueries)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TopQueries>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

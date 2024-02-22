@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
         public MachineLearningAzureBlobDatastore(MachineLearningDatastoreCredentials credentials) : base(credentials)
         {
-            Argument.AssertNotNull(credentials, nameof(credentials));
+            if (credentials == null)
+            {
+                throw new ArgumentNullException(nameof(credentials));
+            }
 
             DatastoreType = DatastoreType.AzureBlob;
         }
@@ -32,6 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <param name="resourceGroup"> Azure Resource Group name. </param>
         /// <param name="subscriptionId"> Azure Subscription Id. </param>
-        internal MachineLearningAzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string resourceGroup, string subscriptionId) : base(description, properties, tags, credentials, datastoreType, intellectualProperty, isDefault)
+        internal MachineLearningAzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string resourceGroup, string subscriptionId) : base(description, properties, tags, serializedAdditionalRawData, credentials, datastoreType, intellectualProperty, isDefault)
         {
             AccountName = accountName;
             ContainerName = containerName;
@@ -57,6 +60,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ResourceGroup = resourceGroup;
             SubscriptionId = subscriptionId;
             DatastoreType = datastoreType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureBlobDatastore"/> for deserialization. </summary>
+        internal MachineLearningAzureBlobDatastore()
+        {
         }
 
         /// <summary> Storage account name. </summary>

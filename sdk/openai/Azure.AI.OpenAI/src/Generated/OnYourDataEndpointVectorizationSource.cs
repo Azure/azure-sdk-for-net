@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -22,8 +22,14 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="authentication"/> is null. </exception>
         public OnYourDataEndpointVectorizationSource(Uri endpoint, OnYourDataAuthenticationOptions authentication)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(authentication, nameof(authentication));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (authentication == null)
+            {
+                throw new ArgumentNullException(nameof(authentication));
+            }
 
             Type = OnYourDataVectorizationSourceType.Endpoint;
             Endpoint = endpoint;
@@ -32,12 +38,18 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OnYourDataEndpointVectorizationSource"/>. </summary>
         /// <param name="type"> The type of vectorization source to use. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
         /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
-        internal OnYourDataEndpointVectorizationSource(OnYourDataVectorizationSourceType type, Uri endpoint, OnYourDataAuthenticationOptions authentication) : base(type)
+        internal OnYourDataEndpointVectorizationSource(OnYourDataVectorizationSourceType type, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri endpoint, OnYourDataAuthenticationOptions authentication) : base(type, serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             Authentication = authentication;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEndpointVectorizationSource"/> for deserialization. </summary>
+        internal OnYourDataEndpointVectorizationSource()
+        {
         }
 
         /// <summary> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </summary>

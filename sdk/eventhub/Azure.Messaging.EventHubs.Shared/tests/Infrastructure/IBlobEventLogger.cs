@@ -125,9 +125,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string eventHubName,
                                    string consumerGroup,
                                    string clientIdentifier,
-                                   long sequenceNumber,
-                                   int replicationSegment,
-                                   long offset,
+                                   string sequenceNumber,
+                                   string replicationSegment,
+                                   string offset,
                                    string exception);
 
         /// <summary>
@@ -148,9 +148,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                       string eventHubName,
                                       string consumerGroup,
                                       string clientIdentifier,
-                                      long sequenceNumber,
-                                      int replicationSegment,
-                                      long offset);
+                                      string sequenceNumber,
+                                      string replicationSegment,
+                                      string offset);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -170,9 +170,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string eventHubName,
                                    string consumerGroup,
                                    string clientIdentifier,
-                                   long sequenceNumber,
-                                   int replicationSegment,
-                                   long offset);
+                                   string sequenceNumber,
+                                   string replicationSegment,
+                                   string offset);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.

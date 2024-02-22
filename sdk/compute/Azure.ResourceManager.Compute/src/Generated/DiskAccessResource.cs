@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +353,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DiskAccessResource>> UpdateAsync(WaitUntil waitUntil, DiskAccessPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.Update");
             scope.Start();
@@ -385,7 +388,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,7 +402,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DiskAccessResource> Update(WaitUntil waitUntil, DiskAccessPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.Update");
             scope.Start();
@@ -431,7 +437,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +466,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -489,7 +495,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -503,8 +509,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DiskAccessResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.AddTag");
             scope.Start();
@@ -551,7 +563,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -565,8 +577,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DiskAccessResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.AddTag");
             scope.Start();
@@ -613,7 +631,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -626,7 +644,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DiskAccessResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.SetTags");
             scope.Start();
@@ -670,7 +691,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -683,7 +704,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DiskAccessResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.SetTags");
             scope.Start();
@@ -727,7 +751,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -740,7 +764,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DiskAccessResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.RemoveTag");
             scope.Start();
@@ -787,7 +814,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -800,7 +827,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DiskAccessResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.RemoveTag");
             scope.Start();

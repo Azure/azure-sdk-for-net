@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownMonitorComputeConfigurationBase. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMonitorComputeConfigurationBase"/>. </summary>
         /// <param name="computeType"> [Required] Specifies the type of signal to monitor. </param>
-        internal UnknownMonitorComputeConfigurationBase(MonitorComputeType computeType) : base(computeType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMonitorComputeConfigurationBase(MonitorComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(computeType, serializedAdditionalRawData)
         {
             ComputeType = computeType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMonitorComputeConfigurationBase"/> for deserialization. </summary>
+        internal UnknownMonitorComputeConfigurationBase()
+        {
         }
     }
 }

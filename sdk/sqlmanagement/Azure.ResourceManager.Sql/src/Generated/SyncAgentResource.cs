@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SyncAgentResource>> UpdateAsync(WaitUntil waitUntil, SyncAgentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SyncAgentResource> Update(WaitUntil waitUntil, SyncAgentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentResource.Update");
             scope.Start();
@@ -451,7 +457,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListLinkedDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncAgentRestClient.CreateListLinkedDatabasesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase, _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase(e), _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -481,7 +487,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListLinkedDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncAgentRestClient.CreateListLinkedDatabasesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase, _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase(e), _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2ACreateProtectionIntentContent : IUtf8JsonSerializable
+    public partial class A2ACreateProtectionIntentContent : IUtf8JsonSerializable, IJsonModel<A2ACreateProtectionIntentContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ACreateProtectionIntentContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<A2ACreateProtectionIntentContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<A2ACreateProtectionIntentContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("fabricObjectId"u8);
             writer.WriteStringValue(FabricObjectId);
@@ -119,7 +130,286 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        A2ACreateProtectionIntentContent IJsonModel<A2ACreateProtectionIntentContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2ACreateProtectionIntentContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2ACreateProtectionIntentContent(document.RootElement, options);
+        }
+
+        internal static A2ACreateProtectionIntentContent DeserializeA2ACreateProtectionIntentContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier fabricObjectId = default;
+            AzureLocation primaryLocation = default;
+            AzureLocation recoveryLocation = default;
+            string recoverySubscriptionId = default;
+            A2ARecoveryAvailabilityType recoveryAvailabilityType = default;
+            Optional<ProtectionProfileCustomDetails> protectionProfileCustomContent = default;
+            ResourceIdentifier recoveryResourceGroupId = default;
+            Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
+            Optional<RecoveryAvailabilitySetCustomDetails> recoveryAvailabilitySetCustomContent = default;
+            Optional<RecoveryVirtualNetworkCustomDetails> recoveryVirtualNetworkCustomContent = default;
+            Optional<RecoveryProximityPlacementGroupCustomDetails> recoveryProximityPlacementGroupCustomContent = default;
+            Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
+            Optional<IList<A2AProtectionIntentDiskDetails>> vmDisks = default;
+            Optional<IList<A2AProtectionIntentManagedDiskDetails>> vmManagedDisks = default;
+            Optional<string> multiVmGroupName = default;
+            Optional<string> multiVmGroupId = default;
+            Optional<StorageAccountCustomDetails> recoveryBootDiagStorageAccount = default;
+            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            Optional<string> recoveryAvailabilityZone = default;
+            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
+            Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
+            Optional<ResourceIdentifier> automationAccountArmId = default;
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("fabricObjectId"u8))
+                {
+                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("primaryLocation"u8))
+                {
+                    primaryLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recoveryLocation"u8))
+                {
+                    recoveryLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recoverySubscriptionId"u8))
+                {
+                    recoverySubscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryAvailabilityType"u8))
+                {
+                    recoveryAvailabilityType = new A2ARecoveryAvailabilityType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("protectionProfileCustomInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectionProfileCustomContent = ProtectionProfileCustomDetails.DeserializeProtectionProfileCustomDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recoveryResourceGroupId"u8))
+                {
+                    recoveryResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("primaryStagingStorageAccountCustomInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recoveryAvailabilitySetCustomInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryAvailabilitySetCustomContent = RecoveryAvailabilitySetCustomDetails.DeserializeRecoveryAvailabilitySetCustomDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recoveryVirtualNetworkCustomInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryVirtualNetworkCustomContent = RecoveryVirtualNetworkCustomDetails.DeserializeRecoveryVirtualNetworkCustomDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recoveryProximityPlacementGroupCustomInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryProximityPlacementGroupCustomContent = RecoveryProximityPlacementGroupCustomDetails.DeserializeRecoveryProximityPlacementGroupCustomDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("autoProtectionOfDataDisk"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoProtectionOfDataDisk = new AutoProtectionOfDataDisk(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("vmDisks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<A2AProtectionIntentDiskDetails> array = new List<A2AProtectionIntentDiskDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(A2AProtectionIntentDiskDetails.DeserializeA2AProtectionIntentDiskDetails(item));
+                    }
+                    vmDisks = array;
+                    continue;
+                }
+                if (property.NameEquals("vmManagedDisks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<A2AProtectionIntentManagedDiskDetails> array = new List<A2AProtectionIntentManagedDiskDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(A2AProtectionIntentManagedDiskDetails.DeserializeA2AProtectionIntentManagedDiskDetails(item));
+                    }
+                    vmManagedDisks = array;
+                    continue;
+                }
+                if (property.NameEquals("multiVmGroupName"u8))
+                {
+                    multiVmGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("multiVmGroupId"u8))
+                {
+                    multiVmGroupId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryBootDiagStorageAccount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryBootDiagStorageAccount = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("diskEncryptionInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recoveryAvailabilityZone"u8))
+                {
+                    recoveryAvailabilityZone = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("agentAutoUpdateStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentAutoUpdateStatus = new SiteRecoveryAgentAutoUpdateStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("automationAccountAuthenticationType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    automationAccountAuthenticationType = new AutomationAccountAuthenticationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("automationAccountArmId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    automationAccountArmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new A2ACreateProtectionIntentContent(instanceType, serializedAdditionalRawData, fabricObjectId, primaryLocation, recoveryLocation, recoverySubscriptionId, recoveryAvailabilityType, protectionProfileCustomContent.Value, recoveryResourceGroupId, primaryStagingStorageAccountCustomContent.Value, recoveryAvailabilitySetCustomContent.Value, recoveryVirtualNetworkCustomContent.Value, recoveryProximityPlacementGroupCustomContent.Value, Optional.ToNullable(autoProtectionOfDataDisk), Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, Optional.ToNullable(agentAutoUpdateStatus), Optional.ToNullable(automationAccountAuthenticationType), automationAccountArmId.Value);
+        }
+
+        BinaryData IPersistableModel<A2ACreateProtectionIntentContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2ACreateProtectionIntentContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        A2ACreateProtectionIntentContent IPersistableModel<A2ACreateProtectionIntentContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<A2ACreateProtectionIntentContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeA2ACreateProtectionIntentContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2ACreateProtectionIntentContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<A2ACreateProtectionIntentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

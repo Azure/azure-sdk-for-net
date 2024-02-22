@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="compute"/> is null. </exception>
         public EdgeKubernetesRoleResources(EdgeKubernetesRoleCompute compute)
         {
-            Argument.AssertNotNull(compute, nameof(compute));
+            if (compute == null)
+            {
+                throw new ArgumentNullException(nameof(compute));
+            }
 
             Compute = compute;
         }

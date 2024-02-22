@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="lifecycles"/> is null. </exception>
         public DataProtectionRetentionRule(string name, IEnumerable<SourceLifeCycle> lifecycles) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(lifecycles, nameof(lifecycles));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (lifecycles == null)
+            {
+                throw new ArgumentNullException(nameof(lifecycles));
+            }
 
             Lifecycles = lifecycles.ToList();
             ObjectType = "AzureRetentionRule";
@@ -31,13 +36,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="DataProtectionRetentionRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="objectType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isDefault"></param>
         /// <param name="lifecycles"></param>
-        internal DataProtectionRetentionRule(string name, string objectType, bool? isDefault, IList<SourceLifeCycle> lifecycles) : base(name, objectType)
+        internal DataProtectionRetentionRule(string name, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isDefault, IList<SourceLifeCycle> lifecycles) : base(name, objectType, serializedAdditionalRawData)
         {
             IsDefault = isDefault;
             Lifecycles = lifecycles;
             ObjectType = objectType ?? "AzureRetentionRule";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionRetentionRule"/> for deserialization. </summary>
+        internal DataProtectionRetentionRule()
+        {
         }
 
         /// <summary> Gets or sets the is default. </summary>

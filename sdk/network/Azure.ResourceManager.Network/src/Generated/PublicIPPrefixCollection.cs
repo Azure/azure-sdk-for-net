@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PublicIPPrefixResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string publicIPPrefixName, PublicIPPrefixData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (publicIPPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPPrefixName));
+            }
+            if (publicIPPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPPrefixName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefixCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PublicIPPrefixResource> CreateOrUpdate(WaitUntil waitUntil, string publicIPPrefixName, PublicIPPrefixData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (publicIPPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPPrefixName));
+            }
+            if (publicIPPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPPrefixName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefixCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
         public virtual async Task<Response<PublicIPPrefixResource>> GetAsync(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
+            if (publicIPPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPPrefixName));
+            }
+            if (publicIPPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPPrefixName));
+            }
 
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefixCollection.Get");
             scope.Start();
@@ -226,7 +253,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
         public virtual Response<PublicIPPrefixResource> Get(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
+            if (publicIPPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPPrefixName));
+            }
+            if (publicIPPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPPrefixName));
+            }
 
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefixCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
+            if (publicIPPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPPrefixName));
+            }
+            if (publicIPPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPPrefixName));
+            }
 
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefixCollection.Exists");
             scope.Start();
@@ -376,7 +417,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
         public virtual Response<bool> Exists(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
+            if (publicIPPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPPrefixName));
+            }
+            if (publicIPPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPPrefixName));
+            }
 
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefixCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
         public virtual async Task<NullableResponse<PublicIPPrefixResource>> GetIfExistsAsync(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
+            if (publicIPPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPPrefixName));
+            }
+            if (publicIPPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPPrefixName));
+            }
 
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefixCollection.GetIfExists");
             scope.Start();
@@ -466,7 +521,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
         public virtual NullableResponse<PublicIPPrefixResource> GetIfExists(string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
+            if (publicIPPrefixName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPPrefixName));
+            }
+            if (publicIPPrefixName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPPrefixName));
+            }
 
             using var scope = _publicIPPrefixClientDiagnostics.CreateScope("PublicIPPrefixCollection.GetIfExists");
             scope.Start();

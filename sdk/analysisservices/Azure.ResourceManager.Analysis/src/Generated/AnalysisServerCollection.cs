@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AnalysisServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, AnalysisServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AnalysisServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverName, AnalysisServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<AnalysisServerResource>> GetAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<AnalysisServerResource> Get(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<NullableResponse<AnalysisServerResource>> GetIfExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual NullableResponse<AnalysisServerResource> GetIfExists(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerCollection.GetIfExists");
             scope.Start();

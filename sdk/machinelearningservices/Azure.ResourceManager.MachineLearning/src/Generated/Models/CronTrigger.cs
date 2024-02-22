@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public CronTrigger(string expression)
         {
-            Argument.AssertNotNull(expression, nameof(expression));
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
 
             Expression = expression;
             TriggerType = MachineLearningTriggerType.Cron;
@@ -39,14 +42,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
         /// <param name="triggerType"> [Required]. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="expression">
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
-        internal CronTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, string expression) : base(endTime, startTime, timeZone, triggerType)
+        internal CronTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData, string expression) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
         {
             Expression = expression;
             TriggerType = triggerType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CronTrigger"/> for deserialization. </summary>
+        internal CronTrigger()
+        {
         }
 
         /// <summary>

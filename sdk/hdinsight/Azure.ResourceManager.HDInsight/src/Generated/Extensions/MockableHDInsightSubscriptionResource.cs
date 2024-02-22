@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         public virtual AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightUsage.DeserializeHDInsightUsage, LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HDInsightUsage.DeserializeHDInsightUsage(e), LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         public virtual Pageable<HDInsightUsage> GetHDInsightUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightUsage.DeserializeHDInsightUsage, LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HDInsightUsage.DeserializeHDInsightUsage(e), LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +324,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability");
             scope.Start();
@@ -363,7 +366,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability");
             scope.Start();
@@ -402,7 +408,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<HDInsightClusterCreationValidateResult>> ValidateHDInsightClusterCreationAsync(AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation");
             scope.Start();
@@ -441,7 +450,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<HDInsightClusterCreationValidateResult> ValidateHDInsightClusterCreation(AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation");
             scope.Start();

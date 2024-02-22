@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class StatefulServiceProperties : IUtf8JsonSerializable
+    public partial class StatefulServiceProperties : IUtf8JsonSerializable, IJsonModel<StatefulServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatefulServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StatefulServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HasPersistedState))
             {
@@ -51,6 +60,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 writer.WritePropertyName("servicePlacementTimeLimit"u8);
                 writer.WriteStringValue(ServicePlacementTimeLimit.Value, "c");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             writer.WritePropertyName("serviceKind"u8);
             writer.WriteStringValue(ServiceKind.ToString());
@@ -118,11 +132,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StatefulServiceProperties DeserializeStatefulServiceProperties(JsonElement element)
+        StatefulServiceProperties IJsonModel<StatefulServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStatefulServiceProperties(document.RootElement, options);
+        }
+
+        internal static StatefulServiceProperties DeserializeStatefulServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,6 +189,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
             Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
             Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasPersistedState"u8))
@@ -315,8 +360,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     scalingPolicies = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StatefulServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(hasPersistedState), Optional.ToNullable(targetReplicaSetSize), Optional.ToNullable(minReplicaSetSize), Optional.ToNullable(replicaRestartWaitDuration), Optional.ToNullable(quorumLossWaitDuration), Optional.ToNullable(standByReplicaKeepDuration), Optional.ToNullable(servicePlacementTimeLimit));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StatefulServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), serializedAdditionalRawData, provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(hasPersistedState), Optional.ToNullable(targetReplicaSetSize), Optional.ToNullable(minReplicaSetSize), Optional.ToNullable(replicaRestartWaitDuration), Optional.ToNullable(quorumLossWaitDuration), Optional.ToNullable(standByReplicaKeepDuration), Optional.ToNullable(servicePlacementTimeLimit));
         }
+
+        BinaryData IPersistableModel<StatefulServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StatefulServiceProperties IPersistableModel<StatefulServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStatefulServiceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StatefulServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

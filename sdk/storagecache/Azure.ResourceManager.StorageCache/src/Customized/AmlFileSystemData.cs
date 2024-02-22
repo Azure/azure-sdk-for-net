@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="hsm"> Hydration and archive settings and status. </param>
         internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, float? storageCapacityTiB, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm) : base(id, name, resourceType, systemData, tags, location)
         {
-            AmlFileSystemData amlFSData = new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, sku, zones, storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, encryptionSettings, maintenanceWindow, hsm, null);
+            AmlFileSystemData amlFSData = new AmlFileSystemData(id, name, resourceType, systemData, tags, location, identity, sku, zones, storageCapacityTiB, health, provisioningState, filesystemSubnet, clientInfo, throughputProvisionedMBps, encryptionSettings, maintenanceWindow, hsm, null, null);
         }
     }
 }

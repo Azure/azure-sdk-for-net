@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="webTestId"/> or <paramref name="componentId"/> is null. </exception>
         public WebtestLocationAvailabilityCriteria(ResourceIdentifier webTestId, ResourceIdentifier componentId, float failedLocationCount)
         {
-            Argument.AssertNotNull(webTestId, nameof(webTestId));
-            Argument.AssertNotNull(componentId, nameof(componentId));
+            if (webTestId == null)
+            {
+                throw new ArgumentNullException(nameof(webTestId));
+            }
+            if (componentId == null)
+            {
+                throw new ArgumentNullException(nameof(componentId));
+            }
 
             WebTestId = webTestId;
             ComponentId = componentId;
@@ -42,6 +48,11 @@ namespace Azure.ResourceManager.Monitor.Models
             ComponentId = componentId;
             FailedLocationCount = failedLocationCount;
             OdataType = odataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebtestLocationAvailabilityCriteria"/> for deserialization. </summary>
+        internal WebtestLocationAvailabilityCriteria()
+        {
         }
 
         /// <summary> The Application Insights web test Id. </summary>

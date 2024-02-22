@@ -29,13 +29,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="directory"> The full path to the file. </param>
         /// <param name="fileHashEntityIds"> The file hash entity identifiers associated with this file. </param>
         /// <param name="fileName"> The file name without path (some alerts might not include path). </param>
         /// <param name="hostEntityId"> The Host entity id which the file belongs to. </param>
-        internal SecurityInsightsFileEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string directory, IReadOnlyList<string> fileHashEntityIds, string fileName, string hostEntityId) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsFileEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string directory, IReadOnlyList<string> fileHashEntityIds, string fileName, string hostEntityId) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

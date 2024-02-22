@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="datasetCompressionType"/> is null. </exception>
         public DatasetCompression(DataFactoryElement<string> datasetCompressionType)
         {
-            Argument.AssertNotNull(datasetCompressionType, nameof(datasetCompressionType));
+            if (datasetCompressionType == null)
+            {
+                throw new ArgumentNullException(nameof(datasetCompressionType));
+            }
 
             DatasetCompressionType = datasetCompressionType;
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -35,6 +38,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetCompressionType = datasetCompressionType;
             Level = level;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatasetCompression"/> for deserialization. </summary>
+        internal DatasetCompression()
+        {
         }
 
         /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>

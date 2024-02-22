@@ -76,7 +76,10 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = SignalRClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.CheckSignalRNameAvailability");
             scope.Start();
@@ -119,7 +122,10 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = SignalRClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.CheckSignalRNameAvailability");
             scope.Start();
@@ -219,7 +225,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SignalRUsage.DeserializeSignalRUsage, UsagesClientDiagnostics, Pipeline, "MockableSignalRSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SignalRUsage.DeserializeSignalRUsage(e), UsagesClientDiagnostics, Pipeline, "MockableSignalRSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +252,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SignalRUsage.DeserializeSignalRUsage, UsagesClientDiagnostics, Pipeline, "MockableSignalRSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SignalRUsage.DeserializeSignalRUsage(e), UsagesClientDiagnostics, Pipeline, "MockableSignalRSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

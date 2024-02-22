@@ -309,7 +309,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ElasticPoolResource>> UpdateAsync(WaitUntil waitUntil, ElasticPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.Update");
             scope.Start();
@@ -355,7 +358,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ElasticPoolResource> Update(WaitUntil waitUntil, ElasticPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.Update");
             scope.Start();
@@ -397,10 +403,13 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SqlMetric.DeserializeSqlMetric(e), _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -426,10 +435,13 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SqlMetric.DeserializeSqlMetric(e), _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -454,7 +466,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SqlMetricDefinition.DeserializeSqlMetricDefinition(e), _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -479,7 +491,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SqlMetricDefinition.DeserializeSqlMetricDefinition(e), _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -504,7 +516,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<ElasticPoolActivity> GetElasticPoolActivitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticPoolActivity.DeserializeElasticPoolActivity, _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ElasticPoolActivity.DeserializeElasticPoolActivity(e), _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -529,7 +541,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<ElasticPoolActivity> GetElasticPoolActivities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ElasticPoolActivity.DeserializeElasticPoolActivity, _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ElasticPoolActivity.DeserializeElasticPoolActivity(e), _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -554,7 +566,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolDatabaseActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity, _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity(e), _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -579,7 +591,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolDatabaseActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity, _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity(e), _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -675,7 +687,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolOperationsRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticPoolOperationsRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ElasticPoolOperationData.DeserializeElasticPoolOperationData, _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ElasticPoolOperationData.DeserializeElasticPoolOperationData(e), _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -701,7 +713,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolOperationsRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticPoolOperationsRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ElasticPoolOperationData.DeserializeElasticPoolOperationData, _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ElasticPoolOperationData.DeserializeElasticPoolOperationData(e), _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -875,8 +887,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ElasticPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.AddTag");
             scope.Start();
@@ -937,8 +955,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ElasticPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.AddTag");
             scope.Start();
@@ -998,7 +1022,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ElasticPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.SetTags");
             scope.Start();
@@ -1055,7 +1082,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ElasticPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.SetTags");
             scope.Start();
@@ -1112,7 +1142,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ElasticPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.RemoveTag");
             scope.Start();
@@ -1172,7 +1205,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ElasticPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.RemoveTag");
             scope.Start();

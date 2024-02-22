@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class IdentityProviderDetails
+    public partial class IdentityProviderDetails : IUtf8JsonSerializable, IJsonModel<IdentityProviderDetails>
     {
-        internal static IdentityProviderDetails DeserializeIdentityProviderDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentityProviderDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IdentityProviderDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IdentityProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IdentityProviderDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
+            if (Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId);
+            }
+            if (Optional.IsDefined(Audience))
+            {
+                writer.WritePropertyName("audience"u8);
+                writer.WriteStringValue(Audience);
+            }
+            if (Optional.IsDefined(AadAuthority))
+            {
+                writer.WritePropertyName("aadAuthority"u8);
+                writer.WriteStringValue(AadAuthority);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IdentityProviderDetails IJsonModel<IdentityProviderDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IdentityProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IdentityProviderDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIdentityProviderDetails(document.RootElement, options);
+        }
+
+        internal static IdentityProviderDetails DeserializeIdentityProviderDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +94,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> objectId = default;
             Optional<string> audience = default;
             Optional<string> aadAuthority = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -55,8 +127,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     aadAuthority = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IdentityProviderDetails(Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IdentityProviderDetails(Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IdentityProviderDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IdentityProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IdentityProviderDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IdentityProviderDetails IPersistableModel<IdentityProviderDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IdentityProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIdentityProviderDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IdentityProviderDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IdentityProviderDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

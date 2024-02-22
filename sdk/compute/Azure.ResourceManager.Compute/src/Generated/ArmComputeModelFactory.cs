@@ -1747,10 +1747,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
         /// <param name="isPerformancePlusEnabled"> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
         /// <param name="elasticSanResourceId"> Required if createOption is CopyFromSanSnapshot. This is the ARM id of the source elastic san volume snapshot. </param>
+        /// <param name="provisionedBandwidthCopySpeed"> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </param>
         /// <returns> A new <see cref="Models.DiskCreationData"/> instance for mocking. </returns>
-        public static DiskCreationData DiskCreationData(DiskCreateOption createOption = default, ResourceIdentifier storageAccountId = null, ImageDiskReference imageReference = null, ImageDiskReference galleryImageReference = null, Uri sourceUri = null, ResourceIdentifier sourceResourceId = null, string sourceUniqueId = null, long? uploadSizeBytes = null, int? logicalSectorSize = null, Uri securityDataUri = null, bool? isPerformancePlusEnabled = null, ResourceIdentifier elasticSanResourceId = null)
+        public static DiskCreationData DiskCreationData(DiskCreateOption createOption = default, ResourceIdentifier storageAccountId = null, ImageDiskReference imageReference = null, ImageDiskReference galleryImageReference = null, Uri sourceUri = null, ResourceIdentifier sourceResourceId = null, string sourceUniqueId = null, long? uploadSizeBytes = null, int? logicalSectorSize = null, Uri securityDataUri = null, bool? isPerformancePlusEnabled = null, ResourceIdentifier elasticSanResourceId = null, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = null)
         {
-            return new DiskCreationData(createOption, storageAccountId, imageReference, galleryImageReference, sourceUri, sourceResourceId, sourceUniqueId, uploadSizeBytes, logicalSectorSize, securityDataUri, isPerformancePlusEnabled, elasticSanResourceId, serializedAdditionalRawData: null);
+            return new DiskCreationData(createOption, storageAccountId, imageReference, galleryImageReference, sourceUri, sourceResourceId, sourceUniqueId, uploadSizeBytes, logicalSectorSize, securityDataUri, isPerformancePlusEnabled, elasticSanResourceId, provisionedBandwidthCopySpeed, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ShareInfoElement"/>. </summary>
@@ -2920,6 +2921,26 @@ namespace Azure.ResourceManager.Compute.Models
         public static OSVersionPropertiesBase OSVersionPropertiesBase(string version = null, string label = null, bool? isDefault = null, bool? isActive = null)
         {
             return new OSVersionPropertiesBase(version, label, isDefault, isActive, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.DiskCreationData" />. </summary>
+        /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
+        /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
+        /// <param name="imageReference"> Disk source information for PIR or user images. </param>
+        /// <param name="galleryImageReference"> Required if creating from a Gallery Image. The id/sharedGalleryImageId/communityGalleryImageId of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </param>
+        /// <param name="sourceUri"> If createOption is Import, this is the URI of a blob to be imported into a managed disk. </param>
+        /// <param name="sourceResourceId"> If createOption is Copy, this is the ARM id of the source snapshot or disk. </param>
+        /// <param name="sourceUniqueId"> If this field is set, this is the unique id identifying the source of this resource. </param>
+        /// <param name="uploadSizeBytes"> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </param>
+        /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </param>
+        /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
+        /// <param name="isPerformancePlusEnabled"> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
+        /// <param name="elasticSanResourceId"> Required if createOption is CopyFromSanSnapshot. This is the ARM id of the source elastic san volume snapshot. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.Models.DiskCreationData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskCreationData DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri, bool? isPerformancePlusEnabled, ResourceIdentifier elasticSanResourceId)
+        {
+            return DiskCreationData(createOption: createOption, storageAccountId: storageAccountId, imageReference: imageReference, galleryImageReference: galleryImageReference, sourceUri: sourceUri, sourceResourceId: sourceResourceId, sourceUniqueId: sourceUniqueId, uploadSizeBytes: uploadSizeBytes, logicalSectorSize: logicalSectorSize, securityDataUri: securityDataUri, isPerformancePlusEnabled: isPerformancePlusEnabled, elasticSanResourceId: elasticSanResourceId, provisionedBandwidthCopySpeed: default);
         }
     }
 }

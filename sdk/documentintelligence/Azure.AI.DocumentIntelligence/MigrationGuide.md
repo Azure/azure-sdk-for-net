@@ -14,6 +14,7 @@ Familiarity with the `Azure.AI.FormRecognizer` package is assumed. For those new
     - [Building a document model](#building-a-document-model)
 - [Missing features](#missing-features)
     - [Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)
+    - [Extracting words from a line](#extracting-words-from-a-line)
     - [Accessing an existing long-running operation](#accessing-an-existing-long-running-operation)
 - [Additional samples](#additional-samples)
 
@@ -498,6 +499,62 @@ for (int i = 0; i < result.Documents.Count; i++)
     {
         CurrencyValue invoiceTotal = invoiceTotalField.ValueCurrency;
         Console.WriteLine($"Invoice Total: '{invoiceTotal.CurrencySymbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
+    }
+}
+```
+
+### Extracting words from a line
+
+Currently the `DocumentLine.GetWords` method is not supported. As a temporary workaround, you can add the following implementation to your code:
+
+```C# Snippet:Migration_DocumentIntelligenceGetWords
+private IReadOnlyList<DocumentWord> GetWords(DocumentLine line, DocumentPage containingPage)
+{
+    var words = new List<DocumentWord>();
+
+    foreach (DocumentWord word in containingPage.Words)
+    {
+        DocumentSpan wordSpan = word.Span;
+
+        foreach (DocumentSpan lineSpan in line.Spans)
+        {
+            if (wordSpan.Offset >= lineSpan.Offset
+                && wordSpan.Offset + wordSpan.Length <= lineSpan.Offset + lineSpan.Length)
+            {
+                words.Add(word);
+            }
+        }
+    }
+
+    return words;
+}
+```
+
+Note that it's necessary to pass the `DocumentPage` containing the line to the method. The method above can be used as follows:
+
+```C# Snippet:Migration_DocumentIntelligenceGetWordsUsage
+Uri uriSource = new Uri("<uriSource>");
+
+var content = new AnalyzeDocumentContent()
+{
+    UrlSource = uriSource
+};
+
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+AnalyzeResult result = operation.Value;
+
+DocumentPage firstPage = result.Pages[0];
+
+foreach (DocumentLine line in firstPage.Lines)
+{
+    IReadOnlyList<DocumentWord> words = GetWords(line, firstPage);
+
+    Console.WriteLine(line.Content);
+    Console.WriteLine("The line above contains the following words:");
+
+    foreach (DocumentWord word in words)
+    {
+        Console.WriteLine($"  {word.Content}");
     }
 }
 ```

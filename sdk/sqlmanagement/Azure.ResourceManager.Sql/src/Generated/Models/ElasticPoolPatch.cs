@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An elastic pool update. </summary>
     public partial class ElasticPoolPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ElasticPoolPatch"/>. </summary>
         public ElasticPoolPatch()
         {
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
-        internal ElasticPoolPatch(SqlSku sku, IDictionary<string, string> tags, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolPatch(SqlSku sku, IDictionary<string, string> tags, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;
@@ -44,6 +78,7 @@ namespace Azure.ResourceManager.Sql.Models
             HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
             PreferredEnclaveType = preferredEnclaveType;
             AvailabilityZone = availabilityZone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An ARM Resource SKU. </summary>

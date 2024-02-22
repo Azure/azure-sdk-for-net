@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -20,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="reprotectAgentId"/>, <paramref name="datastoreName"/> or <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmReprotectContent(string reprotectAgentId, string datastoreName, ResourceIdentifier logStorageAccountId)
         {
-            Argument.AssertNotNull(reprotectAgentId, nameof(reprotectAgentId));
-            Argument.AssertNotNull(datastoreName, nameof(datastoreName));
-            Argument.AssertNotNull(logStorageAccountId, nameof(logStorageAccountId));
+            if (reprotectAgentId == null)
+            {
+                throw new ArgumentNullException(nameof(reprotectAgentId));
+            }
+            if (datastoreName == null)
+            {
+                throw new ArgumentNullException(nameof(datastoreName));
+            }
+            if (logStorageAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(logStorageAccountId));
+            }
 
             ReprotectAgentId = reprotectAgentId;
             DatastoreName = datastoreName;
@@ -32,17 +42,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmReprotectContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="reprotectAgentId"> The reprotect agent Id. </param>
         /// <param name="datastoreName"> The target datastore name. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
         /// <param name="policyId"> The Policy Id. </param>
-        internal InMageRcmReprotectContent(string instanceType, string reprotectAgentId, string datastoreName, ResourceIdentifier logStorageAccountId, ResourceIdentifier policyId) : base(instanceType)
+        internal InMageRcmReprotectContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string reprotectAgentId, string datastoreName, ResourceIdentifier logStorageAccountId, ResourceIdentifier policyId) : base(instanceType, serializedAdditionalRawData)
         {
             ReprotectAgentId = reprotectAgentId;
             DatastoreName = datastoreName;
             LogStorageAccountId = logStorageAccountId;
             PolicyId = policyId;
             InstanceType = instanceType ?? "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmReprotectContent"/> for deserialization. </summary>
+        internal InMageRcmReprotectContent()
+        {
         }
 
         /// <summary> The reprotect agent Id. </summary>

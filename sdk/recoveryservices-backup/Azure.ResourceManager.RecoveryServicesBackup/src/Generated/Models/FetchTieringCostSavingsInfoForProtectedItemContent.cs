@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
         public FetchTieringCostSavingsInfoForProtectedItemContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string containerName, string protectedItemName) : base(sourceTierType, targetTierType)
         {
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(protectedItemName, nameof(protectedItemName));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (protectedItemName == null)
+            {
+                throw new ArgumentNullException(nameof(protectedItemName));
+            }
 
             ContainerName = containerName;
             ProtectedItemName = protectedItemName;
@@ -33,13 +39,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerName"> Name of the protected item container. </param>
         /// <param name="protectedItemName"> Name of the protectedItemName. </param>
-        internal FetchTieringCostSavingsInfoForProtectedItemContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, string containerName, string protectedItemName) : base(sourceTierType, targetTierType, objectType)
+        internal FetchTieringCostSavingsInfoForProtectedItemContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string containerName, string protectedItemName) : base(sourceTierType, targetTierType, objectType, serializedAdditionalRawData)
         {
             ContainerName = containerName;
             ProtectedItemName = protectedItemName;
             ObjectType = objectType ?? "FetchTieringCostSavingsInfoForProtectedItemRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForProtectedItemContent"/> for deserialization. </summary>
+        internal FetchTieringCostSavingsInfoForProtectedItemContent()
+        {
         }
 
         /// <summary> Name of the protected item container. </summary>

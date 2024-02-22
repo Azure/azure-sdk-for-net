@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-02</description>
+        /// <description>2023-10-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +353,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RestorePointResource>> UpdateAsync(WaitUntil waitUntil, RestorePointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointResource.Update");
             scope.Start();
@@ -399,7 +402,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RestorePointResource> Update(WaitUntil waitUntil, RestorePointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointResource.Update");
             scope.Start();

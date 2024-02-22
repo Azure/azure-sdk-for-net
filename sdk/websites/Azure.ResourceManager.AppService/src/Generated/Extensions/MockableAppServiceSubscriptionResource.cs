@@ -325,7 +325,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response> ValidateAppServiceCertificateOrderPurchaseInformationAsync(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ValidateAppServiceCertificateOrderPurchaseInformation");
             scope.Start();
@@ -363,7 +366,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = AppServiceCertificateOrdersClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ValidateAppServiceCertificateOrderPurchaseInformation");
             scope.Start();
@@ -401,7 +407,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public virtual async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(identifier, nameof(identifier));
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
 
             using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability");
             scope.Start();
@@ -439,7 +448,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public virtual Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(identifier, nameof(identifier));
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
 
             using var scope = DomainsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability");
             scope.Start();
@@ -606,11 +618,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An async collection of <see cref="AppServiceDomainNameIdentifier"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendationsAsync(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier, DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(e), DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -636,11 +651,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> A collection of <see cref="AppServiceDomainNameIdentifier"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendations(DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier, DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(e), DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -923,7 +941,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
+            if (deletedSiteId == null)
+            {
+                throw new ArgumentNullException(nameof(deletedSiteId));
+            }
+            if (deletedSiteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
+            }
 
             using var scope = DeletedSiteDeletedWebAppsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetDeletedWebAppByLocationDeletedWebApp");
             scope.Start();
@@ -967,7 +992,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
+            if (deletedSiteId == null)
+            {
+                throw new ArgumentNullException(nameof(deletedSiteId));
+            }
+            if (deletedSiteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
+            }
 
             using var scope = DeletedSiteDeletedWebAppsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetDeletedWebAppByLocationDeletedWebApp");
             scope.Start();
@@ -1067,7 +1099,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetAvailableStacksOnPremRequest(Id.SubscriptionId, osTypeSelected);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetAvailableStacksOnPremNextPageRequest(nextLink, Id.SubscriptionId, osTypeSelected);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApplicationStackResource.DeserializeApplicationStackResource, ProviderClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApplicationStackResource.DeserializeApplicationStackResource(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1094,7 +1126,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetAvailableStacksOnPremRequest(Id.SubscriptionId, osTypeSelected);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetAvailableStacksOnPremNextPageRequest(nextLink, Id.SubscriptionId, osTypeSelected);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApplicationStackResource.DeserializeApplicationStackResource, ProviderClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApplicationStackResource.DeserializeApplicationStackResource(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1122,7 +1154,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RecommendationsRestClient.CreateListRequest(Id.SubscriptionId, featured, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, featured, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, RecommendationsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceRecommendation.DeserializeAppServiceRecommendation(e), RecommendationsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1150,7 +1182,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RecommendationsRestClient.CreateListRequest(Id.SubscriptionId, featured, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, featured, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, RecommendationsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceRecommendation.DeserializeAppServiceRecommendation(e), RecommendationsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1244,7 +1276,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response> DisableAppServiceRecommendationAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation");
             scope.Start();
@@ -1283,7 +1322,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response DisableAppServiceRecommendation(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation");
             scope.Start();
@@ -1322,7 +1368,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceHealthMetadataRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceHealthMetadataRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthMetadataData.DeserializeResourceHealthMetadataData, ResourceHealthMetadataClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(e), ResourceHealthMetadataClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1348,7 +1394,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceHealthMetadataRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceHealthMetadataRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthMetadataData.DeserializeResourceHealthMetadataData, ResourceHealthMetadataClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(e), ResourceHealthMetadataClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1376,7 +1422,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListBillingMetersRequest(Id.SubscriptionId, billingLocation, osType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListBillingMetersNextPageRequest(nextLink, Id.SubscriptionId, billingLocation, osType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceBillingMeter.DeserializeAppServiceBillingMeter, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetBillingMeters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceBillingMeter.DeserializeAppServiceBillingMeter(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetBillingMeters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1404,7 +1450,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListBillingMetersRequest(Id.SubscriptionId, billingLocation, osType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListBillingMetersNextPageRequest(nextLink, Id.SubscriptionId, billingLocation, osType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceBillingMeter.DeserializeAppServiceBillingMeter, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetBillingMeters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceBillingMeter.DeserializeAppServiceBillingMeter(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetBillingMeters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1429,7 +1475,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability");
             scope.Start();
@@ -1467,7 +1516,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ResourceNameAvailability> CheckAppServiceNameAvailability(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability");
             scope.Start();
@@ -1578,7 +1630,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListGeoRegionsRequest(Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListGeoRegionsNextPageRequest(nextLink, Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceGeoRegion.DeserializeAppServiceGeoRegion, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGeoRegions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceGeoRegion.DeserializeAppServiceGeoRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGeoRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1608,7 +1660,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListGeoRegionsRequest(Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListGeoRegionsNextPageRequest(nextLink, Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceGeoRegion.DeserializeAppServiceGeoRegion, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGeoRegions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceGeoRegion.DeserializeAppServiceGeoRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGeoRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1634,7 +1686,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListPremierAddOnOffersRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListPremierAddOnOffersNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PremierAddOnOffer.DeserializePremierAddOnOffer, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PremierAddOnOffer.DeserializePremierAddOnOffer(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1660,7 +1712,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListPremierAddOnOffersRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListPremierAddOnOffersNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PremierAddOnOffer.DeserializePremierAddOnOffer, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PremierAddOnOffer.DeserializePremierAddOnOffer(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1753,7 +1805,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet");
             scope.Start();
@@ -1791,7 +1846,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet");
             scope.Start();
@@ -1830,7 +1888,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = StaticSitesClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow");
             scope.Start();
@@ -1869,7 +1930,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = StaticSitesClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow");
             scope.Start();

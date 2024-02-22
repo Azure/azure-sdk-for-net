@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="restoreDatabaseName"/> is null. </exception>
         public MigrateSqlServerSqlMIDatabaseInput(string name, string restoreDatabaseName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(restoreDatabaseName, nameof(restoreDatabaseName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (restoreDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(restoreDatabaseName));
+            }
 
             Name = name;
             RestoreDatabaseName = restoreDatabaseName;

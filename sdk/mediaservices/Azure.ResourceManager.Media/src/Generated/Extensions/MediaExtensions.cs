@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesAccountFilterResource"/> object. </returns>
         public static MediaServicesAccountFilterResource GetMediaServicesAccountFilterResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaServicesAccountFilterResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesAccountResource"/> object. </returns>
         public static MediaServicesAccountResource GetMediaServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaServicesAccountResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesPrivateLinkResource"/> object. </returns>
         public static MediaServicesPrivateLinkResource GetMediaServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaServicesPrivateLinkResource(id);
         }
@@ -106,7 +115,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesPrivateEndpointConnectionResource"/> object. </returns>
         public static MediaServicesPrivateEndpointConnectionResource GetMediaServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaServicesPrivateEndpointConnectionResource(id);
         }
@@ -125,7 +137,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetResource"/> object. </returns>
         public static MediaAssetResource GetMediaAssetResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaAssetResource(id);
         }
@@ -144,7 +159,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetFilterResource"/> object. </returns>
         public static MediaAssetFilterResource GetMediaAssetFilterResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaAssetFilterResource(id);
         }
@@ -163,7 +181,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetTrackResource"/> object. </returns>
         public static MediaAssetTrackResource GetMediaAssetTrackResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaAssetTrackResource(id);
         }
@@ -182,7 +203,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="ContentKeyPolicyResource"/> object. </returns>
         public static ContentKeyPolicyResource GetContentKeyPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetContentKeyPolicyResource(id);
         }
@@ -201,7 +225,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaTransformResource"/> object. </returns>
         public static MediaTransformResource GetMediaTransformResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaTransformResource(id);
         }
@@ -220,7 +247,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaJobResource"/> object. </returns>
         public static MediaJobResource GetMediaJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaJobResource(id);
         }
@@ -239,7 +269,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingPolicyResource"/> object. </returns>
         public static StreamingPolicyResource GetStreamingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetStreamingPolicyResource(id);
         }
@@ -258,7 +291,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingLocatorResource"/> object. </returns>
         public static StreamingLocatorResource GetStreamingLocatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetStreamingLocatorResource(id);
         }
@@ -277,7 +313,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaLiveEventResource"/> object. </returns>
         public static MediaLiveEventResource GetMediaLiveEventResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaLiveEventResource(id);
         }
@@ -296,7 +335,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaLiveOutputResource"/> object. </returns>
         public static MediaLiveOutputResource GetMediaLiveOutputResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetMediaLiveOutputResource(id);
         }
@@ -315,7 +357,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingEndpointResource"/> object. </returns>
         public static StreamingEndpointResource GetStreamingEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMediaArmClient(client).GetStreamingEndpointResource(id);
         }
@@ -332,7 +377,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaServicesAccountResources and their operations over a MediaServicesAccountResource. </returns>
         public static MediaServicesAccountCollection GetMediaServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableMediaResourceGroupResource(resourceGroupResource).GetMediaServicesAccounts();
         }
@@ -370,7 +418,10 @@ namespace Azure.ResourceManager.Media
         [ForwardsClientCalls]
         public static async Task<Response<MediaServicesAccountResource>> GetMediaServicesAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableMediaResourceGroupResource(resourceGroupResource).GetMediaServicesAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -408,7 +459,10 @@ namespace Azure.ResourceManager.Media
         [ForwardsClientCalls]
         public static Response<MediaServicesAccountResource> GetMediaServicesAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableMediaResourceGroupResource(resourceGroupResource).GetMediaServicesAccount(accountName, cancellationToken);
         }
@@ -444,7 +498,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MediaServicesAccountResource> GetMediaServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMediaSubscriptionResource(subscriptionResource).GetMediaServicesAccountsAsync(cancellationToken);
         }
@@ -480,7 +537,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MediaServicesAccountResource> GetMediaServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMediaSubscriptionResource(subscriptionResource).GetMediaServicesAccounts(cancellationToken);
         }
@@ -513,7 +573,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableMediaSubscriptionResource(subscriptionResource).CheckMediaServicesNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
@@ -546,7 +609,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMediaSubscriptionResource(subscriptionResource).CheckMediaServicesNameAvailability(locationName, content, cancellationToken);
         }

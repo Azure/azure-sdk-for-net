@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Blob index tag based filtering for blob objects. </summary>
     public partial class ManagementPolicyTagFilter
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagementPolicyTagFilter"/>. </summary>
         /// <param name="name"> This is the filter tag name, it can have 1 - 128 characters. </param>
         /// <param name="operator"> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </param>
@@ -20,13 +52,40 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/> or <paramref name="value"/> is null. </exception>
         public ManagementPolicyTagFilter(string name, string @operator, string value)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(@operator, nameof(@operator));
-            Argument.AssertNotNull(value, nameof(value));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (@operator == null)
+            {
+                throw new ArgumentNullException(nameof(@operator));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Name = name;
             Operator = @operator;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyTagFilter"/>. </summary>
+        /// <param name="name"> This is the filter tag name, it can have 1 - 128 characters. </param>
+        /// <param name="operator"> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </param>
+        /// <param name="value"> This is the filter tag value field used for tag based filtering, it can have 0 - 256 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicyTagFilter(string name, string @operator, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Operator = @operator;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyTagFilter"/> for deserialization. </summary>
+        internal ManagementPolicyTagFilter()
+        {
         }
 
         /// <summary> This is the filter tag name, it can have 1 - 128 characters. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
@@ -12,15 +15,38 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightIPConfiguration : IUtf8JsonSerializable
+    public partial class HDInsightIPConfiguration : IUtf8JsonSerializable, IJsonModel<HDInsightIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightIPConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HDInsightIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
@@ -42,11 +68,40 @@ namespace Azure.ResourceManager.HDInsight.Models
                 JsonSerializer.Serialize(writer, Subnet);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightIPConfiguration DeserializeHDInsightIPConfiguration(JsonElement element)
+        HDInsightIPConfiguration IJsonModel<HDInsightIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightIPConfiguration(document.RootElement, options);
+        }
+
+        internal static HDInsightIPConfiguration DeserializeHDInsightIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +114,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IPAddress> privateIPAddress = default;
             Optional<HDInsightPrivateIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<WritableSubResource> subnet = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -141,8 +198,44 @@ namespace Azure.ResourceManager.HDInsight.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightIPConfiguration(id.Value, name, Optional.ToNullable(type), Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightIPConfiguration(id.Value, name, Optional.ToNullable(type), Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightIPConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HDInsightIPConfiguration IPersistableModel<HDInsightIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHDInsightIPConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightIPConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightIPConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

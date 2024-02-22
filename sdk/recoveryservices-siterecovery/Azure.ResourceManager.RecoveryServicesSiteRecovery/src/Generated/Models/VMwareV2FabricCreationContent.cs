@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="migrationSolutionId"/> is null. </exception>
         public VMwareV2FabricCreationContent(ResourceIdentifier migrationSolutionId)
         {
-            Argument.AssertNotNull(migrationSolutionId, nameof(migrationSolutionId));
+            if (migrationSolutionId == null)
+            {
+                throw new ArgumentNullException(nameof(migrationSolutionId));
+            }
 
             MigrationSolutionId = migrationSolutionId;
             InstanceType = "VMwareV2";
@@ -26,15 +30,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="VMwareV2FabricCreationContent"/>. </summary>
         /// <param name="instanceType"> Gets the class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="migrationSolutionId"> The ARM Id of the migration solution. </param>
-        internal VMwareV2FabricCreationContent(string instanceType, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId) : base(instanceType)
+        internal VMwareV2FabricCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, ResourceIdentifier migrationSolutionId) : base(instanceType, serializedAdditionalRawData)
         {
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
             MigrationSolutionId = migrationSolutionId;
             InstanceType = instanceType ?? "VMwareV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareV2FabricCreationContent"/> for deserialization. </summary>
+        internal VMwareV2FabricCreationContent()
+        {
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>

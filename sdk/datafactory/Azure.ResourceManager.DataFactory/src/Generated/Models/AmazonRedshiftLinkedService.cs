@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
         public AmazonRedshiftLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> database)
         {
-            Argument.AssertNotNull(server, nameof(server));
-            Argument.AssertNotNull(database, nameof(database));
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
+            if (database == null)
+            {
+                throw new ArgumentNullException(nameof(database));
+            }
 
             Server = server;
             Database = database;
@@ -51,6 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Port = port;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "AmazonRedshift";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedService"/> for deserialization. </summary>
+        internal AmazonRedshiftLinkedService()
+        {
         }
 
         /// <summary> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </summary>

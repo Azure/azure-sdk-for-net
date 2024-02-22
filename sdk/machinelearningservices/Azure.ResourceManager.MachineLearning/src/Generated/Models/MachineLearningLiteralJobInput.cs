@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningLiteralJobInput(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Value = value;
             JobInputType = JobInputType.Literal;
@@ -27,11 +30,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningLiteralJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> [Required] Literal value for the input. </param>
-        internal MachineLearningLiteralJobInput(string description, JobInputType jobInputType, string value) : base(description, jobInputType)
+        internal MachineLearningLiteralJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(description, jobInputType, serializedAdditionalRawData)
         {
             Value = value;
             JobInputType = jobInputType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningLiteralJobInput"/> for deserialization. </summary>
+        internal MachineLearningLiteralJobInput()
+        {
         }
 
         /// <summary> [Required] Literal value for the input. </summary>

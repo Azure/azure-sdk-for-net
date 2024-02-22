@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<SynapseBigDataPoolInfoResource>> UpdateAsync(SynapseBigDataPoolInfoPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoResource.Update");
             scope.Start();
@@ -324,7 +327,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<SynapseBigDataPoolInfoResource> Update(SynapseBigDataPoolInfoPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoResource.Update");
             scope.Start();
@@ -367,8 +373,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SynapseBigDataPoolInfoResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoResource.AddTag");
             scope.Start();
@@ -429,8 +441,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SynapseBigDataPoolInfoResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoResource.AddTag");
             scope.Start();
@@ -490,7 +508,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SynapseBigDataPoolInfoResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoResource.SetTags");
             scope.Start();
@@ -547,7 +568,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SynapseBigDataPoolInfoResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoResource.SetTags");
             scope.Start();
@@ -604,7 +628,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SynapseBigDataPoolInfoResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoResource.RemoveTag");
             scope.Start();
@@ -664,7 +691,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SynapseBigDataPoolInfoResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoResource.RemoveTag");
             scope.Start();

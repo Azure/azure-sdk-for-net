@@ -137,11 +137,18 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <returns> An async collection of <see cref="ProviderDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderDescription> GetOfferingsAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProviderDescription.DeserializeProviderDescription(e), OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,11 +175,18 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <returns> A collection of <see cref="ProviderDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderDescription> GetOfferings(string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProviderDescription.DeserializeProviderDescription(e), OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -199,8 +213,18 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityWorkspaceAsync(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = WorkspaceClientDiagnostics.CreateScope("MockableQuantumSubscriptionResource.CheckNameAvailabilityWorkspace");
             scope.Start();
@@ -240,8 +264,18 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityWorkspace(string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (locationName == null)
+            {
+                throw new ArgumentNullException(nameof(locationName));
+            }
+            if (locationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = WorkspaceClientDiagnostics.CreateScope("MockableQuantumSubscriptionResource.CheckNameAvailabilityWorkspace");
             scope.Start();

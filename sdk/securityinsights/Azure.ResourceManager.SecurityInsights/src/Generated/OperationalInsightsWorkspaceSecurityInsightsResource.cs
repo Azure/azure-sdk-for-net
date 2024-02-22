@@ -780,7 +780,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An async collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicatorsAsync(ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
+            if (threatIntelligenceFilteringCriteria == null)
+            {
+                throw new ArgumentNullException(nameof(threatIntelligenceFilteringCriteria));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorRestClient.CreateQueryIndicatorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatIntelligenceFilteringCriteria);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _threatIntelligenceIndicatorRestClient.CreateQueryIndicatorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatIntelligenceFilteringCriteria);
@@ -810,7 +813,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicators(ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
+            if (threatIntelligenceFilteringCriteria == null)
+            {
+                throw new ArgumentNullException(nameof(threatIntelligenceFilteringCriteria));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorRestClient.CreateQueryIndicatorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatIntelligenceFilteringCriteria);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _threatIntelligenceIndicatorRestClient.CreateQueryIndicatorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatIntelligenceFilteringCriteria);
@@ -839,7 +845,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual AsyncPageable<ThreatIntelligenceMetrics> GetAllThreatIntelligenceIndicatorMetricsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorMetricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics, _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(e), _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -864,7 +870,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Pageable<ThreatIntelligenceMetrics> GetAllThreatIntelligenceIndicatorMetrics(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorMetricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics, _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(e), _threatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetAllThreatIntelligenceIndicatorMetrics", "value", null, cancellationToken);
         }
     }
 }

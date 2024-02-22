@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -22,11 +21,26 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultEndpoint"/>, <paramref name="keyVaultClientId"/>, <paramref name="servicePrincipalIdNameInKV"/>, <paramref name="servicePrincipalSecretNameInKV"/> or <paramref name="tenantId"/> is null. </exception>
         public ServicePrincipalInKVParam(string keyVaultEndpoint, string keyVaultClientId, string servicePrincipalIdNameInKV, string servicePrincipalSecretNameInKV, string tenantId)
         {
-            Argument.AssertNotNull(keyVaultEndpoint, nameof(keyVaultEndpoint));
-            Argument.AssertNotNull(keyVaultClientId, nameof(keyVaultClientId));
-            Argument.AssertNotNull(servicePrincipalIdNameInKV, nameof(servicePrincipalIdNameInKV));
-            Argument.AssertNotNull(servicePrincipalSecretNameInKV, nameof(servicePrincipalSecretNameInKV));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
+            if (keyVaultEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(keyVaultEndpoint));
+            }
+            if (keyVaultClientId == null)
+            {
+                throw new ArgumentNullException(nameof(keyVaultClientId));
+            }
+            if (servicePrincipalIdNameInKV == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalIdNameInKV));
+            }
+            if (servicePrincipalSecretNameInKV == null)
+            {
+                throw new ArgumentNullException(nameof(servicePrincipalSecretNameInKV));
+            }
+            if (tenantId == null)
+            {
+                throw new ArgumentNullException(nameof(tenantId));
+            }
 
             KeyVaultEndpoint = keyVaultEndpoint;
             KeyVaultClientId = keyVaultClientId;

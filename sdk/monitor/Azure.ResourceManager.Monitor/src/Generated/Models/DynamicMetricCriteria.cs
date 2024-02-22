@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -24,9 +23,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="metricName"/> or <paramref name="failingPeriods"/> is null. </exception>
         public DynamicMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DynamicThresholdFailingPeriods failingPeriods) : base(name, metricName, timeAggregation)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(failingPeriods, nameof(failingPeriods));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (metricName == null)
+            {
+                throw new ArgumentNullException(nameof(metricName));
+            }
+            if (failingPeriods == null)
+            {
+                throw new ArgumentNullException(nameof(failingPeriods));
+            }
 
             Operator = @operator;
             AlertSensitivity = alertSensitivity;
@@ -54,6 +62,11 @@ namespace Azure.ResourceManager.Monitor.Models
             FailingPeriods = failingPeriods;
             IgnoreDataBefore = ignoreDataBefore;
             CriterionType = criterionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/> for deserialization. </summary>
+        internal DynamicMetricCriteria()
+        {
         }
 
         /// <summary> The operator used to compare the metric value against the threshold. </summary>

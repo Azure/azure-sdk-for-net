@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -25,9 +24,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/> or <paramref name="fileShareName"/> is null. </exception>
         public MachineLearningAzureFileDatastore(MachineLearningDatastoreCredentials credentials, string accountName, string fileShareName) : base(credentials)
         {
-            Argument.AssertNotNull(credentials, nameof(credentials));
-            Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(fileShareName, nameof(fileShareName));
+            if (credentials == null)
+            {
+                throw new ArgumentNullException(nameof(credentials));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (fileShareName == null)
+            {
+                throw new ArgumentNullException(nameof(fileShareName));
+            }
 
             AccountName = accountName;
             FileShareName = fileShareName;
@@ -38,6 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -53,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <param name="resourceGroup"> Azure Resource Group name. </param>
         /// <param name="subscriptionId"> Azure Subscription Id. </param>
-        internal MachineLearningAzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string resourceGroup, string subscriptionId) : base(description, properties, tags, credentials, datastoreType, intellectualProperty, isDefault)
+        internal MachineLearningAzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string resourceGroup, string subscriptionId) : base(description, properties, tags, serializedAdditionalRawData, credentials, datastoreType, intellectualProperty, isDefault)
         {
             AccountName = accountName;
             Endpoint = endpoint;
@@ -63,6 +72,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ResourceGroup = resourceGroup;
             SubscriptionId = subscriptionId;
             DatastoreType = datastoreType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureFileDatastore"/> for deserialization. </summary>
+        internal MachineLearningAzureFileDatastore()
+        {
         }
 
         /// <summary> [Required] Storage account name. </summary>

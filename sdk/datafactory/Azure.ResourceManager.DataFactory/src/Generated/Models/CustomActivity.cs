@@ -21,8 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
         public CustomActivity(string name, DataFactoryElement<string> command) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(command, nameof(command));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
 
             Command = command;
             ExtendedProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -57,6 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             RetentionTimeInDays = retentionTimeInDays;
             AutoUserSpecification = autoUserSpecification;
             ActivityType = activityType ?? "Custom";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/> for deserialization. </summary>
+        internal CustomActivity()
+        {
         }
 
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>

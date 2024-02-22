@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -18,9 +17,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions(string ifMatch)
         {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
+            if (ifMatch == null)
+            {
+                throw new ArgumentNullException(nameof(ifMatch));
+            }
 
             IfMatch = ifMatch;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions()
+        {
         }
 
         /// <summary> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </summary>

@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="maximumBatchSize">The maximum number of events to include in the batch.</param>
         /// <param name="maximumWaitTime">The maximum time to wait when no events are available, in seconds.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Duration: '{6:0.00}' seconds; Starting sequence number: '{7}', Ending sequence number: '{8}'; Maximum batch size: '{9}'; Maximum wait time: '{10:0.00}'.")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Duration: '{6:0.00}' seconds; Starting sequence number: '{7}', Ending sequence number: '{8}'; Maximum batch size: '{9}'; Maximum wait time: '{10:0.00}' seconds.")]
         public virtual void EventReceiveComplete(string eventHubName,
                                                  string consumerGroup,
                                                  string partitionId,
@@ -2588,18 +2588,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="operationId">An artificial identifier for the handler invocation.</param>
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
         ///
-        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds.")]
+        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds, Event Count: '{6]'.")]
         public virtual void EventProcessorProcessingHandlerComplete(string partitionId,
                                                                     string identifier,
                                                                     string eventHubName,
                                                                     string consumerGroup,
                                                                     string operationId,
-                                                                    double durationSeconds)
+                                                                    double durationSeconds,
+                                                                    int eventCount)
         {
             if (IsEnabled())
             {
-                EventProcessorProcessingHandlerCompleteCore(124, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, durationSeconds);
+                EventProcessorProcessingHandlerCompleteCore(124, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, durationSeconds, eventCount);
             }
         }
 
@@ -2680,7 +2682,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="loadBalancingIntervalSeconds">The interval, in seconds, that should pass between load balancing cycles.</param>
         /// <param name="ownershipIntervalSeconds">The interval, in seconds, that partition ownership is reserved for..</param>
         ///
-        [Event(128, Level = EventLevel.Warning, Message = "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues with partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval '{2:0:00}' seconds.  Partition Ownership Interval '{3:0:00}' seconds.  {4}")]
+        [Event(128, Level = EventLevel.Warning, Message = "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues with partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval '{2:0.00}' seconds.  Partition Ownership Interval '{3:0.00}' seconds.  {4}")]
         public virtual void ProcessorLoadBalancingIntervalsTooCloseWarning(string identifier,
                                                                            string eventHubName,
                                                                            double loadBalancingIntervalSeconds,
@@ -2733,6 +2735,28 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                     formattedCycleStartTime ?? string.Empty,
                     formattedCycleEndTime ?? string.Empty,
                     durationSeconds);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has encountered an fatal error during load balancing
+        ///   and cannot recover.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(130, Level = EventLevel.Error, Message = "A fatal exception occurred during load balancing for processor instance with identifier '{0}' for Event Hub: {1} and Consumer Group: {2}.  The processor cannot recover and has stopped.  Error Message: '{3}'")]
+        public virtual void EventProcessorFatalTaskError(string identifier,
+                                                         string eventHubName,
+                                                         string consumerGroup,
+                                                         string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(130, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -3231,6 +3255,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="operationId">An artificial identifier for the handler invocation.</param>
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3240,7 +3265,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                                         string eventHubName,
                                                                         string consumerGroup,
                                                                         string operationId,
-                                                                        double durationSeconds)
+                                                                        double durationSeconds,
+                                                                        int eventCount)
         {
             fixed (char* partitionIdPtr = partitionId)
             fixed (char* identifierPtr = identifier)
@@ -3248,7 +3274,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             fixed (char* consumerGroupPtr = consumerGroup)
             fixed (char* operationIdPtr = operationId)
             {
-                var eventPayload = stackalloc EventData[6];
+                var eventPayload = stackalloc EventData[7];
 
                 eventPayload[0].Size = (partitionId.Length + 1) * sizeof(char);
                 eventPayload[0].DataPointer = (IntPtr)partitionIdPtr;
@@ -3268,7 +3294,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].Size = Unsafe.SizeOf<double>();
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
-                WriteEventCore(eventId, 6, eventPayload);
+                eventPayload[6].Size = Unsafe.SizeOf<int>();
+                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref eventCount);
+
+                WriteEventCore(eventId, 7, eventPayload);
             }
         }
 

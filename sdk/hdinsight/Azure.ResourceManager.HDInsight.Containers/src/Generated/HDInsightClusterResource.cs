@@ -288,7 +288,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<HDInsightClusterResource>> UpdateAsync(WaitUntil waitUntil, HDInsightClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.Update");
             scope.Start();
@@ -334,7 +337,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<HDInsightClusterResource> Update(WaitUntil waitUntil, HDInsightClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.Update");
             scope.Start();
@@ -380,7 +386,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<HDInsightClusterResource>> ResizeAsync(WaitUntil waitUntil, ClusterResizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.Resize");
             scope.Start();
@@ -426,7 +435,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<HDInsightClusterResource> Resize(WaitUntil waitUntil, ClusterResizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.Resize");
             scope.Start();
@@ -472,7 +484,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterServiceConfigResult.DeserializeClusterServiceConfigResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterServiceConfigResult.DeserializeClusterServiceConfigResult(e), _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -502,7 +514,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterServiceConfigResult.DeserializeClusterServiceConfigResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterServiceConfigResult.DeserializeClusterServiceConfigResult(e), _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -532,7 +544,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterInstanceViewResult.DeserializeClusterInstanceViewResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterInstanceViewResult.DeserializeClusterInstanceViewResult(e), _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +574,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterInstanceViewResult.DeserializeClusterInstanceViewResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterInstanceViewResult.DeserializeClusterInstanceViewResult(e), _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -664,7 +676,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterJob"/> is null. </exception>
         public virtual async Task<ArmOperation<ClusterJob>> RunJobClusterJobAsync(WaitUntil waitUntil, ClusterJob clusterJob, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(clusterJob, nameof(clusterJob));
+            if (clusterJob == null)
+            {
+                throw new ArgumentNullException(nameof(clusterJob));
+            }
 
             using var scope = _clusterJobsClientDiagnostics.CreateScope("HDInsightClusterResource.RunJobClusterJob");
             scope.Start();
@@ -706,7 +721,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterJob"/> is null. </exception>
         public virtual ArmOperation<ClusterJob> RunJobClusterJob(WaitUntil waitUntil, ClusterJob clusterJob, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(clusterJob, nameof(clusterJob));
+            if (clusterJob == null)
+            {
+                throw new ArgumentNullException(nameof(clusterJob));
+            }
 
             using var scope = _clusterJobsClientDiagnostics.CreateScope("HDInsightClusterResource.RunJobClusterJob");
             scope.Start();
@@ -748,7 +766,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterJob.DeserializeClusterJob, _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterJob.DeserializeClusterJob(e), _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -774,7 +792,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterJob.DeserializeClusterJob, _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterJob.DeserializeClusterJob(e), _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -804,8 +822,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<HDInsightClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.AddTag");
             scope.Start();
@@ -866,8 +890,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<HDInsightClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.AddTag");
             scope.Start();
@@ -927,7 +957,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<HDInsightClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.SetTags");
             scope.Start();
@@ -984,7 +1017,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<HDInsightClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.SetTags");
             scope.Start();
@@ -1041,7 +1077,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<HDInsightClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.RemoveTag");
             scope.Start();
@@ -1101,7 +1140,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<HDInsightClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.RemoveTag");
             scope.Start();

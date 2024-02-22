@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Hive Catalog Option. </summary>
     public partial class HiveCatalogOption
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HiveCatalogOption"/>. </summary>
         /// <param name="catalogName"> Name of trino catalog which should use specified hive metastore. </param>
         /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
@@ -22,17 +54,54 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/>, <paramref name="metastoreDBConnectionPasswordSecret"/>, <paramref name="metastoreDBConnectionUriString"/>, <paramref name="metastoreDBConnectionUserName"/> or <paramref name="metastoreWarehouseDir"/> is null. </exception>
         public HiveCatalogOption(string catalogName, string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, string metastoreWarehouseDir)
         {
-            Argument.AssertNotNull(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(metastoreDBConnectionPasswordSecret, nameof(metastoreDBConnectionPasswordSecret));
-            Argument.AssertNotNull(metastoreDBConnectionUriString, nameof(metastoreDBConnectionUriString));
-            Argument.AssertNotNull(metastoreDBConnectionUserName, nameof(metastoreDBConnectionUserName));
-            Argument.AssertNotNull(metastoreWarehouseDir, nameof(metastoreWarehouseDir));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (metastoreDBConnectionPasswordSecret == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreDBConnectionPasswordSecret));
+            }
+            if (metastoreDBConnectionUriString == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreDBConnectionUriString));
+            }
+            if (metastoreDBConnectionUserName == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreDBConnectionUserName));
+            }
+            if (metastoreWarehouseDir == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreWarehouseDir));
+            }
 
             CatalogName = catalogName;
             MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
             MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
             MetastoreDBConnectionUserName = metastoreDBConnectionUserName;
             MetastoreWarehouseDir = metastoreWarehouseDir;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HiveCatalogOption"/>. </summary>
+        /// <param name="catalogName"> Name of trino catalog which should use specified hive metastore. </param>
+        /// <param name="metastoreDBConnectionPasswordSecret"> Secret reference name from secretsProfile.secrets containing password for database connection. </param>
+        /// <param name="metastoreDBConnectionUriString"> Connection string for hive metastore database. </param>
+        /// <param name="metastoreDBConnectionUserName"> User name for database connection. </param>
+        /// <param name="metastoreWarehouseDir"> Metastore root directory URI, format: abfs[s]://&lt;container&gt;@&lt;account_name&gt;.dfs.core.windows.net/&lt;path&gt;. More details: https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction-abfs-uri. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HiveCatalogOption(string catalogName, string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName, string metastoreWarehouseDir, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CatalogName = catalogName;
+            MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
+            MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
+            MetastoreDBConnectionUserName = metastoreDBConnectionUserName;
+            MetastoreWarehouseDir = metastoreWarehouseDir;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HiveCatalogOption"/> for deserialization. </summary>
+        internal HiveCatalogOption()
+        {
         }
 
         /// <summary> Name of trino catalog which should use specified hive metastore. </summary>
