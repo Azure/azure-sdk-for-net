@@ -112,21 +112,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
             if (Optional.IsDefined(Message) || hasPropertyOverride)
             {
-                builder.Append("  message:");
+                builder.Append("  message: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Message.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Message}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Message}'");
+                        builder.AppendLine($"'{Message}'");
                     }
                 }
             }
@@ -134,21 +134,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionReferenceId), out propertyOverride);
             if (Optional.IsDefined(PolicyDefinitionReferenceId) || hasPropertyOverride)
             {
-                builder.Append("  policyDefinitionReferenceId:");
+                builder.Append("  policyDefinitionReferenceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PolicyDefinitionReferenceId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PolicyDefinitionReferenceId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PolicyDefinitionReferenceId}'");
+                        builder.AppendLine($"'{PolicyDefinitionReferenceId}'");
                     }
                 }
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

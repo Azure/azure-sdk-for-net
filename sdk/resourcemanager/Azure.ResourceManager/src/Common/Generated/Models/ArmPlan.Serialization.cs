@@ -119,21 +119,21 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -141,21 +141,21 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Publisher), out propertyOverride);
             if (Optional.IsDefined(Publisher) || hasPropertyOverride)
             {
-                builder.Append("  publisher:");
+                builder.Append("  publisher: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Publisher.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Publisher}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Publisher}'");
+                        builder.AppendLine($"'{Publisher}'");
                     }
                 }
             }
@@ -163,21 +163,21 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Product), out propertyOverride);
             if (Optional.IsDefined(Product) || hasPropertyOverride)
             {
-                builder.Append("  product:");
+                builder.Append("  product: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Product.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Product}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Product}'");
+                        builder.AppendLine($"'{Product}'");
                     }
                 }
             }
@@ -185,21 +185,21 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PromotionCode), out propertyOverride);
             if (Optional.IsDefined(PromotionCode) || hasPropertyOverride)
             {
-                builder.Append("  promotionCode:");
+                builder.Append("  promotionCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PromotionCode.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PromotionCode}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PromotionCode}'");
+                        builder.AppendLine($"'{PromotionCode}'");
                     }
                 }
             }
@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
             if (Optional.IsDefined(Version) || hasPropertyOverride)
             {
-                builder.Append("  version:");
+                builder.Append("  version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Version.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Version}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Version}'");
+                        builder.AppendLine($"'{Version}'");
                     }
                 }
             }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

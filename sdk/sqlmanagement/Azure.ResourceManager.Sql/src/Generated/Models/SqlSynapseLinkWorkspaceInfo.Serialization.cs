@@ -119,35 +119,35 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
             if (Optional.IsDefined(WorkspaceId) || hasPropertyOverride)
             {
-                builder.Append("  workspaceId:");
+                builder.Append("  workspaceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{WorkspaceId.ToString()}'");
+                    builder.AppendLine($"'{WorkspaceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkConnectionName), out propertyOverride);
             if (Optional.IsDefined(LinkConnectionName) || hasPropertyOverride)
             {
-                builder.Append("  linkConnectionName:");
+                builder.Append("  linkConnectionName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LinkConnectionName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LinkConnectionName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LinkConnectionName}'");
+                        builder.AppendLine($"'{LinkConnectionName}'");
                     }
                 }
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

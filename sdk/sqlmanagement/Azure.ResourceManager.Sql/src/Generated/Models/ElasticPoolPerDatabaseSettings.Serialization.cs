@@ -123,28 +123,28 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCapacity), out propertyOverride);
             if (Optional.IsDefined(MinCapacity) || hasPropertyOverride)
             {
-                builder.Append("  minCapacity:");
+                builder.Append("  minCapacity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MinCapacity.Value.ToString()}'");
+                    builder.AppendLine($"'{MinCapacity.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxCapacity), out propertyOverride);
             if (Optional.IsDefined(MaxCapacity) || hasPropertyOverride)
             {
-                builder.Append("  maxCapacity:");
+                builder.Append("  maxCapacity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MaxCapacity.Value.ToString()}'");
+                    builder.AppendLine($"'{MaxCapacity.Value.ToString()}'");
                 }
             }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

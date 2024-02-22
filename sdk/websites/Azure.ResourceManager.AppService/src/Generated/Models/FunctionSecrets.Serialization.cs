@@ -119,21 +119,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
             if (Optional.IsDefined(Key) || hasPropertyOverride)
             {
-                builder.Append("  key:");
+                builder.Append("  key: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Key.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Key}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Key}'");
+                        builder.AppendLine($"'{Key}'");
                     }
                 }
             }
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerUri), out propertyOverride);
             if (Optional.IsDefined(TriggerUri) || hasPropertyOverride)
             {
-                builder.Append("  trigger_url:");
+                builder.Append("  trigger_url: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TriggerUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{TriggerUri.AbsoluteUri}'");
                 }
             }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

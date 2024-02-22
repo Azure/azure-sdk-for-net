@@ -134,49 +134,56 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
             if (Optional.IsDefined(ActionType) || hasPropertyOverride)
             {
-                builder.Append("  actionType:");
+                builder.Append("  actionType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ActionType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ActionType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomAction), out propertyOverride);
             if (Optional.IsDefined(CustomAction) || hasPropertyOverride)
             {
-                builder.Append("  customAction:");
+                builder.Append("  customAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, CustomAction, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, CustomAction, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  customAction: ".Length;
+                    }
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProcessExecutionTime), out propertyOverride);
             if (Optional.IsDefined(MinProcessExecutionTime) || hasPropertyOverride)
             {
-                builder.Append("  minProcessExecutionTime:");
+                builder.Append("  minProcessExecutionTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (MinProcessExecutionTime.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{MinProcessExecutionTime}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{MinProcessExecutionTime}'");
+                        builder.AppendLine($"'{MinProcessExecutionTime}'");
                     }
                 }
             }
@@ -211,7 +218,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (PrefixMatch.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  prefixMatch:");
+                    builder.Append("  prefixMatch: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in PrefixMatch)
                         {
                             if (item == null)
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (BlobTypes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  blobTypes:");
+                    builder.Append("  blobTypes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in BlobTypes)
                         {
                             if (item == null)
@@ -234,17 +234,24 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (BlobIndexMatch.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  blobIndexMatch:");
+                    builder.Append("  blobIndexMatch: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in BlobIndexMatch)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  blobIndexMatch: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -281,7 +288,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

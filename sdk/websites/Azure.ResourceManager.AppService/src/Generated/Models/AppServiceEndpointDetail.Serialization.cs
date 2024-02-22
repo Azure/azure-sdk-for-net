@@ -154,57 +154,57 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddress), out propertyOverride);
             if (Optional.IsDefined(IPAddress) || hasPropertyOverride)
             {
-                builder.Append("  ipAddress:");
+                builder.Append("  ipAddress: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{IPAddress.ToString()}'");
+                    builder.AppendLine($"'{IPAddress.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
             if (Optional.IsDefined(Port) || hasPropertyOverride)
             {
-                builder.Append("  port:");
+                builder.Append("  port: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Port.Value}");
+                    builder.AppendLine($"{Port.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latency), out propertyOverride);
             if (Optional.IsDefined(Latency) || hasPropertyOverride)
             {
-                builder.Append("  latency:");
+                builder.Append("  latency: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Latency.Value.ToString()}'");
+                    builder.AppendLine($"'{Latency.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAccessible), out propertyOverride);
             if (Optional.IsDefined(IsAccessible) || hasPropertyOverride)
             {
-                builder.Append("  isAccessible:");
+                builder.Append("  isAccessible: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsAccessible.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

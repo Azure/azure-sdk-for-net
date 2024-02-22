@@ -101,21 +101,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Html), out propertyOverride);
             if (Optional.IsDefined(Html) || hasPropertyOverride)
             {
-                builder.Append("  html:");
+                builder.Append("  html: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Html.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Html}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Html}'");
+                        builder.AppendLine($"'{Html}'");
                     }
                 }
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

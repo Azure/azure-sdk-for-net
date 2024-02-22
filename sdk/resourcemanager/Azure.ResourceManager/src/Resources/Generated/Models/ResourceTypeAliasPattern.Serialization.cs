@@ -130,21 +130,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Phrase), out propertyOverride);
             if (Optional.IsDefined(Phrase) || hasPropertyOverride)
             {
-                builder.Append("  phrase:");
+                builder.Append("  phrase: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Phrase.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Phrase}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Phrase}'");
+                        builder.AppendLine($"'{Phrase}'");
                     }
                 }
             }
@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Variable), out propertyOverride);
             if (Optional.IsDefined(Variable) || hasPropertyOverride)
             {
-                builder.Append("  variable:");
+                builder.Append("  variable: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Variable.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Variable}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Variable}'");
+                        builder.AppendLine($"'{Variable}'");
                     }
                 }
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
             if (Optional.IsDefined(AppId) || hasPropertyOverride)
             {
-                builder.Append("  appId:");
+                builder.Append("  appId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AppId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AppId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AppId}'");
+                        builder.AppendLine($"'{AppId}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(AppSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("  appSecretSettingName:");
+                builder.Append("  appSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AppSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AppSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AppSecretSettingName}'");
+                        builder.AppendLine($"'{AppSecretSettingName}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

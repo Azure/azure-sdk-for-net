@@ -149,21 +149,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
             if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
             {
-                builder.Append("  applicationId:");
+                builder.Append("  applicationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ApplicationId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ApplicationId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ApplicationId}'");
+                        builder.AppendLine($"'{ApplicationId}'");
                     }
                 }
             }
@@ -171,42 +171,56 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinition), out propertyOverride);
             if (Optional.IsDefined(RoleDefinition) || hasPropertyOverride)
             {
-                builder.Append("  roleDefinition:");
+                builder.Append("  roleDefinition: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, RoleDefinition, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, RoleDefinition, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  roleDefinition: ".Length;
+                    }
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedByRoleDefinition), out propertyOverride);
             if (Optional.IsDefined(ManagedByRoleDefinition) || hasPropertyOverride)
             {
-                builder.Append("  managedByRoleDefinition:");
+                builder.Append("  managedByRoleDefinition: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ManagedByRoleDefinition, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, ManagedByRoleDefinition, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  managedByRoleDefinition: ".Length;
+                    }
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderAuthorizationConsentState), out propertyOverride);
             if (Optional.IsDefined(ProviderAuthorizationConsentState) || hasPropertyOverride)
             {
-                builder.Append("  providerAuthorizationConsentState:");
+                builder.Append("  providerAuthorizationConsentState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ProviderAuthorizationConsentState.Value.ToString()}'");
+                    builder.AppendLine($"'{ProviderAuthorizationConsentState.Value.ToString()}'");
                 }
             }
 
@@ -240,7 +254,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

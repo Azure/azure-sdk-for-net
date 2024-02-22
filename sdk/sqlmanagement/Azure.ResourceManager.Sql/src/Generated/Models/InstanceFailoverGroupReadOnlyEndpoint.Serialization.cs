@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
             if (Optional.IsDefined(FailoverPolicy) || hasPropertyOverride)
             {
-                builder.Append("  failoverPolicy:");
+                builder.Append("  failoverPolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{FailoverPolicy.Value.ToString()}'");
+                    builder.AppendLine($"'{FailoverPolicy.Value.ToString()}'");
                 }
             }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

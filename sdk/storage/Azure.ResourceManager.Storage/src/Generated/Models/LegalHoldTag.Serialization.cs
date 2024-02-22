@@ -156,21 +156,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tag), out propertyOverride);
             if (Optional.IsDefined(Tag) || hasPropertyOverride)
             {
-                builder.Append("  tag:");
+                builder.Append("  tag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Tag.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Tag}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Tag}'");
+                        builder.AppendLine($"'{Tag}'");
                     }
                 }
             }
@@ -178,36 +178,36 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
             if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
             {
-                builder.Append("  timestamp:");
+                builder.Append("  timestamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectIdentifier), out propertyOverride);
             if (Optional.IsDefined(ObjectIdentifier) || hasPropertyOverride)
             {
-                builder.Append("  objectIdentifier:");
+                builder.Append("  objectIdentifier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ObjectIdentifier.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ObjectIdentifier}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ObjectIdentifier}'");
+                        builder.AppendLine($"'{ObjectIdentifier}'");
                     }
                 }
             }
@@ -215,35 +215,35 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
             if (Optional.IsDefined(TenantId) || hasPropertyOverride)
             {
-                builder.Append("  tenantId:");
+                builder.Append("  tenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TenantId.Value.ToString()}'");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Upn), out propertyOverride);
             if (Optional.IsDefined(Upn) || hasPropertyOverride)
             {
-                builder.Append("  upn:");
+                builder.Append("  upn: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Upn.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Upn}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Upn}'");
+                        builder.AppendLine($"'{Upn}'");
                     }
                 }
             }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

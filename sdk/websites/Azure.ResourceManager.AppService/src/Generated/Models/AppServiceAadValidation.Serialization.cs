@@ -149,14 +149,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JwtClaimChecks), out propertyOverride);
             if (Optional.IsDefined(JwtClaimChecks) || hasPropertyOverride)
             {
-                builder.Append("  jwtClaimChecks:");
+                builder.Append("  jwtClaimChecks: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, JwtClaimChecks, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, JwtClaimChecks, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  jwtClaimChecks: ".Length;
+                    }
                 }
             }
 
@@ -165,14 +172,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AllowedAudiences.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedAudiences:");
+                    builder.Append("  allowedAudiences: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedAudiences)
                         {
                             if (item == null)
@@ -198,14 +205,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAuthorizationPolicy), out propertyOverride);
             if (Optional.IsDefined(DefaultAuthorizationPolicy) || hasPropertyOverride)
             {
-                builder.Append("  defaultAuthorizationPolicy:");
+                builder.Append("  defaultAuthorizationPolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, DefaultAuthorizationPolicy, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, DefaultAuthorizationPolicy, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  defaultAuthorizationPolicy: ".Length;
+                    }
                 }
             }
 
@@ -239,7 +253,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

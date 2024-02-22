@@ -171,17 +171,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Locations.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  locations:");
+                    builder.Append("  locations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Locations)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  locations: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -193,17 +200,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (HostingEnvironments.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  hostingEnvironments:");
+                    builder.Append("  hostingEnvironments: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in HostingEnvironments)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  hostingEnvironments: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -215,17 +229,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (HostingEnvironmentDeploymentInfos.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  hostingEnvironmentDeploymentInfos:");
+                    builder.Append("  hostingEnvironmentDeploymentInfos: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in HostingEnvironmentDeploymentInfos)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  hostingEnvironmentDeploymentInfos: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -262,7 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

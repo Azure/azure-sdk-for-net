@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalSteps), out propertyOverride);
             if (Optional.IsDefined(TotalSteps) || hasPropertyOverride)
             {
-                builder.Append("  totalSteps:");
+                builder.Append("  totalSteps: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TotalSteps.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TotalSteps}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TotalSteps}'");
+                        builder.AppendLine($"'{TotalSteps}'");
                     }
                 }
             }
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentStep), out propertyOverride);
             if (Optional.IsDefined(CurrentStep) || hasPropertyOverride)
             {
-                builder.Append("  currentStep:");
+                builder.Append("  currentStep: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {CurrentStep.Value}");
+                    builder.AppendLine($"{CurrentStep.Value}");
                 }
             }
 
@@ -183,17 +183,24 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (StepsList.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  stepsList:");
+                    builder.Append("  stepsList: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in StepsList)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  stepsList: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -230,7 +237,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

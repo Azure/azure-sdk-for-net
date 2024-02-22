@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (Keys.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  keys:");
+                    builder.Append("  keys: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Keys)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -218,14 +218,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (Secrets.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  secrets:");
+                    builder.Append("  secrets: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Secrets)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (Certificates.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  certificates:");
+                    builder.Append("  certificates: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Certificates)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (Storage.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  storage:");
+                    builder.Append("  storage: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Storage)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

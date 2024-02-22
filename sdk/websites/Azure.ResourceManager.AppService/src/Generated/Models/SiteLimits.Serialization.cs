@@ -138,42 +138,42 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxPercentageCpu), out propertyOverride);
             if (Optional.IsDefined(MaxPercentageCpu) || hasPropertyOverride)
             {
-                builder.Append("  maxPercentageCpu:");
+                builder.Append("  maxPercentageCpu: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MaxPercentageCpu.Value.ToString()}'");
+                    builder.AppendLine($"'{MaxPercentageCpu.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryInMb), out propertyOverride);
             if (Optional.IsDefined(MaxMemoryInMb) || hasPropertyOverride)
             {
-                builder.Append("  maxMemoryInMb:");
+                builder.Append("  maxMemoryInMb: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MaxMemoryInMb.Value.ToString()}'");
+                    builder.AppendLine($"'{MaxMemoryInMb.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxDiskSizeInMb), out propertyOverride);
             if (Optional.IsDefined(MaxDiskSizeInMb) || hasPropertyOverride)
             {
-                builder.Append("  maxDiskSizeInMb:");
+                builder.Append("  maxDiskSizeInMb: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MaxDiskSizeInMb.Value.ToString()}'");
+                    builder.AppendLine($"'{MaxDiskSizeInMb.Value.ToString()}'");
                 }
             }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

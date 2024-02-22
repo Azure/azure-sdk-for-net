@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerGroupName), out propertyOverride);
             if (Optional.IsDefined(ContainerGroupName) || hasPropertyOverride)
             {
-                builder.Append("  containerGroupName:");
+                builder.Append("  containerGroupName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ContainerGroupName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ContainerGroupName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ContainerGroupName}'");
+                        builder.AppendLine($"'{ContainerGroupName}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

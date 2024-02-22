@@ -119,36 +119,36 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateNonce), out propertyOverride);
             if (Optional.IsDefined(ValidateNonce) || hasPropertyOverride)
             {
-                builder.Append("  validateNonce:");
+                builder.Append("  validateNonce: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = ValidateNonce.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonceExpirationInterval), out propertyOverride);
             if (Optional.IsDefined(NonceExpirationInterval) || hasPropertyOverride)
             {
-                builder.Append("  nonceExpirationInterval:");
+                builder.Append("  nonceExpirationInterval: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (NonceExpirationInterval.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{NonceExpirationInterval}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{NonceExpirationInterval}'");
+                        builder.AppendLine($"'{NonceExpirationInterval}'");
                     }
                 }
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

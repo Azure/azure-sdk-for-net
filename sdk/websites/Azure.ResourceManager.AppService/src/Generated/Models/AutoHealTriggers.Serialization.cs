@@ -214,28 +214,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Requests), out propertyOverride);
             if (Optional.IsDefined(Requests) || hasPropertyOverride)
             {
-                builder.Append("  requests:");
+                builder.Append("  requests: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Requests, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, Requests, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  requests: ".Length;
+                    }
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateBytesInKB), out propertyOverride);
             if (Optional.IsDefined(PrivateBytesInKB) || hasPropertyOverride)
             {
-                builder.Append("  privateBytesInKB:");
+                builder.Append("  privateBytesInKB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {PrivateBytesInKB.Value}");
+                    builder.AppendLine($"{PrivateBytesInKB.Value}");
                 }
             }
 
@@ -244,17 +251,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (StatusCodes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  statusCodes:");
+                    builder.Append("  statusCodes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in StatusCodes)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  statusCodes: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -264,14 +278,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequests), out propertyOverride);
             if (Optional.IsDefined(SlowRequests) || hasPropertyOverride)
             {
-                builder.Append("  slowRequests:");
+                builder.Append("  slowRequests: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, SlowRequests, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, SlowRequests, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  slowRequests: ".Length;
+                    }
                 }
             }
 
@@ -280,17 +301,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (SlowRequestsWithPath.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  slowRequestsWithPath:");
+                    builder.Append("  slowRequestsWithPath: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SlowRequestsWithPath)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  slowRequestsWithPath: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -302,17 +330,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (StatusCodesRange.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  statusCodesRange:");
+                    builder.Append("  statusCodesRange: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in StatusCodesRange)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  statusCodesRange: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -349,7 +384,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

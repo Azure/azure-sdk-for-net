@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Groups.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  groups:");
+                    builder.Append("  groups: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Groups)
                         {
                             if (item == null)
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Identities.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  identities:");
+                    builder.Append("  identities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Identities)
                         {
                             if (item == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

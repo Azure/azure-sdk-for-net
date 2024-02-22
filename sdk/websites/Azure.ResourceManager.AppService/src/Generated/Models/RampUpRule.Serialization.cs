@@ -205,21 +205,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -227,21 +227,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionHostName), out propertyOverride);
             if (Optional.IsDefined(ActionHostName) || hasPropertyOverride)
             {
-                builder.Append("  actionHostName:");
+                builder.Append("  actionHostName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ActionHostName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ActionHostName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ActionHostName}'");
+                        builder.AppendLine($"'{ActionHostName}'");
                     }
                 }
             }
@@ -249,84 +249,84 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReroutePercentage), out propertyOverride);
             if (Optional.IsDefined(ReroutePercentage) || hasPropertyOverride)
             {
-                builder.Append("  reroutePercentage:");
+                builder.Append("  reroutePercentage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ReroutePercentage.Value.ToString()}'");
+                    builder.AppendLine($"'{ReroutePercentage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeStep), out propertyOverride);
             if (Optional.IsDefined(ChangeStep) || hasPropertyOverride)
             {
-                builder.Append("  changeStep:");
+                builder.Append("  changeStep: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ChangeStep.Value.ToString()}'");
+                    builder.AppendLine($"'{ChangeStep.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeIntervalInMinutes), out propertyOverride);
             if (Optional.IsDefined(ChangeIntervalInMinutes) || hasPropertyOverride)
             {
-                builder.Append("  changeIntervalInMinutes:");
+                builder.Append("  changeIntervalInMinutes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {ChangeIntervalInMinutes.Value}");
+                    builder.AppendLine($"{ChangeIntervalInMinutes.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinReroutePercentage), out propertyOverride);
             if (Optional.IsDefined(MinReroutePercentage) || hasPropertyOverride)
             {
-                builder.Append("  minReroutePercentage:");
+                builder.Append("  minReroutePercentage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MinReroutePercentage.Value.ToString()}'");
+                    builder.AppendLine($"'{MinReroutePercentage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxReroutePercentage), out propertyOverride);
             if (Optional.IsDefined(MaxReroutePercentage) || hasPropertyOverride)
             {
-                builder.Append("  maxReroutePercentage:");
+                builder.Append("  maxReroutePercentage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MaxReroutePercentage.Value.ToString()}'");
+                    builder.AppendLine($"'{MaxReroutePercentage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeDecisionCallbackUri), out propertyOverride);
             if (Optional.IsDefined(ChangeDecisionCallbackUri) || hasPropertyOverride)
             {
-                builder.Append("  changeDecisionCallbackUrl:");
+                builder.Append("  changeDecisionCallbackUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ChangeDecisionCallbackUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{ChangeDecisionCallbackUri.AbsoluteUri}'");
                 }
             }
 
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

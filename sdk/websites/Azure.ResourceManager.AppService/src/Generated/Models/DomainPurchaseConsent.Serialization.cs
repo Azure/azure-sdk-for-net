@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AgreementKeys.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  agreementKeys:");
+                    builder.Append("  agreementKeys: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AgreementKeys)
                         {
                             if (item == null)
@@ -180,21 +180,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedBy), out propertyOverride);
             if (Optional.IsDefined(AgreedBy) || hasPropertyOverride)
             {
-                builder.Append("  agreedBy:");
+                builder.Append("  agreedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AgreedBy.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AgreedBy}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AgreedBy}'");
+                        builder.AppendLine($"'{AgreedBy}'");
                     }
                 }
             }
@@ -202,15 +202,15 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedOn), out propertyOverride);
             if (Optional.IsDefined(AgreedOn) || hasPropertyOverride)
             {
-                builder.Append("  agreedAt:");
+                builder.Append("  agreedAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(AgreedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -130,21 +130,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
             if (Optional.IsDefined(GroupId) || hasPropertyOverride)
             {
-                builder.Append("  groupId:");
+                builder.Append("  groupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GroupId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GroupId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GroupId}'");
+                        builder.AppendLine($"'{GroupId}'");
                     }
                 }
             }
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (RequiredMembers.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  requiredMembers:");
+                    builder.Append("  requiredMembers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in RequiredMembers)
                         {
                             if (item == null)
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

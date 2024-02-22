@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasUrlSettingName), out propertyOverride);
             if (Optional.IsDefined(SasUrlSettingName) || hasPropertyOverride)
             {
-                builder.Append("  sasUrlSettingName:");
+                builder.Append("  sasUrlSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SasUrlSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SasUrlSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SasUrlSettingName}'");
+                        builder.AppendLine($"'{SasUrlSettingName}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

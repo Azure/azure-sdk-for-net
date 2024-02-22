@@ -109,21 +109,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasExpirationPeriod), out propertyOverride);
             if (Optional.IsDefined(SasExpirationPeriod) || hasPropertyOverride)
             {
-                builder.Append("  sasExpirationPeriod:");
+                builder.Append("  sasExpirationPeriod: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SasExpirationPeriod.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SasExpirationPeriod}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SasExpirationPeriod}'");
+                        builder.AppendLine($"'{SasExpirationPeriod}'");
                     }
                 }
             }
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpirationAction), out propertyOverride);
             if (Optional.IsDefined(ExpirationAction) || hasPropertyOverride)
             {
-                builder.Append("  expirationAction:");
+                builder.Append("  expirationAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ExpirationAction.ToString()}'");
+                    builder.AppendLine($"'{ExpirationAction.ToString()}'");
                 }
             }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

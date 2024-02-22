@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
             if (Optional.IsDefined(Source) || hasPropertyOverride)
             {
-                builder.Append("  source:");
+                builder.Append("  source: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Source.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Source}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Source}'");
+                        builder.AppendLine($"'{Source}'");
                     }
                 }
             }
@@ -229,14 +229,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetectorDefinition), out propertyOverride);
             if (Optional.IsDefined(DetectorDefinition) || hasPropertyOverride)
             {
-                builder.Append("  detectorDefinition:");
+                builder.Append("  detectorDefinition: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, DetectorDefinition, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, DetectorDefinition, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  detectorDefinition: ".Length;
+                    }
                 }
             }
 
@@ -245,17 +252,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Metrics.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  metrics:");
+                    builder.Append("  metrics: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Metrics)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  metrics: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -267,14 +281,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Data.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  data:");
+                    builder.Append("  data: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Data)
                         {
                             if (item == null)
@@ -282,10 +296,17 @@ namespace Azure.ResourceManager.AppService.Models
                                 builder.Append("null");
                                 continue;
                             }
-                            builder.AppendLine(" [");
+                            builder.AppendLine("[");
                             foreach (var item0 in item)
                             {
-                                AppendChildObject(builder, item0, options, 4, true);
+                                int currentIndent = 4;
+                                int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                                int length = builder.Length;
+                                AppendChildObject(builder, item0, options, currentIndent, true);
+                                if (builder.Length == length + emptyObjectLength)
+                                {
+                                    builder.Length = builder.Length - emptyObjectLength - "  data: ".Length;
+                                }
                             }
                             builder.AppendLine("  ]");
                         }
@@ -297,14 +318,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetectorMetaData), out propertyOverride);
             if (Optional.IsDefined(DetectorMetaData) || hasPropertyOverride)
             {
-                builder.Append("  detectorMetaData:");
+                builder.Append("  detectorMetaData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, DetectorMetaData, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, DetectorMetaData, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  detectorMetaData: ".Length;
+                    }
                 }
             }
 
@@ -338,7 +366,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

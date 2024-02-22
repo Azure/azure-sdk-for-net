@@ -116,28 +116,28 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
             if (Optional.IsDefined(FailoverPolicy) || hasPropertyOverride)
             {
-                builder.Append("  failoverPolicy:");
+                builder.Append("  failoverPolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{FailoverPolicy.ToString()}'");
+                    builder.AppendLine($"'{FailoverPolicy.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverWithDataLossGracePeriodMinutes), out propertyOverride);
             if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes) || hasPropertyOverride)
             {
-                builder.Append("  failoverWithDataLossGracePeriodMinutes:");
+                builder.Append("  failoverWithDataLossGracePeriodMinutes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {FailoverWithDataLossGracePeriodMinutes.Value}");
+                    builder.AppendLine($"{FailoverWithDataLossGracePeriodMinutes.Value}");
                 }
             }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

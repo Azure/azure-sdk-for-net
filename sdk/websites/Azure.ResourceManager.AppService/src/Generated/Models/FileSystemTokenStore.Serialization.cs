@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Directory), out propertyOverride);
             if (Optional.IsDefined(Directory) || hasPropertyOverride)
             {
-                builder.Append("  directory:");
+                builder.Append("  directory: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Directory.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Directory}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Directory}'");
+                        builder.AppendLine($"'{Directory}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

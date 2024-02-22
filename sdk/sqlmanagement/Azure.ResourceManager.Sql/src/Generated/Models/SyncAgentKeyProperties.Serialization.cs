@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncAgentKey), out propertyOverride);
             if (Optional.IsDefined(SyncAgentKey) || hasPropertyOverride)
             {
-                builder.Append("  syncAgentKey:");
+                builder.Append("  syncAgentKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SyncAgentKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SyncAgentKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SyncAgentKey}'");
+                        builder.AppendLine($"'{SyncAgentKey}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

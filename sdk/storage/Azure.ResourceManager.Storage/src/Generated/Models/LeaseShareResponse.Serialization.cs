@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseId), out propertyOverride);
             if (Optional.IsDefined(LeaseId) || hasPropertyOverride)
             {
-                builder.Append("  leaseId:");
+                builder.Append("  leaseId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LeaseId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LeaseId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LeaseId}'");
+                        builder.AppendLine($"'{LeaseId}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseTimeSeconds), out propertyOverride);
             if (Optional.IsDefined(LeaseTimeSeconds) || hasPropertyOverride)
             {
-                builder.Append("  leaseTimeSeconds:");
+                builder.Append("  leaseTimeSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LeaseTimeSeconds.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LeaseTimeSeconds}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LeaseTimeSeconds}'");
+                        builder.AppendLine($"'{LeaseTimeSeconds}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

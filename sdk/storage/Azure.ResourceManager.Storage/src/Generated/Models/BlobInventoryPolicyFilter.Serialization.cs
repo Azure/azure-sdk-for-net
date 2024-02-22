@@ -216,14 +216,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (IncludePrefix.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  prefixMatch:");
+                    builder.Append("  prefixMatch: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in IncludePrefix)
                         {
                             if (item == null)
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (ExcludePrefix.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  excludePrefix:");
+                    builder.Append("  excludePrefix: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ExcludePrefix)
                         {
                             if (item == null)
@@ -286,14 +286,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (BlobTypes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  blobTypes:");
+                    builder.Append("  blobTypes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in BlobTypes)
                         {
                             if (item == null)
@@ -319,45 +319,45 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeBlobVersions), out propertyOverride);
             if (Optional.IsDefined(IncludeBlobVersions) || hasPropertyOverride)
             {
-                builder.Append("  includeBlobVersions:");
+                builder.Append("  includeBlobVersions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IncludeBlobVersions.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeSnapshots), out propertyOverride);
             if (Optional.IsDefined(IncludeSnapshots) || hasPropertyOverride)
             {
-                builder.Append("  includeSnapshots:");
+                builder.Append("  includeSnapshots: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IncludeSnapshots.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeDeleted), out propertyOverride);
             if (Optional.IsDefined(IncludeDeleted) || hasPropertyOverride)
             {
-                builder.Append("  includeDeleted:");
+                builder.Append("  includeDeleted: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IncludeDeleted.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

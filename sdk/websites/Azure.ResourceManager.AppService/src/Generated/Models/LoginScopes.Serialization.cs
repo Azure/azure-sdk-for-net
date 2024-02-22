@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Scopes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  scopes:");
+                    builder.Append("  scopes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Scopes)
                         {
                             if (item == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

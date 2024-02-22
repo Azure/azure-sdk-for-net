@@ -151,56 +151,63 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Filters), out propertyOverride);
             if (Optional.IsDefined(Filters) || hasPropertyOverride)
             {
-                builder.Append("  filters:");
+                builder.Append("  filters: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Filters, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, Filters, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  filters: ".Length;
+                    }
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
             if (Optional.IsDefined(Format) || hasPropertyOverride)
             {
-                builder.Append("  format:");
+                builder.Append("  format: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Format.ToString()}'");
+                    builder.AppendLine($"'{Format.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Schedule), out propertyOverride);
             if (Optional.IsDefined(Schedule) || hasPropertyOverride)
             {
-                builder.Append("  schedule:");
+                builder.Append("  schedule: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Schedule.ToString()}'");
+                    builder.AppendLine($"'{Schedule.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectType), out propertyOverride);
             if (Optional.IsDefined(ObjectType) || hasPropertyOverride)
             {
-                builder.Append("  objectType:");
+                builder.Append("  objectType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ObjectType.ToString()}'");
+                    builder.AppendLine($"'{ObjectType.ToString()}'");
                 }
             }
 
@@ -209,14 +216,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (SchemaFields.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  schemaFields:");
+                    builder.Append("  schemaFields: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SchemaFields)
                         {
                             if (item == null)
@@ -269,7 +276,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

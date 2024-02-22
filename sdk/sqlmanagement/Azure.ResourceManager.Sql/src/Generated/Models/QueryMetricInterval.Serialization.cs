@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalStartTime), out propertyOverride);
             if (Optional.IsDefined(IntervalStartTime) || hasPropertyOverride)
             {
-                builder.Append("  intervalStartTime:");
+                builder.Append("  intervalStartTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (IntervalStartTime.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{IntervalStartTime}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{IntervalStartTime}'");
+                        builder.AppendLine($"'{IntervalStartTime}'");
                     }
                 }
             }
@@ -182,28 +182,28 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
             if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
             {
-                builder.Append("  intervalType:");
+                builder.Append("  intervalType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{IntervalType.Value.ToString()}'");
+                    builder.AppendLine($"'{IntervalType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecutionCount), out propertyOverride);
             if (Optional.IsDefined(ExecutionCount) || hasPropertyOverride)
             {
-                builder.Append("  executionCount:");
+                builder.Append("  executionCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ExecutionCount.Value.ToString()}'");
+                    builder.AppendLine($"'{ExecutionCount.Value.ToString()}'");
                 }
             }
 
@@ -212,17 +212,24 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (Metrics.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  metrics:");
+                    builder.Append("  metrics: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Metrics)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  metrics: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -259,7 +266,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

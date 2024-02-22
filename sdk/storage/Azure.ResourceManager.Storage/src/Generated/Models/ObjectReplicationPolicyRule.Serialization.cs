@@ -135,21 +135,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleId), out propertyOverride);
             if (Optional.IsDefined(RuleId) || hasPropertyOverride)
             {
-                builder.Append("  ruleId:");
+                builder.Append("  ruleId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (RuleId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{RuleId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{RuleId}'");
+                        builder.AppendLine($"'{RuleId}'");
                     }
                 }
             }
@@ -157,21 +157,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceContainer), out propertyOverride);
             if (Optional.IsDefined(SourceContainer) || hasPropertyOverride)
             {
-                builder.Append("  sourceContainer:");
+                builder.Append("  sourceContainer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SourceContainer.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SourceContainer}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SourceContainer}'");
+                        builder.AppendLine($"'{SourceContainer}'");
                     }
                 }
             }
@@ -179,21 +179,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationContainer), out propertyOverride);
             if (Optional.IsDefined(DestinationContainer) || hasPropertyOverride)
             {
-                builder.Append("  destinationContainer:");
+                builder.Append("  destinationContainer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DestinationContainer.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DestinationContainer}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DestinationContainer}'");
+                        builder.AppendLine($"'{DestinationContainer}'");
                     }
                 }
             }
@@ -201,14 +201,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Filters), out propertyOverride);
             if (Optional.IsDefined(Filters) || hasPropertyOverride)
             {
-                builder.Append("  filters:");
+                builder.Append("  filters: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Filters, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, Filters, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  filters: ".Length;
+                    }
                 }
             }
 
@@ -242,7 +249,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -119,35 +119,35 @@ namespace Azure.ResourceManager.KeyVault.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActivationStatus), out propertyOverride);
             if (Optional.IsDefined(ActivationStatus) || hasPropertyOverride)
             {
-                builder.Append("  activationStatus:");
+                builder.Append("  activationStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ActivationStatus.Value.ToString()}'");
+                    builder.AppendLine($"'{ActivationStatus.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActivationStatusMessage), out propertyOverride);
             if (Optional.IsDefined(ActivationStatusMessage) || hasPropertyOverride)
             {
-                builder.Append("  activationStatusMessage:");
+                builder.Append("  activationStatusMessage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ActivationStatusMessage.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ActivationStatusMessage}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ActivationStatusMessage}'");
+                        builder.AppendLine($"'{ActivationStatusMessage}'");
                     }
                 }
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

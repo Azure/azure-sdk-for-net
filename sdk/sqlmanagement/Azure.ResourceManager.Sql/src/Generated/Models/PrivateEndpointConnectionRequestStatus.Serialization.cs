@@ -130,35 +130,35 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkServiceId), out propertyOverride);
             if (Optional.IsDefined(PrivateLinkServiceId) || hasPropertyOverride)
             {
-                builder.Append("  privateLinkServiceId:");
+                builder.Append("  privateLinkServiceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PrivateLinkServiceId.ToString()}'");
+                    builder.AppendLine($"'{PrivateLinkServiceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnectionName), out propertyOverride);
             if (Optional.IsDefined(PrivateEndpointConnectionName) || hasPropertyOverride)
             {
-                builder.Append("  privateEndpointConnectionName:");
+                builder.Append("  privateEndpointConnectionName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PrivateEndpointConnectionName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PrivateEndpointConnectionName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PrivateEndpointConnectionName}'");
+                        builder.AppendLine($"'{PrivateEndpointConnectionName}'");
                     }
                 }
             }
@@ -166,21 +166,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
             if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
-                builder.Append("  status:");
+                builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Status.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Status}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Status}'");
+                        builder.AppendLine($"'{Status}'");
                     }
                 }
             }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

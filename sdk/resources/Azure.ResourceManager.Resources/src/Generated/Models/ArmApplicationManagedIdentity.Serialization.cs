@@ -165,28 +165,28 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
             if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
             {
-                builder.Append("  principalId:");
+                builder.Append("  principalId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
+                    builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
             if (Optional.IsDefined(TenantId) || hasPropertyOverride)
             {
-                builder.Append("  tenantId:");
+                builder.Append("  tenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TenantId.Value.ToString()}'");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
                 }
             }
 
@@ -195,18 +195,25 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (UserAssignedIdentities.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  userAssignedIdentities:");
+                    builder.Append("  userAssignedIdentities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" {");
+                        builder.AppendLine("{");
                         foreach (var item in UserAssignedIdentities)
                         {
-                            builder.Append($"    '{item.Key}':");
-                            AppendChildObject(builder, item.Value, options, 4, false);
+                            builder.Append($"    '{item.Key}': ");
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item.Value, options, currentIndent, false);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  userAssignedIdentities: ".Length;
+                            }
                         }
                         builder.AppendLine("  }");
                     }
@@ -243,7 +250,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

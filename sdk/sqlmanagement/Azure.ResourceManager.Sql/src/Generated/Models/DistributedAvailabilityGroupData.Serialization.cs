@@ -284,21 +284,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -306,28 +306,28 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
             if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
+                builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
@@ -336,21 +336,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDatabase), out propertyOverride);
             if (Optional.IsDefined(TargetDatabase) || hasPropertyOverride)
             {
-                builder.Append("    targetDatabase:");
+                builder.Append("    targetDatabase: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TargetDatabase.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TargetDatabase}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TargetDatabase}'");
+                        builder.AppendLine($"'{TargetDatabase}'");
                     }
                 }
             }
@@ -358,21 +358,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceEndpoint), out propertyOverride);
             if (Optional.IsDefined(SourceEndpoint) || hasPropertyOverride)
             {
-                builder.Append("    sourceEndpoint:");
+                builder.Append("    sourceEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SourceEndpoint.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SourceEndpoint}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SourceEndpoint}'");
+                        builder.AppendLine($"'{SourceEndpoint}'");
                     }
                 }
             }
@@ -380,21 +380,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAvailabilityGroupName), out propertyOverride);
             if (Optional.IsDefined(PrimaryAvailabilityGroupName) || hasPropertyOverride)
             {
-                builder.Append("    primaryAvailabilityGroupName:");
+                builder.Append("    primaryAvailabilityGroupName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PrimaryAvailabilityGroupName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PrimaryAvailabilityGroupName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PrimaryAvailabilityGroupName}'");
+                        builder.AppendLine($"'{PrimaryAvailabilityGroupName}'");
                     }
                 }
             }
@@ -402,21 +402,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryAvailabilityGroupName), out propertyOverride);
             if (Optional.IsDefined(SecondaryAvailabilityGroupName) || hasPropertyOverride)
             {
-                builder.Append("    secondaryAvailabilityGroupName:");
+                builder.Append("    secondaryAvailabilityGroupName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SecondaryAvailabilityGroupName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SecondaryAvailabilityGroupName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SecondaryAvailabilityGroupName}'");
+                        builder.AppendLine($"'{SecondaryAvailabilityGroupName}'");
                     }
                 }
             }
@@ -424,77 +424,77 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationMode), out propertyOverride);
             if (Optional.IsDefined(ReplicationMode) || hasPropertyOverride)
             {
-                builder.Append("    replicationMode:");
+                builder.Append("    replicationMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ReplicationMode.Value.ToString()}'");
+                    builder.AppendLine($"'{ReplicationMode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DistributedAvailabilityGroupId), out propertyOverride);
             if (Optional.IsDefined(DistributedAvailabilityGroupId) || hasPropertyOverride)
             {
-                builder.Append("    distributedAvailabilityGroupId:");
+                builder.Append("    distributedAvailabilityGroupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DistributedAvailabilityGroupId.Value.ToString()}'");
+                    builder.AppendLine($"'{DistributedAvailabilityGroupId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceReplicaId), out propertyOverride);
             if (Optional.IsDefined(SourceReplicaId) || hasPropertyOverride)
             {
-                builder.Append("    sourceReplicaId:");
+                builder.Append("    sourceReplicaId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SourceReplicaId.Value.ToString()}'");
+                    builder.AppendLine($"'{SourceReplicaId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetReplicaId), out propertyOverride);
             if (Optional.IsDefined(TargetReplicaId) || hasPropertyOverride)
             {
-                builder.Append("    targetReplicaId:");
+                builder.Append("    targetReplicaId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TargetReplicaId.Value.ToString()}'");
+                    builder.AppendLine($"'{TargetReplicaId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkState), out propertyOverride);
             if (Optional.IsDefined(LinkState) || hasPropertyOverride)
             {
-                builder.Append("    linkState:");
+                builder.Append("    linkState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LinkState.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LinkState}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LinkState}'");
+                        builder.AppendLine($"'{LinkState}'");
                     }
                 }
             }
@@ -502,21 +502,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastHardenedLsn), out propertyOverride);
             if (Optional.IsDefined(LastHardenedLsn) || hasPropertyOverride)
             {
-                builder.Append("    lastHardenedLsn:");
+                builder.Append("    lastHardenedLsn: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LastHardenedLsn.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LastHardenedLsn}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LastHardenedLsn}'");
+                        builder.AppendLine($"'{LastHardenedLsn}'");
                     }
                 }
             }
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyIdentifier), out propertyOverride);
             if (Optional.IsDefined(KeyIdentifier) || hasPropertyOverride)
             {
-                builder.Append("  keyIdentifier:");
+                builder.Append("  keyIdentifier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (KeyIdentifier.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{KeyIdentifier}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{KeyIdentifier}'");
+                        builder.AppendLine($"'{KeyIdentifier}'");
                     }
                 }
             }
@@ -117,21 +117,21 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
             if (Optional.IsDefined(Identity) || hasPropertyOverride)
             {
-                builder.Append("  identity:");
+                builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Identity.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Identity}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Identity}'");
+                        builder.AppendLine($"'{Identity}'");
                     }
                 }
             }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

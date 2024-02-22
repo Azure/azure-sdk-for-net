@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetailLevel), out propertyOverride);
             if (Optional.IsDefined(DetailLevel) || hasPropertyOverride)
             {
-                builder.Append("  detailLevel:");
+                builder.Append("  detailLevel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DetailLevel.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DetailLevel}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DetailLevel}'");
+                        builder.AppendLine($"'{DetailLevel}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

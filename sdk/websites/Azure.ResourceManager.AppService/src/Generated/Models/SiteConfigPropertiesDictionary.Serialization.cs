@@ -141,36 +141,36 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Use32BitWorkerProcess), out propertyOverride);
             if (Optional.IsDefined(Use32BitWorkerProcess) || hasPropertyOverride)
             {
-                builder.Append("  use32BitWorkerProcess:");
+                builder.Append("  use32BitWorkerProcess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = Use32BitWorkerProcess.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxFxVersion), out propertyOverride);
             if (Optional.IsDefined(LinuxFxVersion) || hasPropertyOverride)
             {
-                builder.Append("  linuxFxVersion:");
+                builder.Append("  linuxFxVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LinuxFxVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LinuxFxVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LinuxFxVersion}'");
+                        builder.AppendLine($"'{LinuxFxVersion}'");
                     }
                 }
             }
@@ -178,21 +178,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JavaVersion), out propertyOverride);
             if (Optional.IsDefined(JavaVersion) || hasPropertyOverride)
             {
-                builder.Append("  javaVersion:");
+                builder.Append("  javaVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (JavaVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{JavaVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{JavaVersion}'");
+                        builder.AppendLine($"'{JavaVersion}'");
                     }
                 }
             }
@@ -200,21 +200,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PowerShellVersion), out propertyOverride);
             if (Optional.IsDefined(PowerShellVersion) || hasPropertyOverride)
             {
-                builder.Append("  powerShellVersion:");
+                builder.Append("  powerShellVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PowerShellVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PowerShellVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PowerShellVersion}'");
+                        builder.AppendLine($"'{PowerShellVersion}'");
                     }
                 }
             }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

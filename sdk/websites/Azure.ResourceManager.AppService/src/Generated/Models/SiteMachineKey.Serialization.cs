@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Validation), out propertyOverride);
             if (Optional.IsDefined(Validation) || hasPropertyOverride)
             {
-                builder.Append("  validation:");
+                builder.Append("  validation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Validation.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Validation}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Validation}'");
+                        builder.AppendLine($"'{Validation}'");
                     }
                 }
             }
@@ -159,21 +159,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationKey), out propertyOverride);
             if (Optional.IsDefined(ValidationKey) || hasPropertyOverride)
             {
-                builder.Append("  validationKey:");
+                builder.Append("  validationKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ValidationKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ValidationKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ValidationKey}'");
+                        builder.AppendLine($"'{ValidationKey}'");
                     }
                 }
             }
@@ -181,21 +181,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Decryption), out propertyOverride);
             if (Optional.IsDefined(Decryption) || hasPropertyOverride)
             {
-                builder.Append("  decryption:");
+                builder.Append("  decryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Decryption.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Decryption}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Decryption}'");
+                        builder.AppendLine($"'{Decryption}'");
                     }
                 }
             }
@@ -203,21 +203,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DecryptionKey), out propertyOverride);
             if (Optional.IsDefined(DecryptionKey) || hasPropertyOverride)
             {
-                builder.Append("  decryptionKey:");
+                builder.Append("  decryptionKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DecryptionKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DecryptionKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DecryptionKey}'");
+                        builder.AppendLine($"'{DecryptionKey}'");
                     }
                 }
             }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

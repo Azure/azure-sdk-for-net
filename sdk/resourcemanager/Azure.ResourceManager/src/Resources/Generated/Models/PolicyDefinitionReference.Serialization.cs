@@ -164,21 +164,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionId), out propertyOverride);
             if (Optional.IsDefined(PolicyDefinitionId) || hasPropertyOverride)
             {
-                builder.Append("  policyDefinitionId:");
+                builder.Append("  policyDefinitionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PolicyDefinitionId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PolicyDefinitionId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PolicyDefinitionId}'");
+                        builder.AppendLine($"'{PolicyDefinitionId}'");
                     }
                 }
             }
@@ -188,18 +188,25 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (Parameters.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  parameters:");
+                    builder.Append("  parameters: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" {");
+                        builder.AppendLine("{");
                         foreach (var item in Parameters)
                         {
-                            builder.Append($"    '{item.Key}':");
-                            AppendChildObject(builder, item.Value, options, 4, false);
+                            builder.Append($"    '{item.Key}': ");
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item.Value, options, currentIndent, false);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  parameters: ".Length;
+                            }
                         }
                         builder.AppendLine("  }");
                     }
@@ -209,21 +216,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionReferenceId), out propertyOverride);
             if (Optional.IsDefined(PolicyDefinitionReferenceId) || hasPropertyOverride)
             {
-                builder.Append("  policyDefinitionReferenceId:");
+                builder.Append("  policyDefinitionReferenceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PolicyDefinitionReferenceId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PolicyDefinitionReferenceId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PolicyDefinitionReferenceId}'");
+                        builder.AppendLine($"'{PolicyDefinitionReferenceId}'");
                     }
                 }
             }
@@ -233,14 +240,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (GroupNames.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  groupNames:");
+                    builder.Append("  groupNames: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in GroupNames)
                         {
                             if (item == null)
@@ -293,7 +300,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

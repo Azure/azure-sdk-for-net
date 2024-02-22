@@ -167,21 +167,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountName), out propertyOverride);
             if (Optional.IsDefined(AccountName) || hasPropertyOverride)
             {
-                builder.Append("  accountName:");
+                builder.Append("  accountName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AccountName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AccountName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AccountName}'");
+                        builder.AppendLine($"'{AccountName}'");
                     }
                 }
             }
@@ -189,21 +189,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShareName), out propertyOverride);
             if (Optional.IsDefined(ShareName) || hasPropertyOverride)
             {
-                builder.Append("  shareName:");
+                builder.Append("  shareName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ShareName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ShareName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ShareName}'");
+                        builder.AppendLine($"'{ShareName}'");
                     }
                 }
             }
@@ -211,21 +211,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessKey), out propertyOverride);
             if (Optional.IsDefined(AccessKey) || hasPropertyOverride)
             {
-                builder.Append("  accessKey:");
+                builder.Append("  accessKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AccessKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AccessKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AccessKey}'");
+                        builder.AppendLine($"'{AccessKey}'");
                     }
                 }
             }
@@ -233,21 +233,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountPath), out propertyOverride);
             if (Optional.IsDefined(MountPath) || hasPropertyOverride)
             {
-                builder.Append("  mountPath:");
+                builder.Append("  mountPath: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (MountPath.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{MountPath}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{MountPath}'");
+                        builder.AppendLine($"'{MountPath}'");
                     }
                 }
             }
@@ -255,14 +255,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
             if (Optional.IsDefined(State) || hasPropertyOverride)
             {
-                builder.Append("  state:");
+                builder.Append("  state: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{State.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{State.Value.ToSerialString()}'");
                 }
             }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

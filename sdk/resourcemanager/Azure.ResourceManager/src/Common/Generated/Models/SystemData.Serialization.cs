@@ -155,21 +155,21 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedBy), out propertyOverride);
             if (Optional.IsDefined(CreatedBy) || hasPropertyOverride)
             {
-                builder.Append("  createdBy:");
+                builder.Append("  createdBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (CreatedBy.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{CreatedBy}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{CreatedBy}'");
+                        builder.AppendLine($"'{CreatedBy}'");
                     }
                 }
             }
@@ -177,50 +177,50 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByType), out propertyOverride);
             if (Optional.IsDefined(CreatedByType) || hasPropertyOverride)
             {
-                builder.Append("  createdByType:");
+                builder.Append("  createdByType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CreatedByType.Value.ToString()}'");
+                    builder.AppendLine($"'{CreatedByType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
             if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
             {
-                builder.Append("  createdAt:");
+                builder.Append("  createdAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedBy), out propertyOverride);
             if (Optional.IsDefined(LastModifiedBy) || hasPropertyOverride)
             {
-                builder.Append("  lastModifiedBy:");
+                builder.Append("  lastModifiedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LastModifiedBy.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LastModifiedBy}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LastModifiedBy}'");
+                        builder.AppendLine($"'{LastModifiedBy}'");
                     }
                 }
             }
@@ -228,29 +228,29 @@ namespace Azure.ResourceManager.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedByType), out propertyOverride);
             if (Optional.IsDefined(LastModifiedByType) || hasPropertyOverride)
             {
-                builder.Append("  lastModifiedByType:");
+                builder.Append("  lastModifiedByType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{LastModifiedByType.Value.ToString()}'");
+                    builder.AppendLine($"'{LastModifiedByType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
             if (Optional.IsDefined(LastModifiedOn) || hasPropertyOverride)
             {
-                builder.Append("  lastModifiedAt:");
+                builder.Append("  lastModifiedAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

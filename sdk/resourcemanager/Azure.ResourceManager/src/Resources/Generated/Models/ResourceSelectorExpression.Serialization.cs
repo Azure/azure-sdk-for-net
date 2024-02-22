@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
             if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
-                builder.Append("  kind:");
+                builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Kind.Value.ToString()}'");
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (In.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  in:");
+                    builder.Append("  in: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in In)
                         {
                             if (item == null)
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (NotIn.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  notIn:");
+                    builder.Append("  notIn: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in NotIn)
                         {
                             if (item == null)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

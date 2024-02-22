@@ -153,56 +153,56 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterModificationGreaterThan), out propertyOverride);
             if (Optional.IsDefined(DaysAfterModificationGreaterThan) || hasPropertyOverride)
             {
-                builder.Append("  daysAfterModificationGreaterThan:");
+                builder.Append("  daysAfterModificationGreaterThan: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DaysAfterModificationGreaterThan.Value.ToString()}'");
+                    builder.AppendLine($"'{DaysAfterModificationGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastAccessTimeGreaterThan), out propertyOverride);
             if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan) || hasPropertyOverride)
             {
-                builder.Append("  daysAfterLastAccessTimeGreaterThan:");
+                builder.Append("  daysAfterLastAccessTimeGreaterThan: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DaysAfterLastAccessTimeGreaterThan.Value.ToString()}'");
+                    builder.AppendLine($"'{DaysAfterLastAccessTimeGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastTierChangeGreaterThan), out propertyOverride);
             if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan) || hasPropertyOverride)
             {
-                builder.Append("  daysAfterLastTierChangeGreaterThan:");
+                builder.Append("  daysAfterLastTierChangeGreaterThan: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DaysAfterLastTierChangeGreaterThan.Value.ToString()}'");
+                    builder.AppendLine($"'{DaysAfterLastTierChangeGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterCreationGreaterThan), out propertyOverride);
             if (Optional.IsDefined(DaysAfterCreationGreaterThan) || hasPropertyOverride)
             {
-                builder.Append("  daysAfterCreationGreaterThan:");
+                builder.Append("  daysAfterCreationGreaterThan: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DaysAfterCreationGreaterThan.Value.ToString()}'");
+                    builder.AppendLine($"'{DaysAfterCreationGreaterThan.Value.ToString()}'");
                 }
             }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

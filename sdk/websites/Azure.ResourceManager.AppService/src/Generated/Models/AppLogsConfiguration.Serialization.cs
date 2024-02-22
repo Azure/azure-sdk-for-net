@@ -119,21 +119,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
             if (Optional.IsDefined(Destination) || hasPropertyOverride)
             {
-                builder.Append("  destination:");
+                builder.Append("  destination: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Destination.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Destination}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Destination}'");
+                        builder.AppendLine($"'{Destination}'");
                     }
                 }
             }
@@ -141,14 +141,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogAnalyticsConfiguration), out propertyOverride);
             if (Optional.IsDefined(LogAnalyticsConfiguration) || hasPropertyOverride)
             {
-                builder.Append("  logAnalyticsConfiguration:");
+                builder.Append("  logAnalyticsConfiguration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, LogAnalyticsConfiguration, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, LogAnalyticsConfiguration, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  logAnalyticsConfiguration: ".Length;
+                    }
                 }
             }
 
@@ -182,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

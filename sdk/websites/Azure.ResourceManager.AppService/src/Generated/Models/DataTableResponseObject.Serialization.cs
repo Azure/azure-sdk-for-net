@@ -177,21 +177,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
             if (Optional.IsDefined(TableName) || hasPropertyOverride)
             {
-                builder.Append("  tableName:");
+                builder.Append("  tableName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TableName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TableName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TableName}'");
+                        builder.AppendLine($"'{TableName}'");
                     }
                 }
             }
@@ -201,17 +201,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Columns.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  columns:");
+                    builder.Append("  columns: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Columns)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  columns: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -223,14 +230,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Rows.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  rows:");
+                    builder.Append("  rows: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Rows)
                         {
                             if (item == null)
@@ -238,7 +245,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 builder.Append("null");
                                 continue;
                             }
-                            builder.AppendLine(" [");
+                            builder.AppendLine("[");
                             foreach (var item0 in item)
                             {
                                 if (item0 == null)
@@ -293,7 +300,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

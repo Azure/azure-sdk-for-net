@@ -130,21 +130,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderName), out propertyOverride);
             if (Optional.IsDefined(ProviderName) || hasPropertyOverride)
             {
-                builder.Append("  providerName:");
+                builder.Append("  providerName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ProviderName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ProviderName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ProviderName}'");
+                        builder.AppendLine($"'{ProviderName}'");
                     }
                 }
             }
@@ -154,17 +154,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (PropertyBag.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  propertyBag:");
+                    builder.Append("  propertyBag: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in PropertyBag)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  propertyBag: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -201,7 +208,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

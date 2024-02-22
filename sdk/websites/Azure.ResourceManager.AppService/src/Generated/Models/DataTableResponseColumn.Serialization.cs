@@ -126,21 +126,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnName), out propertyOverride);
             if (Optional.IsDefined(ColumnName) || hasPropertyOverride)
             {
-                builder.Append("  columnName:");
+                builder.Append("  columnName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ColumnName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ColumnName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ColumnName}'");
+                        builder.AppendLine($"'{ColumnName}'");
                     }
                 }
             }
@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataType), out propertyOverride);
             if (Optional.IsDefined(DataType) || hasPropertyOverride)
             {
-                builder.Append("  dataType:");
+                builder.Append("  dataType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DataType.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DataType}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DataType}'");
+                        builder.AppendLine($"'{DataType}'");
                     }
                 }
             }
@@ -170,21 +170,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnType), out propertyOverride);
             if (Optional.IsDefined(ColumnType) || hasPropertyOverride)
             {
-                builder.Append("  columnType:");
+                builder.Append("  columnType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ColumnType.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ColumnType}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ColumnType}'");
+                        builder.AppendLine($"'{ColumnType}'");
                     }
                 }
             }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

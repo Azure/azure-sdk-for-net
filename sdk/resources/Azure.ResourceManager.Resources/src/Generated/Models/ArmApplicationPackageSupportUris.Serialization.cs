@@ -123,28 +123,28 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzurePublicCloudUri), out propertyOverride);
             if (Optional.IsDefined(AzurePublicCloudUri) || hasPropertyOverride)
             {
-                builder.Append("  publicAzure:");
+                builder.Append("  publicAzure: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AzurePublicCloudUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{AzurePublicCloudUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureGovernmentUri), out propertyOverride);
             if (Optional.IsDefined(AzureGovernmentUri) || hasPropertyOverride)
             {
-                builder.Append("  governmentCloud:");
+                builder.Append("  governmentCloud: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AzureGovernmentUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{AzureGovernmentUri.AbsoluteUri}'");
                 }
             }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

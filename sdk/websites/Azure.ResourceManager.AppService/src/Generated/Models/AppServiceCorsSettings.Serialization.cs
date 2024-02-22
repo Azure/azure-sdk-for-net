@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AllowedOrigins.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedOrigins:");
+                    builder.Append("  allowedOrigins: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedOrigins)
                         {
                             if (item == null)
@@ -169,15 +169,15 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCredentialsSupported), out propertyOverride);
             if (Optional.IsDefined(IsCredentialsSupported) || hasPropertyOverride)
             {
-                builder.Append("  supportCredentials:");
+                builder.Append("  supportCredentials: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsCredentialsSupported.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

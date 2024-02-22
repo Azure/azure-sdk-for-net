@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogoutEndpoint), out propertyOverride);
             if (Optional.IsDefined(LogoutEndpoint) || hasPropertyOverride)
             {
-                builder.Append("  logoutEndpoint:");
+                builder.Append("  logoutEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LogoutEndpoint.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LogoutEndpoint}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LogoutEndpoint}'");
+                        builder.AppendLine($"'{LogoutEndpoint}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

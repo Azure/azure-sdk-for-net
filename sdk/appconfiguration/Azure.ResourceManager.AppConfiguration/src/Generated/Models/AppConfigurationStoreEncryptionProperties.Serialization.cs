@@ -116,14 +116,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
             if (Optional.IsDefined(KeyVaultProperties) || hasPropertyOverride)
             {
-                builder.Append("  keyVaultProperties:");
+                builder.Append("  keyVaultProperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, KeyVaultProperties, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, KeyVaultProperties, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  keyVaultProperties: ".Length;
+                    }
                 }
             }
 
@@ -157,7 +164,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

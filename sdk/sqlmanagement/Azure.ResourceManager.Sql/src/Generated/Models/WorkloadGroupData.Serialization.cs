@@ -243,21 +243,21 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -265,28 +265,28 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
             if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
+                builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
@@ -295,77 +295,77 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinResourcePercent), out propertyOverride);
             if (Optional.IsDefined(MinResourcePercent) || hasPropertyOverride)
             {
-                builder.Append("    minResourcePercent:");
+                builder.Append("    minResourcePercent: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {MinResourcePercent.Value}");
+                    builder.AppendLine($"{MinResourcePercent.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxResourcePercent), out propertyOverride);
             if (Optional.IsDefined(MaxResourcePercent) || hasPropertyOverride)
             {
-                builder.Append("    maxResourcePercent:");
+                builder.Append("    maxResourcePercent: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {MaxResourcePercent.Value}");
+                    builder.AppendLine($"{MaxResourcePercent.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinResourcePercentPerRequest), out propertyOverride);
             if (Optional.IsDefined(MinResourcePercentPerRequest) || hasPropertyOverride)
             {
-                builder.Append("    minResourcePercentPerRequest:");
+                builder.Append("    minResourcePercentPerRequest: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MinResourcePercentPerRequest.Value.ToString()}'");
+                    builder.AppendLine($"'{MinResourcePercentPerRequest.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxResourcePercentPerRequest), out propertyOverride);
             if (Optional.IsDefined(MaxResourcePercentPerRequest) || hasPropertyOverride)
             {
-                builder.Append("    maxResourcePercentPerRequest:");
+                builder.Append("    maxResourcePercentPerRequest: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MaxResourcePercentPerRequest.Value.ToString()}'");
+                    builder.AppendLine($"'{MaxResourcePercentPerRequest.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Importance), out propertyOverride);
             if (Optional.IsDefined(Importance) || hasPropertyOverride)
             {
-                builder.Append("    importance:");
+                builder.Append("    importance: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Importance.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Importance}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Importance}'");
+                        builder.AppendLine($"'{Importance}'");
                     }
                 }
             }
@@ -373,14 +373,14 @@ namespace Azure.ResourceManager.Sql
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryExecutionTimeout), out propertyOverride);
             if (Optional.IsDefined(QueryExecutionTimeout) || hasPropertyOverride)
             {
-                builder.Append("    queryExecutionTimeout:");
+                builder.Append("    queryExecutionTimeout: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {QueryExecutionTimeout.Value}");
+                    builder.AppendLine($"{QueryExecutionTimeout.Value}");
                 }
             }
 
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

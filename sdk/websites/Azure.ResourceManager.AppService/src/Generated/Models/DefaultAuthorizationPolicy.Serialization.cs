@@ -134,14 +134,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedPrincipals), out propertyOverride);
             if (Optional.IsDefined(AllowedPrincipals) || hasPropertyOverride)
             {
-                builder.Append("  allowedPrincipals:");
+                builder.Append("  allowedPrincipals: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, AllowedPrincipals, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, AllowedPrincipals, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  allowedPrincipals: ".Length;
+                    }
                 }
             }
 
@@ -150,14 +157,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AllowedApplications.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedApplications:");
+                    builder.Append("  allowedApplications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedApplications)
                         {
                             if (item == null)
@@ -210,7 +217,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

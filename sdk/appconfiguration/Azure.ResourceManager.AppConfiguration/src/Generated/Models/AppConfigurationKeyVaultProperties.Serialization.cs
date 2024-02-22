@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyIdentifier), out propertyOverride);
             if (Optional.IsDefined(KeyIdentifier) || hasPropertyOverride)
             {
-                builder.Append("  keyIdentifier:");
+                builder.Append("  keyIdentifier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (KeyIdentifier.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{KeyIdentifier}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{KeyIdentifier}'");
+                        builder.AppendLine($"'{KeyIdentifier}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
             if (Optional.IsDefined(IdentityClientId) || hasPropertyOverride)
             {
-                builder.Append("  identityClientId:");
+                builder.Append("  identityClientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (IdentityClientId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{IdentityClientId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{IdentityClientId}'");
+                        builder.AppendLine($"'{IdentityClientId}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

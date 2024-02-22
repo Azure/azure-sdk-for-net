@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
             if (Optional.IsDefined(Mode) || hasPropertyOverride)
             {
-                builder.Append("  mode:");
+                builder.Append("  mode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Mode.Value.ToString()}'");
+                    builder.AppendLine($"'{Mode.Value.ToString()}'");
                 }
             }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

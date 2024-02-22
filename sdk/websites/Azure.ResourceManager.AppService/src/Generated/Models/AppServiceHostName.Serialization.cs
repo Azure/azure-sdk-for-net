@@ -186,21 +186,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (SiteNames.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  siteNames:");
+                    builder.Append("  siteNames: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SiteNames)
                         {
                             if (item == null)
@@ -243,21 +243,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureResourceName), out propertyOverride);
             if (Optional.IsDefined(AzureResourceName) || hasPropertyOverride)
             {
-                builder.Append("  azureResourceName:");
+                builder.Append("  azureResourceName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AzureResourceName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AzureResourceName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AzureResourceName}'");
+                        builder.AppendLine($"'{AzureResourceName}'");
                     }
                 }
             }
@@ -265,42 +265,42 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureResourceType), out propertyOverride);
             if (Optional.IsDefined(AzureResourceType) || hasPropertyOverride)
             {
-                builder.Append("  azureResourceType:");
+                builder.Append("  azureResourceType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AzureResourceType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{AzureResourceType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHostNameDnsRecordType), out propertyOverride);
             if (Optional.IsDefined(CustomHostNameDnsRecordType) || hasPropertyOverride)
             {
-                builder.Append("  customHostNameDnsRecordType:");
+                builder.Append("  customHostNameDnsRecordType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CustomHostNameDnsRecordType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{CustomHostNameDnsRecordType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostNameType), out propertyOverride);
             if (Optional.IsDefined(HostNameType) || hasPropertyOverride)
             {
-                builder.Append("  hostNameType:");
+                builder.Append("  hostNameType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{HostNameType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{HostNameType.Value.ToSerialString()}'");
                 }
             }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

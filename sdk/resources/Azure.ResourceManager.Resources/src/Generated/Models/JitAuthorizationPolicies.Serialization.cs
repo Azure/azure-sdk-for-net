@@ -109,35 +109,35 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
             if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
             {
-                builder.Append("  principalId:");
+                builder.Append("  principalId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PrincipalId.ToString()}'");
+                    builder.AppendLine($"'{PrincipalId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionId), out propertyOverride);
             if (Optional.IsDefined(RoleDefinitionId) || hasPropertyOverride)
             {
-                builder.Append("  roleDefinitionId:");
+                builder.Append("  roleDefinitionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (RoleDefinitionId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{RoleDefinitionId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{RoleDefinitionId}'");
+                        builder.AppendLine($"'{RoleDefinitionId}'");
                     }
                 }
             }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

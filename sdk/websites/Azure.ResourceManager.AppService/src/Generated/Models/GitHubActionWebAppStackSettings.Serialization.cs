@@ -119,36 +119,36 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSupported), out propertyOverride);
             if (Optional.IsDefined(IsSupported) || hasPropertyOverride)
             {
-                builder.Append("  isSupported:");
+                builder.Append("  isSupported: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsSupported.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedVersion), out propertyOverride);
             if (Optional.IsDefined(SupportedVersion) || hasPropertyOverride)
             {
-                builder.Append("  supportedVersion:");
+                builder.Append("  supportedVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SupportedVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SupportedVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SupportedVersion}'");
+                        builder.AppendLine($"'{SupportedVersion}'");
                     }
                 }
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

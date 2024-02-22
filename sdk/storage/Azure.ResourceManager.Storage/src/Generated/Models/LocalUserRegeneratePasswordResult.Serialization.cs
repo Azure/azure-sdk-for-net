@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshPassword), out propertyOverride);
             if (Optional.IsDefined(SshPassword) || hasPropertyOverride)
             {
-                builder.Append("  sshPassword:");
+                builder.Append("  sshPassword: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SshPassword.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SshPassword}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SshPassword}'");
+                        builder.AppendLine($"'{SshPassword}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

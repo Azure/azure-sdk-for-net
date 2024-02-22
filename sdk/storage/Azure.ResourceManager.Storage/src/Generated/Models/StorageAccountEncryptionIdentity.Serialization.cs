@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionUserAssignedIdentity), out propertyOverride);
             if (Optional.IsDefined(EncryptionUserAssignedIdentity) || hasPropertyOverride)
             {
-                builder.Append("  userAssignedIdentity:");
+                builder.Append("  userAssignedIdentity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (EncryptionUserAssignedIdentity.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{EncryptionUserAssignedIdentity}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{EncryptionUserAssignedIdentity}'");
+                        builder.AppendLine($"'{EncryptionUserAssignedIdentity}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionFederatedIdentityClientId), out propertyOverride);
             if (Optional.IsDefined(EncryptionFederatedIdentityClientId) || hasPropertyOverride)
             {
-                builder.Append("  federatedIdentityClientId:");
+                builder.Append("  federatedIdentityClientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (EncryptionFederatedIdentityClientId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{EncryptionFederatedIdentityClientId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{EncryptionFederatedIdentityClientId}'");
+                        builder.AppendLine($"'{EncryptionFederatedIdentityClientId}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

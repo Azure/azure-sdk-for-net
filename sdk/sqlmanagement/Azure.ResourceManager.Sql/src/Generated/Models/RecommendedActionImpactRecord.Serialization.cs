@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DimensionName), out propertyOverride);
             if (Optional.IsDefined(DimensionName) || hasPropertyOverride)
             {
-                builder.Append("  dimensionName:");
+                builder.Append("  dimensionName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DimensionName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DimensionName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DimensionName}'");
+                        builder.AppendLine($"'{DimensionName}'");
                     }
                 }
             }
@@ -182,21 +182,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
             if (Optional.IsDefined(Unit) || hasPropertyOverride)
             {
-                builder.Append("  unit:");
+                builder.Append("  unit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Unit.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Unit}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Unit}'");
+                        builder.AppendLine($"'{Unit}'");
                     }
                 }
             }
@@ -204,42 +204,42 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AbsoluteValue), out propertyOverride);
             if (Optional.IsDefined(AbsoluteValue) || hasPropertyOverride)
             {
-                builder.Append("  absoluteValue:");
+                builder.Append("  absoluteValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AbsoluteValue.Value.ToString()}'");
+                    builder.AppendLine($"'{AbsoluteValue.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeValueAbsolute), out propertyOverride);
             if (Optional.IsDefined(ChangeValueAbsolute) || hasPropertyOverride)
             {
-                builder.Append("  changeValueAbsolute:");
+                builder.Append("  changeValueAbsolute: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ChangeValueAbsolute.Value.ToString()}'");
+                    builder.AppendLine($"'{ChangeValueAbsolute.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeValueRelative), out propertyOverride);
             if (Optional.IsDefined(ChangeValueRelative) || hasPropertyOverride)
             {
-                builder.Append("  changeValueRelative:");
+                builder.Append("  changeValueRelative: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ChangeValueRelative.Value.ToString()}'");
+                    builder.AppendLine($"'{ChangeValueRelative.Value.ToString()}'");
                 }
             }
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

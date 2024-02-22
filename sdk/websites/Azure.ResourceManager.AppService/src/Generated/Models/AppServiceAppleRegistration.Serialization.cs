@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
             if (Optional.IsDefined(ClientId) || hasPropertyOverride)
             {
-                builder.Append("  clientId:");
+                builder.Append("  clientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ClientId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ClientId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ClientId}'");
+                        builder.AppendLine($"'{ClientId}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("  clientSecretSettingName:");
+                builder.Append("  clientSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ClientSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ClientSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ClientSecretSettingName}'");
+                        builder.AppendLine($"'{ClientSecretSettingName}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

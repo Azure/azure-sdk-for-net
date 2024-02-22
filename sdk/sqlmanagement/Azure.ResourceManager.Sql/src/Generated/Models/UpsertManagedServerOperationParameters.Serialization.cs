@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
             if (Optional.IsDefined(Family) || hasPropertyOverride)
             {
-                builder.Append("  family:");
+                builder.Append("  family: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Family.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Family}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Family}'");
+                        builder.AppendLine($"'{Family}'");
                     }
                 }
             }
@@ -167,21 +167,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
             if (Optional.IsDefined(Tier) || hasPropertyOverride)
             {
-                builder.Append("  tier:");
+                builder.Append("  tier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Tier.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Tier}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Tier}'");
+                        builder.AppendLine($"'{Tier}'");
                     }
                 }
             }
@@ -189,28 +189,28 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VCores), out propertyOverride);
             if (Optional.IsDefined(VCores) || hasPropertyOverride)
             {
-                builder.Append("  vCores:");
+                builder.Append("  vCores: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {VCores.Value}");
+                    builder.AppendLine($"{VCores.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSizeInGB), out propertyOverride);
             if (Optional.IsDefined(StorageSizeInGB) || hasPropertyOverride)
             {
-                builder.Append("  storageSizeInGB:");
+                builder.Append("  storageSizeInGB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {StorageSizeInGB.Value}");
+                    builder.AppendLine($"{StorageSizeInGB.Value}");
                 }
             }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

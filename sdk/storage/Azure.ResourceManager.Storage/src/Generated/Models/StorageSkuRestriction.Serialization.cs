@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (Values.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  values:");
+                    builder.Append("  values: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Values)
                         {
                             if (item == null)
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
             if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
             {
-                builder.Append("  reasonCode:");
+                builder.Append("  reasonCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ReasonCode.Value.ToString()}'");
+                    builder.AppendLine($"'{ReasonCode.Value.ToString()}'");
                 }
             }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

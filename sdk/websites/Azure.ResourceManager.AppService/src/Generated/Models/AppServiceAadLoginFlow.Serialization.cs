@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (LoginParameters.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  loginParameters:");
+                    builder.Append("  loginParameters: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in LoginParameters)
                         {
                             if (item == null)
@@ -169,15 +169,15 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsWwwAuthenticateDisabled), out propertyOverride);
             if (Optional.IsDefined(IsWwwAuthenticateDisabled) || hasPropertyOverride)
             {
-                builder.Append("  disableWWWAuthenticate:");
+                builder.Append("  disableWWWAuthenticate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsWwwAuthenticateDisabled.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

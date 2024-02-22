@@ -185,21 +185,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppLocation), out propertyOverride);
             if (Optional.IsDefined(AppLocation) || hasPropertyOverride)
             {
-                builder.Append("  appLocation:");
+                builder.Append("  appLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AppLocation.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AppLocation}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AppLocation}'");
+                        builder.AppendLine($"'{AppLocation}'");
                     }
                 }
             }
@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiLocation), out propertyOverride);
             if (Optional.IsDefined(ApiLocation) || hasPropertyOverride)
             {
-                builder.Append("  apiLocation:");
+                builder.Append("  apiLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ApiLocation.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ApiLocation}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ApiLocation}'");
+                        builder.AppendLine($"'{ApiLocation}'");
                     }
                 }
             }
@@ -229,21 +229,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppArtifactLocation), out propertyOverride);
             if (Optional.IsDefined(AppArtifactLocation) || hasPropertyOverride)
             {
-                builder.Append("  appArtifactLocation:");
+                builder.Append("  appArtifactLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AppArtifactLocation.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AppArtifactLocation}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AppArtifactLocation}'");
+                        builder.AppendLine($"'{AppArtifactLocation}'");
                     }
                 }
             }
@@ -251,21 +251,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputLocation), out propertyOverride);
             if (Optional.IsDefined(OutputLocation) || hasPropertyOverride)
             {
-                builder.Append("  outputLocation:");
+                builder.Append("  outputLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (OutputLocation.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{OutputLocation}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{OutputLocation}'");
+                        builder.AppendLine($"'{OutputLocation}'");
                     }
                 }
             }
@@ -273,21 +273,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppBuildCommand), out propertyOverride);
             if (Optional.IsDefined(AppBuildCommand) || hasPropertyOverride)
             {
-                builder.Append("  appBuildCommand:");
+                builder.Append("  appBuildCommand: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AppBuildCommand.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AppBuildCommand}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AppBuildCommand}'");
+                        builder.AppendLine($"'{AppBuildCommand}'");
                     }
                 }
             }
@@ -295,21 +295,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiBuildCommand), out propertyOverride);
             if (Optional.IsDefined(ApiBuildCommand) || hasPropertyOverride)
             {
-                builder.Append("  apiBuildCommand:");
+                builder.Append("  apiBuildCommand: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ApiBuildCommand.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ApiBuildCommand}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ApiBuildCommand}'");
+                        builder.AppendLine($"'{ApiBuildCommand}'");
                     }
                 }
             }
@@ -317,36 +317,36 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipGithubActionWorkflowGeneration), out propertyOverride);
             if (Optional.IsDefined(SkipGithubActionWorkflowGeneration) || hasPropertyOverride)
             {
-                builder.Append("  skipGithubActionWorkflowGeneration:");
+                builder.Append("  skipGithubActionWorkflowGeneration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = SkipGithubActionWorkflowGeneration.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GithubActionSecretNameOverride), out propertyOverride);
             if (Optional.IsDefined(GithubActionSecretNameOverride) || hasPropertyOverride)
             {
-                builder.Append("  githubActionSecretNameOverride:");
+                builder.Append("  githubActionSecretNameOverride: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GithubActionSecretNameOverride.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GithubActionSecretNameOverride}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GithubActionSecretNameOverride}'");
+                        builder.AppendLine($"'{GithubActionSecretNameOverride}'");
                     }
                 }
             }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

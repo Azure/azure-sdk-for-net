@@ -131,42 +131,49 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DirectoryServiceOptions), out propertyOverride);
             if (Optional.IsDefined(DirectoryServiceOptions) || hasPropertyOverride)
             {
-                builder.Append("  directoryServiceOptions:");
+                builder.Append("  directoryServiceOptions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DirectoryServiceOptions.ToString()}'");
+                    builder.AppendLine($"'{DirectoryServiceOptions.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryProperties), out propertyOverride);
             if (Optional.IsDefined(ActiveDirectoryProperties) || hasPropertyOverride)
             {
-                builder.Append("  activeDirectoryProperties:");
+                builder.Append("  activeDirectoryProperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ActiveDirectoryProperties, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, ActiveDirectoryProperties, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  activeDirectoryProperties: ".Length;
+                    }
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSharePermission), out propertyOverride);
             if (Optional.IsDefined(DefaultSharePermission) || hasPropertyOverride)
             {
-                builder.Append("  defaultSharePermission:");
+                builder.Append("  defaultSharePermission: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DefaultSharePermission.Value.ToString()}'");
+                    builder.AppendLine($"'{DefaultSharePermission.Value.ToString()}'");
                 }
             }
 
@@ -200,7 +207,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

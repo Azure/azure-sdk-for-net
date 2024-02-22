@@ -130,35 +130,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Convention), out propertyOverride);
             if (Optional.IsDefined(Convention) || hasPropertyOverride)
             {
-                builder.Append("  convention:");
+                builder.Append("  convention: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Convention.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Convention.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHostHeaderName), out propertyOverride);
             if (Optional.IsDefined(CustomHostHeaderName) || hasPropertyOverride)
             {
-                builder.Append("  customHostHeaderName:");
+                builder.Append("  customHostHeaderName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (CustomHostHeaderName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{CustomHostHeaderName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{CustomHostHeaderName}'");
+                        builder.AppendLine($"'{CustomHostHeaderName}'");
                     }
                 }
             }
@@ -166,21 +166,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomProtoHeaderName), out propertyOverride);
             if (Optional.IsDefined(CustomProtoHeaderName) || hasPropertyOverride)
             {
-                builder.Append("  customProtoHeaderName:");
+                builder.Append("  customProtoHeaderName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (CustomProtoHeaderName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{CustomProtoHeaderName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{CustomProtoHeaderName}'");
+                        builder.AppendLine($"'{CustomProtoHeaderName}'");
                     }
                 }
             }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

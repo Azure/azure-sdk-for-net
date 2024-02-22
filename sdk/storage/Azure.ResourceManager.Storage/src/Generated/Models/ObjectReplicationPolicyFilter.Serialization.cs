@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (PrefixMatch.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  prefixMatch:");
+                    builder.Append("  prefixMatch: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in PrefixMatch)
                         {
                             if (item == null)
@@ -165,21 +165,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCreationTime), out propertyOverride);
             if (Optional.IsDefined(MinCreationTime) || hasPropertyOverride)
             {
-                builder.Append("  minCreationTime:");
+                builder.Append("  minCreationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (MinCreationTime.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{MinCreationTime}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{MinCreationTime}'");
+                        builder.AppendLine($"'{MinCreationTime}'");
                     }
                 }
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

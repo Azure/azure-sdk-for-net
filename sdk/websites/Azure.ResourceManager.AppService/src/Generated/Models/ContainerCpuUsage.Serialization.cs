@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalUsage), out propertyOverride);
             if (Optional.IsDefined(TotalUsage) || hasPropertyOverride)
             {
-                builder.Append("  totalUsage:");
+                builder.Append("  totalUsage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TotalUsage.Value.ToString()}'");
+                    builder.AppendLine($"'{TotalUsage.Value.ToString()}'");
                 }
             }
 
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (PerCpuUsage.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  perCpuUsage:");
+                    builder.Append("  perCpuUsage: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in PerCpuUsage)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -200,28 +200,28 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KernelModeUsage), out propertyOverride);
             if (Optional.IsDefined(KernelModeUsage) || hasPropertyOverride)
             {
-                builder.Append("  kernelModeUsage:");
+                builder.Append("  kernelModeUsage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{KernelModeUsage.Value.ToString()}'");
+                    builder.AppendLine($"'{KernelModeUsage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserModeUsage), out propertyOverride);
             if (Optional.IsDefined(UserModeUsage) || hasPropertyOverride)
             {
-                builder.Append("  userModeUsage:");
+                builder.Append("  userModeUsage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{UserModeUsage.Value.ToString()}'");
+                    builder.AppendLine($"'{UserModeUsage.Value.ToString()}'");
                 }
             }
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

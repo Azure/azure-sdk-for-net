@@ -119,35 +119,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Convention), out propertyOverride);
             if (Optional.IsDefined(Convention) || hasPropertyOverride)
             {
-                builder.Append("  convention:");
+                builder.Append("  convention: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Convention.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Convention.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToExpiration), out propertyOverride);
             if (Optional.IsDefined(TimeToExpiration) || hasPropertyOverride)
             {
-                builder.Append("  timeToExpiration:");
+                builder.Append("  timeToExpiration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TimeToExpiration.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TimeToExpiration}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TimeToExpiration}'");
+                        builder.AppendLine($"'{TimeToExpiration}'");
                     }
                 }
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

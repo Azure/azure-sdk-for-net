@@ -141,35 +141,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerUri), out propertyOverride);
             if (Optional.IsDefined(ServerUri) || hasPropertyOverride)
             {
-                builder.Append("  serverUrl:");
+                builder.Append("  serverUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ServerUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{ServerUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageName), out propertyOverride);
             if (Optional.IsDefined(ImageName) || hasPropertyOverride)
             {
-                builder.Append("  imageName:");
+                builder.Append("  imageName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ImageName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ImageName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ImageName}'");
+                        builder.AppendLine($"'{ImageName}'");
                     }
                 }
             }
@@ -177,21 +177,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Username), out propertyOverride);
             if (Optional.IsDefined(Username) || hasPropertyOverride)
             {
-                builder.Append("  username:");
+                builder.Append("  username: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Username.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Username}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Username}'");
+                        builder.AppendLine($"'{Username}'");
                     }
                 }
             }
@@ -199,21 +199,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
             if (Optional.IsDefined(Password) || hasPropertyOverride)
             {
-                builder.Append("  password:");
+                builder.Append("  password: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Password.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Password}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Password}'");
+                        builder.AppendLine($"'{Password}'");
                     }
                 }
             }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

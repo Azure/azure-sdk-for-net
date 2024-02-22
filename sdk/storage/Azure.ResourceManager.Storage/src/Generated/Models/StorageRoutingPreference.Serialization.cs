@@ -138,44 +138,44 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingChoice), out propertyOverride);
             if (Optional.IsDefined(RoutingChoice) || hasPropertyOverride)
             {
-                builder.Append("  routingChoice:");
+                builder.Append("  routingChoice: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RoutingChoice.Value.ToString()}'");
+                    builder.AppendLine($"'{RoutingChoice.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMicrosoftEndpointsPublished), out propertyOverride);
             if (Optional.IsDefined(IsMicrosoftEndpointsPublished) || hasPropertyOverride)
             {
-                builder.Append("  publishMicrosoftEndpoints:");
+                builder.Append("  publishMicrosoftEndpoints: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsMicrosoftEndpointsPublished.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInternetEndpointsPublished), out propertyOverride);
             if (Optional.IsDefined(IsInternetEndpointsPublished) || hasPropertyOverride)
             {
-                builder.Append("  publishInternetEndpoints:");
+                builder.Append("  publishInternetEndpoints: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsInternetEndpointsPublished.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

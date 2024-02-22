@@ -184,14 +184,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
             if (Optional.IsDefined(Result) || hasPropertyOverride)
             {
-                builder.Append("  result:");
+                builder.Append("  result: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Result.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Result.Value.ToSerialString()}'");
                 }
             }
 
@@ -200,17 +200,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (BlockingFeatures.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  blockingFeatures:");
+                    builder.Append("  blockingFeatures: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in BlockingFeatures)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  blockingFeatures: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -222,17 +229,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (UnsupportedFeatures.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  unsupportedFeatures:");
+                    builder.Append("  unsupportedFeatures: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in UnsupportedFeatures)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  unsupportedFeatures: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -244,17 +258,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (BlockingCharacteristics.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  blockingCharacteristics:");
+                    builder.Append("  blockingCharacteristics: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in BlockingCharacteristics)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  blockingCharacteristics: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -291,7 +312,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

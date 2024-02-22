@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountName), out propertyOverride);
             if (Optional.IsDefined(StorageAccountName) || hasPropertyOverride)
             {
-                builder.Append("  storageAccountName:");
+                builder.Append("  storageAccountName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (StorageAccountName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{StorageAccountName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{StorageAccountName}'");
+                        builder.AppendLine($"'{StorageAccountName}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountKey), out propertyOverride);
             if (Optional.IsDefined(StorageAccountKey) || hasPropertyOverride)
             {
-                builder.Append("  storageAccountKey:");
+                builder.Append("  storageAccountKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (StorageAccountKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{StorageAccountKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{StorageAccountKey}'");
+                        builder.AppendLine($"'{StorageAccountKey}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

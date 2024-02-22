@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinifiedTemplate), out propertyOverride);
             if (Optional.IsDefined(MinifiedTemplate) || hasPropertyOverride)
             {
-                builder.Append("  minifiedTemplate:");
+                builder.Append("  minifiedTemplate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (MinifiedTemplate.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{MinifiedTemplate}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{MinifiedTemplate}'");
+                        builder.AppendLine($"'{MinifiedTemplate}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateHash), out propertyOverride);
             if (Optional.IsDefined(TemplateHash) || hasPropertyOverride)
             {
-                builder.Append("  templateHash:");
+                builder.Append("  templateHash: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TemplateHash.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TemplateHash}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TemplateHash}'");
+                        builder.AppendLine($"'{TemplateHash}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerId), out propertyOverride);
             if (Optional.IsDefined(ServerId) || hasPropertyOverride)
             {
-                builder.Append("  serverId:");
+                builder.Append("  serverId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ServerId.ToString()}'");
+                    builder.AppendLine($"'{ServerId.ToString()}'");
                 }
             }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

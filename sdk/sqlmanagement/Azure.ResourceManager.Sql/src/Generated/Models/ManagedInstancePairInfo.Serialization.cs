@@ -123,28 +123,28 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryManagedInstanceId), out propertyOverride);
             if (Optional.IsDefined(PrimaryManagedInstanceId) || hasPropertyOverride)
             {
-                builder.Append("  primaryManagedInstanceId:");
+                builder.Append("  primaryManagedInstanceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PrimaryManagedInstanceId.ToString()}'");
+                    builder.AppendLine($"'{PrimaryManagedInstanceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerManagedInstanceId), out propertyOverride);
             if (Optional.IsDefined(PartnerManagedInstanceId) || hasPropertyOverride)
             {
-                builder.Append("  partnerManagedInstanceId:");
+                builder.Append("  partnerManagedInstanceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PartnerManagedInstanceId.ToString()}'");
+                    builder.AppendLine($"'{PartnerManagedInstanceId.ToString()}'");
                 }
             }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

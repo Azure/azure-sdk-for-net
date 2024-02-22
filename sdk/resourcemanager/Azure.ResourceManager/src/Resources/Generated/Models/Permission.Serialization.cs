@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (AllowedActions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  actions:");
+                    builder.Append("  actions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedActions)
                         {
                             if (item == null)
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (DeniedActions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  notActions:");
+                    builder.Append("  notActions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in DeniedActions)
                         {
                             if (item == null)
@@ -266,14 +266,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (AllowedDataActions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  dataActions:");
+                    builder.Append("  dataActions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedDataActions)
                         {
                             if (item == null)
@@ -301,14 +301,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (DeniedDataActions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  notDataActions:");
+                    builder.Append("  notDataActions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in DeniedDataActions)
                         {
                             if (item == null)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -193,35 +193,35 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfQueries), out propertyOverride);
             if (Optional.IsDefined(NumberOfQueries) || hasPropertyOverride)
             {
-                builder.Append("  numberOfQueries:");
+                builder.Append("  numberOfQueries: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {NumberOfQueries.Value}");
+                    builder.AppendLine($"{NumberOfQueries.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationFunction), out propertyOverride);
             if (Optional.IsDefined(AggregationFunction) || hasPropertyOverride)
             {
-                builder.Append("  aggregationFunction:");
+                builder.Append("  aggregationFunction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AggregationFunction.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AggregationFunction}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AggregationFunction}'");
+                        builder.AppendLine($"'{AggregationFunction}'");
                     }
                 }
             }
@@ -229,21 +229,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObservationMetric), out propertyOverride);
             if (Optional.IsDefined(ObservationMetric) || hasPropertyOverride)
             {
-                builder.Append("  observationMetric:");
+                builder.Append("  observationMetric: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ObservationMetric.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ObservationMetric}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ObservationMetric}'");
+                        builder.AppendLine($"'{ObservationMetric}'");
                     }
                 }
             }
@@ -251,35 +251,35 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
             if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
             {
-                builder.Append("  intervalType:");
+                builder.Append("  intervalType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{IntervalType.Value.ToString()}'");
+                    builder.AppendLine($"'{IntervalType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
             if (Optional.IsDefined(StartTime) || hasPropertyOverride)
             {
-                builder.Append("  startTime:");
+                builder.Append("  startTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (StartTime.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{StartTime}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{StartTime}'");
+                        builder.AppendLine($"'{StartTime}'");
                     }
                 }
             }
@@ -287,21 +287,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTime), out propertyOverride);
             if (Optional.IsDefined(EndTime) || hasPropertyOverride)
             {
-                builder.Append("  endTime:");
+                builder.Append("  endTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (EndTime.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{EndTime}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{EndTime}'");
+                        builder.AppendLine($"'{EndTime}'");
                     }
                 }
             }
@@ -311,17 +311,24 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (Queries.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  queries:");
+                    builder.Append("  queries: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Queries)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  queries: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -358,7 +365,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

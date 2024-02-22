@@ -130,21 +130,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationPlacementId), out propertyOverride);
             if (Optional.IsDefined(LocationPlacementId) || hasPropertyOverride)
             {
-                builder.Append("  locationPlacementId:");
+                builder.Append("  locationPlacementId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LocationPlacementId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LocationPlacementId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LocationPlacementId}'");
+                        builder.AppendLine($"'{LocationPlacementId}'");
                     }
                 }
             }
@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaId), out propertyOverride);
             if (Optional.IsDefined(QuotaId) || hasPropertyOverride)
             {
-                builder.Append("  quotaId:");
+                builder.Append("  quotaId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (QuotaId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{QuotaId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{QuotaId}'");
+                        builder.AppendLine($"'{QuotaId}'");
                     }
                 }
             }
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpendingLimit), out propertyOverride);
             if (Optional.IsDefined(SpendingLimit) || hasPropertyOverride)
             {
-                builder.Append("  spendingLimit:");
+                builder.Append("  spendingLimit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SpendingLimit.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{SpendingLimit.Value.ToSerialString()}'");
                 }
             }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

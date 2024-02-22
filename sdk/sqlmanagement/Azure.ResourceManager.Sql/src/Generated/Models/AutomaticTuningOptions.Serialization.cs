@@ -153,56 +153,56 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DesiredState), out propertyOverride);
             if (Optional.IsDefined(DesiredState) || hasPropertyOverride)
             {
-                builder.Append("  desiredState:");
+                builder.Append("  desiredState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DesiredState.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{DesiredState.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActualState), out propertyOverride);
             if (Optional.IsDefined(ActualState) || hasPropertyOverride)
             {
-                builder.Append("  actualState:");
+                builder.Append("  actualState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ActualState.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ActualState.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
             if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
             {
-                builder.Append("  reasonCode:");
+                builder.Append("  reasonCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {ReasonCode.Value}");
+                    builder.AppendLine($"{ReasonCode.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonDesc), out propertyOverride);
             if (Optional.IsDefined(ReasonDesc) || hasPropertyOverride)
             {
-                builder.Append("  reasonDesc:");
+                builder.Append("  reasonDesc: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ReasonDesc.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ReasonDesc.Value.ToSerialString()}'");
                 }
             }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

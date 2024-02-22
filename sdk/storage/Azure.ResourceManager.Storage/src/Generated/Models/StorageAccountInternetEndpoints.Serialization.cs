@@ -153,56 +153,56 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobUri), out propertyOverride);
             if (Optional.IsDefined(BlobUri) || hasPropertyOverride)
             {
-                builder.Append("  blob:");
+                builder.Append("  blob: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{BlobUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{BlobUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUri), out propertyOverride);
             if (Optional.IsDefined(FileUri) || hasPropertyOverride)
             {
-                builder.Append("  file:");
+                builder.Append("  file: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{FileUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{FileUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebUri), out propertyOverride);
             if (Optional.IsDefined(WebUri) || hasPropertyOverride)
             {
-                builder.Append("  web:");
+                builder.Append("  web: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{WebUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{WebUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DfsUri), out propertyOverride);
             if (Optional.IsDefined(DfsUri) || hasPropertyOverride)
             {
-                builder.Append("  dfs:");
+                builder.Append("  dfs: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DfsUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{DfsUri.AbsoluteUri}'");
                 }
             }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

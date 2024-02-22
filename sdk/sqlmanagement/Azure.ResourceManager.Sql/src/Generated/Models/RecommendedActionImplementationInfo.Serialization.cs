@@ -119,35 +119,35 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
             if (Optional.IsDefined(Method) || hasPropertyOverride)
             {
-                builder.Append("  method:");
+                builder.Append("  method: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Method.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Method.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Script), out propertyOverride);
             if (Optional.IsDefined(Script) || hasPropertyOverride)
             {
-                builder.Append("  script:");
+                builder.Append("  script: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Script.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Script}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Script}'");
+                        builder.AppendLine($"'{Script}'");
                     }
                 }
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

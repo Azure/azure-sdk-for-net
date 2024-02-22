@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Instructions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  instructions:");
+                    builder.Append("  instructions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Instructions)
                         {
                             if (item == null)
@@ -181,17 +181,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (DataSourceUri.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  dataSourceUri:");
+                    builder.Append("  dataSourceUri: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in DataSourceUri)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  dataSourceUri: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -228,7 +235,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

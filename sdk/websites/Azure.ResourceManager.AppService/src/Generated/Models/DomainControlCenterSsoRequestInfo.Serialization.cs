@@ -130,35 +130,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
             if (Optional.IsDefined(Uri) || hasPropertyOverride)
             {
-                builder.Append("  url:");
+                builder.Append("  url: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Uri.AbsoluteUri}'");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostParameterKey), out propertyOverride);
             if (Optional.IsDefined(PostParameterKey) || hasPropertyOverride)
             {
-                builder.Append("  postParameterKey:");
+                builder.Append("  postParameterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PostParameterKey.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PostParameterKey}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PostParameterKey}'");
+                        builder.AppendLine($"'{PostParameterKey}'");
                     }
                 }
             }
@@ -166,21 +166,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostParameterValue), out propertyOverride);
             if (Optional.IsDefined(PostParameterValue) || hasPropertyOverride)
             {
-                builder.Append("  postParameterValue:");
+                builder.Append("  postParameterValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PostParameterValue.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PostParameterValue}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PostParameterValue}'");
+                        builder.AppendLine($"'{PostParameterValue}'");
                     }
                 }
             }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -126,21 +126,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extension), out propertyOverride);
             if (Optional.IsDefined(Extension) || hasPropertyOverride)
             {
-                builder.Append("  extension:");
+                builder.Append("  extension: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Extension.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Extension}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Extension}'");
+                        builder.AppendLine($"'{Extension}'");
                     }
                 }
             }
@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptProcessor), out propertyOverride);
             if (Optional.IsDefined(ScriptProcessor) || hasPropertyOverride)
             {
-                builder.Append("  scriptProcessor:");
+                builder.Append("  scriptProcessor: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ScriptProcessor.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ScriptProcessor}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ScriptProcessor}'");
+                        builder.AppendLine($"'{ScriptProcessor}'");
                     }
                 }
             }
@@ -170,21 +170,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Arguments), out propertyOverride);
             if (Optional.IsDefined(Arguments) || hasPropertyOverride)
             {
-                builder.Append("  arguments:");
+                builder.Append("  arguments: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Arguments.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Arguments}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Arguments}'");
+                        builder.AppendLine($"'{Arguments}'");
                     }
                 }
             }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

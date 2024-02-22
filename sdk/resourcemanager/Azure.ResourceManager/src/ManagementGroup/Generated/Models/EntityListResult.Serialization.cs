@@ -147,17 +147,24 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 if (Value.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  value:");
+                    builder.Append("  value: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Value)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  value: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -167,35 +174,35 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
             if (Optional.IsDefined(Count) || hasPropertyOverride)
             {
-                builder.Append("  count:");
+                builder.Append("  count: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Count.Value}");
+                    builder.AppendLine($"{Count.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
             if (Optional.IsDefined(NextLink) || hasPropertyOverride)
             {
-                builder.Append("  nextLink:");
+                builder.Append("  nextLink: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (NextLink.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{NextLink}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{NextLink}'");
+                        builder.AppendLine($"'{NextLink}'");
                     }
                 }
             }
@@ -230,7 +237,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

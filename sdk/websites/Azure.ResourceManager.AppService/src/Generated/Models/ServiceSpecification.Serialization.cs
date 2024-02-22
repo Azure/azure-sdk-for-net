@@ -146,17 +146,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (MetricSpecifications.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  metricSpecifications:");
+                    builder.Append("  metricSpecifications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in MetricSpecifications)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  metricSpecifications: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -168,17 +175,24 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (LogSpecifications.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  logSpecifications:");
+                    builder.Append("  logSpecifications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in LogSpecifications)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  logSpecifications: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -215,7 +229,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

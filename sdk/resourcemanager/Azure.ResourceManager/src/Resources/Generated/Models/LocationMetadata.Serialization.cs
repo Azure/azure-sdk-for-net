@@ -215,49 +215,49 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionType), out propertyOverride);
             if (Optional.IsDefined(RegionType) || hasPropertyOverride)
             {
-                builder.Append("  regionType:");
+                builder.Append("  regionType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RegionType.Value.ToString()}'");
+                    builder.AppendLine($"'{RegionType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionCategory), out propertyOverride);
             if (Optional.IsDefined(RegionCategory) || hasPropertyOverride)
             {
-                builder.Append("  regionCategory:");
+                builder.Append("  regionCategory: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RegionCategory.Value.ToString()}'");
+                    builder.AppendLine($"'{RegionCategory.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Geography), out propertyOverride);
             if (Optional.IsDefined(Geography) || hasPropertyOverride)
             {
-                builder.Append("  geography:");
+                builder.Append("  geography: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Geography.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Geography}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Geography}'");
+                        builder.AppendLine($"'{Geography}'");
                     }
                 }
             }
@@ -265,21 +265,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeographyGroup), out propertyOverride);
             if (Optional.IsDefined(GeographyGroup) || hasPropertyOverride)
             {
-                builder.Append("  geographyGroup:");
+                builder.Append("  geographyGroup: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (GeographyGroup.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{GeographyGroup}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{GeographyGroup}'");
+                        builder.AppendLine($"'{GeographyGroup}'");
                     }
                 }
             }
@@ -287,49 +287,49 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Longitude), out propertyOverride);
             if (Optional.IsDefined(Longitude) || hasPropertyOverride)
             {
-                builder.Append("  longitude:");
+                builder.Append("  longitude: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Longitude.Value.ToString()}'");
+                    builder.AppendLine($"'{Longitude.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latitude), out propertyOverride);
             if (Optional.IsDefined(Latitude) || hasPropertyOverride)
             {
-                builder.Append("  latitude:");
+                builder.Append("  latitude: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Latitude.Value.ToString()}'");
+                    builder.AppendLine($"'{Latitude.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalLocation), out propertyOverride);
             if (Optional.IsDefined(PhysicalLocation) || hasPropertyOverride)
             {
-                builder.Append("  physicalLocation:");
+                builder.Append("  physicalLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PhysicalLocation.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PhysicalLocation}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PhysicalLocation}'");
+                        builder.AppendLine($"'{PhysicalLocation}'");
                     }
                 }
             }
@@ -339,17 +339,24 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (PairedRegions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  pairedRegion:");
+                    builder.Append("  pairedRegion: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in PairedRegions)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  pairedRegion: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -359,21 +366,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HomeLocation), out propertyOverride);
             if (Optional.IsDefined(HomeLocation) || hasPropertyOverride)
             {
-                builder.Append("  homeLocation:");
+                builder.Append("  homeLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (HomeLocation.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{HomeLocation}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{HomeLocation}'");
+                        builder.AppendLine($"'{HomeLocation}'");
                     }
                 }
             }
@@ -408,7 +415,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

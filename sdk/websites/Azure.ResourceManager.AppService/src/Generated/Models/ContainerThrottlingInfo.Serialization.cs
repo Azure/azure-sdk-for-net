@@ -138,42 +138,42 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Periods), out propertyOverride);
             if (Optional.IsDefined(Periods) || hasPropertyOverride)
             {
-                builder.Append("  periods:");
+                builder.Append("  periods: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Periods.Value}");
+                    builder.AppendLine($"{Periods.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottledPeriods), out propertyOverride);
             if (Optional.IsDefined(ThrottledPeriods) || hasPropertyOverride)
             {
-                builder.Append("  throttledPeriods:");
+                builder.Append("  throttledPeriods: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {ThrottledPeriods.Value}");
+                    builder.AppendLine($"{ThrottledPeriods.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottledTime), out propertyOverride);
             if (Optional.IsDefined(ThrottledTime) || hasPropertyOverride)
             {
-                builder.Append("  throttledTime:");
+                builder.Append("  throttledTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {ThrottledTime.Value}");
+                    builder.AppendLine($"{ThrottledTime.Value}");
                 }
             }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

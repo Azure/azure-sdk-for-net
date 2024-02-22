@@ -164,77 +164,77 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
             if (Optional.IsDefined(Minimum) || hasPropertyOverride)
             {
-                builder.Append("  minimum:");
+                builder.Append("  minimum: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Minimum.Value}");
+                    builder.AppendLine($"{Minimum.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
             if (Optional.IsDefined(Maximum) || hasPropertyOverride)
             {
-                builder.Append("  maximum:");
+                builder.Append("  maximum: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Maximum.Value}");
+                    builder.AppendLine($"{Maximum.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ElasticMaximum), out propertyOverride);
             if (Optional.IsDefined(ElasticMaximum) || hasPropertyOverride)
             {
-                builder.Append("  elasticMaximum:");
+                builder.Append("  elasticMaximum: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {ElasticMaximum.Value}");
+                    builder.AppendLine($"{ElasticMaximum.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
             if (Optional.IsDefined(Default) || hasPropertyOverride)
             {
-                builder.Append("  default:");
+                builder.Append("  default: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Default.Value}");
+                    builder.AppendLine($"{Default.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleType), out propertyOverride);
             if (Optional.IsDefined(ScaleType) || hasPropertyOverride)
             {
-                builder.Append("  scaleType:");
+                builder.Append("  scaleType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ScaleType.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ScaleType}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ScaleType}'");
+                        builder.AppendLine($"'{ScaleType}'");
                     }
                 }
             }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

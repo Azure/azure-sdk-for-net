@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogicalZone), out propertyOverride);
             if (Optional.IsDefined(LogicalZone) || hasPropertyOverride)
             {
-                builder.Append("  logicalZone:");
+                builder.Append("  logicalZone: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (LogicalZone.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{LogicalZone}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{LogicalZone}'");
+                        builder.AppendLine($"'{LogicalZone}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalZone), out propertyOverride);
             if (Optional.IsDefined(PhysicalZone) || hasPropertyOverride)
             {
-                builder.Append("  physicalZone:");
+                builder.Append("  physicalZone: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (PhysicalZone.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{PhysicalZone}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{PhysicalZone}'");
+                        builder.AppendLine($"'{PhysicalZone}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

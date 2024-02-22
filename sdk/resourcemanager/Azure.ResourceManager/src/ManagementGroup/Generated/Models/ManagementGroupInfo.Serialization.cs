@@ -249,50 +249,50 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
             if (Optional.IsDefined(Version) || hasPropertyOverride)
             {
-                builder.Append("  version:");
+                builder.Append("  version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {Version.Value}");
+                    builder.AppendLine($"{Version.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedOn), out propertyOverride);
             if (Optional.IsDefined(UpdatedOn) || hasPropertyOverride)
             {
-                builder.Append("  updatedTime:");
+                builder.Append("  updatedTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedBy), out propertyOverride);
             if (Optional.IsDefined(UpdatedBy) || hasPropertyOverride)
             {
-                builder.Append("  updatedBy:");
+                builder.Append("  updatedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (UpdatedBy.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{UpdatedBy}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{UpdatedBy}'");
+                        builder.AppendLine($"'{UpdatedBy}'");
                     }
                 }
             }
@@ -300,14 +300,21 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parent), out propertyOverride);
             if (Optional.IsDefined(Parent) || hasPropertyOverride)
             {
-                builder.Append("  parent:");
+                builder.Append("  parent: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Parent, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, Parent, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  parent: ".Length;
+                    }
                 }
             }
 
@@ -316,17 +323,24 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 if (Path.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  path:");
+                    builder.Append("  path: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Path)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  path: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -338,14 +352,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 if (ManagementGroupAncestors.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  managementGroupAncestors:");
+                    builder.Append("  managementGroupAncestors: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ManagementGroupAncestors)
                         {
                             if (item == null)
@@ -373,17 +387,24 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 if (ManagementGroupAncestorChain.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  managementGroupAncestorsChain:");
+                    builder.Append("  managementGroupAncestorsChain: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ManagementGroupAncestorChain)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  managementGroupAncestorsChain: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -420,7 +441,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

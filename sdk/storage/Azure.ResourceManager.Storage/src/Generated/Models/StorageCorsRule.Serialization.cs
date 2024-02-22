@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (AllowedOrigins.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedOrigins:");
+                    builder.Append("  allowedOrigins: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedOrigins)
                         {
                             if (item == null)
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (AllowedMethods.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedMethods:");
+                    builder.Append("  allowedMethods: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedMethods)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgeInSeconds), out propertyOverride);
             if (Optional.IsDefined(MaxAgeInSeconds) || hasPropertyOverride)
             {
-                builder.Append("  maxAgeInSeconds:");
+                builder.Append("  maxAgeInSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {MaxAgeInSeconds}");
+                    builder.AppendLine($"{MaxAgeInSeconds}");
                 }
             }
 
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (ExposedHeaders.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  exposedHeaders:");
+                    builder.Append("  exposedHeaders: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ExposedHeaders)
                         {
                             if (item == null)
@@ -282,14 +282,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (AllowedHeaders.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedHeaders:");
+                    builder.Append("  allowedHeaders: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedHeaders)
                         {
                             if (item == null)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -132,17 +132,24 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (Tables.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  tables:");
+                    builder.Append("  tables: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Tables)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  tables: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -152,21 +159,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterSyncMemberName), out propertyOverride);
             if (Optional.IsDefined(MasterSyncMemberName) || hasPropertyOverride)
             {
-                builder.Append("  masterSyncMemberName:");
+                builder.Append("  masterSyncMemberName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (MasterSyncMemberName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{MasterSyncMemberName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{MasterSyncMemberName}'");
+                        builder.AppendLine($"'{MasterSyncMemberName}'");
                     }
                 }
             }
@@ -201,7 +208,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

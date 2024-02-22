@@ -117,21 +117,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
             if (Optional.IsDefined(Permissions) || hasPropertyOverride)
             {
-                builder.Append("  permissions:");
+                builder.Append("  permissions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Permissions.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Permissions}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Permissions}'");
+                        builder.AppendLine($"'{Permissions}'");
                     }
                 }
             }
@@ -139,21 +139,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Service), out propertyOverride);
             if (Optional.IsDefined(Service) || hasPropertyOverride)
             {
-                builder.Append("  service:");
+                builder.Append("  service: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Service.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Service}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Service}'");
+                        builder.AppendLine($"'{Service}'");
                     }
                 }
             }
@@ -161,21 +161,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceName), out propertyOverride);
             if (Optional.IsDefined(ResourceName) || hasPropertyOverride)
             {
-                builder.Append("  resourceName:");
+                builder.Append("  resourceName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ResourceName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ResourceName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ResourceName}'");
+                        builder.AppendLine($"'{ResourceName}'");
                     }
                 }
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

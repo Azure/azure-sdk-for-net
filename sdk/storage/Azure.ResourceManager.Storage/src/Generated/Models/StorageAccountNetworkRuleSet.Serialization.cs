@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bypass), out propertyOverride);
             if (Optional.IsDefined(Bypass) || hasPropertyOverride)
             {
-                builder.Append("  bypass:");
+                builder.Append("  bypass: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Bypass.Value.ToString()}'");
+                    builder.AppendLine($"'{Bypass.Value.ToString()}'");
                 }
             }
 
@@ -208,17 +208,24 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (ResourceAccessRules.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  resourceAccessRules:");
+                    builder.Append("  resourceAccessRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ResourceAccessRules)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  resourceAccessRules: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -230,17 +237,24 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (VirtualNetworkRules.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  virtualNetworkRules:");
+                    builder.Append("  virtualNetworkRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in VirtualNetworkRules)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  virtualNetworkRules: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -252,17 +266,24 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (IPRules.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  ipRules:");
+                    builder.Append("  ipRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in IPRules)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  ipRules: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -272,14 +293,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
             if (Optional.IsDefined(DefaultAction) || hasPropertyOverride)
             {
-                builder.Append("  defaultAction:");
+                builder.Append("  defaultAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DefaultAction.ToSerialString()}'");
+                    builder.AppendLine($"'{DefaultAction.ToSerialString()}'");
                 }
             }
 
@@ -313,7 +334,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

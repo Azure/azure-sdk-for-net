@@ -123,28 +123,28 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
             if (Optional.IsDefined(FailoverPolicy) || hasPropertyOverride)
             {
-                builder.Append("  failoverPolicy:");
+                builder.Append("  failoverPolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{FailoverPolicy.Value.ToString()}'");
+                    builder.AppendLine($"'{FailoverPolicy.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServer), out propertyOverride);
             if (Optional.IsDefined(TargetServer) || hasPropertyOverride)
             {
-                builder.Append("  targetServer:");
+                builder.Append("  targetServer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TargetServer.ToString()}'");
+                    builder.AppendLine($"'{TargetServer.ToString()}'");
                 }
             }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

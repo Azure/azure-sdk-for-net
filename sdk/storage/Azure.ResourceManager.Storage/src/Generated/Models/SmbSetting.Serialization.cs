@@ -152,35 +152,42 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Multichannel), out propertyOverride);
             if (Optional.IsDefined(Multichannel) || hasPropertyOverride)
             {
-                builder.Append("  multichannel:");
+                builder.Append("  multichannel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Multichannel, options, 2, false);
+                    int currentIndent = 2;
+                    int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                    int length = builder.Length;
+                    AppendChildObject(builder, Multichannel, options, currentIndent, false);
+                    if (builder.Length == length + emptyObjectLength)
+                    {
+                        builder.Length = builder.Length - emptyObjectLength - "  multichannel: ".Length;
+                    }
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Versions), out propertyOverride);
             if (Optional.IsDefined(Versions) || hasPropertyOverride)
             {
-                builder.Append("  versions:");
+                builder.Append("  versions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Versions.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Versions}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Versions}'");
+                        builder.AppendLine($"'{Versions}'");
                     }
                 }
             }
@@ -188,21 +195,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationMethods), out propertyOverride);
             if (Optional.IsDefined(AuthenticationMethods) || hasPropertyOverride)
             {
-                builder.Append("  authenticationMethods:");
+                builder.Append("  authenticationMethods: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AuthenticationMethods.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AuthenticationMethods}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AuthenticationMethods}'");
+                        builder.AppendLine($"'{AuthenticationMethods}'");
                     }
                 }
             }
@@ -210,21 +217,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KerberosTicketEncryption), out propertyOverride);
             if (Optional.IsDefined(KerberosTicketEncryption) || hasPropertyOverride)
             {
-                builder.Append("  kerberosTicketEncryption:");
+                builder.Append("  kerberosTicketEncryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (KerberosTicketEncryption.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{KerberosTicketEncryption}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{KerberosTicketEncryption}'");
+                        builder.AppendLine($"'{KerberosTicketEncryption}'");
                     }
                 }
             }
@@ -232,21 +239,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChannelEncryption), out propertyOverride);
             if (Optional.IsDefined(ChannelEncryption) || hasPropertyOverride)
             {
-                builder.Append("  channelEncryption:");
+                builder.Append("  channelEncryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ChannelEncryption.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ChannelEncryption}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ChannelEncryption}'");
+                        builder.AppendLine($"'{ChannelEncryption}'");
                     }
                 }
             }
@@ -281,7 +288,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

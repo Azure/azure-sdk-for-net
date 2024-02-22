@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProfileVersion), out propertyOverride);
             if (Optional.IsDefined(ProfileVersion) || hasPropertyOverride)
             {
-                builder.Append("  profileVersion:");
+                builder.Append("  profileVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ProfileVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ProfileVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ProfileVersion}'");
+                        builder.AppendLine($"'{ProfileVersion}'");
                     }
                 }
             }
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersion), out propertyOverride);
             if (Optional.IsDefined(ApiVersion) || hasPropertyOverride)
             {
-                builder.Append("  apiVersion:");
+                builder.Append("  apiVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ApiVersion.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ApiVersion}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ApiVersion}'");
+                        builder.AppendLine($"'{ApiVersion}'");
                     }
                 }
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

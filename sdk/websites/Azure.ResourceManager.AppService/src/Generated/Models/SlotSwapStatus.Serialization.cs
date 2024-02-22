@@ -130,36 +130,36 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimestampUtc), out propertyOverride);
             if (Optional.IsDefined(TimestampUtc) || hasPropertyOverride)
             {
-                builder.Append("  timestampUtc:");
+                builder.Append("  timestampUtc: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(TimestampUtc.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceSlotName), out propertyOverride);
             if (Optional.IsDefined(SourceSlotName) || hasPropertyOverride)
             {
-                builder.Append("  sourceSlotName:");
+                builder.Append("  sourceSlotName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SourceSlotName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SourceSlotName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SourceSlotName}'");
+                        builder.AppendLine($"'{SourceSlotName}'");
                     }
                 }
             }
@@ -167,21 +167,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationSlotName), out propertyOverride);
             if (Optional.IsDefined(DestinationSlotName) || hasPropertyOverride)
             {
-                builder.Append("  destinationSlotName:");
+                builder.Append("  destinationSlotName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DestinationSlotName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DestinationSlotName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DestinationSlotName}'");
+                        builder.AppendLine($"'{DestinationSlotName}'");
                     }
                 }
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

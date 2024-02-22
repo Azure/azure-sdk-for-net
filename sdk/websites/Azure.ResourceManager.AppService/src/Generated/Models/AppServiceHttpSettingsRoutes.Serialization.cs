@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiPrefix), out propertyOverride);
             if (Optional.IsDefined(ApiPrefix) || hasPropertyOverride)
             {
-                builder.Append("  apiPrefix:");
+                builder.Append("  apiPrefix: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ApiPrefix.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ApiPrefix}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ApiPrefix}'");
+                        builder.AppendLine($"'{ApiPrefix}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

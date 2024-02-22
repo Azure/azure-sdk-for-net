@@ -213,112 +213,112 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxBytes), out propertyOverride);
             if (Optional.IsDefined(RxBytes) || hasPropertyOverride)
             {
-                builder.Append("  rxBytes:");
+                builder.Append("  rxBytes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RxBytes.Value.ToString()}'");
+                    builder.AppendLine($"'{RxBytes.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxPackets), out propertyOverride);
             if (Optional.IsDefined(RxPackets) || hasPropertyOverride)
             {
-                builder.Append("  rxPackets:");
+                builder.Append("  rxPackets: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RxPackets.Value.ToString()}'");
+                    builder.AppendLine($"'{RxPackets.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxErrors), out propertyOverride);
             if (Optional.IsDefined(RxErrors) || hasPropertyOverride)
             {
-                builder.Append("  rxErrors:");
+                builder.Append("  rxErrors: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RxErrors.Value.ToString()}'");
+                    builder.AppendLine($"'{RxErrors.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxDropped), out propertyOverride);
             if (Optional.IsDefined(RxDropped) || hasPropertyOverride)
             {
-                builder.Append("  rxDropped:");
+                builder.Append("  rxDropped: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RxDropped.Value.ToString()}'");
+                    builder.AppendLine($"'{RxDropped.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxBytes), out propertyOverride);
             if (Optional.IsDefined(TxBytes) || hasPropertyOverride)
             {
-                builder.Append("  txBytes:");
+                builder.Append("  txBytes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TxBytes.Value.ToString()}'");
+                    builder.AppendLine($"'{TxBytes.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxPackets), out propertyOverride);
             if (Optional.IsDefined(TxPackets) || hasPropertyOverride)
             {
-                builder.Append("  txPackets:");
+                builder.Append("  txPackets: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TxPackets.Value.ToString()}'");
+                    builder.AppendLine($"'{TxPackets.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxErrors), out propertyOverride);
             if (Optional.IsDefined(TxErrors) || hasPropertyOverride)
             {
-                builder.Append("  txErrors:");
+                builder.Append("  txErrors: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TxErrors.Value.ToString()}'");
+                    builder.AppendLine($"'{TxErrors.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxDropped), out propertyOverride);
             if (Optional.IsDefined(TxDropped) || hasPropertyOverride)
             {
-                builder.Append("  txDropped:");
+                builder.Append("  txDropped: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TxDropped.Value.ToString()}'");
+                    builder.AppendLine($"'{TxDropped.Value.ToString()}'");
                 }
             }
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

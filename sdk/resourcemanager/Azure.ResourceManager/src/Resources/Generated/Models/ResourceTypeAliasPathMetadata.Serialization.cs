@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Attributes), out propertyOverride);
             if (Optional.IsDefined(Attributes) || hasPropertyOverride)
             {
-                builder.Append("  attributes:");
+                builder.Append("  attributes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Attributes.Value.ToString()}'");
+                    builder.AppendLine($"'{Attributes.Value.ToString()}'");
                 }
             }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

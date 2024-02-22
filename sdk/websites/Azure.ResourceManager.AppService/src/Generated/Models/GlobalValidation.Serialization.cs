@@ -160,50 +160,50 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthenticationRequired), out propertyOverride);
             if (Optional.IsDefined(IsAuthenticationRequired) || hasPropertyOverride)
             {
-                builder.Append("  requireAuthentication:");
+                builder.Append("  requireAuthentication: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsAuthenticationRequired.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnauthenticatedClientAction), out propertyOverride);
             if (Optional.IsDefined(UnauthenticatedClientAction) || hasPropertyOverride)
             {
-                builder.Append("  unauthenticatedClientAction:");
+                builder.Append("  unauthenticatedClientAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{UnauthenticatedClientAction.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{UnauthenticatedClientAction.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedirectToProvider), out propertyOverride);
             if (Optional.IsDefined(RedirectToProvider) || hasPropertyOverride)
             {
-                builder.Append("  redirectToProvider:");
+                builder.Append("  redirectToProvider: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (RedirectToProvider.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{RedirectToProvider}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{RedirectToProvider}'");
+                        builder.AppendLine($"'{RedirectToProvider}'");
                     }
                 }
             }
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ExcludedPaths.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  excludedPaths:");
+                    builder.Append("  excludedPaths: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ExcludedPaths)
                         {
                             if (item == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

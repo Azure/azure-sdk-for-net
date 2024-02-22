@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountSasToken), out propertyOverride);
             if (Optional.IsDefined(AccountSasToken) || hasPropertyOverride)
             {
-                builder.Append("  accountSasToken:");
+                builder.Append("  accountSasToken: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AccountSasToken.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AccountSasToken}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AccountSasToken}'");
+                        builder.AppendLine($"'{AccountSasToken}'");
                     }
                 }
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -119,35 +119,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
             if (Optional.IsDefined(Method) || hasPropertyOverride)
             {
-                builder.Append("  method:");
+                builder.Append("  method: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Method.Value.ToString()}'");
+                    builder.AppendLine($"'{Method.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
             if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
             {
-                builder.Append("  clientSecretSettingName:");
+                builder.Append("  clientSecretSettingName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ClientSecretSettingName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ClientSecretSettingName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ClientSecretSettingName}'");
+                        builder.AppendLine($"'{ClientSecretSettingName}'");
                     }
                 }
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {

@@ -130,21 +130,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
             if (Optional.IsDefined(Category) || hasPropertyOverride)
             {
-                builder.Append("  category:");
+                builder.Append("  category: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Category.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Category}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Category}'");
+                        builder.AppendLine($"'{Category}'");
                     }
                 }
             }
@@ -154,17 +154,24 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (Endpoints.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  endpoints:");
+                    builder.Append("  endpoints: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Endpoints)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            int currentIndent = 4;
+                            int emptyObjectLength = 2 + currentIndent + Environment.NewLine.Length + Environment.NewLine.Length;
+                            int length = builder.Length;
+                            AppendChildObject(builder, item, options, currentIndent, true);
+                            if (builder.Length == length + emptyObjectLength)
+                            {
+                                builder.Length = builder.Length - emptyObjectLength - "  endpoints: ".Length;
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -201,7 +208,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
