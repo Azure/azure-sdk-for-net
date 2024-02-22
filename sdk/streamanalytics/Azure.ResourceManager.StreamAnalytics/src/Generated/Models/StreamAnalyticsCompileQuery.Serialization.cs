@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryInput> array = new List<StreamAnalyticsQueryInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryInput.DeserializeStreamAnalyticsQueryInput(item));
+                        array.Add(StreamAnalyticsQueryInput.DeserializeStreamAnalyticsQueryInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryFunction> array = new List<StreamAnalyticsQueryFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryFunction.DeserializeStreamAnalyticsQueryFunction(item));
+                        array.Add(StreamAnalyticsQueryFunction.DeserializeStreamAnalyticsQueryFunction(item, options));
                     }
                     functions = array;
                     continue;

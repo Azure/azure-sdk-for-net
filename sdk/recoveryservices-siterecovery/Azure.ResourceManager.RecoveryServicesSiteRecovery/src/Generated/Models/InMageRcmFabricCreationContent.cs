@@ -21,9 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareSiteId"/>, <paramref name="physicalSiteId"/> or <paramref name="sourceAgentIdentity"/> is null. </exception>
         public InMageRcmFabricCreationContent(ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity)
         {
-            Argument.AssertNotNull(vmwareSiteId, nameof(vmwareSiteId));
-            Argument.AssertNotNull(physicalSiteId, nameof(physicalSiteId));
-            Argument.AssertNotNull(sourceAgentIdentity, nameof(sourceAgentIdentity));
+            if (vmwareSiteId == null)
+            {
+                throw new ArgumentNullException(nameof(vmwareSiteId));
+            }
+            if (physicalSiteId == null)
+            {
+                throw new ArgumentNullException(nameof(physicalSiteId));
+            }
+            if (sourceAgentIdentity == null)
+            {
+                throw new ArgumentNullException(nameof(sourceAgentIdentity));
+            }
 
             VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;

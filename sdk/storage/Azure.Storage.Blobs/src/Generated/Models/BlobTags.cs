@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="blobTagSet"/> is null. </exception>
         public BlobTags(IEnumerable<BlobTag> blobTagSet)
         {
-            Argument.AssertNotNull(blobTagSet, nameof(blobTagSet));
+            if (blobTagSet == null)
+            {
+                throw new ArgumentNullException(nameof(blobTagSet));
+            }
 
             BlobTagSet = blobTagSet.ToList();
         }

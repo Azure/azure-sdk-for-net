@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    fileSystem = FileSystemTokenStore.DeserializeFileSystemTokenStore(property.Value);
+                    fileSystem = FileSystemTokenStore.DeserializeFileSystemTokenStore(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureBlobStorage"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AppServiceBlobStorageTokenStore.DeserializeAppServiceBlobStorageTokenStore(property.Value);
+                    azureBlobStorage = AppServiceBlobStorageTokenStore.DeserializeAppServiceBlobStorageTokenStore(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,57 +153,57 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
             if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
             {
-                builder.Append("  enabled:");
+                builder.Append("  enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenRefreshExtensionHours), out propertyOverride);
             if (Optional.IsDefined(TokenRefreshExtensionHours) || hasPropertyOverride)
             {
-                builder.Append("  tokenRefreshExtensionHours:");
+                builder.Append("  tokenRefreshExtensionHours: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TokenRefreshExtensionHours.Value.ToString()}'");
+                    builder.AppendLine($"'{TokenRefreshExtensionHours.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileSystem), out propertyOverride);
             if (Optional.IsDefined(FileSystem) || hasPropertyOverride)
             {
-                builder.Append("  fileSystem:");
+                builder.Append("  fileSystem: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, FileSystem, options, 2, false);
+                    AppendChildObject(builder, FileSystem, options, 2, false, "  fileSystem: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureBlobStorage), out propertyOverride);
             if (Optional.IsDefined(AzureBlobStorage) || hasPropertyOverride)
             {
-                builder.Append("  azureBlobStorage:");
+                builder.Append("  azureBlobStorage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, AzureBlobStorage, options, 2, false);
+                    AppendChildObject(builder, AzureBlobStorage, options, 2, false, "  azureBlobStorage: ");
                 }
             }
 
@@ -211,12 +211,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -237,12 +240,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

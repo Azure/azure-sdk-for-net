@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value);
+                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value);
+                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("featureSettings"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value);
+                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

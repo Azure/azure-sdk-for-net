@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    scheduleAvailabilityRequest = ScheduleAvailabilityContent.DeserializeScheduleAvailabilityContent(property.Value);
+                    scheduleAvailabilityRequest = ScheduleAvailabilityContent.DeserializeScheduleAvailabilityContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transportAvailabilityRequest"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityRequest = TransportAvailabilityRequest.DeserializeTransportAvailabilityRequest(property.Value);
+                    transportAvailabilityRequest = TransportAvailabilityRequest.DeserializeTransportAvailabilityRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddressRequest"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value);
+                    dataCenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

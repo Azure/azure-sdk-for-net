@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoDatabasePrincipal(KustoDatabasePrincipalRole role, string name, KustoDatabasePrincipalType principalType)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Role = role;
             Name = name;

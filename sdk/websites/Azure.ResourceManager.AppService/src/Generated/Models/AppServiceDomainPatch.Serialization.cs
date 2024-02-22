@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactBilling"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactRegistrant"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactTech"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("registrationStatus"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceHostName> array = new List<AppServiceHostName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item));
+                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item, options));
                             }
                             managedHostNames = array;
                             continue;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value);
+                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("domainNotRenewableReasons"u8))
@@ -491,21 +491,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -513,21 +513,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
             if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
-                builder.Append("  kind:");
+                builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Kind.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Kind}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Kind}'");
+                        builder.AppendLine($"'{Kind}'");
                     }
                 }
             }
@@ -535,28 +535,28 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
             if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
-                builder.Append("  systemData:");
+                builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SystemData.ToString()}'");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
@@ -565,84 +565,84 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContactAdmin), out propertyOverride);
             if (Optional.IsDefined(ContactAdmin) || hasPropertyOverride)
             {
-                builder.Append("    contactAdmin:");
+                builder.Append("    contactAdmin: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ContactAdmin, options, 4, false);
+                    AppendChildObject(builder, ContactAdmin, options, 4, false, "    contactAdmin: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContactBilling), out propertyOverride);
             if (Optional.IsDefined(ContactBilling) || hasPropertyOverride)
             {
-                builder.Append("    contactBilling:");
+                builder.Append("    contactBilling: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ContactBilling, options, 4, false);
+                    AppendChildObject(builder, ContactBilling, options, 4, false, "    contactBilling: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContactRegistrant), out propertyOverride);
             if (Optional.IsDefined(ContactRegistrant) || hasPropertyOverride)
             {
-                builder.Append("    contactRegistrant:");
+                builder.Append("    contactRegistrant: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ContactRegistrant, options, 4, false);
+                    AppendChildObject(builder, ContactRegistrant, options, 4, false, "    contactRegistrant: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContactTech), out propertyOverride);
             if (Optional.IsDefined(ContactTech) || hasPropertyOverride)
             {
-                builder.Append("    contactTech:");
+                builder.Append("    contactTech: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ContactTech, options, 4, false);
+                    AppendChildObject(builder, ContactTech, options, 4, false, "    contactTech: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationStatus), out propertyOverride);
             if (Optional.IsDefined(RegistrationStatus) || hasPropertyOverride)
             {
-                builder.Append("    registrationStatus:");
+                builder.Append("    registrationStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RegistrationStatus.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{RegistrationStatus.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
             if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
             {
-                builder.Append("    provisioningState:");
+                builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ProvisioningState.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
                 }
             }
 
@@ -651,14 +651,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (NameServers.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    nameServers:");
+                    builder.Append("    nameServers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in NameServers)
                         {
                             if (item == null)
@@ -684,90 +684,90 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDomainPrivacyEnabled), out propertyOverride);
             if (Optional.IsDefined(IsDomainPrivacyEnabled) || hasPropertyOverride)
             {
-                builder.Append("    privacy:");
+                builder.Append("    privacy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsDomainPrivacyEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
             if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
             {
-                builder.Append("    createdTime:");
+                builder.Append("    createdTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
             if (Optional.IsDefined(ExpireOn) || hasPropertyOverride)
             {
-                builder.Append("    expirationTime:");
+                builder.Append("    expirationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastRenewedOn), out propertyOverride);
             if (Optional.IsDefined(LastRenewedOn) || hasPropertyOverride)
             {
-                builder.Append("    lastRenewedTime:");
+                builder.Append("    lastRenewedTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(LastRenewedOn.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutoRenew), out propertyOverride);
             if (Optional.IsDefined(IsAutoRenew) || hasPropertyOverride)
             {
-                builder.Append("    autoRenew:");
+                builder.Append("    autoRenew: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsAutoRenew.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsReadyForDnsRecordManagement), out propertyOverride);
             if (Optional.IsDefined(IsReadyForDnsRecordManagement) || hasPropertyOverride)
             {
-                builder.Append("    readyForDnsRecordManagement:");
+                builder.Append("    readyForDnsRecordManagement: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsReadyForDnsRecordManagement.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -776,17 +776,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ManagedHostNames.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    managedHostNames:");
+                    builder.Append("    managedHostNames: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ManagedHostNames)
                         {
-                            AppendChildObject(builder, item, options, 6, true);
+                            AppendChildObject(builder, item, options, 6, true, "    managedHostNames: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -796,14 +796,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Consent), out propertyOverride);
             if (Optional.IsDefined(Consent) || hasPropertyOverride)
             {
-                builder.Append("    consent:");
+                builder.Append("    consent: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Consent, options, 4, false);
+                    AppendChildObject(builder, Consent, options, 4, false, "    consent: ");
                 }
             }
 
@@ -812,14 +812,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (DomainNotRenewableReasons.Any() || hasPropertyOverride)
                 {
-                    builder.Append("    domainNotRenewableReasons:");
+                    builder.Append("    domainNotRenewableReasons: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in DomainNotRenewableReasons)
                         {
                             builder.AppendLine($"      '{item.ToString()}'");
@@ -832,35 +832,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsType), out propertyOverride);
             if (Optional.IsDefined(DnsType) || hasPropertyOverride)
             {
-                builder.Append("    dnsType:");
+                builder.Append("    dnsType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DnsType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{DnsType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsZoneId), out propertyOverride);
             if (Optional.IsDefined(DnsZoneId) || hasPropertyOverride)
             {
-                builder.Append("    dnsZoneId:");
+                builder.Append("    dnsZoneId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DnsZoneId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DnsZoneId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DnsZoneId}'");
+                        builder.AppendLine($"'{DnsZoneId}'");
                     }
                 }
             }
@@ -868,35 +868,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDnsType), out propertyOverride);
             if (Optional.IsDefined(TargetDnsType) || hasPropertyOverride)
             {
-                builder.Append("    targetDnsType:");
+                builder.Append("    targetDnsType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TargetDnsType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{TargetDnsType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthCode), out propertyOverride);
             if (Optional.IsDefined(AuthCode) || hasPropertyOverride)
             {
-                builder.Append("    authCode:");
+                builder.Append("    authCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AuthCode.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AuthCode}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AuthCode}'");
+                        builder.AppendLine($"'{AuthCode}'");
                     }
                 }
             }
@@ -906,12 +906,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -932,12 +935,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

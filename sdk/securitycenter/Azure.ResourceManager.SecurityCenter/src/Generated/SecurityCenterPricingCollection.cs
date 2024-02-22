@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityCenterPricingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string pricingName, SecurityCenterPricingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (pricingName == null)
+            {
+                throw new ArgumentNullException(nameof(pricingName));
+            }
+            if (pricingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityCenterPricingResource> CreateOrUpdate(WaitUntil waitUntil, string pricingName, SecurityCenterPricingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (pricingName == null)
+            {
+                throw new ArgumentNullException(nameof(pricingName));
+            }
+            if (pricingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
         public virtual async Task<Response<SecurityCenterPricingResource>> GetAsync(string pricingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+            if (pricingName == null)
+            {
+                throw new ArgumentNullException(nameof(pricingName));
+            }
+            if (pricingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
+            }
 
             using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
         public virtual Response<SecurityCenterPricingResource> Get(string pricingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+            if (pricingName == null)
+            {
+                throw new ArgumentNullException(nameof(pricingName));
+            }
+            if (pricingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
+            }
 
             using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string pricingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+            if (pricingName == null)
+            {
+                throw new ArgumentNullException(nameof(pricingName));
+            }
+            if (pricingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
+            }
 
             using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
         public virtual Response<bool> Exists(string pricingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+            if (pricingName == null)
+            {
+                throw new ArgumentNullException(nameof(pricingName));
+            }
+            if (pricingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
+            }
 
             using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityCenterPricingResource>> GetIfExistsAsync(string pricingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+            if (pricingName == null)
+            {
+                throw new ArgumentNullException(nameof(pricingName));
+            }
+            if (pricingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
+            }
 
             using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="pricingName"/> is null. </exception>
         public virtual NullableResponse<SecurityCenterPricingResource> GetIfExists(string pricingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+            if (pricingName == null)
+            {
+                throw new ArgumentNullException(nameof(pricingName));
+            }
+            if (pricingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
+            }
 
             using var scope = _securityCenterPricingPricingsClientDiagnostics.CreateScope("SecurityCenterPricingCollection.GetIfExists");
             scope.Start();

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingEndpointSkuInfo> array = new List<StreamingEndpointSkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo(item));
+                        array.Add(StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo(item, options));
                     }
                     value = array;
                     continue;

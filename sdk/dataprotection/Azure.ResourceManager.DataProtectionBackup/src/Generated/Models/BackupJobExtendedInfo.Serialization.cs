@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    sourceRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value);
+                    sourceRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subTasks"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupJobSubTask> array = new List<BackupJobSubTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupJobSubTask.DeserializeBackupJobSubTask(item));
+                        array.Add(BackupJobSubTask.DeserializeBackupJobSubTask(item, options));
                     }
                     subTasks = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    targetRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value);
+                    targetRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("warningDetails"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<UserFacingWarningDetail> array = new List<UserFacingWarningDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserFacingWarningDetail.DeserializeUserFacingWarningDetail(item));
+                        array.Add(UserFacingWarningDetail.DeserializeUserFacingWarningDetail(item, options));
                     }
                     warningDetails = array;
                     continue;

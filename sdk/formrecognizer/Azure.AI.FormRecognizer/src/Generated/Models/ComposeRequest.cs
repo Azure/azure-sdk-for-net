@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="modelIds"/> is null. </exception>
         public ComposeRequest(IEnumerable<Guid> modelIds)
         {
-            Argument.AssertNotNull(modelIds, nameof(modelIds));
+            if (modelIds == null)
+            {
+                throw new ArgumentNullException(nameof(modelIds));
+            }
 
             ModelIds = modelIds.ToList();
         }

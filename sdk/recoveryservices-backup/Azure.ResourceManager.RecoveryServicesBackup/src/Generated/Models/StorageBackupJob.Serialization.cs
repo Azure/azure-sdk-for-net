@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<StorageErrorInfo> array = new List<StorageErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageErrorInfo.DeserializeStorageErrorInfo(item));
+                        array.Add(StorageErrorInfo.DeserializeStorageErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = StorageBackupJobExtendedInfo.DeserializeStorageBackupJobExtendedInfo(property.Value);
+                    extendedInfo = StorageBackupJobExtendedInfo.DeserializeStorageBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isUserTriggered"u8))

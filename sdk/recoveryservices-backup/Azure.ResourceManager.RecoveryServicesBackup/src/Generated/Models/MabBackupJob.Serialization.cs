@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<MabErrorInfo> array = new List<MabErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MabErrorInfo.DeserializeMabErrorInfo(item));
+                        array.Add(MabErrorInfo.DeserializeMabErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = MabBackupJobExtendedInfo.DeserializeMabBackupJobExtendedInfo(property.Value);
+                    extendedInfo = MabBackupJobExtendedInfo.DeserializeMabBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))

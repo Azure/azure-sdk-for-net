@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value);
+                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

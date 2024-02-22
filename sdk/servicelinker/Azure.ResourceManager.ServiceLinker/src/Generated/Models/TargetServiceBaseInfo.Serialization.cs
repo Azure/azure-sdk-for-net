@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureResource": return AzureResourceInfo.DeserializeAzureResourceInfo(element);
-                    case "ConfluentBootstrapServer": return ConfluentBootstrapServerInfo.DeserializeConfluentBootstrapServerInfo(element);
-                    case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element);
+                    case "AzureResource": return AzureResourceInfo.DeserializeAzureResourceInfo(element, options);
+                    case "ConfluentBootstrapServer": return ConfluentBootstrapServerInfo.DeserializeConfluentBootstrapServerInfo(element, options);
+                    case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element, options);
                 }
             }
-            return UnknownTargetServiceBase.DeserializeUnknownTargetServiceBase(element);
+            return UnknownTargetServiceBase.DeserializeUnknownTargetServiceBase(element, options);
         }
 
         BinaryData IPersistableModel<TargetServiceBaseInfo>.Write(ModelReaderWriterOptions options)

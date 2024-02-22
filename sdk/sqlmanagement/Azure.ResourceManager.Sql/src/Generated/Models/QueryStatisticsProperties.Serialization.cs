@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricInterval> array = new List<QueryMetricInterval>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item));
+                        array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item, options));
                     }
                     intervals = array;
                     continue;
@@ -163,21 +163,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
             if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
             {
-                builder.Append("  databaseName:");
+                builder.Append("  databaseName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DatabaseName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DatabaseName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DatabaseName}'");
+                        builder.AppendLine($"'{DatabaseName}'");
                     }
                 }
             }
@@ -185,21 +185,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryId), out propertyOverride);
             if (Optional.IsDefined(QueryId) || hasPropertyOverride)
             {
-                builder.Append("  queryId:");
+                builder.Append("  queryId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (QueryId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{QueryId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{QueryId}'");
+                        builder.AppendLine($"'{QueryId}'");
                     }
                 }
             }
@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
             if (Optional.IsDefined(StartTime) || hasPropertyOverride)
             {
-                builder.Append("  startTime:");
+                builder.Append("  startTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (StartTime.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{StartTime}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{StartTime}'");
+                        builder.AppendLine($"'{StartTime}'");
                     }
                 }
             }
@@ -229,21 +229,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTime), out propertyOverride);
             if (Optional.IsDefined(EndTime) || hasPropertyOverride)
             {
-                builder.Append("  endTime:");
+                builder.Append("  endTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (EndTime.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{EndTime}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{EndTime}'");
+                        builder.AppendLine($"'{EndTime}'");
                     }
                 }
             }
@@ -253,17 +253,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (Intervals.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  intervals:");
+                    builder.Append("  intervals: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Intervals)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  intervals: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -274,12 +274,15 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -300,12 +303,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     {
                         continue;
                     }
-                    properties = ConfigurationProfileProperties.DeserializeConfigurationProfileProperties(property.Value);
+                    properties = ConfigurationProfileProperties.DeserializeConfigurationProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

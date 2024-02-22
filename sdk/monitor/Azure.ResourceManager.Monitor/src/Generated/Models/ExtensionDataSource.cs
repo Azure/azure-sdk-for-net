@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public ExtensionDataSource(string extensionName)
         {
-            Argument.AssertNotNull(extensionName, nameof(extensionName));
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
 
             Streams = new ChangeTrackingList<ExtensionDataSourceStream>();
             ExtensionName = extensionName;

@@ -68,7 +68,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmOperationsDataIngestion.xml" path="doc/members/member[@name='GetJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetJobDetailsAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("FarmOperationsDataIngestion.GetJobDetails");
             scope.Start();
@@ -103,7 +110,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmOperationsDataIngestion.xml" path="doc/members/member[@name='GetJobDetails(string,RequestContext)']/*" />
         public virtual Response GetJobDetails(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("FarmOperationsDataIngestion.GetJobDetails");
             scope.Start();
@@ -140,8 +154,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmOperationsDataIngestion.xml" path="doc/members/member[@name='CreateJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("FarmOperationsDataIngestion.CreateJob");
             scope.Start();
@@ -178,8 +202,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmOperationsDataIngestion.xml" path="doc/members/member[@name='CreateJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("FarmOperationsDataIngestion.CreateJob");
             scope.Start();

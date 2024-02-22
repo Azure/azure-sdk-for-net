@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NestedResourceTypeThirdSkuResource>> UpdateAsync(WaitUntil waitUntil, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _nestedResourceTypeThirdSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Update");
             scope.Start();
@@ -330,7 +333,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NestedResourceTypeThirdSkuResource> Update(WaitUntil waitUntil, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _nestedResourceTypeThirdSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Update");
             scope.Start();

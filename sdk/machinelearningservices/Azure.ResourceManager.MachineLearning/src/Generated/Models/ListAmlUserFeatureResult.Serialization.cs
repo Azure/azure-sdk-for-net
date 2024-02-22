@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningUserFeature> array = new List<MachineLearningUserFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item));
+                        array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ScopeProperties> array = new List<ScopeProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeProperties.DeserializeScopeProperties(item));
+                        array.Add(ScopeProperties.DeserializeScopeProperties(item, options));
                     }
                     scopes = array;
                     continue;

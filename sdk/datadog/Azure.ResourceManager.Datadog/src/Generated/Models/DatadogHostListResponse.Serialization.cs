@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogHost> array = new List<DatadogHost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogHost.DeserializeDatadogHost(item));
+                        array.Add(DatadogHost.DeserializeDatadogHost(item, options));
                     }
                     value = array;
                     continue;

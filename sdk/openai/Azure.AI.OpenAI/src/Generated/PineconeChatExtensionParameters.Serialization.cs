@@ -120,7 +120,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value);
+                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("topNDocuments"u8))
@@ -167,7 +167,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("fieldsMapping"u8))
                 {
-                    fieldsMapping = PineconeFieldMappingOptions.DeserializePineconeFieldMappingOptions(property.Value);
+                    fieldsMapping = PineconeFieldMappingOptions.DeserializePineconeFieldMappingOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("embeddingDependency"u8))
@@ -176,7 +176,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    embeddingDependency = OnYourDataVectorizationSource.DeserializeOnYourDataVectorizationSource(property.Value);
+                    embeddingDependency = OnYourDataVectorizationSource.DeserializeOnYourDataVectorizationSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

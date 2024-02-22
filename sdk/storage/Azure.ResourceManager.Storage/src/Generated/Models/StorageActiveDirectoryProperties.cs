@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public StorageActiveDirectoryProperties(string domainName, Guid domainGuid)
         {
-            Argument.AssertNotNull(domainName, nameof(domainName));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
 
             DomainName = domainName;
             DomainGuid = domainGuid;

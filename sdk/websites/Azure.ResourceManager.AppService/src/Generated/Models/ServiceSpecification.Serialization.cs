@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricSpecification> array = new List<MetricSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSpecification.DeserializeMetricSpecification(item));
+                        array.Add(MetricSpecification.DeserializeMetricSpecification(item, options));
                     }
                     metricSpecifications = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<LogSpecification> array = new List<LogSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogSpecification.DeserializeLogSpecification(item));
+                        array.Add(LogSpecification.DeserializeLogSpecification(item, options));
                     }
                     logSpecifications = array;
                     continue;
@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (MetricSpecifications.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  metricSpecifications:");
+                    builder.Append("  metricSpecifications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in MetricSpecifications)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  metricSpecifications: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -168,17 +168,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (LogSpecifications.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  logSpecifications:");
+                    builder.Append("  logSpecifications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in LogSpecifications)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  logSpecifications: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -189,12 +189,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -215,12 +218,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

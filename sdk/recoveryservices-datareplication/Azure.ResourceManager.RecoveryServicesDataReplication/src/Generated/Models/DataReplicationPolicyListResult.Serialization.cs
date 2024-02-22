@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationPolicyData> array = new List<DataReplicationPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationPolicyData.DeserializeDataReplicationPolicyData(item));
+                        array.Add(DataReplicationPolicyData.DeserializeDataReplicationPolicyData(item, options));
                     }
                     value = array;
                     continue;

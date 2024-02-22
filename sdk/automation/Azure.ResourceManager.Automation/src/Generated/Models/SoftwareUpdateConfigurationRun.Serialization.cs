@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value);
+                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            tasks = SoftwareUpdateConfigurationRunTasks.DeserializeSoftwareUpdateConfigurationRunTasks(property0.Value);
+                            tasks = SoftwareUpdateConfigurationRunTasks.DeserializeSoftwareUpdateConfigurationRunTasks(property0.Value, options);
                             continue;
                         }
                     }

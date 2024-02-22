@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value);
+                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            maintenanceWindow = AmlFileSystemUpdatePropertiesMaintenanceWindow.DeserializeAmlFileSystemUpdatePropertiesMaintenanceWindow(property0.Value);
+                            maintenanceWindow = AmlFileSystemUpdatePropertiesMaintenanceWindow.DeserializeAmlFileSystemUpdatePropertiesMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rootSquashSettings"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value);
+                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value, options);
                             continue;
                         }
                     }

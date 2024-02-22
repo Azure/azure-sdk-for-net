@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareVmInstanceData> array = new List<VMwareVmInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareVmInstanceData.DeserializeVMwareVmInstanceData(item));
+                        array.Add(VMwareVmInstanceData.DeserializeVMwareVmInstanceData(item, options));
                     }
                     value = array;
                     continue;

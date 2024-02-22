@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value);
+                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("emptyDir"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value);
+                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

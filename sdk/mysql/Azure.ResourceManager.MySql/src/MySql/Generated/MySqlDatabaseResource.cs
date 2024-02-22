@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlDatabaseResource>> UpdateAsync(WaitUntil waitUntil, MySqlDatabaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlDatabaseDatabasesClientDiagnostics.CreateScope("MySqlDatabaseResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlDatabaseResource> Update(WaitUntil waitUntil, MySqlDatabaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlDatabaseDatabasesClientDiagnostics.CreateScope("MySqlDatabaseResource.Update");
             scope.Start();

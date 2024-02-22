@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobRestoreRange> array = new List<BlobRestoreRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
+                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item, options));
                     }
                     blobRanges = array;
                     continue;
@@ -120,15 +120,15 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToRestore), out propertyOverride);
             if (Optional.IsDefined(TimeToRestore) || hasPropertyOverride)
             {
-                builder.Append("  timetoRestore:");
+                builder.Append("  timetoRestore: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(TimeToRestore, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (BlobRanges.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  blobRanges:");
+                    builder.Append("  blobRanges: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in BlobRanges)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  blobRanges: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -158,12 +158,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -184,12 +187,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

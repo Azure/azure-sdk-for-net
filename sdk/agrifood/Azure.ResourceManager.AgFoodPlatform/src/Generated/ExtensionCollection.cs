@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
         public virtual async Task<ArmOperation<ExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string extensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+            if (extensionId == null)
+            {
+                throw new ArgumentNullException(nameof(extensionId));
+            }
+            if (extensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
+            }
 
             using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
         public virtual ArmOperation<ExtensionResource> CreateOrUpdate(WaitUntil waitUntil, string extensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+            if (extensionId == null)
+            {
+                throw new ArgumentNullException(nameof(extensionId));
+            }
+            if (extensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
+            }
 
             using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -174,7 +188,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
         public virtual async Task<Response<ExtensionResource>> GetAsync(string extensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+            if (extensionId == null)
+            {
+                throw new ArgumentNullException(nameof(extensionId));
+            }
+            if (extensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
+            }
 
             using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.Get");
             scope.Start();
@@ -219,7 +240,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
         public virtual Response<ExtensionResource> Get(string extensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+            if (extensionId == null)
+            {
+                throw new ArgumentNullException(nameof(extensionId));
+            }
+            if (extensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
+            }
 
             using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.Get");
             scope.Start();
@@ -338,7 +366,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string extensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+            if (extensionId == null)
+            {
+                throw new ArgumentNullException(nameof(extensionId));
+            }
+            if (extensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
+            }
 
             using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.Exists");
             scope.Start();
@@ -381,7 +416,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
         public virtual Response<bool> Exists(string extensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+            if (extensionId == null)
+            {
+                throw new ArgumentNullException(nameof(extensionId));
+            }
+            if (extensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
+            }
 
             using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.Exists");
             scope.Start();
@@ -424,7 +466,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
         public virtual async Task<NullableResponse<ExtensionResource>> GetIfExistsAsync(string extensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+            if (extensionId == null)
+            {
+                throw new ArgumentNullException(nameof(extensionId));
+            }
+            if (extensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
+            }
 
             using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetIfExists");
             scope.Start();
@@ -469,7 +518,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
         public virtual NullableResponse<ExtensionResource> GetIfExists(string extensionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(extensionId, nameof(extensionId));
+            if (extensionId == null)
+            {
+                throw new ArgumentNullException(nameof(extensionId));
+            }
+            if (extensionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionId));
+            }
 
             using var scope = _extensionClientDiagnostics.CreateScope("ExtensionCollection.GetIfExists");
             scope.Start();

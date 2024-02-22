@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PlanRequesterInfo> array = new List<PlanRequesterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item));
+                        array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item, options));
                     }
                     requesters = array;
                     continue;

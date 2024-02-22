@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryVmEndpoint> array = new List<SiteRecoveryVmEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryVmEndpoint.DeserializeSiteRecoveryVmEndpoint(item));
+                        array.Add(SiteRecoveryVmEndpoint.DeserializeSiteRecoveryVmEndpoint(item, options));
                     }
                     contentEndpoints = array;
                     continue;

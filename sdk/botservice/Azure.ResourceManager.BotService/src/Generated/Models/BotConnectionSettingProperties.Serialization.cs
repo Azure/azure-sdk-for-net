@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotConnectionSettingParameter> array = new List<BotConnectionSettingParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item));
+                        array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item, options));
                     }
                     parameters = array;
                     continue;

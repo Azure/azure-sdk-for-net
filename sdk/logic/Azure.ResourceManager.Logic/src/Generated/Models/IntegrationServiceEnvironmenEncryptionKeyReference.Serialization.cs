@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    keyVault = LogicResourceReference.DeserializeLogicResourceReference(property.Value);
+                    keyVault = LogicResourceReference.DeserializeLogicResourceReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyName"u8))

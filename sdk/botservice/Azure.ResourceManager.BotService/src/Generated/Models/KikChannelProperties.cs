@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public KikChannelProperties(string userName, bool isEnabled)
         {
-            Argument.AssertNotNull(userName, nameof(userName));
+            if (userName == null)
+            {
+                throw new ArgumentNullException(nameof(userName));
+            }
 
             UserName = userName;
             IsEnabled = isEnabled;

@@ -53,9 +53,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="storageId"/> or <paramref name="storageUri"/> is null. </exception>
         public TroubleshootingContent(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, Uri storageUri)
         {
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(storageId, nameof(storageId));
-            Argument.AssertNotNull(storageUri, nameof(storageUri));
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+            if (storageId == null)
+            {
+                throw new ArgumentNullException(nameof(storageId));
+            }
+            if (storageUri == null)
+            {
+                throw new ArgumentNullException(nameof(storageUri));
+            }
 
             TargetResourceId = targetResourceId;
             StorageId = storageId;

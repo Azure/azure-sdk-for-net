@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<StorageInsightData> array = new List<StorageInsightData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageInsightData.DeserializeStorageInsightData(item));
+                        array.Add(StorageInsightData.DeserializeStorageInsightData(item, options));
                     }
                     value = array;
                     continue;

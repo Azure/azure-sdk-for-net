@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Bayesian": return BayesianSamplingAlgorithm.DeserializeBayesianSamplingAlgorithm(element);
-                    case "Grid": return GridSamplingAlgorithm.DeserializeGridSamplingAlgorithm(element);
-                    case "Random": return RandomSamplingAlgorithm.DeserializeRandomSamplingAlgorithm(element);
+                    case "Bayesian": return BayesianSamplingAlgorithm.DeserializeBayesianSamplingAlgorithm(element, options);
+                    case "Grid": return GridSamplingAlgorithm.DeserializeGridSamplingAlgorithm(element, options);
+                    case "Random": return RandomSamplingAlgorithm.DeserializeRandomSamplingAlgorithm(element, options);
                 }
             }
-            return UnknownSamplingAlgorithm.DeserializeUnknownSamplingAlgorithm(element);
+            return UnknownSamplingAlgorithm.DeserializeUnknownSamplingAlgorithm(element, options);
         }
 
         BinaryData IPersistableModel<SamplingAlgorithm>.Write(ModelReaderWriterOptions options)

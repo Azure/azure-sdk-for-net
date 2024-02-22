@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRLiveTraceCategory> array = new List<SignalRLiveTraceCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRLiveTraceCategory.DeserializeSignalRLiveTraceCategory(item));
+                        array.Add(SignalRLiveTraceCategory.DeserializeSignalRLiveTraceCategory(item, options));
                     }
                     categories = array;
                     continue;

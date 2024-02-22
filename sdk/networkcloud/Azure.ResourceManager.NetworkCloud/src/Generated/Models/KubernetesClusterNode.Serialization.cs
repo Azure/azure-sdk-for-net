@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<KubernetesLabel> array = new List<KubernetesLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                     }
                     labels = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkAttachment> array = new List<NetworkAttachment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkAttachment.DeserializeNetworkAttachment(item));
+                        array.Add(NetworkAttachment.DeserializeNetworkAttachment(item, options));
                     }
                     networkAttachments = array;
                     continue;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<KubernetesLabel> array = new List<KubernetesLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                        array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                     }
                     taints = array;
                     continue;

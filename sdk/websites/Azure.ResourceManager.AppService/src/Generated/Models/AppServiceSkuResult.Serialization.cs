@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<GlobalCsmSkuDescription> array = new List<GlobalCsmSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item));
+                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item, options));
                     }
                     skus = array;
                     continue;
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
             if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
             {
-                builder.Append("  resourceType:");
+                builder.Append("  resourceType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+                    builder.AppendLine($"'{ResourceType.Value.ToString()}'");
                 }
             }
 
@@ -150,17 +150,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Skus.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  skus:");
+                    builder.Append("  skus: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Skus)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  skus: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -171,12 +171,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -197,12 +200,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

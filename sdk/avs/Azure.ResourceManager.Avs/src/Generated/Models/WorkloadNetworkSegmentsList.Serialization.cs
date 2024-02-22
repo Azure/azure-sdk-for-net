@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkSegmentData> array = new List<WorkloadNetworkSegmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(item));
+                        array.Add(WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(item, options));
                     }
                     value = array;
                     continue;

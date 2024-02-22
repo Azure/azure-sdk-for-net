@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                        array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item, options));
                     }
                     value = array;
                     continue;

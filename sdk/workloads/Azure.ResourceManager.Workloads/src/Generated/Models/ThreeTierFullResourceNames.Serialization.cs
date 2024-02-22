@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    centralServer = CentralServerFullResourceNames.DeserializeCentralServerFullResourceNames(property.Value);
+                    centralServer = CentralServerFullResourceNames.DeserializeCentralServerFullResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationServer"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    applicationServer = ApplicationServerFullResourceNames.DeserializeApplicationServerFullResourceNames(property.Value);
+                    applicationServer = ApplicationServerFullResourceNames.DeserializeApplicationServerFullResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databaseServer"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    databaseServer = DatabaseServerFullResourceNames.DeserializeDatabaseServerFullResourceNames(property.Value);
+                    databaseServer = DatabaseServerFullResourceNames.DeserializeDatabaseServerFullResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sharedStorage"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sharedStorage = SharedStorageResourceNames.DeserializeSharedStorageResourceNames(property.Value);
+                    sharedStorage = SharedStorageResourceNames.DeserializeSharedStorageResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("namingPatternType"u8))

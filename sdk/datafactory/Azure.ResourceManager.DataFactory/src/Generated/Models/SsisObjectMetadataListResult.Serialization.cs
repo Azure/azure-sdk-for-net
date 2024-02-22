@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisObjectMetadata> array = new List<SsisObjectMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisObjectMetadata.DeserializeSsisObjectMetadata(item));
+                        array.Add(SsisObjectMetadata.DeserializeSsisObjectMetadata(item, options));
                     }
                     value = array;
                     continue;

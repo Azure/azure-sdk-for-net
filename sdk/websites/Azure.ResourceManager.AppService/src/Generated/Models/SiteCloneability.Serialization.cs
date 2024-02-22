@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item, options));
                     }
                     blockingFeatures = array;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item, options));
                     }
                     unsupportedFeatures = array;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item, options));
                     }
                     blockingCharacteristics = array;
                     continue;
@@ -184,14 +184,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
             if (Optional.IsDefined(Result) || hasPropertyOverride)
             {
-                builder.Append("  result:");
+                builder.Append("  result: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Result.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Result.Value.ToSerialString()}'");
                 }
             }
 
@@ -200,17 +200,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (BlockingFeatures.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  blockingFeatures:");
+                    builder.Append("  blockingFeatures: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in BlockingFeatures)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  blockingFeatures: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -222,17 +222,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (UnsupportedFeatures.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  unsupportedFeatures:");
+                    builder.Append("  unsupportedFeatures: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in UnsupportedFeatures)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  unsupportedFeatures: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -244,17 +244,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (BlockingCharacteristics.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  blockingCharacteristics:");
+                    builder.Append("  blockingCharacteristics: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in BlockingCharacteristics)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  blockingCharacteristics: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -265,12 +265,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -291,12 +294,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToCold"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToHot"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delete"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,70 +168,70 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToCool), out propertyOverride);
             if (Optional.IsDefined(TierToCool) || hasPropertyOverride)
             {
-                builder.Append("  tierToCool:");
+                builder.Append("  tierToCool: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, TierToCool, options, 2, false);
+                    AppendChildObject(builder, TierToCool, options, 2, false, "  tierToCool: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToArchive), out propertyOverride);
             if (Optional.IsDefined(TierToArchive) || hasPropertyOverride)
             {
-                builder.Append("  tierToArchive:");
+                builder.Append("  tierToArchive: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, TierToArchive, options, 2, false);
+                    AppendChildObject(builder, TierToArchive, options, 2, false, "  tierToArchive: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToCold), out propertyOverride);
             if (Optional.IsDefined(TierToCold) || hasPropertyOverride)
             {
-                builder.Append("  tierToCold:");
+                builder.Append("  tierToCold: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, TierToCold, options, 2, false);
+                    AppendChildObject(builder, TierToCold, options, 2, false, "  tierToCold: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToHot), out propertyOverride);
             if (Optional.IsDefined(TierToHot) || hasPropertyOverride)
             {
-                builder.Append("  tierToHot:");
+                builder.Append("  tierToHot: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, TierToHot, options, 2, false);
+                    AppendChildObject(builder, TierToHot, options, 2, false, "  tierToHot: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delete), out propertyOverride);
             if (Optional.IsDefined(Delete) || hasPropertyOverride)
             {
-                builder.Append("  delete:");
+                builder.Append("  delete: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Delete, options, 2, false);
+                    AppendChildObject(builder, Delete, options, 2, false, "  delete: ");
                 }
             }
 
@@ -239,12 +239,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -265,12 +268,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

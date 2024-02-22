@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    startupScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value);
+                    startupScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationScript"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    creationScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value);
+                    creationScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

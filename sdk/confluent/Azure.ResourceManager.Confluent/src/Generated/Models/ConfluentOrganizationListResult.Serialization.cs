@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     List<ConfluentOrganizationData> array = new List<ConfluentOrganizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentOrganizationData.DeserializeConfluentOrganizationData(item));
+                        array.Add(ConfluentOrganizationData.DeserializeConfluentOrganizationData(item, options));
                     }
                     value = array;
                     continue;

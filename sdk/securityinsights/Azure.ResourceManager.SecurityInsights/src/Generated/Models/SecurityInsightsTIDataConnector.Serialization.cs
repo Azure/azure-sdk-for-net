@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dataTypes = TIDataConnectorDataTypes.DeserializeTIDataConnectorDataTypes(property0.Value);
+                            dataTypes = TIDataConnectorDataTypes.DeserializeTIDataConnectorDataTypes(property0.Value, options);
                             continue;
                         }
                     }

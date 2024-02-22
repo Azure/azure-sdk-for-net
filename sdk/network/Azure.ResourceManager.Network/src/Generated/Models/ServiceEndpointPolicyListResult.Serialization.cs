@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ServiceEndpointPolicyData> array = new List<ServiceEndpointPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(item));
+                        array.Add(ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(item, options));
                     }
                     value = array;
                     continue;

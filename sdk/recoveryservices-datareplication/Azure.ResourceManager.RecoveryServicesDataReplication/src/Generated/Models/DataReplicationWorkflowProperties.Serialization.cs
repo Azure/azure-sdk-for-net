@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationTask> array = new List<DataReplicationTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationTask.DeserializeDataReplicationTask(item));
+                        array.Add(DataReplicationTask.DeserializeDataReplicationTask(item, options));
                     }
                     tasks = array;
                     continue;
@@ -300,14 +300,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationErrorInfo> array = new List<DataReplicationErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationErrorInfo.DeserializeDataReplicationErrorInfo(item));
+                        array.Add(DataReplicationErrorInfo.DeserializeDataReplicationErrorInfo(item, options));
                     }
                     errors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = WorkflowModelCustomProperties.DeserializeWorkflowModelCustomProperties(property.Value);
+                    customProperties = WorkflowModelCustomProperties.DeserializeWorkflowModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

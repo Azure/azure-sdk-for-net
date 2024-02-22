@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="prefixList"/> is null. </exception>
         public GlobalRulestackPrefixData(IEnumerable<string> prefixList)
         {
-            Argument.AssertNotNull(prefixList, nameof(prefixList));
+            if (prefixList == null)
+            {
+                throw new ArgumentNullException(nameof(prefixList));
+            }
 
             PrefixList = prefixList.ToList();
         }

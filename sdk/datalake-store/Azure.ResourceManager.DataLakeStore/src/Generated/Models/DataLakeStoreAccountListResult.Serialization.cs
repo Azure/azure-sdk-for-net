@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreAccountBasicData> array = new List<DataLakeStoreAccountBasicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(item));
+                        array.Add(DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(item, options));
                     }
                     value = array;
                     continue;

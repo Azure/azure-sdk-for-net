@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryPointResource>> GetAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
+            if (recoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointName));
+            }
+            if (recoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointName));
+            }
 
             using var scope = _siteRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("SiteRecoveryPointCollection.Get");
             scope.Start();
@@ -111,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         public virtual Response<SiteRecoveryPointResource> Get(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
+            if (recoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointName));
+            }
+            if (recoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointName));
+            }
 
             using var scope = _siteRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("SiteRecoveryPointCollection.Get");
             scope.Start();
@@ -156,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -186,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
+            if (recoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointName));
+            }
+            if (recoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointName));
+            }
 
             using var scope = _siteRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("SiteRecoveryPointCollection.Exists");
             scope.Start();
@@ -259,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         public virtual Response<bool> Exists(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
+            if (recoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointName));
+            }
+            if (recoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointName));
+            }
 
             using var scope = _siteRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("SiteRecoveryPointCollection.Exists");
             scope.Start();
@@ -302,7 +330,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryPointResource>> GetIfExistsAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
+            if (recoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointName));
+            }
+            if (recoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointName));
+            }
 
             using var scope = _siteRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("SiteRecoveryPointCollection.GetIfExists");
             scope.Start();
@@ -347,7 +382,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryPointResource> GetIfExists(string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
+            if (recoveryPointName == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointName));
+            }
+            if (recoveryPointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointName));
+            }
 
             using var scope = _siteRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("SiteRecoveryPointCollection.GetIfExists");
             scope.Start();

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<HardwareInventoryNetworkInterface> array = new List<HardwareInventoryNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwareInventoryNetworkInterface.DeserializeHardwareInventoryNetworkInterface(item));
+                        array.Add(HardwareInventoryNetworkInterface.DeserializeHardwareInventoryNetworkInterface(item, options));
                     }
                     interfaces = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudNic> array = new List<NetworkCloudNic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item));
+                        array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item, options));
                     }
                     nics = array;
                     continue;

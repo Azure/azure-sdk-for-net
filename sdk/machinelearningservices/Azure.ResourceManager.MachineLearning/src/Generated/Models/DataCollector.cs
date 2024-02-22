@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -54,7 +53,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="collections"/> is null. </exception>
         public DataCollector(IDictionary<string, DataCollectionConfiguration> collections)
         {
-            Argument.AssertNotNull(collections, nameof(collections));
+            if (collections == null)
+            {
+                throw new ArgumentNullException(nameof(collections));
+            }
 
             Collections = collections;
         }

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ServerlessSpark": return MonitorServerlessSparkCompute.DeserializeMonitorServerlessSparkCompute(element);
+                    case "ServerlessSpark": return MonitorServerlessSparkCompute.DeserializeMonitorServerlessSparkCompute(element, options);
                 }
             }
-            return UnknownMonitorComputeConfigurationBase.DeserializeUnknownMonitorComputeConfigurationBase(element);
+            return UnknownMonitorComputeConfigurationBase.DeserializeUnknownMonitorComputeConfigurationBase(element, options);
         }
 
         BinaryData IPersistableModel<MonitorComputeConfigurationBase>.Write(ModelReaderWriterOptions options)

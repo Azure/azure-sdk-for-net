@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value);
+                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value);
+                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JwtClaimChecks), out propertyOverride);
             if (Optional.IsDefined(JwtClaimChecks) || hasPropertyOverride)
             {
-                builder.Append("  jwtClaimChecks:");
+                builder.Append("  jwtClaimChecks: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, JwtClaimChecks, options, 2, false);
+                    AppendChildObject(builder, JwtClaimChecks, options, 2, false, "  jwtClaimChecks: ");
                 }
             }
 
@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AllowedAudiences.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedAudiences:");
+                    builder.Append("  allowedAudiences: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedAudiences)
                         {
                             if (item == null)
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAuthorizationPolicy), out propertyOverride);
             if (Optional.IsDefined(DefaultAuthorizationPolicy) || hasPropertyOverride)
             {
-                builder.Append("  defaultAuthorizationPolicy:");
+                builder.Append("  defaultAuthorizationPolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, DefaultAuthorizationPolicy, options, 2, false);
+                    AppendChildObject(builder, DefaultAuthorizationPolicy, options, 2, false, "  defaultAuthorizationPolicy: ");
                 }
             }
 
@@ -213,12 +213,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -239,12 +242,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

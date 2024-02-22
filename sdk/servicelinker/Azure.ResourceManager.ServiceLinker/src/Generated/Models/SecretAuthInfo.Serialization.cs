@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         secretInfo = null;
                         continue;
                     }
-                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value);
+                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))

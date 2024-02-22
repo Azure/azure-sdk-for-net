@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    dataFlowProperties = SynapseIntegrationRuntimeDataFlowProperties.DeserializeSynapseIntegrationRuntimeDataFlowProperties(property.Value);
+                    dataFlowProperties = SynapseIntegrationRuntimeDataFlowProperties.DeserializeSynapseIntegrationRuntimeDataFlowProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vNetProperties"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    vNetProperties = SynapseIntegrationRuntimeVnetProperties.DeserializeSynapseIntegrationRuntimeVnetProperties(property.Value);
+                    vNetProperties = SynapseIntegrationRuntimeVnetProperties.DeserializeSynapseIntegrationRuntimeVnetProperties(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

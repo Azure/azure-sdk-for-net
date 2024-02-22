@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    httpsServerCertificate = MobileNetworkHttpsServerCertificate.DeserializeMobileNetworkHttpsServerCertificate(property.Value);
+                    httpsServerCertificate = MobileNetworkHttpsServerCertificate.DeserializeMobileNetworkHttpsServerCertificate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

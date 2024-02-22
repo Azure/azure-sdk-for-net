@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<KeyVaultSecretResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string secretName, KeyVaultSecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<KeyVaultSecretResource> CreateOrUpdate(WaitUntil waitUntil, string secretName, KeyVaultSecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<Response<KeyVaultSecretResource>> GetAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<KeyVaultSecretResource> Get(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual Response<bool> Exists(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual async Task<NullableResponse<KeyVaultSecretResource>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         public virtual NullableResponse<KeyVaultSecretResource> GetIfExists(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+            if (secretName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secretName));
+            }
 
             using var scope = _keyVaultSecretSecretsClientDiagnostics.CreateScope("KeyVaultSecretCollection.GetIfExists");
             scope.Start();

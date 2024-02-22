@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineData> array = new List<VirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineData.DeserializeVirtualMachineData(item));
+                        array.Add(VirtualMachineData.DeserializeVirtualMachineData(item, options));
                     }
                     value = array;
                     continue;

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanProtectedItem> array = new List<RecoveryPlanProtectedItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanProtectedItem.DeserializeRecoveryPlanProtectedItem(item));
+                        array.Add(RecoveryPlanProtectedItem.DeserializeRecoveryPlanProtectedItem(item, options));
                     }
                     replicationProtectedItems = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanAction> array = new List<RecoveryPlanAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanAction.DeserializeRecoveryPlanAction(item));
+                        array.Add(RecoveryPlanAction.DeserializeRecoveryPlanAction(item, options));
                     }
                     startGroupActions = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanAction> array = new List<RecoveryPlanAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanAction.DeserializeRecoveryPlanAction(item));
+                        array.Add(RecoveryPlanAction.DeserializeRecoveryPlanAction(item, options));
                     }
                     endGroupActions = array;
                     continue;

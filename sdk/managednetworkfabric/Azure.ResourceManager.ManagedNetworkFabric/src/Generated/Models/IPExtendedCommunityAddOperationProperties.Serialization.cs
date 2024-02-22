@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value);
+                    @add = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

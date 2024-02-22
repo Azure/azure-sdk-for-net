@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVersionProperties> array = new List<KubernetesVersionProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersionProperties.DeserializeKubernetesVersionProperties(item));
+                        array.Add(KubernetesVersionProperties.DeserializeKubernetesVersionProperties(item, options));
                     }
                     values = array;
                     continue;

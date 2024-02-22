@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<HttpErrorRange> array = new List<HttpErrorRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpErrorRange.DeserializeHttpErrorRange(item));
+                        array.Add(HttpErrorRange.DeserializeHttpErrorRange(item, options));
                     }
                     httpErrorRanges = array;
                     continue;

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -54,9 +53,18 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="trigger"/> or <paramref name="actions"/> is null. </exception>
         internal ExceptionRule(string id, ExceptionTrigger trigger, IEnumerable<ExceptionAction> actions)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(trigger, nameof(trigger));
-            Argument.AssertNotNull(actions, nameof(actions));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (trigger == null)
+            {
+                throw new ArgumentNullException(nameof(trigger));
+            }
+            if (actions == null)
+            {
+                throw new ArgumentNullException(nameof(actions));
+            }
 
             Id = id;
             Trigger = trigger;

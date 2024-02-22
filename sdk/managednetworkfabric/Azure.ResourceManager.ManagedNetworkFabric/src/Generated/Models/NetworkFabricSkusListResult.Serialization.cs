@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricSkuData> array = new List<NetworkFabricSkuData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricSkuData.DeserializeNetworkFabricSkuData(item));
+                        array.Add(NetworkFabricSkuData.DeserializeNetworkFabricSkuData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
+                        array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item, options));
                     }
                     value = array;
                     continue;

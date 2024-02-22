@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountResourceAccessRule> array = new List<StorageAccountResourceAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountResourceAccessRule.DeserializeStorageAccountResourceAccessRule(item));
+                        array.Add(StorageAccountResourceAccessRule.DeserializeStorageAccountResourceAccessRule(item, options));
                     }
                     resourceAccessRules = array;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountVirtualNetworkRule> array = new List<StorageAccountVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountVirtualNetworkRule.DeserializeStorageAccountVirtualNetworkRule(item));
+                        array.Add(StorageAccountVirtualNetworkRule.DeserializeStorageAccountVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountIPRule> array = new List<StorageAccountIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountIPRule.DeserializeStorageAccountIPRule(item));
+                        array.Add(StorageAccountIPRule.DeserializeStorageAccountIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bypass), out propertyOverride);
             if (Optional.IsDefined(Bypass) || hasPropertyOverride)
             {
-                builder.Append("  bypass:");
+                builder.Append("  bypass: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Bypass.Value.ToString()}'");
+                    builder.AppendLine($"'{Bypass.Value.ToString()}'");
                 }
             }
 
@@ -208,17 +208,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (ResourceAccessRules.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  resourceAccessRules:");
+                    builder.Append("  resourceAccessRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ResourceAccessRules)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  resourceAccessRules: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -230,17 +230,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (VirtualNetworkRules.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  virtualNetworkRules:");
+                    builder.Append("  virtualNetworkRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in VirtualNetworkRules)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  virtualNetworkRules: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -252,17 +252,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (IPRules.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  ipRules:");
+                    builder.Append("  ipRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in IPRules)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  ipRules: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -272,14 +272,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
             if (Optional.IsDefined(DefaultAction) || hasPropertyOverride)
             {
-                builder.Append("  defaultAction:");
+                builder.Append("  defaultAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DefaultAction.ToSerialString()}'");
+                    builder.AppendLine($"'{DefaultAction.ToSerialString()}'");
                 }
             }
 
@@ -287,12 +287,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -313,12 +316,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

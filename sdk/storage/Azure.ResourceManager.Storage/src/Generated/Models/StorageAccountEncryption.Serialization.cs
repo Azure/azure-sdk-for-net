@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    services = StorageAccountEncryptionServices.DeserializeStorageAccountEncryptionServices(property.Value);
+                    services = StorageAccountEncryptionServices.DeserializeStorageAccountEncryptionServices(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    keyvaultproperties = StorageAccountKeyVaultProperties.DeserializeStorageAccountKeyVaultProperties(property.Value);
+                    keyvaultproperties = StorageAccountKeyVaultProperties.DeserializeStorageAccountKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    identity = StorageAccountEncryptionIdentity.DeserializeStorageAccountEncryptionIdentity(property.Value);
+                    identity = StorageAccountEncryptionIdentity.DeserializeStorageAccountEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,71 +168,71 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Services), out propertyOverride);
             if (Optional.IsDefined(Services) || hasPropertyOverride)
             {
-                builder.Append("  services:");
+                builder.Append("  services: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Services, options, 2, false);
+                    AppendChildObject(builder, Services, options, 2, false, "  services: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySource), out propertyOverride);
             if (Optional.IsDefined(KeySource) || hasPropertyOverride)
             {
-                builder.Append("  keySource:");
+                builder.Append("  keySource: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{KeySource.Value.ToString()}'");
+                    builder.AppendLine($"'{KeySource.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequireInfrastructureEncryption), out propertyOverride);
             if (Optional.IsDefined(RequireInfrastructureEncryption) || hasPropertyOverride)
             {
-                builder.Append("  requireInfrastructureEncryption:");
+                builder.Append("  requireInfrastructureEncryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = RequireInfrastructureEncryption.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
             if (Optional.IsDefined(KeyVaultProperties) || hasPropertyOverride)
             {
-                builder.Append("  keyvaultproperties:");
+                builder.Append("  keyvaultproperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, KeyVaultProperties, options, 2, false);
+                    AppendChildObject(builder, KeyVaultProperties, options, 2, false, "  keyvaultproperties: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionIdentity), out propertyOverride);
             if (Optional.IsDefined(EncryptionIdentity) || hasPropertyOverride)
             {
-                builder.Append("  identity:");
+                builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, EncryptionIdentity, options, 2, false);
+                    AppendChildObject(builder, EncryptionIdentity, options, 2, false, "  identity: ");
                 }
             }
 
@@ -240,12 +240,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -266,12 +269,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

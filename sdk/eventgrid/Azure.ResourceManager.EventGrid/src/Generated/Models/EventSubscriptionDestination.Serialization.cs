@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFunction": return AzureFunctionEventSubscriptionDestination.DeserializeAzureFunctionEventSubscriptionDestination(element);
-                    case "EventHub": return EventHubEventSubscriptionDestination.DeserializeEventHubEventSubscriptionDestination(element);
-                    case "HybridConnection": return HybridConnectionEventSubscriptionDestination.DeserializeHybridConnectionEventSubscriptionDestination(element);
-                    case "MonitorAlert": return MonitorAlertEventSubscriptionDestination.DeserializeMonitorAlertEventSubscriptionDestination(element);
-                    case "NamespaceTopic": return NamespaceTopicEventSubscriptionDestination.DeserializeNamespaceTopicEventSubscriptionDestination(element);
-                    case "PartnerDestination": return PartnerEventSubscriptionDestination.DeserializePartnerEventSubscriptionDestination(element);
-                    case "ServiceBusQueue": return ServiceBusQueueEventSubscriptionDestination.DeserializeServiceBusQueueEventSubscriptionDestination(element);
-                    case "ServiceBusTopic": return ServiceBusTopicEventSubscriptionDestination.DeserializeServiceBusTopicEventSubscriptionDestination(element);
-                    case "StorageQueue": return StorageQueueEventSubscriptionDestination.DeserializeStorageQueueEventSubscriptionDestination(element);
-                    case "WebHook": return WebHookEventSubscriptionDestination.DeserializeWebHookEventSubscriptionDestination(element);
+                    case "AzureFunction": return AzureFunctionEventSubscriptionDestination.DeserializeAzureFunctionEventSubscriptionDestination(element, options);
+                    case "EventHub": return EventHubEventSubscriptionDestination.DeserializeEventHubEventSubscriptionDestination(element, options);
+                    case "HybridConnection": return HybridConnectionEventSubscriptionDestination.DeserializeHybridConnectionEventSubscriptionDestination(element, options);
+                    case "MonitorAlert": return MonitorAlertEventSubscriptionDestination.DeserializeMonitorAlertEventSubscriptionDestination(element, options);
+                    case "NamespaceTopic": return NamespaceTopicEventSubscriptionDestination.DeserializeNamespaceTopicEventSubscriptionDestination(element, options);
+                    case "PartnerDestination": return PartnerEventSubscriptionDestination.DeserializePartnerEventSubscriptionDestination(element, options);
+                    case "ServiceBusQueue": return ServiceBusQueueEventSubscriptionDestination.DeserializeServiceBusQueueEventSubscriptionDestination(element, options);
+                    case "ServiceBusTopic": return ServiceBusTopicEventSubscriptionDestination.DeserializeServiceBusTopicEventSubscriptionDestination(element, options);
+                    case "StorageQueue": return StorageQueueEventSubscriptionDestination.DeserializeStorageQueueEventSubscriptionDestination(element, options);
+                    case "WebHook": return WebHookEventSubscriptionDestination.DeserializeWebHookEventSubscriptionDestination(element, options);
                 }
             }
-            return UnknownEventSubscriptionDestination.DeserializeUnknownEventSubscriptionDestination(element);
+            return UnknownEventSubscriptionDestination.DeserializeUnknownEventSubscriptionDestination(element, options);
         }
 
         BinaryData IPersistableModel<EventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         public SecurityAssessmentMetadataProperties(string displayName, SecurityAssessmentSeverity severity, SecurityAssessmentType assessmentType)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
+            if (displayName == null)
+            {
+                throw new ArgumentNullException(nameof(displayName));
+            }
 
             DisplayName = displayName;
             Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();

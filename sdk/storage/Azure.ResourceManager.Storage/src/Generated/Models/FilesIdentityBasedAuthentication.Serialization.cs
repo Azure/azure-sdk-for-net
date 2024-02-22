@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(property.Value);
+                    activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultSharePermission"u8))
@@ -131,42 +131,42 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DirectoryServiceOptions), out propertyOverride);
             if (Optional.IsDefined(DirectoryServiceOptions) || hasPropertyOverride)
             {
-                builder.Append("  directoryServiceOptions:");
+                builder.Append("  directoryServiceOptions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DirectoryServiceOptions.ToString()}'");
+                    builder.AppendLine($"'{DirectoryServiceOptions.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryProperties), out propertyOverride);
             if (Optional.IsDefined(ActiveDirectoryProperties) || hasPropertyOverride)
             {
-                builder.Append("  activeDirectoryProperties:");
+                builder.Append("  activeDirectoryProperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, ActiveDirectoryProperties, options, 2, false);
+                    AppendChildObject(builder, ActiveDirectoryProperties, options, 2, false, "  activeDirectoryProperties: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSharePermission), out propertyOverride);
             if (Optional.IsDefined(DefaultSharePermission) || hasPropertyOverride)
             {
-                builder.Append("  defaultSharePermission:");
+                builder.Append("  defaultSharePermission: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DefaultSharePermission.Value.ToString()}'");
+                    builder.AppendLine($"'{DefaultSharePermission.Value.ToString()}'");
                 }
             }
 
@@ -174,12 +174,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -200,12 +203,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

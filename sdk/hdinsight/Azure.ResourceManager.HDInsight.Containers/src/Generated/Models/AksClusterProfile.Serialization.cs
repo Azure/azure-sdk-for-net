@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    aksClusterAgentPoolIdentityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value);
+                    aksClusterAgentPoolIdentityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aksVersion"u8))

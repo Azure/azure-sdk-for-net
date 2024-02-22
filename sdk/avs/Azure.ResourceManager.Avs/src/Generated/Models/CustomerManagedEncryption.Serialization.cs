@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = AvsEncryptionKeyVaultProperties.DeserializeAvsEncryptionKeyVaultProperties(property.Value);
+                    keyVaultProperties = AvsEncryptionKeyVaultProperties.DeserializeAvsEncryptionKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

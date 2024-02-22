@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningUsage> array = new List<MachineLearningUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningUsage.DeserializeMachineLearningUsage(item));
+                        array.Add(MachineLearningUsage.DeserializeMachineLearningUsage(item, options));
                     }
                     value = array;
                     continue;

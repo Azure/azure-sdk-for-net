@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceFabricApplicationTypeVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, ServiceFabricApplicationTypeVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(data, nameof(data));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceFabricApplicationTypeVersionResource> CreateOrUpdate(WaitUntil waitUntil, string version, ServiceFabricApplicationTypeVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(data, nameof(data));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricApplicationTypeVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<ServiceFabricApplicationTypeVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceFabricApplicationTypeVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual NullableResponse<ServiceFabricApplicationTypeVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
 
             using var scope = _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics.CreateScope("ServiceFabricApplicationTypeVersionCollection.GetIfExists");
             scope.Start();

@@ -351,7 +351,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadGroupResource>> UpdateAsync(WaitUntil waitUntil, WorkloadGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupResource.Update");
             scope.Start();
@@ -397,7 +400,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadGroupResource> Update(WaitUntil waitUntil, WorkloadGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _workloadGroupClientDiagnostics.CreateScope("WorkloadGroupResource.Update");
             scope.Start();

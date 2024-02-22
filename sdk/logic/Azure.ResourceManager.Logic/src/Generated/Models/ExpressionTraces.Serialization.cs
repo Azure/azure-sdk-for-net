@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpressionRoot> array = new List<LogicExpressionRoot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicExpressionRoot.DeserializeLogicExpressionRoot(item));
+                        array.Add(LogicExpressionRoot.DeserializeLogicExpressionRoot(item, options));
                     }
                     inputs = array;
                     continue;

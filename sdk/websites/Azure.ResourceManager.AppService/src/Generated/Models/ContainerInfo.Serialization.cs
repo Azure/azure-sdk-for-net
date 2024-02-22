@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previousCpuStats"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryStats"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value);
+                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value);
+                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,21 +205,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -227,93 +227,93 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentTimeStamp), out propertyOverride);
             if (Optional.IsDefined(CurrentTimeStamp) || hasPropertyOverride)
             {
-                builder.Append("  currentTimeStamp:");
+                builder.Append("  currentTimeStamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(CurrentTimeStamp.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviousTimeStamp), out propertyOverride);
             if (Optional.IsDefined(PreviousTimeStamp) || hasPropertyOverride)
             {
-                builder.Append("  previousTimeStamp:");
+                builder.Append("  previousTimeStamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedDateTimeString = TypeFormatters.ToString(PreviousTimeStamp.Value, "o");
-                    builder.AppendLine($" '{formattedDateTimeString}'");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentCpuStats), out propertyOverride);
             if (Optional.IsDefined(CurrentCpuStats) || hasPropertyOverride)
             {
-                builder.Append("  currentCpuStats:");
+                builder.Append("  currentCpuStats: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, CurrentCpuStats, options, 2, false);
+                    AppendChildObject(builder, CurrentCpuStats, options, 2, false, "  currentCpuStats: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviousCpuStats), out propertyOverride);
             if (Optional.IsDefined(PreviousCpuStats) || hasPropertyOverride)
             {
-                builder.Append("  previousCpuStats:");
+                builder.Append("  previousCpuStats: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, PreviousCpuStats, options, 2, false);
+                    AppendChildObject(builder, PreviousCpuStats, options, 2, false, "  previousCpuStats: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryStats), out propertyOverride);
             if (Optional.IsDefined(MemoryStats) || hasPropertyOverride)
             {
-                builder.Append("  memoryStats:");
+                builder.Append("  memoryStats: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, MemoryStats, options, 2, false);
+                    AppendChildObject(builder, MemoryStats, options, 2, false, "  memoryStats: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Id.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Id}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Id}'");
+                        builder.AppendLine($"'{Id}'");
                     }
                 }
             }
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Eth0), out propertyOverride);
             if (Optional.IsDefined(Eth0) || hasPropertyOverride)
             {
-                builder.Append("  eth0:");
+                builder.Append("  eth0: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Eth0, options, 2, false);
+                    AppendChildObject(builder, Eth0, options, 2, false, "  eth0: ");
                 }
             }
 
@@ -336,12 +336,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -362,12 +365,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

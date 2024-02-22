@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public BotChannelRegenerateKeysContent(string siteName, BotServiceKey key)
         {
-            Argument.AssertNotNull(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
 
             SiteName = siteName;
             Key = key;

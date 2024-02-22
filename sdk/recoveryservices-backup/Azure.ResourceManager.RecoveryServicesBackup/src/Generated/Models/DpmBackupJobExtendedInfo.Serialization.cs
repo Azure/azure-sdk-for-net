@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DpmBackupJobTaskDetails> array = new List<DpmBackupJobTaskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DpmBackupJobTaskDetails.DeserializeDpmBackupJobTaskDetails(item));
+                        array.Add(DpmBackupJobTaskDetails.DeserializeDpmBackupJobTaskDetails(item, options));
                     }
                     tasksList = array;
                     continue;

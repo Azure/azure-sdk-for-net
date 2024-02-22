@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element);
-                    case "AzureSqlContainer": return SqlContainer.DeserializeSqlContainer(element);
-                    case "AzureWorkloadContainer": return WorkloadContainer.DeserializeWorkloadContainer(element);
-                    case "DPMContainer": return DpmContainer.DeserializeDpmContainer(element);
-                    case "GenericContainer": return GenericContainer.DeserializeGenericContainer(element);
-                    case "IaasVMContainer": return IaasVmContainer.DeserializeIaasVmContainer(element);
-                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element);
-                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element);
-                    case "SQLAGWorkLoadContainer": return SqlAvailabilityGroupWorkloadProtectionContainer.DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(element);
-                    case "StorageContainer": return StorageContainer.DeserializeStorageContainer(element);
-                    case "VMAppContainer": return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element);
-                    case "Windows": return MabContainer.DeserializeMabContainer(element);
+                    case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element, options);
+                    case "AzureSqlContainer": return SqlContainer.DeserializeSqlContainer(element, options);
+                    case "AzureWorkloadContainer": return WorkloadContainer.DeserializeWorkloadContainer(element, options);
+                    case "DPMContainer": return DpmContainer.DeserializeDpmContainer(element, options);
+                    case "GenericContainer": return GenericContainer.DeserializeGenericContainer(element, options);
+                    case "IaasVMContainer": return IaasVmContainer.DeserializeIaasVmContainer(element, options);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element, options);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element, options);
+                    case "SQLAGWorkLoadContainer": return SqlAvailabilityGroupWorkloadProtectionContainer.DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(element, options);
+                    case "StorageContainer": return StorageContainer.DeserializeStorageContainer(element, options);
+                    case "VMAppContainer": return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element, options);
+                    case "Windows": return MabContainer.DeserializeMabContainer(element, options);
                 }
             }
-            return UnknownProtectionContainer.DeserializeUnknownProtectionContainer(element);
+            return UnknownProtectionContainer.DeserializeUnknownProtectionContainer(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericProtectionContainer>.Write(ModelReaderWriterOptions options)

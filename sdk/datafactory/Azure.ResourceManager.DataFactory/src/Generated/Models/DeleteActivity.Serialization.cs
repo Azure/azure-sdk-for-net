@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logStorageSettings = LogStorageSettings.DeserializeLogStorageSettings(property0.Value);
+                            logStorageSettings = LogStorageSettings.DeserializeLogStorageSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataset"u8))
                         {
-                            dataset = DatasetReference.DeserializeDatasetReference(property0.Value);
+                            dataset = DatasetReference.DeserializeDatasetReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storeSettings"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property0.Value);
+                            storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property0.Value, options);
                             continue;
                         }
                     }

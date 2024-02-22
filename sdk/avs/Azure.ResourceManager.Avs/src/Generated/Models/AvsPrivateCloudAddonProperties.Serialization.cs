@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element);
-                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element);
-                    case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element);
-                    case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element);
+                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element, options);
+                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
+                    case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element, options);
+                    case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element, options);
                 }
             }
-            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element);
+            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element, options);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudAddonProperties>.Write(ModelReaderWriterOptions options)

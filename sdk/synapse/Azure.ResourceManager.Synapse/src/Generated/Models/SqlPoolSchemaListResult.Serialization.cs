@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSqlPoolSchemaData> array = new List<SynapseSqlPoolSchemaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(item));
+                        array.Add(SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(item, options));
                     }
                     value = array;
                     continue;

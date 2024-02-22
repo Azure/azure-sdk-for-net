@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineSize> array = new List<VirtualMachineSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineSize.DeserializeVirtualMachineSize(item));
+                        array.Add(VirtualMachineSize.DeserializeVirtualMachineSize(item, options));
                     }
                     value = array;
                     continue;

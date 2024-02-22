@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionMarketplace> array = new List<ConsumptionMarketplace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionMarketplace.DeserializeConsumptionMarketplace(item));
+                        array.Add(ConsumptionMarketplace.DeserializeConsumptionMarketplace(item, options));
                     }
                     value = array;
                     continue;

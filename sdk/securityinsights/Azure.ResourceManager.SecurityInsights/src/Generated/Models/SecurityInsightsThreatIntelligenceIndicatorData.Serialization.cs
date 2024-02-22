@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceKillChainPhase> array = new List<ThreatIntelligenceKillChainPhase>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceKillChainPhase.DeserializeThreatIntelligenceKillChainPhase(item));
+                                array.Add(ThreatIntelligenceKillChainPhase.DeserializeThreatIntelligenceKillChainPhase(item, options));
                             }
                             killChainPhases = array;
                             continue;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceParsedPattern> array = new List<ThreatIntelligenceParsedPattern>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceParsedPattern.DeserializeThreatIntelligenceParsedPattern(item));
+                                array.Add(ThreatIntelligenceParsedPattern.DeserializeThreatIntelligenceParsedPattern(item, options));
                             }
                             parsedPattern = array;
                             continue;
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceExternalReference> array = new List<ThreatIntelligenceExternalReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceExternalReference.DeserializeThreatIntelligenceExternalReference(item));
+                                array.Add(ThreatIntelligenceExternalReference.DeserializeThreatIntelligenceExternalReference(item, options));
                             }
                             externalReferences = array;
                             continue;
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceGranularMarkingEntity> array = new List<ThreatIntelligenceGranularMarkingEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceGranularMarkingEntity.DeserializeThreatIntelligenceGranularMarkingEntity(item));
+                                array.Add(ThreatIntelligenceGranularMarkingEntity.DeserializeThreatIntelligenceGranularMarkingEntity(item, options));
                             }
                             granularMarkings = array;
                             continue;

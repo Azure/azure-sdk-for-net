@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<AutoscaleProfile> array = new List<AutoscaleProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item));
+                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item, options));
                             }
                             profiles = array;
                             continue;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<AutoscaleNotification> array = new List<AutoscaleNotification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item));
+                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item, options));
                             }
                             notifications = array;
                             continue;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor.Models
                                 predictiveAutoscalePolicy = null;
                                 continue;
                             }
-                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value);
+                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("name"u8))

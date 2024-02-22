@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (Keys.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  keys:");
+                    builder.Append("  keys: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Keys)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -218,14 +218,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (Secrets.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  secrets:");
+                    builder.Append("  secrets: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Secrets)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (Certificates.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  certificates:");
+                    builder.Append("  certificates: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Certificates)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (Storage.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  storage:");
+                    builder.Append("  storage: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Storage)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -283,12 +283,15 @@ namespace Azure.ResourceManager.KeyVault.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -309,12 +312,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

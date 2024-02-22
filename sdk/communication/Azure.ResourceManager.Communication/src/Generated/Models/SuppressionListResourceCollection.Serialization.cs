@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<SuppressionListResourceData> array = new List<SuppressionListResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionListResourceData.DeserializeSuppressionListResourceData(item));
+                        array.Add(SuppressionListResourceData.DeserializeSuppressionListResourceData(item, options));
                     }
                     value = array;
                     continue;

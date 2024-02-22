@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value);
+                    frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubeConfig"u8))
@@ -178,35 +178,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactsStorageType), out propertyOverride);
             if (Optional.IsDefined(ArtifactsStorageType) || hasPropertyOverride)
             {
-                builder.Append("  artifactsStorageType:");
+                builder.Append("  artifactsStorageType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ArtifactsStorageType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ArtifactsStorageType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageClassName), out propertyOverride);
             if (Optional.IsDefined(ArtifactStorageClassName) || hasPropertyOverride)
             {
-                builder.Append("  artifactStorageClassName:");
+                builder.Append("  artifactStorageClassName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ArtifactStorageClassName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ArtifactStorageClassName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ArtifactStorageClassName}'");
+                        builder.AppendLine($"'{ArtifactStorageClassName}'");
                     }
                 }
             }
@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageMountPath), out propertyOverride);
             if (Optional.IsDefined(ArtifactStorageMountPath) || hasPropertyOverride)
             {
-                builder.Append("  artifactStorageMountPath:");
+                builder.Append("  artifactStorageMountPath: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ArtifactStorageMountPath.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ArtifactStorageMountPath}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ArtifactStorageMountPath}'");
+                        builder.AppendLine($"'{ArtifactStorageMountPath}'");
                     }
                 }
             }
@@ -236,21 +236,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageNodeName), out propertyOverride);
             if (Optional.IsDefined(ArtifactStorageNodeName) || hasPropertyOverride)
             {
-                builder.Append("  artifactStorageNodeName:");
+                builder.Append("  artifactStorageNodeName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ArtifactStorageNodeName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ArtifactStorageNodeName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ArtifactStorageNodeName}'");
+                        builder.AppendLine($"'{ArtifactStorageNodeName}'");
                     }
                 }
             }
@@ -258,21 +258,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageAccessMode), out propertyOverride);
             if (Optional.IsDefined(ArtifactStorageAccessMode) || hasPropertyOverride)
             {
-                builder.Append("  artifactStorageAccessMode:");
+                builder.Append("  artifactStorageAccessMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ArtifactStorageAccessMode.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ArtifactStorageAccessMode}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ArtifactStorageAccessMode}'");
+                        builder.AppendLine($"'{ArtifactStorageAccessMode}'");
                     }
                 }
             }
@@ -280,35 +280,35 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontEndServiceConfiguration), out propertyOverride);
             if (Optional.IsDefined(FrontEndServiceConfiguration) || hasPropertyOverride)
             {
-                builder.Append("  frontEndServiceConfiguration:");
+                builder.Append("  frontEndServiceConfiguration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, FrontEndServiceConfiguration, options, 2, false);
+                    AppendChildObject(builder, FrontEndServiceConfiguration, options, 2, false, "  frontEndServiceConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubeConfig), out propertyOverride);
             if (Optional.IsDefined(KubeConfig) || hasPropertyOverride)
             {
-                builder.Append("  kubeConfig:");
+                builder.Append("  kubeConfig: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (KubeConfig.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{KubeConfig}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{KubeConfig}'");
+                        builder.AppendLine($"'{KubeConfig}'");
                     }
                 }
             }
@@ -317,12 +317,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -343,12 +346,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

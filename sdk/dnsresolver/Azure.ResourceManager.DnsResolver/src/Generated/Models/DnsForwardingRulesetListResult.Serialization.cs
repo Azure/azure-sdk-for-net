@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<DnsForwardingRulesetData> array = new List<DnsForwardingRulesetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(item));
+                        array.Add(DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(item, options));
                     }
                     value = array;
                     continue;

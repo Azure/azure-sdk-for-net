@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item, options));
                             }
                             inputs = array;
                             continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value);
+                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("binding"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value);
+                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value, options);
                             continue;
                         }
                     }

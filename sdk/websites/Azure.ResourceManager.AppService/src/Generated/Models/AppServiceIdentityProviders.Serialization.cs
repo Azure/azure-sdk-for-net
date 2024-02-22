@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value);
+                    azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("facebook"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value);
+                    facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gitHub"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value);
+                    gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("google"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value);
+                    google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("legacyMicrosoftAccount"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value);
+                    legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("twitter"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value);
+                    twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apple"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value);
+                    apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value);
+                    azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customOpenIdConnectProviders"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, CustomOpenIdConnectProvider> dictionary = new Dictionary<string, CustomOpenIdConnectProvider>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CustomOpenIdConnectProvider.DeserializeCustomOpenIdConnectProvider(property0.Value));
+                        dictionary.Add(property0.Name, CustomOpenIdConnectProvider.DeserializeCustomOpenIdConnectProvider(property0.Value, options));
                     }
                     customOpenIdConnectProviders = dictionary;
                     continue;
@@ -240,112 +240,112 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectory), out propertyOverride);
             if (Optional.IsDefined(AzureActiveDirectory) || hasPropertyOverride)
             {
-                builder.Append("  azureActiveDirectory:");
+                builder.Append("  azureActiveDirectory: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, AzureActiveDirectory, options, 2, false);
+                    AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Facebook), out propertyOverride);
             if (Optional.IsDefined(Facebook) || hasPropertyOverride)
             {
-                builder.Append("  facebook:");
+                builder.Append("  facebook: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Facebook, options, 2, false);
+                    AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHub), out propertyOverride);
             if (Optional.IsDefined(GitHub) || hasPropertyOverride)
             {
-                builder.Append("  gitHub:");
+                builder.Append("  gitHub: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, GitHub, options, 2, false);
+                    AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Google), out propertyOverride);
             if (Optional.IsDefined(Google) || hasPropertyOverride)
             {
-                builder.Append("  google:");
+                builder.Append("  google: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Google, options, 2, false);
+                    AppendChildObject(builder, Google, options, 2, false, "  google: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LegacyMicrosoftAccount), out propertyOverride);
             if (Optional.IsDefined(LegacyMicrosoftAccount) || hasPropertyOverride)
             {
-                builder.Append("  legacyMicrosoftAccount:");
+                builder.Append("  legacyMicrosoftAccount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, LegacyMicrosoftAccount, options, 2, false);
+                    AppendChildObject(builder, LegacyMicrosoftAccount, options, 2, false, "  legacyMicrosoftAccount: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Twitter), out propertyOverride);
             if (Optional.IsDefined(Twitter) || hasPropertyOverride)
             {
-                builder.Append("  twitter:");
+                builder.Append("  twitter: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Twitter, options, 2, false);
+                    AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Apple), out propertyOverride);
             if (Optional.IsDefined(Apple) || hasPropertyOverride)
             {
-                builder.Append("  apple:");
+                builder.Append("  apple: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Apple, options, 2, false);
+                    AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStaticWebApps), out propertyOverride);
             if (Optional.IsDefined(AzureStaticWebApps) || hasPropertyOverride)
             {
-                builder.Append("  azureStaticWebApps:");
+                builder.Append("  azureStaticWebApps: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, AzureStaticWebApps, options, 2, false);
+                    AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
                 }
             }
 
@@ -354,18 +354,18 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (CustomOpenIdConnectProviders.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  customOpenIdConnectProviders:");
+                    builder.Append("  customOpenIdConnectProviders: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" {");
+                        builder.AppendLine("{");
                         foreach (var item in CustomOpenIdConnectProviders)
                         {
-                            builder.Append($"    '{item.Key}':");
-                            AppendChildObject(builder, item.Value, options, 4, false);
+                            builder.Append($"    '{item.Key}': ");
+                            AppendChildObject(builder, item.Value, options, 4, false, "  customOpenIdConnectProviders: ");
                         }
                         builder.AppendLine("  }");
                     }
@@ -376,12 +376,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -402,12 +405,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

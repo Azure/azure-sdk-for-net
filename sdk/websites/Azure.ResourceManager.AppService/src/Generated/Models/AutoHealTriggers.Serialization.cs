@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value);
+                    requests = RequestsBasedTrigger.DeserializeRequestsBasedTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateBytesInKB"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StatusCodesBasedTrigger> array = new List<StatusCodesBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item));
+                        array.Add(StatusCodesBasedTrigger.DeserializeStatusCodesBasedTrigger(item, options));
                     }
                     statusCodes = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value);
+                    slowRequests = SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("slowRequestsWithPath"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SlowRequestsBasedTrigger> array = new List<SlowRequestsBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item));
+                        array.Add(SlowRequestsBasedTrigger.DeserializeSlowRequestsBasedTrigger(item, options));
                     }
                     slowRequestsWithPath = array;
                     continue;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StatusCodesRangeBasedTrigger> array = new List<StatusCodesRangeBasedTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item));
+                        array.Add(StatusCodesRangeBasedTrigger.DeserializeStatusCodesRangeBasedTrigger(item, options));
                     }
                     statusCodesRange = array;
                     continue;
@@ -214,28 +214,28 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Requests), out propertyOverride);
             if (Optional.IsDefined(Requests) || hasPropertyOverride)
             {
-                builder.Append("  requests:");
+                builder.Append("  requests: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Requests, options, 2, false);
+                    AppendChildObject(builder, Requests, options, 2, false, "  requests: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateBytesInKB), out propertyOverride);
             if (Optional.IsDefined(PrivateBytesInKB) || hasPropertyOverride)
             {
-                builder.Append("  privateBytesInKB:");
+                builder.Append("  privateBytesInKB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {PrivateBytesInKB.Value}");
+                    builder.AppendLine($"{PrivateBytesInKB.Value}");
                 }
             }
 
@@ -244,17 +244,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (StatusCodes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  statusCodes:");
+                    builder.Append("  statusCodes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in StatusCodes)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  statusCodes: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequests), out propertyOverride);
             if (Optional.IsDefined(SlowRequests) || hasPropertyOverride)
             {
-                builder.Append("  slowRequests:");
+                builder.Append("  slowRequests: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, SlowRequests, options, 2, false);
+                    AppendChildObject(builder, SlowRequests, options, 2, false, "  slowRequests: ");
                 }
             }
 
@@ -280,17 +280,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (SlowRequestsWithPath.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  slowRequestsWithPath:");
+                    builder.Append("  slowRequestsWithPath: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SlowRequestsWithPath)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  slowRequestsWithPath: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -302,17 +302,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (StatusCodesRange.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  statusCodesRange:");
+                    builder.Append("  statusCodesRange: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in StatusCodesRange)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  statusCodesRange: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -323,12 +323,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -349,12 +352,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

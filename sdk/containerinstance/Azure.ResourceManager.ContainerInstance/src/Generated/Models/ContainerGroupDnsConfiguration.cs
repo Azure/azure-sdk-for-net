@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nameServers"/> is null. </exception>
         public ContainerGroupDnsConfiguration(IEnumerable<string> nameServers)
         {
-            Argument.AssertNotNull(nameServers, nameof(nameServers));
+            if (nameServers == null)
+            {
+                throw new ArgumentNullException(nameof(nameServers));
+            }
 
             NameServers = nameServers.ToList();
         }

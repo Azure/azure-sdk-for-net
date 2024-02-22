@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<JitApprover> array = new List<JitApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitApprover.DeserializeJitApprover(item));
+                        array.Add(JitApprover.DeserializeJitApprover(item, options));
                     }
                     jitApprovers = array;
                     continue;
@@ -157,29 +157,29 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitAccessEnabled), out propertyOverride);
             if (Optional.IsDefined(JitAccessEnabled) || hasPropertyOverride)
             {
-                builder.Append("  jitAccessEnabled:");
+                builder.Append("  jitAccessEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = JitAccessEnabled == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovalMode), out propertyOverride);
             if (Optional.IsDefined(JitApprovalMode) || hasPropertyOverride)
             {
-                builder.Append("  jitApprovalMode:");
+                builder.Append("  jitApprovalMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{JitApprovalMode.Value.ToString()}'");
+                    builder.AppendLine($"'{JitApprovalMode.Value.ToString()}'");
                 }
             }
 
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (JitApprovers.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  jitApprovers:");
+                    builder.Append("  jitApprovers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in JitApprovers)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  jitApprovers: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -208,15 +208,15 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumJitAccessDuration), out propertyOverride);
             if (Optional.IsDefined(MaximumJitAccessDuration) || hasPropertyOverride)
             {
-                builder.Append("  maximumJitAccessDuration:");
+                builder.Append("  maximumJitAccessDuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var formattedTimeSpan = TypeFormatters.ToString(MaximumJitAccessDuration.Value, "P");
-                    builder.AppendLine($" '{formattedTimeSpan}'");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
                 }
             }
 
@@ -224,12 +224,15 @@ namespace Azure.ResourceManager.Resources.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -250,12 +253,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

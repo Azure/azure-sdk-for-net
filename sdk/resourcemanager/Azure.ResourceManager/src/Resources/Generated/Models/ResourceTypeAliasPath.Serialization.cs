@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    pattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
+                    pattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value);
+                    metadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
             if (Optional.IsDefined(Path) || hasPropertyOverride)
             {
-                builder.Append("  path:");
+                builder.Append("  path: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Path.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Path}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Path}'");
+                        builder.AppendLine($"'{Path}'");
                     }
                 }
             }
@@ -184,14 +184,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (ApiVersions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  apiVersions:");
+                    builder.Append("  apiVersions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ApiVersions)
                         {
                             if (item == null)
@@ -217,28 +217,28 @@ namespace Azure.ResourceManager.Resources.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Pattern), out propertyOverride);
             if (Optional.IsDefined(Pattern) || hasPropertyOverride)
             {
-                builder.Append("  pattern:");
+                builder.Append("  pattern: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Pattern, options, 2, false);
+                    AppendChildObject(builder, Pattern, options, 2, false, "  pattern: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
             if (Optional.IsDefined(Metadata) || hasPropertyOverride)
             {
-                builder.Append("  metadata:");
+                builder.Append("  metadata: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Metadata, options, 2, false);
+                    AppendChildObject(builder, Metadata, options, 2, false, "  metadata: ");
                 }
             }
 
@@ -246,12 +246,15 @@ namespace Azure.ResourceManager.Resources.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -272,12 +275,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSkuLocationInfo> array = new List<ElasticSanSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSkuLocationInfo.DeserializeElasticSanSkuLocationInfo(item));
+                        array.Add(ElasticSanSkuLocationInfo.DeserializeElasticSanSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSkuCapability> array = new List<ElasticSanSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSkuCapability.DeserializeElasticSanSkuCapability(item));
+                        array.Add(ElasticSanSkuCapability.DeserializeElasticSanSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;

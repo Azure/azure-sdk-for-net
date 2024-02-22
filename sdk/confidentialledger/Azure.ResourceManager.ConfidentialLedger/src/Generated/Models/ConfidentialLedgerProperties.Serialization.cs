@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<AadBasedSecurityPrincipal> array = new List<AadBasedSecurityPrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AadBasedSecurityPrincipal.DeserializeAadBasedSecurityPrincipal(item));
+                        array.Add(AadBasedSecurityPrincipal.DeserializeAadBasedSecurityPrincipal(item, options));
                     }
                     aadBasedSecurityPrincipals = array;
                     continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<CertBasedSecurityPrincipal> array = new List<CertBasedSecurityPrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CertBasedSecurityPrincipal.DeserializeCertBasedSecurityPrincipal(item));
+                        array.Add(CertBasedSecurityPrincipal.DeserializeCertBasedSecurityPrincipal(item, options));
                     }
                     certBasedSecurityPrincipals = array;
                     continue;

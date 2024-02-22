@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value);
+                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rotation"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fadeIn"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value);
+                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fadeOut"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value);
+                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("overlays"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOverlayBase> array = new List<MediaOverlayBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item));
+                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item, options));
                     }
                     overlays = array;
                     continue;

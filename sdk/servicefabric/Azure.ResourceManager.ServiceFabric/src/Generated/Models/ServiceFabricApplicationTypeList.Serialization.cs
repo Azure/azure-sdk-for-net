@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ServiceFabricApplicationTypeData> array = new List<ServiceFabricApplicationTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(item));
+                        array.Add(ServiceFabricApplicationTypeData.DeserializeServiceFabricApplicationTypeData(item, options));
                     }
                     value = array;
                     continue;

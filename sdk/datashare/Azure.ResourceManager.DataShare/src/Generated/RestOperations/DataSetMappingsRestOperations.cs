@@ -72,11 +72,46 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ShareDataSetMappingData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
-            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
+            if (dataSetMappingName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetMappingName));
+            }
+            if (dataSetMappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,11 +142,46 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ShareDataSetMappingData> Get(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
-            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
+            if (dataSetMappingName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetMappingName));
+            }
+            if (dataSetMappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName);
             _pipeline.Send(message, cancellationToken);
@@ -171,12 +241,50 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ShareDataSetMappingData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, ShareDataSetMappingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
-            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
+            if (dataSetMappingName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetMappingName));
+            }
+            if (dataSetMappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -207,12 +315,50 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ShareDataSetMappingData> Create(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, ShareDataSetMappingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
-            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
+            if (dataSetMappingName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetMappingName));
+            }
+            if (dataSetMappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName, data);
             _pipeline.Send(message, cancellationToken);
@@ -266,11 +412,46 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
-            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
+            if (dataSetMappingName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetMappingName));
+            }
+            if (dataSetMappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -295,11 +476,46 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareSubscriptionName"/> or <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
-            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
+            if (dataSetMappingName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSetMappingName));
+            }
+            if (dataSetMappingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSetMappingName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, dataSetMappingName);
             _pipeline.Send(message, cancellationToken);
@@ -361,10 +577,38 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataSetMappingList>> ListByShareSubscriptionAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
 
             using var message = CreateListByShareSubscriptionRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, skipToken, filter, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -395,10 +639,38 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataSetMappingList> ListByShareSubscription(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
 
             using var message = CreateListByShareSubscriptionRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, skipToken, filter, orderby);
             _pipeline.Send(message, cancellationToken);
@@ -444,11 +716,42 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataSetMappingList>> ListByShareSubscriptionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
 
             using var message = CreateListByShareSubscriptionNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, shareSubscriptionName, skipToken, filter, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -480,11 +783,42 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataSetMappingList> ListByShareSubscriptionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (shareSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(shareSubscriptionName));
+            }
+            if (shareSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
+            }
 
             using var message = CreateListByShareSubscriptionNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, shareSubscriptionName, skipToken, filter, orderby);
             _pipeline.Send(message, cancellationToken);

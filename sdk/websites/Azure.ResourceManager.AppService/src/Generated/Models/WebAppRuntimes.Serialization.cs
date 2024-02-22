@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    linuxRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value);
+                    linuxRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsRuntimeSettings"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    windowsRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value);
+                    windowsRuntimeSettings = WebAppRuntimeSettings.DeserializeWebAppRuntimeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxContainerSettings"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    linuxContainerSettings = LinuxJavaContainerSettings.DeserializeLinuxJavaContainerSettings(property.Value);
+                    linuxContainerSettings = LinuxJavaContainerSettings.DeserializeLinuxJavaContainerSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsContainerSettings"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    windowsContainerSettings = WindowsJavaContainerSettings.DeserializeWindowsJavaContainerSettings(property.Value);
+                    windowsContainerSettings = WindowsJavaContainerSettings.DeserializeWindowsJavaContainerSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,56 +153,56 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
             if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
             {
-                builder.Append("  linuxRuntimeSettings:");
+                builder.Append("  linuxRuntimeSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false);
+                    AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false, "  linuxRuntimeSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
             if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
             {
-                builder.Append("  windowsRuntimeSettings:");
+                builder.Append("  windowsRuntimeSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false);
+                    AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false, "  windowsRuntimeSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxContainerSettings), out propertyOverride);
             if (Optional.IsDefined(LinuxContainerSettings) || hasPropertyOverride)
             {
-                builder.Append("  linuxContainerSettings:");
+                builder.Append("  linuxContainerSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, LinuxContainerSettings, options, 2, false);
+                    AppendChildObject(builder, LinuxContainerSettings, options, 2, false, "  linuxContainerSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsContainerSettings), out propertyOverride);
             if (Optional.IsDefined(WindowsContainerSettings) || hasPropertyOverride)
             {
-                builder.Append("  windowsContainerSettings:");
+                builder.Append("  windowsContainerSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, WindowsContainerSettings, options, 2, false);
+                    AppendChildObject(builder, WindowsContainerSettings, options, 2, false, "  windowsContainerSettings: ");
                 }
             }
 
@@ -210,12 +210,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -236,12 +239,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.FluidRelay;
 
 namespace Azure.ResourceManager.FluidRelay.Models
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FluidRelayServerList(IEnumerable<FluidRelayServerData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Value = value.ToList();
         }

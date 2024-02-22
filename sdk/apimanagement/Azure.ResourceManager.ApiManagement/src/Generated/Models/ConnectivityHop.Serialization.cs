@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ConnectivityIssue> array = new List<ConnectivityIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item));
+                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item, options));
                     }
                     issues = array;
                     continue;

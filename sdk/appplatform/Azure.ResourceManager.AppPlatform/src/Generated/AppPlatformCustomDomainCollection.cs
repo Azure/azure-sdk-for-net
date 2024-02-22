@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformCustomDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, AppPlatformCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (domainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformCustomDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, AppPlatformCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (domainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformCustomDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (domainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
+            }
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<AppPlatformCustomDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (domainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
+            }
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (domainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
+            }
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<bool> Exists(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (domainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
+            }
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformCustomDomainResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (domainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
+            }
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformCustomDomainResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
+            if (domainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
+            }
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainCollection.GetIfExists");
             scope.Start();

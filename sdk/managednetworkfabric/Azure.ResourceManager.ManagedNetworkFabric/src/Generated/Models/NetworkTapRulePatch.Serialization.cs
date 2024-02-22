@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<NetworkTapRuleMatchConfiguration> array = new List<NetworkTapRuleMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item));
+                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item, options));
                             }
                             matchConfigurations = array;
                             continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item));
+                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
                             }
                             dynamicMatchConfigurations = array;
                             continue;

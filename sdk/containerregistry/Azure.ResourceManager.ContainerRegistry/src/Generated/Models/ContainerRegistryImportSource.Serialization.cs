@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    credentials = ContainerRegistryImportSourceCredentials.DeserializeContainerRegistryImportSourceCredentials(property.Value);
+                    credentials = ContainerRegistryImportSourceCredentials.DeserializeContainerRegistryImportSourceCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceImage"u8))

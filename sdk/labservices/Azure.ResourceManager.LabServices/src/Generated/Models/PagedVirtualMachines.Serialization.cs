@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<LabVirtualMachineData> array = new List<LabVirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabVirtualMachineData.DeserializeLabVirtualMachineData(item));
+                        array.Add(LabVirtualMachineData.DeserializeLabVirtualMachineData(item, options));
                     }
                     value = array;
                     continue;

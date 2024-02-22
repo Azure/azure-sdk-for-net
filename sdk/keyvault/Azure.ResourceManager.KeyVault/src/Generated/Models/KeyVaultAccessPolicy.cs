@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="permissions"/> is null. </exception>
         public KeyVaultAccessPolicy(Guid tenantId, string objectId, IdentityAccessPermissions permissions)
         {
-            Argument.AssertNotNull(objectId, nameof(objectId));
-            Argument.AssertNotNull(permissions, nameof(permissions));
+            if (objectId == null)
+            {
+                throw new ArgumentNullException(nameof(objectId));
+            }
+            if (permissions == null)
+            {
+                throw new ArgumentNullException(nameof(permissions));
+            }
 
             TenantId = tenantId;
             ObjectId = objectId;

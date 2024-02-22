@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = ClientRegistration.DeserializeClientRegistration(property.Value);
+                    registration = ClientRegistration.DeserializeClientRegistration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
+                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    validation = AllowedAudiencesValidation.DeserializeAllowedAudiencesValidation(property.Value);
+                    validation = AllowedAudiencesValidation.DeserializeAllowedAudiencesValidation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,57 +153,57 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
             if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
             {
-                builder.Append("  enabled:");
+                builder.Append("  enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Registration), out propertyOverride);
             if (Optional.IsDefined(Registration) || hasPropertyOverride)
             {
-                builder.Append("  registration:");
+                builder.Append("  registration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Registration, options, 2, false);
+                    AppendChildObject(builder, Registration, options, 2, false, "  registration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Login), out propertyOverride);
             if (Optional.IsDefined(Login) || hasPropertyOverride)
             {
-                builder.Append("  login:");
+                builder.Append("  login: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Login, options, 2, false);
+                    AppendChildObject(builder, Login, options, 2, false, "  login: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Validation), out propertyOverride);
             if (Optional.IsDefined(Validation) || hasPropertyOverride)
             {
-                builder.Append("  validation:");
+                builder.Append("  validation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Validation, options, 2, false);
+                    AppendChildObject(builder, Validation, options, 2, false, "  validation: ");
                 }
             }
 
@@ -211,12 +211,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -237,12 +240,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

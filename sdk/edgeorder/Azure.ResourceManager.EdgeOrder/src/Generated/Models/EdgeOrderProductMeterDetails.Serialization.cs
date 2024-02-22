@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Pav2": return Pav2MeterDetails.DeserializePav2MeterDetails(element);
-                    case "Purchase": return PurchaseMeterDetails.DeserializePurchaseMeterDetails(element);
+                    case "Pav2": return Pav2MeterDetails.DeserializePav2MeterDetails(element, options);
+                    case "Purchase": return PurchaseMeterDetails.DeserializePurchaseMeterDetails(element, options);
                 }
             }
-            return UnknownMeterDetails.DeserializeUnknownMeterDetails(element);
+            return UnknownMeterDetails.DeserializeUnknownMeterDetails(element, options);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductMeterDetails>.Write(ModelReaderWriterOptions options)

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<UpdateHistoryEntry> array = new List<UpdateHistoryEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateHistoryEntry.DeserializeUpdateHistoryEntry(item));
+                        array.Add(UpdateHistoryEntry.DeserializeUpdateHistoryEntry(item, options));
                     }
                     updateHistory = array;
                     continue;
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
             if (Optional.IsDefined(ETag) || hasPropertyOverride)
             {
-                builder.Append("  etag:");
+                builder.Append("  etag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ETag.Value.ToString()}'");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
                 }
             }
 
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (UpdateHistory.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  updateHistory:");
+                    builder.Append("  updateHistory: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in UpdateHistory)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  updateHistory: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -248,58 +248,58 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImmutabilityPeriodSinceCreationInDays), out propertyOverride);
             if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays) || hasPropertyOverride)
             {
-                builder.Append("    immutabilityPeriodSinceCreationInDays:");
+                builder.Append("    immutabilityPeriodSinceCreationInDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {ImmutabilityPeriodSinceCreationInDays.Value}");
+                    builder.AppendLine($"{ImmutabilityPeriodSinceCreationInDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
             if (Optional.IsDefined(State) || hasPropertyOverride)
             {
-                builder.Append("    state:");
+                builder.Append("    state: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{State.Value.ToString()}'");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowProtectedAppendWrites), out propertyOverride);
             if (Optional.IsDefined(AllowProtectedAppendWrites) || hasPropertyOverride)
             {
-                builder.Append("    allowProtectedAppendWrites:");
+                builder.Append("    allowProtectedAppendWrites: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = AllowProtectedAppendWrites.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowProtectedAppendWritesAll), out propertyOverride);
             if (Optional.IsDefined(AllowProtectedAppendWritesAll) || hasPropertyOverride)
             {
-                builder.Append("    allowProtectedAppendWritesAll:");
+                builder.Append("    allowProtectedAppendWritesAll: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = AllowProtectedAppendWritesAll.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -308,12 +308,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -334,12 +337,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

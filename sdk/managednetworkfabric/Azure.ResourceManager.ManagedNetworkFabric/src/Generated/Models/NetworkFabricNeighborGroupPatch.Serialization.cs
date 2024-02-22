@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value);
+                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value, options);
                             continue;
                         }
                     }

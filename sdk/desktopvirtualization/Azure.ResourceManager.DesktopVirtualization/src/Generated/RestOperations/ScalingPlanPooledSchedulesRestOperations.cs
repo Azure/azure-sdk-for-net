@@ -69,10 +69,38 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScalingPlanPooledScheduleData>> GetAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
+            if (scalingPlanScheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
+            }
+            if (scalingPlanScheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,10 +130,38 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScalingPlanPooledScheduleData> Get(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
+            if (scalingPlanScheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
+            }
+            if (scalingPlanScheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName);
             _pipeline.Send(message, cancellationToken);
@@ -162,11 +218,42 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScalingPlanPooledScheduleData>> CreateAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPooledScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
+            if (scalingPlanScheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
+            }
+            if (scalingPlanScheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -196,11 +283,42 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScalingPlanPooledScheduleData> Create(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPooledScheduleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
+            if (scalingPlanScheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
+            }
+            if (scalingPlanScheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName, data);
             _pipeline.Send(message, cancellationToken);
@@ -251,10 +369,38 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
+            if (scalingPlanScheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
+            }
+            if (scalingPlanScheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,10 +424,38 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
+            if (scalingPlanScheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
+            }
+            if (scalingPlanScheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName);
             _pipeline.Send(message, cancellationToken);
@@ -332,11 +506,42 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScalingPlanPooledScheduleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPooledSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
+            if (scalingPlanScheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
+            }
+            if (scalingPlanScheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -365,11 +570,42 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScalingPlanPooledScheduleData> Update(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPooledSchedulePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
+            if (scalingPlanScheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanScheduleName));
+            }
+            if (scalingPlanScheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanScheduleName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -432,9 +668,30 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScalingPlanPooledScheduleList>> ListAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, scalingPlanName, pageSize, isDescending, initialSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -464,9 +721,30 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScalingPlanPooledScheduleList> List(string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, scalingPlanName, pageSize, isDescending, initialSkip);
             _pipeline.Send(message, cancellationToken);
@@ -511,10 +789,34 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScalingPlanPooledScheduleList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, scalingPlanName, pageSize, isDescending, initialSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -545,10 +847,34 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScalingPlanPooledScheduleList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (scalingPlanName == null)
+            {
+                throw new ArgumentNullException(nameof(scalingPlanName));
+            }
+            if (scalingPlanName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, scalingPlanName, pageSize, isDescending, initialSkip);
             _pipeline.Send(message, cancellationToken);

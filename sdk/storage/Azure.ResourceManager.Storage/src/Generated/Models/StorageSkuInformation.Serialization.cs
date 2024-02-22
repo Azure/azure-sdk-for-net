@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuCapability> array = new List<StorageSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item));
+                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuRestriction> array = new List<StorageSkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item));
+                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -218,49 +218,49 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name.ToString()}'");
+                    builder.AppendLine($"'{Name.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
             if (Optional.IsDefined(Tier) || hasPropertyOverride)
             {
-                builder.Append("  tier:");
+                builder.Append("  tier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Tier.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Tier.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
             if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
             {
-                builder.Append("  resourceType:");
+                builder.Append("  resourceType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ResourceType.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ResourceType}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ResourceType}'");
+                        builder.AppendLine($"'{ResourceType}'");
                     }
                 }
             }
@@ -268,14 +268,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
             if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
-                builder.Append("  kind:");
+                builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Kind.Value.ToString()}'");
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 
@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (Locations.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  locations:");
+                    builder.Append("  locations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Locations)
                         {
                             if (item == null)
@@ -319,17 +319,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (Capabilities.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  capabilities:");
+                    builder.Append("  capabilities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Capabilities)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  capabilities: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -341,17 +341,17 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (Restrictions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  restrictions:");
+                    builder.Append("  restrictions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Restrictions)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  restrictions: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -362,12 +362,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -388,12 +391,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

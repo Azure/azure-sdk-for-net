@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedMaxSizes = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value);
+                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zoneRedundant"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value);
+                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedMinCapacities"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MinCapacityCapability> array = new List<MinCapacityCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item));
+                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item, options));
                     }
                     supportedMinCapacities = array;
                     continue;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaintenanceConfigurationCapability> array = new List<MaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item));
+                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item, options));
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;
@@ -332,21 +332,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
-                builder.Append("  id:");
+                builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id.Value.ToString()}'");
+                    builder.AppendLine($"'{Id.Value.ToString()}'");
                 }
             }
 
@@ -370,17 +370,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (SupportedMaxSizes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedMaxSizes:");
+                    builder.Append("  supportedMaxSizes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SupportedMaxSizes)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  supportedMaxSizes: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -390,28 +390,28 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerformanceLevel), out propertyOverride);
             if (Optional.IsDefined(PerformanceLevel) || hasPropertyOverride)
             {
-                builder.Append("  performanceLevel:");
+                builder.Append("  performanceLevel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, PerformanceLevel, options, 2, false);
+                    AppendChildObject(builder, PerformanceLevel, options, 2, false, "  performanceLevel: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
             if (Optional.IsDefined(Sku) || hasPropertyOverride)
             {
-                builder.Append("  sku:");
+                builder.Append("  sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Sku, options, 2, false);
+                    AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
                 }
             }
 
@@ -420,17 +420,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (SupportedLicenseTypes.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedLicenseTypes:");
+                    builder.Append("  supportedLicenseTypes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SupportedLicenseTypes)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  supportedLicenseTypes: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -440,43 +440,43 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedMaxSize), out propertyOverride);
             if (Optional.IsDefined(IncludedMaxSize) || hasPropertyOverride)
             {
-                builder.Append("  includedMaxSize:");
+                builder.Append("  includedMaxSize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, IncludedMaxSize, options, 2, false);
+                    AppendChildObject(builder, IncludedMaxSize, options, 2, false, "  includedMaxSize: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
             if (Optional.IsDefined(IsZoneRedundant) || hasPropertyOverride)
             {
-                builder.Append("  zoneRedundant:");
+                builder.Append("  zoneRedundant: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedAutoPauseDelay), out propertyOverride);
             if (Optional.IsDefined(SupportedAutoPauseDelay) || hasPropertyOverride)
             {
-                builder.Append("  supportedAutoPauseDelay:");
+                builder.Append("  supportedAutoPauseDelay: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, SupportedAutoPauseDelay, options, 2, false);
+                    AppendChildObject(builder, SupportedAutoPauseDelay, options, 2, false, "  supportedAutoPauseDelay: ");
                 }
             }
 
@@ -485,17 +485,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (SupportedMinCapacities.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedMinCapacities:");
+                    builder.Append("  supportedMinCapacities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SupportedMinCapacities)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  supportedMinCapacities: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -505,21 +505,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeModel), out propertyOverride);
             if (Optional.IsDefined(ComputeModel) || hasPropertyOverride)
             {
-                builder.Append("  computeModel:");
+                builder.Append("  computeModel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ComputeModel.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ComputeModel}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ComputeModel}'");
+                        builder.AppendLine($"'{ComputeModel}'");
                     }
                 }
             }
@@ -529,17 +529,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (SupportedMaintenanceConfigurations.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedMaintenanceConfigurations:");
+                    builder.Append("  supportedMaintenanceConfigurations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SupportedMaintenanceConfigurations)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  supportedMaintenanceConfigurations: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -549,35 +549,35 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
             if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
-                builder.Append("  status:");
+                builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
             if (Optional.IsDefined(Reason) || hasPropertyOverride)
             {
-                builder.Append("  reason:");
+                builder.Append("  reason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Reason.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Reason}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Reason}'");
+                        builder.AppendLine($"'{Reason}'");
                     }
                 }
             }
@@ -586,12 +586,15 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -612,12 +615,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

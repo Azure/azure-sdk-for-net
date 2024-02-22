@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SapVirtualInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sapVirtualInstanceName, SapVirtualInstanceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sapVirtualInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
+            }
+            if (sapVirtualInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SapVirtualInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string sapVirtualInstanceName, SapVirtualInstanceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sapVirtualInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
+            }
+            if (sapVirtualInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
         public virtual async Task<Response<SapVirtualInstanceResource>> GetAsync(string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            if (sapVirtualInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
+            }
+            if (sapVirtualInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
+            }
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
         public virtual Response<SapVirtualInstanceResource> Get(string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            if (sapVirtualInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
+            }
+            if (sapVirtualInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
+            }
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            if (sapVirtualInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
+            }
+            if (sapVirtualInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
+            }
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            if (sapVirtualInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
+            }
+            if (sapVirtualInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
+            }
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SapVirtualInstanceResource>> GetIfExistsAsync(string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            if (sapVirtualInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
+            }
+            if (sapVirtualInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
+            }
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
         public virtual NullableResponse<SapVirtualInstanceResource> GetIfExists(string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            if (sapVirtualInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
+            }
+            if (sapVirtualInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
+            }
 
             using var scope = _sapVirtualInstanceSapVirtualInstancesClientDiagnostics.CreateScope("SapVirtualInstanceCollection.GetIfExists");
             scope.Start();

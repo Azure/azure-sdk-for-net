@@ -53,9 +53,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkRackId"/>, <paramref name="rackSerialNumber"/> or <paramref name="rackSkuId"/> is null. </exception>
         public NetworkCloudRackDefinition(ResourceIdentifier networkRackId, string rackSerialNumber, ResourceIdentifier rackSkuId)
         {
-            Argument.AssertNotNull(networkRackId, nameof(networkRackId));
-            Argument.AssertNotNull(rackSerialNumber, nameof(rackSerialNumber));
-            Argument.AssertNotNull(rackSkuId, nameof(rackSkuId));
+            if (networkRackId == null)
+            {
+                throw new ArgumentNullException(nameof(networkRackId));
+            }
+            if (rackSerialNumber == null)
+            {
+                throw new ArgumentNullException(nameof(rackSerialNumber));
+            }
+            if (rackSkuId == null)
+            {
+                throw new ArgumentNullException(nameof(rackSkuId));
+            }
 
             BareMetalMachineConfigurationData = new ChangeTrackingList<BareMetalMachineConfiguration>();
             NetworkRackId = networkRackId;

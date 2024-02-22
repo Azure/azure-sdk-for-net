@@ -173,7 +173,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> An async collection of <see cref="CdnPeeringPrefix"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(string peeringLocation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+            if (peeringLocation == null)
+            {
+                throw new ArgumentNullException(nameof(peeringLocation));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CdnPeeringPrefixesRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CdnPeeringPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation);
@@ -203,7 +206,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> A collection of <see cref="CdnPeeringPrefix"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnPeeringPrefix> GetCdnPeeringPrefixes(string peeringLocation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+            if (peeringLocation == null)
+            {
+                throw new ArgumentNullException(nameof(peeringLocation));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CdnPeeringPrefixesRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CdnPeeringPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation);
@@ -232,7 +238,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.CheckPeeringServiceProviderAvailability");
             scope.Start();
@@ -270,7 +279,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.CheckPeeringServiceProviderAvailability");
             scope.Start();
@@ -312,7 +324,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> An async collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+            if (peeringLocation == null)
+            {
+                throw new ArgumentNullException(nameof(peeringLocation));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LegacyPeeringsRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LegacyPeeringsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
@@ -345,7 +360,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <returns> A collection of <see cref="PeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringResource> GetPeeringsByLegacyPeering(string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
+            if (peeringLocation == null)
+            {
+                throw new ArgumentNullException(nameof(peeringLocation));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LegacyPeeringsRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LegacyPeeringsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation, kind, asn, directPeeringType);
@@ -377,8 +395,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         public virtual async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+            if (sourceLocation == null)
+            {
+                throw new ArgumentNullException(nameof(sourceLocation));
+            }
+            if (destinationIP == null)
+            {
+                throw new ArgumentNullException(nameof(destinationIP));
+            }
 
             using var scope = LookingGlassClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.InvokeLookingGlass");
             scope.Start();
@@ -419,8 +443,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         public virtual Response<LookingGlassOutput> InvokeLookingGlass(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+            if (sourceLocation == null)
+            {
+                throw new ArgumentNullException(nameof(sourceLocation));
+            }
+            if (destinationIP == null)
+            {
+                throw new ArgumentNullException(nameof(destinationIP));
+            }
 
             using var scope = LookingGlassClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.InvokeLookingGlass");
             scope.Start();

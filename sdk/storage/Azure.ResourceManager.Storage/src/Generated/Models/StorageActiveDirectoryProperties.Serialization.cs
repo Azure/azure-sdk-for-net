@@ -179,21 +179,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
             if (Optional.IsDefined(DomainName) || hasPropertyOverride)
             {
-                builder.Append("  domainName:");
+                builder.Append("  domainName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DomainName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DomainName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DomainName}'");
+                        builder.AppendLine($"'{DomainName}'");
                     }
                 }
             }
@@ -201,21 +201,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetBiosDomainName), out propertyOverride);
             if (Optional.IsDefined(NetBiosDomainName) || hasPropertyOverride)
             {
-                builder.Append("  netBiosDomainName:");
+                builder.Append("  netBiosDomainName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (NetBiosDomainName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{NetBiosDomainName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{NetBiosDomainName}'");
+                        builder.AppendLine($"'{NetBiosDomainName}'");
                     }
                 }
             }
@@ -223,21 +223,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForestName), out propertyOverride);
             if (Optional.IsDefined(ForestName) || hasPropertyOverride)
             {
-                builder.Append("  forestName:");
+                builder.Append("  forestName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ForestName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ForestName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ForestName}'");
+                        builder.AppendLine($"'{ForestName}'");
                     }
                 }
             }
@@ -245,35 +245,35 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainGuid), out propertyOverride);
             if (Optional.IsDefined(DomainGuid) || hasPropertyOverride)
             {
-                builder.Append("  domainGuid:");
+                builder.Append("  domainGuid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DomainGuid.ToString()}'");
+                    builder.AppendLine($"'{DomainGuid.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainSid), out propertyOverride);
             if (Optional.IsDefined(DomainSid) || hasPropertyOverride)
             {
-                builder.Append("  domainSid:");
+                builder.Append("  domainSid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (DomainSid.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{DomainSid}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{DomainSid}'");
+                        builder.AppendLine($"'{DomainSid}'");
                     }
                 }
             }
@@ -281,21 +281,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStorageSid), out propertyOverride);
             if (Optional.IsDefined(AzureStorageSid) || hasPropertyOverride)
             {
-                builder.Append("  azureStorageSid:");
+                builder.Append("  azureStorageSid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (AzureStorageSid.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{AzureStorageSid}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{AzureStorageSid}'");
+                        builder.AppendLine($"'{AzureStorageSid}'");
                     }
                 }
             }
@@ -303,21 +303,21 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamAccountName), out propertyOverride);
             if (Optional.IsDefined(SamAccountName) || hasPropertyOverride)
             {
-                builder.Append("  samAccountName:");
+                builder.Append("  samAccountName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (SamAccountName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{SamAccountName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{SamAccountName}'");
+                        builder.AppendLine($"'{SamAccountName}'");
                     }
                 }
             }
@@ -325,14 +325,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountType), out propertyOverride);
             if (Optional.IsDefined(AccountType) || hasPropertyOverride)
             {
-                builder.Append("  accountType:");
+                builder.Append("  accountType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AccountType.Value.ToString()}'");
+                    builder.AppendLine($"'{AccountType.Value.ToString()}'");
                 }
             }
 
@@ -340,12 +340,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -366,12 +369,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

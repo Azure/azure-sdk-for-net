@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<ExposureControlResult> array = new List<ExposureControlResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExposureControlResult.DeserializeExposureControlResult(item));
+                        array.Add(ExposureControlResult.DeserializeExposureControlResult(item, options));
                     }
                     exposureControlResponses = array;
                     continue;

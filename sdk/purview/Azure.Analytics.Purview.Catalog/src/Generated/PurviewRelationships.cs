@@ -64,7 +64,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
@@ -98,7 +101,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Create");
             scope.Start();
@@ -132,7 +138,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='UpdateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
@@ -166,7 +175,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='Update(RequestContent,RequestContext)']/*" />
         public virtual Response Update(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Update");
             scope.Start();
@@ -202,7 +214,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='GetPurviewRelationshipAsync(string,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
@@ -238,7 +257,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='GetPurviewRelationship(string,bool?,RequestContext)']/*" />
         public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.GetPurviewRelationship");
             scope.Start();
@@ -273,7 +299,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();
@@ -308,7 +341,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string guid, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewRelationships.Delete");
             scope.Start();

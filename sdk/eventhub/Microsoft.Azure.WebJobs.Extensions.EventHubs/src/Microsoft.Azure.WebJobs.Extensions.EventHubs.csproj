@@ -3,25 +3,20 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK EventHubs Extension</Description>
-    <Version>6.1.0-beta.1</Version>
+    <Version>6.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>6.0.2</ApiCompatVersion>
+    <ApiCompatVersion>6.1.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="Azure.Messaging.EventHubs" />-->
+    <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
   </ItemGroup>
-
-	<ItemGroup>
-		<!-- TEMP REMOVE BEFORE RELEASE -->
-		<ProjectReference Include="..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
-	</ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource" />

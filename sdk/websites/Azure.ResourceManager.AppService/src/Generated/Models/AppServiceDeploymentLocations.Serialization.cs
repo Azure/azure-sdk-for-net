@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceGeoRegion> array = new List<AppServiceGeoRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item));
+                        array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item, options));
                     }
                     locations = array;
                     continue;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceEnvironmentProperties> array = new List<AppServiceEnvironmentProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(item));
+                        array.Add(AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(item, options));
                     }
                     hostingEnvironments = array;
                     continue;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<HostingEnvironmentDeploymentInfo> array = new List<HostingEnvironmentDeploymentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HostingEnvironmentDeploymentInfo.DeserializeHostingEnvironmentDeploymentInfo(item));
+                        array.Add(HostingEnvironmentDeploymentInfo.DeserializeHostingEnvironmentDeploymentInfo(item, options));
                     }
                     hostingEnvironmentDeploymentInfos = array;
                     continue;
@@ -171,17 +171,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Locations.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  locations:");
+                    builder.Append("  locations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Locations)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  locations: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -193,17 +193,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (HostingEnvironments.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  hostingEnvironments:");
+                    builder.Append("  hostingEnvironments: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in HostingEnvironments)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  hostingEnvironments: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -215,17 +215,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (HostingEnvironmentDeploymentInfos.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  hostingEnvironmentDeploymentInfos:");
+                    builder.Append("  hostingEnvironmentDeploymentInfos: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in HostingEnvironmentDeploymentInfos)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  hostingEnvironmentDeploymentInfos: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -236,12 +236,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -262,12 +265,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

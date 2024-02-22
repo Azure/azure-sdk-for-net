@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    recurrence = MapperPolicyRecurrence.DeserializeMapperPolicyRecurrence(property.Value);
+                    recurrence = MapperPolicyRecurrence.DeserializeMapperPolicyRecurrence(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

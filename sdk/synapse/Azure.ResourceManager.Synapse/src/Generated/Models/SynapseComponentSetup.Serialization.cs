@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            licenseKey = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
+                            licenseKey = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value, options);
                             continue;
                         }
                     }

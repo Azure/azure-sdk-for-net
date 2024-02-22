@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualRouterPeeringData> array = new List<VirtualRouterPeeringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(item));
+                        array.Add(VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(item, options));
                     }
                     value = array;
                     continue;

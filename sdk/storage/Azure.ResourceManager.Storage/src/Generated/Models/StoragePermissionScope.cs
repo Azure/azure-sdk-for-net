@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="permissions"/>, <paramref name="service"/> or <paramref name="resourceName"/> is null. </exception>
         public StoragePermissionScope(string permissions, string service, string resourceName)
         {
-            Argument.AssertNotNull(permissions, nameof(permissions));
-            Argument.AssertNotNull(service, nameof(service));
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
+            if (permissions == null)
+            {
+                throw new ArgumentNullException(nameof(permissions));
+            }
+            if (service == null)
+            {
+                throw new ArgumentNullException(nameof(service));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
 
             Permissions = permissions;
             Service = service;

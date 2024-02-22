@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<SparkUserPlugin> array = new List<SparkUserPlugin>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkUserPlugin.DeserializeSparkUserPlugin(item));
+                        array.Add(SparkUserPlugin.DeserializeSparkUserPlugin(item, options));
                     }
                     plugins = array;
                     continue;

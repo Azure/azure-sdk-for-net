@@ -1,17 +1,18 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-tools/typespec-csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/@azure-tools/typespec-csharp/-/typespec-csharp-0.2.0-alpha.20240216.2.tgz"
+    "@azure-tools/typespec-csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/@azure-tools/typespec-csharp/-/typespec-csharp-0.2.0-alpha.20240221.4.tgz"
   },
   "devDependencies": {
     "@typespec/compiler": "0.52.0",
-    "@typespec/http": "0.52.1",
     "@typespec/rest": "0.52.0",
-    "@azure-tools/typespec-client-generator-core": "0.38.0",
     "@azure-tools/typespec-azure-core": "0.38.0",
-    "@typespec/versioning": "0.52.0"
+    "@typespec/openapi": "0.52.0",
+    "@typespec/versioning": "0.52.0",
+    "@azure-tools/typespec-client-generator-core": "0.38.0",
+    "@typespec/http": "0.52.1"
   },
   "overrides": {
-    "@autorest/csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/@autorest/csharp/-/csharp-3.0.0-alpha.20240216.2.tgz"
+    "@autorest/csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/@autorest/csharp/-/csharp-3.0.0-alpha.20240221.4.tgz"
   }
 }

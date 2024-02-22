@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionScheduleDaily = DailyRetentionFormat.DeserializeDailyRetentionFormat(property.Value);
+                    retentionScheduleDaily = DailyRetentionFormat.DeserializeDailyRetentionFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionScheduleWeekly"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionScheduleWeekly = WeeklyRetentionFormat.DeserializeWeeklyRetentionFormat(property.Value);
+                    retentionScheduleWeekly = WeeklyRetentionFormat.DeserializeWeeklyRetentionFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionTimes"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);
+                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

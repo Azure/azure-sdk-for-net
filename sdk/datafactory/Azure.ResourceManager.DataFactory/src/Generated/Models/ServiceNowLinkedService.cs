@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -21,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public ServiceNowLinkedService(DataFactoryElement<string> endpoint, ServiceNowAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
 
             Endpoint = endpoint;
             AuthenticationType = authenticationType;

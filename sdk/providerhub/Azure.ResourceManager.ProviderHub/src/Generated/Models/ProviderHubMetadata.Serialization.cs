@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item));
+                        array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item, options));
                     }
                     providerAuthorizations = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value);
+                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("thirdPartyProviderAuthorization"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value);
+                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

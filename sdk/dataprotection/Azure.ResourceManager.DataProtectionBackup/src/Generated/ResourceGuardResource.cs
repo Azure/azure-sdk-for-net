@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardResource>> UpdateAsync(ResourceGuardPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.Update");
             scope.Start();
@@ -325,7 +328,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ResourceGuardResource> Update(ResourceGuardPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.Update");
             scope.Start();
@@ -728,7 +734,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDisableSoftDeleteObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetDisableSoftDeleteObject");
             scope.Start();
@@ -771,7 +784,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual Response<ResourceGuardProtectedObjectData> GetDisableSoftDeleteObject(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetDisableSoftDeleteObject");
             scope.Start();
@@ -814,7 +834,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDeleteResourceGuardProxyObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetDeleteResourceGuardProxyObject");
             scope.Start();
@@ -857,7 +884,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual Response<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyObject(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetDeleteResourceGuardProxyObject");
             scope.Start();
@@ -900,7 +934,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetBackupSecurityPinObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetBackupSecurityPinObject");
             scope.Start();
@@ -943,7 +984,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual Response<ResourceGuardProtectedObjectData> GetBackupSecurityPinObject(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetBackupSecurityPinObject");
             scope.Start();
@@ -986,7 +1034,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDeleteProtectedItemObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetDeleteProtectedItemObject");
             scope.Start();
@@ -1029,7 +1084,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual Response<ResourceGuardProtectedObjectData> GetDeleteProtectedItemObject(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetDeleteProtectedItemObject");
             scope.Start();
@@ -1072,7 +1134,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetUpdateProtectionPolicyObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetUpdateProtectionPolicyObject");
             scope.Start();
@@ -1115,7 +1184,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual Response<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyObject(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetUpdateProtectionPolicyObject");
             scope.Start();
@@ -1158,7 +1234,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetUpdateProtectedItemObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetUpdateProtectedItemObject");
             scope.Start();
@@ -1201,7 +1284,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         public virtual Response<ResourceGuardProtectedObjectData> GetUpdateProtectedItemObject(string requestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+            if (requestName == null)
+            {
+                throw new ArgumentNullException(nameof(requestName));
+            }
+            if (requestName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetUpdateProtectedItemObject");
             scope.Start();
@@ -1244,8 +1334,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.AddTag");
             scope.Start();
@@ -1306,8 +1402,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ResourceGuardResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.AddTag");
             scope.Start();
@@ -1367,7 +1469,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.SetTags");
             scope.Start();
@@ -1424,7 +1529,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ResourceGuardResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.SetTags");
             scope.Start();
@@ -1481,7 +1589,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.RemoveTag");
             scope.Start();
@@ -1541,7 +1652,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ResourceGuardResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.RemoveTag");
             scope.Start();

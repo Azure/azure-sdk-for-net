@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (AllowedOrigins.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedOrigins:");
+                    builder.Append("  allowedOrigins: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedOrigins)
                         {
                             if (item == null)
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (AllowedMethods.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedMethods:");
+                    builder.Append("  allowedMethods: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedMethods)
                         {
                             builder.AppendLine($"    '{item.ToString()}'");
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgeInSeconds), out propertyOverride);
             if (Optional.IsDefined(MaxAgeInSeconds) || hasPropertyOverride)
             {
-                builder.Append("  maxAgeInSeconds:");
+                builder.Append("  maxAgeInSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" {MaxAgeInSeconds}");
+                    builder.AppendLine($"{MaxAgeInSeconds}");
                 }
             }
 
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (ExposedHeaders.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  exposedHeaders:");
+                    builder.Append("  exposedHeaders: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in ExposedHeaders)
                         {
                             if (item == null)
@@ -282,14 +282,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (AllowedHeaders.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedHeaders:");
+                    builder.Append("  allowedHeaders: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedHeaders)
                         {
                             if (item == null)
@@ -316,12 +316,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -342,12 +345,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

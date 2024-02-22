@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value);
+                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tokenStore"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    tokenStore = AppServiceTokenStore.DeserializeAppServiceTokenStore(property.Value);
+                    tokenStore = AppServiceTokenStore.DeserializeAppServiceTokenStore(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    cookieExpiration = WebAppCookieExpiration.DeserializeWebAppCookieExpiration(property.Value);
+                    cookieExpiration = WebAppCookieExpiration.DeserializeWebAppCookieExpiration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nonce"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    nonce = LoginFlowNonceSettings.DeserializeLoginFlowNonceSettings(property.Value);
+                    nonce = LoginFlowNonceSettings.DeserializeLoginFlowNonceSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,43 +194,43 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Routes), out propertyOverride);
             if (Optional.IsDefined(Routes) || hasPropertyOverride)
             {
-                builder.Append("  routes:");
+                builder.Append("  routes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Routes, options, 2, false);
+                    AppendChildObject(builder, Routes, options, 2, false, "  routes: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenStore), out propertyOverride);
             if (Optional.IsDefined(TokenStore) || hasPropertyOverride)
             {
-                builder.Append("  tokenStore:");
+                builder.Append("  tokenStore: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, TokenStore, options, 2, false);
+                    AppendChildObject(builder, TokenStore, options, 2, false, "  tokenStore: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreserveUrlFragmentsForLogins), out propertyOverride);
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins) || hasPropertyOverride)
             {
-                builder.Append("  preserveUrlFragmentsForLogins:");
+                builder.Append("  preserveUrlFragmentsForLogins: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     var boolValue = PreserveUrlFragmentsForLogins.Value == true ? "true" : "false";
-                    builder.AppendLine($" {boolValue}");
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -239,14 +239,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AllowedExternalRedirectUrls.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  allowedExternalRedirectUrls:");
+                    builder.Append("  allowedExternalRedirectUrls: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in AllowedExternalRedirectUrls)
                         {
                             if (item == null)
@@ -272,28 +272,28 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CookieExpiration), out propertyOverride);
             if (Optional.IsDefined(CookieExpiration) || hasPropertyOverride)
             {
-                builder.Append("  cookieExpiration:");
+                builder.Append("  cookieExpiration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, CookieExpiration, options, 2, false);
+                    AppendChildObject(builder, CookieExpiration, options, 2, false, "  cookieExpiration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nonce), out propertyOverride);
             if (Optional.IsDefined(Nonce) || hasPropertyOverride)
             {
-                builder.Append("  nonce:");
+                builder.Append("  nonce: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Nonce, options, 2, false);
+                    AppendChildObject(builder, Nonce, options, 2, false, "  nonce: ");
                 }
             }
 
@@ -301,12 +301,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -327,12 +330,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

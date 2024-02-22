@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         jobStatus = null;
                         continue;
                     }
-                    jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value);
+                    jobStatus = MoverResourceJobStatus.DeserializeMoverResourceJobStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         errors = null;
                         continue;
                     }
-                    errors = MoveResourceError.DeserializeMoveResourceError(property.Value);
+                    errors = MoveResourceError.DeserializeMoveResourceError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

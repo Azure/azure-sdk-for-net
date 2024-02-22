@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<PrivateEndpointConnectionDataModel> array = new List<PrivateEndpointConnectionDataModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionDataModel.DeserializePrivateEndpointConnectionDataModel(item));
+                        array.Add(PrivateEndpointConnectionDataModel.DeserializePrivateEndpointConnectionDataModel(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;

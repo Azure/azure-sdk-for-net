@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterData> array = new List<HDInsightClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterData.DeserializeHDInsightClusterData(item));
+                        array.Add(HDInsightClusterData.DeserializeHDInsightClusterData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapProviderInstanceData> array = new List<SapProviderInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapProviderInstanceData.DeserializeSapProviderInstanceData(item));
+                        array.Add(SapProviderInstanceData.DeserializeSapProviderInstanceData(item, options));
                     }
                     value = array;
                     continue;

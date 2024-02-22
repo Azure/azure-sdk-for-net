@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<ConfigServerGitPatternRepository> array = new List<ConfigServerGitPatternRepository>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigServerGitPatternRepository.DeserializeConfigServerGitPatternRepository(item));
+                        array.Add(ConfigServerGitPatternRepository.DeserializeConfigServerGitPatternRepository(item, options));
                     }
                     repositories = array;
                     continue;

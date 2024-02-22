@@ -27,6 +27,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
 
+        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
+
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
         /// </summary>
@@ -137,7 +139,29 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.Services.AddOptions<OpenTelemetryLoggerOptions>()
                     .Configure<IOptionsMonitor<AzureMonitorOptions>>((loggingOptions, azureOptions) =>
                     {
-                        loggingOptions.AddAzureMonitorLogExporter(o => azureOptions.Get(Options.DefaultName).SetValueToExporterOptions(o));
+                        var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
+
+                        bool enableLogSampling = false;
+                        try
+                        {
+                            var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
+                            bool.TryParse(enableLogSamplingEnvVar, out enableLogSampling);
+                        }
+                        catch (Exception ex)
+                        {
+                            AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
+                        }
+
+                        if (enableLogSampling)
+                        {
+                            var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
+                            azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
+                            loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
+                        }
+                        else
+                        {
+                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
+                        }
                     });
 
             // Register a configuration action so that when

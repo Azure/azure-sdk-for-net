@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesAuthorization> array = new List<ManagedServicesAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item));
+                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesEligibleAuthorization> array = new List<ManagedServicesEligibleAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item));
+                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item, options));
                     }
                     eligibleAuthorizations = array;
                     continue;

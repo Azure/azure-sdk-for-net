@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             {
                                 continue;
                             }
-                            controlPlaneNodeConfiguration = ControlPlaneNodePatchConfiguration.DeserializeControlPlaneNodePatchConfiguration(property0.Value);
+                            controlPlaneNodeConfiguration = ControlPlaneNodePatchConfiguration.DeserializeControlPlaneNodePatchConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kubernetesVersion"u8))

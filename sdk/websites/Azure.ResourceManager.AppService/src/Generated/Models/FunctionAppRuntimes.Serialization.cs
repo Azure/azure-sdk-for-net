@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    linuxRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value);
+                    linuxRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsRuntimeSettings"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    windowsRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value);
+                    windowsRuntimeSettings = FunctionAppRuntimeSettings.DeserializeFunctionAppRuntimeSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,28 +123,28 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
             if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
             {
-                builder.Append("  linuxRuntimeSettings:");
+                builder.Append("  linuxRuntimeSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false);
+                    AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false, "  linuxRuntimeSettings: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
             if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
             {
-                builder.Append("  windowsRuntimeSettings:");
+                builder.Append("  windowsRuntimeSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false);
+                    AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false, "  windowsRuntimeSettings: ");
                 }
             }
 
@@ -152,12 +152,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -178,12 +181,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

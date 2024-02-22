@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value);
+                    logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,21 +119,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
             if (Optional.IsDefined(Destination) || hasPropertyOverride)
             {
-                builder.Append("  destination:");
+                builder.Append("  destination: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Destination.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Destination}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Destination}'");
+                        builder.AppendLine($"'{Destination}'");
                     }
                 }
             }
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogAnalyticsConfiguration), out propertyOverride);
             if (Optional.IsDefined(LogAnalyticsConfiguration) || hasPropertyOverride)
             {
-                builder.Append("  logAnalyticsConfiguration:");
+                builder.Append("  logAnalyticsConfiguration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, LogAnalyticsConfiguration, options, 2, false);
+                    AppendChildObject(builder, LogAnalyticsConfiguration, options, 2, false, "  logAnalyticsConfiguration: ");
                 }
             }
 
@@ -156,12 +156,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -182,12 +185,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

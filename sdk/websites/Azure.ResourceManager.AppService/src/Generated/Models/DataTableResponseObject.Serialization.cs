@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataTableResponseColumn> array = new List<DataTableResponseColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item));
+                        array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -177,21 +177,21 @@ namespace Azure.ResourceManager.AppService.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
             if (Optional.IsDefined(TableName) || hasPropertyOverride)
             {
-                builder.Append("  tableName:");
+                builder.Append("  tableName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (TableName.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{TableName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{TableName}'");
+                        builder.AppendLine($"'{TableName}'");
                     }
                 }
             }
@@ -201,17 +201,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Columns.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  columns:");
+                    builder.Append("  columns: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Columns)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  columns: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Rows.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  rows:");
+                    builder.Append("  rows: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in Rows)
                         {
                             if (item == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 builder.Append("null");
                                 continue;
                             }
-                            builder.AppendLine(" [");
+                            builder.AppendLine("[");
                             foreach (var item0 in item)
                             {
                                 if (item0 == null)
@@ -267,12 +267,15 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -293,12 +296,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

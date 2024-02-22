@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("customDetails"u8))
                 {
-                    customDetails = RecoveryPlanActionDetails.DeserializeRecoveryPlanActionDetails(property.Value);
+                    customDetails = RecoveryPlanActionDetails.DeserializeRecoveryPlanActionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

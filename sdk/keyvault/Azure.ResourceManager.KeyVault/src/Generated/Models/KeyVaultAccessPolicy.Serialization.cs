@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("permissions"u8))
                 {
-                    permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value);
+                    permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -132,35 +132,35 @@ namespace Azure.ResourceManager.KeyVault.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
             if (Optional.IsDefined(TenantId) || hasPropertyOverride)
             {
-                builder.Append("  tenantId:");
+                builder.Append("  tenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TenantId.ToString()}'");
+                    builder.AppendLine($"'{TenantId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectId), out propertyOverride);
             if (Optional.IsDefined(ObjectId) || hasPropertyOverride)
             {
-                builder.Append("  objectId:");
+                builder.Append("  objectId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (ObjectId.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{ObjectId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{ObjectId}'");
+                        builder.AppendLine($"'{ObjectId}'");
                     }
                 }
             }
@@ -168,28 +168,28 @@ namespace Azure.ResourceManager.KeyVault.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
             if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
             {
-                builder.Append("  applicationId:");
+                builder.Append("  applicationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ApplicationId.Value.ToString()}'");
+                    builder.AppendLine($"'{ApplicationId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
             if (Optional.IsDefined(Permissions) || hasPropertyOverride)
             {
-                builder.Append("  permissions:");
+                builder.Append("  permissions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, Permissions, options, 2, false);
+                    AppendChildObject(builder, Permissions, options, 2, false, "  permissions: ");
                 }
             }
 
@@ -197,12 +197,15 @@ namespace Azure.ResourceManager.KeyVault.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -223,12 +226,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

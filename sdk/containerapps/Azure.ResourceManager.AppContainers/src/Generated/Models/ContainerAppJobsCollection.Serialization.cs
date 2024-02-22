@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppJobData> array = new List<ContainerAppJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppJobData.DeserializeContainerAppJobData(item));
+                        array.Add(ContainerAppJobData.DeserializeContainerAppJobData(item, options));
                     }
                     value = array;
                     continue;

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
+                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSettings"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value);
+                    scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rateLimits"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountThrottlingRule> array = new List<ServiceAccountThrottlingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item));
+                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item, options));
                     }
                     rateLimits = array;
                     continue;

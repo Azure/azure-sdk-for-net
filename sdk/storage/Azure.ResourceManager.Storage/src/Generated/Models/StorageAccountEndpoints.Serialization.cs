@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    microsoftEndpoints = StorageAccountMicrosoftEndpoints.DeserializeStorageAccountMicrosoftEndpoints(property.Value);
+                    microsoftEndpoints = StorageAccountMicrosoftEndpoints.DeserializeStorageAccountMicrosoftEndpoints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("internetEndpoints"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value);
+                    internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -213,112 +213,112 @@ namespace Azure.ResourceManager.Storage.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobUri), out propertyOverride);
             if (Optional.IsDefined(BlobUri) || hasPropertyOverride)
             {
-                builder.Append("  blob:");
+                builder.Append("  blob: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{BlobUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{BlobUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueueUri), out propertyOverride);
             if (Optional.IsDefined(QueueUri) || hasPropertyOverride)
             {
-                builder.Append("  queue:");
+                builder.Append("  queue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{QueueUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{QueueUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableUri), out propertyOverride);
             if (Optional.IsDefined(TableUri) || hasPropertyOverride)
             {
-                builder.Append("  table:");
+                builder.Append("  table: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TableUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{TableUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUri), out propertyOverride);
             if (Optional.IsDefined(FileUri) || hasPropertyOverride)
             {
-                builder.Append("  file:");
+                builder.Append("  file: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{FileUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{FileUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebUri), out propertyOverride);
             if (Optional.IsDefined(WebUri) || hasPropertyOverride)
             {
-                builder.Append("  web:");
+                builder.Append("  web: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{WebUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{WebUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DfsUri), out propertyOverride);
             if (Optional.IsDefined(DfsUri) || hasPropertyOverride)
             {
-                builder.Append("  dfs:");
+                builder.Append("  dfs: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DfsUri.AbsoluteUri}'");
+                    builder.AppendLine($"'{DfsUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftEndpoints), out propertyOverride);
             if (Optional.IsDefined(MicrosoftEndpoints) || hasPropertyOverride)
             {
-                builder.Append("  microsoftEndpoints:");
+                builder.Append("  microsoftEndpoints: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, MicrosoftEndpoints, options, 2, false);
+                    AppendChildObject(builder, MicrosoftEndpoints, options, 2, false, "  microsoftEndpoints: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternetEndpoints), out propertyOverride);
             if (Optional.IsDefined(InternetEndpoints) || hasPropertyOverride)
             {
-                builder.Append("  internetEndpoints:");
+                builder.Append("  internetEndpoints: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    AppendChildObject(builder, InternetEndpoints, options, 2, false);
+                    AppendChildObject(builder, InternetEndpoints, options, 2, false, "  internetEndpoints: ");
                 }
             }
 
@@ -326,12 +326,15 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -352,12 +355,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

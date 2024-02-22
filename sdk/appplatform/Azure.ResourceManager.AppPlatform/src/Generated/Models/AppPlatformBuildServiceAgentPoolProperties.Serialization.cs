@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    poolSize = BuildServiceAgentPoolSizeProperties.DeserializeBuildServiceAgentPoolSizeProperties(property.Value);
+                    poolSize = BuildServiceAgentPoolSizeProperties.DeserializeBuildServiceAgentPoolSizeProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

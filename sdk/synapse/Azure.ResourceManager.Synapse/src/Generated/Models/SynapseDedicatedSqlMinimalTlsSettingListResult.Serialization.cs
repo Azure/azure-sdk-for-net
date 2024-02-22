@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDedicatedSqlMinimalTlsSettingData> array = new List<SynapseDedicatedSqlMinimalTlsSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(item));
+                        array.Add(SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(item, options));
                     }
                     value = array;
                     continue;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DiagnosticSettingData> array = new List<DiagnosticSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSettingData.DeserializeDiagnosticSettingData(item));
+                        array.Add(DiagnosticSettingData.DeserializeDiagnosticSettingData(item, options));
                     }
                     value = array;
                     continue;

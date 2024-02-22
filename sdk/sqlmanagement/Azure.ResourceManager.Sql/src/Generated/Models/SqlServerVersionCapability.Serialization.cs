@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EditionCapability> array = new List<EditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EditionCapability.DeserializeEditionCapability(item));
+                        array.Add(EditionCapability.DeserializeEditionCapability(item, options));
                     }
                     supportedEditions = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolEditionCapability> array = new List<ElasticPoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item));
+                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item, options));
                     }
                     supportedElasticPoolEditions = array;
                     continue;
@@ -181,21 +181,21 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
             if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
-                builder.Append("  name:");
+                builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Name.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Name}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Name}'");
+                        builder.AppendLine($"'{Name}'");
                     }
                 }
             }
@@ -205,17 +205,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (SupportedEditions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedEditions:");
+                    builder.Append("  supportedEditions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SupportedEditions)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  supportedEditions: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -227,17 +227,17 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (SupportedElasticPoolEditions.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  supportedElasticPoolEditions:");
+                    builder.Append("  supportedElasticPoolEditions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($" {propertyOverride}");
+                        builder.AppendLine($"{propertyOverride}");
                     }
                     else
                     {
-                        builder.AppendLine(" [");
+                        builder.AppendLine("[");
                         foreach (var item in SupportedElasticPoolEditions)
                         {
-                            AppendChildObject(builder, item, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true, "  supportedElasticPoolEditions: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -247,35 +247,35 @@ namespace Azure.ResourceManager.Sql.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
             if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
-                builder.Append("  status:");
+                builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
             if (Optional.IsDefined(Reason) || hasPropertyOverride)
             {
-                builder.Append("  reason:");
+                builder.Append("  reason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($" {propertyOverride}");
+                    builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
                     if (Reason.Contains(Environment.NewLine))
                     {
-                        builder.AppendLine(" '''");
+                        builder.AppendLine("'''");
                         builder.AppendLine($"{Reason}'''");
                     }
                     else
                     {
-                        builder.AppendLine($" '{Reason}'");
+                        builder.AppendLine($"'{Reason}'");
                     }
                 }
             }
@@ -284,12 +284,15 @@ namespace Azure.ResourceManager.Sql.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
         {
             string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
             BinaryData data = ModelReaderWriter.Write(childObject, options);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i];
@@ -310,12 +313,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (i == 0 && !indentFirstLine)
                 {
-                    stringBuilder.AppendLine($" {line}");
+                    stringBuilder.AppendLine($"{line}");
                 }
                 else
                 {
                     stringBuilder.AppendLine($"{indent}{line}");
                 }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 
