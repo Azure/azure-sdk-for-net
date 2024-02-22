@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 @description('Enable soft delete')
-param enableSoftDelete string
+param enableSoftDelete string = 'True'
 
 
 resource resourceGroup_AVG5HpqPz 'Microsoft.Resources/resourceGroups@2023-07-01' = {

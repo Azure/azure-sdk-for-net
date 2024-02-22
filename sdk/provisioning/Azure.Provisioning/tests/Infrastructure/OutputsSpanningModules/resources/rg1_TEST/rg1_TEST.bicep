@@ -1,5 +1,5 @@
 @description('Enable soft delete')
-param enableSoftDelete string
+param enableSoftDelete string = 'True'
 
 @secure()
 @description('')

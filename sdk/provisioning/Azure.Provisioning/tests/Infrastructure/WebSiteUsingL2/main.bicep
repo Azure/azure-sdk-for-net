@@ -2,11 +2,14 @@ targetScope = 'subscription'
 
 @secure()
 @description('SQL Server administrator password')
-param sqlAdminPassword string
+param sqlAdminPassword string = 'password'
 
 @secure()
 @description('Application user password')
-param appUserPassword string
+param appUserPassword string = 'password'
+
+@description('')
+param workaround string = '/subscriptions/subscription()/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
 
 
 resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01' = {
@@ -24,6 +27,7 @@ module rg_TEST './resources/rg_TEST/rg_TEST.bicep' = {
   params: {
     sqlAdminPassword: sqlAdminPassword
     appUserPassword: appUserPassword
+    workaround: workaround
   }
 }
 

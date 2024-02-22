@@ -1,10 +1,13 @@
 @secure()
 @description('SQL Server administrator password')
-param sqlAdminPassword string
+param sqlAdminPassword string = 'password'
 
 @secure()
 @description('Application user password')
-param appUserPassword string
+param appUserPassword string = 'password'
+
+@description('')
+param workaround string = '/subscriptions/subscription()/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
 
 
 resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
@@ -81,7 +84,7 @@ resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
   }
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
+    serverFarmId: workaround
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true

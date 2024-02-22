@@ -1,10 +1,10 @@
 @secure()
 @description('SQL Server administrator password')
-param sqlAdminPassword string
+param sqlAdminPassword string = 'password'
 
 @secure()
 @description('Application user password')
-param appUserPassword string
+param appUserPassword string = 'password'
 
 
 resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {

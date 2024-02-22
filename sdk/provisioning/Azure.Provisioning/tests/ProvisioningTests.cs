@@ -7,14 +7,19 @@ using System;
 using System.IO;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
+using Azure.Identity;
 using Azure.Provisioning.AppService;
 using Azure.Provisioning.KeyVaults;
 using Azure.Provisioning.Sql;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.Provisioning.Tests
@@ -28,9 +33,9 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
 
-            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", "SQL Server administrator password", isSecure: true);
+            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", "SQL Server administrator password", isSecure: true, defaultValue: "password");
             infra.AddParameter(sqlAdminPasswordParam);
-            Parameter appUserPasswordParam = new Parameter("appUserPassword", "Application user password", isSecure: true);
+            Parameter appUserPasswordParam = new Parameter("appUserPassword", "Application user password", isSecure: true, defaultValue: "password");
             infra.AddParameter(appUserPasswordParam);
 
             infra.AddResourceGroup();
@@ -72,21 +77,23 @@ namespace Azure.Provisioning.Tests
         }
 
         [TearDown]
-        public void ValidateBicep()
+        public async Task ValidateBicep()
         {
             if (TestEnvironment.GlobalIsRunningInCI)
             {
                 return;
             }
 
+            var testPath = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name);
+
             try
             {
-                var path = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name, "main.bicep");
+                var bicepPath = Path.Combine(testPath, "main.bicep");
                 var args = Path.Combine(
                     TestEnvironment.RepositoryRoot,
                     "eng",
                     "scripts",
-                    $"Validate-Bicep.ps1 {path}");
+                    $"Validate-Bicep.ps1 {bicepPath}");
                 var processInfo = new ProcessStartInfo("pwsh.exe", args)
                 {
                     UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true,
@@ -101,10 +108,25 @@ namespace Azure.Provisioning.Tests
                         Assert.Fail(error);
                     }
                 }
+
+                var client = new ArmClient(new DefaultAzureCredential());
+                SubscriptionResource subscription = await client.GetSubscriptions().GetAsync(Environment.GetEnvironmentVariable("SUBSCRIPTION_ID"));
+
+                var identifier = ArmDeploymentResource.CreateResourceIdentifier(subscription.Id, TestContext.CurrentContext.Test.Name);
+                var resource = client.GetArmDeploymentResource(identifier);
+                await resource.ValidateAsync(WaitUntil.Completed,
+                    new ArmDeploymentContent(
+                        new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+                        {
+                            Template = new BinaryData(File.ReadAllText(Path.Combine(testPath, "main.json"))),
+                        })
+                    {
+                        Location = "westus"
+                    });
             }
             finally
             {
-                File.Delete(Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name, "main.json"));
+                // File.Delete(Path.Combine(testPath, "main.json"));
             }
         }
 
@@ -196,7 +218,7 @@ namespace Azure.Provisioning.Tests
             var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
 
             KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
-            keyVault.AssignParameter(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", isSecure: false));
+            keyVault.AssignParameter(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", defaultValue: true, isSecure: false));
 
             WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
 
