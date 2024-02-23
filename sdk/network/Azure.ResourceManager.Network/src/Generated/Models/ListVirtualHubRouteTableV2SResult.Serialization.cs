@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualHubRouteTableV2Data>> value = default;
+            IReadOnlyList<VirtualHubRouteTableV2Data> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListVirtualHubRouteTableV2SResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListVirtualHubRouteTableV2SResult(value ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListVirtualHubRouteTableV2SResult>.Write(ModelReaderWriterOptions options)

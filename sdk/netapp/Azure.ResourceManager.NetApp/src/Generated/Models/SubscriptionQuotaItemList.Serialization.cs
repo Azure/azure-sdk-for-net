@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppSubscriptionQuotaItem>> value = default;
+            IReadOnlyList<NetAppSubscriptionQuotaItem> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionQuotaItemList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SubscriptionQuotaItemList(value ?? new ChangeTrackingList<NetAppSubscriptionQuotaItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionQuotaItemList>.Write(ModelReaderWriterOptions options)

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<SubResource>> networkFunctions = default;
+            IReadOnlyList<SubResource> networkFunctions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToList(networkFunctions), serializedAdditionalRawData);
+            return new MobileNetworkSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), networkFunctions ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSiteData>.Write(ModelReaderWriterOptions options)

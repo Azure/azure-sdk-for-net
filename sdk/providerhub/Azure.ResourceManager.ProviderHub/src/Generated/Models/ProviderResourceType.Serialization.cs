@@ -254,26 +254,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> name = default;
             Optional<ResourceRoutingType> routingType = default;
             Optional<ResourceValidation> resourceValidation = default;
-            Optional<IReadOnlyList<string>> allowedUnauthorizedActions = default;
-            Optional<IReadOnlyList<AuthorizationActionMapping>> authorizationActionMappings = default;
-            Optional<IReadOnlyList<LinkedAccessCheck>> linkedAccessChecks = default;
+            IReadOnlyList<string> allowedUnauthorizedActions = default;
+            IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings = default;
+            IReadOnlyList<LinkedAccessCheck> linkedAccessChecks = default;
             Optional<string> defaultApiVersion = default;
-            Optional<IReadOnlyList<LoggingRule>> loggingRules = default;
-            Optional<IReadOnlyList<ThrottlingRule>> throttlingRules = default;
-            Optional<IReadOnlyList<ResourceProviderEndpoint>> endpoints = default;
+            IReadOnlyList<LoggingRule> loggingRules = default;
+            IReadOnlyList<ThrottlingRule> throttlingRules = default;
+            IReadOnlyList<ResourceProviderEndpoint> endpoints = default;
             Optional<MarketplaceType> marketplaceType = default;
             Optional<IdentityManagement> identityManagement = default;
             Optional<BinaryData> metadata = default;
-            Optional<IReadOnlyList<string>> requiredFeatures = default;
+            IReadOnlyList<string> requiredFeatures = default;
             Optional<FeaturesRule> featuresRule = default;
-            Optional<IReadOnlyList<ProviderSubscriptionStateRule>> subscriptionStateRules = default;
-            Optional<IReadOnlyList<ServiceTreeInfo>> serviceTreeInfos = default;
+            IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
+            IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
             Optional<RequestHeaderOptions> requestHeaderOptions = default;
             Optional<string> skuLink = default;
-            Optional<IReadOnlyList<string>> disallowedActionVerbs = default;
+            IReadOnlyList<string> disallowedActionVerbs = default;
             Optional<TemplateDeploymentPolicy> templateDeploymentPolicy = default;
-            Optional<IReadOnlyList<ProviderHubExtendedLocationOptions>> extendedLocations = default;
-            Optional<IReadOnlyList<LinkedOperationRule>> linkedOperationRules = default;
+            IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
+            IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
             Optional<ManifestResourceDeletionPolicy> resourceDeletionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderResourceType(name.Value, Optional.ToNullable(routingType), Optional.ToNullable(resourceValidation), Optional.ToList(allowedUnauthorizedActions), Optional.ToList(authorizationActionMappings), Optional.ToList(linkedAccessChecks), defaultApiVersion.Value, Optional.ToList(loggingRules), Optional.ToList(throttlingRules), Optional.ToList(endpoints), Optional.ToNullable(marketplaceType), identityManagement.Value, metadata.Value, Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToList(subscriptionStateRules), Optional.ToList(serviceTreeInfos), requestHeaderOptions.Value, skuLink.Value, Optional.ToList(disallowedActionVerbs), templateDeploymentPolicy.Value, Optional.ToList(extendedLocations), Optional.ToList(linkedOperationRules), Optional.ToNullable(resourceDeletionPolicy), serializedAdditionalRawData);
+            return new ProviderResourceType(name.Value, Optional.ToNullable(routingType), Optional.ToNullable(resourceValidation), allowedUnauthorizedActions ?? new ChangeTrackingList<string>(), authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(), linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(), defaultApiVersion.Value, loggingRules ?? new ChangeTrackingList<LoggingRule>(), throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(), endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(), Optional.ToNullable(marketplaceType), identityManagement.Value, metadata.Value, requiredFeatures ?? new ChangeTrackingList<string>(), featuresRule.Value, subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(), serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(), requestHeaderOptions.Value, skuLink.Value, disallowedActionVerbs ?? new ChangeTrackingList<string>(), templateDeploymentPolicy.Value, extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(), linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(), Optional.ToNullable(resourceDeletionPolicy), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)

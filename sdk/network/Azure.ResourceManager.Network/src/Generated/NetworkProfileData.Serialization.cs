@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IReadOnlyList<ContainerNetworkInterface>> containerNetworkInterfaces = default;
-            Optional<IList<ContainerNetworkInterfaceConfiguration>> containerNetworkInterfaceConfigurations = default;
+            IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces = default;
+            IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkProfileData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(containerNetworkInterfaces), Optional.ToList(containerNetworkInterfaceConfigurations), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NetworkProfileData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), containerNetworkInterfaces ?? new ChangeTrackingList<ContainerNetworkInterface>(), containerNetworkInterfaceConfigurations ?? new ChangeTrackingList<ContainerNetworkInterfaceConfiguration>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<NetworkProfileData>.Write(ModelReaderWriterOptions options)

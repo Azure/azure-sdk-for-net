@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network
             Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
             Optional<string> serviceProviderNotes = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ExpressRouteCrossConnectionPeeringData>> peerings = default;
+            IList<ExpressRouteCrossConnectionPeeringData> peerings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), Optional.ToList(peerings));
+            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), peerings ?? new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>());
         }
 
         BinaryData IPersistableModel<ExpressRouteCrossConnectionData>.Write(ModelReaderWriterOptions options)

@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Network
             Optional<SystemData> systemData = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<WritableSubResource>> publicIPAddresses = default;
-            Optional<IReadOnlyList<WritableSubResource>> virtualNetworks = default;
+            IReadOnlyList<WritableSubResource> publicIPAddresses = default;
+            IReadOnlyList<WritableSubResource> virtualNetworks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DdosProtectionPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(publicIPAddresses), Optional.ToList(virtualNetworks), serializedAdditionalRawData);
+            return new DdosProtectionPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(), virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DdosProtectionPlanData>.Write(ModelReaderWriterOptions options)

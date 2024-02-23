@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudBmcKeySetData>> value = default;
+            IReadOnlyList<NetworkCloudBmcKeySetData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BmcKeySetList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new BmcKeySetList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudBmcKeySetData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BmcKeySetList>.Write(ModelReaderWriterOptions options)

@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> smbServerName = default;
             Optional<string> organizationalUnit = default;
             Optional<string> site = default;
-            Optional<IList<string>> backupOperators = default;
-            Optional<IList<string>> administrators = default;
+            IList<string> backupOperators = default;
+            IList<string> administrators = default;
             Optional<IPAddress> kdcIP = default;
             Optional<string> adName = default;
             Optional<string> serverRootCACertificate = default;
             Optional<bool> aesEncryption = default;
             Optional<bool> ldapSigning = default;
-            Optional<IList<string>> securityOperators = default;
+            IList<string> securityOperators = default;
             Optional<bool> ldapOverTls = default;
             Optional<bool> allowLocalNfsUsersWithLdap = default;
             Optional<bool> encryptDCConnections = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, Optional.ToList(backupOperators), Optional.ToList(administrators), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), Optional.ToList(securityOperators), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value, preferredServersForLdapClient.Value, serializedAdditionalRawData);
+            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, backupOperators ?? new ChangeTrackingList<string>(), administrators ?? new ChangeTrackingList<string>(), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), securityOperators ?? new ChangeTrackingList<string>(), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value, preferredServersForLdapClient.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountActiveDirectory>.Write(ModelReaderWriterOptions options)

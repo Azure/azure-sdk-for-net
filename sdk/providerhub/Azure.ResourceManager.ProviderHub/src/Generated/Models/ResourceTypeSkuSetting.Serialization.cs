@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<string> kind = default;
-            Optional<IList<string>> locations = default;
-            Optional<IList<ResourceTypeSkuLocationInfo>> locationInfo = default;
-            Optional<IList<string>> requiredQuotaIds = default;
-            Optional<IList<string>> requiredFeatures = default;
+            IList<string> locations = default;
+            IList<ResourceTypeSkuLocationInfo> locationInfo = default;
+            IList<string> requiredQuotaIds = default;
+            IList<string> requiredFeatures = default;
             Optional<ResourceTypeSkuCapacity> capacity = default;
-            Optional<IList<ResourceTypeSkuCost>> costs = default;
-            Optional<IList<ResourceSkuCapability>> capabilities = default;
+            IList<ResourceTypeSkuCost> costs = default;
+            IList<ResourceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(requiredQuotaIds), Optional.ToList(requiredFeatures), capacity.Value, Optional.ToList(costs), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, locations ?? new ChangeTrackingList<string>(), locationInfo ?? new ChangeTrackingList<ResourceTypeSkuLocationInfo>(), requiredQuotaIds ?? new ChangeTrackingList<string>(), requiredFeatures ?? new ChangeTrackingList<string>(), capacity.Value, costs ?? new ChangeTrackingList<ResourceTypeSkuCost>(), capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuSetting>.Write(ModelReaderWriterOptions options)

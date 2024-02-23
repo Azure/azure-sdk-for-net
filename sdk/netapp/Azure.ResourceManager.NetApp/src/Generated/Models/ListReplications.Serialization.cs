@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppVolumeReplication>> value = default;
+            IReadOnlyList<NetAppVolumeReplication> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListReplications(Optional.ToList(value), serializedAdditionalRawData);
+            return new ListReplications(value ?? new ChangeTrackingList<NetAppVolumeReplication>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListReplications>.Write(ModelReaderWriterOptions options)

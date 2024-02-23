@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             TrafficRegions canary = default;
             Optional<ProviderRegistrationData> providerRegistration = default;
-            Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
+            IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRolloutSpecification(canary, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations), serializedAdditionalRawData);
+            return new CustomRolloutSpecification(canary, providerRegistration.Value, resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRolloutSpecification>.Write(ModelReaderWriterOptions options)

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NotificationHubs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<AuthorizationRuleAccessRight>> rights = default;
+            IList<AuthorizationRuleAccessRight> rights = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> keyName = default;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(rights), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Optional.ToNullable(modifiedTime), Optional.ToNullable(createdTime), Optional.ToNullable(revision), sku.Value, serializedAdditionalRawData);
+            return new NotificationHubAuthorizationRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, rights ?? new ChangeTrackingList<AuthorizationRuleAccessRight>(), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Optional.ToNullable(modifiedTime), Optional.ToNullable(createdTime), Optional.ToNullable(revision), sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubAuthorizationRuleData>.Write(ModelReaderWriterOptions options)

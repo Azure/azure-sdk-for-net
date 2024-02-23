@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<int> vCores = default;
             Optional<int> supportedIops = default;
             Optional<long> supportedMemoryPerVcoreMb = default;
-            Optional<IReadOnlyList<string>> supportedZones = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerHAMode>> supportedHaMode = default;
+            IReadOnlyList<string> supportedZones = default;
+            IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerSkuCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVcoreMb), Optional.ToList(supportedZones), Optional.ToList(supportedHaMode));
+            return new PostgreSqlFlexibleServerSkuCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVcoreMb), supportedZones ?? new ChangeTrackingList<string>(), supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>());
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerSkuCapability>.Write(ModelReaderWriterOptions options)

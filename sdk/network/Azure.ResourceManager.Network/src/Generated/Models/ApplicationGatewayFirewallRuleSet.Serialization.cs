@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
-            Optional<IList<ApplicationGatewayFirewallRuleGroup>> ruleGroups = default;
-            Optional<IList<ApplicationGatewayTierType>> tiers = default;
+            IList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default;
+            IList<ApplicationGatewayTierType> tiers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallRuleSet(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups), Optional.ToList(tiers));
+            return new ApplicationGatewayFirewallRuleSet(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>(), tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallRuleSet>.Write(ModelReaderWriterOptions options)

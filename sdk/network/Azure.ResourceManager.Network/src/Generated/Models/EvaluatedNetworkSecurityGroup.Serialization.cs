@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> networkSecurityGroupId = default;
             Optional<string> appliedTo = default;
             Optional<MatchedRule> matchedRule = default;
-            Optional<IReadOnlyList<NetworkSecurityRulesEvaluationResult>> rulesEvaluationResult = default;
+            IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId.Value, appliedTo.Value, matchedRule.Value, Optional.ToList(rulesEvaluationResult), serializedAdditionalRawData);
+            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId.Value, appliedTo.Value, matchedRule.Value, rulesEvaluationResult ?? new ChangeTrackingList<NetworkSecurityRulesEvaluationResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EvaluatedNetworkSecurityGroup>.Write(ModelReaderWriterOptions options)
