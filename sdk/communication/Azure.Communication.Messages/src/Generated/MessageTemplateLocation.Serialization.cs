@@ -27,12 +27,12 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocationName))
+            if (LocationName != null)
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName);
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);

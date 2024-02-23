@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ThroughputPolicy))
+            if (ThroughputPolicy != null)
             {
                 writer.WritePropertyName("throughputPolicy"u8);
                 writer.WriteObjectValue(ThroughputPolicy);

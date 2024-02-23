@@ -102,7 +102,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _capacityReservationGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<CapacityReservationGroupResource>(Response.FromValue(new CapacityReservationGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _capacityReservationGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ComputeArmOperation<CapacityReservationGroupResource>(Response.FromValue(new CapacityReservationGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,7 +163,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _capacityReservationGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, data, cancellationToken);
-                var operation = new ComputeArmOperation<CapacityReservationGroupResource>(Response.FromValue(new CapacityReservationGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _capacityReservationGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ComputeArmOperation<CapacityReservationGroupResource>(Response.FromValue(new CapacityReservationGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

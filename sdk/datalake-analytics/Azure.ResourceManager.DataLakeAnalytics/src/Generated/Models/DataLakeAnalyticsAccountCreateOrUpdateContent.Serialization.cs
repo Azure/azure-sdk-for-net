@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ComputePolicies))
+            if (!(ComputePolicies is ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("computePolicies"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FirewallRules))
+            if (!(FirewallRules is ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -80,42 +80,42 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirewallState))
+            if (FirewallState.HasValue)
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(FirewallAllowAzureIPs))
+            if (FirewallAllowAzureIPs.HasValue)
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NewTier))
+            if (NewTier.HasValue)
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
-            if (Optional.IsDefined(MaxJobCount))
+            if (MaxJobCount.HasValue)
             {
                 writer.WritePropertyName("maxJobCount"u8);
                 writer.WriteNumberValue(MaxJobCount.Value);
             }
-            if (Optional.IsDefined(MaxDegreeOfParallelism))
+            if (MaxDegreeOfParallelism.HasValue)
             {
                 writer.WritePropertyName("maxDegreeOfParallelism"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelism.Value);
             }
-            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
+            if (MaxDegreeOfParallelismPerJob.HasValue)
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (Optional.IsDefined(MinPriorityPerJob))
+            if (MinPriorityPerJob.HasValue)
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
             }
-            if (Optional.IsDefined(QueryStoreRetention))
+            if (QueryStoreRetention.HasValue)
             {
                 writer.WritePropertyName("queryStoreRetention"u8);
                 writer.WriteNumberValue(QueryStoreRetention.Value);

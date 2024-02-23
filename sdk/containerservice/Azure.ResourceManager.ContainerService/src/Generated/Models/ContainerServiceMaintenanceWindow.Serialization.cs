@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteObjectValue(Schedule);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
-            if (Optional.IsDefined(UtcOffset))
+            if (UtcOffset != null)
             {
                 writer.WritePropertyName("utcOffset"u8);
                 writer.WriteStringValue(UtcOffset);
             }
-            if (Optional.IsDefined(StartDate))
+            if (StartDate != null)
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartDate);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
-            if (Optional.IsCollectionDefined(NotAllowedDates))
+            if (!(NotAllowedDates is ChangeTrackingList<ContainerServiceDateSpan> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notAllowedDates"u8);
                 writer.WriteStartArray();

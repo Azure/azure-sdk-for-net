@@ -27,17 +27,17 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationServerUri))
+            if (AuthorizationServerUri != null)
             {
                 writer.WritePropertyName("authorizationServerUri"u8);
                 writer.WriteStringValue(AuthorizationServerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ClientCredential))
+            if (ClientCredential != null)
             {
                 writer.WritePropertyName("clientCredential"u8);
                 writer.WriteObjectValue(ClientCredential);
             }
-            if (Optional.IsDefined(WebhookUri))
+            if (WebhookUri != null)
             {
                 writer.WritePropertyName("webhookUri"u8);
                 writer.WriteStringValue(WebhookUri.AbsoluteUri);

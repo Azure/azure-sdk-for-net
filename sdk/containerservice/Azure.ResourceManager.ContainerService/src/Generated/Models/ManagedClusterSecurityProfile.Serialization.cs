@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Defender))
+            if (Defender != null)
             {
                 writer.WritePropertyName("defender"u8);
                 writer.WriteObjectValue(Defender);
             }
-            if (Optional.IsDefined(AzureKeyVaultKms))
+            if (AzureKeyVaultKms != null)
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms);
             }
-            if (Optional.IsDefined(WorkloadIdentity))
+            if (WorkloadIdentity != null)
             {
                 writer.WritePropertyName("workloadIdentity"u8);
                 writer.WriteObjectValue(WorkloadIdentity);
             }
-            if (Optional.IsDefined(ImageCleaner))
+            if (ImageCleaner != null)
             {
                 writer.WritePropertyName("imageCleaner"u8);
                 writer.WriteObjectValue(ImageCleaner);

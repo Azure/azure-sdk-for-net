@@ -101,7 +101,9 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = await _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreTrustedIdProviderResource>(Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreTrustedIdProviderResource>(Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -160,7 +162,9 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, content, cancellationToken);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreTrustedIdProviderResource>(Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, trustedIdProviderName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreTrustedIdProviderResource>(Response.FromValue(new DataLakeStoreTrustedIdProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

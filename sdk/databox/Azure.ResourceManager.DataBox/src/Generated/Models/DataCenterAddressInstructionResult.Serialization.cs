@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CommunicationInstruction))
+            if (options.Format != "W" && CommunicationInstruction != null)
             {
                 writer.WritePropertyName("communicationInstruction"u8);
                 writer.WriteStringValue(CommunicationInstruction);
             }
             writer.WritePropertyName("datacenterAddressType"u8);
             writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
+            if (options.Format != "W" && !(SupportedCarriersForReturnShipment is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAzureLocation))
+            if (options.Format != "W" && DataCenterAzureLocation.HasValue)
             {
                 writer.WritePropertyName("dataCenterAzureLocation"u8);
                 writer.WriteStringValue(DataCenterAzureLocation.Value);

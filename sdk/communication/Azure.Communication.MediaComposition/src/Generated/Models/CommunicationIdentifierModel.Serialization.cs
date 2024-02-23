@@ -15,27 +15,27 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(RawId))
+            if (RawId != null)
             {
                 writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
-            if (Optional.IsDefined(CommunicationUser))
+            if (CommunicationUser != null)
             {
                 writer.WritePropertyName("communicationUser"u8);
                 writer.WriteObjectValue(CommunicationUser);
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (PhoneNumber != null)
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteObjectValue(PhoneNumber);
             }
-            if (Optional.IsDefined(MicrosoftTeamsUser))
+            if (MicrosoftTeamsUser != null)
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
                 writer.WriteObjectValue(MicrosoftTeamsUser);

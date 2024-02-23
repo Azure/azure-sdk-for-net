@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(LocationName))
+            if (LocationName.HasValue)
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
-            if (Optional.IsDefined(FailoverPriority))
+            if (FailoverPriority.HasValue)
             {
                 writer.WritePropertyName("failoverPriority"u8);
                 writer.WriteNumberValue(FailoverPriority.Value);

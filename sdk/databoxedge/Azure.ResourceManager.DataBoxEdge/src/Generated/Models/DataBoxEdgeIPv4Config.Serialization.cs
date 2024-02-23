@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Subnet))
+            if (options.Format != "W" && Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (options.Format != "W" && Optional.IsDefined(Gateway))
+            if (options.Format != "W" && Gateway != null)
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStringValue(Gateway);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Activities))
+            if (!(Activities is ChangeTrackingList<PipelineActivity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Variables))
+            if (!(Variables is ChangeTrackingDictionary<string, PipelineVariableSpecification> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartObject();
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Concurrency))
+            if (Concurrency.HasValue)
             {
                 writer.WritePropertyName("concurrency"u8);
                 writer.WriteNumberValue(Concurrency.Value);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RunDimensions))
+            if (!(RunDimensions is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);

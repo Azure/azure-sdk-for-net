@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExcludeDisks))
+            if (!(ExcludeDisks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludeDisks"u8);
                 writer.WriteStartArray();
@@ -61,32 +61,32 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceMetadata))
+            if (SourceMetadata != null)
             {
                 writer.WritePropertyName("sourceMetadata"u8);
                 writer.WriteObjectValue(SourceMetadata);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(ConsistencyMode))
+            if (ConsistencyMode.HasValue)
             {
                 writer.WritePropertyName("consistencyMode"u8);
                 writer.WriteStringValue(ConsistencyMode.Value.ToString());
             }
-            if (Optional.IsDefined(TimeCreated))
+            if (TimeCreated.HasValue)
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (Optional.IsDefined(SourceRestorePoint))
+            if (SourceRestorePoint != null)
             {
                 writer.WritePropertyName("sourceRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceRestorePoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);

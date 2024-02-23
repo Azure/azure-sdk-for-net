@@ -43,36 +43,36 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(StorageAccountStatus))
+            if (StorageAccountStatus.HasValue)
             {
                 writer.WritePropertyName("storageAccountStatus"u8);
                 writer.WriteStringValue(StorageAccountStatus.Value.ToString());
             }
             writer.WritePropertyName("dataPolicy"u8);
             writer.WriteStringValue(DataPolicy.ToString());
-            if (Optional.IsDefined(StorageAccountCredentialId))
+            if (StorageAccountCredentialId != null)
             {
                 writer.WritePropertyName("storageAccountCredentialId"u8);
                 writer.WriteStringValue(StorageAccountCredentialId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BlobEndpoint))
+            if (options.Format != "W" && BlobEndpoint != null)
             {
                 writer.WritePropertyName("blobEndpoint"u8);
                 writer.WriteStringValue(BlobEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerCount))
+            if (options.Format != "W" && ContainerCount.HasValue)
             {
                 writer.WritePropertyName("containerCount"u8);
                 writer.WriteNumberValue(ContainerCount.Value);

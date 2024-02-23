@@ -22,7 +22,7 @@ namespace Azure.Communication.Email
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(CC))
+            if (!(CC is ChangeTrackingList<EmailAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("cc"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.Communication.Email
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BCC))
+            if (!(BCC is ChangeTrackingList<EmailAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bcc"u8);
                 writer.WriteStartArray();

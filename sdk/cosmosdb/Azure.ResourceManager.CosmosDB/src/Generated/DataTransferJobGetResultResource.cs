@@ -208,7 +208,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _dataTransferJobGetResultDataTransferJobsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()));
+                var uri = _dataTransferJobGetResultDataTransferJobsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -257,7 +259,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _dataTransferJobGetResultDataTransferJobsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()));
+                var uri = _dataTransferJobGetResultDataTransferJobsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

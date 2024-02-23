@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByBillingAccountIdRequestUri(string billingAccountId, GrainContent? grainParameter, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (grainParameter != null)
+            {
+                uri.AppendQuery("grainParameter", grainParameter.Value.ToString(), true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByBillingAccountIdRequest(string billingAccountId, GrainContent? grainParameter, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -128,6 +147,27 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileIdRequestUri(string billingAccountId, string billingProfileId, GrainContent? grainParameter, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (grainParameter != null)
+            {
+                uri.AppendQuery("grainParameter", grainParameter.Value.ToString(), true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileIdRequest(string billingAccountId, string billingProfileId, GrainContent? grainParameter, string filter)
@@ -243,6 +283,25 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        internal RequestUriBuilder CreateListBySavingsPlanOrderRequestUri(string savingsPlanOrderId, string filter, GrainContent? grainParameter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (grainParameter != null)
+            {
+                uri.AppendQuery("grainParameter", grainParameter.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListBySavingsPlanOrderRequest(string savingsPlanOrderId, string filter, GrainContent? grainParameter)
         {
             var message = _pipeline.CreateMessage();
@@ -334,6 +393,27 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySavingsPlanIdRequestUri(string savingsPlanOrderId, string savingsPlanId, string filter, GrainContent? grainParameter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/savingsPlans/", false);
+            uri.AppendPath(savingsPlanId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/benefitUtilizationSummaries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (grainParameter != null)
+            {
+                uri.AppendQuery("grainParameter", grainParameter.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySavingsPlanIdRequest(string savingsPlanOrderId, string savingsPlanId, string filter, GrainContent? grainParameter)
@@ -449,6 +529,14 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        internal RequestUriBuilder CreateListByBillingAccountIdNextPageRequestUri(string nextLink, string billingAccountId, GrainContent? grainParameter, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByBillingAccountIdNextPageRequest(string nextLink, string billingAccountId, GrainContent? grainParameter, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -539,6 +627,14 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileIdNextPageRequestUri(string nextLink, string billingAccountId, string billingProfileId, GrainContent? grainParameter, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileIdNextPageRequest(string nextLink, string billingAccountId, string billingProfileId, GrainContent? grainParameter, string filter)
@@ -651,6 +747,14 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        internal RequestUriBuilder CreateListBySavingsPlanOrderNextPageRequestUri(string nextLink, string savingsPlanOrderId, string filter, GrainContent? grainParameter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySavingsPlanOrderNextPageRequest(string nextLink, string savingsPlanOrderId, string filter, GrainContent? grainParameter)
         {
             var message = _pipeline.CreateMessage();
@@ -741,6 +845,14 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySavingsPlanIdNextPageRequestUri(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter, GrainContent? grainParameter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySavingsPlanIdNextPageRequest(string nextLink, string savingsPlanOrderId, string savingsPlanId, string filter, GrainContent? grainParameter)
