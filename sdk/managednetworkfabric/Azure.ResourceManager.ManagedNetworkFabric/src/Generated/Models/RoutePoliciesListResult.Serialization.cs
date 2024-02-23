@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricRoutePolicyData>> value = default;
+            IReadOnlyList<NetworkFabricRoutePolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutePoliciesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoutePoliciesListResult(value ?? new ChangeTrackingList<NetworkFabricRoutePolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutePoliciesListResult>.Write(ModelReaderWriterOptions options)

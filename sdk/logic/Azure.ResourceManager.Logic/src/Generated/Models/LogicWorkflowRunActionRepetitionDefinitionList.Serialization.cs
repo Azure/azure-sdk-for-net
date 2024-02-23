@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<LogicWorkflowRunActionRepetitionDefinitionData>> value = default;
+            IReadOnlyList<LogicWorkflowRunActionRepetitionDefinitionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunActionRepetitionDefinitionList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new LogicWorkflowRunActionRepetitionDefinitionList(nextLink.Value, value ?? new ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionList>.Write(ModelReaderWriterOptions options)

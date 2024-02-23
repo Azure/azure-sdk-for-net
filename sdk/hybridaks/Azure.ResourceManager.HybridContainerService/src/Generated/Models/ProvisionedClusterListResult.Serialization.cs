@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProvisionedClusterData>> value = default;
+            IReadOnlyList<ProvisionedClusterData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterListResult(value ?? new ChangeTrackingList<ProvisionedClusterData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterListResult>.Write(ModelReaderWriterOptions options)

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> annotation = default;
             Optional<NetworkTapPollingType> pollingType = default;
-            Optional<IList<NetworkTapPatchableParametersDestinationsItem>> destinations = default;
+            IList<NetworkTapPatchableParametersDestinationsItem> destinations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(pollingType), Optional.ToList(destinations));
+            return new NetworkTapPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(pollingType), destinations ?? new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>());
         }
 
         BinaryData IPersistableModel<NetworkTapPatch>.Write(ModelReaderWriterOptions options)

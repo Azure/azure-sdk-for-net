@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputeMachineExtensionData>> resources = default;
+            IReadOnlyList<HybridComputeMachineExtensionData> resources = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ArcKindEnum> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.HybridCompute
             Optional<string> provisioningState = default;
             Optional<HybridComputeStatusType> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;
-            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            IReadOnlyList<ResponseError> errorDetails = default;
             Optional<string> agentVersion = default;
             Optional<Guid> vmId = default;
             Optional<string> displayName = default;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HybridCompute
             Optional<string> osVersion = default;
             Optional<string> osType = default;
             Optional<Guid> vmUuid = default;
-            Optional<IList<MachineExtensionInstanceView>> extensions = default;
+            IList<MachineExtensionInstanceView> extensions = default;
             Optional<string> osSku = default;
             Optional<string> osEdition = default;
             Optional<string> domainName = default;
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(resources), identity, Optional.ToNullable(kind), locationData.Value, agentConfiguration.Value, serviceStatuses.Value, cloudMetadata.Value, agentUpgrade.Value, osProfile.Value, licenseProfile.Value, provisioningState.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), Optional.ToList(errorDetails), agentVersion.Value, Optional.ToNullable(vmId), displayName.Value, machineFqdn.Value, clientPublicKey.Value, osName.Value, osVersion.Value, osType.Value, Optional.ToNullable(vmUuid), Optional.ToList(extensions), osSku.Value, osEdition.Value, domainName.Value, adFqdn.Value, dnsFqdn.Value, privateLinkScopeResourceId.Value, parentClusterResourceId.Value, mssqlDiscovered.Value, Optional.ToDictionary(detectedProperties), networkProfile.Value, serializedAdditionalRawData);
+            return new HybridComputeMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>(), identity, Optional.ToNullable(kind), locationData.Value, agentConfiguration.Value, serviceStatuses.Value, cloudMetadata.Value, agentUpgrade.Value, osProfile.Value, licenseProfile.Value, provisioningState.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), errorDetails ?? new ChangeTrackingList<ResponseError>(), agentVersion.Value, Optional.ToNullable(vmId), displayName.Value, machineFqdn.Value, clientPublicKey.Value, osName.Value, osVersion.Value, osType.Value, Optional.ToNullable(vmUuid), extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>(), osSku.Value, osEdition.Value, domainName.Value, adFqdn.Value, dnsFqdn.Value, privateLinkScopeResourceId.Value, parentClusterResourceId.Value, mssqlDiscovered.Value, Optional.ToDictionary(detectedProperties), networkProfile.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeMachineData>.Write(ModelReaderWriterOptions options)

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<string> sku = default;
             Optional<string> version = default;
             Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<IList<AzureLocation>> availableRegions = default;
+            IList<AzureLocation> availableRegions = default;
             Optional<LabVirtualMachineImageOSState> osState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, Optional.ToList(availableRegions), Optional.ToNullable(osState), serializedAdditionalRawData);
+            return new LabVirtualMachineImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, availableRegions ?? new ChangeTrackingList<AzureLocation>(), Optional.ToNullable(osState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineImageData>.Write(ModelReaderWriterOptions options)

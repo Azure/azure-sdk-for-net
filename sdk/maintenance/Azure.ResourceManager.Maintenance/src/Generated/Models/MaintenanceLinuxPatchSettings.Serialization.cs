@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IList<string>> packageNameMasksToExclude = default;
-            Optional<IList<string>> packageNameMasksToInclude = default;
-            Optional<IList<string>> classificationsToInclude = default;
+            IList<string> packageNameMasksToExclude = default;
+            IList<string> packageNameMasksToInclude = default;
+            IList<string> classificationsToInclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceLinuxPatchSettings(Optional.ToList(packageNameMasksToExclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(classificationsToInclude), serializedAdditionalRawData);
+            return new MaintenanceLinuxPatchSettings(packageNameMasksToExclude ?? new ChangeTrackingList<string>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceLinuxPatchSettings>.Write(ModelReaderWriterOptions options)

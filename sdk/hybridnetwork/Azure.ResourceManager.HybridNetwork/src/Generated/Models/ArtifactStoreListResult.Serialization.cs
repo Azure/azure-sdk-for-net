@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ArtifactStoreData>> value = default;
+            IReadOnlyList<ArtifactStoreData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactStoreListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArtifactStoreListResult(value ?? new ChangeTrackingList<ArtifactStoreData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactStoreListResult>.Write(ModelReaderWriterOptions options)

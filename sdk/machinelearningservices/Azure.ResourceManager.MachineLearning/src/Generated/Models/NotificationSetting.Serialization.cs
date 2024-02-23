@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<EmailNotificationEnableType>> emailOn = default;
-            Optional<IList<string>> emails = default;
+            IList<EmailNotificationEnableType> emailOn = default;
+            IList<string> emails = default;
             Optional<IDictionary<string, MachineLearningWebhook>> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationSetting(Optional.ToList(emailOn), Optional.ToList(emails), Optional.ToDictionary(webhooks), serializedAdditionalRawData);
+            return new NotificationSetting(emailOn ?? new ChangeTrackingList<EmailNotificationEnableType>(), emails ?? new ChangeTrackingList<string>(), Optional.ToDictionary(webhooks), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationSetting>.Write(ModelReaderWriterOptions options)

@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AnomalyAlertConfiguration>> value = default;
+            IReadOnlyList<AnomalyAlertConfiguration> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlertingConfigurationList(Optional.ToList(value), nextLink.Value);
+            return new AnomalyAlertingConfigurationList(value ?? new ChangeTrackingList<AnomalyAlertConfiguration>(), nextLink.Value);
         }
     }
 }
