@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<AutomationActivityParameterDefinition>> parameters = default;
+            IReadOnlyList<AutomationActivityParameterDefinition> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivityParameterSet(name.Value, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new AutomationActivityParameterSet(name.Value, parameters ?? new ChangeTrackingList<AutomationActivityParameterDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivityParameterSet>.Write(ModelReaderWriterOptions options)

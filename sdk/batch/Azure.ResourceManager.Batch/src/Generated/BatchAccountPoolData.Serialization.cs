@@ -306,14 +306,14 @@ namespace Azure.ResourceManager.Batch
             Optional<BatchNetworkConfiguration> networkConfiguration = default;
             Optional<int> taskSlotsPerNode = default;
             Optional<TaskSchedulingPolicy> taskSchedulingPolicy = default;
-            Optional<IList<BatchUserAccount>> userAccounts = default;
-            Optional<IList<BatchAccountPoolMetadataItem>> metadata = default;
+            IList<BatchUserAccount> userAccounts = default;
+            IList<BatchAccountPoolMetadataItem> metadata = default;
             Optional<BatchAccountPoolStartTask> startTask = default;
-            Optional<IList<BatchCertificateReference>> certificates = default;
-            Optional<IList<BatchApplicationPackageReference>> applicationPackages = default;
-            Optional<IList<string>> applicationLicenses = default;
+            IList<BatchCertificateReference> certificates = default;
+            IList<BatchApplicationPackageReference> applicationPackages = default;
+            IList<string> applicationLicenses = default;
             Optional<BatchResizeOperationStatus> resizeOperationStatus = default;
-            Optional<IList<BatchMountConfiguration>> mountConfiguration = default;
+            IList<BatchMountConfiguration> mountConfiguration = default;
             Optional<NodeCommunicationMode> targetNodeCommunicationMode = default;
             Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
             Optional<IDictionary<string, string>> resourceTags = default;
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToDictionary(resourceTags), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, userAccounts ?? new ChangeTrackingList<BatchUserAccount>(), metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>(), startTask.Value, certificates ?? new ChangeTrackingList<BatchCertificateReference>(), applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>(), applicationLicenses ?? new ChangeTrackingList<string>(), resizeOperationStatus.Value, mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>(), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToDictionary(resourceTags), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolData>.Write(ModelReaderWriterOptions options)

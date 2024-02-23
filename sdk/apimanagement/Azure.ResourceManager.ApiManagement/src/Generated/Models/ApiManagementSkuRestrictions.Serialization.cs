@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             Optional<ApiManagementSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
+            IReadOnlyList<string> values = default;
             Optional<ApiManagementSkuRestrictionInfo> restrictionInfo = default;
             Optional<ApiManagementSkuRestrictionsReasonCode> reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new ApiManagementSkuRestrictions(Optional.ToNullable(type), values ?? new ChangeTrackingList<string>(), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSkuRestrictions>.Write(ModelReaderWriterOptions options)

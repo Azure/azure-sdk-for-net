@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<float> count = default;
             Optional<float> minCount = default;
             Optional<bool> dynamicThrottlingEnabled = default;
-            Optional<IReadOnlyList<ServiceAccountThrottlingMatchPattern>> matchPatterns = default;
+            IReadOnlyList<ServiceAccountThrottlingMatchPattern> matchPatterns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountThrottlingRule(key.Value, Optional.ToNullable(renewalPeriod), Optional.ToNullable(count), Optional.ToNullable(minCount), Optional.ToNullable(dynamicThrottlingEnabled), Optional.ToList(matchPatterns), serializedAdditionalRawData);
+            return new ServiceAccountThrottlingRule(key.Value, Optional.ToNullable(renewalPeriod), Optional.ToNullable(count), Optional.ToNullable(minCount), Optional.ToNullable(dynamicThrottlingEnabled), matchPatterns ?? new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountThrottlingRule>.Write(ModelReaderWriterOptions options)

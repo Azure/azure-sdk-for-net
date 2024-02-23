@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             AzureLocation location = default;
             ApiManagementServiceSkuProperties sku = default;
-            Optional<IList<string>> zones = default;
-            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
-            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
+            IList<string> zones = default;
+            IReadOnlyList<IPAddress> publicIPAddresses = default;
+            IReadOnlyList<IPAddress> privateIPAddresses = default;
             Optional<ResourceIdentifier> publicIPAddressId = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             Optional<Uri> gatewayRegionalUri = default;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion), serializedAdditionalRawData);
+            return new AdditionalLocation(location, sku, zones ?? new ChangeTrackingList<string>(), publicIPAddresses ?? new ChangeTrackingList<IPAddress>(), privateIPAddresses ?? new ChangeTrackingList<IPAddress>(), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalLocation>.Write(ModelReaderWriterOptions options)

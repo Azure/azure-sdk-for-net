@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<FrontDoorActivatedResourceInfo>> domains = default;
-            Optional<IList<string>> patternsToMatch = default;
+            IList<FrontDoorActivatedResourceInfo> domains = default;
+            IList<string> patternsToMatch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityPolicyWebApplicationFirewallAssociation(Optional.ToList(domains), Optional.ToList(patternsToMatch), serializedAdditionalRawData);
+            return new SecurityPolicyWebApplicationFirewallAssociation(domains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), patternsToMatch ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>.Write(ModelReaderWriterOptions options)

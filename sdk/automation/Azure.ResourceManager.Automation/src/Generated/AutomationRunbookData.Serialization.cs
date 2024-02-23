@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Automation
             Optional<int> logActivityTrace = default;
             Optional<int> jobCount = default;
             Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
-            Optional<IList<string>> outputTypes = default;
+            IList<string> outputTypes = default;
             Optional<AutomationRunbookDraft> draft = default;
             Optional<RunbookProvisioningState> provisioningState = default;
             Optional<string> lastModifiedBy = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(runbookType), publishContentLink.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), Optional.ToNullable(logActivityTrace), Optional.ToNullable(jobCount), Optional.ToDictionary(parameters), Optional.ToList(outputTypes), draft.Value, Optional.ToNullable(provisioningState), lastModifiedBy.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationRunbookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(runbookType), publishContentLink.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), Optional.ToNullable(logActivityTrace), Optional.ToNullable(jobCount), Optional.ToDictionary(parameters), outputTypes ?? new ChangeTrackingList<string>(), draft.Value, Optional.ToNullable(provisioningState), lastModifiedBy.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookData>.Write(ModelReaderWriterOptions options)

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchOperator @operator = default;
             Optional<bool> negateCondition = default;
             IList<string> matchValue = default;
-            Optional<IList<TransformType>> transforms = default;
+            IList<TransformType> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms), serializedAdditionalRawData);
+            return new CustomRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, transforms ?? new ChangeTrackingList<TransformType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRuleMatchCondition>.Write(ModelReaderWriterOptions options)

@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             Optional<LinuxUpdateClassification> includedPackageClassifications = default;
-            Optional<IList<string>> excludedPackageNameMasks = default;
-            Optional<IList<string>> includedPackageNameMasks = default;
+            IList<string> excludedPackageNameMasks = default;
+            IList<string> includedPackageNameMasks = default;
             Optional<string> rebootSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxUpdateConfigurationProperties(Optional.ToNullable(includedPackageClassifications), Optional.ToList(excludedPackageNameMasks), Optional.ToList(includedPackageNameMasks), rebootSetting.Value, serializedAdditionalRawData);
+            return new LinuxUpdateConfigurationProperties(Optional.ToNullable(includedPackageClassifications), excludedPackageNameMasks ?? new ChangeTrackingList<string>(), includedPackageNameMasks ?? new ChangeTrackingList<string>(), rebootSetting.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)

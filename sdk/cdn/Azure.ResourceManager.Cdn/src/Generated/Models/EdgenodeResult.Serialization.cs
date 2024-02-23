@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EdgeNode>> value = default;
+            IReadOnlyList<EdgeNode> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgenodeResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EdgenodeResult(value ?? new ChangeTrackingList<EdgeNode>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgenodeResult>.Write(ModelReaderWriterOptions options)

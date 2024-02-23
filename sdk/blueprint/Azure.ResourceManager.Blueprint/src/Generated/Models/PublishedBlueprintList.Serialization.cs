@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PublishedBlueprintData>> value = default;
+            IReadOnlyList<PublishedBlueprintData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublishedBlueprintList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PublishedBlueprintList(value ?? new ChangeTrackingList<PublishedBlueprintData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublishedBlueprintList>.Write(ModelReaderWriterOptions options)

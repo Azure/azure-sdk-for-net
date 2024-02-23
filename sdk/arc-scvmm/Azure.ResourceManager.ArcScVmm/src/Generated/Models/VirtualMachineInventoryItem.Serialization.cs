@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<OSType> osType = default;
             Optional<string> osName = default;
             Optional<string> powerState = default;
-            Optional<IList<string>> ipAddresses = default;
+            IList<string> ipAddresses = default;
             Optional<InventoryItemDetails> cloud = default;
             InventoryType inventoryType = default;
             Optional<string> managedResourceId = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData, Optional.ToNullable(osType), osName.Value, powerState.Value, Optional.ToList(ipAddresses), cloud.Value);
+            return new VirtualMachineInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData, Optional.ToNullable(osType), osName.Value, powerState.Value, ipAddresses ?? new ChangeTrackingList<string>(), cloud.Value);
         }
 
         BinaryData IPersistableModel<VirtualMachineInventoryItem>.Write(ModelReaderWriterOptions options)

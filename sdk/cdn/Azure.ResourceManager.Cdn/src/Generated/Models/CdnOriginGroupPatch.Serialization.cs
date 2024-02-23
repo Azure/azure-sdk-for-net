@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             Optional<HealthProbeSettings> healthProbeSettings = default;
-            Optional<IList<WritableSubResource>> origins = default;
+            IList<WritableSubResource> origins = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnOriginGroupPatch(healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, serializedAdditionalRawData);
+            return new CdnOriginGroupPatch(healthProbeSettings.Value, origins ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnOriginGroupPatch>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AuthorizationProviderOperationsMetadataData>> value = default;
+            IReadOnlyList<AuthorizationProviderOperationsMetadataData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderOperationsMetadataListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AuthorizationProviderOperationsMetadataListResult(value ?? new ChangeTrackingList<AuthorizationProviderOperationsMetadataData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataListResult>.Write(ModelReaderWriterOptions options)

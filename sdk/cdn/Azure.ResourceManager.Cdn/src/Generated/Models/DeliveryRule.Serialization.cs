@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             Optional<string> name = default;
             int order = default;
-            Optional<IList<DeliveryRuleCondition>> conditions = default;
+            IList<DeliveryRuleCondition> conditions = default;
             IList<DeliveryRuleAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeliveryRule(name.Value, order, Optional.ToList(conditions), actions, serializedAdditionalRawData);
+            return new DeliveryRule(name.Value, order, conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryRule>.Write(ModelReaderWriterOptions options)
