@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             Optional<string> deviceSerialNumber = default;
             Optional<string> devicePassword = default;
-            Optional<IReadOnlyList<ApplianceNetworkConfiguration>> networkConfigurations = default;
+            IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations = default;
             Optional<string> encodedValidationCertPubKey = default;
-            Optional<IReadOnlyList<DataBoxAccountCredentialDetails>> accountCredentialDetails = default;
+            IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSecret(deviceSerialNumber.Value, devicePassword.Value, Optional.ToList(networkConfigurations), encodedValidationCertPubKey.Value, Optional.ToList(accountCredentialDetails), serializedAdditionalRawData);
+            return new DataBoxSecret(deviceSerialNumber.Value, devicePassword.Value, networkConfigurations ?? new ChangeTrackingList<ApplianceNetworkConfiguration>(), encodedValidationCertPubKey.Value, accountCredentialDetails ?? new ChangeTrackingList<DataBoxAccountCredentialDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSecret>.Write(ModelReaderWriterOptions options)

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             ZendeskAuthenticationType authenticationType = default;
             DataFactoryElement<string> url = default;
             Optional<DataFactoryElement<string>> userName = default;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ZendeskLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, authenticationType, url, userName.Value, password, apiToken, encryptedCredential.Value);
+            return new ZendeskLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, authenticationType, url, userName.Value, password, apiToken, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<ZendeskLinkedService>.Write(ModelReaderWriterOptions options)

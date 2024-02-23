@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> largeImage = default;
             Optional<string> apiEntitySetName = default;
             Optional<EntityType> entityType = default;
-            Optional<IList<PropertyDefinition>> fields = default;
+            IList<PropertyDefinition> fields = default;
             Optional<int> instancesCount = default;
             Optional<DateTimeOffset> lastChangedUtc = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<Guid> tenantId = default;
             Optional<string> timestampFieldName = default;
             Optional<string> typeName = default;
-            Optional<IList<StrongId>> strongIds = default;
+            IList<StrongId> strongIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), Optional.ToList(fields), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, Optional.ToList(strongIds), serializedAdditionalRawData);
+            return new ProfileResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), fields ?? new ChangeTrackingList<PropertyDefinition>(), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, strongIds ?? new ChangeTrackingList<StrongId>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileResourceFormatData>.Write(ModelReaderWriterOptions options)

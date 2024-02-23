@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<int> currentCapacity = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachinesAllocated = default;
+            IReadOnlyList<SubResource> virtualMachinesAllocated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationUtilization(Optional.ToNullable(currentCapacity), Optional.ToList(virtualMachinesAllocated), serializedAdditionalRawData);
+            return new CapacityReservationUtilization(Optional.ToNullable(currentCapacity), virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationUtilization>.Write(ModelReaderWriterOptions options)

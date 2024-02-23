@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataProtectionBackupRecoveryPointData>> value = default;
+            IReadOnlyList<DataProtectionBackupRecoveryPointData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureBackupRecoveryPointResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureBackupRecoveryPointResourceList(value ?? new ChangeTrackingList<DataProtectionBackupRecoveryPointData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureBackupRecoveryPointResourceList>.Write(ModelReaderWriterOptions options)

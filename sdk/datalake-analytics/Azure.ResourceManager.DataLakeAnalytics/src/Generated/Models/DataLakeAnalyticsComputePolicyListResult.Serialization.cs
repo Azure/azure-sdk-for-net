@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeAnalyticsComputePolicyData>> value = default;
+            IReadOnlyList<DataLakeAnalyticsComputePolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsComputePolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsComputePolicyListResult(value ?? new ChangeTrackingList<DataLakeAnalyticsComputePolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsComputePolicyListResult>.Write(ModelReaderWriterOptions options)

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string streamName = default;
             Optional<int> rowLimits = default;
-            Optional<IList<string>> columns = default;
+            IList<string> columns = default;
             Optional<string> expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowDebugCommandPayload(streamName, Optional.ToNullable(rowLimits), Optional.ToList(columns), expression.Value, serializedAdditionalRawData);
+            return new DataFlowDebugCommandPayload(streamName, Optional.ToNullable(rowLimits), columns ?? new ChangeTrackingList<string>(), expression.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowDebugCommandPayload>.Write(ModelReaderWriterOptions options)

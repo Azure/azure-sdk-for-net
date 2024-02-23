@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> firstLSN = default;
             Optional<string> lastLSN = default;
             Optional<string> backupType = default;
-            Optional<IReadOnlyList<SqlBackupFileInfo>> listOfBackupFiles = default;
+            IReadOnlyList<SqlBackupFileInfo> listOfBackupFiles = default;
             Optional<DateTimeOffset> backupStartDate = default;
             Optional<DateTimeOffset> backupFinishDate = default;
             Optional<bool> isBackupRestored = default;
             Optional<bool> hasBackupChecksums = default;
             Optional<int> familyCount = default;
-            Optional<IReadOnlyList<string>> ignoreReasons = default;
+            IReadOnlyList<string> ignoreReasons = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Optional.ToList(listOfBackupFiles), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), Optional.ToList(ignoreReasons), serializedAdditionalRawData);
+            return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, listOfBackupFiles ?? new ChangeTrackingList<SqlBackupFileInfo>(), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), ignoreReasons ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlBackupSetInfo>.Write(ModelReaderWriterOptions options)

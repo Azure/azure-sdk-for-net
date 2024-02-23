@@ -107,10 +107,10 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 return null;
             }
-            Optional<IList<WhatsAppMessageTemplateBindingsComponent>> header = default;
-            Optional<IList<WhatsAppMessageTemplateBindingsComponent>> body = default;
-            Optional<IList<WhatsAppMessageTemplateBindingsComponent>> footer = default;
-            Optional<IList<WhatsAppMessageTemplateBindingsButton>> buttons = default;
+            IList<WhatsAppMessageTemplateBindingsComponent> header = default;
+            IList<WhatsAppMessageTemplateBindingsComponent> body = default;
+            IList<WhatsAppMessageTemplateBindingsComponent> footer = default;
+            IList<WhatsAppMessageTemplateBindingsButton> buttons = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,7 +183,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatsAppMessageTemplateBindings(kind, serializedAdditionalRawData, Optional.ToList(header), Optional.ToList(body), Optional.ToList(footer), Optional.ToList(buttons));
+            return new WhatsAppMessageTemplateBindings(kind, serializedAdditionalRawData, header ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), body ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), footer ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>(), buttons ?? new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>());
         }
 
         BinaryData IPersistableModel<WhatsAppMessageTemplateBindings>.Write(ModelReaderWriterOptions options)

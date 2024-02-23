@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<ComputeResourceSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
+            IReadOnlyList<string> values = default;
             Optional<ComputeResourceSkuRestrictionInfo> restrictionInfo = default;
             Optional<ComputeResourceSkuRestrictionsReasonCode> reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new ComputeResourceSkuRestrictions(Optional.ToNullable(type), values ?? new ChangeTrackingList<string>(), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSkuRestrictions>.Write(ModelReaderWriterOptions options)

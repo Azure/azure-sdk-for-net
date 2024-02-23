@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Communication
             Optional<ResourceIdentifier> notificationHubId = default;
             Optional<string> version = default;
             Optional<Guid> immutableResourceId = default;
-            Optional<IList<string>> linkedDomains = default;
+            IList<string> linkedDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains), serializedAdditionalRawData);
+            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), linkedDomains ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunicationServiceResourceData>.Write(ModelReaderWriterOptions options)

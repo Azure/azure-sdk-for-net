@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             Optional<string> interactionName = default;
-            Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
+            IReadOnlyList<RelationshipsLookup> suggestedRelationships = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuggestRelationshipLinksResponse(interactionName.Value, Optional.ToList(suggestedRelationships), serializedAdditionalRawData);
+            return new SuggestRelationshipLinksResponse(interactionName.Value, suggestedRelationships ?? new ChangeTrackingList<RelationshipsLookup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuggestRelationshipLinksResponse>.Write(ModelReaderWriterOptions options)

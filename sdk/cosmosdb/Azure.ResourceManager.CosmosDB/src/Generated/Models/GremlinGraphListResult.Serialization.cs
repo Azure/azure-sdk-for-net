@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GremlinGraphData>> value = default;
+            IReadOnlyList<GremlinGraphData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GremlinGraphListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new GremlinGraphListResult(value ?? new ChangeTrackingList<GremlinGraphData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GremlinGraphListResult>.Write(ModelReaderWriterOptions options)

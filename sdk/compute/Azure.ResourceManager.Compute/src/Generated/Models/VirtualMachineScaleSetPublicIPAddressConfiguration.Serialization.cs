@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ComputePublicIPAddressSku> sku = default;
             Optional<int> idleTimeoutInMinutes = default;
             Optional<VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings> dnsSettings = default;
-            Optional<IList<VirtualMachineScaleSetIPTag>> ipTags = default;
+            IList<VirtualMachineScaleSetIPTag> ipTags = default;
             Optional<WritableSubResource> publicIPPrefix = default;
             Optional<IPVersion> publicIPAddressVersion = default;
             Optional<ComputeDeleteOption> deleteOption = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetPublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(deleteOption), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetPublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, ipTags ?? new ChangeTrackingList<VirtualMachineScaleSetIPTag>(), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(deleteOption), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)

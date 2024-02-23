@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<ComputeResourceSkuCapabilities>> capabilities = default;
+            IReadOnlyList<string> name = default;
+            IReadOnlyList<ComputeResourceSkuCapabilities> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ComputeResourceSkuZoneDetails(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<ComputeResourceSkuCapabilities>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSkuZoneDetails>.Write(ModelReaderWriterOptions options)

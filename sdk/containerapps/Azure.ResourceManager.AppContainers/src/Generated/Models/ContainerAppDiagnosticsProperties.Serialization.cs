@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             Optional<ContainerAppDiagnosticsMetadata> metadata = default;
-            Optional<IList<ContainerAppDiagnosticsDataApiResult>> dataset = default;
+            IList<ContainerAppDiagnosticsDataApiResult> dataset = default;
             Optional<ContainerAppDiagnosticsStatus> status = default;
             Optional<ContainerAppDiagnosticDataProviderMetadata> dataProviderMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsProperties(metadata.Value, Optional.ToList(dataset), status.Value, dataProviderMetadata.Value, serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsProperties(metadata.Value, dataset ?? new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>(), status.Value, dataProviderMetadata.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsProperties>.Write(ModelReaderWriterOptions options)

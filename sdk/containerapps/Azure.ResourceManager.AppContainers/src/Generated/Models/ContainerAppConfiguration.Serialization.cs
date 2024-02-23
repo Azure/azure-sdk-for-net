@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppWritableSecret>> secrets = default;
+            IList<ContainerAppWritableSecret> secrets = default;
             Optional<ContainerAppActiveRevisionsMode> activeRevisionsMode = default;
             Optional<ContainerAppIngressConfiguration> ingress = default;
-            Optional<IList<ContainerAppRegistryCredentials>> registries = default;
+            IList<ContainerAppRegistryCredentials> registries = default;
             Optional<ContainerAppDaprConfiguration> dapr = default;
             Optional<int> maxInactiveRevisions = default;
             Optional<Service> service = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value, Optional.ToNullable(maxInactiveRevisions), service.Value, serializedAdditionalRawData);
+            return new ContainerAppConfiguration(secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(), Optional.ToNullable(activeRevisionsMode), ingress.Value, registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(), dapr.Value, Optional.ToNullable(maxInactiveRevisions), service.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppConfiguration>.Write(ModelReaderWriterOptions options)

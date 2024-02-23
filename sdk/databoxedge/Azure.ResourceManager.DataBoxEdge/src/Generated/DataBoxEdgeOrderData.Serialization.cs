@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<DataBoxEdgeContactDetails> contactInformation = default;
             Optional<DataBoxEdgeShippingAddress> shippingAddress = default;
             Optional<DataBoxEdgeOrderStatus> currentStatus = default;
-            Optional<IReadOnlyList<DataBoxEdgeOrderStatus>> orderHistory = default;
+            IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory = default;
             Optional<string> serialNumber = default;
-            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> deliveryTrackingInfo = default;
-            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> returnTrackingInfo = default;
+            IReadOnlyList<DataBoxEdgeTrackingInfo> deliveryTrackingInfo = default;
+            IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo = default;
             Optional<DataBoxEdgeShipmentType> shipmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Optional.ToList(orderHistory), serialNumber.Value, Optional.ToList(deliveryTrackingInfo), Optional.ToList(returnTrackingInfo), Optional.ToNullable(shipmentType), serializedAdditionalRawData);
+            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, orderHistory ?? new ChangeTrackingList<DataBoxEdgeOrderStatus>(), serialNumber.Value, deliveryTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(), returnTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(), Optional.ToNullable(shipmentType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeOrderData>.Write(ModelReaderWriterOptions options)

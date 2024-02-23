@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Optional<string> name = default;
             Optional<CapacityReservationUtilization> utilizationInfo = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationInstanceViewWithName(utilizationInfo.Value, Optional.ToList(statuses), serializedAdditionalRawData, name.Value);
+            return new CapacityReservationInstanceViewWithName(utilizationInfo.Value, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData, name.Value);
         }
 
         BinaryData IPersistableModel<CapacityReservationInstanceViewWithName>.Write(ModelReaderWriterOptions options)

@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             Optional<DataBoxSku> sku = default;
             Optional<bool> enabled = default;
-            Optional<IReadOnlyList<DataLocationToServiceLocationMap>> dataLocationToServiceLocationMap = default;
+            IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = default;
             Optional<DataBoxSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<DataBoxSkuCost>> costs = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
+            IReadOnlyList<DataBoxSkuCost> costs = default;
+            IReadOnlyList<string> apiVersions = default;
             Optional<SkuDisabledReason> disabledReason = default;
             Optional<string> disabledReasonMessage = default;
             Optional<string> requiredFeature = default;
-            Optional<IReadOnlyList<string>> countriesWithinCommerceBoundary = default;
+            IReadOnlyList<string> countriesWithinCommerceBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Optional.ToList(countriesWithinCommerceBoundary), serializedAdditionalRawData);
+            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), dataLocationToServiceLocationMap ?? new ChangeTrackingList<DataLocationToServiceLocationMap>(), capacity.Value, costs ?? new ChangeTrackingList<DataBoxSkuCost>(), apiVersions ?? new ChangeTrackingList<string>(), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, countriesWithinCommerceBoundary ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuInformation>.Write(ModelReaderWriterOptions options)

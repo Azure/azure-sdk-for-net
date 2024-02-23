@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             Optional<string> contextPath = default;
             Optional<string> file = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            IList<ContainerRegistryRunArgument> arguments = default;
             Optional<string> target = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
             Optional<string> updateTriggerToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, Optional.ToList(arguments), target.Value, Optional.ToList(values), updateTriggerToken.Value, serializedAdditionalRawData);
+            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(), target.Value, values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(), updateTriggerToken.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryOverrideTaskStepProperties>.Write(ModelReaderWriterOptions options)
