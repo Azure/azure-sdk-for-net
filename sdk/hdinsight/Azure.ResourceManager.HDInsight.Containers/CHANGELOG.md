@@ -1,5 +1,5 @@
 # Release History
-## 1.0.0-beta.4 (2024-02-28)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -13,12 +13,6 @@
     - Enable check if the cluster name is available.
     - Enable upgrade hot fix for cluster.
     - Enable upgrade node os for cluster.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (Unreleased)
 
