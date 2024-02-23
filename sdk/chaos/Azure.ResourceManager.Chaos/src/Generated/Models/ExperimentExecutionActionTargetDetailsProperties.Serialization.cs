@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(Target))
+            if (options.Format != "W" && Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetFailedOn))
+            if (options.Format != "W" && TargetFailedOn.HasValue)
             {
                 if (TargetFailedOn != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     writer.WriteNull("targetFailedTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetCompletedOn))
+            if (options.Format != "W" && TargetCompletedOn.HasValue)
             {
                 if (TargetCompletedOn != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     writer.WriteNull("targetCompletedTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 if (Error != null)
                 {

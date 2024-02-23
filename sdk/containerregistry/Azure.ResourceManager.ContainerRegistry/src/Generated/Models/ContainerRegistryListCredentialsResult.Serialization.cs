@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsCollectionDefined(Passwords))
+            if (!(Passwords is ChangeTrackingList<ContainerRegistryPassword> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Type))
+            if (Type != null)
             {
                 if (Type != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("type");
                 }
             }
-            if (Optional.IsDefined(Subtype))
+            if (Subtype != null)
             {
                 if (Subtype != null)
                 {
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("subtype");
                 }
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 if (Id != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("id");
                 }
             }
-            if (Optional.IsDefined(CaseSensitive))
+            if (CaseSensitive.HasValue)
             {
                 if (CaseSensitive != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("caseSensitive");
                 }
             }
-            if (Optional.IsDefined(AccentSensitive))
+            if (AccentSensitive.HasValue)
             {
                 if (AccentSensitive != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("accentSensitive");
                 }
             }
-            if (Optional.IsDefined(FuzzyEditDistance))
+            if (FuzzyEditDistance.HasValue)
             {
                 if (FuzzyEditDistance != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("fuzzyEditDistance");
                 }
             }
-            if (Optional.IsDefined(DefaultCaseSensitive))
+            if (DefaultCaseSensitive.HasValue)
             {
                 if (DefaultCaseSensitive != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultCaseSensitive");
                 }
             }
-            if (Optional.IsDefined(DefaultAccentSensitive))
+            if (DefaultAccentSensitive.HasValue)
             {
                 if (DefaultAccentSensitive != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultAccentSensitive");
                 }
             }
-            if (Optional.IsDefined(DefaultFuzzyEditDistance))
+            if (DefaultFuzzyEditDistance.HasValue)
             {
                 if (DefaultFuzzyEditDistance != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultFuzzyEditDistance");
                 }
             }
-            if (Optional.IsCollectionDefined(Aliases))
+            if (!(Aliases is ChangeTrackingList<CustomEntityAlias> collection && collection.IsUndefined))
             {
                 if (Aliases != null)
                 {

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConnectionString))
+            if (options.Format != "W" && ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyKind))
+            if (options.Format != "W" && KeyKind.HasValue)
             {
                 writer.WritePropertyName("keyKind"u8);
                 writer.WriteStringValue(KeyKind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyType))
+            if (options.Format != "W" && KeyType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());

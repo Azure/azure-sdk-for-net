@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(QueryAccessMode.ToString());
             writer.WritePropertyName("ingestionAccessMode"u8);
             writer.WriteStringValue(IngestionAccessMode.ToString());
-            if (Optional.IsCollectionDefined(Exclusions))
+            if (!(Exclusions is ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();

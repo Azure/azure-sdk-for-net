@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Deployments))
+            if (!(Deployments is ChangeTrackingList<KubernetesDeployment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Pods))
+            if (!(Pods is ChangeTrackingList<KubernetesPod> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("pods"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReplicaSets))
+            if (!(ReplicaSets is ChangeTrackingList<KubernetesReplicaSet> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("replicaSets"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StatefulSets))
+            if (!(StatefulSets is ChangeTrackingList<KubernetesStatefulSet> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("statefulSets"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DaemonSets))
+            if (!(DaemonSets is ChangeTrackingList<KubernetesDaemonSet> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("daemonSets"u8);
                 writer.WriteStartArray();

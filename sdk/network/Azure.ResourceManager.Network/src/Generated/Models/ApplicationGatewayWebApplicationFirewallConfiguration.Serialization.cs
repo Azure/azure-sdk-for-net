@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsCollectionDefined(DisabledRuleGroups))
+            if (!(DisabledRuleGroups is ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disabledRuleGroups"u8);
                 writer.WriteStartArray();
@@ -44,27 +44,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequestBodyCheck))
+            if (RequestBodyCheck.HasValue)
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (Optional.IsDefined(MaxRequestBodySize))
+            if (MaxRequestBodySize.HasValue)
             {
                 writer.WritePropertyName("maxRequestBodySize"u8);
                 writer.WriteNumberValue(MaxRequestBodySize.Value);
             }
-            if (Optional.IsDefined(MaxRequestBodySizeInKb))
+            if (MaxRequestBodySizeInKb.HasValue)
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (Optional.IsDefined(FileUploadLimitInMb))
+            if (FileUploadLimitInMb.HasValue)
             {
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (Optional.IsCollectionDefined(Exclusions))
+            if (!(Exclusions is ChangeTrackingList<ApplicationGatewayFirewallExclusion> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();

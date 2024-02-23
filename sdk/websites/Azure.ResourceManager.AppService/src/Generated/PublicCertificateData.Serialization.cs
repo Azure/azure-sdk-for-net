@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Blob))
+            if (Blob != null)
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteBase64StringValue(Blob, "D");
             }
-            if (Optional.IsDefined(PublicCertificateLocation))
+            if (PublicCertificateLocation.HasValue)
             {
                 writer.WritePropertyName("publicCertificateLocation"u8);
                 writer.WriteStringValue(PublicCertificateLocation.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
+            if (options.Format != "W" && ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);

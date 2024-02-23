@@ -16,22 +16,22 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LowerCaseTerms))
+            if (LowerCaseTerms.HasValue)
             {
                 writer.WritePropertyName("lowercase"u8);
                 writer.WriteBooleanValue(LowerCaseTerms.Value);
             }
-            if (Optional.IsDefined(Pattern))
+            if (Pattern != null)
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(FlagsInternal))
+            if (FlagsInternal != null)
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (Optional.IsCollectionDefined(Stopwords))
+            if (!(Stopwords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();

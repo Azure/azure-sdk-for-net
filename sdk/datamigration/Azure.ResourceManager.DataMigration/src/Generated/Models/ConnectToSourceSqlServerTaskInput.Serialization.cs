@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (Optional.IsDefined(CheckPermissionsGroup))
+            if (CheckPermissionsGroup.HasValue)
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CollectDatabases))
+            if (CollectDatabases.HasValue)
             {
                 writer.WritePropertyName("collectDatabases"u8);
                 writer.WriteBooleanValue(CollectDatabases.Value);
             }
-            if (Optional.IsDefined(CollectLogins))
+            if (CollectLogins.HasValue)
             {
                 writer.WritePropertyName("collectLogins"u8);
                 writer.WriteBooleanValue(CollectLogins.Value);
             }
-            if (Optional.IsDefined(CollectAgentJobs))
+            if (CollectAgentJobs.HasValue)
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
                 writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
-            if (Optional.IsDefined(CollectTdeCertificateInfo))
+            if (CollectTdeCertificateInfo.HasValue)
             {
                 writer.WritePropertyName("collectTdeCertificateInfo"u8);
                 writer.WriteBooleanValue(CollectTdeCertificateInfo.Value);
             }
-            if (Optional.IsDefined(ValidateSsisCatalogOnly))
+            if (ValidateSsisCatalogOnly.HasValue)
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
                 writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
             }
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (EncryptedKeyForSecureFields != null)
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);

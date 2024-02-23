@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomWindow))
+            if (CustomWindow != null)
             {
                 writer.WritePropertyName("customWindow"u8);
                 writer.WriteStringValue(CustomWindow);
             }
-            if (Optional.IsDefined(StartHour))
+            if (StartHour.HasValue)
             {
                 writer.WritePropertyName("startHour"u8);
                 writer.WriteNumberValue(StartHour.Value);
             }
-            if (Optional.IsDefined(StartMinute))
+            if (StartMinute.HasValue)
             {
                 writer.WritePropertyName("startMinute"u8);
                 writer.WriteNumberValue(StartMinute.Value);
             }
-            if (Optional.IsDefined(DayOfWeek))
+            if (DayOfWeek.HasValue)
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);

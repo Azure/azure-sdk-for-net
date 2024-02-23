@@ -29,12 +29,12 @@ namespace Azure.Communication.Messages
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(Caption))
+            if (Caption != null)
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteStringValue(Caption);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);

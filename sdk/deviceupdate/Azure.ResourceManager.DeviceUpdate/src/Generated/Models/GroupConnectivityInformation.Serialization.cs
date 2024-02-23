@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(GroupId))
+            if (options.Format != "W" && GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemberName))
+            if (options.Format != "W" && MemberName != null)
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
-            if (Optional.IsCollectionDefined(CustomerVisibleFqdns))
+            if (!(CustomerVisibleFqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customerVisibleFqdns"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalFqdn))
+            if (options.Format != "W" && InternalFqdn != null)
             {
                 writer.WritePropertyName("internalFqdn"u8);
                 writer.WriteStringValue(InternalFqdn);
             }
-            if (Optional.IsDefined(RedirectMapId))
+            if (RedirectMapId != null)
             {
                 writer.WritePropertyName("redirectMapId"u8);
                 writer.WriteStringValue(RedirectMapId);
             }
-            if (Optional.IsDefined(PrivateLinkServiceArmRegion))
+            if (PrivateLinkServiceArmRegion.HasValue)
             {
                 writer.WritePropertyName("privateLinkServiceArmRegion"u8);
                 writer.WriteStringValue(PrivateLinkServiceArmRegion.Value);

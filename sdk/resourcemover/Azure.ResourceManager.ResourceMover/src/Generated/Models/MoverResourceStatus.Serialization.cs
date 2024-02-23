@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MoveState))
+            if (options.Format != "W" && MoveState.HasValue)
             {
                 writer.WritePropertyName("moveState"u8);
                 writer.WriteStringValue(MoveState.Value.ToString());
             }
-            if (Optional.IsDefined(JobStatus))
+            if (JobStatus != null)
             {
                 if (JobStatus != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("jobStatus");
                 }
             }
-            if (Optional.IsDefined(Errors))
+            if (Errors != null)
             {
                 if (Errors != null)
                 {

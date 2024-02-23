@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (Optional.IsDefined(LastCommitId))
+            if (LastCommitId != null)
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (Optional.IsDefined(DisablePublish))
+            if (DisablePublish.HasValue)
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFactoryRepoConfiguration(document.RootElement, options);
+            return DeserializeFactoryRepoConfiguration(document.RootElement, options);
         }
 
         internal static UnknownFactoryRepoConfiguration DeserializeUnknownFactoryRepoConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFactoryRepoConfiguration(document.RootElement, options);
+                        return DeserializeFactoryRepoConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FactoryRepoConfiguration)} does not support '{options.Format}' format.");

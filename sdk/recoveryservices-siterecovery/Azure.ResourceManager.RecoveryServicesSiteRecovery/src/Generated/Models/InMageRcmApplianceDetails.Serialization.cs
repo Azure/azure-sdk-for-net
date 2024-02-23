@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricArmId))
+            if (options.Format != "W" && FabricArmId != null)
             {
                 writer.WritePropertyName("fabricArmId"u8);
                 writer.WriteStringValue(FabricArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessServer))
+            if (options.Format != "W" && ProcessServer != null)
             {
                 writer.WritePropertyName("processServer"u8);
                 writer.WriteObjectValue(ProcessServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(RcmProxy))
+            if (options.Format != "W" && RcmProxy != null)
             {
                 writer.WritePropertyName("rcmProxy"u8);
                 writer.WriteObjectValue(RcmProxy);
             }
-            if (options.Format != "W" && Optional.IsDefined(PushInstaller))
+            if (options.Format != "W" && PushInstaller != null)
             {
                 writer.WritePropertyName("pushInstaller"u8);
                 writer.WriteObjectValue(PushInstaller);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationAgent))
+            if (options.Format != "W" && ReplicationAgent != null)
             {
                 writer.WritePropertyName("replicationAgent"u8);
                 writer.WriteObjectValue(ReplicationAgent);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReprotectAgent))
+            if (options.Format != "W" && ReprotectAgent != null)
             {
                 writer.WritePropertyName("reprotectAgent"u8);
                 writer.WriteObjectValue(ReprotectAgent);
             }
-            if (options.Format != "W" && Optional.IsDefined(MarsAgent))
+            if (options.Format != "W" && MarsAgent != null)
             {
                 writer.WritePropertyName("marsAgent"u8);
                 writer.WriteObjectValue(MarsAgent);
             }
-            if (options.Format != "W" && Optional.IsDefined(Dra))
+            if (options.Format != "W" && Dra != null)
             {
                 writer.WritePropertyName("dra"u8);
                 writer.WriteObjectValue(Dra);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+            if (options.Format != "W" && !(SwitchProviderBlockingErrorDetails is ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
                 writer.WriteStartArray();

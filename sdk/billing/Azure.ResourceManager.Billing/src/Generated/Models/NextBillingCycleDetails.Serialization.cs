@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NextBillingCycleBillingFrequency))
+            if (options.Format != "W" && NextBillingCycleBillingFrequency != null)
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(NextBillingCycleBillingFrequency);

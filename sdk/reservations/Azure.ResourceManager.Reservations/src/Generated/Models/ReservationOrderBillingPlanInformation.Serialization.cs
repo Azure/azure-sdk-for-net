@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (PricingCurrencyTotal != null)
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "D");
             }
-            if (Optional.IsDefined(NextPaymentDueOn))
+            if (NextPaymentDueOn.HasValue)
             {
                 writer.WritePropertyName("nextPaymentDueDate"u8);
                 writer.WriteStringValue(NextPaymentDueOn.Value, "D");
             }
-            if (Optional.IsCollectionDefined(Transactions))
+            if (!(Transactions is ChangeTrackingList<PaymentDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transactions"u8);
                 writer.WriteStartArray();

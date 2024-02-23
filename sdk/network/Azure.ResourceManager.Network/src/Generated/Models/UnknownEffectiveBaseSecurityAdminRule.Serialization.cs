@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ConfigurationDescription))
+            if (ConfigurationDescription != null)
             {
                 writer.WritePropertyName("configurationDescription"u8);
                 writer.WriteStringValue(ConfigurationDescription);
             }
-            if (Optional.IsDefined(RuleCollectionDescription))
+            if (RuleCollectionDescription != null)
             {
                 writer.WritePropertyName("ruleCollectionDescription"u8);
                 writer.WriteStringValue(RuleCollectionDescription);
             }
-            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            if (!(RuleCollectionAppliesToGroups is ChangeTrackingList<NetworkManagerSecurityGroupItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RuleGroups))
+            if (!(RuleGroups is ChangeTrackingList<NetworkConfigurationGroup> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEffectiveBaseSecurityAdminRule(document.RootElement, options);
+            return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
         }
 
         internal static UnknownEffectiveBaseSecurityAdminRule DeserializeUnknownEffectiveBaseSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEffectiveBaseSecurityAdminRule(document.RootElement, options);
+                        return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");

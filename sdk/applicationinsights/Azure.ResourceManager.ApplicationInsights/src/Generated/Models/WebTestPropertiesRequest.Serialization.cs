@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestUri))
+            if (RequestUri != null)
             {
                 writer.WritePropertyName("RequestUrl"u8);
                 writer.WriteStringValue(RequestUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<HeaderField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Headers"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HttpVerb))
+            if (HttpVerb != null)
             {
                 writer.WritePropertyName("HttpVerb"u8);
                 writer.WriteStringValue(HttpVerb);
             }
-            if (Optional.IsDefined(RequestBody))
+            if (RequestBody != null)
             {
                 writer.WritePropertyName("RequestBody"u8);
                 writer.WriteStringValue(RequestBody);
             }
-            if (Optional.IsDefined(ParseDependentRequests))
+            if (ParseDependentRequests.HasValue)
             {
                 writer.WritePropertyName("ParseDependentRequests"u8);
                 writer.WriteBooleanValue(ParseDependentRequests.Value);
             }
-            if (Optional.IsDefined(FollowRedirects))
+            if (FollowRedirects.HasValue)
             {
                 writer.WritePropertyName("FollowRedirects"u8);
                 writer.WriteBooleanValue(FollowRedirects.Value);

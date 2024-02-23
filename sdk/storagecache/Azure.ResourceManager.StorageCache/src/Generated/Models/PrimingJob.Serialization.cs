@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStringValue(PrimingJobName);
             writer.WritePropertyName("primingManifestUrl"u8);
             writer.WriteStringValue(PrimingManifestUri.AbsoluteUri);
-            if (options.Format != "W" && Optional.IsDefined(PrimingJobId))
+            if (options.Format != "W" && PrimingJobId != null)
             {
                 writer.WritePropertyName("primingJobId"u8);
                 writer.WriteStringValue(PrimingJobId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimingJobState))
+            if (options.Format != "W" && PrimingJobState.HasValue)
             {
                 writer.WritePropertyName("primingJobState"u8);
                 writer.WriteStringValue(PrimingJobState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimingJobStatus))
+            if (options.Format != "W" && PrimingJobStatus != null)
             {
                 writer.WritePropertyName("primingJobStatus"u8);
                 writer.WriteStringValue(PrimingJobStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimingJobDetails))
+            if (options.Format != "W" && PrimingJobDetails != null)
             {
                 writer.WritePropertyName("primingJobDetails"u8);
                 writer.WriteStringValue(PrimingJobDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimingJobPercentComplete))
+            if (options.Format != "W" && PrimingJobPercentComplete.HasValue)
             {
                 writer.WritePropertyName("primingJobPercentComplete"u8);
                 writer.WriteNumberValue(PrimingJobPercentComplete.Value);

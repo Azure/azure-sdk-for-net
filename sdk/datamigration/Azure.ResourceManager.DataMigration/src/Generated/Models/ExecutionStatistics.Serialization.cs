@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExecutionCount))
+            if (ExecutionCount.HasValue)
             {
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (Optional.IsDefined(CpuTimeMs))
+            if (CpuTimeMs.HasValue)
             {
                 writer.WritePropertyName("cpuTimeMs"u8);
                 writer.WriteNumberValue(CpuTimeMs.Value);
             }
-            if (Optional.IsDefined(ElapsedTimeMs))
+            if (ElapsedTimeMs.HasValue)
             {
                 writer.WritePropertyName("elapsedTimeMs"u8);
                 writer.WriteNumberValue(ElapsedTimeMs.Value);
             }
-            if (Optional.IsCollectionDefined(WaitStats))
+            if (!(WaitStats is ChangeTrackingDictionary<string, WaitStatistics> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("waitStats"u8);
                 writer.WriteStartObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(HasErrors))
+            if (HasErrors.HasValue)
             {
                 writer.WritePropertyName("hasErrors"u8);
                 writer.WriteBooleanValue(HasErrors.Value);
             }
-            if (Optional.IsCollectionDefined(SqlErrors))
+            if (!(SqlErrors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sqlErrors"u8);
                 writer.WriteStartArray();

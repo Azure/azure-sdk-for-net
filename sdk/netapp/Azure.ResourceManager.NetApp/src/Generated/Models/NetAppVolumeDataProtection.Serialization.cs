@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Backup))
+            if (Backup != null)
             {
                 writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
-            if (Optional.IsDefined(Replication))
+            if (Replication != null)
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteObjectValue(Replication);
             }
-            if (Optional.IsDefined(Snapshot))
+            if (Snapshot != null)
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (Optional.IsDefined(VolumeRelocation))
+            if (VolumeRelocation != null)
             {
                 writer.WritePropertyName("volumeRelocation"u8);
                 writer.WriteObjectValue(VolumeRelocation);

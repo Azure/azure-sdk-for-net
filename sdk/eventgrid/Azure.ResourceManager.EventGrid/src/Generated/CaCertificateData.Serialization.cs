@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(EncodedCertificate))
+            if (EncodedCertificate != null)
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
-            if (options.Format != "W" && Optional.IsDefined(IssueTimeInUtc))
+            if (options.Format != "W" && IssueTimeInUtc.HasValue)
             {
                 writer.WritePropertyName("issueTimeInUtc"u8);
                 writer.WriteStringValue(IssueTimeInUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiryTimeInUtc))
+            if (options.Format != "W" && ExpiryTimeInUtc.HasValue)
             {
                 writer.WritePropertyName("expiryTimeInUtc"u8);
                 writer.WriteStringValue(ExpiryTimeInUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

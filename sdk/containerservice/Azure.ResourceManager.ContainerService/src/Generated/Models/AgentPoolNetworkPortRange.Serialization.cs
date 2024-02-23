@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PortStart))
+            if (PortStart.HasValue)
             {
                 writer.WritePropertyName("portStart"u8);
                 writer.WriteNumberValue(PortStart.Value);
             }
-            if (Optional.IsDefined(PortEnd))
+            if (PortEnd.HasValue)
             {
                 writer.WritePropertyName("portEnd"u8);
                 writer.WriteNumberValue(PortEnd.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());

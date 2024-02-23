@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exclude))
+            if (Exclude.HasValue)
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteBooleanValue(Exclude.Value);
             }
-            if (Optional.IsDefined(LowCpuThreshold))
+            if (LowCpuThreshold.HasValue)
             {
                 writer.WritePropertyName("lowCpuThreshold"u8);
                 writer.WriteStringValue(LowCpuThreshold.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Digests))
+            if (!(Digests is ChangeTrackingList<DigestConfig> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("digests"u8);
                 writer.WriteStartArray();

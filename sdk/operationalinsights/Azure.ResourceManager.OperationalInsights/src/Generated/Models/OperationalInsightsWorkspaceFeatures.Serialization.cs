@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDataExportEnabled))
+            if (IsDataExportEnabled.HasValue)
             {
                 if (IsDataExportEnabled != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableDataExport");
                 }
             }
-            if (Optional.IsDefined(ImmediatePurgeDataOn30Days))
+            if (ImmediatePurgeDataOn30Days.HasValue)
             {
                 if (ImmediatePurgeDataOn30Days != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("immediatePurgeDataOn30Days");
                 }
             }
-            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
+            if (IsLogAccessUsingOnlyResourcePermissionsEnabled.HasValue)
             {
                 if (IsLogAccessUsingOnlyResourcePermissionsEnabled != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableLogAccessUsingOnlyResourcePermissions");
                 }
             }
-            if (Optional.IsDefined(ClusterResourceId))
+            if (ClusterResourceId != null)
             {
                 if (ClusterResourceId != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("clusterResourceId");
                 }
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (IsLocalAuthDisabled.HasValue)
             {
                 if (IsLocalAuthDisabled != null)
                 {

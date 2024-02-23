@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAlertRuleTemplate(document.RootElement, options);
+            return DeserializeSecurityInsightsAlertRuleTemplateData(document.RootElement, options);
         }
 
         internal static UnknownAlertRuleTemplate DeserializeUnknownAlertRuleTemplate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAlertRuleTemplate(document.RootElement, options);
+                        return DeserializeSecurityInsightsAlertRuleTemplateData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsAlertRuleTemplateData)} does not support '{options.Format}' format.");

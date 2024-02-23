@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(JobName))
+            if (options.Format != "W" && JobName.HasValue)
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(JobProgress))
+            if (options.Format != "W" && JobProgress != null)
             {
                 writer.WritePropertyName("jobProgress"u8);
                 writer.WriteStringValue(JobProgress);

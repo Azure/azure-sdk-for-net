@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScriptUri))
+            if (ScriptUri != null)
             {
                 writer.WritePropertyName("scriptUrl"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ScriptUriSasToken))
+            if (ScriptUriSasToken != null)
             {
                 writer.WritePropertyName("scriptUrlSasToken"u8);
                 writer.WriteStringValue(ScriptUriSasToken);
             }
-            if (Optional.IsDefined(ScriptContent))
+            if (ScriptContent != null)
             {
                 writer.WritePropertyName("scriptContent"u8);
                 writer.WriteStringValue(ScriptContent);
             }
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(ShouldContinueOnErrors))
+            if (ShouldContinueOnErrors.HasValue)
             {
                 writer.WritePropertyName("continueOnErrors"u8);
                 writer.WriteBooleanValue(ShouldContinueOnErrors.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

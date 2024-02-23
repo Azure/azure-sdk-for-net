@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DefaultValues))
+            if (!(DefaultValues is ChangeTrackingList<DWCopyCommandDefaultValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("defaultValues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdditionalOptions))
+            if (!(AdditionalOptions is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("additionalOptions"u8);
                 writer.WriteStartObject();

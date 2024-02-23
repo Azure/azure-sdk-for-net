@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
+            if (options.Format != "W" && AddressPrefix != null)
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(AuthorizationKey))
+            if (AuthorizationKey != null)
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(CircuitConnectionStatus))
+            if (options.Format != "W" && CircuitConnectionStatus.HasValue)
             {
                 writer.WritePropertyName("circuitConnectionStatus"u8);
                 writer.WriteStringValue(CircuitConnectionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(PeerExpressRouteCircuit))
+            if (PeerExpressRouteCircuit != null)
             {
                 writer.WritePropertyName("peerExpressRouteCircuit"u8);
                 writer.WriteStringValue(PeerExpressRouteCircuit);
             }
-            if (Optional.IsDefined(ExpressRouteId))
+            if (ExpressRouteId != null)
             {
                 writer.WritePropertyName("expressRouteId"u8);
                 writer.WriteStringValue(ExpressRouteId);

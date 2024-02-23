@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherName))
+            if (options.Format != "W" && PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
+            if (options.Format != "W" && PublisherScope.HasValue)
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaName))
+            if (options.Format != "W" && ConfigurationGroupSchemaName != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaName"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaOfferingLocation))
+            if (options.Format != "W" && ConfigurationGroupSchemaOfferingLocation != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaOfferingLocation"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation);
             }
-            if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
+            if (ConfigurationGroupSchemaResourceReference != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
                 writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+            return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
         }
 
         internal static UnknownConfigurationGroupValuePropertiesFormat DeserializeUnknownConfigurationGroupValuePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+                        return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{options.Format}' format.");

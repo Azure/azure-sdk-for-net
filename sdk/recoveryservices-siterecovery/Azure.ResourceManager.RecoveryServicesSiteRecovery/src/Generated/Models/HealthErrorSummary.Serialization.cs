@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SummaryCode))
+            if (SummaryCode != null)
             {
                 writer.WritePropertyName("summaryCode"u8);
                 writer.WriteStringValue(SummaryCode);
             }
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(SummaryMessage))
+            if (SummaryMessage != null)
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (Optional.IsDefined(AffectedResourceType))
+            if (AffectedResourceType != null)
             {
                 writer.WritePropertyName("affectedResourceType"u8);
                 writer.WriteStringValue(AffectedResourceType);
             }
-            if (Optional.IsDefined(AffectedResourceSubtype))
+            if (AffectedResourceSubtype != null)
             {
                 writer.WritePropertyName("affectedResourceSubtype"u8);
                 writer.WriteStringValue(AffectedResourceSubtype);
             }
-            if (Optional.IsCollectionDefined(AffectedResourceCorrelationIds))
+            if (!(AffectedResourceCorrelationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("affectedResourceCorrelationIds"u8);
                 writer.WriteStartArray();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(TopSid))
+            if (!(TopSid is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("topSid"u8);
                 writer.WriteStartArray();

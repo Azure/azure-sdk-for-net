@@ -29,94 +29,94 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowVirtualNetworkAccess))
+            if (AllowVirtualNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("allowVirtualNetworkAccess"u8);
                 writer.WriteBooleanValue(AllowVirtualNetworkAccess.Value);
             }
-            if (Optional.IsDefined(AllowForwardedTraffic))
+            if (AllowForwardedTraffic.HasValue)
             {
                 writer.WritePropertyName("allowForwardedTraffic"u8);
                 writer.WriteBooleanValue(AllowForwardedTraffic.Value);
             }
-            if (Optional.IsDefined(AllowGatewayTransit))
+            if (AllowGatewayTransit.HasValue)
             {
                 writer.WritePropertyName("allowGatewayTransit"u8);
                 writer.WriteBooleanValue(AllowGatewayTransit.Value);
             }
-            if (Optional.IsDefined(UseRemoteGateways))
+            if (UseRemoteGateways.HasValue)
             {
                 writer.WritePropertyName("useRemoteGateways"u8);
                 writer.WriteBooleanValue(UseRemoteGateways.Value);
             }
-            if (Optional.IsDefined(RemoteVirtualNetwork))
+            if (RemoteVirtualNetwork != null)
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
             }
-            if (Optional.IsDefined(RemoteAddressSpace))
+            if (RemoteAddressSpace != null)
             {
                 writer.WritePropertyName("remoteAddressSpace"u8);
                 writer.WriteObjectValue(RemoteAddressSpace);
             }
-            if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
+            if (RemoteVirtualNetworkAddressSpace != null)
             {
                 writer.WritePropertyName("remoteVirtualNetworkAddressSpace"u8);
                 writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace);
             }
-            if (Optional.IsDefined(RemoteBgpCommunities))
+            if (RemoteBgpCommunities != null)
             {
                 writer.WritePropertyName("remoteBgpCommunities"u8);
                 writer.WriteObjectValue(RemoteBgpCommunities);
             }
-            if (options.Format != "W" && Optional.IsDefined(RemoteVirtualNetworkEncryption))
+            if (options.Format != "W" && RemoteVirtualNetworkEncryption != null)
             {
                 writer.WritePropertyName("remoteVirtualNetworkEncryption"u8);
                 writer.WriteObjectValue(RemoteVirtualNetworkEncryption);
             }
-            if (Optional.IsDefined(PeeringState))
+            if (PeeringState.HasValue)
             {
                 writer.WritePropertyName("peeringState"u8);
                 writer.WriteStringValue(PeeringState.Value.ToString());
             }
-            if (Optional.IsDefined(PeeringSyncLevel))
+            if (PeeringSyncLevel.HasValue)
             {
                 writer.WritePropertyName("peeringSyncLevel"u8);
                 writer.WriteStringValue(PeeringSyncLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DoNotVerifyRemoteGateways))
+            if (DoNotVerifyRemoteGateways.HasValue)
             {
                 writer.WritePropertyName("doNotVerifyRemoteGateways"u8);
                 writer.WriteBooleanValue(DoNotVerifyRemoteGateways.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);

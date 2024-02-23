@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("principalType"u8);
             writer.WriteStringValue(PrincipalType);
-            if (Optional.IsCollectionDefined(PrincipalMetadata))
+            if (!(PrincipalMetadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("principalMetadata"u8);
                 writer.WriteStartObject();

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStringValue(SubdomainName);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);

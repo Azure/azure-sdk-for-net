@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,29 +67,29 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HierarchyIdentifier))
+            if (HierarchyIdentifier != null)
             {
                 writer.WritePropertyName("hierarchyIdentifier"u8);
                 writer.WriteStringValue(HierarchyIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(HierarchyIdentifierTrialEndOn))
+            if (options.Format != "W" && HierarchyIdentifierTrialEndOn.HasValue)
             {
                 writer.WritePropertyName("hierarchyIdentifierTrialEndDate"u8);
                 writer.WriteStringValue(HierarchyIdentifierTrialEndOn.Value, "O");
             }
-            if (Optional.IsDefined(EnvironmentName))
+            if (EnvironmentName.HasValue)
             {
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Offerings))
+            if (!(Offerings is ChangeTrackingList<SecurityCenterCloudOffering> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("offerings"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnvironmentData))
+            if (EnvironmentData != null)
             {
                 writer.WritePropertyName("environmentData"u8);
                 writer.WriteObjectValue(EnvironmentData);

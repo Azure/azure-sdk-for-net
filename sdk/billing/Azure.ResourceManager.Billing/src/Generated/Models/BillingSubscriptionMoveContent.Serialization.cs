@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationEnrollmentAccountId))
+            if (DestinationEnrollmentAccountId != null)
             {
                 writer.WritePropertyName("destinationEnrollmentAccountId"u8);
                 writer.WriteStringValue(DestinationEnrollmentAccountId);
             }
-            if (Optional.IsDefined(DestinationInvoiceSectionId))
+            if (DestinationInvoiceSectionId != null)
             {
                 writer.WritePropertyName("destinationInvoiceSectionId"u8);
                 writer.WriteStringValue(DestinationInvoiceSectionId);

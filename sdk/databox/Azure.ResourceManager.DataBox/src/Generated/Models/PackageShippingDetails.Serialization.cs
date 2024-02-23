@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TrackingUri))
+            if (options.Format != "W" && TrackingUri != null)
             {
                 writer.WritePropertyName("trackingUrl"u8);
                 writer.WriteStringValue(TrackingUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(CarrierName))
+            if (options.Format != "W" && CarrierName != null)
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrackingId))
+            if (options.Format != "W" && TrackingId != null)
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);

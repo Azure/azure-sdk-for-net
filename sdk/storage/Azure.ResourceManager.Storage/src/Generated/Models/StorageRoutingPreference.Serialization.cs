@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoutingChoice))
+            if (RoutingChoice.HasValue)
             {
                 writer.WritePropertyName("routingChoice"u8);
                 writer.WriteStringValue(RoutingChoice.Value.ToString());
             }
-            if (Optional.IsDefined(IsMicrosoftEndpointsPublished))
+            if (IsMicrosoftEndpointsPublished.HasValue)
             {
                 writer.WritePropertyName("publishMicrosoftEndpoints"u8);
                 writer.WriteBooleanValue(IsMicrosoftEndpointsPublished.Value);
             }
-            if (Optional.IsDefined(IsInternetEndpointsPublished))
+            if (IsInternetEndpointsPublished.HasValue)
             {
                 writer.WritePropertyName("publishInternetEndpoints"u8);
                 writer.WriteBooleanValue(IsInternetEndpointsPublished.Value);

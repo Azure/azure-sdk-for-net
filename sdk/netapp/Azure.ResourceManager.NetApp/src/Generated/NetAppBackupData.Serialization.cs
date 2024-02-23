@@ -43,61 +43,61 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BackupId))
+            if (options.Format != "W" && BackupId != null)
             {
                 writer.WritePropertyName("backupId"u8);
                 writer.WriteStringValue(BackupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Size))
+            if (options.Format != "W" && Size.HasValue)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupType))
+            if (options.Format != "W" && BackupType.HasValue)
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FailureReason))
+            if (options.Format != "W" && FailureReason != null)
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
             writer.WritePropertyName("volumeResourceId"u8);
             writer.WriteStringValue(VolumeResourceId);
-            if (Optional.IsDefined(UseExistingSnapshot))
+            if (UseExistingSnapshot.HasValue)
             {
                 writer.WritePropertyName("useExistingSnapshot"u8);
                 writer.WriteBooleanValue(UseExistingSnapshot.Value);
             }
-            if (Optional.IsDefined(SnapshotName))
+            if (SnapshotName != null)
             {
                 writer.WritePropertyName("snapshotName"u8);
                 writer.WriteStringValue(SnapshotName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupPolicyResourceId))
+            if (options.Format != "W" && BackupPolicyResourceId != null)
             {
                 writer.WritePropertyName("backupPolicyResourceId"u8);
                 writer.WriteStringValue(BackupPolicyResourceId);

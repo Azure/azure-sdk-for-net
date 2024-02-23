@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefinitionType))
+            if (DefinitionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToString());
             }
-            if (Optional.IsDefined(ReadOnly))
+            if (ReadOnly.HasValue)
             {
                 if (ReadOnly != null)
                 {
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readOnly");
                 }
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(Consistency))
+            if (Consistency != null)
             {
                 if (Consistency != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("consistency");
                 }
             }
-            if (Optional.IsDefined(Bind))
+            if (Bind != null)
             {
                 if (Bind != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("bind");
                 }
             }
-            if (Optional.IsDefined(Volume))
+            if (Volume != null)
             {
                 if (Volume != null)
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("volume");
                 }
             }
-            if (Optional.IsDefined(Tmpfs))
+            if (Tmpfs != null)
             {
                 if (Tmpfs != null)
                 {

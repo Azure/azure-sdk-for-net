@@ -27,79 +27,79 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreCopyScript))
+            if (PreCopyScript != null)
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 JsonSerializer.Serialize(writer, PreCopyScript);
             }
-            if (Optional.IsDefined(AllowPolyBase))
+            if (AllowPolyBase != null)
             {
                 writer.WritePropertyName("allowPolyBase"u8);
                 JsonSerializer.Serialize(writer, AllowPolyBase);
             }
-            if (Optional.IsDefined(PolyBaseSettings))
+            if (PolyBaseSettings != null)
             {
                 writer.WritePropertyName("polyBaseSettings"u8);
                 writer.WriteObjectValue(PolyBaseSettings);
             }
-            if (Optional.IsDefined(AllowCopyCommand))
+            if (AllowCopyCommand != null)
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
                 JsonSerializer.Serialize(writer, AllowCopyCommand);
             }
-            if (Optional.IsDefined(CopyCommandSettings))
+            if (CopyCommandSettings != null)
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
                 writer.WriteObjectValue(CopyCommandSettings);
             }
-            if (Optional.IsDefined(TableOption))
+            if (TableOption != null)
             {
                 writer.WritePropertyName("tableOption"u8);
                 JsonSerializer.Serialize(writer, TableOption);
             }
-            if (Optional.IsDefined(SqlWriterUseTableLock))
+            if (SqlWriterUseTableLock != null)
             {
                 writer.WritePropertyName("sqlWriterUseTableLock"u8);
                 JsonSerializer.Serialize(writer, SqlWriterUseTableLock);
             }
-            if (Optional.IsDefined(WriteBehavior))
+            if (WriteBehavior != null)
             {
                 writer.WritePropertyName("writeBehavior"u8);
                 JsonSerializer.Serialize(writer, WriteBehavior);
             }
-            if (Optional.IsDefined(UpsertSettings))
+            if (UpsertSettings != null)
             {
                 writer.WritePropertyName("upsertSettings"u8);
                 writer.WriteObjectValue(UpsertSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkProviderName))
+            if (LinkProviderName != null)
             {
                 writer.WritePropertyName("linkProviderName"u8);
                 writer.WriteStringValue(LinkProviderName);
             }
-            if (Optional.IsDefined(LinkSpeedInMbps))
+            if (LinkSpeedInMbps.HasValue)
             {
                 writer.WritePropertyName("linkSpeedInMbps"u8);
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);

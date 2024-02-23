@@ -30,47 +30,47 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(HostnameType.ToString());
             writer.WritePropertyName("hostName"u8);
             writer.WriteStringValue(HostName);
-            if (Optional.IsDefined(KeyVaultSecretUri))
+            if (KeyVaultSecretUri != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultSecretUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IdentityClientId))
+            if (IdentityClientId != null)
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
             }
-            if (Optional.IsDefined(EncodedCertificate))
+            if (EncodedCertificate != null)
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
-            if (Optional.IsDefined(CertificatePassword))
+            if (CertificatePassword != null)
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (Optional.IsDefined(IsDefaultSslBindingEnabled))
+            if (IsDefaultSslBindingEnabled.HasValue)
             {
                 writer.WritePropertyName("defaultSslBinding"u8);
                 writer.WriteBooleanValue(IsDefaultSslBindingEnabled.Value);
             }
-            if (Optional.IsDefined(IsClientCertificateNegotiationEnabled))
+            if (IsClientCertificateNegotiationEnabled.HasValue)
             {
                 writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateNegotiationEnabled.Value);
             }
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
             }
-            if (Optional.IsDefined(CertificateSource))
+            if (CertificateSource.HasValue)
             {
                 writer.WritePropertyName("certificateSource"u8);
                 writer.WriteStringValue(CertificateSource.Value.ToString());
             }
-            if (Optional.IsDefined(CertificateStatus))
+            if (CertificateStatus.HasValue)
             {
                 writer.WritePropertyName("certificateStatus"u8);
                 writer.WriteStringValue(CertificateStatus.Value.ToString());

@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerCertificate))
+            if (ServerCertificate != null)
             {
                 writer.WritePropertyName("serverCertificate"u8);
 #if NET6_0_OR_GREATER
@@ -62,112 +62,112 @@ namespace Azure.ResourceManager.StorageSync
                 }
 #endif
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersionStatus))
+            if (options.Format != "W" && AgentVersionStatus.HasValue)
             {
                 writer.WritePropertyName("agentVersionStatus"u8);
                 writer.WriteStringValue(AgentVersionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersionExpireOn))
+            if (options.Format != "W" && AgentVersionExpireOn.HasValue)
             {
                 writer.WritePropertyName("agentVersionExpirationDate"u8);
                 writer.WriteStringValue(AgentVersionExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(ServerOSVersion))
+            if (ServerOSVersion != null)
             {
                 writer.WritePropertyName("serverOSVersion"u8);
                 writer.WriteStringValue(ServerOSVersion);
             }
-            if (Optional.IsDefined(ServerManagementErrorCode))
+            if (ServerManagementErrorCode.HasValue)
             {
                 writer.WritePropertyName("serverManagementErrorCode"u8);
                 writer.WriteNumberValue(ServerManagementErrorCode.Value);
             }
-            if (Optional.IsDefined(LastHeartbeat))
+            if (LastHeartbeat != null)
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartbeat);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(ServerRole))
+            if (ServerRole != null)
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole);
             }
-            if (Optional.IsDefined(ClusterId))
+            if (ClusterId.HasValue)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (Optional.IsDefined(ClusterName))
+            if (ClusterName != null)
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (Optional.IsDefined(ServerId))
+            if (ServerId.HasValue)
             {
                 writer.WritePropertyName("serverId"u8);
                 writer.WriteStringValue(ServerId.Value);
             }
-            if (Optional.IsDefined(StorageSyncServiceUid))
+            if (StorageSyncServiceUid.HasValue)
             {
                 writer.WritePropertyName("storageSyncServiceUid"u8);
                 writer.WriteStringValue(StorageSyncServiceUid.Value);
             }
-            if (Optional.IsDefined(LastWorkflowId))
+            if (LastWorkflowId != null)
             {
                 writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
-            if (Optional.IsDefined(LastOperationName))
+            if (LastOperationName != null)
             {
                 writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
-            if (Optional.IsDefined(DiscoveryEndpointUri))
+            if (DiscoveryEndpointUri != null)
             {
                 writer.WritePropertyName("discoveryEndpointUri"u8);
                 writer.WriteStringValue(DiscoveryEndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ResourceLocation))
+            if (ResourceLocation.HasValue)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (Optional.IsDefined(ServiceLocation))
+            if (ServiceLocation.HasValue)
             {
                 writer.WritePropertyName("serviceLocation"u8);
                 writer.WriteStringValue(ServiceLocation.Value);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ManagementEndpointUri))
+            if (ManagementEndpointUri != null)
             {
                 writer.WritePropertyName("managementEndpointUri"u8);
                 writer.WriteStringValue(ManagementEndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MonitoringEndpointUri))
+            if (MonitoringEndpointUri != null)
             {
                 writer.WritePropertyName("monitoringEndpointUri"u8);
                 writer.WriteStringValue(MonitoringEndpointUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MonitoringConfiguration))
+            if (MonitoringConfiguration != null)
             {
                 writer.WritePropertyName("monitoringConfiguration"u8);
                 writer.WriteStringValue(MonitoringConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);

@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ReplicationId))
+            if (options.Format != "W" && ReplicationId != null)
             {
                 writer.WritePropertyName("replicationId"u8);
                 writer.WriteStringValue(ReplicationId);
             }
-            if (Optional.IsDefined(EndpointType))
+            if (EndpointType.HasValue)
             {
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationSchedule))
+            if (ReplicationSchedule.HasValue)
             {
                 writer.WritePropertyName("replicationSchedule"u8);
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
             writer.WritePropertyName("remoteVolumeResourceId"u8);
             writer.WriteStringValue(RemoteVolumeResourceId);
-            if (Optional.IsDefined(RemotePath))
+            if (RemotePath != null)
             {
                 writer.WritePropertyName("remotePath"u8);
                 writer.WriteObjectValue(RemotePath);
             }
-            if (Optional.IsDefined(RemoteVolumeRegion))
+            if (RemoteVolumeRegion != null)
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
                 writer.WriteStringValue(RemoteVolumeRegion);

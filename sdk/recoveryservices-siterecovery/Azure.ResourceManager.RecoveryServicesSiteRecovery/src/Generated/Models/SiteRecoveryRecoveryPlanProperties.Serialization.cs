@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(PrimaryFabricId))
+            if (PrimaryFabricId != null)
             {
                 writer.WritePropertyName("primaryFabricId"u8);
                 writer.WriteStringValue(PrimaryFabricId);
             }
-            if (Optional.IsDefined(PrimaryFabricFriendlyName))
+            if (PrimaryFabricFriendlyName != null)
             {
                 writer.WritePropertyName("primaryFabricFriendlyName"u8);
                 writer.WriteStringValue(PrimaryFabricFriendlyName);
             }
-            if (Optional.IsDefined(RecoveryFabricId))
+            if (RecoveryFabricId != null)
             {
                 writer.WritePropertyName("recoveryFabricId"u8);
                 writer.WriteStringValue(RecoveryFabricId);
             }
-            if (Optional.IsDefined(RecoveryFabricFriendlyName))
+            if (RecoveryFabricFriendlyName != null)
             {
                 writer.WritePropertyName("recoveryFabricFriendlyName"u8);
                 writer.WriteStringValue(RecoveryFabricFriendlyName);
             }
-            if (Optional.IsDefined(FailoverDeploymentModel))
+            if (FailoverDeploymentModel != null)
             {
                 writer.WritePropertyName("failoverDeploymentModel"u8);
                 writer.WriteStringValue(FailoverDeploymentModel);
             }
-            if (Optional.IsCollectionDefined(ReplicationProviders))
+            if (!(ReplicationProviders is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replicationProviders"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedOperations))
+            if (!(AllowedOperations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedOperations"u8);
                 writer.WriteStartArray();
@@ -76,37 +76,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastPlannedFailoverOn))
+            if (LastPlannedFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastPlannedFailoverTime"u8);
                 writer.WriteStringValue(LastPlannedFailoverOn.Value, "O");
             }
-            if (Optional.IsDefined(LastUnplannedFailoverOn))
+            if (LastUnplannedFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastUnplannedFailoverTime"u8);
                 writer.WriteStringValue(LastUnplannedFailoverOn.Value, "O");
             }
-            if (Optional.IsDefined(LastTestFailoverOn))
+            if (LastTestFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastTestFailoverTime"u8);
                 writer.WriteStringValue(LastTestFailoverOn.Value, "O");
             }
-            if (Optional.IsDefined(CurrentScenario))
+            if (CurrentScenario != null)
             {
                 writer.WritePropertyName("currentScenario"u8);
                 writer.WriteObjectValue(CurrentScenario);
             }
-            if (Optional.IsDefined(CurrentScenarioStatus))
+            if (CurrentScenarioStatus != null)
             {
                 writer.WritePropertyName("currentScenarioStatus"u8);
                 writer.WriteStringValue(CurrentScenarioStatus);
             }
-            if (Optional.IsDefined(CurrentScenarioStatusDescription))
+            if (CurrentScenarioStatusDescription != null)
             {
                 writer.WritePropertyName("currentScenarioStatusDescription"u8);
                 writer.WriteStringValue(CurrentScenarioStatusDescription);
             }
-            if (Optional.IsCollectionDefined(Groups))
+            if (!(Groups is ChangeTrackingList<SiteRecoveryPlanGroup> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
+            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentValidation))
+            if (ContentValidation != null)
             {
                 writer.WritePropertyName("ContentValidation"u8);
                 writer.WriteObjectValue(ContentValidation);
             }
-            if (Optional.IsDefined(CheckSsl))
+            if (CheckSsl.HasValue)
             {
                 writer.WritePropertyName("SSLCheck"u8);
                 writer.WriteBooleanValue(CheckSsl.Value);
             }
-            if (Optional.IsDefined(SSLCertRemainingLifetimeCheck))
+            if (SSLCertRemainingLifetimeCheck.HasValue)
             {
                 writer.WritePropertyName("SSLCertRemainingLifetimeCheck"u8);
                 writer.WriteNumberValue(SSLCertRemainingLifetimeCheck.Value);
             }
-            if (Optional.IsDefined(ExpectedHttpStatusCode))
+            if (ExpectedHttpStatusCode.HasValue)
             {
                 writer.WritePropertyName("ExpectedHttpStatusCode"u8);
                 writer.WriteNumberValue(ExpectedHttpStatusCode.Value);
             }
-            if (Optional.IsDefined(IgnoreHttpStatusCode))
+            if (IgnoreHttpStatusCode.HasValue)
             {
                 writer.WritePropertyName("IgnoreHttpStatusCode"u8);
                 writer.WriteBooleanValue(IgnoreHttpStatusCode.Value);

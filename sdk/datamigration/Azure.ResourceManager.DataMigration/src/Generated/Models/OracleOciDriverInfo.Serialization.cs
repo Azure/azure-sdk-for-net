@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DriverName))
+            if (options.Format != "W" && DriverName != null)
             {
                 writer.WritePropertyName("driverName"u8);
                 writer.WriteStringValue(DriverName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DriverSize))
+            if (options.Format != "W" && DriverSize != null)
             {
                 writer.WritePropertyName("driverSize"u8);
                 writer.WriteStringValue(DriverSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(ArchiveChecksum))
+            if (options.Format != "W" && ArchiveChecksum != null)
             {
                 writer.WritePropertyName("archiveChecksum"u8);
                 writer.WriteStringValue(ArchiveChecksum);
             }
-            if (options.Format != "W" && Optional.IsDefined(OracleChecksum))
+            if (options.Format != "W" && OracleChecksum != null)
             {
                 writer.WritePropertyName("oracleChecksum"u8);
                 writer.WriteStringValue(OracleChecksum);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssemblyVersion))
+            if (options.Format != "W" && AssemblyVersion != null)
             {
                 writer.WritePropertyName("assemblyVersion"u8);
                 writer.WriteStringValue(AssemblyVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedOracleVersions))
+            if (options.Format != "W" && !(SupportedOracleVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedOracleVersions"u8);
                 writer.WriteStartArray();

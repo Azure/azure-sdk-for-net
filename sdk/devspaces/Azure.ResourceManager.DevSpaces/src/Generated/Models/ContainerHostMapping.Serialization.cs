@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerHostResourceId))
+            if (ContainerHostResourceId != null)
             {
                 writer.WritePropertyName("containerHostResourceId"u8);
                 writer.WriteStringValue(ContainerHostResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MappedControllerResourceId))
+            if (options.Format != "W" && MappedControllerResourceId != null)
             {
                 writer.WritePropertyName("mappedControllerResourceId"u8);
                 writer.WriteStringValue(MappedControllerResourceId);

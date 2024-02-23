@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndArray();
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

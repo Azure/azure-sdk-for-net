@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(ConfigurationGroups))
+            if (!(ConfigurationGroups is ChangeTrackingList<NetworkConfigurationGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationGroups"u8);
                 writer.WriteStartArray();
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ConnectivityTopology))
+            if (ConnectivityTopology.HasValue)
             {
                 writer.WritePropertyName("connectivityTopology"u8);
                 writer.WriteStringValue(ConnectivityTopology.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Hubs))
+            if (!(Hubs is ChangeTrackingList<ConnectivityHub> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hubs"u8);
                 writer.WriteStartArray();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsGlobal))
+            if (IsGlobal.HasValue)
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AppliesToGroups))
+            if (!(AppliesToGroups is ChangeTrackingList<ConnectivityGroupItem> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DeleteExistingPeering))
+            if (DeleteExistingPeering.HasValue)
             {
                 writer.WritePropertyName("deleteExistingPeering"u8);
                 writer.WriteStringValue(DeleteExistingPeering.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);

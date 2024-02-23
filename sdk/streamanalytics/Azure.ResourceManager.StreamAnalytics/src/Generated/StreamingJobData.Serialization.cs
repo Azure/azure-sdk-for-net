@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,89 +63,89 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobId))
+            if (options.Format != "W" && JobId.HasValue)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobState))
+            if (options.Format != "W" && JobState != null)
             {
                 writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState);
             }
-            if (Optional.IsDefined(JobType))
+            if (JobType.HasValue)
             {
                 writer.WritePropertyName("jobType"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
-            if (Optional.IsDefined(OutputStartMode))
+            if (OutputStartMode.HasValue)
             {
                 writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
-            if (Optional.IsDefined(OutputStartOn))
+            if (OutputStartOn.HasValue)
             {
                 writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastOutputEventOn))
+            if (options.Format != "W" && LastOutputEventOn.HasValue)
             {
                 writer.WritePropertyName("lastOutputEventTime"u8);
                 writer.WriteStringValue(LastOutputEventOn.Value, "O");
             }
-            if (Optional.IsDefined(EventsOutOfOrderPolicy))
+            if (EventsOutOfOrderPolicy.HasValue)
             {
                 writer.WritePropertyName("eventsOutOfOrderPolicy"u8);
                 writer.WriteStringValue(EventsOutOfOrderPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(OutputErrorPolicy))
+            if (OutputErrorPolicy.HasValue)
             {
                 writer.WritePropertyName("outputErrorPolicy"u8);
                 writer.WriteStringValue(OutputErrorPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(EventsOutOfOrderMaxDelayInSeconds))
+            if (EventsOutOfOrderMaxDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("eventsOutOfOrderMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsOutOfOrderMaxDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(EventsLateArrivalMaxDelayInSeconds))
+            if (EventsLateArrivalMaxDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("eventsLateArrivalMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsLateArrivalMaxDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(DataLocalion))
+            if (DataLocalion.HasValue)
             {
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
             }
-            if (Optional.IsDefined(CompatibilityLevel))
+            if (CompatibilityLevel.HasValue)
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StreamingJobInputData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Transformation))
+            if (Transformation != null)
             {
                 writer.WritePropertyName("transformation"u8);
                 writer.WriteObjectValue(Transformation);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<StreamingJobOutputData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (!(Functions is ChangeTrackingList<StreamingJobFunctionData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(JobStorageAccount))
+            if (JobStorageAccount != null)
             {
                 if (JobStorageAccount != null)
                 {
@@ -197,17 +197,17 @@ namespace Azure.ResourceManager.StreamAnalytics
                     writer.WriteNull("jobStorageAccount");
                 }
             }
-            if (Optional.IsDefined(ContentStoragePolicy))
+            if (ContentStoragePolicy.HasValue)
             {
                 writer.WritePropertyName("contentStoragePolicy"u8);
                 writer.WriteStringValue(ContentStoragePolicy.Value.ToString());
             }
-            if (Optional.IsDefined(Externals))
+            if (Externals != null)
             {
                 writer.WritePropertyName("externals"u8);
                 writer.WriteObjectValue(Externals);
             }
-            if (Optional.IsDefined(Cluster))
+            if (Cluster != null)
             {
                 if (Cluster != null)
                 {

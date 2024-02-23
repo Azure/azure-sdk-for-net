@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Relay
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,49 +48,49 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsDynamic))
+            if (options.Format != "W" && IsDynamic.HasValue)
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ListenerCount))
+            if (options.Format != "W" && ListenerCount.HasValue)
             {
                 writer.WritePropertyName("listenerCount"u8);
                 writer.WriteNumberValue(ListenerCount.Value);
             }
-            if (Optional.IsDefined(RelayType))
+            if (RelayType.HasValue)
             {
                 writer.WritePropertyName("relayType"u8);
                 writer.WriteStringValue(RelayType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsClientAuthorizationRequired))
+            if (IsClientAuthorizationRequired.HasValue)
             {
                 writer.WritePropertyName("requiresClientAuthorization"u8);
                 writer.WriteBooleanValue(IsClientAuthorizationRequired.Value);
             }
-            if (Optional.IsDefined(IsTransportSecurityRequired))
+            if (IsTransportSecurityRequired.HasValue)
             {
                 writer.WritePropertyName("requiresTransportSecurity"u8);
                 writer.WriteBooleanValue(IsTransportSecurityRequired.Value);
             }
-            if (Optional.IsDefined(UserMetadata))
+            if (UserMetadata != null)
             {
                 writer.WritePropertyName("userMetadata"u8);
                 writer.WriteStringValue(UserMetadata);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionTimeInDays))
+            if (RetentionTimeInDays.HasValue)
             {
                 writer.WritePropertyName("retentionTimeInDays"u8);
                 writer.WriteNumberValue(RetentionTimeInDays.Value);
             }
-            if (Optional.IsDefined(PartitionCount))
+            if (PartitionCount.HasValue)
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PartitionIds))
+            if (options.Format != "W" && !(PartitionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("partitionIds"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EventHubCompatibleName))
+            if (options.Format != "W" && EventHubCompatibleName != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(EventHubCompatibleName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Endpoint))
+            if (options.Format != "W" && Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);

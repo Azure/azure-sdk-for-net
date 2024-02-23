@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(QueueName))
+            if (QueueName != null)
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Optional.IsDefined(QueueMessageTimeToLiveInSeconds))
+            if (QueueMessageTimeToLiveInSeconds.HasValue)
             {
                 writer.WritePropertyName("queueMessageTimeToLiveInSeconds"u8);
                 writer.WriteNumberValue(QueueMessageTimeToLiveInSeconds.Value);

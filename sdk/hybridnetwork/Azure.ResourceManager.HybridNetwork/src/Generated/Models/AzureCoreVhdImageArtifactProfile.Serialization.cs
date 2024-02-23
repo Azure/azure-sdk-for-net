@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VhdArtifactProfile))
+            if (VhdArtifactProfile != null)
             {
                 writer.WritePropertyName("vhdArtifactProfile"u8);
                 writer.WriteObjectValue(VhdArtifactProfile);
             }
-            if (Optional.IsDefined(ArtifactStore))
+            if (ArtifactStore != null)
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);

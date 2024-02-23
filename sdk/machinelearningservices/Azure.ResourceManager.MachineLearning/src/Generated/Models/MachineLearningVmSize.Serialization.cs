@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Family))
+            if (options.Format != "W" && Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCpus))
+            if (options.Format != "W" && VCpus.HasValue)
             {
                 writer.WritePropertyName("vCPUs"u8);
                 writer.WriteNumberValue(VCpus.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Gpus))
+            if (options.Format != "W" && Gpus.HasValue)
             {
                 writer.WritePropertyName("gpus"u8);
                 writer.WriteNumberValue(Gpus.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSVhdSizeMB))
+            if (options.Format != "W" && OSVhdSizeMB.HasValue)
             {
                 writer.WritePropertyName("osVhdSizeMB"u8);
                 writer.WriteNumberValue(OSVhdSizeMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxResourceVolumeMB))
+            if (options.Format != "W" && MaxResourceVolumeMB.HasValue)
             {
                 writer.WritePropertyName("maxResourceVolumeMB"u8);
                 writer.WriteNumberValue(MaxResourceVolumeMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemoryGB))
+            if (options.Format != "W" && MemoryGB.HasValue)
             {
                 writer.WritePropertyName("memoryGB"u8);
                 writer.WriteNumberValue(MemoryGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LowPriorityCapable))
+            if (options.Format != "W" && LowPriorityCapable.HasValue)
             {
                 writer.WritePropertyName("lowPriorityCapable"u8);
                 writer.WriteBooleanValue(LowPriorityCapable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPremiumIOSupported))
+            if (options.Format != "W" && IsPremiumIOSupported.HasValue)
             {
                 writer.WritePropertyName("premiumIO"u8);
                 writer.WriteBooleanValue(IsPremiumIOSupported.Value);
             }
-            if (Optional.IsDefined(EstimatedVmPrices))
+            if (EstimatedVmPrices != null)
             {
                 writer.WritePropertyName("estimatedVMPrices"u8);
                 writer.WriteObjectValue(EstimatedVmPrices);
             }
-            if (Optional.IsCollectionDefined(SupportedComputeTypes))
+            if (!(SupportedComputeTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedComputeTypes"u8);
                 writer.WriteStartArray();

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
-            if (Optional.IsDefined(StorageApplianceName))
+            if (StorageApplianceName != null)
             {
                 writer.WritePropertyName("storageApplianceName"u8);
                 writer.WriteStringValue(StorageApplianceName);

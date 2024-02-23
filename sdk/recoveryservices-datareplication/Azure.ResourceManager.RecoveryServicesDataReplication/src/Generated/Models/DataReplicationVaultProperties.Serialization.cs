@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
+            if (options.Format != "W" && ServiceResourceId != null)
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (Optional.IsDefined(VaultType))
+            if (VaultType.HasValue)
             {
                 writer.WritePropertyName("vaultType"u8);
                 writer.WriteStringValue(VaultType.Value.ToString());
