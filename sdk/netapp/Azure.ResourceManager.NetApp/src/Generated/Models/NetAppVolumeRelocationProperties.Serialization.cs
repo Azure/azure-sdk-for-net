@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsRelocationRequested))
+            if (IsRelocationRequested.HasValue)
             {
                 writer.WritePropertyName("relocationRequested"u8);
                 writer.WriteBooleanValue(IsRelocationRequested.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsReadyToBeFinalized))
+            if (options.Format != "W" && IsReadyToBeFinalized.HasValue)
             {
                 writer.WritePropertyName("readyToBeFinalized"u8);
                 writer.WriteBooleanValue(IsReadyToBeFinalized.Value);

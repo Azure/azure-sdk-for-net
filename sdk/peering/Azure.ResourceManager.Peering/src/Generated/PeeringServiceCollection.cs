@@ -101,7 +101,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _peeringServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, peeringServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<PeeringServiceResource>(Response.FromValue(new PeeringServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _peeringServiceRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, peeringServiceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<PeeringServiceResource>(Response.FromValue(new PeeringServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -160,7 +162,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _peeringServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, peeringServiceName, data, cancellationToken);
-                var operation = new PeeringArmOperation<PeeringServiceResource>(Response.FromValue(new PeeringServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _peeringServiceRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, peeringServiceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<PeeringServiceResource>(Response.FromValue(new PeeringServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Prefix))
+            if (options.Format != "W" && Prefix != null)
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureRegion))
+            if (options.Format != "W" && AzureRegion.HasValue)
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureService))
+            if (options.Format != "W" && AzureService != null)
             {
                 writer.WritePropertyName("azureService"u8);
                 writer.WriteStringValue(AzureService);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPrimaryRegion))
+            if (options.Format != "W" && IsPrimaryRegion.HasValue)
             {
                 writer.WritePropertyName("isPrimaryRegion"u8);
                 writer.WriteBooleanValue(IsPrimaryRegion.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BgpCommunity))
+            if (options.Format != "W" && BgpCommunity != null)
             {
                 writer.WritePropertyName("bgpCommunity"u8);
                 writer.WriteStringValue(BgpCommunity);

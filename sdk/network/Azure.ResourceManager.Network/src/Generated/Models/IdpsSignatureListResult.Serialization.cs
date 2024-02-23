@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MatchingRecordsCount))
+            if (MatchingRecordsCount.HasValue)
             {
                 writer.WritePropertyName("matchingRecordsCount"u8);
                 writer.WriteNumberValue(MatchingRecordsCount.Value);
             }
-            if (Optional.IsCollectionDefined(Signatures))
+            if (!(Signatures is ChangeTrackingList<IdpsSignatureResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("signatures"u8);
                 writer.WriteStartArray();

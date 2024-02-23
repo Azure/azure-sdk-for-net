@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteBooleanValue(IsCheckedIn);
             writer.WritePropertyName("statusMessage"u8);
             writer.WriteStringValue(StatusMessage);
-            if (Optional.IsDefined(PullRequest))
+            if (PullRequest != null)
             {
                 writer.WritePropertyName("pullRequest"u8);
                 writer.WriteStringValue(PullRequest);
             }
-            if (Optional.IsDefined(CommitId))
+            if (CommitId != null)
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);

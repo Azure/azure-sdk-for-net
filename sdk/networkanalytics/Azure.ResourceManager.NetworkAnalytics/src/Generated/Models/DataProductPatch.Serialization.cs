@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Owners))
+            if (!(Owners is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PurviewAccount))
+            if (PurviewAccount != null)
             {
                 writer.WritePropertyName("purviewAccount"u8);
                 writer.WriteStringValue(PurviewAccount);
             }
-            if (Optional.IsDefined(PurviewCollection))
+            if (PurviewCollection != null)
             {
                 writer.WritePropertyName("purviewCollection"u8);
                 writer.WriteStringValue(PurviewCollection);
             }
-            if (Optional.IsDefined(PrivateLinksEnabled))
+            if (PrivateLinksEnabled.HasValue)
             {
                 writer.WritePropertyName("privateLinksEnabled"u8);
                 writer.WriteStringValue(PrivateLinksEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(CurrentMinorVersion))
+            if (CurrentMinorVersion != null)
             {
                 writer.WritePropertyName("currentMinorVersion"u8);
                 writer.WriteStringValue(CurrentMinorVersion);

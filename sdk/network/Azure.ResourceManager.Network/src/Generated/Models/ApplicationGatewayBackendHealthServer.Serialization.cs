@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(IPConfiguration))
+            if (IPConfiguration != null)
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 writer.WriteObjectValue(IPConfiguration);
             }
-            if (Optional.IsDefined(Health))
+            if (Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (Optional.IsDefined(HealthProbeLog))
+            if (HealthProbeLog != null)
             {
                 writer.WritePropertyName("healthProbeLog"u8);
                 writer.WriteStringValue(HealthProbeLog);

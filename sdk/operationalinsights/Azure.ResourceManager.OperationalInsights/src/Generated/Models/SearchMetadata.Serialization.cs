@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SearchId))
+            if (SearchId != null)
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(SearchId);
             }
-            if (Optional.IsDefined(ResultType))
+            if (ResultType != null)
             {
                 writer.WritePropertyName("resultType"u8);
                 writer.WriteStringValue(ResultType);
             }
-            if (Optional.IsDefined(Total))
+            if (Total.HasValue)
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Optional.IsDefined(Top))
+            if (Top.HasValue)
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(CoreSummaries))
+            if (!(CoreSummaries is ChangeTrackingList<OperationalInsightsSearchCoreSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("coreSummaries"u8);
                 writer.WriteStartArray();
@@ -62,27 +62,27 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (LastUpdated.HasValue)
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Sort))
+            if (!(Sort is ChangeTrackingList<SearchSort> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sort"u8);
                 writer.WriteStartArray();
@@ -92,32 +92,32 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequestTime))
+            if (RequestTime.HasValue)
             {
                 writer.WritePropertyName("requestTime"u8);
                 writer.WriteNumberValue(RequestTime.Value);
             }
-            if (Optional.IsDefined(AggregatedValueField))
+            if (AggregatedValueField != null)
             {
                 writer.WritePropertyName("aggregatedValueField"u8);
                 writer.WriteStringValue(AggregatedValueField);
             }
-            if (Optional.IsDefined(AggregatedGroupingFields))
+            if (AggregatedGroupingFields != null)
             {
                 writer.WritePropertyName("aggregatedGroupingFields"u8);
                 writer.WriteStringValue(AggregatedGroupingFields);
             }
-            if (Optional.IsDefined(Sum))
+            if (Sum.HasValue)
             {
                 writer.WritePropertyName("sum"u8);
                 writer.WriteNumberValue(Sum.Value);
             }
-            if (Optional.IsDefined(Max))
+            if (Max.HasValue)
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema != null)
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);

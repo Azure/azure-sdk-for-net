@@ -101,7 +101,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var uri = _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -160,7 +162,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken);
-                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var uri = _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<MonitorPrivateLinkScopeResource>(Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NetworkAnalytics
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,39 +61,39 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid != null)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Product))
+            if (Product != null)
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Optional.IsDefined(MajorVersion))
+            if (MajorVersion != null)
             {
                 writer.WritePropertyName("majorVersion"u8);
                 writer.WriteStringValue(MajorVersion);
             }
-            if (Optional.IsCollectionDefined(Owners))
+            if (!(Owners is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -103,52 +103,52 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Redundancy))
+            if (Redundancy.HasValue)
             {
                 writer.WritePropertyName("redundancy"u8);
                 writer.WriteStringValue(Redundancy.Value.ToString());
             }
-            if (Optional.IsDefined(PurviewAccount))
+            if (PurviewAccount != null)
             {
                 writer.WritePropertyName("purviewAccount"u8);
                 writer.WriteStringValue(PurviewAccount);
             }
-            if (Optional.IsDefined(PurviewCollection))
+            if (PurviewCollection != null)
             {
                 writer.WritePropertyName("purviewCollection"u8);
                 writer.WriteStringValue(PurviewCollection);
             }
-            if (Optional.IsDefined(PrivateLinksEnabled))
+            if (PrivateLinksEnabled.HasValue)
             {
                 writer.WritePropertyName("privateLinksEnabled"u8);
                 writer.WriteStringValue(PrivateLinksEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(CustomerManagedKeyEncryptionEnabled))
+            if (CustomerManagedKeyEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("customerManagedKeyEncryptionEnabled"u8);
                 writer.WriteStringValue(CustomerManagedKeyEncryptionEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(CustomerEncryptionKey))
+            if (CustomerEncryptionKey != null)
             {
                 writer.WritePropertyName("customerEncryptionKey"u8);
                 writer.WriteObjectValue(CustomerEncryptionKey);
             }
-            if (Optional.IsDefined(Networkacls))
+            if (Networkacls != null)
             {
                 writer.WritePropertyName("networkacls"u8);
                 writer.WriteObjectValue(Networkacls);
             }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (ManagedResourceGroupConfiguration != null)
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableMinorVersions))
+            if (options.Format != "W" && !(AvailableMinorVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("availableMinorVersions"u8);
                 writer.WriteStartArray();
@@ -158,22 +158,22 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CurrentMinorVersion))
+            if (CurrentMinorVersion != null)
             {
                 writer.WritePropertyName("currentMinorVersion"u8);
                 writer.WriteStringValue(CurrentMinorVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Documentation))
+            if (options.Format != "W" && Documentation != null)
             {
                 writer.WritePropertyName("documentation"u8);
                 writer.WriteStringValue(Documentation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConsumptionEndpoints))
+            if (options.Format != "W" && ConsumptionEndpoints != null)
             {
                 writer.WritePropertyName("consumptionEndpoints"u8);
                 writer.WriteObjectValue(ConsumptionEndpoints);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
+            if (options.Format != "W" && KeyVaultUri != null)
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
