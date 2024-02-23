@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRulePatch(Optional.ToDictionary(tags), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new AlertProcessingRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enabled), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRulePatch>.Write(ModelReaderWriterOptions options)

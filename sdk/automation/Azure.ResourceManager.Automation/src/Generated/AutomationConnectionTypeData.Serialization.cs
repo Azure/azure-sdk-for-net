@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Automation
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> isGlobal = default;
-            Optional<IReadOnlyDictionary<string, AutomationConnectionFieldDefinition>> fieldDefinitions = default;
+            IReadOnlyDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> description = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionTypeData(id, name, type, systemData.Value, Optional.ToNullable(isGlobal), Optional.ToDictionary(fieldDefinitions), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationConnectionTypeData(id, name, type, systemData.Value, Optional.ToNullable(isGlobal), fieldDefinitions ?? new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>(), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionTypeData>.Write(ModelReaderWriterOptions options)

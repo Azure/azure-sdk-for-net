@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 return null;
             }
             Optional<AnalysisResourceSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ServerAdministrators> asAdministrators = default;
             Optional<Uri> backupBlobContainerUri = default;
             Optional<AnalysisGatewayDetails> gatewayDetails = default;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisServerPatch(sku.Value, Optional.ToDictionary(tags), asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), serializedAdditionalRawData);
+            return new AnalysisServerPatch(sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisServerPatch>.Write(ModelReaderWriterOptions options)

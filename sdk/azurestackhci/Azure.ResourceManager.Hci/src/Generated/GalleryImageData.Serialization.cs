@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci
                 return null;
             }
             Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, containerId.Value, imagePath.Value, Optional.ToNullable(osType), Optional.ToNullable(cloudInitDataSource), Optional.ToNullable(hyperVGeneration), identifier.Value, version.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new GalleryImageData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, containerId.Value, imagePath.Value, Optional.ToNullable(osType), Optional.ToNullable(cloudInitDataSource), Optional.ToNullable(hyperVGeneration), identifier.Value, version.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageData>.Write(ModelReaderWriterOptions options)

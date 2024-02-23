@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Optional<ETag> etag = default;
             Optional<string> kind = default;
             Optional<CognitiveServicesSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<CommitmentPlanProperties> properties = default;
             ResourceIdentifier id = default;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanData(id, name, type, systemData.Value, Optional.ToNullable(etag), kind.Value, sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new CommitmentPlanData(id, name, type, systemData.Value, Optional.ToNullable(etag), kind.Value, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanData>.Write(ModelReaderWriterOptions options)

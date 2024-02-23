@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Hci
                 return null;
             }
             Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicalNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, dhcpOptions.Value, subnets ?? new ChangeTrackingList<Subnet>(), Optional.ToNullable(provisioningState), vmSwitchName.Value, status.Value, serializedAdditionalRawData);
+            return new LogicalNetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, dhcpOptions.Value, subnets ?? new ChangeTrackingList<Subnet>(), Optional.ToNullable(provisioningState), vmSwitchName.Value, status.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicalNetworkData>.Write(ModelReaderWriterOptions options)

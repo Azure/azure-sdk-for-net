@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             IList<string> certificateIds = default;
             IList<string> certificate = default;
-            Optional<IDictionary<string, IList<string>>> query = default;
-            Optional<IDictionary<string, IList<string>>> header = default;
+            IDictionary<string, IList<string>> query = default;
+            IDictionary<string, IList<string>> header = default;
             Optional<BackendAuthorizationHeaderCredentials> authorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendCredentialsContract(certificateIds ?? new ChangeTrackingList<string>(), certificate ?? new ChangeTrackingList<string>(), Optional.ToDictionary(query), Optional.ToDictionary(header), authorization.Value, serializedAdditionalRawData);
+            return new BackendCredentialsContract(certificateIds ?? new ChangeTrackingList<string>(), certificate ?? new ChangeTrackingList<string>(), query ?? new ChangeTrackingDictionary<string, IList<string>>(), header ?? new ChangeTrackingDictionary<string, IList<string>>(), authorization.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendCredentialsContract>.Write(ModelReaderWriterOptions options)
