@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Classes))
+            if (!(Classes is ChangeTrackingDictionary<string, LabelClass> collection && collection.IsUndefined))
             {
                 if (Classes != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("classes");
                 }
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(MultiSelect))
+            if (MultiSelect.HasValue)
             {
                 writer.WritePropertyName("multiSelect"u8);
                 writer.WriteStringValue(MultiSelect.Value.ToString());

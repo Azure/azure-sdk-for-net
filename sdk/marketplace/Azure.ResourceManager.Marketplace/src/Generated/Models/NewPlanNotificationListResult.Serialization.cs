@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NewPlansNotifications))
+            if (!(NewPlansNotifications is ChangeTrackingList<NewPlanNotification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("newPlansNotifications"u8);
                 writer.WriteStartArray();

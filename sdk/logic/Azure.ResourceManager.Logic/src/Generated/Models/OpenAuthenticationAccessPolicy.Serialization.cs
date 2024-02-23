@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderType))
+            if (ProviderType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Claims))
+            if (!(Claims is ChangeTrackingList<OpenAuthenticationPolicyClaim> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteStartArray();

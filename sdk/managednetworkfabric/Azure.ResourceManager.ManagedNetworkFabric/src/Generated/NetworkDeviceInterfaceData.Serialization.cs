@@ -44,49 +44,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (options.Format != "W" && Optional.IsDefined(PhysicalIdentifier))
+            if (options.Format != "W" && PhysicalIdentifier != null)
             {
                 writer.WritePropertyName("physicalIdentifier"u8);
                 writer.WriteStringValue(PhysicalIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectedTo))
+            if (options.Format != "W" && ConnectedTo != null)
             {
                 writer.WritePropertyName("connectedTo"u8);
                 writer.WriteStringValue(ConnectedTo);
             }
-            if (options.Format != "W" && Optional.IsDefined(InterfaceType))
+            if (options.Format != "W" && InterfaceType.HasValue)
             {
                 writer.WritePropertyName("interfaceType"u8);
                 writer.WriteStringValue(InterfaceType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
+            if (options.Format != "W" && IPv4Address != null)
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
+            if (options.Format != "W" && IPv6Address != null)
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
+            if (options.Format != "W" && AdministrativeState.HasValue)
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());

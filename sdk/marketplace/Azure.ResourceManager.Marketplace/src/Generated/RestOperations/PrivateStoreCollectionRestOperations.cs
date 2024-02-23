@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.Marketplace
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(Guid privateStoreId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
@@ -94,6 +105,18 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(Guid privateStoreId, Guid collectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(Guid privateStoreId, Guid collectionId)
@@ -160,6 +183,18 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(Guid privateStoreId, Guid collectionId, PrivateStoreCollectionInfoData info)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(Guid privateStoreId, Guid collectionId, PrivateStoreCollectionInfoData info)
@@ -242,6 +277,18 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(Guid privateStoreId, Guid collectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(Guid privateStoreId, Guid collectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -294,6 +341,18 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePostRequestUri(Guid privateStoreId, Guid collectionId, PrivateStoreOperation? payload)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePostRequest(Guid privateStoreId, Guid collectionId, PrivateStoreOperation? payload)
@@ -355,6 +414,19 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTransferOffersRequestUri(Guid privateStoreId, Guid collectionId, TransferOffersContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/transferOffers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTransferOffersRequest(Guid privateStoreId, Guid collectionId, TransferOffersContent content)
@@ -429,6 +501,19 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
+        internal RequestUriBuilder CreateApproveAllItemsRequestUri(Guid privateStoreId, Guid collectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/approveAllItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateApproveAllItemsRequest(Guid privateStoreId, Guid collectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -490,6 +575,19 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDisableApproveAllItemsRequestUri(Guid privateStoreId, Guid collectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/disableApproveAllItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDisableApproveAllItemsRequest(Guid privateStoreId, Guid collectionId)

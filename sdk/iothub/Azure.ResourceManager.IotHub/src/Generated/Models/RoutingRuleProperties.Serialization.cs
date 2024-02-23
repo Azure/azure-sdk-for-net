@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
-            if (Optional.IsDefined(Condition))
+            if (Condition != null)
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);

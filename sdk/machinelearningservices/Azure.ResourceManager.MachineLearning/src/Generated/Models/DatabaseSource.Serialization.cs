@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 if (Query != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("query");
                 }
             }
-            if (Optional.IsDefined(StoredProcedure))
+            if (StoredProcedure != null)
             {
                 if (StoredProcedure != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storedProcedure");
                 }
             }
-            if (Optional.IsCollectionDefined(StoredProcedureParams))
+            if (!(StoredProcedureParams is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
             {
                 if (StoredProcedureParams != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storedProcedureParams");
                 }
             }
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 if (TableName != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tableName");
                 }
             }
-            if (Optional.IsDefined(Connection))
+            if (Connection != null)
             {
                 if (Connection != null)
                 {

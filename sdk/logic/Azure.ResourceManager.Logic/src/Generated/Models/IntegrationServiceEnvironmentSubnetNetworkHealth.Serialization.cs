@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(OutboundNetworkDependencies))
+            if (!(OutboundNetworkDependencies is ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outboundNetworkDependencies"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutboundNetworkHealth))
+            if (OutboundNetworkHealth != null)
             {
                 writer.WritePropertyName("outboundNetworkHealth"u8);
                 writer.WriteObjectValue(OutboundNetworkHealth);
