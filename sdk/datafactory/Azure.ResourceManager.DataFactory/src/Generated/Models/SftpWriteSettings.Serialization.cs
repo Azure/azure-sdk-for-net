@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
             Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             Optional<DataFactoryElement<string>> copyBehavior = default;
-            Optional<IList<DataFactoryMetadataItemInfo>> metadata = default;
+            IList<DataFactoryMetadataItemInfo> metadata = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, Optional.ToList(metadata), additionalProperties, operationTimeout.Value, useTempFileRename.Value);
+            return new SftpWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(), additionalProperties, operationTimeout.Value, useTempFileRename.Value);
         }
 
         BinaryData IPersistableModel<SftpWriteSettings>.Write(ModelReaderWriterOptions options)

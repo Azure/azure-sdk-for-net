@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualMachineImageBase>> value = default;
+            IReadOnlyList<VirtualMachineImageBase> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmImagesInEdgeZoneListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VmImagesInEdgeZoneListResult(value ?? new ChangeTrackingList<VirtualMachineImageBase>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmImagesInEdgeZoneListResult>.Write(ModelReaderWriterOptions options)

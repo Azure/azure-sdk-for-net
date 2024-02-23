@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<SecurityProfile> securityProfile = default;
             Optional<VCenterInfrastructureProfile> infrastructureProfile = default;
             Optional<string> powerState = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
             Optional<VMwareResourceProvisioningState> provisioningState = default;
             Optional<string> resourceUid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmInstanceData(id, name, type, systemData.Value, extendedLocation, placementProfile.Value, osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, securityProfile.Value, infrastructureProfile.Value, powerState.Value, Optional.ToList(statuses), Optional.ToNullable(provisioningState), resourceUid.Value, serializedAdditionalRawData);
+            return new VMwareVmInstanceData(id, name, type, systemData.Value, extendedLocation, placementProfile.Value, osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, securityProfile.Value, infrastructureProfile.Value, powerState.Value, statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), Optional.ToNullable(provisioningState), resourceUid.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVmInstanceData>.Write(ModelReaderWriterOptions options)

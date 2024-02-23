@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TransportAvailabilityDetails>> transportAvailabilityDetails = default;
+            IReadOnlyList<TransportAvailabilityDetails> transportAvailabilityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransportAvailabilityResponse(Optional.ToList(transportAvailabilityDetails), serializedAdditionalRawData);
+            return new TransportAvailabilityResponse(transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransportAvailabilityResponse>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<SharedGalleryOSDiskImage> osDiskImage = default;
-            Optional<IReadOnlyList<SharedGalleryDataDiskImage>> dataDiskImages = default;
+            IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryImageVersionStorageProfile(osDiskImage.Value, Optional.ToList(dataDiskImages), serializedAdditionalRawData);
+            return new SharedGalleryImageVersionStorageProfile(osDiskImage.Value, dataDiskImages ?? new ChangeTrackingList<SharedGalleryDataDiskImage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedGalleryImageVersionStorageProfile>.Write(ModelReaderWriterOptions options)

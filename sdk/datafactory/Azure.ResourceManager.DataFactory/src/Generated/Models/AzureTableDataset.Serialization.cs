@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DatasetFolder> folder = default;
             DataFactoryElement<string> tableName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName);
+            return new AzureTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, tableName);
         }
 
         BinaryData IPersistableModel<AzureTableDataset>.Write(ModelReaderWriterOptions options)

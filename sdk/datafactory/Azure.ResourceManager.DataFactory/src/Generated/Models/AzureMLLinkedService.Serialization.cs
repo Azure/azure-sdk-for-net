@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> mlEndpoint = default;
             DataFactorySecretBaseDefinition apiKey = default;
             Optional<DataFactoryElement<string>> updateResourceEndpoint = default;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, mlEndpoint, apiKey, updateResourceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, encryptedCredential.Value, authentication.Value);
+            return new AzureMLLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, mlEndpoint, apiKey, updateResourceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, encryptedCredential.Value, authentication.Value);
         }
 
         BinaryData IPersistableModel<AzureMLLinkedService>.Write(ModelReaderWriterOptions options)

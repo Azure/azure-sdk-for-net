@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ComputePrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<ComputePrivateEndpointConnectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputePrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ComputePrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ComputePrivateEndpointConnectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

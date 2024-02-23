@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> environmentUrl = default;
             Optional<DataFactoryElement<string>> username = default;
             Optional<DataFactorySecretBaseDefinition> password = default;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceServiceCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, environmentUrl.Value, username.Value, password, securityToken, apiVersion.Value, extendedProperties.Value, encryptedCredential.Value);
+            return new SalesforceServiceCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, environmentUrl.Value, username.Value, password, securityToken, apiVersion.Value, extendedProperties.Value, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SalesforceServiceCloudLinkedService>.Write(ModelReaderWriterOptions options)

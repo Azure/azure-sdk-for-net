@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<WritableSubResource> healthProbe = default;
-            Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
+            IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default;
             Optional<NetworkApiVersion> networkApiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetNetworkProfile(healthProbe, Optional.ToList(networkInterfaceConfigurations), Optional.ToNullable(networkApiVersion), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetNetworkProfile(healthProbe, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>(), Optional.ToNullable(networkApiVersion), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetNetworkProfile>.Write(ModelReaderWriterOptions options)

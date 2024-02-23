@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<DataFactoryElement<string>> folderPath = default;
             Optional<DataFactoryElement<string>> tableRootLocation = default;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, folderPath.Value, tableRootLocation.Value, fileName.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, compression.Value);
+            return new AzureBlobDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, folderPath.Value, tableRootLocation.Value, fileName.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, compression.Value);
         }
 
         BinaryData IPersistableModel<AzureBlobDataset>.Write(ModelReaderWriterOptions options)

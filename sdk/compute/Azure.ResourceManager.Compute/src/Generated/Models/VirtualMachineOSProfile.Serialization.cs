@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> customData = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;
             Optional<LinuxConfiguration> linuxConfiguration = default;
-            Optional<IList<VaultSecretGroup>> secrets = default;
+            IList<VaultSecretGroup> secrets = default;
             Optional<bool> allowExtensionOperations = default;
             Optional<bool> requireGuestProvisionSignal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineOSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal), serializedAdditionalRawData);
+            return new VirtualMachineOSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, secrets ?? new ChangeTrackingList<VaultSecretGroup>(), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineOSProfile>.Write(ModelReaderWriterOptions options)

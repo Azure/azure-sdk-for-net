@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> policyName = default;
-            Optional<IList<PermissionType>> permissions = default;
+            IList<PermissionType> permissions = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationPolicyResourceFormatData(id, name, type, systemData.Value, policyName.Value, Optional.ToList(permissions), primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
+            return new AuthorizationPolicyResourceFormatData(id, name, type, systemData.Value, policyName.Value, permissions ?? new ChangeTrackingList<PermissionType>(), primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationPolicyResourceFormatData>.Write(ModelReaderWriterOptions options)

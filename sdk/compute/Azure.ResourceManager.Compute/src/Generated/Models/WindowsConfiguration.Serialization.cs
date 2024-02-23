@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> provisionVmAgent = default;
             Optional<bool> enableAutomaticUpdates = default;
             Optional<string> timeZone = default;
-            Optional<IList<AdditionalUnattendContent>> additionalUnattendContent = default;
+            IList<AdditionalUnattendContent> additionalUnattendContent = default;
             Optional<PatchSettings> patchSettings = default;
             Optional<WinRMConfiguration> winRM = default;
             Optional<bool> enableVmAgentPlatformUpdates = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsConfiguration(Optional.ToNullable(provisionVmAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value, Optional.ToNullable(enableVmAgentPlatformUpdates), serializedAdditionalRawData);
+            return new WindowsConfiguration(Optional.ToNullable(provisionVmAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(), patchSettings.Value, winRM.Value, Optional.ToNullable(enableVmAgentPlatformUpdates), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsConfiguration>.Write(ModelReaderWriterOptions options)

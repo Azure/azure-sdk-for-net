@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CostManagementAlertData>> value = default;
+            IReadOnlyList<CostManagementAlertData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementAlertsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CostManagementAlertsResult(value ?? new ChangeTrackingList<CostManagementAlertData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementAlertsResult>.Write(ModelReaderWriterOptions options)

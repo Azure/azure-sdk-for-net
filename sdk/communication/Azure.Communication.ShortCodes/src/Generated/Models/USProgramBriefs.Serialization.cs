@@ -19,7 +19,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<USProgramBrief>> programBriefs = default;
+            IReadOnlyList<USProgramBrief> programBriefs = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new USProgramBriefs(Optional.ToList(programBriefs), nextLink.Value);
+            return new USProgramBriefs(programBriefs ?? new ChangeTrackingList<USProgramBrief>(), nextLink.Value);
         }
     }
 }

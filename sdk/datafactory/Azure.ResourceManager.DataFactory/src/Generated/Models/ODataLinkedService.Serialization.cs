@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> url = default;
             Optional<ODataAuthenticationType> authenticationType = default;
             Optional<DataFactoryElement<string>> userName = default;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ODataLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password, authHeaders.Value, tenant.Value, servicePrincipalId.Value, azureCloudType.Value, aadResourceId.Value, Optional.ToNullable(aadServicePrincipalCredentialType), servicePrincipalKey, servicePrincipalEmbeddedCert, servicePrincipalEmbeddedCertPassword, encryptedCredential.Value);
+            return new ODataLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password, authHeaders.Value, tenant.Value, servicePrincipalId.Value, azureCloudType.Value, aadResourceId.Value, Optional.ToNullable(aadServicePrincipalCredentialType), servicePrincipalKey, servicePrincipalEmbeddedCert, servicePrincipalEmbeddedCertPassword, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<ODataLinkedService>.Write(ModelReaderWriterOptions options)

@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             AzureFunctionActivityMethod method = default;
             DataFactoryElement<string> functionName = default;
             Optional<IDictionary<string, DataFactoryElement<string>>> headers = default;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFunctionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, method, functionName, Optional.ToDictionary(headers), body.Value);
+            return new AzureFunctionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, method, functionName, Optional.ToDictionary(headers), body.Value);
         }
 
         BinaryData IPersistableModel<AzureFunctionActivity>.Write(ModelReaderWriterOptions options)

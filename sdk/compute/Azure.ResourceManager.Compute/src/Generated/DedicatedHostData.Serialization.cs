@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
             Optional<int> platformFaultDomain = default;
             Optional<bool> autoReplaceOnFailure = default;
             Optional<string> hostId = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachines = default;
+            IReadOnlyList<SubResource> virtualMachines = default;
             Optional<DedicatedHostLicenseType> licenseType = default;
             Optional<DateTimeOffset> provisioningTime = default;
             Optional<string> provisioningState = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, Optional.ToList(virtualMachines), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new DedicatedHostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, virtualMachines ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHostData>.Write(ModelReaderWriterOptions options)

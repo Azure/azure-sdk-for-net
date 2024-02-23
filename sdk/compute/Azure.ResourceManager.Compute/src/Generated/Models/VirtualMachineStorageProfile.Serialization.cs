@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Optional<ImageReference> imageReference = default;
             Optional<VirtualMachineOSDisk> osDisk = default;
-            Optional<IList<VirtualMachineDataDisk>> dataDisks = default;
+            IList<VirtualMachineDataDisk> dataDisks = default;
             Optional<DiskControllerType> diskControllerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(diskControllerType), serializedAdditionalRawData);
+            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, dataDisks ?? new ChangeTrackingList<VirtualMachineDataDisk>(), Optional.ToNullable(diskControllerType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineStorageProfile>.Write(ModelReaderWriterOptions options)

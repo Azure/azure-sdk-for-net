@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> databaseName = default;
-            Optional<IList<string>> graphNames = default;
+            IList<string> graphNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GremlinDatabaseRestoreResourceInfo(databaseName.Value, Optional.ToList(graphNames), serializedAdditionalRawData);
+            return new GremlinDatabaseRestoreResourceInfo(databaseName.Value, graphNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GremlinDatabaseRestoreResourceInfo>.Write(ModelReaderWriterOptions options)

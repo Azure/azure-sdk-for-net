@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryTaskStepType type = "Unknown";
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
+            IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
             Optional<string> contextPath = default;
             Optional<string> contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownTaskStepProperties(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData);
+            return new UnknownTaskStepProperties(type, baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskStepProperties>.Write(ModelReaderWriterOptions options)

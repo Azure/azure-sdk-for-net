@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<MigrateOracleAzureDBPostgreSqlSyncTaskInput> input = default;
-            Optional<IReadOnlyList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>> output = default;
+            IReadOnlyList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput> output = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
+            IReadOnlyList<ODataError> errors = default;
             Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
+            IReadOnlyList<CommandProperties> commands = default;
             Optional<IDictionary<string, string>> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, Optional.ToList(output));
+            return new MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>());
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBForPostgreSqlSyncTaskProperties>.Write(ModelReaderWriterOptions options)

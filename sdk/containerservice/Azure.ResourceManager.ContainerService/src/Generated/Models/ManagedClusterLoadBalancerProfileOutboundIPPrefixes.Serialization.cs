@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<WritableSubResource>> publicIPPrefixes = default;
+            IList<WritableSubResource> publicIPPrefixes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(Optional.ToList(publicIPPrefixes), serializedAdditionalRawData);
+            return new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>.Write(ModelReaderWriterOptions options)

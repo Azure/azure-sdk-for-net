@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<ReportGranularityType> granularity = default;
             Optional<ReportConfigDatasetConfiguration> configuration = default;
             Optional<IDictionary<string, ReportConfigAggregation>> aggregation = default;
-            Optional<IList<ReportConfigGrouping>> grouping = default;
-            Optional<IList<ReportConfigSorting>> sorting = default;
+            IList<ReportConfigGrouping> grouping = default;
+            IList<ReportConfigSorting> sorting = default;
             Optional<ReportConfigFilter> filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportConfigDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), Optional.ToList(sorting), filter.Value, serializedAdditionalRawData);
+            return new ReportConfigDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), grouping ?? new ChangeTrackingList<ReportConfigGrouping>(), sorting ?? new ChangeTrackingList<ReportConfigSorting>(), filter.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportConfigDataset>.Write(ModelReaderWriterOptions options)

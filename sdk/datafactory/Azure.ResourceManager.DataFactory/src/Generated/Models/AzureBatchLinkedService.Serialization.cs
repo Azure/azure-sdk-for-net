@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> accountName = default;
             Optional<DataFactorySecretBaseDefinition> accessKey = default;
             DataFactoryElement<string> batchUri = default;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBatchLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accountName, accessKey, batchUri, poolName, linkedServiceName, encryptedCredential.Value, credential.Value);
+            return new AzureBatchLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, accountName, accessKey, batchUri, poolName, linkedServiceName, encryptedCredential.Value, credential.Value);
         }
 
         BinaryData IPersistableModel<AzureBatchLinkedService>.Write(ModelReaderWriterOptions options)

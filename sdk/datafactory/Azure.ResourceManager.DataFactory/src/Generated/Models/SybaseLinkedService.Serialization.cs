@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> server = default;
             DataFactoryElement<string> database = default;
             Optional<DataFactoryElement<string>> schema = default;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SybaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, database, schema.Value, Optional.ToNullable(authenticationType), username.Value, password, encryptedCredential.Value);
+            return new SybaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, server, database, schema.Value, Optional.ToNullable(authenticationType), username.Value, password, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SybaseLinkedService>.Write(ModelReaderWriterOptions options)

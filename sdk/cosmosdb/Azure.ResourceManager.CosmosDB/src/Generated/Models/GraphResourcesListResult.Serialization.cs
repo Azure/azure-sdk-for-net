@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GraphResourceGetResultData>> value = default;
+            IReadOnlyList<GraphResourceGetResultData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphResourcesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new GraphResourcesListResult(value ?? new ChangeTrackingList<GraphResourceGetResultData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphResourcesListResult>.Write(ModelReaderWriterOptions options)

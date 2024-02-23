@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<TriggerPipelineReference>> pipelines = default;
+            IList<TriggerPipelineReference> pipelines = default;
             string type = default;
             Optional<string> description = default;
             Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             string folderPath = default;
             int maxConcurrency = default;
             DataFactoryLinkedServiceReference linkedService = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryBlobTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), folderPath, maxConcurrency, linkedService);
+            return new DataFactoryBlobTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(), folderPath, maxConcurrency, linkedService);
         }
 
         BinaryData IPersistableModel<DataFactoryBlobTrigger>.Write(ModelReaderWriterOptions options)

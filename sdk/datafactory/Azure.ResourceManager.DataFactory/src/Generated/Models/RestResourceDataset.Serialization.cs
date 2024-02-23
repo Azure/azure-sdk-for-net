@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<DataFactoryElement<string>> relativeUrl = default;
             Optional<DataFactoryElement<string>> requestMethod = default;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, relativeUrl.Value, requestMethod.Value, requestBody.Value, Optional.ToDictionary(additionalHeaders), Optional.ToDictionary(paginationRules));
+            return new RestResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, relativeUrl.Value, requestMethod.Value, requestBody.Value, Optional.ToDictionary(additionalHeaders), Optional.ToDictionary(paginationRules));
         }
 
         BinaryData IPersistableModel<RestResourceDataset>.Write(ModelReaderWriterOptions options)

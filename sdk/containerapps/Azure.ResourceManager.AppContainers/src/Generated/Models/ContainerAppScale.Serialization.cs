@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             Optional<int> minReplicas = default;
             Optional<int> maxReplicas = default;
-            Optional<IList<ContainerAppScaleRule>> rules = default;
+            IList<ContainerAppScaleRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppScale(Optional.ToNullable(minReplicas), Optional.ToNullable(maxReplicas), Optional.ToList(rules), serializedAdditionalRawData);
+            return new ContainerAppScale(Optional.ToNullable(minReplicas), Optional.ToNullable(maxReplicas), rules ?? new ChangeTrackingList<ContainerAppScaleRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppScale>.Write(ModelReaderWriterOptions options)
