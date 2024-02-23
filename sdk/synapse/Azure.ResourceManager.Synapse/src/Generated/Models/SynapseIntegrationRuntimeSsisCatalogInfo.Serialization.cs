@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogServerEndpoint))
+            if (CatalogServerEndpoint != null)
             {
                 writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(CatalogAdminUserName))
+            if (CatalogAdminUserName != null)
             {
                 writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
-            if (Optional.IsDefined(CatalogAdminPassword))
+            if (CatalogAdminPassword != null)
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
                 writer.WriteObjectValue(CatalogAdminPassword);
             }
-            if (Optional.IsDefined(CatalogPricingTier))
+            if (CatalogPricingTier.HasValue)
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());

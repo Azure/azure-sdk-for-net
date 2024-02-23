@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportedSkus))
+            if (!(SupportedSkus is ChangeTrackingList<SapSupportedSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedSkus"u8);
                 writer.WriteStartArray();

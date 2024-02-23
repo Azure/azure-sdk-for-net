@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterBootstrapAccountPassword))
+            if (ClusterBootstrapAccountPassword != null)
             {
                 writer.WritePropertyName("clusterBootstrapAccountPassword"u8);
                 writer.WriteStringValue(ClusterBootstrapAccountPassword);
             }
-            if (Optional.IsDefined(ClusterOperatorAccountPassword))
+            if (ClusterOperatorAccountPassword != null)
             {
                 writer.WritePropertyName("clusterOperatorAccountPassword"u8);
                 writer.WriteStringValue(ClusterOperatorAccountPassword);
             }
-            if (Optional.IsDefined(SqlServiceAccountPassword))
+            if (SqlServiceAccountPassword != null)
             {
                 writer.WritePropertyName("sqlServiceAccountPassword"u8);
                 writer.WriteStringValue(SqlServiceAccountPassword);
