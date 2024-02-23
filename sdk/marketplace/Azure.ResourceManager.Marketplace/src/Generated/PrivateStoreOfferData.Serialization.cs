@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<DateTimeOffset> modifiedAt = default;
             IList<string> specificPlanIdsLimitation = default;
             Optional<bool> updateSuppressedDueIdempotence = default;
-            Optional<IDictionary<string, Uri>> iconFileUris = default;
+            IDictionary<string, Uri> iconFileUris = default;
             IList<PrivateStorePlan> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreOfferData(id, name, type, systemData.Value, uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), specificPlanIdsLimitation ?? new ChangeTrackingList<string>(), Optional.ToNullable(updateSuppressedDueIdempotence), Optional.ToDictionary(iconFileUris), plans ?? new ChangeTrackingList<PrivateStorePlan>(), serializedAdditionalRawData);
+            return new PrivateStoreOfferData(id, name, type, systemData.Value, uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), specificPlanIdsLimitation ?? new ChangeTrackingList<string>(), Optional.ToNullable(updateSuppressedDueIdempotence), iconFileUris ?? new ChangeTrackingDictionary<string, Uri>(), plans ?? new ChangeTrackingList<PrivateStorePlan>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreOfferData>.Write(ModelReaderWriterOptions options)

@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<MonitoringDataSegment> dataSegment = default;
-            Optional<IDictionary<string, MonitoringFeatureDataType>> featureDataTypeOverride = default;
+            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
             Optional<MonitoringFeatureFilterBase> features = default;
             IList<DataDriftMetricThresholdBase> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
             Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataDriftMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, dataSegment.Value, Optional.ToDictionary(featureDataTypeOverride), features.Value, metricThresholds, productionData, referenceData);
+            return new DataDriftMonitoringSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, dataSegment.Value, featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(), features.Value, metricThresholds, productionData, referenceData);
         }
 
         BinaryData IPersistableModel<DataDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)
