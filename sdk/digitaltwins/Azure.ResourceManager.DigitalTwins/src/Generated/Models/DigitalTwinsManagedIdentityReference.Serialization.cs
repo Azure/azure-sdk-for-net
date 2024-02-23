@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (IdentityType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (UserAssignedIdentity != null)
             {
                 if (UserAssignedIdentity != null)
                 {

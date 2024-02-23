@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageType))
+            if (UsageType != null)
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType);
             }
-            if (Optional.IsDefined(BillingCycle))
+            if (BillingCycle != null)
             {
                 writer.WritePropertyName("billingCycle"u8);
                 writer.WriteStringValue(BillingCycle);
             }
-            if (Optional.IsDefined(PlanDetails))
+            if (PlanDetails != null)
             {
                 writer.WritePropertyName("planDetails"u8);
                 writer.WriteStringValue(PlanDetails);
             }
-            if (Optional.IsDefined(EffectiveOn))
+            if (EffectiveOn.HasValue)
             {
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");

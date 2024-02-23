@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (!(VirtualNetworkRules is ChangeTrackingList<ElasticSanVirtualNetworkRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();

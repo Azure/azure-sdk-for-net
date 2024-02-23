@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            if (options.Format != "W" && Optional.IsDefined(PodPrefix))
+            if (options.Format != "W" && PodPrefix != null)
             {
                 writer.WritePropertyName("podPrefix"u8);
                 writer.WriteStringValue(PodPrefix);

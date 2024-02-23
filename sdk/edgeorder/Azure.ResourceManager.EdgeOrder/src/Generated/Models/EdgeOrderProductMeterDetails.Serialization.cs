@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Multiplier))
+            if (options.Format != "W" && Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargingType))
+            if (options.Format != "W" && ChargingType.HasValue)
             {
                 writer.WritePropertyName("chargingType"u8);
                 writer.WriteStringValue(ChargingType.Value.ToString());

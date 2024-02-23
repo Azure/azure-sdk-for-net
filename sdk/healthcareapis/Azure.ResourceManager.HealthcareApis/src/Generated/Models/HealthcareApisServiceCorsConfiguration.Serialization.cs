@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Origins))
+            if (!(Origins is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Methods))
+            if (!(Methods is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("methods"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxAge))
+            if (MaxAge.HasValue)
             {
                 writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
-            if (Optional.IsDefined(AllowCredentials))
+            if (AllowCredentials.HasValue)
             {
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);

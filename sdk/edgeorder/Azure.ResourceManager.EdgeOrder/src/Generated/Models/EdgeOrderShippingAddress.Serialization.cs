@@ -28,44 +28,44 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("streetAddress1"u8);
             writer.WriteStringValue(StreetAddress1);
-            if (Optional.IsDefined(StreetAddress2))
+            if (StreetAddress2 != null)
             {
                 writer.WritePropertyName("streetAddress2"u8);
                 writer.WriteStringValue(StreetAddress2);
             }
-            if (Optional.IsDefined(StreetAddress3))
+            if (StreetAddress3 != null)
             {
                 writer.WritePropertyName("streetAddress3"u8);
                 writer.WriteStringValue(StreetAddress3);
             }
-            if (Optional.IsDefined(City))
+            if (City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(StateOrProvince))
+            if (StateOrProvince != null)
             {
                 writer.WritePropertyName("stateOrProvince"u8);
                 writer.WriteStringValue(StateOrProvince);
             }
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            if (Optional.IsDefined(PostalCode))
+            if (PostalCode != null)
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (Optional.IsDefined(ZipExtendedCode))
+            if (ZipExtendedCode != null)
             {
                 writer.WritePropertyName("zipExtendedCode"u8);
                 writer.WriteStringValue(ZipExtendedCode);
             }
-            if (Optional.IsDefined(CompanyName))
+            if (CompanyName != null)
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (Optional.IsDefined(AddressType))
+            if (AddressType.HasValue)
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToString());

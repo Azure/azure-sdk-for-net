@@ -29,52 +29,52 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(ValueString))
+            if (ValueString != null)
             {
                 writer.WritePropertyName("valueString"u8);
                 writer.WriteStringValue(ValueString);
             }
-            if (Optional.IsDefined(ValueDate))
+            if (ValueDate.HasValue)
             {
                 writer.WritePropertyName("valueDate"u8);
                 writer.WriteStringValue(ValueDate.Value, "D");
             }
-            if (Optional.IsDefined(ValueTime))
+            if (ValueTime.HasValue)
             {
                 writer.WritePropertyName("valueTime"u8);
                 writer.WriteStringValue(ValueTime.Value, "T");
             }
-            if (Optional.IsDefined(ValuePhoneNumber))
+            if (ValuePhoneNumber != null)
             {
                 writer.WritePropertyName("valuePhoneNumber"u8);
                 writer.WriteStringValue(ValuePhoneNumber);
             }
-            if (Optional.IsDefined(ValueNumber))
+            if (ValueNumber.HasValue)
             {
                 writer.WritePropertyName("valueNumber"u8);
                 writer.WriteNumberValue(ValueNumber.Value);
             }
-            if (Optional.IsDefined(ValueInteger))
+            if (ValueInteger.HasValue)
             {
                 writer.WritePropertyName("valueInteger"u8);
                 writer.WriteNumberValue(ValueInteger.Value);
             }
-            if (Optional.IsDefined(ValueSelectionMark))
+            if (ValueSelectionMark.HasValue)
             {
                 writer.WritePropertyName("valueSelectionMark"u8);
                 writer.WriteStringValue(ValueSelectionMark.Value.ToString());
             }
-            if (Optional.IsDefined(ValueSignature))
+            if (ValueSignature.HasValue)
             {
                 writer.WritePropertyName("valueSignature"u8);
                 writer.WriteStringValue(ValueSignature.Value.ToString());
             }
-            if (Optional.IsDefined(ValueCountryRegion))
+            if (ValueCountryRegion != null)
             {
                 writer.WritePropertyName("valueCountryRegion"u8);
                 writer.WriteStringValue(ValueCountryRegion);
             }
-            if (Optional.IsCollectionDefined(ValueArray))
+            if (!(ValueArray is ChangeTrackingList<DocumentField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValueObject))
+            if (!(ValueObject is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
@@ -95,27 +95,27 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ValueCurrency))
+            if (ValueCurrency != null)
             {
                 writer.WritePropertyName("valueCurrency"u8);
                 writer.WriteObjectValue(ValueCurrency);
             }
-            if (Optional.IsDefined(ValueAddress))
+            if (ValueAddress != null)
             {
                 writer.WritePropertyName("valueAddress"u8);
                 writer.WriteObjectValue(ValueAddress);
             }
-            if (Optional.IsDefined(ValueBoolean))
+            if (ValueBoolean.HasValue)
             {
                 writer.WritePropertyName("valueBoolean"u8);
                 writer.WriteBooleanValue(ValueBoolean.Value);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Spans))
+            if (!(Spans is ChangeTrackingList<DocumentSpan> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("spans"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Confidence))
+            if (Confidence.HasValue)
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
