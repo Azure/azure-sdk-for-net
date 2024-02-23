@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> disableVpnEncryption = default;
             IReadOnlyList<WritableSubResource> virtualHubs = default;
             IReadOnlyList<WritableSubResource> vpnSites = default;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWanData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(disableVpnEncryption), virtualHubs ?? new ChangeTrackingList<WritableSubResource>(), vpnSites ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
+            return new VirtualWanData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(disableVpnEncryption), virtualHubs ?? new ChangeTrackingList<WritableSubResource>(), vpnSites ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
         }
 
         BinaryData IPersistableModel<VirtualWanData>.Write(ModelReaderWriterOptions options)

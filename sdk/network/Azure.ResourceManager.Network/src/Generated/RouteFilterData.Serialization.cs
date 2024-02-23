@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IList<RouteFilterRuleData> rules = default;
             IReadOnlyList<ExpressRouteCircuitPeeringData> peerings = default;
             IReadOnlyList<ExpressRouteCircuitPeeringData> ipv6Peerings = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteFilterData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), rules ?? new ChangeTrackingList<RouteFilterRuleData>(), peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), ipv6Peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), Optional.ToNullable(provisioningState));
+            return new RouteFilterData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), rules ?? new ChangeTrackingList<RouteFilterRuleData>(), peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), ipv6Peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<RouteFilterData>.Write(ModelReaderWriterOptions options)
