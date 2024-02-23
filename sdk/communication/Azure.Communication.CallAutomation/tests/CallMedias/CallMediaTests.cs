@@ -808,6 +808,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             };
         }
 
+        [Obsolete]
         private static IEnumerable<object?[]> TestData_HoldOperationsAsync()
         {
             return new[]
@@ -830,7 +831,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.HoldAsync(_holdOptionsNoMusic)
+                   callMedia => callMedia.HoldAsync(_holdOptions)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
@@ -839,6 +840,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             };
         }
 
+        [Obsolete]
         private static IEnumerable<object?[]> TestData_HoldOperations()
         {
             return new[]

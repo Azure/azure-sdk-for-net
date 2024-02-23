@@ -393,6 +393,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Obsolete("This operations is deprecated, please us Hold instead.")]
         public virtual Response StartHoldMusic(StartHoldMusicOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartHoldMusic)}");
@@ -422,6 +423,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Obsolete("This operations is deprecated, please us HoldAsync instead.")]
         public virtual async Task<Response> StartHoldMusicAsync(StartHoldMusicOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartHoldMusicAsync)}");
@@ -451,6 +453,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Obsolete("This operations is deprecated, please us UnholdAsync instead.")]
         public virtual async Task<Response> StopHoldMusicAsync(StopHoldMusicOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopHoldMusicAsync)}");
@@ -474,6 +477,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [Obsolete("This operations is deprecated, please us Unhold instead.")]
         public virtual Response StopHoldMusic(StopHoldMusicOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopHoldMusicAsync)}");
