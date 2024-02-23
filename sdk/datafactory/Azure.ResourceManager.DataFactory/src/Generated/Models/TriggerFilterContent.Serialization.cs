@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContinuationToken))
+            if (ContinuationToken != null)
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
-            if (Optional.IsDefined(ParentTriggerName))
+            if (ParentTriggerName != null)
             {
                 writer.WritePropertyName("parentTriggerName"u8);
                 writer.WriteStringValue(ParentTriggerName);

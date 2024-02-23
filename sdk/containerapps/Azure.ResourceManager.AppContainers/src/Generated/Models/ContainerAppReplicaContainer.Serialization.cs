@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ContainerId))
+            if (ContainerId != null)
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (Optional.IsDefined(IsReady))
+            if (IsReady.HasValue)
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(IsReady.Value);
             }
-            if (Optional.IsDefined(IsStarted))
+            if (IsStarted.HasValue)
             {
                 writer.WritePropertyName("started"u8);
                 writer.WriteBooleanValue(IsStarted.Value);
             }
-            if (Optional.IsDefined(RestartCount))
+            if (RestartCount.HasValue)
             {
                 writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RunningState))
+            if (options.Format != "W" && RunningState.HasValue)
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RunningStateDetails))
+            if (options.Format != "W" && RunningStateDetails != null)
             {
                 writer.WritePropertyName("runningStateDetails"u8);
                 writer.WriteStringValue(RunningStateDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(LogStreamEndpoint))
+            if (options.Format != "W" && LogStreamEndpoint != null)
             {
                 writer.WritePropertyName("logStreamEndpoint"u8);
                 writer.WriteStringValue(LogStreamEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecEndpoint))
+            if (options.Format != "W" && ExecEndpoint != null)
             {
                 writer.WritePropertyName("execEndpoint"u8);
                 writer.WriteStringValue(ExecEndpoint);

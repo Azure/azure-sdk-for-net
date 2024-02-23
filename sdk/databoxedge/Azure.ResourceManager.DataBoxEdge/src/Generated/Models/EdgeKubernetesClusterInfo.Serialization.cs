@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EtcdInfo))
+            if (options.Format != "W" && EtcdInfo != null)
             {
                 writer.WritePropertyName("etcdInfo"u8);
                 writer.WriteObjectValue(EtcdInfo);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && !(Nodes is ChangeTrackingList<EdgeKubernetesNodeInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();

@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ContainerService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(ClusterIdentity))
+            if (ClusterIdentity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(ClusterIdentity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,64 +72,64 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            if (options.Format != "W" && PowerState != null)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteObjectValue(PowerState);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxAgentPools))
+            if (options.Format != "W" && MaxAgentPools.HasValue)
             {
                 writer.WritePropertyName("maxAgentPools"u8);
                 writer.WriteNumberValue(MaxAgentPools.Value);
             }
-            if (Optional.IsDefined(KubernetesVersion))
+            if (KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentKubernetesVersion))
+            if (options.Format != "W" && CurrentKubernetesVersion != null)
             {
                 writer.WritePropertyName("currentKubernetesVersion"u8);
                 writer.WriteStringValue(CurrentKubernetesVersion);
             }
-            if (Optional.IsDefined(DnsPrefix))
+            if (DnsPrefix != null)
             {
                 writer.WritePropertyName("dnsPrefix"u8);
                 writer.WriteStringValue(DnsPrefix);
             }
-            if (Optional.IsDefined(FqdnSubdomain))
+            if (FqdnSubdomain != null)
             {
                 writer.WritePropertyName("fqdnSubdomain"u8);
                 writer.WriteStringValue(FqdnSubdomain);
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateFqdn))
+            if (options.Format != "W" && PrivateFqdn != null)
             {
                 writer.WritePropertyName("privateFQDN"u8);
                 writer.WriteStringValue(PrivateFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzurePortalFqdn))
+            if (options.Format != "W" && AzurePortalFqdn != null)
             {
                 writer.WritePropertyName("azurePortalFQDN"u8);
                 writer.WriteStringValue(AzurePortalFqdn);
             }
-            if (Optional.IsCollectionDefined(AgentPoolProfiles))
+            if (!(AgentPoolProfiles is ChangeTrackingList<ManagedClusterAgentPoolProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("agentPoolProfiles"u8);
                 writer.WriteStartArray();
@@ -139,22 +139,22 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LinuxProfile))
+            if (LinuxProfile != null)
             {
                 writer.WritePropertyName("linuxProfile"u8);
                 writer.WriteObjectValue(LinuxProfile);
             }
-            if (Optional.IsDefined(WindowsProfile))
+            if (WindowsProfile != null)
             {
                 writer.WritePropertyName("windowsProfile"u8);
                 writer.WriteObjectValue(WindowsProfile);
             }
-            if (Optional.IsDefined(ServicePrincipalProfile))
+            if (ServicePrincipalProfile != null)
             {
                 writer.WritePropertyName("servicePrincipalProfile"u8);
                 writer.WriteObjectValue(ServicePrincipalProfile);
             }
-            if (Optional.IsCollectionDefined(AddonProfiles))
+            if (!(AddonProfiles is ChangeTrackingDictionary<string, ManagedClusterAddonProfile> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("addonProfiles"u8);
                 writer.WriteStartObject();
@@ -165,72 +165,72 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(PodIdentityProfile))
+            if (PodIdentityProfile != null)
             {
                 writer.WritePropertyName("podIdentityProfile"u8);
                 writer.WriteObjectValue(PodIdentityProfile);
             }
-            if (Optional.IsDefined(OidcIssuerProfile))
+            if (OidcIssuerProfile != null)
             {
                 writer.WritePropertyName("oidcIssuerProfile"u8);
                 writer.WriteObjectValue(OidcIssuerProfile);
             }
-            if (Optional.IsDefined(NodeResourceGroup))
+            if (NodeResourceGroup != null)
             {
                 writer.WritePropertyName("nodeResourceGroup"u8);
                 writer.WriteStringValue(NodeResourceGroup);
             }
-            if (Optional.IsDefined(EnableRbac))
+            if (EnableRbac.HasValue)
             {
                 writer.WritePropertyName("enableRBAC"u8);
                 writer.WriteBooleanValue(EnableRbac.Value);
             }
-            if (Optional.IsDefined(SupportPlan))
+            if (SupportPlan.HasValue)
             {
                 writer.WritePropertyName("supportPlan"u8);
                 writer.WriteStringValue(SupportPlan.Value.ToString());
             }
-            if (Optional.IsDefined(EnablePodSecurityPolicy))
+            if (EnablePodSecurityPolicy.HasValue)
             {
                 writer.WritePropertyName("enablePodSecurityPolicy"u8);
                 writer.WriteBooleanValue(EnablePodSecurityPolicy.Value);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(AadProfile))
+            if (AadProfile != null)
             {
                 writer.WritePropertyName("aadProfile"u8);
                 writer.WriteObjectValue(AadProfile);
             }
-            if (Optional.IsDefined(AutoUpgradeProfile))
+            if (AutoUpgradeProfile != null)
             {
                 writer.WritePropertyName("autoUpgradeProfile"u8);
                 writer.WriteObjectValue(AutoUpgradeProfile);
             }
-            if (Optional.IsDefined(UpgradeSettings))
+            if (UpgradeSettings != null)
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
             }
-            if (Optional.IsDefined(AutoScalerProfile))
+            if (AutoScalerProfile != null)
             {
                 writer.WritePropertyName("autoScalerProfile"u8);
                 writer.WriteObjectValue(AutoScalerProfile);
             }
-            if (Optional.IsDefined(ApiServerAccessProfile))
+            if (ApiServerAccessProfile != null)
             {
                 writer.WritePropertyName("apiServerAccessProfile"u8);
                 writer.WriteObjectValue(ApiServerAccessProfile);
             }
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetID"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsCollectionDefined(IdentityProfile))
+            if (!(IdentityProfile is ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("identityProfile"u8);
                 writer.WriteStartObject();
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PrivateLinkResources))
+            if (!(PrivateLinkResources is ChangeTrackingList<ContainerServicePrivateLinkResourceData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("privateLinkResources"u8);
                 writer.WriteStartArray();
@@ -251,47 +251,47 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAccounts))
+            if (DisableLocalAccounts.HasValue)
             {
                 writer.WritePropertyName("disableLocalAccounts"u8);
                 writer.WriteBooleanValue(DisableLocalAccounts.Value);
             }
-            if (Optional.IsDefined(HttpProxyConfig))
+            if (HttpProxyConfig != null)
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(WorkloadAutoScalerProfile))
+            if (WorkloadAutoScalerProfile != null)
             {
                 writer.WritePropertyName("workloadAutoScalerProfile"u8);
                 writer.WriteObjectValue(WorkloadAutoScalerProfile);
             }
-            if (Optional.IsDefined(AzureMonitorProfile))
+            if (AzureMonitorProfile != null)
             {
                 writer.WritePropertyName("azureMonitorProfile"u8);
                 writer.WriteObjectValue(AzureMonitorProfile);
             }
-            if (Optional.IsDefined(ServiceMeshProfile))
+            if (ServiceMeshProfile != null)
             {
                 writer.WritePropertyName("serviceMeshProfile"u8);
                 writer.WriteObjectValue(ServiceMeshProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceUID"u8);
                 writer.WriteStringValue(ResourceId);

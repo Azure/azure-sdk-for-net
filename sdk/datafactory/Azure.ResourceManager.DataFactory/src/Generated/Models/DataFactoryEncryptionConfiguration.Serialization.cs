@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("vaultBaseUrl"u8);
             writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
-            if (Optional.IsDefined(KeyVersion))
+            if (KeyVersion != null)
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);

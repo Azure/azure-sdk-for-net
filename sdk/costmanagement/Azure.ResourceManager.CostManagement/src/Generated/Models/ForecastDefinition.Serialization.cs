@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(ForecastType.ToString());
             writer.WritePropertyName("timeframe"u8);
             writer.WriteStringValue(Timeframe.ToString());
-            if (Optional.IsDefined(TimePeriod))
+            if (TimePeriod != null)
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
             writer.WritePropertyName("dataset"u8);
             writer.WriteObjectValue(Dataset);
-            if (Optional.IsDefined(IncludeActualCost))
+            if (IncludeActualCost.HasValue)
             {
                 writer.WritePropertyName("includeActualCost"u8);
                 writer.WriteBooleanValue(IncludeActualCost.Value);
             }
-            if (Optional.IsDefined(IncludeFreshPartialCost))
+            if (IncludeFreshPartialCost.HasValue)
             {
                 writer.WritePropertyName("includeFreshPartialCost"u8);
                 writer.WriteBooleanValue(IncludeFreshPartialCost.Value);

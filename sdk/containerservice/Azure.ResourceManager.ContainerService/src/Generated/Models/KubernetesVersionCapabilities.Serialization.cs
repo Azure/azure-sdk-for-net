@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportPlan))
+            if (!(SupportPlan is ChangeTrackingList<KubernetesSupportPlan> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportPlan"u8);
                 writer.WriteStartArray();

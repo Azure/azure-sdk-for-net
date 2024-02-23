@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DeleteOn))
+            if (options.Format != "W" && DeleteOn.HasValue)
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeleteOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
+            if (options.Format != "W" && BillingEndOn.HasValue)
             {
                 writer.WritePropertyName("billingEndDate"u8);
                 writer.WriteStringValue(BillingEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
+            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
             {
                 writer.WritePropertyName("scheduledPurgeTime"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeleteActivityId))
+            if (options.Format != "W" && DeleteActivityId != null)
             {
                 writer.WritePropertyName("deleteActivityID"u8);
                 writer.WriteStringValue(DeleteActivityId);

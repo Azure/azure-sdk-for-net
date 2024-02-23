@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SignatureTemplateNames))
+            if (!(SignatureTemplateNames is ChangeTrackingList<UefiSignatureTemplateName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("signatureTemplateNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AdditionalSignatures))
+            if (AdditionalSignatures != null)
             {
                 writer.WritePropertyName("additionalSignatures"u8);
                 writer.WriteObjectValue(AdditionalSignatures);

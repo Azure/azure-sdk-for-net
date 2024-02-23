@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("requests"u8);
             writer.WriteObjectValue(Requests);
-            if (Optional.IsDefined(Limits))
+            if (Limits != null)
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits);

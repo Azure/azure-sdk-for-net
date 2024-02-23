@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SuccessfulInstanceCount))
+            if (options.Format != "W" && SuccessfulInstanceCount.HasValue)
             {
                 writer.WritePropertyName("successfulInstanceCount"u8);
                 writer.WriteNumberValue(SuccessfulInstanceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedInstanceCount))
+            if (options.Format != "W" && FailedInstanceCount.HasValue)
             {
                 writer.WritePropertyName("failedInstanceCount"u8);
                 writer.WriteNumberValue(FailedInstanceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InProgressInstanceCount))
+            if (options.Format != "W" && InProgressInstanceCount.HasValue)
             {
                 writer.WritePropertyName("inProgressInstanceCount"u8);
                 writer.WriteNumberValue(InProgressInstanceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PendingInstanceCount))
+            if (options.Format != "W" && PendingInstanceCount.HasValue)
             {
                 writer.WritePropertyName("pendingInstanceCount"u8);
                 writer.WriteNumberValue(PendingInstanceCount.Value);

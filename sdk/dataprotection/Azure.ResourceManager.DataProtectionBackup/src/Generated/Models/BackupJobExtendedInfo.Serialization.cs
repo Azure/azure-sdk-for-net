@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdditionalDetails))
+            if (!(AdditionalDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStartObject();
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupInstanceState))
+            if (options.Format != "W" && BackupInstanceState != null)
             {
                 writer.WritePropertyName("backupInstanceState"u8);
                 writer.WriteStringValue(BackupInstanceState);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataTransferredInBytes))
+            if (options.Format != "W" && DataTransferredInBytes.HasValue)
             {
                 writer.WritePropertyName("dataTransferredInBytes"u8);
                 writer.WriteNumberValue(DataTransferredInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecoveryDestination))
+            if (options.Format != "W" && RecoveryDestination != null)
             {
                 writer.WritePropertyName("recoveryDestination"u8);
                 writer.WriteStringValue(RecoveryDestination);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
+            if (options.Format != "W" && SourceRecoverPoint != null)
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
                 writer.WriteObjectValue(SourceRecoverPoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
+            if (options.Format != "W" && !(SubTasks is ChangeTrackingList<BackupJobSubTask> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subTasks"u8);
                 writer.WriteStartArray();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
+            if (options.Format != "W" && TargetRecoverPoint != null)
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
                 writer.WriteObjectValue(TargetRecoverPoint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
+            if (options.Format != "W" && !(WarningDetails is ChangeTrackingList<UserFacingWarningDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("warningDetails"u8);
                 writer.WriteStartArray();

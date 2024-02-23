@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeToLive))
+            if (TimeToLive.HasValue)
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (Optional.IsDefined(NumberOfPipelineNodes))
+            if (NumberOfPipelineNodes.HasValue)
             {
                 writer.WritePropertyName("numberOfPipelineNodes"u8);
                 writer.WriteNumberValue(NumberOfPipelineNodes.Value);
             }
-            if (Optional.IsDefined(NumberOfExternalNodes))
+            if (NumberOfExternalNodes.HasValue)
             {
                 writer.WritePropertyName("numberOfExternalNodes"u8);
                 writer.WriteNumberValue(NumberOfExternalNodes.Value);

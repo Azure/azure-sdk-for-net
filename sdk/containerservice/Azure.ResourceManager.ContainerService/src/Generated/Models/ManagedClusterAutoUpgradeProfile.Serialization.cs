@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpgradeChannel))
+            if (UpgradeChannel.HasValue)
             {
                 writer.WritePropertyName("upgradeChannel"u8);
                 writer.WriteStringValue(UpgradeChannel.Value.ToString());
             }
-            if (Optional.IsDefined(NodeOSUpgradeChannel))
+            if (NodeOSUpgradeChannel.HasValue)
             {
                 writer.WritePropertyName("nodeOSUpgradeChannel"u8);
                 writer.WriteStringValue(NodeOSUpgradeChannel.Value.ToString());

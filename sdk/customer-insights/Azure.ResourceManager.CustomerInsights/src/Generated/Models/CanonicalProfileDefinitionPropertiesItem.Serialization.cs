@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProfileName))
+            if (ProfileName != null)
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(ProfilePropertyName))
+            if (ProfilePropertyName != null)
             {
                 writer.WritePropertyName("profilePropertyName"u8);
                 writer.WriteStringValue(ProfilePropertyName);
             }
-            if (Optional.IsDefined(Rank))
+            if (Rank.HasValue)
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteNumberValue(Rank.Value);
             }
-            if (Optional.IsDefined(ValueType))
+            if (ValueType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ValueType.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
