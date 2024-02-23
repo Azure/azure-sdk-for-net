@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             LinkedServiceReferenceType type = default;
             string referenceName = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            IDictionary<string, object> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkedServiceReference(type, referenceName, Optional.ToDictionary(parameters));
+            return new LinkedServiceReference(type, referenceName, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class LinkedServiceReferenceConverter : JsonConverter<LinkedServiceReference>

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
             Optional<AmlFileSystemUpdatePropertiesMaintenanceWindow> maintenanceWindow = default;
             Optional<AmlFileSystemRootSquashSettings> rootSquashSettings = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemPatch(Optional.ToDictionary(tags), encryptionSettings.Value, maintenanceWindow.Value, rootSquashSettings.Value, serializedAdditionalRawData);
+            return new AmlFileSystemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), encryptionSettings.Value, maintenanceWindow.Value, rootSquashSettings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemPatch>.Write(ModelReaderWriterOptions options)

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> machineName = default;
             Optional<Uri> hostServiceUri = default;
             Optional<SynapseSelfHostedIntegrationRuntimeNodeStatus> status = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
             Optional<string> versionStatus = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> registerTime = default;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Optional.ToNullable(status), Optional.ToDictionary(capabilities), versionStatus.Value, version.Value, Optional.ToNullable(registerTime), Optional.ToNullable(lastConnectTime), Optional.ToNullable(expiryTime), Optional.ToNullable(lastStartTime), Optional.ToNullable(lastStopTime), Optional.ToNullable(lastUpdateResult), Optional.ToNullable(lastStartUpdateTime), Optional.ToNullable(lastEndUpdateTime), Optional.ToNullable(isActiveDispatcher), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(maxConcurrentJobs), additionalProperties);
+            return new SynapseSelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Optional.ToNullable(status), capabilities ?? new ChangeTrackingDictionary<string, string>(), versionStatus.Value, version.Value, Optional.ToNullable(registerTime), Optional.ToNullable(lastConnectTime), Optional.ToNullable(expiryTime), Optional.ToNullable(lastStartTime), Optional.ToNullable(lastStopTime), Optional.ToNullable(lastUpdateResult), Optional.ToNullable(lastStartUpdateTime), Optional.ToNullable(lastEndUpdateTime), Optional.ToNullable(isActiveDispatcher), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(maxConcurrentJobs), additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseSelfHostedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)
