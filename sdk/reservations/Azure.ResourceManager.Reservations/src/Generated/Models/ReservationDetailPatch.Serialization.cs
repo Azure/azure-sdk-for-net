@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppliedScopeType))
+            if (AppliedScopeType.HasValue)
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AppliedScopes))
+            if (!(AppliedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appliedScopes"u8);
                 writer.WriteStartArray();
@@ -43,32 +43,32 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AppliedScopeProperties))
+            if (AppliedScopeProperties != null)
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
-            if (Optional.IsDefined(InstanceFlexibility))
+            if (InstanceFlexibility.HasValue)
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsRenewEnabled))
+            if (IsRenewEnabled.HasValue)
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewEnabled.Value);
             }
-            if (Optional.IsDefined(RenewProperties))
+            if (RenewProperties != null)
             {
                 writer.WritePropertyName("renewProperties"u8);
                 writer.WriteObjectValue(RenewProperties);
             }
-            if (Optional.IsDefined(ReviewOn))
+            if (ReviewOn.HasValue)
             {
                 writer.WritePropertyName("reviewDateTime"u8);
                 writer.WriteStringValue(ReviewOn.Value, "O");

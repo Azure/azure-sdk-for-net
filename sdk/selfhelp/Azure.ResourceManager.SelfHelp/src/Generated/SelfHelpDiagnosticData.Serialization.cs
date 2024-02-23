@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GlobalParameters))
+            if (!(GlobalParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("globalParameters"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Insights))
+            if (!(Insights is ChangeTrackingList<SelfHelpDiagnosticInvocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AcceptedOn))
+            if (options.Format != "W" && AcceptedOn.HasValue)
             {
                 writer.WritePropertyName("acceptedAt"u8);
                 writer.WriteStringValue(AcceptedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
+            if (options.Format != "W" && !(Diagnostics is ChangeTrackingList<SelfHelpDiagnosticInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteStartArray();

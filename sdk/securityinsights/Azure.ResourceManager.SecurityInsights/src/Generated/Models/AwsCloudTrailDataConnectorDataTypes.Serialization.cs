@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Logs))
+            if (Logs != null)
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteObjectValue(Logs);

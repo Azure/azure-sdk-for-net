@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExcludedProjectNumbers))
+            if (!(ExcludedProjectNumbers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedProjectNumbers"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ServiceAccountEmailAddress))
+            if (ServiceAccountEmailAddress != null)
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
-            if (Optional.IsDefined(WorkloadIdentityProviderId))
+            if (WorkloadIdentityProviderId != null)
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OrganizationName))
+            if (options.Format != "W" && OrganizationName != null)
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteStringValue(OrganizationName);

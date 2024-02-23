@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(_etag))
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);

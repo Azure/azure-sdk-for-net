@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConsumedRefundsTotal))
+            if (ConsumedRefundsTotal != null)
             {
                 writer.WritePropertyName("consumedRefundsTotal"u8);
                 writer.WriteObjectValue(ConsumedRefundsTotal);
             }
-            if (Optional.IsDefined(MaxRefundLimit))
+            if (MaxRefundLimit != null)
             {
                 writer.WritePropertyName("maxRefundLimit"u8);
                 writer.WriteObjectValue(MaxRefundLimit);
             }
-            if (Optional.IsCollectionDefined(PolicyErrors))
+            if (!(PolicyErrors is ChangeTrackingList<ReservationRefundPolicyError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyErrors"u8);
                 writer.WriteStartArray();

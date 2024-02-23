@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConsentToAuthorization))
+            if (ConsentToAuthorization.HasValue)
             {
                 writer.WritePropertyName("consentToAuthorization"u8);
                 writer.WriteBooleanValue(ConsentToAuthorization.Value);

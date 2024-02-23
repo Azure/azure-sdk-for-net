@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterCodeVersion))
+            if (ClusterCodeVersion != null)
             {
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
-            if (Optional.IsDefined(VersionSupportExpireOn))
+            if (VersionSupportExpireOn.HasValue)
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
                 writer.WriteStringValue(VersionSupportExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());

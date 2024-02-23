@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Videos))
+            if (!(Videos is ChangeTrackingList<VideoGroupVideo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("videos"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReplacementKey))
+            if (ReplacementKey != null)
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);

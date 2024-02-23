@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AadAuthFailureMode))
+            if (AadAuthFailureMode.HasValue)
             {
                 writer.WritePropertyName("aadAuthFailureMode"u8);
                 writer.WriteStringValue(AadAuthFailureMode.Value.ToSerialString());

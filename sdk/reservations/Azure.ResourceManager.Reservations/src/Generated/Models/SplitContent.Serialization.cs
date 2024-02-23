@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Quantities))
+            if (!(Quantities is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("quantities"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReservationId))
+            if (ReservationId != null)
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);

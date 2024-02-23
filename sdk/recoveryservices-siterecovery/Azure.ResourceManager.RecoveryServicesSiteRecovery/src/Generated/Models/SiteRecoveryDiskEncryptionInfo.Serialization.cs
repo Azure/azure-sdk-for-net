@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskEncryptionKeyInfo))
+            if (DiskEncryptionKeyInfo != null)
             {
                 writer.WritePropertyName("diskEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionKeyInfo);
             }
-            if (Optional.IsDefined(KeyEncryptionKeyInfo))
+            if (KeyEncryptionKeyInfo != null)
             {
                 writer.WritePropertyName("keyEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyInfo);

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MinValue))
+            if (options.Format != "W" && MinValue != null)
             {
                 writer.WritePropertyName("minValue"u8);
                 writer.WriteObjectValue(MinValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxValue))
+            if (options.Format != "W" && MaxValue != null)
             {
                 writer.WritePropertyName("maxValue"u8);
                 writer.WriteObjectValue(MaxValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScaleSize))
+            if (options.Format != "W" && ScaleSize != null)
             {
                 writer.WritePropertyName("scaleSize"u8);
                 writer.WriteObjectValue(ScaleSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(LogSize))
+            if (options.Format != "W" && LogSize != null)
             {
                 writer.WritePropertyName("logSize"u8);
                 writer.WriteObjectValue(LogSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

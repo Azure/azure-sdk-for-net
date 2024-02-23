@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NativeCloudConnection))
+            if (NativeCloudConnection != null)
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
                 writer.WriteObjectValue(NativeCloudConnection);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

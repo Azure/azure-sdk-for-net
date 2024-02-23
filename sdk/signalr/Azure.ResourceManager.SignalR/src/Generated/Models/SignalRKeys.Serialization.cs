@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryKey))
+            if (PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(PrimaryConnectionString))
+            if (PrimaryConnectionString != null)
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (Optional.IsDefined(SecondaryConnectionString))
+            if (SecondaryConnectionString != null)
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ScheduleRunDays))
+            if (!(ScheduleRunDays is ChangeTrackingList<BackupDayOfWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("scheduleRunDays"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScheduleRunTimes))
+            if (!(ScheduleRunTimes is ChangeTrackingList<DateTimeOffset> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();

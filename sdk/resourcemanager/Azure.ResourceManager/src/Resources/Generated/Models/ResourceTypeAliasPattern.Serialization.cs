@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Phrase))
+            if (Phrase != null)
             {
                 writer.WritePropertyName("phrase"u8);
                 writer.WriteStringValue(Phrase);
             }
-            if (Optional.IsDefined(Variable))
+            if (Variable != null)
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (Optional.IsDefined(PatternType))
+            if (PatternType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PatternType.Value.ToSerialString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Paths))
+            if (!(Paths is ChangeTrackingList<ResourceTypeAliasPath> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AliasType))
+            if (AliasType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AliasType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DefaultPath))
+            if (DefaultPath != null)
             {
                 writer.WritePropertyName("defaultPath"u8);
                 writer.WriteStringValue(DefaultPath);
             }
-            if (Optional.IsDefined(DefaultPattern))
+            if (DefaultPattern != null)
             {
                 writer.WritePropertyName("defaultPattern"u8);
                 writer.WriteObjectValue(DefaultPattern);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultMetadata))
+            if (options.Format != "W" && DefaultMetadata != null)
             {
                 writer.WritePropertyName("defaultMetadata"u8);
                 writer.WriteObjectValue(DefaultMetadata);

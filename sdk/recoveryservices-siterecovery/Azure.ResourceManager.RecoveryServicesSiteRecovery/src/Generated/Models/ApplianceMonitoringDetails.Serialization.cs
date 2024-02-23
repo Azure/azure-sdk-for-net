@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CpuDetails))
+            if (options.Format != "W" && CpuDetails != null)
             {
                 writer.WritePropertyName("cpuDetails"u8);
                 writer.WriteObjectValue(CpuDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(RamDetails))
+            if (options.Format != "W" && RamDetails != null)
             {
                 writer.WritePropertyName("ramDetails"u8);
                 writer.WriteObjectValue(RamDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreSnapshot))
+            if (options.Format != "W" && !(DatastoreSnapshot is ChangeTrackingList<DataStoreUtilizationDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("datastoreSnapshot"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DisksReplicationDetails))
+            if (options.Format != "W" && DisksReplicationDetails != null)
             {
                 writer.WritePropertyName("disksReplicationDetails"u8);
                 writer.WriteObjectValue(DisksReplicationDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(EsxiNfcBuffer))
+            if (options.Format != "W" && EsxiNfcBuffer != null)
             {
                 writer.WritePropertyName("esxiNfcBuffer"u8);
                 writer.WriteObjectValue(EsxiNfcBuffer);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkBandwidth))
+            if (options.Format != "W" && NetworkBandwidth != null)
             {
                 writer.WritePropertyName("networkBandwidth"u8);
                 writer.WriteObjectValue(NetworkBandwidth);

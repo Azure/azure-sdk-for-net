@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicBlob))
+            if (PublicBlob != null)
             {
                 writer.WritePropertyName("publicBlob"u8);
                 writer.WriteStringValue(PublicBlob);
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(CertificateName))
+            if (options.Format != "W" && CertificateName != null)
             {
                 writer.WritePropertyName("certificateName"u8);
                 writer.WriteStringValue(CertificateName);

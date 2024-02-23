@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(PublicIPAddress))
+            if (PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);

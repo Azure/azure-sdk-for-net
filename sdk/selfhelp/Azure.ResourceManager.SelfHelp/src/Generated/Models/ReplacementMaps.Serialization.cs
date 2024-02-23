@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(WebResults))
+            if (!(WebResults is ChangeTrackingList<WebResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("webResults"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Diagnostics))
+            if (!(Diagnostics is ChangeTrackingList<SolutionsDiagnostic> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Troubleshooters))
+            if (!(Troubleshooters is ChangeTrackingList<SolutionsTroubleshooters> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("troubleshooters"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MetricsBasedCharts))
+            if (!(MetricsBasedCharts is ChangeTrackingList<MetricsBasedChart> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("metricsBasedCharts"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Videos))
+            if (!(Videos is ChangeTrackingList<SelfHelpVideo> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("videos"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VideoGroups))
+            if (!(VideoGroups is ChangeTrackingList<VideoGroup> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("videoGroups"u8);
                 writer.WriteStartArray();

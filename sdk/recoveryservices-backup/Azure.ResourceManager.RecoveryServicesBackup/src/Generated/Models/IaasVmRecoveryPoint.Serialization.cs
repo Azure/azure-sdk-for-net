@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointType))
+            if (RecoveryPointType != null)
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (Optional.IsDefined(RecoveryPointOn))
+            if (RecoveryPointOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointAdditionalInfo))
+            if (RecoveryPointAdditionalInfo != null)
             {
                 writer.WritePropertyName("recoveryPointAdditionalInfo"u8);
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
-            if (Optional.IsDefined(SourceVmStorageType))
+            if (SourceVmStorageType != null)
             {
                 writer.WritePropertyName("sourceVMStorageType"u8);
                 writer.WriteStringValue(SourceVmStorageType);
             }
-            if (Optional.IsDefined(IsSourceVmEncrypted))
+            if (IsSourceVmEncrypted.HasValue)
             {
                 writer.WritePropertyName("isSourceVMEncrypted"u8);
                 writer.WriteBooleanValue(IsSourceVmEncrypted.Value);
             }
-            if (Optional.IsDefined(KeyAndSecret))
+            if (KeyAndSecret != null)
             {
                 writer.WritePropertyName("keyAndSecret"u8);
                 writer.WriteObjectValue(KeyAndSecret);
             }
-            if (Optional.IsDefined(IsInstantIlrSessionActive))
+            if (IsInstantIlrSessionActive.HasValue)
             {
                 writer.WritePropertyName("isInstantIlrSessionActive"u8);
                 writer.WriteBooleanValue(IsInstantIlrSessionActive.Value);
             }
-            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
+            if (!(RecoveryPointTierDetails is ChangeTrackingList<RecoveryPointTierInformationV2> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
@@ -72,32 +72,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsManagedVirtualMachine))
+            if (IsManagedVirtualMachine.HasValue)
             {
                 writer.WritePropertyName("isManagedVirtualMachine"u8);
                 writer.WriteBooleanValue(IsManagedVirtualMachine.Value);
             }
-            if (Optional.IsDefined(VirtualMachineSize))
+            if (VirtualMachineSize != null)
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
                 writer.WriteStringValue(VirtualMachineSize);
             }
-            if (Optional.IsDefined(OriginalStorageAccountOption))
+            if (OriginalStorageAccountOption.HasValue)
             {
                 writer.WritePropertyName("originalStorageAccountOption"u8);
                 writer.WriteBooleanValue(OriginalStorageAccountOption.Value);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(RecoveryPointDiskConfiguration))
+            if (RecoveryPointDiskConfiguration != null)
             {
                 writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
                 writer.WriteObjectValue(RecoveryPointDiskConfiguration);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
+            if (!(RecoveryPointMoveReadinessInfo is ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();
@@ -118,22 +118,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SecurityType))
+            if (SecurityType != null)
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType);
             }
-            if (Optional.IsDefined(RecoveryPointProperties))
+            if (RecoveryPointProperties != null)
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
             }
-            if (Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
+            if (IsPrivateAccessEnabledOnAnyDisk.HasValue)
             {
                 writer.WritePropertyName("isPrivateAccessEnabledOnAnyDisk"u8);
                 writer.WriteBooleanValue(IsPrivateAccessEnabledOnAnyDisk.Value);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);

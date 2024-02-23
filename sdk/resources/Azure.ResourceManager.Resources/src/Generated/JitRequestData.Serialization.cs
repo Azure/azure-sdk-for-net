@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationResourceId))
+            if (ApplicationResourceId != null)
             {
                 writer.WritePropertyName("applicationResourceId"u8);
                 writer.WriteStringValue(ApplicationResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherTenantId))
+            if (options.Format != "W" && PublisherTenantId.HasValue)
             {
                 writer.WritePropertyName("publisherTenantId"u8);
                 writer.WriteStringValue(PublisherTenantId.Value);
             }
-            if (Optional.IsCollectionDefined(JitAuthorizationPolicies))
+            if (!(JitAuthorizationPolicies is ChangeTrackingList<JitAuthorizationPolicies> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("jitAuthorizationPolicies"u8);
                 writer.WriteStartArray();
@@ -83,27 +83,27 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(JitSchedulingPolicy))
+            if (JitSchedulingPolicy != null)
             {
                 writer.WritePropertyName("jitSchedulingPolicy"u8);
                 writer.WriteObjectValue(JitSchedulingPolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(JitRequestState))
+            if (options.Format != "W" && JitRequestState.HasValue)
             {
                 writer.WritePropertyName("jitRequestState"u8);
                 writer.WriteStringValue(JitRequestState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (options.Format != "W" && CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
+            if (options.Format != "W" && UpdatedBy != null)
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);

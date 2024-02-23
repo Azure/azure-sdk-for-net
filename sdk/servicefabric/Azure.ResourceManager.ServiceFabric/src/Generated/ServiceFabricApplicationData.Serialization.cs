@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ServiceFabric
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypeVersion))
+            if (TypeVersion != null)
             {
                 writer.WritePropertyName("typeVersion"u8);
                 writer.WriteStringValue(TypeVersion);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -90,27 +90,27 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(UpgradePolicy))
+            if (UpgradePolicy != null)
             {
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy);
             }
-            if (Optional.IsDefined(MinimumNodes))
+            if (MinimumNodes.HasValue)
             {
                 writer.WritePropertyName("minimumNodes"u8);
                 writer.WriteNumberValue(MinimumNodes.Value);
             }
-            if (Optional.IsDefined(MaximumNodes))
+            if (MaximumNodes.HasValue)
             {
                 writer.WritePropertyName("maximumNodes"u8);
                 writer.WriteNumberValue(MaximumNodes.Value);
             }
-            if (Optional.IsDefined(RemoveApplicationCapacity))
+            if (RemoveApplicationCapacity.HasValue)
             {
                 writer.WritePropertyName("removeApplicationCapacity"u8);
                 writer.WriteBooleanValue(RemoveApplicationCapacity.Value);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<ApplicationMetricDescription> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManagedIdentities))
+            if (!(ManagedIdentities is ChangeTrackingList<ApplicationUserAssignedIdentity> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("managedIdentities"u8);
                 writer.WriteStartArray();
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(TypeName))
+            if (TypeName != null)
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
