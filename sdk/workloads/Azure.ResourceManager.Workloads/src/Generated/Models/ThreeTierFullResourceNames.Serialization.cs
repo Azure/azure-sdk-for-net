@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CentralServer))
+            if (CentralServer != null)
             {
                 writer.WritePropertyName("centralServer"u8);
                 writer.WriteObjectValue(CentralServer);
             }
-            if (Optional.IsDefined(ApplicationServer))
+            if (ApplicationServer != null)
             {
                 writer.WritePropertyName("applicationServer"u8);
                 writer.WriteObjectValue(ApplicationServer);
             }
-            if (Optional.IsDefined(DatabaseServer))
+            if (DatabaseServer != null)
             {
                 writer.WritePropertyName("databaseServer"u8);
                 writer.WriteObjectValue(DatabaseServer);
             }
-            if (Optional.IsDefined(SharedStorage))
+            if (SharedStorage != null)
             {
                 writer.WritePropertyName("sharedStorage"u8);
                 writer.WriteObjectValue(SharedStorage);

@@ -92,7 +92,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseTransparentDataEncryptionResource>(Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation<SynapseTransparentDataEncryptionResource>(Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,7 +144,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseTransparentDataEncryptionResource>(Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, transparentDataEncryptionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation<SynapseTransparentDataEncryptionResource>(Response.FromValue(new SynapseTransparentDataEncryptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -207,7 +207,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseExtendedSqlPoolBlobAuditingPolicyExtendedSqlPoolBlobAuditingPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseExtendedSqlPoolBlobAuditingPolicyResource>(Response.FromValue(new SynapseExtendedSqlPoolBlobAuditingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseExtendedSqlPoolBlobAuditingPolicyExtendedSqlPoolBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation<SynapseExtendedSqlPoolBlobAuditingPolicyResource>(Response.FromValue(new SynapseExtendedSqlPoolBlobAuditingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -256,7 +258,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseExtendedSqlPoolBlobAuditingPolicyExtendedSqlPoolBlobAuditingPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseExtendedSqlPoolBlobAuditingPolicyResource>(Response.FromValue(new SynapseExtendedSqlPoolBlobAuditingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseExtendedSqlPoolBlobAuditingPolicyExtendedSqlPoolBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation<SynapseExtendedSqlPoolBlobAuditingPolicyResource>(Response.FromValue(new SynapseExtendedSqlPoolBlobAuditingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsDefined(CurrentConnection))
+            if (CurrentConnection != null)
             {
                 writer.WritePropertyName("currentConnection"u8);
                 writer.WriteObjectValue(CurrentConnection);
             }
-            if (Optional.IsDefined(ResultLimit))
+            if (ResultLimit.HasValue)
             {
                 writer.WritePropertyName("resultLimit"u8);
                 writer.WriteNumberValue(ResultLimit.Value);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);

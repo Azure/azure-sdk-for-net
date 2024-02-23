@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SapFqdn);
             writer.WritePropertyName("sshPrivateKey"u8);
             writer.WriteStringValue(SshPrivateKey);
-            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
+            if (HighAvailabilitySoftwareConfiguration != null)
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);

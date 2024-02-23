@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RestorePointType))
+            if (options.Format != "W" && RestorePointType.HasValue)
             {
                 writer.WritePropertyName("restorePointType"u8);
                 writer.WriteStringValue(RestorePointType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
+            if (options.Format != "W" && EarliestRestoreOn.HasValue)
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RestorePointCreationOn))
+            if (options.Format != "W" && RestorePointCreationOn.HasValue)
             {
                 writer.WritePropertyName("restorePointCreationDate"u8);
                 writer.WriteStringValue(RestorePointCreationOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RestorePointLabel))
+            if (options.Format != "W" && RestorePointLabel != null)
             {
                 writer.WritePropertyName("restorePointLabel"u8);
                 writer.WriteStringValue(RestorePointLabel);
