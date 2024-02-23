@@ -167,10 +167,25 @@ namespace Azure.AI.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatExtensionConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatExtensionConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureChatExtensionDataSourceResponseCitation : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation>
+    {
+        internal AzureChatExtensionDataSourceResponseCitation() { }
+        public string ChunkId { get { throw null; } }
+        public string Content { get { throw null; } }
+        public string Filepath { get { throw null; } }
+        public string Title { get { throw null; } }
+        public string Url { get { throw null; } }
+        Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AzureChatExtensionsMessageContext : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureChatExtensionsMessageContext>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatExtensionsMessageContext>
     {
         internal AzureChatExtensionsMessageContext() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ChatResponseMessage> Messages { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation> Citations { get { throw null; } }
+        public string Intent { get { throw null; } }
         public Azure.AI.OpenAI.ContentFilterResultsForPrompt RequestContentFilterResults { get { throw null; } }
         public Azure.AI.OpenAI.ContentFilterResultsForChoice ResponseContentFilterResults { get { throw null; } }
         Azure.AI.OpenAI.AzureChatExtensionsMessageContext System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureChatExtensionsMessageContext>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -205,67 +220,6 @@ namespace Azure.AI.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatOCREnhancementConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureChatOCREnhancementConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureCognitiveSearchChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration>
-    {
-        public AzureCognitiveSearchChatExtensionConfiguration() { }
-        public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
-        public int? DocumentCount { get { throw null; } set { } }
-        public System.Uri EmbeddingEndpoint { get { throw null; } set { } }
-        public string EmbeddingKey { get { throw null; } set { } }
-        public Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
-        public string Key { get { throw null; } set { } }
-        public Azure.AI.OpenAI.AzureCognitiveSearchQueryType? QueryType { get { throw null; } set { } }
-        public string RoleInformation { get { throw null; } set { } }
-        public System.Uri SearchEndpoint { get { throw null; } set { } }
-        public string SemanticConfiguration { get { throw null; } set { } }
-        public bool? ShouldRestrictResultScope { get { throw null; } set { } }
-        public int? Strictness { get { throw null; } set { } }
-        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } set { } }
-        Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCognitiveSearchChatExtensionConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AzureCognitiveSearchIndexFieldMappingOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions>
-    {
-        public AzureCognitiveSearchIndexFieldMappingOptions() { }
-        public System.Collections.Generic.IList<string> ContentFieldNames { get { throw null; } }
-        public string ContentFieldSeparator { get { throw null; } set { } }
-        public string FilepathFieldName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ImageVectorFieldNames { get { throw null; } }
-        public string TitleFieldName { get { throw null; } set { } }
-        public string UrlFieldName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
-        Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AzureCognitiveSearchQueryType : System.IEquatable<Azure.AI.OpenAI.AzureCognitiveSearchQueryType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AzureCognitiveSearchQueryType(string value) { throw null; }
-        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Semantic { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Simple { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Vector { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType VectorSemanticHybrid { get { throw null; } }
-        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType VectorSimpleHybrid { get { throw null; } }
-        public bool Equals(Azure.AI.OpenAI.AzureCognitiveSearchQueryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.OpenAI.AzureCognitiveSearchQueryType left, Azure.AI.OpenAI.AzureCognitiveSearchQueryType right) { throw null; }
-        public static implicit operator Azure.AI.OpenAI.AzureCognitiveSearchQueryType (string value) { throw null; }
-        public static bool operator !=(Azure.AI.OpenAI.AzureCognitiveSearchQueryType left, Azure.AI.OpenAI.AzureCognitiveSearchQueryType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AzureCosmosDBChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCosmosDBChatExtensionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCosmosDBChatExtensionConfiguration>
     {
         public AzureCosmosDBChatExtensionConfiguration() { }
@@ -287,7 +241,12 @@ namespace Azure.AI.OpenAI
     }
     public partial class AzureCosmosDBFieldMappingOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions>
     {
-        public AzureCosmosDBFieldMappingOptions(System.Collections.Generic.IEnumerable<string> vectorFieldNames) { }
+        public AzureCosmosDBFieldMappingOptions(System.Collections.Generic.IEnumerable<string> contentFieldNames, System.Collections.Generic.IEnumerable<string> vectorFieldNames) { }
+        public System.Collections.Generic.IList<string> ContentFieldNames { get { throw null; } }
+        public string ContentFieldSeparator { get { throw null; } set { } }
+        public string FilepathFieldName { get { throw null; } set { } }
+        public string TitleFieldName { get { throw null; } set { } }
+        public string UrlFieldName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
         Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureCosmosDBFieldMappingOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -365,12 +324,14 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.AudioTranslation AudioTranslation(string text, string language, System.TimeSpan duration, System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.AudioTranslationSegment> segments) { throw null; }
         public static Azure.AI.OpenAI.AudioTranslationSegment AudioTranslationSegment(int id = 0, System.TimeSpan start = default(System.TimeSpan), System.TimeSpan end = default(System.TimeSpan), string text = null, float temperature = 0f, float averageLogProbability = 0f, float compressionRatio = 0f, float noSpeechProbability = 0f, System.Collections.Generic.IEnumerable<int> tokens = null, int seek = 0) { throw null; }
         public static Azure.AI.OpenAI.AzureChatEnhancements AzureChatEnhancements(Azure.AI.OpenAI.AzureGroundingEnhancement grounding = null) { throw null; }
-        public static Azure.AI.OpenAI.AzureChatExtensionsMessageContext AzureChatExtensionsMessageContext(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatResponseMessage> messages = null) { throw null; }
+        public static Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation AzureChatExtensionDataSourceResponseCitation(string content = null, string title = null, string url = null, string filepath = null, string chunkId = null) { throw null; }
+        public static Azure.AI.OpenAI.AzureChatExtensionsMessageContext AzureChatExtensionsMessageContext(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureChatExtensionDataSourceResponseCitation> citations = null, string intent = null) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancement AzureGroundingEnhancement(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementLine> lines = null) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementCoordinatePoint AzureGroundingEnhancementCoordinatePoint(float x = 0f, float y = 0f) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementLine AzureGroundingEnhancementLine(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementLineSpan> spans = null) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementLineSpan AzureGroundingEnhancementLineSpan(string text = null, int offset = 0, int length = 0, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementCoordinatePoint> polygon = null) { throw null; }
-        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatResponseMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), Azure.AI.OpenAI.ChatFinishDetails finishDetails = null, Azure.AI.OpenAI.ChatResponseMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.AzureChatEnhancements enhancements = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatResponseMessage message = null, Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo logProbabilityInfo = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), Azure.AI.OpenAI.ChatFinishDetails finishDetails = null, Azure.AI.OpenAI.ChatResponseMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.AzureChatEnhancements enhancements = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo ChatChoiceLogProbabilityInfo(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatTokenLogProbabilityResult> tokenLogProbabilityResults = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatChoice> choices = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(Azure.AI.OpenAI.FunctionDefinition function = null) { throw null; }
         public static Azure.AI.OpenAI.ChatMessageImageContentItem ChatMessageImageContentItem(Azure.AI.OpenAI.ChatMessageImageUrl imageUrl = null) { throw null; }
@@ -381,6 +342,8 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.ChatRequestSystemMessage ChatRequestSystemMessage(string content = null, string name = null) { throw null; }
         public static Azure.AI.OpenAI.ChatRequestToolMessage ChatRequestToolMessage(string content = null, string toolCallId = null) { throw null; }
         public static Azure.AI.OpenAI.ChatResponseMessage ChatResponseMessage(Azure.AI.OpenAI.ChatRole role = default(Azure.AI.OpenAI.ChatRole), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatCompletionsToolCall> toolCalls = null, Azure.AI.OpenAI.FunctionCall functionCall = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatTokenLogProbabilityInfo ChatTokenLogProbabilityInfo(string token = null, float logProbability = 0f, System.Collections.Generic.IEnumerable<int> utf8ByteValues = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatTokenLogProbabilityResult ChatTokenLogProbabilityResult(string token = null, float logProbability = 0f, System.Collections.Generic.IEnumerable<int> utf8ByteValues = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo> topLogProbabilityEntries = null) { throw null; }
         public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?)) { throw null; }
         public static Azure.AI.OpenAI.Completions Completions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ContentFilterResultsForPrompt> promptFilterResults = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Choice> choices = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.CompletionsLogProbabilityModel CompletionsLogProbabilityModel(System.Collections.Generic.IEnumerable<string> tokens = null, System.Collections.Generic.IEnumerable<float?> tokenLogProbabilities = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IDictionary<string, float?>> topLogProbabilities = null, System.Collections.Generic.IEnumerable<int> textOffsets = null) { throw null; }
@@ -396,9 +359,11 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.OpenAI.ImageGenerationData ImageGenerationData(System.Uri url = null, string base64Data = null, string revisedPrompt = null) { throw null; }
+        public static Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions OnYourDataAccessTokenAuthenticationOptions(string accessToken = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataApiKeyAuthenticationOptions OnYourDataApiKeyAuthenticationOptions(string key = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataConnectionStringAuthenticationOptions OnYourDataConnectionStringAuthenticationOptions(string connectionString = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource OnYourDataDeploymentNameVectorizationSource(string deploymentName = null) { throw null; }
+        public static Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataEndpointVectorizationSource OnYourDataEndpointVectorizationSource(System.Uri endpoint = null, Azure.AI.OpenAI.OnYourDataAuthenticationOptions authentication = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions OnYourDataKeyAndKeyIdAuthenticationOptions(string key = null, string keyId = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataModelIdVectorizationSource OnYourDataModelIdVectorizationSource(string modelId = null) { throw null; }
@@ -406,6 +371,64 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.StopFinishDetails StopFinishDetails(string stop = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, System.DateTimeOffset created, string systemFingerprint, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.StreamingToolCallUpdate toolCallUpdate = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingFunctionToolCallUpdate StreamingFunctionToolCallUpdate(string id, int toolCallIndex, string functionName, string functionArgumentsUpdate) { throw null; }
+    }
+    public partial class AzureSearchChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>
+    {
+        public AzureSearchChatExtensionConfiguration() { }
+        public Azure.AI.OpenAI.OnYourDataAuthenticationOptions Authentication { get { throw null; } set { } }
+        public int? DocumentCount { get { throw null; } set { } }
+        public Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string IndexName { get { throw null; } set { } }
+        public Azure.AI.OpenAI.AzureSearchQueryType? QueryType { get { throw null; } set { } }
+        public string RoleInformation { get { throw null; } set { } }
+        public System.Uri SearchEndpoint { get { throw null; } set { } }
+        public string SemanticConfiguration { get { throw null; } set { } }
+        public bool? ShouldRestrictResultScope { get { throw null; } set { } }
+        public int? Strictness { get { throw null; } set { } }
+        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } set { } }
+        Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AzureSearchIndexFieldMappingOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions>
+    {
+        public AzureSearchIndexFieldMappingOptions() { }
+        public System.Collections.Generic.IList<string> ContentFieldNames { get { throw null; } }
+        public string ContentFieldSeparator { get { throw null; } set { } }
+        public string FilepathFieldName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ImageVectorFieldNames { get { throw null; } }
+        public string TitleFieldName { get { throw null; } set { } }
+        public string UrlFieldName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
+        Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchIndexFieldMappingOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureSearchQueryType : System.IEquatable<Azure.AI.OpenAI.AzureSearchQueryType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureSearchQueryType(string value) { throw null; }
+        public static Azure.AI.OpenAI.AzureSearchQueryType Semantic { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureSearchQueryType Simple { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureSearchQueryType Vector { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureSearchQueryType VectorSemanticHybrid { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureSearchQueryType VectorSimpleHybrid { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.AzureSearchQueryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.AzureSearchQueryType left, Azure.AI.OpenAI.AzureSearchQueryType right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.AzureSearchQueryType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.AzureSearchQueryType left, Azure.AI.OpenAI.AzureSearchQueryType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ChatChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatChoice>
     {
@@ -415,12 +438,23 @@ namespace Azure.AI.OpenAI
         public Azure.AI.OpenAI.ChatFinishDetails FinishDetails { get { throw null; } }
         public Azure.AI.OpenAI.CompletionsFinishReason? FinishReason { get { throw null; } }
         public int Index { get { throw null; } }
+        public Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo LogProbabilityInfo { get { throw null; } }
         public Azure.AI.OpenAI.ChatResponseMessage Message { get { throw null; } }
         Azure.AI.OpenAI.ChatChoice System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatChoice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatChoice>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.ChatChoice System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatChoice>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatChoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatChoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChatChoiceLogProbabilityInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo>
+    {
+        internal ChatChoiceLogProbabilityInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ChatTokenLogProbabilityResult> TokenLogProbabilityResults { get { throw null; } }
+        Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ChatCompletions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatCompletions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatCompletions>
     {
@@ -470,9 +504,11 @@ namespace Azure.AI.OpenAI
         public Azure.AI.OpenAI.AzureChatExtensionsOptions AzureExtensionsOptions { get { throw null; } set { } }
         public int? ChoiceCount { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
+        public bool? EnableLogProbabilities { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionDefinition FunctionCall { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.FunctionDefinition> Functions { get { throw null; } }
+        public int? LogProbabilitiesPerToken { get { throw null; } set { } }
         public int? MaxTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatRequestMessage> Messages { get { throw null; } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
@@ -705,6 +741,31 @@ namespace Azure.AI.OpenAI
         public static implicit operator Azure.AI.OpenAI.ChatRole (string value) { throw null; }
         public static bool operator !=(Azure.AI.OpenAI.ChatRole left, Azure.AI.OpenAI.ChatRole right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ChatTokenLogProbabilityInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo>
+    {
+        internal ChatTokenLogProbabilityInfo() { }
+        public float LogProbability { get { throw null; } }
+        public string Token { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<int> Utf8ByteValues { get { throw null; } }
+        Azure.AI.OpenAI.ChatTokenLogProbabilityInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.ChatTokenLogProbabilityInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ChatTokenLogProbabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatTokenLogProbabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatTokenLogProbabilityResult>
+    {
+        internal ChatTokenLogProbabilityResult() { }
+        public float LogProbability { get { throw null; } }
+        public string Token { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ChatTokenLogProbabilityInfo> TopLogProbabilityEntries { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<int> Utf8ByteValues { get { throw null; } }
+        Azure.AI.OpenAI.ChatTokenLogProbabilityResult System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatTokenLogProbabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatTokenLogProbabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.ChatTokenLogProbabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatTokenLogProbabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatTokenLogProbabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatTokenLogProbabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class Choice : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Choice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Choice>
     {
@@ -996,6 +1057,7 @@ namespace Azure.AI.OpenAI
         public EmbeddingsOptions(string deploymentName, System.Collections.Generic.IEnumerable<string> input) { }
         public string DeploymentName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Input { get { throw null; } }
+        public string InputType { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
         Azure.AI.OpenAI.EmbeddingsOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.EmbeddingsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.EmbeddingsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1146,6 +1208,16 @@ namespace Azure.AI.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.MaxTokensFinishDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.MaxTokensFinishDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class OnYourDataAccessTokenAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>
+    {
+        public OnYourDataAccessTokenAuthenticationOptions(string accessToken) { }
+        public string AccessToken { get { throw null; } }
+        Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataAccessTokenAuthenticationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class OnYourDataApiKeyAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataApiKeyAuthenticationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataApiKeyAuthenticationOptions>
     {
         public OnYourDataApiKeyAuthenticationOptions(string key) { }
@@ -1184,6 +1256,16 @@ namespace Azure.AI.OpenAI
         Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataDeploymentNameVectorizationSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OnYourDataEncodedApiKeyAuthenticationOptions : Azure.AI.OpenAI.OnYourDataAuthenticationOptions, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>
+    {
+        public OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey) { }
+        public string EncodedApiKey { get { throw null; } }
+        Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OnYourDataEndpointVectorizationSource : Azure.AI.OpenAI.OnYourDataVectorizationSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.OnYourDataEndpointVectorizationSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.OnYourDataEndpointVectorizationSource>
     {
@@ -1255,6 +1337,8 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response<System.BinaryData> GenerateSpeechFromText(Azure.AI.OpenAI.SpeechGenerationOptions speechGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GenerateSpeechFromTextAsync(Azure.AI.OpenAI.SpeechGenerationOptions speechGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.AudioTranscription> GetAudioTranscription(Azure.AI.OpenAI.AudioTranscriptionOptions audioTranscriptionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.AudioTranscription>> GetAudioTranscriptionAsync(Azure.AI.OpenAI.AudioTranscriptionOptions audioTranscriptionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.AudioTranslation> GetAudioTranslation(Azure.AI.OpenAI.AudioTranslationOptions audioTranslationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1274,16 +1358,14 @@ namespace Azure.AI.OpenAI
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_12_01_Preview) { }
+        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2024_02_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_12_01 = 1,
             V2023_05_15 = 2,
             V2023_06_01_Preview = 3,
             V2023_07_01_Preview = 4,
-            V2023_08_01_Preview = 5,
-            V2023_09_01_Preview = 6,
-            V2023_12_01_Preview = 7,
+            V2024_02_15_Preview = 5,
         }
     }
     public partial class PineconeChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>
@@ -1306,19 +1388,74 @@ namespace Azure.AI.OpenAI
     }
     public partial class PineconeFieldMappingOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>
     {
-        public PineconeFieldMappingOptions() { }
+        public PineconeFieldMappingOptions(System.Collections.Generic.IEnumerable<string> contentFieldNames) { }
         public System.Collections.Generic.IList<string> ContentFieldNames { get { throw null; } }
         public string ContentFieldSeparator { get { throw null; } set { } }
         public string FilepathFieldName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ImageVectorFieldNames { get { throw null; } }
         public string TitleFieldName { get { throw null; } set { } }
         public string UrlFieldName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
         Azure.AI.OpenAI.PineconeFieldMappingOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.PineconeFieldMappingOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeFieldMappingOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SpeechGenerationOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.SpeechGenerationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.SpeechGenerationOptions>
+    {
+        public SpeechGenerationOptions() { }
+        public SpeechGenerationOptions(string deploymentName, string input, Azure.AI.OpenAI.SpeechVoice voice) { }
+        public string DeploymentName { get { throw null; } set { } }
+        public string Input { get { throw null; } set { } }
+        public Azure.AI.OpenAI.SpeechGenerationResponseFormat? ResponseFormat { get { throw null; } set { } }
+        public float? Speed { get { throw null; } set { } }
+        public Azure.AI.OpenAI.SpeechVoice Voice { get { throw null; } set { } }
+        Azure.AI.OpenAI.SpeechGenerationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.SpeechGenerationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.SpeechGenerationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.SpeechGenerationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.SpeechGenerationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.SpeechGenerationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.SpeechGenerationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SpeechGenerationResponseFormat : System.IEquatable<Azure.AI.OpenAI.SpeechGenerationResponseFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SpeechGenerationResponseFormat(string value) { throw null; }
+        public static Azure.AI.OpenAI.SpeechGenerationResponseFormat Aac { get { throw null; } }
+        public static Azure.AI.OpenAI.SpeechGenerationResponseFormat Flac { get { throw null; } }
+        public static Azure.AI.OpenAI.SpeechGenerationResponseFormat Mp3 { get { throw null; } }
+        public static Azure.AI.OpenAI.SpeechGenerationResponseFormat Opus { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.SpeechGenerationResponseFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.SpeechGenerationResponseFormat left, Azure.AI.OpenAI.SpeechGenerationResponseFormat right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.SpeechGenerationResponseFormat (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.SpeechGenerationResponseFormat left, Azure.AI.OpenAI.SpeechGenerationResponseFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SpeechVoice : System.IEquatable<Azure.AI.OpenAI.SpeechVoice>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SpeechVoice(string value) { throw null; }
+        public static Azure.AI.OpenAI.SpeechVoice Alloy { get { throw null; } }
+        public static Azure.AI.OpenAI.SpeechVoice Echo { get { throw null; } }
+        public static Azure.AI.OpenAI.SpeechVoice Fable { get { throw null; } }
+        public static Azure.AI.OpenAI.SpeechVoice Nova { get { throw null; } }
+        public static Azure.AI.OpenAI.SpeechVoice Onyx { get { throw null; } }
+        public static Azure.AI.OpenAI.SpeechVoice Shimmer { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.SpeechVoice other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.SpeechVoice left, Azure.AI.OpenAI.SpeechVoice right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.SpeechVoice (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.SpeechVoice left, Azure.AI.OpenAI.SpeechVoice right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StopFinishDetails : Azure.AI.OpenAI.ChatFinishDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.StopFinishDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.StopFinishDetails>
     {
