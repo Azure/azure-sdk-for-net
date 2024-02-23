@@ -257,7 +257,7 @@ namespace Azure.Maps.Rendering
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
             uri.AppendQuery("zoom", zoom, true);
-            if (bounds != null && Optional.IsCollectionDefined(bounds))
+            if (bounds != null && !(bounds is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("bounds", bounds, ",", true);
             }
@@ -529,11 +529,11 @@ namespace Azure.Maps.Rendering
             {
                 uri.AppendQuery("zoom", zoom.Value, true);
             }
-            if (center != null && Optional.IsCollectionDefined(center))
+            if (center != null && !(center is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("center", center, ",", true);
             }
-            if (boundingBoxPrivate != null && Optional.IsCollectionDefined(boundingBoxPrivate))
+            if (boundingBoxPrivate != null && !(boundingBoxPrivate is ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("bbox", boundingBoxPrivate, ",", true);
             }
@@ -553,14 +553,14 @@ namespace Azure.Maps.Rendering
             {
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
-            if (pins != null && Optional.IsCollectionDefined(pins))
+            if (pins != null && !(pins is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in pins)
                 {
                     uri.AppendQuery("pins", param, true);
                 }
             }
-            if (path != null && Optional.IsCollectionDefined(path))
+            if (path != null && !(path is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in path)
                 {
@@ -1160,11 +1160,11 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/copyright/bounding/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (boundingBox?.SouthWest != null && Optional.IsCollectionDefined(boundingBox?.SouthWest))
+            if (boundingBox?.SouthWest != null && !(boundingBox?.SouthWest is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
             }
-            if (boundingBox?.NorthEast != null && Optional.IsCollectionDefined(boundingBox?.NorthEast))
+            if (boundingBox?.NorthEast != null && !(boundingBox?.NorthEast is ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
             }

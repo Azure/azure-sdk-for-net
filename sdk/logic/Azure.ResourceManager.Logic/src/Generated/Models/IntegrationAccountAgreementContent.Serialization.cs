@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AS2))
+            if (AS2 != null)
             {
                 writer.WritePropertyName("aS2"u8);
                 writer.WriteObjectValue(AS2);
             }
-            if (Optional.IsDefined(X12))
+            if (X12 != null)
             {
                 writer.WritePropertyName("x12"u8);
                 writer.WriteObjectValue(X12);
             }
-            if (Optional.IsDefined(Edifact))
+            if (Edifact != null)
             {
                 writer.WritePropertyName("edifact"u8);
                 writer.WriteObjectValue(Edifact);

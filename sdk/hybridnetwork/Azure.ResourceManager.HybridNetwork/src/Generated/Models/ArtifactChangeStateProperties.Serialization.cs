@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactState))
+            if (ArtifactState.HasValue)
             {
                 writer.WritePropertyName("artifactState"u8);
                 writer.WriteStringValue(ArtifactState.Value.ToString());

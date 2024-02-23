@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnabledProtocols))
+            if (EnabledProtocols != null)
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
-            if (Optional.IsCollectionDefined(ClearTracks))
+            if (!(ClearTracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentKeys))
+            if (ContentKeys != null)
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Optional.IsDefined(Drm))
+            if (Drm != null)
             {
                 writer.WritePropertyName("drm"u8);
                 writer.WriteObjectValue(Drm);
             }
-            if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
+            if (ClearKeyEncryptionConfiguration != null)
             {
                 writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
                 writer.WriteObjectValue(ClearKeyEncryptionConfiguration);

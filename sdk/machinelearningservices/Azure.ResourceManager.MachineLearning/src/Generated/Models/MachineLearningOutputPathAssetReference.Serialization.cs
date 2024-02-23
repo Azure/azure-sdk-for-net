@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobId))
+            if (JobId != null)
             {
                 if (JobId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobId");
                 }
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 if (Path != null)
                 {

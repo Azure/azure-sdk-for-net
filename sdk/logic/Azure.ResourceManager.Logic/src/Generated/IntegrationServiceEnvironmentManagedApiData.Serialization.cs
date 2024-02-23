@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NamePropertiesName))
+            if (options.Format != "W" && NamePropertiesName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectionParameters))
+            if (options.Format != "W" && !(ConnectionParameters is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("connectionParameters"u8);
                 writer.WriteStartObject();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(Metadata))
+            if (options.Format != "W" && Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RuntimeUris))
+            if (options.Format != "W" && !(RuntimeUris is ChangeTrackingList<Uri> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("runtimeUrls"u8);
                 writer.WriteStartArray();
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(GeneralInformation))
+            if (options.Format != "W" && GeneralInformation != null)
             {
                 writer.WritePropertyName("generalInformation"u8);
                 writer.WriteObjectValue(GeneralInformation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -126,42 +126,42 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BackendService))
+            if (options.Format != "W" && BackendService != null)
             {
                 writer.WritePropertyName("backendService"u8);
                 writer.WriteObjectValue(BackendService);
             }
-            if (options.Format != "W" && Optional.IsDefined(Policies))
+            if (options.Format != "W" && Policies != null)
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteObjectValue(Policies);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiDefinitionUri))
+            if (options.Format != "W" && ApiDefinitionUri != null)
             {
                 writer.WritePropertyName("apiDefinitionUrl"u8);
                 writer.WriteStringValue(ApiDefinitionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiDefinitions))
+            if (options.Format != "W" && ApiDefinitions != null)
             {
                 writer.WritePropertyName("apiDefinitions"u8);
                 writer.WriteObjectValue(ApiDefinitions);
             }
-            if (Optional.IsDefined(IntegrationServiceEnvironment))
+            if (IntegrationServiceEnvironment != null)
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(DeploymentParameters))
+            if (DeploymentParameters != null)
             {
                 writer.WritePropertyName("deploymentParameters"u8);
                 writer.WriteObjectValue(DeploymentParameters);

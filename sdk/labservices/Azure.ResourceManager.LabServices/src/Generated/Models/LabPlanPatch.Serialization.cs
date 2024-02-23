@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultConnectionProfile))
+            if (DefaultConnectionProfile != null)
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
                 writer.WriteObjectValue(DefaultConnectionProfile);
             }
-            if (Optional.IsDefined(DefaultAutoShutdownProfile))
+            if (DefaultAutoShutdownProfile != null)
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
                 writer.WriteObjectValue(DefaultAutoShutdownProfile);
             }
-            if (Optional.IsDefined(DefaultNetworkProfile))
+            if (DefaultNetworkProfile != null)
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
                 writer.WriteObjectValue(DefaultNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(AllowedRegions))
+            if (!(AllowedRegions is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedRegions"u8);
                 writer.WriteStartArray();
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SharedGalleryId))
+            if (SharedGalleryId != null)
             {
                 writer.WritePropertyName("sharedGalleryId"u8);
                 writer.WriteStringValue(SharedGalleryId);
             }
-            if (Optional.IsDefined(SupportInfo))
+            if (SupportInfo != null)
             {
                 writer.WritePropertyName("supportInfo"u8);
                 writer.WriteObjectValue(SupportInfo);
             }
-            if (Optional.IsDefined(LinkedLmsInstance))
+            if (LinkedLmsInstance != null)
             {
                 writer.WritePropertyName("linkedLmsInstance"u8);
                 writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);

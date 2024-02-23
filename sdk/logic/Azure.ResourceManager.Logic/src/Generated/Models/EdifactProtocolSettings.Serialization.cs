@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteObjectValue(MessageFilter);
             writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
-            if (Optional.IsCollectionDefined(EnvelopeOverrides))
+            if (!(EnvelopeOverrides is ChangeTrackingList<EdifactEnvelopeOverride> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MessageFilterList))
+            if (!(MessageFilterList is ChangeTrackingList<EdifactMessageIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ValidationOverrides))
+            if (!(ValidationOverrides is ChangeTrackingList<EdifactValidationOverride> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EdifactDelimiterOverrides))
+            if (!(EdifactDelimiterOverrides is ChangeTrackingList<EdifactDelimiterOverride> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("edifactDelimiterOverrides"u8);
                 writer.WriteStartArray();

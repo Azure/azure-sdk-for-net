@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HelmPackageName))
+            if (HelmPackageName != null)
             {
                 writer.WritePropertyName("helmPackageName"u8);
                 writer.WriteStringValue(HelmPackageName);
             }
-            if (Optional.IsDefined(HelmPackageVersionRange))
+            if (HelmPackageVersionRange != null)
             {
                 writer.WritePropertyName("helmPackageVersionRange"u8);
                 writer.WriteStringValue(HelmPackageVersionRange);
             }
-            if (Optional.IsCollectionDefined(RegistryValuesPaths))
+            if (!(RegistryValuesPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("registryValuesPaths"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ImagePullSecretsValuesPaths))
+            if (!(ImagePullSecretsValuesPaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("imagePullSecretsValuesPaths"u8);
                 writer.WriteStartArray();

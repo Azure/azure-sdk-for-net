@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Compute))
+            if (Compute != null)
             {
                 if (Compute != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute");
                 }
             }
-            if (Optional.IsCollectionDefined(MirrorTraffic))
+            if (!(MirrorTraffic is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
             {
                 if (MirrorTraffic != null)
                 {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("mirrorTraffic");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Traffic))
+            if (!(Traffic is ChangeTrackingDictionary<string, int> collection0 && collection0.IsUndefined))
             {
                 if (Traffic != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Keys))
+            if (Keys != null)
             {
                 if (Keys != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keys");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ScoringUri))
+            if (options.Format != "W" && ScoringUri != null)
             {
                 if (ScoringUri != null)
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scoringUri");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SwaggerUri))
+            if (options.Format != "W" && SwaggerUri != null)
             {
                 if (SwaggerUri != null)
                 {

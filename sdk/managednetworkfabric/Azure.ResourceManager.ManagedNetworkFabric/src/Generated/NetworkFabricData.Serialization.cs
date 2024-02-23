@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,26 +56,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
             writer.WritePropertyName("networkFabricSku"u8);
             writer.WriteStringValue(NetworkFabricSku);
-            if (options.Format != "W" && Optional.IsDefined(FabricVersion))
+            if (options.Format != "W" && FabricVersion != null)
             {
                 writer.WritePropertyName("fabricVersion"u8);
                 writer.WriteStringValue(FabricVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RouterIds))
+            if (options.Format != "W" && !(RouterIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("routerIds"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
             writer.WritePropertyName("networkFabricControllerId"u8);
             writer.WriteStringValue(NetworkFabricControllerId);
-            if (Optional.IsDefined(RackCount))
+            if (RackCount.HasValue)
             {
                 writer.WritePropertyName("rackCount"u8);
                 writer.WriteNumberValue(RackCount.Value);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteNumberValue(ServerCountPerRack);
             writer.WritePropertyName("ipv4Prefix"u8);
             writer.WriteStringValue(IPv4Prefix);
-            if (Optional.IsDefined(IPv6Prefix))
+            if (IPv6Prefix != null)
             {
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteObjectValue(TerminalServerConfiguration);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
             writer.WriteObjectValue(ManagementNetworkConfiguration);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
+            if (options.Format != "W" && !(Racks is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("racks"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(L2IsolationDomains))
+            if (options.Format != "W" && !(L2IsolationDomains is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("l2IsolationDomains"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(L3IsolationDomains))
+            if (options.Format != "W" && !(L3IsolationDomains is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("l3IsolationDomains"u8);
                 writer.WriteStartArray();
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
+            if (options.Format != "W" && ConfigurationState.HasValue)
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
+            if (options.Format != "W" && AdministrativeState.HasValue)
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());

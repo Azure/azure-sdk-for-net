@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(LabVirtualMachineId))
+            if (LabVirtualMachineId != null)
             {
                 writer.WritePropertyName("labVirtualMachineId"u8);
                 writer.WriteStringValue(LabVirtualMachineId);

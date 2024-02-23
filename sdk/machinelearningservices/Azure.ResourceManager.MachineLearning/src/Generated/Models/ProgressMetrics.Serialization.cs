@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CompletedDatapointCount))
+            if (options.Format != "W" && CompletedDatapointCount.HasValue)
             {
                 if (CompletedDatapointCount != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("completedDatapointCount");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(IncrementalDataLastRefreshOn))
+            if (options.Format != "W" && IncrementalDataLastRefreshOn.HasValue)
             {
                 if (IncrementalDataLastRefreshOn != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("incrementalDataLastRefreshDateTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SkippedDatapointCount))
+            if (options.Format != "W" && SkippedDatapointCount.HasValue)
             {
                 if (SkippedDatapointCount != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("skippedDatapointCount");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalDatapointCount))
+            if (options.Format != "W" && TotalDatapointCount.HasValue)
             {
                 if (TotalDatapointCount != null)
                 {
