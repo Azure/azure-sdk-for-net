@@ -6,6 +6,7 @@ using System.Buffers.Binary;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Shared;
 using NUnit.Framework;
 using static Azure.Storage.Shared.StructuredMessage;
@@ -76,92 +77,29 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        [Combinatorial]
-        public async Task EncodesDataSingleSegment(
-            [Values(Flags.None, Flags.Crc)] int flagsInt,
-            [Values(1024, 1001)] int dataLength)
+        [Pairwise]
+        public async Task EncodesData(
+            [Values(2048, 2005)] int dataLength,
+            [Values(default, 512)] int? seglen,
+            [Values(8 * Constants.KB, 512, 530, 3)] int readLen,
+            [Values(true, false)] bool useCrc)
         {
-            Flags flags = (Flags)flagsInt;
-            const int expectedHeaderLen = V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength;
-            int expectedFooterLen = flags.HasFlag(Flags.Crc) ? Crc64Length : 0;
+            int segmentContentLength = seglen ?? int.MaxValue;
+            Flags flags = useCrc ? Flags.Crc : Flags.None;
 
-            byte[] data = new byte[dataLength];
-            new Random().NextBytes(data);
-            byte[] expectedHeader = new byte[expectedHeaderLen];
-            byte[] expectedFooter = new byte[expectedFooterLen];
-            V1_0.WriteStreamHeader(
-                new Span<byte>(expectedHeader, 0, V1_0.StreamHeaderLength),
-                messageLength: data.Length + expectedHeaderLen + expectedFooterLen,
-                flags,
-                totalSegments: 1);
-            V1_0.WriteSegmentHeader(
-                new Span<byte>(expectedHeader, V1_0.StreamHeaderLength, V1_0.SegmentHeaderLength),
-                segmentNum: 1,
-                segmentLength: dataLength);
-            if (flags.HasFlag(Flags.Crc))
-            {
-                V1_0.WriteSegmentFooter(expectedFooter, CrcInline(data));
-            }
+            byte[] originalData = new byte[dataLength];
+            new Random().NextBytes(originalData);
+            byte[] expectedEncodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentContentLength, flags);
 
-            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), 1024, flags);
+            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(originalData), segmentContentLength, flags);
             byte[] encodedData;
             using (MemoryStream dest = new())
             {
-                await CopyStream(encodingStream, dest);
+                await CopyStream(encodingStream, dest, readLen);
                 encodedData = dest.ToArray();
             }
 
-            Assert.That(encodedData.Length, Is.EqualTo(data.Length + expectedHeaderLen + expectedFooterLen));
-            Assert.That(new Span<byte>(encodedData, 0, expectedHeaderLen).SequenceEqual(expectedHeader));
-            if (flags.HasFlag(Flags.Crc))
-            {
-                Assert.That(new Span<byte>(encodedData, expectedHeaderLen + data.Length, expectedFooterLen)
-                    .SequenceEqual(expectedFooter));
-            }
-        }
-
-        [Test]
-        [Combinatorial]
-        public async Task EncodesDataMultiSegment(
-            [Values(Flags.None, Flags.Crc)] int flagsInt,
-            [Values(2048, 2005)] int dataLength)
-        {
-            const int segmentLength = 512;
-            const int expectedNumSegments = 4;
-            Flags flags = (Flags)flagsInt;
-            int expectedSegFooterLen = flags.HasFlag(Flags.Crc) ? Crc64Length : 0;
-            int expectedEncodedDataLen = V1_0.StreamHeaderLength +
-                (expectedNumSegments * (V1_0.SegmentHeaderLength + expectedSegFooterLen))
-                + dataLength;
-
-            byte[] data = new byte[dataLength];
-            new Random().NextBytes(data);
-
-            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, flags);
-            byte[] encodedData;
-            using (MemoryStream dest = new())
-            {
-                await CopyStream(encodingStream, dest);
-                encodedData = dest.ToArray();
-            }
-
-            Assert.That(encodedData.Length, Is.EqualTo(expectedEncodedDataLen));
-            AssertExpectedStreamHeader(new Span<byte>(encodedData, 0, V1_0.StreamHeaderLength),
-                dataLength, flags, expectedNumSegments);
-            foreach (int segNum in Enumerable.Range(1, expectedNumSegments))
-            {
-                int segOffset = V1_0.StreamHeaderLength + ((segNum - 1) * (V1_0.SegmentHeaderLength + segmentLength + expectedSegFooterLen));
-                int segContentLength = Math.Min(segmentLength, dataLength - ((segNum-1) * segmentLength));
-                AssertExpectedSegmentHeader(new Span<byte>(encodedData, segOffset, V1_0.SegmentHeaderLength), segNum, segContentLength);
-                Assert.That(new Span<byte>(encodedData, segOffset + V1_0.SegmentHeaderLength, segContentLength)
-                    .SequenceEqual(new Span<byte>(data, (segNum - 1) * segmentLength, segContentLength)));
-                if (flags.HasFlag(Flags.Crc))
-                {
-                    int offset = (segNum - 1) * segmentLength;
-                    Assert.That(new Span<byte>(encodedData, segOffset + V1_0.SegmentHeaderLength + segContentLength, Crc64Length)
-                        .SequenceEqual(CrcInline(new Span<byte>(data, 0, offset + Math.Min(segmentLength, data.Length - offset)))));
-                }
-            }
+            Assert.That(new Span<byte>(encodedData).SequenceEqual(expectedEncodedData));
         }
 
         [TestCase(0, 0)] // start

@@ -91,11 +91,11 @@ namespace Azure.Storage.Tests
             new Random().NextBytes(originalData);
             byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentContentLength, flags);
 
-            Stream encodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
             byte[] decodedData;
             using (MemoryStream dest = new())
             {
-                await CopyStream(encodingStream, dest, readLen);
+                await CopyStream(decodingStream, dest, readLen);
                 decodedData = dest.ToArray();
             }
 
