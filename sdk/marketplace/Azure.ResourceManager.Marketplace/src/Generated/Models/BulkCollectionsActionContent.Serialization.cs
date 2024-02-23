@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IList<Guid>> collectionIds = default;
+            IList<Guid> collectionIds = default;
             Optional<string> action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BulkCollectionsActionContent(Optional.ToList(collectionIds), action.Value, serializedAdditionalRawData);
+            return new BulkCollectionsActionContent(collectionIds ?? new ChangeTrackingList<Guid>(), action.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BulkCollectionsActionContent>.Write(ModelReaderWriterOptions options)

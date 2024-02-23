@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             string model = default;
             Optional<string> manufacturer = default;
-            Optional<IList<SupportedVersionProperties>> supportedVersions = default;
-            Optional<IList<NetworkDeviceRoleName>> supportedRoleTypes = default;
-            Optional<IList<NetworkDeviceInterfaceProperties>> interfaces = default;
+            IList<SupportedVersionProperties> supportedVersions = default;
+            IList<NetworkDeviceRoleName> supportedRoleTypes = default;
+            IList<NetworkDeviceInterfaceProperties> interfaces = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, Optional.ToList(supportedVersions), Optional.ToList(supportedRoleTypes), Optional.ToList(interfaces), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkDeviceSkuData(id, name, type, systemData.Value, model, manufacturer.Value, supportedVersions ?? new ChangeTrackingList<SupportedVersionProperties>(), supportedRoleTypes ?? new ChangeTrackingList<NetworkDeviceRoleName>(), interfaces ?? new ChangeTrackingList<NetworkDeviceInterfaceProperties>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceSkuData>.Write(ModelReaderWriterOptions options)

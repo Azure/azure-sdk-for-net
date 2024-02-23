@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StopSellNotifications>> stopSellNotifications = default;
-            Optional<IReadOnlyList<NewPlanNotification>> newNotifications = default;
-            Optional<IReadOnlyList<RequestApprovalsDetails>> approvalRequests = default;
+            IReadOnlyList<StopSellNotifications> stopSellNotifications = default;
+            IReadOnlyList<NewPlanNotification> newNotifications = default;
+            IReadOnlyList<RequestApprovalsDetails> approvalRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreNotificationsState(Optional.ToList(stopSellNotifications), Optional.ToList(newNotifications), Optional.ToList(approvalRequests), serializedAdditionalRawData);
+            return new PrivateStoreNotificationsState(stopSellNotifications ?? new ChangeTrackingList<StopSellNotifications>(), newNotifications ?? new ChangeTrackingList<NewPlanNotification>(), approvalRequests ?? new ChangeTrackingList<RequestApprovalsDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreNotificationsState>.Write(ModelReaderWriterOptions options)

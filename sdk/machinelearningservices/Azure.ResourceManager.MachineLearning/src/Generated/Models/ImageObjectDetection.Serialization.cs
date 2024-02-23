@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<ObjectDetectionPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsObjectDetection> modelSettings = default;
-            Optional<IList<ImageModelDistributionSettingsObjectDetection>> searchSpace = default;
+            IList<ImageModelDistributionSettingsObjectDetection> searchSpace = default;
             ImageLimitSettings limitSettings = default;
             Optional<ImageSweepSettings> sweepSettings = default;
             Optional<MachineLearningTableJobInput> validationData = default;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageObjectDetection(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
+            return new ImageObjectDetection(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>(), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
         }
 
         BinaryData IPersistableModel<ImageObjectDetection>.Write(ModelReaderWriterOptions options)

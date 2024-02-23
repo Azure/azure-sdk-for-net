@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationResponse>> value = default;
+            IReadOnlyList<OperationResponse> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OperationList(value ?? new ChangeTrackingList<OperationResponse>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationList>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MarketplaceApprovalRequestData>> value = default;
+            IReadOnlyList<MarketplaceApprovalRequestData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestApprovalsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RequestApprovalsList(value ?? new ChangeTrackingList<MarketplaceApprovalRequestData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestApprovalsList>.Write(ModelReaderWriterOptions options)

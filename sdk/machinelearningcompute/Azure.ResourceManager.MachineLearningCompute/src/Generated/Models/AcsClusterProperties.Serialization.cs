@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<string> clusterFqdn = default;
             OrchestratorType orchestratorType = default;
             Optional<KubernetesClusterProperties> orchestratorProperties = default;
-            Optional<IList<SystemService>> systemServices = default;
+            IList<SystemService> systemServices = default;
             Optional<int> masterCount = default;
             Optional<int> agentCount = default;
             Optional<AgentVmSizeType> agentVmSize = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Optional.ToList(systemServices), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize), serializedAdditionalRawData);
+            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, systemServices ?? new ChangeTrackingList<SystemService>(), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsClusterProperties>.Write(ModelReaderWriterOptions options)

@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<SwaggerSchema> items = default;
             Optional<IDictionary<string, SwaggerSchema>> properties = default;
             Optional<BinaryData> additionalProperties = default;
-            Optional<IList<string>> required = default;
+            IList<string> required = default;
             Optional<int> maxProperties = default;
             Optional<int> minProperties = default;
-            Optional<IList<SwaggerSchema>> allOf = default;
+            IList<SwaggerSchema> allOf = default;
             Optional<string> discriminator = default;
             Optional<bool> readOnly = default;
             Optional<SwaggerXml> xml = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerSchema(@ref.Value, Optional.ToNullable(type), title.Value, items.Value, Optional.ToDictionary(properties), additionalProperties.Value, Optional.ToList(required), Optional.ToNullable(maxProperties), Optional.ToNullable(minProperties), Optional.ToList(allOf), discriminator.Value, Optional.ToNullable(readOnly), xml.Value, externalDocs.Value, example.Value, Optional.ToNullable(notificationUrlExtension), dynamicSchemaOld.Value, dynamicSchemaNew.Value, dynamicListNew.Value, dynamicTree.Value, serializedAdditionalRawData);
+            return new SwaggerSchema(@ref.Value, Optional.ToNullable(type), title.Value, items.Value, Optional.ToDictionary(properties), additionalProperties.Value, required ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxProperties), Optional.ToNullable(minProperties), allOf ?? new ChangeTrackingList<SwaggerSchema>(), discriminator.Value, Optional.ToNullable(readOnly), xml.Value, externalDocs.Value, example.Value, Optional.ToNullable(notificationUrlExtension), dynamicSchemaOld.Value, dynamicSchemaNew.Value, dynamicListNew.Value, dynamicTree.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerSchema>.Write(ModelReaderWriterOptions options)

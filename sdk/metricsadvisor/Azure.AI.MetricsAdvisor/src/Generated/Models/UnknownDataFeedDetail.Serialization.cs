@@ -175,7 +175,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataFeedGranularityType granularityName = default;
             Optional<int?> granularityAmount = default;
             IList<DataFeedMetric> metrics = default;
-            Optional<IList<DataFeedDimension>> dimension = default;
+            IList<DataFeedDimension> dimension = default;
             Optional<string> timestampColumn = default;
             DateTimeOffset dataStartFrom = default;
             Optional<long> startOffsetInSeconds = default;
@@ -184,13 +184,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<long> stopRetryAfterInSeconds = default;
             Optional<DataFeedRollupType> needRollup = default;
             Optional<DataFeedAutoRollupMethod> rollUpMethod = default;
-            Optional<IList<string>> rollUpColumns = default;
+            IList<string> rollUpColumns = default;
             Optional<string> allUpIdentification = default;
             Optional<DataFeedMissingDataPointFillType> fillMissingPointType = default;
             Optional<double> fillMissingPointValue = default;
             Optional<DataFeedAccessMode> viewMode = default;
-            Optional<IList<string>> admins = default;
-            Optional<IList<string>> viewers = default;
+            IList<string> admins = default;
+            IList<string> viewers = default;
             Optional<bool> isAdmin = default;
             Optional<string> creator = default;
             Optional<DataFeedStatus> status = default;
@@ -449,7 +449,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UnknownDataFeedDetail(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value);
+            return new UnknownDataFeedDetail(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, dimension ?? new ChangeTrackingList<DataFeedDimension>(), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), rollUpColumns ?? new ChangeTrackingList<string>(), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), admins ?? new ChangeTrackingList<string>(), viewers ?? new ChangeTrackingList<string>(), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value);
         }
     }
 }

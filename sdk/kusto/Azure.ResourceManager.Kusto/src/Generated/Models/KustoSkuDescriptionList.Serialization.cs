@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoSkuDescription>> value = default;
+            IReadOnlyList<KustoSkuDescription> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoSkuDescriptionList(Optional.ToList(value), serializedAdditionalRawData);
+            return new KustoSkuDescriptionList(value ?? new ChangeTrackingList<KustoSkuDescription>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoSkuDescriptionList>.Write(ModelReaderWriterOptions options)

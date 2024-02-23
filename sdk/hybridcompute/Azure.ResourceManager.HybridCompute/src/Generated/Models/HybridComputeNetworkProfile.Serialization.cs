@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputeNetworkInterface>> networkInterfaces = default;
+            IReadOnlyList<HybridComputeNetworkInterface> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeNetworkProfile(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new HybridComputeNetworkProfile(networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeNetworkProfile>.Write(ModelReaderWriterOptions options)

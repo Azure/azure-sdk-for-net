@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> etherTypes = default;
-            Optional<IList<string>> fragments = default;
-            Optional<IList<string>> ipLengths = default;
-            Optional<IList<string>> ttlValues = default;
-            Optional<IList<string>> dscpMarkings = default;
+            IList<string> etherTypes = default;
+            IList<string> fragments = default;
+            IList<string> ipLengths = default;
+            IList<string> ttlValues = default;
+            IList<string> dscpMarkings = default;
             Optional<AccessControlListPortCondition> portCondition = default;
-            Optional<IList<string>> protocolTypes = default;
+            IList<string> protocolTypes = default;
             Optional<VlanMatchCondition> vlanMatchCondition = default;
             Optional<IPMatchCondition> ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, Optional.ToList(etherTypes), Optional.ToList(fragments), Optional.ToList(ipLengths), Optional.ToList(ttlValues), Optional.ToList(dscpMarkings), portCondition.Value);
+            return new AccessControlListMatchCondition(protocolTypes ?? new ChangeTrackingList<string>(), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, etherTypes ?? new ChangeTrackingList<string>(), fragments ?? new ChangeTrackingList<string>(), ipLengths ?? new ChangeTrackingList<string>(), ttlValues ?? new ChangeTrackingList<string>(), dscpMarkings ?? new ChangeTrackingList<string>(), portCondition.Value);
         }
 
         BinaryData IPersistableModel<AccessControlListMatchCondition>.Write(ModelReaderWriterOptions options)
