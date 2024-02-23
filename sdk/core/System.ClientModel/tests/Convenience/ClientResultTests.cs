@@ -130,13 +130,24 @@ public class PipelineResponseTests
     [Test]
     public void CanImplicitlyCastClientResultOfT()
     {
-        string value = "hello";
         PipelineResponse response = new MockPipelineResponse(200);
 
-        ClientResult<string> resultAsClientResultOfT = ClientResult.FromValue(value, response);
-        string resultAsString = ClientResult.FromValue(value, response);
+        string plainString = "hello";
+        ClientResult<string> resultAsClientResultOfString = ClientResult.FromValue(plainString, response);
+        string resultAsPlainString = ClientResult.FromValue(plainString, response);
+        Assert.AreEqual(resultAsClientResultOfString.Value, resultAsPlainString);
 
-        Assert.AreEqual(resultAsClientResultOfT.Value, resultAsString);
+        string? nullableString = null;
+        ClientResult<string?> resultAsClientResultOfNullableString = ClientResult.FromOptionalValue(nullableString, response);
+        string? resultAsNullableString = ClientResult.FromOptionalValue(nullableString, response);
+        Assert.IsNull(resultAsNullableString);
+        Assert.AreEqual(resultAsClientResultOfNullableString.Value, resultAsNullableString);
+
+        int? nullableInt = null;
+        ClientResult<int?> resultAsClientResultOfNullableInt = ClientResult.FromOptionalValue(nullableInt, response);
+        int? resultAsNullableInt = ClientResult.FromOptionalValue(nullableInt, response);
+        Assert.IsNull(resultAsNullableInt);
+        Assert.AreEqual(resultAsClientResultOfNullableInt.Value, resultAsNullableInt);
     }
 
     #endregion
