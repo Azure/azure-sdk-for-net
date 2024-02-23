@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IList<StorageCorsRule>> corsRules = default;
+            IList<StorageCorsRule> corsRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCorsRules(Optional.ToList(corsRules), serializedAdditionalRawData);
+            return new StorageCorsRules(corsRules ?? new ChangeTrackingList<StorageCorsRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCorsRules>.Write(ModelReaderWriterOptions options)

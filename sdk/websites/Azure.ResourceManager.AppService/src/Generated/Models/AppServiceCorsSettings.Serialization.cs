@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedOrigins = default;
+            IList<string> allowedOrigins = default;
             Optional<bool> supportCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCorsSettings(Optional.ToList(allowedOrigins), Optional.ToNullable(supportCredentials), serializedAdditionalRawData);
+            return new AppServiceCorsSettings(allowedOrigins ?? new ChangeTrackingList<string>(), Optional.ToNullable(supportCredentials), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCorsSettings>.Write(ModelReaderWriterOptions options)

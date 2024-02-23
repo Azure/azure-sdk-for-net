@@ -23,7 +23,7 @@ namespace Azure.AI.Translation.Document
             IReadOnlyList<string> fileExtensions = default;
             IReadOnlyList<string> contentTypes = default;
             Optional<string> defaultVersion = default;
-            Optional<IReadOnlyList<string>> versions = default;
+            IReadOnlyList<string> versions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("format"u8))
@@ -71,7 +71,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentTranslationFileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, Optional.ToList(versions));
+            return new DocumentTranslationFileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, versions ?? new ChangeTrackingList<string>());
         }
     }
 }

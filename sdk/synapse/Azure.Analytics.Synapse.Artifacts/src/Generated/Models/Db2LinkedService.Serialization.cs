@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<object> connectionString = default;
             object server = default;
             object database = default;
@@ -273,7 +273,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Db2LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, server, database, Optional.ToNullable(authenticationType), username.Value, password.Value, packageCollection.Value, certificateCommonName.Value, encryptedCredential.Value);
+            return new Db2LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, server, database, Optional.ToNullable(authenticationType), username.Value, password.Value, packageCollection.Value, certificateCommonName.Value, encryptedCredential.Value);
         }
 
         internal partial class Db2LinkedServiceConverter : JsonConverter<Db2LinkedService>

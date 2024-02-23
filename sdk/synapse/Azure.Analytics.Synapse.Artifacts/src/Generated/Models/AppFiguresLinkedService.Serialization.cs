@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             object userName = default;
             SecretBase password = default;
             SecretBase clientKey = default;
@@ -176,7 +176,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AppFiguresLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, userName, password, clientKey);
+            return new AppFiguresLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, userName, password, clientKey);
         }
 
         internal partial class AppFiguresLinkedServiceConverter : JsonConverter<AppFiguresLinkedService>

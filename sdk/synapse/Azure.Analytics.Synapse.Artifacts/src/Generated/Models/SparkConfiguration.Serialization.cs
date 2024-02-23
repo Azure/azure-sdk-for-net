@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<string> description = default;
             IDictionary<string, string> configs = default;
-            Optional<IList<string>> annotations = default;
+            IList<string> annotations = default;
             Optional<string> notes = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> created = default;
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkConfiguration(description.Value, configs, Optional.ToList(annotations), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule));
+            return new SparkConfiguration(description.Value, configs, annotations ?? new ChangeTrackingList<string>(), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule));
         }
 
         internal partial class SparkConfigurationConverter : JsonConverter<SparkConfiguration>

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             IDictionary<string, string> configs = default;
-            Optional<IList<string>> annotations = default;
+            IList<string> annotations = default;
             Optional<string> notes = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> created = default;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSparkConfigurationData(id, name, type, systemData.Value, description.Value, configs, Optional.ToList(annotations), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SynapseSparkConfigurationData(id, name, type, systemData.Value, description.Value, configs, annotations ?? new ChangeTrackingList<string>(), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSparkConfigurationData>.Write(ModelReaderWriterOptions options)

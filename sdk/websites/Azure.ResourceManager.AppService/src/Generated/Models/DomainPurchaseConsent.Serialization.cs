@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> agreementKeys = default;
+            IList<string> agreementKeys = default;
             Optional<string> agreedBy = default;
             Optional<DateTimeOffset> agreedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainPurchaseConsent(Optional.ToList(agreementKeys), agreedBy.Value, Optional.ToNullable(agreedAt), serializedAdditionalRawData);
+            return new DomainPurchaseConsent(agreementKeys ?? new ChangeTrackingList<string>(), agreedBy.Value, Optional.ToNullable(agreedAt), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainPurchaseConsent>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapLandscapeMonitorData>> value = default;
+            IReadOnlyList<SapLandscapeMonitorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLandscapeMonitorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SapLandscapeMonitorListResult(value ?? new ChangeTrackingList<SapLandscapeMonitorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapLandscapeMonitorListResult>.Write(ModelReaderWriterOptions options)

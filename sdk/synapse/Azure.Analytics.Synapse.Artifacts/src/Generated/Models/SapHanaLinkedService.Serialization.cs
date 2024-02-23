@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<object> connectionString = default;
             object server = default;
             Optional<SapHanaAuthenticationType> authenticationType = default;
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapHanaLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, server, Optional.ToNullable(authenticationType), userName.Value, password.Value, encryptedCredential.Value);
+            return new SapHanaLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, server, Optional.ToNullable(authenticationType), userName.Value, password.Value, encryptedCredential.Value);
         }
 
         internal partial class SapHanaLinkedServiceConverter : JsonConverter<SapHanaLinkedService>

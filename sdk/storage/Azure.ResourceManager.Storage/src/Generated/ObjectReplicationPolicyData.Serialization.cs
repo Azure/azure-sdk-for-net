@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage
             Optional<DateTimeOffset> enabledTime = default;
             Optional<string> sourceAccount = default;
             Optional<string> destinationAccount = default;
-            Optional<IList<ObjectReplicationPolicyRule>> rules = default;
+            IList<ObjectReplicationPolicyRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, Optional.ToList(rules), serializedAdditionalRawData);
+            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options)

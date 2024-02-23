@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             Optional<AmlFileSystemHsmSettings> settings = default;
-            Optional<IReadOnlyList<AmlFileSystemArchive>> archiveStatus = default;
+            IReadOnlyList<AmlFileSystemArchive> archiveStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemPropertiesHsm(settings.Value, Optional.ToList(archiveStatus), serializedAdditionalRawData);
+            return new AmlFileSystemPropertiesHsm(settings.Value, archiveStatus ?? new ChangeTrackingList<AmlFileSystemArchive>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemPropertiesHsm>.Write(ModelReaderWriterOptions options)

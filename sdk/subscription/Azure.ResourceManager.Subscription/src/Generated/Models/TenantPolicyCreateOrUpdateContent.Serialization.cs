@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Subscription.Models
             }
             Optional<bool> blockSubscriptionsLeavingTenant = default;
             Optional<bool> blockSubscriptionsIntoTenant = default;
-            Optional<IList<Guid>> exemptedPrincipals = default;
+            IList<Guid> exemptedPrincipals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantPolicyCreateOrUpdateContent(Optional.ToNullable(blockSubscriptionsLeavingTenant), Optional.ToNullable(blockSubscriptionsIntoTenant), Optional.ToList(exemptedPrincipals), serializedAdditionalRawData);
+            return new TenantPolicyCreateOrUpdateContent(Optional.ToNullable(blockSubscriptionsLeavingTenant), Optional.ToNullable(blockSubscriptionsIntoTenant), exemptedPrincipals ?? new ChangeTrackingList<Guid>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantPolicyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

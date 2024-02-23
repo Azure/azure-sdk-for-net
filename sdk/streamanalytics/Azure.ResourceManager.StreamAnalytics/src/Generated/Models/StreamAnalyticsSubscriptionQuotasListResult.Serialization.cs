@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamAnalyticsSubscriptionQuota>> value = default;
+            IReadOnlyList<StreamAnalyticsSubscriptionQuota> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSubscriptionQuotasListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new StreamAnalyticsSubscriptionQuotasListResult(value ?? new ChangeTrackingList<StreamAnalyticsSubscriptionQuota>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSubscriptionQuotasListResult>.Write(ModelReaderWriterOptions options)

@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             object connectionString = default;
             Optional<object> userName = default;
             Optional<SecretBase> password = default;
@@ -220,7 +220,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, userName.Value, password.Value, encryptedCredential.Value, alwaysEncryptedSettings.Value);
+            return new SqlServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString, userName.Value, password.Value, encryptedCredential.Value, alwaysEncryptedSettings.Value);
         }
 
         internal partial class SqlServerLinkedServiceConverter : JsonConverter<SqlServerLinkedService>
