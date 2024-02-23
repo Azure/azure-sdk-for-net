@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<SystemData> systemData = default;
             Optional<DevTestLabTargetCost> targetCost = default;
             Optional<LabCostSummaryProperties> labCostSummary = default;
-            Optional<IReadOnlyList<DevTestLabCostDetails>> labCostDetails = default;
-            Optional<IReadOnlyList<DevTestLabResourceCost>> resourceCosts = default;
+            IReadOnlyList<DevTestLabCostDetails> labCostDetails = default;
+            IReadOnlyList<DevTestLabResourceCost> resourceCosts = default;
             Optional<string> currencyCode = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, Optional.ToList(labCostDetails), Optional.ToList(resourceCosts), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabCostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>(), resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>(), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostData>.Write(ModelReaderWriterOptions options)

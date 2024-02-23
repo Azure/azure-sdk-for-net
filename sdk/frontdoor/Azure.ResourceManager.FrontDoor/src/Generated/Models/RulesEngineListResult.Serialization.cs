@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontDoorRulesEngineData>> value = default;
+            IReadOnlyList<FrontDoorRulesEngineData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesEngineListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RulesEngineListResult(value ?? new ChangeTrackingList<FrontDoorRulesEngineData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesEngineListResult>.Write(ModelReaderWriterOptions options)

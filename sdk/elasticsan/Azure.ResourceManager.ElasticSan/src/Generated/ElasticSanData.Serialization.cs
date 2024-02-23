@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             ElasticSanSku sku = default;
-            Optional<IList<string>> availabilityZones = default;
+            IList<string> availabilityZones = default;
             Optional<ElasticSanProvisioningState> provisioningState = default;
             long baseSizeTiB = default;
             long extendedCapacitySizeTiB = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<long> totalIops = default;
             Optional<long> totalMbps = default;
             Optional<long> totalSizeTiB = default;
-            Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<ElasticSanPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, availabilityZones ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options)

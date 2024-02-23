@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<CustomLocationAuthentication> authentication = default;
-            Optional<IList<ResourceIdentifier>> clusterExtensionIds = default;
+            IList<ResourceIdentifier> clusterExtensionIds = default;
             Optional<string> displayName = default;
             Optional<ResourceIdentifier> hostResourceId = default;
             Optional<CustomLocationHostType> hostType = default;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationPatch(identity, Optional.ToDictionary(tags), authentication.Value, Optional.ToList(clusterExtensionIds), displayName.Value, hostResourceId.Value, Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new CustomLocationPatch(identity, Optional.ToDictionary(tags), authentication.Value, clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>(), displayName.Value, hostResourceId.Value, Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationPatch>.Write(ModelReaderWriterOptions options)

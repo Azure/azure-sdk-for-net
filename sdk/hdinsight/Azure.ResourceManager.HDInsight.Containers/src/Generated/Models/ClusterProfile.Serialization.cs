@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string clusterVersion = default;
             string ossVersion = default;
-            Optional<IReadOnlyList<ClusterComponentItem>> components = default;
+            IReadOnlyList<ClusterComponentItem> components = default;
             HDInsightIdentityProfile identityProfile = default;
             AuthorizationProfile authorizationProfile = default;
             Optional<ClusterSecretsProfile> secretsProfile = default;
-            Optional<IList<ClusterServiceConfigsProfile>> serviceConfigsProfiles = default;
+            IList<ClusterServiceConfigsProfile> serviceConfigsProfiles = default;
             Optional<ClusterConnectivityProfile> connectivityProfile = default;
             Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
             Optional<ClusterPrometheusProfile> prometheusProfile = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<FlinkProfile> flinkProfile = default;
             Optional<SparkProfile> sparkProfile = default;
             Optional<IDictionary<string, BinaryData>> stubProfile = default;
-            Optional<IList<ScriptActionProfile>> scriptActionProfiles = default;
+            IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterProfile(clusterVersion, ossVersion, Optional.ToList(components), identityProfile, authorizationProfile, secretsProfile.Value, Optional.ToList(serviceConfigsProfiles), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), Optional.ToList(scriptActionProfiles), serializedAdditionalRawData);
+            return new ClusterProfile(clusterVersion, ossVersion, components ?? new ChangeTrackingList<ClusterComponentItem>(), identityProfile, authorizationProfile, secretsProfile.Value, serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)

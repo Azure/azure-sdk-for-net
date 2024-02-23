@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<DevTestLabSubnet>> allowedSubnets = default;
+            IList<DevTestLabSubnet> allowedSubnets = default;
             Optional<string> description = default;
             Optional<string> externalProviderResourceId = default;
-            Optional<IReadOnlyList<DevTestLabExternalSubnet>> externalSubnets = default;
-            Optional<IList<DevTestLabSubnetOverride>> subnetOverrides = default;
+            IReadOnlyList<DevTestLabExternalSubnet> externalSubnets = default;
+            IList<DevTestLabSubnetOverride> subnetOverrides = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> provisioningState = default;
             Optional<Guid> uniqueIdentifier = default;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(allowedSubnets), description.Value, externalProviderResourceId.Value, Optional.ToList(externalSubnets), Optional.ToList(subnetOverrides), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, allowedSubnets ?? new ChangeTrackingList<DevTestLabSubnet>(), description.Value, externalProviderResourceId.Value, externalSubnets ?? new ChangeTrackingList<DevTestLabExternalSubnet>(), subnetOverrides ?? new ChangeTrackingList<DevTestLabSubnetOverride>(), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabVirtualNetworkData>.Write(ModelReaderWriterOptions options)
