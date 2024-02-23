@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<TimeSpan> interval = default;
             Optional<string> metricName = default;
             Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<IReadOnlyList<PredictiveValue>> data = default;
+            IReadOnlyList<PredictiveValue> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingPredicativeResult(timespan.Value, Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, Optional.ToList(data), serializedAdditionalRawData);
+            return new AutoscaleSettingPredicativeResult(timespan.Value, Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, data ?? new ChangeTrackingList<PredictiveValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingPredicativeResult>.Write(ModelReaderWriterOptions options)

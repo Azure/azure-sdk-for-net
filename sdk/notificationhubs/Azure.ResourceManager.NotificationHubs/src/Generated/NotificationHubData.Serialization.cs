@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NotificationHubs
             Optional<SystemData> systemData = default;
             Optional<string> name0 = default;
             Optional<TimeSpan> registrationTtl = default;
-            Optional<IList<SharedAccessAuthorizationRuleProperties>> authorizationRules = default;
+            IList<SharedAccessAuthorizationRuleProperties> authorizationRules = default;
             Optional<NotificationHubApnsCredential> apnsCredential = default;
             Optional<NotificationHubWnsCredential> wnsCredential = default;
             Optional<NotificationHubGcmCredential> gcmCredential = default;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToNullable(registrationTtl), Optional.ToList(authorizationRules), apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value, serializedAdditionalRawData);
+            return new NotificationHubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToNullable(registrationTtl), authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>(), apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubData>.Write(ModelReaderWriterOptions options)

@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string aggregation = default;
-            Optional<IReadOnlyList<MonitorMetricSingleDimension>> dimensions = default;
+            IReadOnlyList<MonitorMetricSingleDimension> dimensions = default;
             IReadOnlyList<DateTimeOffset> timestamps = default;
             IReadOnlyList<MonitorSingleBaseline> data = default;
-            Optional<IReadOnlyList<MonitorBaselineMetadata>> metadataValues = default;
+            IReadOnlyList<MonitorBaselineMetadata> metadataValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorTimeSeriesBaseline(aggregation, Optional.ToList(dimensions), timestamps, data, Optional.ToList(metadataValues), serializedAdditionalRawData);
+            return new MonitorTimeSeriesBaseline(aggregation, dimensions ?? new ChangeTrackingList<MonitorMetricSingleDimension>(), timestamps, data, metadataValues ?? new ChangeTrackingList<MonitorBaselineMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorTimeSeriesBaseline>.Write(ModelReaderWriterOptions options)

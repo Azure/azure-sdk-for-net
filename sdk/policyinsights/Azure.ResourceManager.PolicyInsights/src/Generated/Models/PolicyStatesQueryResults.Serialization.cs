@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<string> odataContext = default;
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;
-            Optional<IReadOnlyList<PolicyState>> value = default;
+            IReadOnlyList<PolicyState> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyStatesQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new PolicyStatesQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, value ?? new ChangeTrackingList<PolicyState>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyStatesQueryResults>.Write(ModelReaderWriterOptions options)

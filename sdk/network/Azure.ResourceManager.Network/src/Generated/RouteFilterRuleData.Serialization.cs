@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<NetworkAccess> access = default;
             Optional<RouteFilterRuleType> routeFilterRuleType = default;
-            Optional<IList<string>> communities = default;
+            IList<string> communities = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
+            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), communities ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<RouteFilterRuleData>.Write(ModelReaderWriterOptions options)

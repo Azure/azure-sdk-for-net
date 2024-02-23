@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> port = default;
             Optional<NetworkHttpConfigurationMethod> method = default;
             Optional<string> path = default;
-            Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
-            Optional<IList<string>> validStatusCodeRanges = default;
+            IList<NetworkWatcherHttpHeader> requestHeaders = default;
+            IList<string> validStatusCodeRanges = default;
             Optional<bool> preferHTTPS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS), serializedAdditionalRawData);
+            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(), validStatusCodeRanges ?? new ChangeTrackingList<string>(), Optional.ToNullable(preferHTTPS), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorHttpConfiguration>.Write(ModelReaderWriterOptions options)

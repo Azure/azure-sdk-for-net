@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnPeeringPrefix>> value = default;
+            IReadOnlyList<CdnPeeringPrefix> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnPeeringPrefixListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CdnPeeringPrefixListResult(value ?? new ChangeTrackingList<CdnPeeringPrefix>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnPeeringPrefixListResult>.Write(ModelReaderWriterOptions options)

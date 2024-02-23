@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VpnClientConnectionHealthDetail>> value = default;
+            IReadOnlyList<VpnClientConnectionHealthDetail> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealthDetailListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new VpnClientConnectionHealthDetailListResult(value ?? new ChangeTrackingList<VpnClientConnectionHealthDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealthDetailListResult>.Write(ModelReaderWriterOptions options)

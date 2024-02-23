@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<AdministratorConfiguration> administratorConfiguration = default;
             Optional<NetworkCloudAgentConfiguration> agentOptions = default;
             Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<IList<string>> availabilityZones = default;
+            IList<string> availabilityZones = default;
             long count = default;
-            Optional<IList<KubernetesLabel>> labels = default;
+            IList<KubernetesLabel> labels = default;
             NetworkCloudAgentPoolMode mode = default;
             string name = default;
-            Optional<IList<KubernetesLabel>> taints = default;
+            IList<KubernetesLabel> taints = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToList(labels), mode, name, Optional.ToList(taints), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
+            return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, availabilityZones ?? new ChangeTrackingList<string>(), count, labels ?? new ChangeTrackingList<KubernetesLabel>(), mode, name, taints ?? new ChangeTrackingList<KubernetesLabel>(), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitialAgentPoolConfiguration>.Write(ModelReaderWriterOptions options)

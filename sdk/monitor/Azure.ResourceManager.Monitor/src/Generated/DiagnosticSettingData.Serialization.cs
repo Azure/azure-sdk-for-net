@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Monitor
             Optional<ResourceIdentifier> serviceBusRuleId = default;
             Optional<ResourceIdentifier> eventHubAuthorizationRuleId = default;
             Optional<string> eventHubName = default;
-            Optional<IList<MetricSettings>> metrics = default;
-            Optional<IList<LogSettings>> logs = default;
+            IList<MetricSettings> metrics = default;
+            IList<LogSettings> logs = default;
             Optional<ResourceIdentifier> workspaceId = default;
             Optional<ResourceIdentifier> marketplacePartnerId = default;
             Optional<string> logAnalyticsDestinationType = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSettingData(id, name, type, systemData.Value, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, Optional.ToList(metrics), Optional.ToList(logs), workspaceId.Value, marketplacePartnerId.Value, logAnalyticsDestinationType.Value, serializedAdditionalRawData);
+            return new DiagnosticSettingData(id, name, type, systemData.Value, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, metrics ?? new ChangeTrackingList<MetricSettings>(), logs ?? new ChangeTrackingList<LogSettings>(), workspaceId.Value, marketplacePartnerId.Value, logAnalyticsDestinationType.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSettingData>.Write(ModelReaderWriterOptions options)

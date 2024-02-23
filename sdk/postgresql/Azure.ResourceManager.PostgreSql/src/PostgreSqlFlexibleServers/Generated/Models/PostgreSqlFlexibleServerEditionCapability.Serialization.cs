@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             Optional<string> name = default;
             Optional<string> defaultSkuName = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability>> supportedStorageEditions = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerSkuCapability>> supportedServerSkus = default;
+            IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions = default;
+            IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerEditionCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, name.Value, defaultSkuName.Value, Optional.ToList(supportedStorageEditions), Optional.ToList(supportedServerSkus));
+            return new PostgreSqlFlexibleServerEditionCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, name.Value, defaultSkuName.Value, supportedStorageEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability>(), supportedServerSkus ?? new ChangeTrackingList<PostgreSqlFlexibleServerSkuCapability>());
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerEditionCapability>.Write(ModelReaderWriterOptions options)

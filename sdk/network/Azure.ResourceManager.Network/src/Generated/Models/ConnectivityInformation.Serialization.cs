@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
+            IReadOnlyList<ConnectivityHopInfo> hops = default;
             Optional<NetworkConnectionStatus> connectionStatus = default;
             Optional<int> avgLatencyInMs = default;
             Optional<int> minLatencyInMs = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityInformation(Optional.ToList(hops), Optional.ToNullable(connectionStatus), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), serializedAdditionalRawData);
+            return new ConnectivityInformation(hops ?? new ChangeTrackingList<ConnectivityHopInfo>(), Optional.ToNullable(connectionStatus), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityInformation>.Write(ModelReaderWriterOptions options)

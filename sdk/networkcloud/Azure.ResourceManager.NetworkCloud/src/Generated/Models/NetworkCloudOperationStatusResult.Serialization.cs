@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<float> percentComplete = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<NetworkCloudOperationStatusResult>> operations = default;
+            IReadOnlyList<NetworkCloudOperationStatusResult> operations = default;
             Optional<ResponseError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudOperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, serializedAdditionalRawData);
+            return new NetworkCloudOperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), operations ?? new ChangeTrackingList<NetworkCloudOperationStatusResult>(), error.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudOperationStatusResult>.Write(ModelReaderWriterOptions options)

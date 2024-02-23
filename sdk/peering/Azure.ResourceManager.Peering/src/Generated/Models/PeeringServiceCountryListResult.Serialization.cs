@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeeringServiceCountry>> value = default;
+            IReadOnlyList<PeeringServiceCountry> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceCountryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeeringServiceCountryListResult(value ?? new ChangeTrackingList<PeeringServiceCountry>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceCountryListResult>.Write(ModelReaderWriterOptions options)

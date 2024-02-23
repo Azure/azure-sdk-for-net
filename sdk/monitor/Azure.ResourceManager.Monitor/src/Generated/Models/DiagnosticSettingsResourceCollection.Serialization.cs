@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiagnosticSettingData>> value = default;
+            IReadOnlyList<DiagnosticSettingData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSettingsResourceCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new DiagnosticSettingsResourceCollection(value ?? new ChangeTrackingList<DiagnosticSettingData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSettingsResourceCollection>.Write(ModelReaderWriterOptions options)

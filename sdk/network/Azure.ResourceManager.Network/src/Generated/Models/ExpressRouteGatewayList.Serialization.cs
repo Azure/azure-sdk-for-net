@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpressRouteGatewayData>> value = default;
+            IReadOnlyList<ExpressRouteGatewayData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteGatewayList(Optional.ToList(value), serializedAdditionalRawData);
+            return new ExpressRouteGatewayList(value ?? new ChangeTrackingList<ExpressRouteGatewayData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteGatewayList>.Write(ModelReaderWriterOptions options)

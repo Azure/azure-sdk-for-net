@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> serviceName = default;
-            Optional<IReadOnlyList<string>> actions = default;
+            IReadOnlyList<string> actions = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableDelegation(id, name, type, systemData.Value, serviceName.Value, Optional.ToList(actions), serializedAdditionalRawData);
+            return new AvailableDelegation(id, name, type, systemData.Value, serviceName.Value, actions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableDelegation>.Write(ModelReaderWriterOptions options)

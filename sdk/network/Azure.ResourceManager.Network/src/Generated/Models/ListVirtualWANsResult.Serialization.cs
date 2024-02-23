@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualWanData>> value = default;
+            IReadOnlyList<VirtualWanData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListVirtualWANsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListVirtualWANsResult(value ?? new ChangeTrackingList<VirtualWanData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListVirtualWANsResult>.Write(ModelReaderWriterOptions options)

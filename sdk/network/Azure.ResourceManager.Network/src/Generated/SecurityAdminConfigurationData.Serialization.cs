@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<IList<NetworkIntentPolicyBasedService>> applyOnNetworkIntentPolicyBasedServices = default;
+            IList<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<Guid> resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAdminConfigurationData(id, name, type, systemData.Value, description.Value, Optional.ToList(applyOnNetworkIntentPolicyBasedServices), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityAdminConfigurationData(id, name, type, systemData.Value, description.Value, applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAdminConfigurationData>.Write(ModelReaderWriterOptions options)

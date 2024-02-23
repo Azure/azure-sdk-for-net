@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<WindowsEventLogDataSourceStream>> streams = default;
-            Optional<IList<string>> xPathQueries = default;
+            IList<WindowsEventLogDataSourceStream> streams = default;
+            IList<string> xPathQueries = default;
             Optional<string> name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsEventLogDataSource(Optional.ToList(streams), Optional.ToList(xPathQueries), name.Value, serializedAdditionalRawData);
+            return new WindowsEventLogDataSource(streams ?? new ChangeTrackingList<WindowsEventLogDataSourceStream>(), xPathQueries ?? new ChangeTrackingList<string>(), name.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsEventLogDataSource>.Write(ModelReaderWriterOptions options)

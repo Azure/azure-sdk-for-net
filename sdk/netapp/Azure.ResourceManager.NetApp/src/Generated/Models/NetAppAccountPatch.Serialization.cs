@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<IList<NetAppAccountActiveDirectory>> activeDirectories = default;
+            IList<NetAppAccountActiveDirectory> activeDirectories = default;
             Optional<NetAppAccountEncryption> encryption = default;
             Optional<bool?> disableShowmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToList(activeDirectories), encryption.Value, Optional.ToNullable(disableShowmount), serializedAdditionalRawData);
+            return new NetAppAccountPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(), encryption.Value, Optional.ToNullable(disableShowmount), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountPatch>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectionMonitorTestData>> value = default;
+            IReadOnlyList<ConnectionMonitorTestData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorTestListResult(value ?? new ChangeTrackingList<ConnectionMonitorTestData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestListResult>.Write(ModelReaderWriterOptions options)
