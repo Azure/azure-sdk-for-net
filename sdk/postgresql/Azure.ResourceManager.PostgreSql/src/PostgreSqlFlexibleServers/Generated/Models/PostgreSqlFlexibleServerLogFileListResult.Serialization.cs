@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerLogFile>> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServerLogFile> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerLogFileListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerLogFileListResult(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerLogFile>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerLogFileListResult>.Write(ModelReaderWriterOptions options)

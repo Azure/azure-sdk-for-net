@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> totalBytesPerSession = default;
             Optional<int> timeLimitInSeconds = default;
             PacketCaptureStorageLocation storageLocation = default;
-            Optional<IList<PacketCaptureFilter>> filters = default;
+            IList<PacketCaptureFilter> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureCreateOrUpdateContent(target, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation, Optional.ToList(filters), serializedAdditionalRawData);
+            return new PacketCaptureCreateOrUpdateContent(target, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation, filters ?? new ChangeTrackingList<PacketCaptureFilter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

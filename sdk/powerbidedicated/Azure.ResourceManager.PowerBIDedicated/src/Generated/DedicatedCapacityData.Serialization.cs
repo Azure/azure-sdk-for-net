@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             Optional<string> name = default;
             Optional<string> type = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<SystemData> systemData = default;
             Optional<DedicatedCapacityAdministrators> administration = default;
             Optional<Mode> mode = default;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedCapacityData(id.Value, name.Value, type.Value, location, Optional.ToDictionary(tags), systemData.Value, serializedAdditionalRawData, sku, administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState));
+            return new DedicatedCapacityData(id.Value, name.Value, type.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), systemData.Value, serializedAdditionalRawData, sku, administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options)

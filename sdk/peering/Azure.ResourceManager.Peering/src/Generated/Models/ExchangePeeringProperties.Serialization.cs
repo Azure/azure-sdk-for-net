@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<PeeringExchangeConnection>> connections = default;
+            IList<PeeringExchangeConnection> connections = default;
             Optional<WritableSubResource> peerAsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangePeeringProperties(Optional.ToList(connections), peerAsn, serializedAdditionalRawData);
+            return new ExchangePeeringProperties(connections ?? new ChangeTrackingList<PeeringExchangeConnection>(), peerAsn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangePeeringProperties>.Write(ModelReaderWriterOptions options)

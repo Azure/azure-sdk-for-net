@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Optional<ETag> panETag = default;
             Optional<AzureLocation> panLocation = default;
             Optional<RulestackScopeType> scope = default;
-            Optional<IList<string>> associatedSubscriptions = default;
+            IList<string> associatedSubscriptions = default;
             Optional<string> description = default;
             Optional<RuleCreationDefaultMode> defaultMode = default;
             Optional<string> minAppIdVersion = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalRulestackUpdateProperties(Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), Optional.ToList(associatedSubscriptions), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, securityServices.Value, serializedAdditionalRawData);
+            return new LocalRulestackUpdateProperties(Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), associatedSubscriptions ?? new ChangeTrackingList<string>(), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, securityServices.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalRulestackUpdateProperties>.Write(ModelReaderWriterOptions options)

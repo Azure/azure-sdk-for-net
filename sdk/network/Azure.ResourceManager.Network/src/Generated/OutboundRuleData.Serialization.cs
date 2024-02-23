@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<int> allocatedOutboundPorts = default;
-            Optional<IList<WritableSubResource>> frontendIPConfigurations = default;
+            IList<WritableSubResource> frontendIPConfigurations = default;
             Optional<WritableSubResource> backendAddressPool = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<LoadBalancerOutboundRuleProtocol> protocol = default;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(allocatedOutboundPorts), Optional.ToList(frontendIPConfigurations), backendAddressPool, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes));
+            return new OutboundRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(allocatedOutboundPorts), frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>(), backendAddressPool, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes));
         }
 
         BinaryData IPersistableModel<OutboundRuleData>.Write(ModelReaderWriterOptions options)

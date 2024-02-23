@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RemoteRenderingAccountData>> value = default;
+            IReadOnlyList<RemoteRenderingAccountData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemoteRenderingAccountListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RemoteRenderingAccountListResult(value ?? new ChangeTrackingList<RemoteRenderingAccountData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemoteRenderingAccountListResult>.Write(ModelReaderWriterOptions options)

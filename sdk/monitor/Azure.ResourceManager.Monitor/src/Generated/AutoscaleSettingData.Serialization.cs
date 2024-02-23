@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             IList<AutoscaleProfile> profiles = default;
-            Optional<IList<AutoscaleNotification>> notifications = default;
+            IList<AutoscaleNotification> notifications = default;
             Optional<bool> enabled = default;
             Optional<PredictiveAutoscalePolicy> predictiveAutoscalePolicy = default;
             Optional<string> name0 = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation), serializedAdditionalRawData);
+            return new AutoscaleSettingData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, profiles, notifications ?? new ChangeTrackingList<AutoscaleNotification>(), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingData>.Write(ModelReaderWriterOptions options)

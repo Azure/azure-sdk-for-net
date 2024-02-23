@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsDataSourceData>> value = default;
+            IReadOnlyList<OperationalInsightsDataSourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataSourceListResult(value ?? new ChangeTrackingList<OperationalInsightsDataSourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourceListResult>.Write(ModelReaderWriterOptions options)

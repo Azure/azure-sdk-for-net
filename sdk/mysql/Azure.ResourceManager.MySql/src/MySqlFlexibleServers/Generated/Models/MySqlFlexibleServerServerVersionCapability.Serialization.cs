@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<MySqlFlexibleServerSkuCapability>> supportedSkus = default;
+            IReadOnlyList<MySqlFlexibleServerSkuCapability> supportedSkus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerServerVersionCapability(name.Value, Optional.ToList(supportedSkus), serializedAdditionalRawData);
+            return new MySqlFlexibleServerServerVersionCapability(name.Value, supportedSkus ?? new ChangeTrackingList<MySqlFlexibleServerSkuCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerServerVersionCapability>.Write(ModelReaderWriterOptions options)

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, availabilityZone, clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(provisioningState), rackLocation, rackSerialNumber, rackSkuId, serializedAdditionalRawData);
+            return new NetworkCloudRackData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, availabilityZone, clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(provisioningState), rackLocation, rackSerialNumber, rackSkuId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackData>.Write(ModelReaderWriterOptions options)

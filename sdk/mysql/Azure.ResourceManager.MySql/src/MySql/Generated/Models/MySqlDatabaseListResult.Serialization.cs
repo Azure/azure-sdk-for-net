@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlDatabaseData>> value = default;
+            IReadOnlyList<MySqlDatabaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MySqlDatabaseListResult(value ?? new ChangeTrackingList<MySqlDatabaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlDatabaseListResult>.Write(ModelReaderWriterOptions options)

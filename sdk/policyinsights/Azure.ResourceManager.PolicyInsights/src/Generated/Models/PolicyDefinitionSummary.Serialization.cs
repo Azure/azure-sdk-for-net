@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> policyDefinitionReferenceId = default;
-            Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
+            IReadOnlyList<string> policyDefinitionGroupNames = default;
             Optional<string> effect = default;
             Optional<PolicySummaryResults> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionSummary(policyDefinitionId.Value, policyDefinitionReferenceId.Value, Optional.ToList(policyDefinitionGroupNames), effect.Value, results.Value, serializedAdditionalRawData);
+            return new PolicyDefinitionSummary(policyDefinitionId.Value, policyDefinitionReferenceId.Value, policyDefinitionGroupNames ?? new ChangeTrackingList<string>(), effect.Value, results.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionSummary>.Write(ModelReaderWriterOptions options)

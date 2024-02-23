@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             Optional<bool> enableDefaultValidation = default;
-            Optional<IList<string>> resourceTypesWithCustomValidation = default;
+            IList<string> resourceTypesWithCustomValidation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckNameAvailabilitySpecifications(Optional.ToNullable(enableDefaultValidation), Optional.ToList(resourceTypesWithCustomValidation), serializedAdditionalRawData);
+            return new CheckNameAvailabilitySpecifications(Optional.ToNullable(enableDefaultValidation), resourceTypesWithCustomValidation ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckNameAvailabilitySpecifications>.Write(ModelReaderWriterOptions options)

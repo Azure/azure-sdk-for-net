@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlFlexibleServerAadAdministratorData>> value = default;
+            IReadOnlyList<MySqlFlexibleServerAadAdministratorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerAadAdministratorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerAadAdministratorListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerAadAdministratorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerAadAdministratorListResult>.Write(ModelReaderWriterOptions options)

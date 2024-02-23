@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlLtrServerBackupOperationData>> value = default;
+            IReadOnlyList<PostgreSqlLtrServerBackupOperationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlLtrServerBackupOperationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlLtrServerBackupOperationList(value ?? new ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlLtrServerBackupOperationList>.Write(ModelReaderWriterOptions options)

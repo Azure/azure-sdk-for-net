@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> peeringLocation = default;
             Optional<int> bandwidthInGbps = default;
             Optional<float> provisionedBandwidthInGbps = default;
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.Network
             Optional<ExpressRoutePortsEncapsulation> encapsulation = default;
             Optional<string> etherType = default;
             Optional<string> allocationDate = default;
-            Optional<IList<ExpressRouteLinkData>> links = default;
-            Optional<IReadOnlyList<WritableSubResource>> circuits = default;
+            IList<ExpressRouteLinkData> links = default;
+            IReadOnlyList<WritableSubResource> circuits = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<Guid> resourceGuid = default;
             Optional<ExpressRoutePortsBillingType> billingType = default;
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(billingType));
+            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, links ?? new ChangeTrackingList<ExpressRouteLinkData>(), circuits ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(billingType));
         }
 
         BinaryData IPersistableModel<ExpressRoutePortData>.Write(ModelReaderWriterOptions options)

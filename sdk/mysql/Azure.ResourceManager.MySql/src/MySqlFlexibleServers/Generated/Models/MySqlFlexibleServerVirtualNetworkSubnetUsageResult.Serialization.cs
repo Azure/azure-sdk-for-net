@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             Optional<AzureLocation> location = default;
             Optional<string> subscriptionId = default;
-            Optional<IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
+            IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToNullable(location), subscriptionId.Value, Optional.ToList(delegatedSubnetsUsage), serializedAdditionalRawData);
+            return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToNullable(location), subscriptionId.Value, delegatedSubnetsUsage ?? new ChangeTrackingList<MySqlFlexibleServerDelegatedSubnetUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(ModelReaderWriterOptions options)

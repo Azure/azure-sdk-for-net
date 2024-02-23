@@ -200,23 +200,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<EgressEndpoint>> additionalEgressEndpoints = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
+            IList<EgressEndpoint> additionalEgressEndpoints = default;
+            IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
             Optional<ResourceIdentifier> clusterId = default;
             Optional<CloudServicesNetworkDetailedStatus> detailedStatus = default;
             Optional<string> detailedStatusMessage = default;
             Optional<CloudServicesNetworkEnableDefaultEgressEndpoint> enableDefaultEgressEndpoints = default;
-            Optional<IReadOnlyList<EgressEndpoint>> enabledEgressEndpoints = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
+            IReadOnlyList<EgressEndpoint> enabledEgressEndpoints = default;
+            IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
             Optional<string> interfaceName = default;
             Optional<CloudServicesNetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
+            IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudCloudServicesNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(additionalEgressEndpoints), Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(enableDefaultEgressEndpoints), Optional.ToList(enabledEgressEndpoints), Optional.ToList(hybridAksClustersAssociatedIds), interfaceName.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), serializedAdditionalRawData);
+            return new NetworkCloudCloudServicesNetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(enableDefaultEgressEndpoints), enabledEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), interfaceName.Value, Optional.ToNullable(provisioningState), virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudCloudServicesNetworkData>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             Optional<AllowDnsProxyType> enableDnsProxy = default;
             Optional<EnabledDnsType> enabledDnsType = default;
-            Optional<IList<IPAddressInfo>> dnsServers = default;
+            IList<IPAddressInfo> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallDnsSettings(Optional.ToNullable(enableDnsProxy), Optional.ToNullable(enabledDnsType), Optional.ToList(dnsServers), serializedAdditionalRawData);
+            return new FirewallDnsSettings(Optional.ToNullable(enableDnsProxy), Optional.ToNullable(enabledDnsType), dnsServers ?? new ChangeTrackingList<IPAddressInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallDnsSettings>.Write(ModelReaderWriterOptions options)

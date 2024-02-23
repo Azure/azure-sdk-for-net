@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> maxLatencyInMs = default;
             Optional<long> probesSent = default;
             Optional<long> probesFailed = default;
-            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
+            IReadOnlyList<ConnectivityHopInfo> hops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), Optional.ToList(hops), serializedAdditionalRawData);
+            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), hops ?? new ChangeTrackingList<ConnectivityHopInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionStateSnapshot>.Write(ModelReaderWriterOptions options)

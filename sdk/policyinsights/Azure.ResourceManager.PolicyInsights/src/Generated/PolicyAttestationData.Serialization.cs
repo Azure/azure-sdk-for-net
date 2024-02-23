@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Optional<DateTimeOffset> expiresOn = default;
             Optional<string> owner = default;
             Optional<string> comments = default;
-            Optional<IList<AttestationEvidence>> evidence = default;
+            IList<AttestationEvidence> evidence = default;
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> lastComplianceStateChangeAt = default;
             Optional<DateTimeOffset> assessmentDate = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, Optional.ToList(evidence), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt), Optional.ToNullable(assessmentDate), metadata.Value, serializedAdditionalRawData);
+            return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, evidence ?? new ChangeTrackingList<AttestationEvidence>(), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt), Optional.ToNullable(assessmentDate), metadata.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAttestationData>.Write(ModelReaderWriterOptions options)

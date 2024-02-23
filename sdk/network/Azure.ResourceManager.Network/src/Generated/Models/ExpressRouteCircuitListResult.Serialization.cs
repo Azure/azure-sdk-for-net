@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpressRouteCircuitData>> value = default;
+            IReadOnlyList<ExpressRouteCircuitData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitListResult(value ?? new ChangeTrackingList<ExpressRouteCircuitData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitListResult>.Write(ModelReaderWriterOptions options)

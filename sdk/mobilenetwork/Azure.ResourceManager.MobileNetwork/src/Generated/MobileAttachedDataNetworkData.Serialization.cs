@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.MobileNetwork
             MobileNetworkInterfaceProperties userPlaneDataInterface = default;
             IList<string> dnsAddresses = default;
             Optional<NaptConfiguration> naptConfiguration = default;
-            Optional<IList<string>> userEquipmentAddressPoolPrefix = default;
-            Optional<IList<string>> userEquipmentStaticAddressPoolPrefix = default;
+            IList<string> userEquipmentAddressPoolPrefix = default;
+            IList<string> userEquipmentStaticAddressPoolPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileAttachedDataNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneDataInterface, dnsAddresses, naptConfiguration.Value, Optional.ToList(userEquipmentAddressPoolPrefix), Optional.ToList(userEquipmentStaticAddressPoolPrefix), serializedAdditionalRawData);
+            return new MobileAttachedDataNetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), userPlaneDataInterface, dnsAddresses, naptConfiguration.Value, userEquipmentAddressPoolPrefix ?? new ChangeTrackingList<string>(), userEquipmentStaticAddressPoolPrefix ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileAttachedDataNetworkData>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyAttestationData>> value = default;
+            IReadOnlyList<PolicyAttestationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AttestationListResult(value ?? new ChangeTrackingList<PolicyAttestationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationListResult>.Write(ModelReaderWriterOptions options)

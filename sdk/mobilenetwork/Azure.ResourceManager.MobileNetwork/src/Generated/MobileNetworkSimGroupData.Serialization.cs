@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 return null;
             }
             Optional<MobileNetworkManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSimGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), encryptionKey.Value, mobileNetwork, serializedAdditionalRawData);
+            return new MobileNetworkSimGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity.Value, Optional.ToNullable(provisioningState), encryptionKey.Value, mobileNetwork, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSimGroupData>.Write(ModelReaderWriterOptions options)

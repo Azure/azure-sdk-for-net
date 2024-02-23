@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> service = default;
-            Optional<IList<AzureLocation>> locations = default;
+            IList<AzureLocation> locations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEndpointProperties(service.Value, Optional.ToList(locations), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ServiceEndpointProperties(service.Value, locations ?? new ChangeTrackingList<AzureLocation>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceEndpointProperties>.Write(ModelReaderWriterOptions options)
