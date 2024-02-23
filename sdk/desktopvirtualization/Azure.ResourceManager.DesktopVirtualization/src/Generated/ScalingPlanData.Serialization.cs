@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<ManagedServiceIdentity> identity = default;
             Optional<DesktopVirtualizationSku> sku = default;
             Optional<ArmPlan> plan = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, timeZone, Optional.ToNullable(hostPoolType), exclusionTag.Value, schedules ?? new ChangeTrackingList<ScalingSchedule>(), hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
+            return new ScalingPlanData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, objectId.Value, description.Value, friendlyName.Value, timeZone, Optional.ToNullable(hostPoolType), exclusionTag.Value, schedules ?? new ChangeTrackingList<ScalingSchedule>(), hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanData>.Write(ModelReaderWriterOptions options)
