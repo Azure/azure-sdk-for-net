@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, IList<string>>> tags = default;
+            IDictionary<string, IList<string>> tags = default;
             Optional<VmTagOperator> filterOperator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmTagSettings(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator), serializedAdditionalRawData);
+            return new VmTagSettings(tags ?? new ChangeTrackingDictionary<string, IList<string>>(), Optional.ToNullable(filterOperator), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmTagSettings>.Write(ModelReaderWriterOptions options)

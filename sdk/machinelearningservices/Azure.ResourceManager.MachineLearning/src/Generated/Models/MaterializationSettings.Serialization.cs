@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<NotificationSetting> notification = default;
             Optional<MaterializationComputeResource> resource = default;
             Optional<MachineLearningRecurrenceTrigger> schedule = default;
-            Optional<IDictionary<string, string>> sparkConfiguration = default;
+            IDictionary<string, string> sparkConfiguration = default;
             Optional<MaterializationStoreType> storeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaterializationSettings(notification.Value, resource.Value, schedule.Value, Optional.ToDictionary(sparkConfiguration), Optional.ToNullable(storeType), serializedAdditionalRawData);
+            return new MaterializationSettings(notification.Value, resource.Value, schedule.Value, sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(storeType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaterializationSettings>.Write(ModelReaderWriterOptions options)

@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicSku> sku = default;
             Optional<LogicResourceReference> integrationAccount = default;
             Optional<BinaryData> definition = default;
-            Optional<IDictionary<string, LogicWorkflowParameterInfo>> parameters = default;
+            IDictionary<string, LogicWorkflowParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, definition.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new LogicWorkflowVersionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, definition.Value, parameters ?? new ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowVersionData>.Write(ModelReaderWriterOptions options)

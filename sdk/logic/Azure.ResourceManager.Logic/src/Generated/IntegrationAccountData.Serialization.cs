@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Logic
                 return null;
             }
             Optional<IntegrationAccountSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, integrationServiceEnvironment.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new IntegrationAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, integrationServiceEnvironment.Value, Optional.ToNullable(state), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountData>.Write(ModelReaderWriterOptions options)
