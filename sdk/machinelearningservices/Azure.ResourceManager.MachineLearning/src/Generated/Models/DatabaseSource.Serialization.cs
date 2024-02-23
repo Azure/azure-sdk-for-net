@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<string> query = default;
             Optional<string> storedProcedure = default;
-            Optional<IList<IDictionary<string, string>>> storedProcedureParams = default;
+            IList<IDictionary<string, string>> storedProcedureParams = default;
             Optional<string> tableName = default;
             Optional<string> connection = default;
             DataImportSourceType sourceType = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseSource(connection.Value, sourceType, serializedAdditionalRawData, query.Value, storedProcedure.Value, Optional.ToList(storedProcedureParams), tableName.Value);
+            return new DatabaseSource(connection.Value, sourceType, serializedAdditionalRawData, query.Value, storedProcedure.Value, storedProcedureParams ?? new ChangeTrackingList<IDictionary<string, string>>(), tableName.Value);
         }
 
         BinaryData IPersistableModel<DatabaseSource>.Write(ModelReaderWriterOptions options)

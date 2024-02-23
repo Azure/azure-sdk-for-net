@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<string>> entities = default;
+            IList<string> entities = default;
             Optional<MaterializationSettings> materializationSettings = default;
             Optional<RegistryAssetProvisioningState> provisioningState = default;
             Optional<FeaturesetSpecification> specification = default;
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureSetVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToList(entities), materializationSettings.Value, Optional.ToNullable(provisioningState), specification.Value, stage.Value);
+            return new MachineLearningFeatureSetVersionProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), entities ?? new ChangeTrackingList<string>(), materializationSettings.Value, Optional.ToNullable(provisioningState), specification.Value, stage.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureSetVersionProperties>.Write(ModelReaderWriterOptions options)

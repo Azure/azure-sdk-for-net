@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningLabelingJobData>> value = default;
+            IReadOnlyList<MachineLearningLabelingJobData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelingJobResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new LabelingJobResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningLabelingJobData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelingJobResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<UserAssignedIdentityData>> value = default;
+            IReadOnlyList<UserAssignedIdentityData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserAssignedIdentitiesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UserAssignedIdentitiesListResult(value ?? new ChangeTrackingList<UserAssignedIdentityData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserAssignedIdentitiesListResult>.Write(ModelReaderWriterOptions options)

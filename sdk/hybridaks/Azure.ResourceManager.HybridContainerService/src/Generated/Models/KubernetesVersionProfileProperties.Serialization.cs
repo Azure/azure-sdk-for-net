@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<KubernetesVersionProperties>> values = default;
+            IReadOnlyList<KubernetesVersionProperties> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionProfileProperties(Optional.ToNullable(provisioningState), Optional.ToList(values), serializedAdditionalRawData);
+            return new KubernetesVersionProfileProperties(Optional.ToNullable(provisioningState), values ?? new ChangeTrackingList<KubernetesVersionProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionProfileProperties>.Write(ModelReaderWriterOptions options)

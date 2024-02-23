@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FirmwareCve>> value = default;
+            IReadOnlyList<FirmwareCve> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CveList(value ?? new ChangeTrackingList<FirmwareCve>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveList>.Write(ModelReaderWriterOptions options)

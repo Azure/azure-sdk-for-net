@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing.Models
                 return null;
             }
             Optional<int> effectCode = default;
-            Optional<IReadOnlyList<RouteSectionTecCause>> causes = default;
+            IReadOnlyList<RouteSectionTecCause> causes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("effectCode"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSectionTec(Optional.ToNullable(effectCode), Optional.ToList(causes));
+            return new RouteSectionTec(Optional.ToNullable(effectCode), causes ?? new ChangeTrackingList<RouteSectionTecCause>());
         }
     }
 }

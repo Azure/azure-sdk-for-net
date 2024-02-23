@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             Optional<string> kubernetesVersion = default;
             Optional<HybridContainerServiceOSType> osType = default;
-            Optional<IList<ProvisionedClusterPoolUpgradeProfileProperties>> upgrades = default;
+            IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, Optional.ToNullable(osType), Optional.ToList(upgrades), serializedAdditionalRawData);
+            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, Optional.ToNullable(osType), upgrades ?? new ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterPoolUpgradeProfile>.Write(ModelReaderWriterOptions options)

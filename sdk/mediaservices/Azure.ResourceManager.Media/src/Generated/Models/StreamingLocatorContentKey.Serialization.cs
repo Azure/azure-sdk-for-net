@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> labelReferenceInStreamingPolicy = default;
             Optional<string> value = default;
             Optional<string> policyName = default;
-            Optional<IReadOnlyList<MediaTrackSelection>> tracks = default;
+            IReadOnlyList<MediaTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingLocatorContentKey(id, Optional.ToNullable(type), labelReferenceInStreamingPolicy.Value, value.Value, policyName.Value, Optional.ToList(tracks), serializedAdditionalRawData);
+            return new StreamingLocatorContentKey(id, Optional.ToNullable(type), labelReferenceInStreamingPolicy.Value, value.Value, policyName.Value, tracks ?? new ChangeTrackingList<MediaTrackSelection>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingLocatorContentKey>.Write(ModelReaderWriterOptions options)
