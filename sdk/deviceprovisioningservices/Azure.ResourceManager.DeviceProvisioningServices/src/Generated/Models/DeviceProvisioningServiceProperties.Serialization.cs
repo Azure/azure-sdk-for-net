@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             Optional<DeviceProvisioningServicesState> state = default;
             Optional<DeviceProvisioningServicesPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<DeviceProvisioningServicesIPFilterRule>> ipFilterRules = default;
-            Optional<IList<DeviceProvisioningServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules = default;
+            IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<string> provisioningState = default;
-            Optional<IList<IotHubDefinitionDescription>> iotHubs = default;
+            IList<IotHubDefinitionDescription> iotHubs = default;
             Optional<DeviceProvisioningServicesAllocationPolicy> allocationPolicy = default;
             Optional<string> serviceOperationsHostName = default;
             Optional<string> deviceProvisioningHostName = default;
             Optional<string> idScope = default;
-            Optional<IList<DeviceProvisioningServicesSharedAccessKey>> authorizationPolicies = default;
+            IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default;
             Optional<bool> enableDataResidency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServiceProperties(Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipFilterRules), Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToList(iotHubs), Optional.ToNullable(allocationPolicy), serviceOperationsHostName.Value, deviceProvisioningHostName.Value, idScope.Value, Optional.ToList(authorizationPolicies), Optional.ToNullable(enableDataResidency), serializedAdditionalRawData);
+            return new DeviceProvisioningServiceProperties(Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), ipFilterRules ?? new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>(), privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(), provisioningState.Value, iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(), Optional.ToNullable(allocationPolicy), serviceOperationsHostName.Value, deviceProvisioningHostName.Value, idScope.Value, authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(), Optional.ToNullable(enableDataResidency), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServiceProperties>.Write(ModelReaderWriterOptions options)

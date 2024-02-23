@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> ordererEndpoints = default;
-            Optional<IReadOnlyList<string>> storageEndpoints = default;
-            Optional<IReadOnlyList<string>> serviceEndpoints = default;
+            IReadOnlyList<string> ordererEndpoints = default;
+            IReadOnlyList<string> storageEndpoints = default;
+            IReadOnlyList<string> serviceEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayEndpoints(Optional.ToList(ordererEndpoints), Optional.ToList(storageEndpoints), Optional.ToList(serviceEndpoints), serializedAdditionalRawData);
+            return new FluidRelayEndpoints(ordererEndpoints ?? new ChangeTrackingList<string>(), storageEndpoints ?? new ChangeTrackingList<string>(), serviceEndpoints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayEndpoints>.Write(ModelReaderWriterOptions options)

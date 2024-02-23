@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<EdgeOrderShippingAddress> shippingAddress = default;
             Optional<EdgeOrderAddressContactDetails> contactDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderAddressPatch(Optional.ToDictionary(tags), shippingAddress.Value, contactDetails.Value, serializedAdditionalRawData);
+            return new EdgeOrderAddressPatch(tags ?? new ChangeTrackingDictionary<string, string>(), shippingAddress.Value, contactDetails.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderAddressPatch>.Write(ModelReaderWriterOptions options)

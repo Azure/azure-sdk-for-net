@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkSecurityPerimeterConfigurationData>> value = default;
+            IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationList(value ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationList>.Write(ModelReaderWriterOptions options)

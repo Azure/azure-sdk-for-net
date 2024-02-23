@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
             CustomFormModelInfo modelInfo = default;
             Optional<KeysResult> keys = default;
             Optional<TrainResult> trainResult = default;
-            Optional<IReadOnlyList<TrainResult>> composedTrainResults = default;
+            IReadOnlyList<TrainResult> composedTrainResults = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelInfo"u8))
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new Model(modelInfo, keys.Value, trainResult.Value, Optional.ToList(composedTrainResults));
+            return new Model(modelInfo, keys.Value, trainResult.Value, composedTrainResults ?? new ChangeTrackingList<TrainResult>());
         }
     }
 }

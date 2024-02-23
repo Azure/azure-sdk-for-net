@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DesktopVirtualizationStartMenuItem>> value = default;
+            IReadOnlyList<DesktopVirtualizationStartMenuItem> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StartMenuItemList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StartMenuItemList(value ?? new ChangeTrackingList<DesktopVirtualizationStartMenuItem>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StartMenuItemList>.Write(ModelReaderWriterOptions options)

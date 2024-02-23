@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GrafanaAvailablePlugin>> value = default;
+            IReadOnlyList<GrafanaAvailablePlugin> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrafanaAvailablePluginListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GrafanaAvailablePluginListResponse(value ?? new ChangeTrackingList<GrafanaAvailablePlugin>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaAvailablePluginListResponse>.Write(ModelReaderWriterOptions options)

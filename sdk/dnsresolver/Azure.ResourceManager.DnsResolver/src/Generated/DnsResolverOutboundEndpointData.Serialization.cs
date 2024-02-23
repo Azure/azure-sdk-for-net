@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DnsResolver
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DnsResolver
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsResolverOutboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), subnet, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), serializedAdditionalRawData);
+            return new DnsResolverOutboundEndpointData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), subnet, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResolverOutboundEndpointData>.Write(ModelReaderWriterOptions options)

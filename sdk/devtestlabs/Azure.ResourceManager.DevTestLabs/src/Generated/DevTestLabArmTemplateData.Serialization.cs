@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> icon = default;
             Optional<BinaryData> contents = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<IReadOnlyList<DevTestLabParametersValueFileInfo>> parametersValueFilesInfo = default;
+            IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = default;
             Optional<bool> enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArmTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, displayName.Value, description.Value, publisher.Value, icon.Value, contents.Value, Optional.ToNullable(createdDate), Optional.ToList(parametersValueFilesInfo), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new DevTestLabArmTemplateData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, displayName.Value, description.Value, publisher.Value, icon.Value, contents.Value, Optional.ToNullable(createdDate), parametersValueFilesInfo ?? new ChangeTrackingList<DevTestLabParametersValueFileInfo>(), Optional.ToNullable(enabled), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArmTemplateData>.Write(ModelReaderWriterOptions options)

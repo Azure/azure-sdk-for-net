@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             Optional<string> displayName = default;
             Optional<ProductDescription> description = default;
-            Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
+            IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
             Optional<EdgeOrderProductCostInformation> costInformation = default;
             Optional<ProductAvailabilityInformation> availabilityInformation = default;
             Optional<HierarchyInformation> hierarchyInformation = default;
-            Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
-            Optional<IReadOnlyList<ProductSpecification>> specifications = default;
+            IReadOnlyList<FilterableProperty> filterableProperties = default;
+            IReadOnlyList<ProductSpecification> specifications = default;
             Optional<ProductDimensions> dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductConfiguration(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(specifications), dimensions.Value, serializedAdditionalRawData);
+            return new ProductConfiguration(displayName.Value, description.Value, imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, filterableProperties ?? new ChangeTrackingList<FilterableProperty>(), specifications ?? new ChangeTrackingList<ProductSpecification>(), dimensions.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductConfiguration>.Write(ModelReaderWriterOptions options)

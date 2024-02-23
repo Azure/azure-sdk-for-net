@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IList<EventHubsKeyVaultProperties>> keyVaultProperties = default;
+            IList<EventHubsKeyVaultProperties> keyVaultProperties = default;
             Optional<EventHubsKeySource> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsEncryption(Optional.ToList(keyVaultProperties), Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), serializedAdditionalRawData);
+            return new EventHubsEncryption(keyVaultProperties ?? new ChangeTrackingList<EventHubsKeyVaultProperties>(), Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsEncryption>.Write(ModelReaderWriterOptions options)

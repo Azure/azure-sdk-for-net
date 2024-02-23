@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> failureMessage = default;
             Optional<string> operationId = default;
             Optional<string> cmdletId = default;
-            Optional<IReadOnlyList<string>> output = default;
+            IReadOnlyList<string> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureMessage"u8))
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AvsScriptExecutionFailedEventData(operationId.Value, cmdletId.Value, Optional.ToList(output), failureMessage.Value);
+            return new AvsScriptExecutionFailedEventData(operationId.Value, cmdletId.Value, output ?? new ChangeTrackingList<string>(), failureMessage.Value);
         }
 
         internal partial class AvsScriptExecutionFailedEventDataConverter : JsonConverter<AvsScriptExecutionFailedEventData>

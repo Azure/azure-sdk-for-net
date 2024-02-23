@@ -157,19 +157,19 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<PartnerNamespaceProvisioningState> provisioningState = default;
             Optional<ResourceIdentifier> partnerRegistrationFullyQualifiedId = default;
             Optional<TlsVersion> minimumTlsVersionAllowed = default;
             Optional<Uri> endpoint = default;
             Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
             Optional<bool> disableLocalAuth = default;
             Optional<PartnerTopicRoutingMode> partnerTopicRoutingMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), partnerRegistrationFullyQualifiedId.Value, Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(partnerTopicRoutingMode), serializedAdditionalRawData);
+            return new PartnerNamespaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), partnerRegistrationFullyQualifiedId.Value, Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(partnerTopicRoutingMode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerNamespaceData>.Write(ModelReaderWriterOptions options)

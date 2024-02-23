@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<SystemData> systemData = default;
             Optional<SubResource> privateEndpoint = default;
             DeviceUpdatePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> groupIds = default;
             Optional<DeviceUpdatePrivateEndpointConnectionProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, Optional.ToList(groupIds), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, groupIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

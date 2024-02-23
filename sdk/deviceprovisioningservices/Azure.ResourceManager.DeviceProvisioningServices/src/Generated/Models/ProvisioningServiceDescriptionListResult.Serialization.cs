@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceProvisioningServiceData>> value = default;
+            IReadOnlyList<DeviceProvisioningServiceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisioningServiceDescriptionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProvisioningServiceDescriptionListResult(value ?? new ChangeTrackingList<DeviceProvisioningServiceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisioningServiceDescriptionListResult>.Write(ModelReaderWriterOptions options)

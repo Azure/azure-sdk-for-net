@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DigitalTwins
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<DigitalTwinsProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
-            Optional<IList<DigitalTwinsPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<DigitalTwinsPublicNetworkAccess?> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), hostName.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), identity, serializedAdditionalRawData);
+            return new DigitalTwinsDescriptionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), hostName.Value, privateEndpointConnections ?? new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsDescriptionData>.Write(ModelReaderWriterOptions options)

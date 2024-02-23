@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsZoneData>> value = default;
+            IReadOnlyList<DnsZoneData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsZoneListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DnsZoneListResult(value ?? new ChangeTrackingList<DnsZoneData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsZoneListResult>.Write(ModelReaderWriterOptions options)

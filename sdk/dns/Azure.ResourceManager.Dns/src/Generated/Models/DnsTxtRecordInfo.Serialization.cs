@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IList<string>> value = default;
+            IList<string> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsTxtRecordInfo(Optional.ToList(value), serializedAdditionalRawData);
+            return new DnsTxtRecordInfo(value ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsTxtRecordInfo>.Write(ModelReaderWriterOptions options)
