@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformGatewayApiMetadataProperties> apiMetadataProperties = default;
             Optional<AppPlatformGatewayCorsProperties> corsProperties = default;
             Optional<AppPlatformGatewayResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformGatewayInstance>> instances = default;
+            IReadOnlyList<AppPlatformGatewayInstance> instances = default;
             Optional<AppPlatformGatewayOperatorProperties> operatorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), ssoProperties.Value, apiMetadataProperties.Value, corsProperties.Value, resourceRequests.Value, Optional.ToList(instances), operatorProperties.Value, serializedAdditionalRawData);
+            return new AppPlatformGatewayProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), ssoProperties.Value, apiMetadataProperties.Value, corsProperties.Value, resourceRequests.Value, instances ?? new ChangeTrackingList<AppPlatformGatewayInstance>(), operatorProperties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayProperties>.Write(ModelReaderWriterOptions options)

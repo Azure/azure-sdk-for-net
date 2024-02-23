@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             Optional<string> ranking = default;
-            Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsItem>> data = default;
+            IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RankingsResponseTablesItem(ranking.Value, Optional.ToList(data), serializedAdditionalRawData);
+            return new RankingsResponseTablesItem(ranking.Value, data ?? new ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RankingsResponseTablesItem>.Write(ModelReaderWriterOptions options)

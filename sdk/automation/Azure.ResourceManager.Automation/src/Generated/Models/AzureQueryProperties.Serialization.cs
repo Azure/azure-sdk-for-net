@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IList<string>> scope = default;
-            Optional<IList<AzureLocation>> locations = default;
+            IList<string> scope = default;
+            IList<AzureLocation> locations = default;
             Optional<QueryTagSettingsProperties> tagSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureQueryProperties(Optional.ToList(scope), Optional.ToList(locations), tagSettings.Value, serializedAdditionalRawData);
+            return new AzureQueryProperties(scope ?? new ChangeTrackingList<string>(), locations ?? new ChangeTrackingList<AzureLocation>(), tagSettings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureQueryProperties>.Write(ModelReaderWriterOptions options)

@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
+            IReadOnlyList<CallParticipantInternal> participants = default;
             Optional<int> sequenceNumber = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
@@ -65,7 +65,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new ParticipantsUpdatedInternal(Optional.ToList(participants), Optional.ToNullable(sequenceNumber), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new ParticipantsUpdatedInternal(participants ?? new ChangeTrackingList<CallParticipantInternal>(), Optional.ToNullable(sequenceNumber), callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

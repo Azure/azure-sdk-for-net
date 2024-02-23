@@ -206,8 +206,8 @@ namespace Azure.ResourceManager.Avs
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> scriptCmdletId = default;
-            Optional<IList<ScriptExecutionParameterDetails>> parameters = default;
-            Optional<IList<ScriptExecutionParameterDetails>> hiddenParameters = default;
+            IList<ScriptExecutionParameterDetails> parameters = default;
+            IList<ScriptExecutionParameterDetails> hiddenParameters = default;
             Optional<string> failureReason = default;
             Optional<string> timeout = default;
             Optional<string> retention = default;
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.Avs
             Optional<DateTimeOffset> startedAt = default;
             Optional<DateTimeOffset> finishedAt = default;
             Optional<ScriptExecutionProvisioningState> provisioningState = default;
-            Optional<IList<string>> output = default;
+            IList<string> output = default;
             Optional<BinaryData> namedOutputs = default;
-            Optional<IReadOnlyList<string>> information = default;
-            Optional<IReadOnlyList<string>> warnings = default;
-            Optional<IReadOnlyList<string>> errors = default;
+            IReadOnlyList<string> information = default;
+            IReadOnlyList<string> warnings = default;
+            IReadOnlyList<string> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, Optional.ToList(parameters), Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), Optional.ToList(output), namedOutputs.Value, Optional.ToList(information), Optional.ToList(warnings), Optional.ToList(errors), serializedAdditionalRawData);
+            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, parameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(), hiddenParameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), output ?? new ChangeTrackingList<string>(), namedOutputs.Value, information ?? new ChangeTrackingList<string>(), warnings ?? new ChangeTrackingList<string>(), errors ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptExecutionData>.Write(ModelReaderWriterOptions options)

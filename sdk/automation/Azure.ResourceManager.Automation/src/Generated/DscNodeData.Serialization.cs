@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Automation
             Optional<string> nodeId = default;
             Optional<ETag> etag = default;
             Optional<int> totalCount = default;
-            Optional<IList<DscNodeExtensionHandlerAssociationProperty>> extensionHandler = default;
+            IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler = default;
             Optional<string> name0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeData(id, name, type, systemData.Value, Optional.ToNullable(lastSeen), Optional.ToNullable(registrationTime), ip.Value, accountId.Value, status.Value, nodeId.Value, Optional.ToNullable(etag), Optional.ToNullable(totalCount), Optional.ToList(extensionHandler), name0.Value, serializedAdditionalRawData);
+            return new DscNodeData(id, name, type, systemData.Value, Optional.ToNullable(lastSeen), Optional.ToNullable(registrationTime), ip.Value, accountId.Value, status.Value, nodeId.Value, Optional.ToNullable(etag), Optional.ToNullable(totalCount), extensionHandler ?? new ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>(), name0.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeData>.Write(ModelReaderWriterOptions options)

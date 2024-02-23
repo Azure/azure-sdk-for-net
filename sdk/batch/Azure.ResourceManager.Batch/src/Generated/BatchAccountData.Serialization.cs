@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Batch
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -273,16 +273,16 @@ namespace Azure.ResourceManager.Batch
             Optional<BatchKeyVaultReference> keyVaultReference = default;
             Optional<BatchPublicNetworkAccess?> publicNetworkAccess = default;
             Optional<BatchNetworkProfile> networkProfile = default;
-            Optional<IReadOnlyList<BatchPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<BatchAccountAutoStorageConfiguration> autoStorage = default;
             Optional<BatchAccountEncryptionConfiguration> encryption = default;
             Optional<int?> dedicatedCoreQuota = default;
             Optional<int?> lowPriorityCoreQuota = default;
-            Optional<IReadOnlyList<BatchVmFamilyCoreQuota>> dedicatedCoreQuotaPerVmFamily = default;
+            IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default;
             Optional<bool> dedicatedCoreQuotaPerVmFamilyEnforced = default;
             Optional<int> poolQuota = default;
             Optional<int> activeJobAndJobScheduleQuota = default;
-            Optional<IReadOnlyList<BatchAuthenticationMode>> allowedAuthenticationModes = default;
+            IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>(), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountData>.Write(ModelReaderWriterOptions options)

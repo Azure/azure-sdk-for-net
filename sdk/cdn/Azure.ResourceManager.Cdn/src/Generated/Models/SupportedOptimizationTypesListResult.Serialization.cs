@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OptimizationType>> supportedOptimizationTypes = default;
+            IReadOnlyList<OptimizationType> supportedOptimizationTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedOptimizationTypesListResult(Optional.ToList(supportedOptimizationTypes), serializedAdditionalRawData);
+            return new SupportedOptimizationTypesListResult(supportedOptimizationTypes ?? new ChangeTrackingList<OptimizationType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedOptimizationTypesListResult>.Write(ModelReaderWriterOptions options)

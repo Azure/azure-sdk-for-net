@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Optional<ETag> etag = default;
             CdnSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<RateLimitRuleList> rateLimitRules = default;
             Optional<CustomRuleList> customRules = default;
             Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<SubResource>> endpointLinks = default;
+            IReadOnlyList<SubResource> endpointLinks = default;
             Optional<WebApplicationFirewallPolicyProvisioningState> provisioningState = default;
             Optional<PolicyResourceState> resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, endpointLinks ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

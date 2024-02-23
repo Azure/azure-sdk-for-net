@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Attestation
             Optional<AttestationServiceStatus> status = default;
             Optional<Uri> attestUri = default;
             Optional<PublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IReadOnlyList<AttestationPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Attestation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationProviderData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, trustModel.Value, Optional.ToNullable(status), attestUri.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new AttestationProviderData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, trustModel.Value, Optional.ToNullable(status), attestUri.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationProviderData>.Write(ModelReaderWriterOptions options)

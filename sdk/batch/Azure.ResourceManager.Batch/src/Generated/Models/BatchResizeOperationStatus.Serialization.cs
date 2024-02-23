@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<TimeSpan> resizeTimeout = default;
             Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
             Optional<DateTimeOffset> startTime = default;
-            Optional<IReadOnlyList<ResponseError>> errors = default;
+            IReadOnlyList<ResponseError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchResizeOperationStatus(Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(resizeTimeout), Optional.ToNullable(nodeDeallocationOption), Optional.ToNullable(startTime), Optional.ToList(errors), serializedAdditionalRawData);
+            return new BatchResizeOperationStatus(Optional.ToNullable(targetDedicatedNodes), Optional.ToNullable(targetLowPriorityNodes), Optional.ToNullable(resizeTimeout), Optional.ToNullable(nodeDeallocationOption), Optional.ToNullable(startTime), errors ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchResizeOperationStatus>.Write(ModelReaderWriterOptions options)

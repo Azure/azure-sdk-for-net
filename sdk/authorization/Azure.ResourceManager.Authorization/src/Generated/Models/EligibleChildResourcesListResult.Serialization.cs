@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EligibleChildResource>> value = default;
+            IReadOnlyList<EligibleChildResource> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EligibleChildResourcesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EligibleChildResourcesListResult(value ?? new ChangeTrackingList<EligibleChildResource>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EligibleChildResourcesListResult>.Write(ModelReaderWriterOptions options)

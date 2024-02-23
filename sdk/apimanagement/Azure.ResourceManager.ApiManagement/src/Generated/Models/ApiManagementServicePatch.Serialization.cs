@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ApiManagementServiceSkuProperties> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -331,21 +331,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<Uri> managementApiUri = default;
             Optional<Uri> scmUri = default;
             Optional<Uri> developerPortalUri = default;
-            Optional<IList<HostnameConfiguration>> hostnameConfigurations = default;
-            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
-            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
+            IList<HostnameConfiguration> hostnameConfigurations = default;
+            IReadOnlyList<IPAddress> publicIPAddresses = default;
+            IReadOnlyList<IPAddress> privateIPAddresses = default;
             Optional<ResourceIdentifier> publicIPAddressId = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<IList<AdditionalLocation>> additionalLocations = default;
-            Optional<IDictionary<string, string>> customProperties = default;
-            Optional<IList<CertificateConfiguration>> certificates = default;
+            IList<AdditionalLocation> additionalLocations = default;
+            IDictionary<string, string> customProperties = default;
+            IList<CertificateConfiguration> certificates = default;
             Optional<bool> enableClientCertificate = default;
             Optional<bool> disableGateway = default;
             Optional<VirtualNetworkType> virtualNetworkType = default;
             Optional<ApiVersionConstraint> apiVersionConstraint = default;
             Optional<bool> restore = default;
-            Optional<IList<RemotePrivateEndpointConnectionWrapper>> privateEndpointConnections = default;
+            IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default;
             Optional<PlatformVersion> platformVersion = default;
             Optional<string> publisherEmail = default;
             Optional<string> publisherName = default;
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(), publicIPAddresses ?? new ChangeTrackingList<IPAddress>(), privateIPAddresses ?? new ChangeTrackingList<IPAddress>(), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(), customProperties ?? new ChangeTrackingDictionary<string, string>(), certificates ?? new ChangeTrackingList<CertificateConfiguration>(), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServicePatch>.Write(ModelReaderWriterOptions options)
