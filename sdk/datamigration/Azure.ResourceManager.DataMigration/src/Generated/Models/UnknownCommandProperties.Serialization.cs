@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             CommandType commandType = "Unknown";
-            Optional<IReadOnlyList<ODataError>> errors = default;
+            IReadOnlyList<ODataError> errors = default;
             Optional<CommandState> state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new UnknownCommandProperties(commandType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommandProperties>.Write(ModelReaderWriterOptions options)

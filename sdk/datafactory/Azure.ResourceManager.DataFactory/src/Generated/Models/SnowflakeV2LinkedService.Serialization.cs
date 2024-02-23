@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> accountIdentifier = default;
             Optional<DataFactoryElement<string>> user = default;
             Optional<DataFactorySecretBaseDefinition> password = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SnowflakeV2LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accountIdentifier, user.Value, password, database, warehouse, Optional.ToNullable(authenticationType), clientId.Value, clientSecret, tenantId.Value, scope.Value, privateKey, privateKeyPassphrase, encryptedCredential.Value);
+            return new SnowflakeV2LinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, accountIdentifier, user.Value, password, database, warehouse, Optional.ToNullable(authenticationType), clientId.Value, clientSecret, tenantId.Value, scope.Value, privateKey, privateKeyPassphrase, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SnowflakeV2LinkedService>.Write(ModelReaderWriterOptions options)

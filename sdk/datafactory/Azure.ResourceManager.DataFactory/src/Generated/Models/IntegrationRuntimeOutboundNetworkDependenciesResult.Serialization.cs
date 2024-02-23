@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> value = default;
+            IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeOutboundNetworkDependenciesResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new IntegrationRuntimeOutboundNetworkDependenciesResult(value ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesResult>.Write(ModelReaderWriterOptions options)

@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> clusterUri = default;
             Optional<DataFactoryElement<string>> userName = default;
             Optional<DataFactorySecretBaseDefinition> password = default;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterUri, userName.Value, password, linkedServiceName, hcatalogLinkedServiceName, encryptedCredential.Value, isEspEnabled.Value, fileSystem.Value);
+            return new HDInsightLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, clusterUri, userName.Value, password, linkedServiceName, hcatalogLinkedServiceName, encryptedCredential.Value, isEspEnabled.Value, fileSystem.Value);
         }
 
         BinaryData IPersistableModel<HDInsightLinkedService>.Write(ModelReaderWriterOptions options)

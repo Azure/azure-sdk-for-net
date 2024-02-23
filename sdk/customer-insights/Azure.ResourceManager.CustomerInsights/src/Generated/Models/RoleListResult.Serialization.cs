@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleResourceFormat>> value = default;
+            IReadOnlyList<RoleResourceFormat> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleListResult(value ?? new ChangeTrackingList<RoleResourceFormat>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleListResult>.Write(ModelReaderWriterOptions options)

@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.CustomerInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, string>> description = default;
+            IDictionary<string, string> displayName = default;
+            IDictionary<string, string> description = default;
             Optional<string> interactionType = default;
             Optional<string> linkName = default;
-            Optional<IList<RelationshipLinkFieldMapping>> mappings = default;
-            Optional<IList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
+            IList<RelationshipLinkFieldMapping> mappings = default;
+            IList<ParticipantProfilePropertyReference> profilePropertyReferences = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<ParticipantProfilePropertyReference>> relatedProfilePropertyReferences = default;
+            IList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences = default;
             Optional<string> relationshipName = default;
             Optional<string> relationshipGuidId = default;
             Optional<Guid> tenantId = default;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelationshipLinkResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), interactionType.Value, linkName.Value, Optional.ToList(mappings), Optional.ToList(profilePropertyReferences), Optional.ToNullable(provisioningState), Optional.ToList(relatedProfilePropertyReferences), relationshipName.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new RelationshipLinkResourceFormatData(id, name, type, systemData.Value, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), interactionType.Value, linkName.Value, mappings ?? new ChangeTrackingList<RelationshipLinkFieldMapping>(), profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(), Optional.ToNullable(provisioningState), relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(), relationshipName.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelationshipLinkResourceFormatData>.Write(ModelReaderWriterOptions options)

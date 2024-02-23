@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             Optional<bool> managed = default;
             Optional<bool> enableAzureRBAC = default;
-            Optional<IList<Guid>> adminGroupObjectIds = default;
+            IList<Guid> adminGroupObjectIds = default;
             Optional<Guid> clientAppId = default;
             Optional<Guid> serverAppId = default;
             Optional<string> serverAppSecret = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), Optional.ToNullable(clientAppId), Optional.ToNullable(serverAppId), serverAppSecret.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), adminGroupObjectIds ?? new ChangeTrackingList<Guid>(), Optional.ToNullable(clientAppId), Optional.ToNullable(serverAppId), serverAppSecret.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAadProfile>.Write(ModelReaderWriterOptions options)

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             Optional<ContainerInstanceAzureFileVolume> azureFile = default;
             Optional<BinaryData> emptyDir = default;
-            Optional<IDictionary<string, string>> secret = default;
+            IDictionary<string, string> secret = default;
             Optional<ContainerInstanceGitRepoVolume> gitRepo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerVolume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value, serializedAdditionalRawData);
+            return new ContainerVolume(name, azureFile.Value, emptyDir.Value, secret ?? new ChangeTrackingDictionary<string, string>(), gitRepo.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerVolume>.Write(ModelReaderWriterOptions options)

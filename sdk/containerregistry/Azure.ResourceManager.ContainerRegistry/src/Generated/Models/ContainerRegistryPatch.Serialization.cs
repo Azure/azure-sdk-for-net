@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ContainerRegistrySku> sku = default;
             Optional<bool> adminUserEnabled = default;
             Optional<ContainerRegistryNetworkRuleSet> networkRuleSet = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPatch(identity, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), serializedAdditionalRawData);
+            return new ContainerRegistryPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPatch>.Write(ModelReaderWriterOptions options)

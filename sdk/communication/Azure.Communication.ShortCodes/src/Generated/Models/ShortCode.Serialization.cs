@@ -23,7 +23,7 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<string> number = default;
             Optional<NumberType> numberType = default;
             Optional<string> countryCode = default;
-            Optional<IReadOnlyList<string>> programBriefIds = default;
+            IReadOnlyList<string> programBriefIds = default;
             Optional<DateTimeOffset> purchaseDate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ShortCode(number.Value, Optional.ToNullable(numberType), countryCode.Value, Optional.ToList(programBriefIds), Optional.ToNullable(purchaseDate));
+            return new ShortCode(number.Value, Optional.ToNullable(numberType), countryCode.Value, programBriefIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(purchaseDate));
         }
     }
 }

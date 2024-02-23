@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> packageName = default;
             Optional<DataFactoryElement<string>> packageContent = default;
             Optional<string> packageLastModifiedDate = default;
-            Optional<IList<SsisChildPackage>> childPackages = default;
+            IList<SsisChildPackage> childPackages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Optional.ToList(childPackages), serializedAdditionalRawData);
+            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, childPackages ?? new ChangeTrackingList<SsisChildPackage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisPackageLocation>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CommunicationDomainResourceData>> value = default;
+            IReadOnlyList<CommunicationDomainResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DomainResourceList(value ?? new ChangeTrackingList<CommunicationDomainResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainResourceList>.Write(ModelReaderWriterOptions options)

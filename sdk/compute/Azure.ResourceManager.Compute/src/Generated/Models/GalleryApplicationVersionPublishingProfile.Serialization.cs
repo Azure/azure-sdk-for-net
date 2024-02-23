@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.Compute.Models
             UserArtifactSource source = default;
             Optional<UserArtifactManagement> manageActions = default;
             Optional<UserArtifactSettings> settings = default;
-            Optional<IDictionary<string, string>> advancedSettings = default;
+            IDictionary<string, string> advancedSettings = default;
             Optional<bool> enableHealthCheck = default;
-            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
-            Optional<IList<TargetRegion>> targetRegions = default;
+            IList<GalleryApplicationCustomAction> customActions = default;
+            IList<TargetRegion> targetRegions = default;
             Optional<int> replicaCount = default;
             Optional<bool> excludeFromLatest = default;
             Optional<DateTimeOffset> publishedDate = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<ImageStorageAccountType> storageAccountType = default;
             Optional<GalleryReplicationMode> replicationMode = default;
-            Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
+            IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), serializedAdditionalRawData, source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck), Optional.ToList(customActions));
+            return new GalleryApplicationVersionPublishingProfile(targetRegions ?? new ChangeTrackingList<TargetRegion>(), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(), serializedAdditionalRawData, source, manageActions.Value, settings.Value, advancedSettings ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enableHealthCheck), customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>());
         }
 
         BinaryData IPersistableModel<GalleryApplicationVersionPublishingProfile>.Write(ModelReaderWriterOptions options)

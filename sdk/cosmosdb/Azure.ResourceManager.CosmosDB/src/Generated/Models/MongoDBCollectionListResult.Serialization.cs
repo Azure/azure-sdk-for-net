@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MongoDBCollectionData>> value = default;
+            IReadOnlyList<MongoDBCollectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MongoDBCollectionListResult(value ?? new ChangeTrackingList<MongoDBCollectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionListResult>.Write(ModelReaderWriterOptions options)

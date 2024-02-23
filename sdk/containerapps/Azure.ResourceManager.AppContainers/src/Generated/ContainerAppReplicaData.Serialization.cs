@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.AppContainers
             Optional<DateTimeOffset> createdTime = default;
             Optional<ContainerAppReplicaRunningState> runningState = default;
             Optional<string> runningStateDetails = default;
-            Optional<IList<ContainerAppReplicaContainer>> containers = default;
-            Optional<IList<ContainerAppReplicaContainer>> initContainers = default;
+            IList<ContainerAppReplicaContainer> containers = default;
+            IList<ContainerAppReplicaContainer> initContainers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(runningState), runningStateDetails.Value, Optional.ToList(containers), Optional.ToList(initContainers), serializedAdditionalRawData);
+            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(runningState), runningStateDetails.Value, containers ?? new ChangeTrackingList<ContainerAppReplicaContainer>(), initContainers ?? new ChangeTrackingList<ContainerAppReplicaContainer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppReplicaData>.Write(ModelReaderWriterOptions options)

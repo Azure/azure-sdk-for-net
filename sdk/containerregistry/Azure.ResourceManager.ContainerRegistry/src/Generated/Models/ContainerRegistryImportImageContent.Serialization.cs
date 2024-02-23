@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryImportSource source = default;
-            Optional<IList<string>> targetTags = default;
-            Optional<IList<string>> untaggedTargetRepositories = default;
+            IList<string> targetTags = default;
+            IList<string> untaggedTargetRepositories = default;
             Optional<ContainerRegistryImportMode> mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImportImageContent(source, Optional.ToList(targetTags), Optional.ToList(untaggedTargetRepositories), Optional.ToNullable(mode), serializedAdditionalRawData);
+            return new ContainerRegistryImportImageContent(source, targetTags ?? new ChangeTrackingList<string>(), untaggedTargetRepositories ?? new ChangeTrackingList<string>(), Optional.ToNullable(mode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImportImageContent>.Write(ModelReaderWriterOptions options)

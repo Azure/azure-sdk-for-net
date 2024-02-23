@@ -250,18 +250,18 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<AlertTimeGrainType> timeGrainType = default;
             Optional<string> periodStartDate = default;
             Optional<string> triggeredBy = default;
-            Optional<IList<BinaryData>> resourceGroupFilter = default;
-            Optional<IList<BinaryData>> resourceFilter = default;
-            Optional<IList<BinaryData>> meterFilter = default;
+            IList<BinaryData> resourceGroupFilter = default;
+            IList<BinaryData> resourceFilter = default;
+            IList<BinaryData> meterFilter = default;
             Optional<BinaryData> tagFilter = default;
             Optional<decimal> threshold = default;
             Optional<CostManagementAlertOperator> @operator = default;
             Optional<decimal> amount = default;
             Optional<string> unit = default;
             Optional<decimal> currentSpend = default;
-            Optional<IList<string>> contactEmails = default;
-            Optional<IList<string>> contactGroups = default;
-            Optional<IList<string>> contactRoles = default;
+            IList<string> contactEmails = default;
+            IList<string> contactGroups = default;
+            IList<string> contactRoles = default;
             Optional<string> overridingAlert = default;
             Optional<string> departmentName = default;
             Optional<string> companyName = default;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertPropertiesDetails(Optional.ToNullable(timeGrainType), periodStartDate.Value, triggeredBy.Value, Optional.ToList(resourceGroupFilter), Optional.ToList(resourceFilter), Optional.ToList(meterFilter), tagFilter.Value, Optional.ToNullable(threshold), Optional.ToNullable(@operator), Optional.ToNullable(amount), unit.Value, Optional.ToNullable(currentSpend), Optional.ToList(contactEmails), Optional.ToList(contactGroups), Optional.ToList(contactRoles), overridingAlert.Value, departmentName.Value, companyName.Value, enrollmentNumber.Value, enrollmentStartDate.Value, enrollmentEndDate.Value, Optional.ToNullable(invoicingThreshold), serializedAdditionalRawData);
+            return new AlertPropertiesDetails(Optional.ToNullable(timeGrainType), periodStartDate.Value, triggeredBy.Value, resourceGroupFilter ?? new ChangeTrackingList<BinaryData>(), resourceFilter ?? new ChangeTrackingList<BinaryData>(), meterFilter ?? new ChangeTrackingList<BinaryData>(), tagFilter.Value, Optional.ToNullable(threshold), Optional.ToNullable(@operator), Optional.ToNullable(amount), unit.Value, Optional.ToNullable(currentSpend), contactEmails ?? new ChangeTrackingList<string>(), contactGroups ?? new ChangeTrackingList<string>(), contactRoles ?? new ChangeTrackingList<string>(), overridingAlert.Value, departmentName.Value, companyName.Value, enrollmentNumber.Value, enrollmentStartDate.Value, enrollmentEndDate.Value, Optional.ToNullable(invoicingThreshold), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertPropertiesDetails>.Write(ModelReaderWriterOptions options)
