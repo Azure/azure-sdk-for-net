@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedistributeThroughputParameters(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, identity, serializedAdditionalRawData);
+            return new RedistributeThroughputParameters(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resource, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedistributeThroughputParameters>.Write(ModelReaderWriterOptions options)

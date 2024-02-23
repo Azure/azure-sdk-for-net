@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyList<ODataError> errors = default;
             Optional<TaskState> state = default;
             IReadOnlyList<CommandProperties> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSsisTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MigrateSsisTaskOutput>());
+            return new MigrateSsisTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MigrateSsisTaskOutput>());
         }
 
         BinaryData IPersistableModel<MigrateSsisTaskProperties>.Write(ModelReaderWriterOptions options)

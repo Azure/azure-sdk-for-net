@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, provisioningState.Value, restorePointGroupId.Value, restorePoints ?? new ChangeTrackingList<RestorePointData>(), serializedAdditionalRawData);
+            return new RestorePointGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, source.Value, provisioningState.Value, restorePointGroupId.Value, restorePoints ?? new ChangeTrackingList<RestorePointData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointGroupData>.Write(ModelReaderWriterOptions options)
