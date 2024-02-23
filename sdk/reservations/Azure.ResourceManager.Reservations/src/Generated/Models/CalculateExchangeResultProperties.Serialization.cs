@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> netPayable = default;
             Optional<PurchasePrice> refundsTotal = default;
             Optional<PurchasePrice> purchasesTotal = default;
-            Optional<IReadOnlyList<ReservationToPurchaseCalculateExchange>> reservationsToPurchase = default;
-            Optional<IReadOnlyList<SavingsPlanToPurchaseCalculateExchange>> savingsPlansToPurchase = default;
-            Optional<IReadOnlyList<ReservationToExchange>> reservationsToExchange = default;
+            IReadOnlyList<ReservationToPurchaseCalculateExchange> reservationsToPurchase = default;
+            IReadOnlyList<SavingsPlanToPurchaseCalculateExchange> savingsPlansToPurchase = default;
+            IReadOnlyList<ReservationToExchange> reservationsToExchange = default;
             Optional<ExchangePolicyErrors> policyResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value, serializedAdditionalRawData);
+            return new CalculateExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, reservationsToPurchase ?? new ChangeTrackingList<ReservationToPurchaseCalculateExchange>(), savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>(), reservationsToExchange ?? new ChangeTrackingList<ReservationToExchange>(), policyResult.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeResultProperties>.Write(ModelReaderWriterOptions options)

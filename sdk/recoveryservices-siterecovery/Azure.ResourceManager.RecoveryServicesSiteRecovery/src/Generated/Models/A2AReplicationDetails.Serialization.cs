@@ -367,9 +367,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> multiVmGroupName = default;
             Optional<MultiVmGroupCreateOption> multiVmGroupCreateOption = default;
             Optional<string> managementId = default;
-            Optional<IReadOnlyList<A2AProtectedDiskDetails>> protectedDisks = default;
-            Optional<IReadOnlyList<A2AUnprotectedDiskDetails>> unprotectedDisks = default;
-            Optional<IReadOnlyList<A2AProtectedManagedDiskDetails>> protectedManagedDisks = default;
+            IReadOnlyList<A2AProtectedDiskDetails> protectedDisks = default;
+            IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks = default;
+            IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default;
             Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
             Optional<AzureLocation> primaryFabricLocation = default;
             Optional<AzureLocation> recoveryFabricLocation = default;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoveryAvailabilitySet = default;
             Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
             Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
-            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
+            IReadOnlyList<VmNicDetails> vmNics = default;
             Optional<A2AVmSyncedConfigDetails> vmSyncedConfigDetails = default;
             Optional<int> monitoringPercentageCompletion = default;
             Optional<string> monitoringJobType = default;
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AReplicationDetails(instanceType, serializedAdditionalRawData, fabricObjectId.Value, initialPrimaryZone.Value, Optional.ToNullable(initialPrimaryFabricLocation), initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialRecoveryFabricLocation), multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToNullable(multiVmGroupCreateOption), managementId.Value, Optional.ToList(protectedDisks), Optional.ToList(unprotectedDisks), Optional.ToList(protectedManagedDisks), recoveryBootDiagStorageAccountId.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), osType.Value, recoveryAzureVmSize.Value, recoveryAzureVmName.Value, recoveryAzureResourceGroupId.Value, recoveryCloudService.Value, recoveryAvailabilitySet.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, Optional.ToList(vmNics), vmSyncedConfigDetails.Value, Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(lastHeartbeat), agentVersion.Value, Optional.ToNullable(agentExpireOn), Optional.ToNullable(isReplicationAgentUpdateRequired), Optional.ToNullable(agentCertificateExpireOn), Optional.ToNullable(isReplicationAgentCertificateUpdateRequired), recoveryFabricObjectId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value, testFailoverRecoveryFabricObjectId.Value, Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), primaryAvailabilityZone.Value, recoveryAvailabilityZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(vmEncryptionType), tfoAzureVmName.Value, recoveryAzureGeneration.Value, recoveryProximityPlacementGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk), recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, Optional.ToNullable(churnOptionSelected));
+            return new A2AReplicationDetails(instanceType, serializedAdditionalRawData, fabricObjectId.Value, initialPrimaryZone.Value, Optional.ToNullable(initialPrimaryFabricLocation), initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialRecoveryFabricLocation), multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToNullable(multiVmGroupCreateOption), managementId.Value, protectedDisks ?? new ChangeTrackingList<A2AProtectedDiskDetails>(), unprotectedDisks ?? new ChangeTrackingList<A2AUnprotectedDiskDetails>(), protectedManagedDisks ?? new ChangeTrackingList<A2AProtectedManagedDiskDetails>(), recoveryBootDiagStorageAccountId.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), osType.Value, recoveryAzureVmSize.Value, recoveryAzureVmName.Value, recoveryAzureResourceGroupId.Value, recoveryCloudService.Value, recoveryAvailabilitySet.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, vmNics ?? new ChangeTrackingList<VmNicDetails>(), vmSyncedConfigDetails.Value, Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(lastHeartbeat), agentVersion.Value, Optional.ToNullable(agentExpireOn), Optional.ToNullable(isReplicationAgentUpdateRequired), Optional.ToNullable(agentCertificateExpireOn), Optional.ToNullable(isReplicationAgentCertificateUpdateRequired), recoveryFabricObjectId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value, testFailoverRecoveryFabricObjectId.Value, Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), primaryAvailabilityZone.Value, recoveryAvailabilityZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(vmEncryptionType), tfoAzureVmName.Value, recoveryAzureGeneration.Value, recoveryProximityPlacementGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk), recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, Optional.ToNullable(churnOptionSelected));
         }
 
         BinaryData IPersistableModel<A2AReplicationDetails>.Write(ModelReaderWriterOptions options)

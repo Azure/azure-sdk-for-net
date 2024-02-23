@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources
             }
             Optional<AzureLocation> location = default;
             Optional<ArmDeploymentPropertiesExtended> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentData(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ArmDeploymentData(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentData>.Write(ModelReaderWriterOptions options)

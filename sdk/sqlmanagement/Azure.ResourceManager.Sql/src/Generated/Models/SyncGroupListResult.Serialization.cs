@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SyncGroupData>> value = default;
+            IReadOnlyList<SyncGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SyncGroupListResult(value ?? new ChangeTrackingList<SyncGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupListResult>.Write(ModelReaderWriterOptions options)

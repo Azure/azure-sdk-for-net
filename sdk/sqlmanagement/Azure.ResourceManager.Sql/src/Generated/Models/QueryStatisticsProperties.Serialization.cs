@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> queryId = default;
             Optional<string> startTime = default;
             Optional<string> endTime = default;
-            Optional<IReadOnlyList<QueryMetricInterval>> intervals = default;
+            IReadOnlyList<QueryMetricInterval> intervals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryStatisticsProperties(databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals), serializedAdditionalRawData);
+            return new QueryStatisticsProperties(databaseName.Value, queryId.Value, startTime.Value, endTime.Value, intervals ?? new ChangeTrackingList<QueryMetricInterval>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryStatisticsProperties>.Write(ModelReaderWriterOptions options)

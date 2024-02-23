@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<ActionableRemediationState> state = default;
-            Optional<IList<CategoryConfiguration>> categoryConfigurations = default;
+            IList<CategoryConfiguration> categoryConfigurations = default;
             Optional<TargetBranchConfiguration> branchConfiguration = default;
             Optional<InheritFromParentState> inheritFromParentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionableRemediation(Optional.ToNullable(state), Optional.ToList(categoryConfigurations), branchConfiguration.Value, Optional.ToNullable(inheritFromParentState), serializedAdditionalRawData);
+            return new ActionableRemediation(Optional.ToNullable(state), categoryConfigurations ?? new ChangeTrackingList<CategoryConfiguration>(), branchConfiguration.Value, Optional.ToNullable(inheritFromParentState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionableRemediation>.Write(ModelReaderWriterOptions options)

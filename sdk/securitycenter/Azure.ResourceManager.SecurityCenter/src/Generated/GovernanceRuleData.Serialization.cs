@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<bool> isDisabled = default;
             Optional<GovernanceRuleType> ruleType = default;
             Optional<GovernanceRuleSourceResourceType> sourceResourceType = default;
-            Optional<IList<string>> excludedScopes = default;
-            Optional<IList<BinaryData>> conditionSets = default;
+            IList<string> excludedScopes = default;
+            IList<BinaryData> conditionSets = default;
             Optional<bool> includeMemberScopes = default;
             Optional<GovernanceRuleOwnerSource> ownerSource = default;
             Optional<GovernanceRuleEmailNotification> governanceEmailNotification = default;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value, serializedAdditionalRawData);
+            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), excludedScopes ?? new ChangeTrackingList<string>(), conditionSets ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options)

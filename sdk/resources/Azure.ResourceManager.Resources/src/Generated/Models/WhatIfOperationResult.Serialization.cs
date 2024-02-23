@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<string> status = default;
             Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<WhatIfChange>> changes = default;
+            IReadOnlyList<WhatIfChange> changes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatIfOperationResult(status.Value, error.Value, Optional.ToList(changes), serializedAdditionalRawData);
+            return new WhatIfOperationResult(status.Value, error.Value, changes ?? new ChangeTrackingList<WhatIfChange>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WhatIfOperationResult>.Write(ModelReaderWriterOptions options)

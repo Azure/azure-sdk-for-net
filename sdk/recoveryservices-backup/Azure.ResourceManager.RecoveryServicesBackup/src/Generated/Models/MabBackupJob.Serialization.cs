@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             Optional<TimeSpan> duration = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
+            IList<JobSupportedAction> actionsInfo = default;
             Optional<string> mabServerName = default;
             Optional<MabServerType> mabServerType = default;
             Optional<BackupWorkloadType> workloadType = default;
-            Optional<IList<MabErrorInfo>> errorDetails = default;
+            IList<MabErrorInfo> errorDetails = default;
             Optional<MabBackupJobExtendedInfo> extendedInfo = default;
             Optional<string> entityFriendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), Optional.ToList(actionsInfo), mabServerName.Value, Optional.ToNullable(mabServerType), Optional.ToNullable(workloadType), Optional.ToList(errorDetails), extendedInfo.Value);
+            return new MabBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(), mabServerName.Value, Optional.ToNullable(mabServerType), Optional.ToNullable(workloadType), errorDetails ?? new ChangeTrackingList<MabErrorInfo>(), extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<MabBackupJob>.Write(ModelReaderWriterOptions options)

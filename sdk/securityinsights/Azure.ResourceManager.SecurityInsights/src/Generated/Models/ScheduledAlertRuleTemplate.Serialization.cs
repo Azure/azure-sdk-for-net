@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<DateTimeOffset> lastUpdatedDateUTC = default;
             Optional<string> description = default;
             Optional<string> displayName = default;
-            Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
+            IList<AlertRuleTemplateDataSource> requiredDataConnectors = default;
             Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
             Optional<string> query = default;
             Optional<TimeSpan> queryFrequency = default;
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SecurityInsightsAlertSeverity> severity = default;
             Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
             Optional<int> triggerThreshold = default;
-            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
+            IList<SecurityInsightsAttackTactic> tactics = default;
+            IList<string> techniques = default;
             Optional<string> version = default;
             Optional<EventGroupingSettings> eventGroupingSettings = default;
-            Optional<IDictionary<string, string>> customDetails = default;
-            Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
+            IDictionary<string, string> customDetails = default;
+            IList<SecurityInsightsAlertRuleEntityMapping> entityMappings = default;
             Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), Optional.ToList(tactics), Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value);
+            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), techniques ?? new ChangeTrackingList<string>(), version.Value, eventGroupingSettings.Value, customDetails ?? new ChangeTrackingDictionary<string, string>(), entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(), alertDetailsOverride.Value);
         }
 
         BinaryData IPersistableModel<ScheduledAlertRuleTemplate>.Write(ModelReaderWriterOptions options)

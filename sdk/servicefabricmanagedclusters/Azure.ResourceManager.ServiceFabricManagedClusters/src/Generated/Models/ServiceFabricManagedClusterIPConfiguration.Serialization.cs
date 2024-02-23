@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string name = default;
-            Optional<IList<WritableSubResource>> applicationGatewayBackendAddressPools = default;
-            Optional<IList<WritableSubResource>> loadBalancerBackendAddressPools = default;
-            Optional<IList<WritableSubResource>> loadBalancerInboundNatPools = default;
+            IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
+            IList<WritableSubResource> loadBalancerBackendAddressPools = default;
+            IList<WritableSubResource> loadBalancerInboundNatPools = default;
             Optional<WritableSubResource> subnet = default;
             Optional<ServiceFabricManagedClusterPrivateIPAddressVersion> privateIPAddressVersion = default;
             Optional<ServiceFabricManagedClusterPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedClusterIPConfiguration(name, Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatPools), subnet, Optional.ToNullable(privateIPAddressVersion), publicIPAddressConfiguration.Value, serializedAdditionalRawData);
+            return new ServiceFabricManagedClusterIPConfiguration(name, applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>(), subnet, Optional.ToNullable(privateIPAddressVersion), publicIPAddressConfiguration.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedClusterIPConfiguration>.Write(ModelReaderWriterOptions options)

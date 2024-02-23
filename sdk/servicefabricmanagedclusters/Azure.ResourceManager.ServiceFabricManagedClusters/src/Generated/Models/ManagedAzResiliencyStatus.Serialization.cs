@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceAzStatus>> baseResourceStatus = default;
+            IReadOnlyList<ResourceAzStatus> baseResourceStatus = default;
             Optional<bool> isClusterZoneResilient = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedAzResiliencyStatus(Optional.ToList(baseResourceStatus), Optional.ToNullable(isClusterZoneResilient), serializedAdditionalRawData);
+            return new ManagedAzResiliencyStatus(baseResourceStatus ?? new ChangeTrackingList<ResourceAzStatus>(), Optional.ToNullable(isClusterZoneResilient), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedAzResiliencyStatus>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlDatabaseSecurityAlertPolicyData>> value = default;
+            IReadOnlyList<SqlDatabaseSecurityAlertPolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseSecurityAlertListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatabaseSecurityAlertListResult(value ?? new ChangeTrackingList<SqlDatabaseSecurityAlertPolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseSecurityAlertListResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<SecurityEventSource> eventSource = default;
-            Optional<IList<SecurityAutomationRuleSet>> ruleSets = default;
+            IList<SecurityAutomationRuleSet> ruleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationSource(Optional.ToNullable(eventSource), Optional.ToList(ruleSets), serializedAdditionalRawData);
+            return new SecurityAutomationSource(Optional.ToNullable(eventSource), ruleSets ?? new ChangeTrackingList<SecurityAutomationRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationSource>.Write(ModelReaderWriterOptions options)

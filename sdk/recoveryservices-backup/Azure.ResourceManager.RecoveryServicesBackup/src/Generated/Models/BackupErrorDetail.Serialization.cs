@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<string> code = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<string>> recommendations = default;
+            IReadOnlyList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupErrorDetail(code.Value, message.Value, Optional.ToList(recommendations), serializedAdditionalRawData);
+            return new BackupErrorDetail(code.Value, message.Value, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupErrorDetail>.Write(ModelReaderWriterOptions options)

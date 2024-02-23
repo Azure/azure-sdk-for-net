@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
             ServiceFabricManagedClustersSku sku = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -376,32 +376,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<IPAddress> ipv4Address = default;
             Optional<Guid> clusterId = default;
             Optional<ServiceFabricManagedClusterState> clusterState = default;
-            Optional<IReadOnlyList<BinaryData>> clusterCertificateThumbprints = default;
+            IReadOnlyList<BinaryData> clusterCertificateThumbprints = default;
             Optional<int> clientConnectionPort = default;
             Optional<int> httpGatewayConnectionPort = default;
             Optional<string> adminUserName = default;
             Optional<string> adminPassword = default;
-            Optional<IList<ManagedClusterLoadBalancingRule>> loadBalancingRules = default;
+            IList<ManagedClusterLoadBalancingRule> loadBalancingRules = default;
             Optional<bool> allowRdpAccess = default;
-            Optional<IList<ServiceFabricManagedNetworkSecurityRule>> networkSecurityRules = default;
-            Optional<IList<ManagedClusterClientCertificate>> clients = default;
+            IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules = default;
+            IList<ManagedClusterClientCertificate> clients = default;
             Optional<ManagedClusterAzureActiveDirectory> azureActiveDirectory = default;
-            Optional<IList<ClusterFabricSettingsSection>> fabricSettings = default;
+            IList<ClusterFabricSettingsSection> fabricSettings = default;
             Optional<ServiceFabricManagedResourceProvisioningState> provisioningState = default;
             Optional<string> clusterCodeVersion = default;
             Optional<ManagedClusterUpgradeMode> clusterUpgradeMode = default;
             Optional<ManagedClusterUpgradeCadence> clusterUpgradeCadence = default;
-            Optional<IList<ManagedClusterAddOnFeature>> addonFeatures = default;
+            IList<ManagedClusterAddOnFeature> addonFeatures = default;
             Optional<bool> enableAutoOSUpgrade = default;
             Optional<bool> zonalResiliency = default;
             Optional<ApplicationTypeVersionsCleanupPolicy> applicationTypeVersionsCleanupPolicy = default;
             Optional<bool> enableIPv6 = default;
             Optional<string> subnetId = default;
-            Optional<IList<ManagedClusterIPTag>> ipTags = default;
+            IList<ManagedClusterIPTag> ipTags = default;
             Optional<IPAddress> ipv6Address = default;
             Optional<bool> enableServicePublicIP = default;
-            Optional<IList<ManagedClusterSubnet>> auxiliarySubnets = default;
-            Optional<IList<ManagedClusterServiceEndpoint>> serviceEndpoints = default;
+            IList<ManagedClusterSubnet> auxiliarySubnets = default;
+            IList<ManagedClusterServiceEndpoint> serviceEndpoints = default;
             Optional<ZonalUpdateMode> zonalUpdateMode = default;
             Optional<bool> useCustomVnet = default;
             Optional<ResourceIdentifier> publicIPPrefixId = default;
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), Optional.ToList(clusterCertificateThumbprints), Optional.ToNullable(clientConnectionPort), Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(allowRdpAccess), Optional.ToList(networkSecurityRules), Optional.ToList(clients), azureActiveDirectory.Value, Optional.ToList(fabricSettings), Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Optional.ToNullable(clusterUpgradeMode), Optional.ToNullable(clusterUpgradeCadence), Optional.ToList(addonFeatures), Optional.ToNullable(enableAutoOSUpgrade), Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(enableIPv6), subnetId.Value, Optional.ToList(ipTags), ipv6Address.Value, Optional.ToNullable(enableServicePublicIP), Optional.ToList(auxiliarySubnets), Optional.ToList(serviceEndpoints), Optional.ToNullable(zonalUpdateMode), Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, publicIPv6PrefixId.Value, ddosProtectionPlanId.Value, upgradeDescription.Value, Optional.ToNullable(httpGatewayTokenAuthConnectionPort), Optional.ToNullable(enableHttpGatewayExclusiveAuthMode), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), clusterCertificateThumbprints ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(clientConnectionPort), Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, loadBalancingRules ?? new ChangeTrackingList<ManagedClusterLoadBalancingRule>(), Optional.ToNullable(allowRdpAccess), networkSecurityRules ?? new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>(), clients ?? new ChangeTrackingList<ManagedClusterClientCertificate>(), azureActiveDirectory.Value, fabricSettings ?? new ChangeTrackingList<ClusterFabricSettingsSection>(), Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Optional.ToNullable(clusterUpgradeMode), Optional.ToNullable(clusterUpgradeCadence), addonFeatures ?? new ChangeTrackingList<ManagedClusterAddOnFeature>(), Optional.ToNullable(enableAutoOSUpgrade), Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(enableIPv6), subnetId.Value, ipTags ?? new ChangeTrackingList<ManagedClusterIPTag>(), ipv6Address.Value, Optional.ToNullable(enableServicePublicIP), auxiliarySubnets ?? new ChangeTrackingList<ManagedClusterSubnet>(), serviceEndpoints ?? new ChangeTrackingList<ManagedClusterServiceEndpoint>(), Optional.ToNullable(zonalUpdateMode), Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, publicIPv6PrefixId.Value, ddosProtectionPlanId.Value, upgradeDescription.Value, Optional.ToNullable(httpGatewayTokenAuthConnectionPort), Optional.ToNullable(enableHttpGatewayExclusiveAuthMode), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedClusterData>.Write(ModelReaderWriterOptions options)

@@ -309,28 +309,28 @@ namespace Azure.ResourceManager.ServiceFabric
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<ClusterAddOnFeature>> addOnFeatures = default;
-            Optional<IReadOnlyList<ClusterVersionDetails>> availableClusterVersions = default;
+            IList<ClusterAddOnFeature> addOnFeatures = default;
+            IReadOnlyList<ClusterVersionDetails> availableClusterVersions = default;
             Optional<ClusterAadSetting> azureActiveDirectory = default;
             Optional<ClusterCertificateDescription> certificate = default;
             Optional<ClusterServerCertificateCommonNames> certificateCommonNames = default;
-            Optional<IList<ClusterClientCertificateCommonName>> clientCertificateCommonNames = default;
-            Optional<IList<ClusterClientCertificateThumbprint>> clientCertificateThumbprints = default;
+            IList<ClusterClientCertificateCommonName> clientCertificateCommonNames = default;
+            IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default;
             Optional<string> clusterCodeVersion = default;
             Optional<Uri> clusterEndpoint = default;
             Optional<Guid> clusterId = default;
             Optional<ServiceFabricClusterState> clusterState = default;
             Optional<DiagnosticsStorageAccountConfig> diagnosticsStorageAccountConfig = default;
             Optional<bool> eventStoreServiceEnabled = default;
-            Optional<IList<SettingsSectionDescription>> fabricSettings = default;
+            IList<SettingsSectionDescription> fabricSettings = default;
             Optional<Uri> managementEndpoint = default;
-            Optional<IList<ClusterNodeTypeDescription>> nodeTypes = default;
+            IList<ClusterNodeTypeDescription> nodeTypes = default;
             Optional<ServiceFabricProvisioningState> provisioningState = default;
             Optional<ClusterReliabilityLevel> reliabilityLevel = default;
             Optional<ClusterCertificateDescription> reverseProxyCertificate = default;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<DateTimeOffset> upgradePauseStartTimestampUtc = default;
             Optional<DateTimeOffset> upgradePauseEndTimestampUtc = default;
             Optional<bool> waveUpgradePaused = default;
-            Optional<IList<ClusterNotification>> notifications = default;
+            IList<ClusterNotification> notifications = default;
             Optional<bool> enableHttpGatewayExclusiveAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(addOnFeatures), Optional.ToList(availableClusterVersions), azureActiveDirectory.Value, certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, clusterEndpoint.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), diagnosticsStorageAccountConfig.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), managementEndpoint.Value, Optional.ToList(nodeTypes), Optional.ToNullable(provisioningState), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, reverseProxyCertificateCommonNames.Value, upgradeDescription.Value, Optional.ToNullable(upgradeMode), applicationTypeVersionsCleanupPolicy.Value, vmImage.Value, Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), Optional.ToNullable(enableHttpGatewayExclusiveAuthMode), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>(), availableClusterVersions ?? new ChangeTrackingList<ClusterVersionDetails>(), azureActiveDirectory.Value, certificate.Value, certificateCommonNames.Value, clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>(), clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>(), clusterCodeVersion.Value, clusterEndpoint.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), diagnosticsStorageAccountConfig.Value, Optional.ToNullable(eventStoreServiceEnabled), fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>(), managementEndpoint.Value, nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>(), Optional.ToNullable(provisioningState), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, reverseProxyCertificateCommonNames.Value, upgradeDescription.Value, Optional.ToNullable(upgradeMode), applicationTypeVersionsCleanupPolicy.Value, vmImage.Value, Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), notifications ?? new ChangeTrackingList<ClusterNotification>(), Optional.ToNullable(enableHttpGatewayExclusiveAuthMode), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricClusterData>.Write(ModelReaderWriterOptions options)

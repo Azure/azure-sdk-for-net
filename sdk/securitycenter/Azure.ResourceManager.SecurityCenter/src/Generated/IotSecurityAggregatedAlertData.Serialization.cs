@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> systemSource = default;
             Optional<string> actionTaken = default;
             Optional<string> logAnalyticsQuery = default;
-            Optional<IReadOnlyList<IotSecurityAggregatedAlertTopDevice>> topDevicesList = default;
+            IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, Optional.ToList(topDevicesList), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new IotSecurityAggregatedAlertData(id, name, type, systemData.Value, alertType.Value, alertDisplayName.Value, Optional.ToNullable(aggregatedDateUtc), vendorName.Value, Optional.ToNullable(reportedSeverity), remediationSteps.Value, description.Value, Optional.ToNullable(count), effectedResourceType.Value, systemSource.Value, actionTaken.Value, logAnalyticsQuery.Value, topDevicesList ?? new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityAggregatedAlertData>.Write(ModelReaderWriterOptions options)

@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             Optional<TextWeights> text = default;
-            Optional<IList<ScoringFunction>> functions = default;
+            IList<ScoringFunction> functions = default;
             Optional<ScoringFunctionAggregation?> functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ScoringProfile(name, text.Value, Optional.ToList(functions), Optional.ToNullable(functionAggregation));
+            return new ScoringProfile(name, text.Value, functions ?? new ChangeTrackingList<ScoringFunction>(), Optional.ToNullable(functionAggregation));
         }
     }
 }

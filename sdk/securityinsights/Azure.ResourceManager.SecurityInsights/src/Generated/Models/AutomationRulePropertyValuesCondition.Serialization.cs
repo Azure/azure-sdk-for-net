@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             Optional<AutomationRulePropertyConditionSupportedProperty> propertyName = default;
             Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
-            Optional<IList<string>> propertyValues = default;
+            IList<string> propertyValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRulePropertyValuesCondition(Optional.ToNullable(propertyName), Optional.ToNullable(@operator), Optional.ToList(propertyValues), serializedAdditionalRawData);
+            return new AutomationRulePropertyValuesCondition(Optional.ToNullable(propertyName), Optional.ToNullable(@operator), propertyValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRulePropertyValuesCondition>.Write(ModelReaderWriterOptions options)

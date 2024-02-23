@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> protectionStatus = default;
             Optional<ResourceIdentifier> replicationProtectedItemId = default;
             Optional<ResourceIdentifier> recoveryServicesProviderId = default;
-            Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
-            Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
+            IReadOnlyList<string> protectionReadinessErrors = default;
+            IReadOnlyList<string> supportedReplicationProviders = default;
             Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, Optional.ToList(protectionReadinessErrors), Optional.ToList(supportedReplicationProviders), customDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, protectionReadinessErrors ?? new ChangeTrackingList<string>(), supportedReplicationProviders ?? new ChangeTrackingList<string>(), customDetails.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectableItemProperties>.Write(ModelReaderWriterOptions options)

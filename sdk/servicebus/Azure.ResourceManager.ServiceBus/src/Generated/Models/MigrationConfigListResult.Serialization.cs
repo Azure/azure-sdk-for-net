@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MigrationConfigurationData>> value = default;
+            IReadOnlyList<MigrationConfigurationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationConfigListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MigrationConfigListResult(value ?? new ChangeTrackingList<MigrationConfigurationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationConfigListResult>.Write(ModelReaderWriterOptions options)

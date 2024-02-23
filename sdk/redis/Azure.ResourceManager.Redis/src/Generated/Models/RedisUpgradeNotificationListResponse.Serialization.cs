@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisUpgradeNotification>> value = default;
+            IReadOnlyList<RedisUpgradeNotification> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisUpgradeNotificationListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisUpgradeNotificationListResponse(value ?? new ChangeTrackingList<RedisUpgradeNotification>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisUpgradeNotificationListResponse>.Write(ModelReaderWriterOptions options)

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources
             Optional<ArmApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
             Optional<ArmApplicationSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Resources
             Optional<ArmApplicationBillingDetails> billingDetails = default;
             Optional<ArmApplicationJitAccessPolicy> jitAccessPolicy = default;
             Optional<Guid> publisherTenantId = default;
-            Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
+            IReadOnlyList<ArmApplicationAuthorization> authorizations = default;
             Optional<ArmApplicationManagementMode> managementMode = default;
             Optional<ArmApplicationPackageContact> customerSupport = default;
             Optional<ArmApplicationPackageSupportUris> supportUris = default;
-            Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
+            IReadOnlyList<ArmApplicationArtifact> artifacts = default;
             Optional<ArmApplicationDetails> createdBy = default;
             Optional<ArmApplicationDetails> updatedBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, serializedAdditionalRawData, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, managedBy.Value, sku.Value, serializedAdditionalRawData, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, artifacts ?? new ChangeTrackingList<ArmApplicationArtifact>(), createdBy.Value, updatedBy.Value);
         }
 
         BinaryData IPersistableModel<ArmApplicationData>.Write(ModelReaderWriterOptions options)

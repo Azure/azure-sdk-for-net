@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<TestMigrationState> testMigrateState = default;
             Optional<string> testMigrateStateDescription = default;
             Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<IReadOnlyList<MigrationItemOperation>> allowedOperations = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            IReadOnlyList<MigrationItemOperation> allowedOperations = default;
             Optional<CurrentJobDetails> currentJob = default;
-            Optional<IReadOnlyList<CriticalJobHistoryDetails>> criticalJobHistory = default;
+            IReadOnlyList<CriticalJobHistoryDetails> criticalJobHistory = default;
             Optional<string> eventCorrelationId = default;
             Optional<MigrationProviderSpecificSettings> providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryMigrationItemProperties(machineName.Value, policyId.Value, policyFriendlyName.Value, recoveryServicesProviderId.Value, replicationStatus.Value, Optional.ToNullable(migrationState), migrationStateDescription.Value, Optional.ToNullable(lastTestMigrationTime), lastTestMigrationStatus.Value, Optional.ToNullable(lastMigrationTime), lastMigrationStatus.Value, Optional.ToNullable(testMigrateState), testMigrateStateDescription.Value, Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToList(allowedOperations), currentJob.Value, Optional.ToList(criticalJobHistory), eventCorrelationId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryMigrationItemProperties(machineName.Value, policyId.Value, policyFriendlyName.Value, recoveryServicesProviderId.Value, replicationStatus.Value, Optional.ToNullable(migrationState), migrationStateDescription.Value, Optional.ToNullable(lastTestMigrationTime), lastTestMigrationStatus.Value, Optional.ToNullable(lastMigrationTime), lastMigrationStatus.Value, Optional.ToNullable(testMigrateState), testMigrateStateDescription.Value, Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), allowedOperations ?? new ChangeTrackingList<MigrationItemOperation>(), currentJob.Value, criticalJobHistory ?? new ChangeTrackingList<CriticalJobHistoryDetails>(), eventCorrelationId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryMigrationItemProperties>.Write(ModelReaderWriterOptions options)

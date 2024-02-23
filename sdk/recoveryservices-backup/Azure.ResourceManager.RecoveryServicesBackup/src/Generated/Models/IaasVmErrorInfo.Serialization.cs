@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> errorCode = default;
             Optional<string> errorTitle = default;
             Optional<string> errorString = default;
-            Optional<IReadOnlyList<string>> recommendations = default;
+            IReadOnlyList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmErrorInfo(Optional.ToNullable(errorCode), errorTitle.Value, errorString.Value, Optional.ToList(recommendations), serializedAdditionalRawData);
+            return new IaasVmErrorInfo(Optional.ToNullable(errorCode), errorTitle.Value, errorString.Value, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmErrorInfo>.Write(ModelReaderWriterOptions options)

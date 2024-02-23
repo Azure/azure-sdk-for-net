@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationProtectionIntentData>> value = default;
+            IReadOnlyList<ReplicationProtectionIntentData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationProtectionIntentListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ReplicationProtectionIntentListResult(value ?? new ChangeTrackingList<ReplicationProtectionIntentData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationProtectionIntentListResult>.Write(ModelReaderWriterOptions options)

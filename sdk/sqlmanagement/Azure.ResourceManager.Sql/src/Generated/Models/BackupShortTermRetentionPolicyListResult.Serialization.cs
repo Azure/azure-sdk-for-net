@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackupShortTermRetentionPolicyData>> value = default;
+            IReadOnlyList<BackupShortTermRetentionPolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupShortTermRetentionPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BackupShortTermRetentionPolicyListResult(value ?? new ChangeTrackingList<BackupShortTermRetentionPolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupShortTermRetentionPolicyListResult>.Write(ModelReaderWriterOptions options)

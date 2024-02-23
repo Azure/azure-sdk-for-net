@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IList<int>> quantities = default;
+            IList<int> quantities = default;
             Optional<ResourceIdentifier> reservationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SplitContent(Optional.ToList(quantities), reservationId.Value, serializedAdditionalRawData);
+            return new SplitContent(quantities ?? new ChangeTrackingList<int>(), reservationId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SplitContent>.Write(ModelReaderWriterOptions options)

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
+            IReadOnlyList<string> groupIds = default;
             Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<SqlPrivateEndpointProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SqlPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

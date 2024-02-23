@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<BinaryData> metadata = default;
-            Optional<IReadOnlyDictionary<string, TemplateSpecVersionInfo>> versions = default;
+            IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), description.Value, displayName.Value, metadata.Value, Optional.ToDictionary(versions), serializedAdditionalRawData);
+            return new TemplateSpecData(id, name, type, systemData.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, displayName.Value, metadata.Value, versions ?? new ChangeTrackingDictionary<string, TemplateSpecVersionInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateSpecData>.Write(ModelReaderWriterOptions options)
