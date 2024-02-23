@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HasError))
+            if (HasError.HasValue)
             {
                 writer.WritePropertyName("hasError"u8);
                 writer.WriteBooleanValue(HasError.Value);
             }
-            if (Optional.IsCollectionDefined(PolicyViolations))
+            if (!(PolicyViolations is ChangeTrackingList<DevTestLabPolicyViolation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyViolations"u8);
                 writer.WriteStartArray();

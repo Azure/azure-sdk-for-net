@@ -291,7 +291,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             try
             {
                 var response = await _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<HardwareSecurityModulesPrivateEndpointConnectionResource>(Response.FromValue(new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HardwareSecurityModulesArmOperation<HardwareSecurityModulesPrivateEndpointConnectionResource>(Response.FromValue(new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,7 +342,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             try
             {
                 var response = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<HardwareSecurityModulesPrivateEndpointConnectionResource>(Response.FromValue(new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HardwareSecurityModulesArmOperation<HardwareSecurityModulesPrivateEndpointConnectionResource>(Response.FromValue(new HardwareSecurityModulesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

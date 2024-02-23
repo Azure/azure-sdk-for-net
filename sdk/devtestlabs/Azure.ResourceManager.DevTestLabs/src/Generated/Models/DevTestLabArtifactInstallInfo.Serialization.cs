@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactId))
+            if (ArtifactId != null)
             {
                 writer.WritePropertyName("artifactId"u8);
                 writer.WriteStringValue(ArtifactId);
             }
-            if (Optional.IsDefined(ArtifactTitle))
+            if (ArtifactTitle != null)
             {
                 writer.WritePropertyName("artifactTitle"u8);
                 writer.WriteStringValue(ArtifactTitle);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<DevTestLabArtifactParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(DeploymentStatusMessage))
+            if (DeploymentStatusMessage != null)
             {
                 writer.WritePropertyName("deploymentStatusMessage"u8);
                 writer.WriteStringValue(DeploymentStatusMessage);
             }
-            if (Optional.IsDefined(VmExtensionStatusMessage))
+            if (VmExtensionStatusMessage != null)
             {
                 writer.WritePropertyName("vmExtensionStatusMessage"u8);
                 writer.WriteStringValue(VmExtensionStatusMessage);
             }
-            if (Optional.IsDefined(InstallOn))
+            if (InstallOn.HasValue)
             {
                 writer.WritePropertyName("installTime"u8);
                 writer.WriteStringValue(InstallOn.Value, "O");

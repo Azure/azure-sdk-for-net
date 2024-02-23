@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(CustomerSubscriptionDetails))
+            if (CustomerSubscriptionDetails != null)
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
                 writer.WriteObjectValue(CustomerSubscriptionDetails);

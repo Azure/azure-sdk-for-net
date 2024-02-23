@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Authority))
+            if (options.Format != "W" && Authority != null)
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Audiences))
+            if (options.Format != "W" && !(Audiences is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("audiences"u8);
                 writer.WriteStartArray();

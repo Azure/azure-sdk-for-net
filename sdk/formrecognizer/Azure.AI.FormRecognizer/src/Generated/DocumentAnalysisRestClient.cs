@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
@@ -164,7 +164,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
@@ -260,7 +260,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }

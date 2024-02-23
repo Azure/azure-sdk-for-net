@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(MonitoringStatus))
+            if (MonitoringStatus.HasValue)
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
+            if (MarketplaceSubscriptionStatus.HasValue)
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(DynatraceEnvironmentProperties))
+            if (DynatraceEnvironmentProperties != null)
             {
                 writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
                 writer.WriteObjectValue(DynatraceEnvironmentProperties);
             }
-            if (Optional.IsDefined(UserInfo))
+            if (UserInfo != null)
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (Optional.IsDefined(PlanData))
+            if (PlanData != null)
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);

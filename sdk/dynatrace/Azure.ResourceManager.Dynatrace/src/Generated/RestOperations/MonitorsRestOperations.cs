@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.Dynatrace
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetAccountCredentialsRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/getAccountCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAccountCredentialsRequest(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -156,6 +171,21 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMonitoredResourcesRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/listMonitoredResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMonitoredResourcesRequest(string subscriptionId, string resourceGroupName, string monitorName)
@@ -279,6 +309,21 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        internal RequestUriBuilder CreateGetVmHostPayloadRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/getVMHostPayload", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetVmHostPayloadRequest(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -398,6 +443,20 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string monitorName)
@@ -524,6 +583,20 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMonitorData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMonitorData data)
         {
             var message = _pipeline.CreateMessage();
@@ -648,6 +721,20 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMonitorPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMonitorPatch patch)
@@ -784,6 +871,20 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -898,6 +999,17 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionIdRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionIdRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -977,6 +1089,19 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -1078,6 +1203,21 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListHostsRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/listHosts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListHostsRequest(string subscriptionId, string resourceGroupName, string monitorName)
@@ -1201,6 +1341,21 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        internal RequestUriBuilder CreateListAppServicesRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/listAppServices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAppServicesRequest(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -1320,6 +1475,21 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSsoDetailsRequestUri(string subscriptionId, string resourceGroupName, string monitorName, DynatraceSsoDetailsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/getSSODetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSsoDetailsRequest(string subscriptionId, string resourceGroupName, string monitorName, DynatraceSsoDetailsContent content)
@@ -1450,6 +1620,21 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListLinkableEnvironmentsRequestUri(string subscriptionId, string resourceGroupName, string monitorName, LinkableEnvironmentContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Dynatrace.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/listLinkableEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListLinkableEnvironmentsRequest(string subscriptionId, string resourceGroupName, string monitorName, LinkableEnvironmentContent content)
@@ -1587,6 +1772,14 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        internal RequestUriBuilder CreateListMonitoredResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListMonitoredResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -1711,6 +1904,14 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionIdNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionIdNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1797,6 +1998,14 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1903,6 +2112,14 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListHostsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListHostsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName)
@@ -2029,6 +2246,14 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        internal RequestUriBuilder CreateListAppServicesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAppServicesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -2151,6 +2376,14 @@ namespace Azure.ResourceManager.Dynatrace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListLinkableEnvironmentsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, LinkableEnvironmentContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListLinkableEnvironmentsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, LinkableEnvironmentContent content)

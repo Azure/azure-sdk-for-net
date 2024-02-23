@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Policies))
+            if (!(Policies is ChangeTrackingList<DevTestLabEvaluatePolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();

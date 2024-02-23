@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(MinInstanceCount))
+            if (MinInstanceCount.HasValue)
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (Optional.IsDefined(TargetInstanceCount))
+            if (TargetInstanceCount.HasValue)
             {
                 writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);
             }
-            if (Optional.IsDefined(VmGroupName))
+            if (VmGroupName != null)
             {
                 writer.WritePropertyName("VMGroupName"u8);
                 writer.WriteStringValue(VmGroupName);
             }
-            if (Optional.IsDefined(AutoScaleConfiguration))
+            if (AutoScaleConfiguration != null)
             {
                 writer.WritePropertyName("autoscale"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
-            if (Optional.IsDefined(HardwareProfile))
+            if (HardwareProfile != null)
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (OSProfile != null)
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Optional.IsDefined(VirtualNetworkProfile))
+            if (VirtualNetworkProfile != null)
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(DataDisksGroups))
+            if (!(DataDisksGroups is ChangeTrackingList<HDInsightClusterDataDiskGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDisksGroups"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScriptActions))
+            if (!(ScriptActions is ChangeTrackingList<ScriptAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EncryptDataDisks))
+            if (EncryptDataDisks.HasValue)
             {
                 writer.WritePropertyName("encryptDataDisks"u8);
                 writer.WriteBooleanValue(EncryptDataDisks.Value);
