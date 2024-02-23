@@ -173,7 +173,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         /// Write the attributes of a <see cref="Resource"/>.
         /// </summary>
         /// <param name="resource">The resource.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="resource"/> is null.</exception>
         [NonEvent]
         public void WriteResourceAttributes(Resource resource)
         {
