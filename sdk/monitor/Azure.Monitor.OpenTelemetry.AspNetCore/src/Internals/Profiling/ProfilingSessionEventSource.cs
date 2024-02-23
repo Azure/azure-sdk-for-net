@@ -187,6 +187,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
                 ResourceAttributes(attributes.Select(kvp => new KeyValuePair<string, string>(kvp.Key, SafeConvertToString(kvp.Value))));
             }
 
+            // Safely convert an object to a string.
+            // The ResourceBuilder won't allow a non-primitive type for an
+            // attribute value but, just to be sure, catch any exceptions
+            // and return an empty string.
+            // Also truncates the value to a reasonably length.
             static string SafeConvertToString(object? value)
             {
                 const int maxLength = 128;
@@ -195,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
                     string converted = Convert.ToString(value, InvariantCulture) ?? string.Empty;
                     return converted.Length <= maxLength ? converted : converted.Substring(0, maxLength);
                 }
-                catch
+                catch // In case value's ToString implementation throws.
                 {
                     return string.Empty;
                 }
