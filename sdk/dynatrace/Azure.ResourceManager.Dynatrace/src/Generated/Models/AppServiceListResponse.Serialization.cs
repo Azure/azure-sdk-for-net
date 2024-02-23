@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>> value = default;
+            IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AppServiceListResponse(value ?? new ChangeTrackingList<DynatraceOneAgentEnabledAppServiceInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceListResponse>.Write(ModelReaderWriterOptions options)

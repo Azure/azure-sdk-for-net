@@ -170,13 +170,13 @@ namespace Azure.ResourceManager.EventGrid
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<NamespaceProvisioningState> provisioningState = default;
             Optional<TopicsConfiguration> topicsConfiguration = default;
             Optional<TopicSpacesConfiguration> topicSpacesConfiguration = default;
             Optional<bool> isZoneRedundant = default;
             Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
             Optional<TlsVersion> minimumTlsVersionAllowed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), topicsConfiguration.Value, topicSpacesConfiguration.Value, Optional.ToNullable(isZoneRedundant), Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(minimumTlsVersionAllowed), serializedAdditionalRawData);
+            return new EventGridNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), topicsConfiguration.Value, topicSpacesConfiguration.Value, Optional.ToNullable(isZoneRedundant), Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(minimumTlsVersionAllowed), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespaceData>.Write(ModelReaderWriterOptions options)

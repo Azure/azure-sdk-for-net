@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScalingPlanPooledScheduleData>> value = default;
+            IReadOnlyList<ScalingPlanPooledScheduleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanPooledScheduleList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScalingPlanPooledScheduleList(value ?? new ChangeTrackingList<ScalingPlanPooledScheduleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanPooledScheduleList>.Write(ModelReaderWriterOptions options)

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
-            Optional<IList<string>> applicationGroupReferences = default;
+            IList<string> applicationGroupReferences = default;
             Optional<DesktopVirtualizationPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWorkspacePatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new VirtualWorkspacePatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, applicationGroupReferences ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWorkspacePatch>.Write(ModelReaderWriterOptions options)

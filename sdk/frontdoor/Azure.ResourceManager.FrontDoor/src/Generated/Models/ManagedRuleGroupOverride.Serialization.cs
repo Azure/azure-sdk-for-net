@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             string ruleGroupName = default;
-            Optional<IList<ManagedRuleExclusion>> exclusions = default;
-            Optional<IList<ManagedRuleOverride>> rules = default;
+            IList<ManagedRuleExclusion> exclusions = default;
+            IList<ManagedRuleOverride> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleGroupOverride(ruleGroupName, Optional.ToList(exclusions), Optional.ToList(rules), serializedAdditionalRawData);
+            return new ManagedRuleGroupOverride(ruleGroupName, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), rules ?? new ChangeTrackingList<ManagedRuleOverride>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleGroupOverride>.Write(ModelReaderWriterOptions options)

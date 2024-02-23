@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DynatraceMonitorVmInfo>> value = default;
+            IReadOnlyList<DynatraceMonitorVmInfo> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmHostsListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VmHostsListResponse(value ?? new ChangeTrackingList<DynatraceMonitorVmInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmHostsListResponse>.Write(ModelReaderWriterOptions options)

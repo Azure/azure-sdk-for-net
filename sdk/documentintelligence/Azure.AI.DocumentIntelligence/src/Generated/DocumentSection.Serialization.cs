@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<string>> elements = default;
+            IReadOnlyList<string> elements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentSection(spans, Optional.ToList(elements), serializedAdditionalRawData);
+            return new DocumentSection(spans, elements ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentSection>.Write(ModelReaderWriterOptions options)

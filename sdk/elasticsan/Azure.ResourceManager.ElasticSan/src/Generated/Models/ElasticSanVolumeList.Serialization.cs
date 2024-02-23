@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ElasticSanVolumeData>> value = default;
+            IReadOnlyList<ElasticSanVolumeData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ElasticSanVolumeList(value ?? new ChangeTrackingList<ElasticSanVolumeData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeList>.Write(ModelReaderWriterOptions options)

@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> message = default;
             Optional<string> target = default;
             Optional<AcsRouterCommunicationError> innererror = default;
-            Optional<IReadOnlyList<AcsRouterCommunicationError>> details = default;
+            IReadOnlyList<AcsRouterCommunicationError> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterCommunicationError(code.Value, message.Value, target.Value, innererror.Value, Optional.ToList(details));
+            return new AcsRouterCommunicationError(code.Value, message.Value, target.Value, innererror.Value, details ?? new ChangeTrackingList<AcsRouterCommunicationError>());
         }
     }
 }
