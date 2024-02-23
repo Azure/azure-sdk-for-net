@@ -1259,7 +1259,7 @@ namespace Azure.Developer.DevCenter.Samples
             {
                 parameters = new
                 {
-                    key = "<parameters>",
+                    key = new object(),
                 },
                 environmentType = "<environmentType>",
                 catalogName = "<catalogName>",
@@ -1295,7 +1295,7 @@ namespace Azure.Developer.DevCenter.Samples
             {
                 parameters = new
                 {
-                    key = "<parameters>",
+                    key = new object(),
                 },
                 environmentType = "<environmentType>",
                 catalogName = "<catalogName>",
@@ -1331,7 +1331,7 @@ namespace Azure.Developer.DevCenter.Samples
             {
                 Parameters =
 {
-["key"] = "<parameters>"
+["key"] = BinaryData.FromObjectAsJson(new object())
 },
             };
             Operation<DevCenterEnvironment> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
@@ -1350,7 +1350,7 @@ namespace Azure.Developer.DevCenter.Samples
             {
                 Parameters =
 {
-["key"] = "<parameters>"
+["key"] = BinaryData.FromObjectAsJson(new object())
 },
             };
             Operation<DevCenterEnvironment> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", body);
