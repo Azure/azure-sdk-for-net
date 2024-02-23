@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<AzureLocation> dataLocale = default;
             Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<IList<StreamingJobInputData>> inputs = default;
+            IList<StreamingJobInputData> inputs = default;
             Optional<StreamingJobTransformationData> transformation = default;
-            Optional<IList<StreamingJobOutputData>> outputs = default;
-            Optional<IList<StreamingJobFunctionData>> functions = default;
+            IList<StreamingJobOutputData> outputs = default;
+            IList<StreamingJobFunctionData> functions = default;
             Optional<ETag> etag = default;
             Optional<StreamingJobStorageAccount> jobStorageAccount = default;
             Optional<StreamingJobContentStoragePolicy> contentStoragePolicy = default;
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Optional.ToNullable(dataLocale), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster.Value, serializedAdditionalRawData);
+            return new StreamingJobData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, sku.Value, Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Optional.ToNullable(dataLocale), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), inputs ?? new ChangeTrackingList<StreamingJobInputData>(), transformation.Value, outputs ?? new ChangeTrackingList<StreamingJobOutputData>(), functions ?? new ChangeTrackingList<StreamingJobFunctionData>(), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobData>.Write(ModelReaderWriterOptions options)

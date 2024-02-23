@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Storage
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IDictionary<string, string> metadata = default;
             Optional<int> shareQuota = default;
             Optional<FileShareEnabledProtocol> enabledProtocols = default;
             Optional<RootSquashType> rootSquash = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Storage
             Optional<StorageLeaseStatus> leaseStatus = default;
             Optional<StorageLeaseState> leaseState = default;
             Optional<StorageLeaseDurationType> leaseDuration = default;
-            Optional<IList<StorageSignedIdentifier>> signedIdentifiers = default;
+            IList<StorageSignedIdentifier> signedIdentifiers = default;
             Optional<DateTimeOffset> snapshotTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(metadata), Optional.ToNullable(shareQuota), Optional.ToNullable(enabledProtocols), Optional.ToNullable(rootSquash), version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), Optional.ToNullable(accessTier), Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Optional.ToNullable(shareUsageBytes), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToList(signedIdentifiers), Optional.ToNullable(snapshotTime), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new FileShareData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), metadata ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(shareQuota), Optional.ToNullable(enabledProtocols), Optional.ToNullable(rootSquash), version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), Optional.ToNullable(accessTier), Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Optional.ToNullable(shareUsageBytes), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), signedIdentifiers ?? new ChangeTrackingList<StorageSignedIdentifier>(), Optional.ToNullable(snapshotTime), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileShareData>.Write(ModelReaderWriterOptions options)

@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IList<string>> prefixMatch = default;
-            Optional<IList<string>> excludePrefix = default;
-            Optional<IList<string>> blobTypes = default;
+            IList<string> prefixMatch = default;
+            IList<string> excludePrefix = default;
+            IList<string> blobTypes = default;
             Optional<bool> includeBlobVersions = default;
             Optional<bool> includeSnapshots = default;
             Optional<bool> includeDeleted = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobInventoryPolicyFilter(Optional.ToList(prefixMatch), Optional.ToList(excludePrefix), Optional.ToList(blobTypes), Optional.ToNullable(includeBlobVersions), Optional.ToNullable(includeSnapshots), Optional.ToNullable(includeDeleted), serializedAdditionalRawData);
+            return new BlobInventoryPolicyFilter(prefixMatch ?? new ChangeTrackingList<string>(), excludePrefix ?? new ChangeTrackingList<string>(), blobTypes ?? new ChangeTrackingList<string>(), Optional.ToNullable(includeBlobVersions), Optional.ToNullable(includeSnapshots), Optional.ToNullable(includeDeleted), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobInventoryPolicyFilter>.Write(ModelReaderWriterOptions options)

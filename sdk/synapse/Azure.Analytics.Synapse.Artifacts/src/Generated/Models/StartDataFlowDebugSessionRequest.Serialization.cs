@@ -85,9 +85,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<string> sessionId = default;
             Optional<DataFlowResource> dataFlow = default;
-            Optional<IList<DataFlowResource>> dataFlows = default;
-            Optional<IList<DatasetResource>> datasets = default;
-            Optional<IList<LinkedServiceResource>> linkedServices = default;
+            IList<DataFlowResource> dataFlows = default;
+            IList<DatasetResource> datasets = default;
+            IList<LinkedServiceResource> linkedServices = default;
             Optional<object> staging = default;
             Optional<object> debugSettings = default;
             Optional<bool> incrementalDebug = default;
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new StartDataFlowDebugSessionRequest(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, Optional.ToNullable(incrementalDebug));
+            return new StartDataFlowDebugSessionRequest(sessionId.Value, dataFlow.Value, dataFlows ?? new ChangeTrackingList<DataFlowResource>(), datasets ?? new ChangeTrackingList<DatasetResource>(), linkedServices ?? new ChangeTrackingList<LinkedServiceResource>(), staging.Value, debugSettings.Value, Optional.ToNullable(incrementalDebug));
         }
 
         internal partial class StartDataFlowDebugSessionRequestConverter : JsonConverter<StartDataFlowDebugSessionRequest>

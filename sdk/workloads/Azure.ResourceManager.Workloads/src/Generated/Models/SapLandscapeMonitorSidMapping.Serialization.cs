@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IList<string>> topSid = default;
+            IList<string> topSid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLandscapeMonitorSidMapping(name.Value, Optional.ToList(topSid), serializedAdditionalRawData);
+            return new SapLandscapeMonitorSidMapping(name.Value, topSid ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapLandscapeMonitorSidMapping>.Write(ModelReaderWriterOptions options)

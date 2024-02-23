@@ -69,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Models
             double confidenceScore = default;
             Optional<HealthcareEntityAssertion> assertion = default;
             Optional<string> name = default;
-            Optional<IList<EntityDataSource>> links = default;
+            IList<EntityDataSource> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -131,7 +131,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links));
+            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, links ?? new ChangeTrackingList<EntityDataSource>());
         }
     }
 }

@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.Storage
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<StoragePermissionScope>> permissionScopes = default;
+            IList<StoragePermissionScope> permissionScopes = default;
             Optional<string> homeDirectory = default;
-            Optional<IList<StorageSshPublicKey>> sshAuthorizedKeys = default;
+            IList<StorageSshPublicKey> sshAuthorizedKeys = default;
             Optional<string> sid = default;
             Optional<bool> hasSharedKey = default;
             Optional<bool> hasSshKey = default;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountLocalUserData(id, name, type, systemData.Value, Optional.ToList(permissionScopes), homeDirectory.Value, Optional.ToList(sshAuthorizedKeys), sid.Value, Optional.ToNullable(hasSharedKey), Optional.ToNullable(hasSshKey), Optional.ToNullable(hasSshPassword), serializedAdditionalRawData);
+            return new StorageAccountLocalUserData(id, name, type, systemData.Value, permissionScopes ?? new ChangeTrackingList<StoragePermissionScope>(), homeDirectory.Value, sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(), sid.Value, Optional.ToNullable(hasSharedKey), Optional.ToNullable(hasSshKey), Optional.ToNullable(hasSshPassword), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountLocalUserData>.Write(ModelReaderWriterOptions options)

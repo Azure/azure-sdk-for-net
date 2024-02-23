@@ -19,7 +19,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IReadOnlyList<TimeSeriesInsightsEventProperty>> properties = default;
+            IReadOnlyList<TimeSeriesInsightsEventProperty> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -37,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new EventSchema(Optional.ToList(properties));
+            return new EventSchema(properties ?? new ChangeTrackingList<TimeSeriesInsightsEventProperty>());
         }
     }
 }

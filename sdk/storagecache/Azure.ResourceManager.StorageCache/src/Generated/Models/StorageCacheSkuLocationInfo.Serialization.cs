@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
+            IReadOnlyList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), serializedAdditionalRawData);
+            return new StorageCacheSkuLocationInfo(Optional.ToNullable(location), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheSkuLocationInfo>.Write(ModelReaderWriterOptions options)
