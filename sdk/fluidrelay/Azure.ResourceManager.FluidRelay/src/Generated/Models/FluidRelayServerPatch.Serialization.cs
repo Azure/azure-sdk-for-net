@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             Optional<EncryptionProperties> encryption = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayServerPatch(Optional.ToDictionary(tags), identity, Optional.ToNullable(location), encryption.Value, serializedAdditionalRawData);
+            return new FluidRelayServerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, Optional.ToNullable(location), encryption.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayServerPatch>.Write(ModelReaderWriterOptions options)

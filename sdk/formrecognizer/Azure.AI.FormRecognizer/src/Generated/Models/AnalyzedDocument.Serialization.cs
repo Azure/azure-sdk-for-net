@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             string docType = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyDictionary<string, DocumentField>> fields = default;
+            IReadOnlyDictionary<string, DocumentField> fields = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzedDocument(docType, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, Optional.ToDictionary(fields), confidence);
+            return new AnalyzedDocument(docType, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, fields ?? new ChangeTrackingDictionary<string, DocumentField>(), confidence);
         }
     }
 }

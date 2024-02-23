@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServicePatch(Optional.ToDictionary(tags), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new HealthcareApisServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServicePatch>.Write(ModelReaderWriterOptions options)

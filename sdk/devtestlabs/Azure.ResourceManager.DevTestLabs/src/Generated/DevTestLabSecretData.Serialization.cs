@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabSecretData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, value.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabSecretData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, value.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabSecretData>.Write(ModelReaderWriterOptions options)

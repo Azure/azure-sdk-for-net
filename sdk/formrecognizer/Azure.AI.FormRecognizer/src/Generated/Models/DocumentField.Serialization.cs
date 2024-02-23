@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<DocumentSignatureType> valueSignature = default;
             Optional<string> valueCountryRegion = default;
             IReadOnlyList<DocumentField> valueArray = default;
-            Optional<IReadOnlyDictionary<string, DocumentField>> valueObject = default;
+            IReadOnlyDictionary<string, DocumentField> valueObject = default;
             Optional<CurrencyValue> valueCurrency = default;
             Optional<AddressValue> valueAddress = default;
             Optional<bool> valueBoolean = default;
@@ -213,7 +213,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, valueArray ?? new ChangeTrackingList<DocumentField>(), Optional.ToDictionary(valueObject), Optional.ToNullable(valueCurrency), valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans ?? new ChangeTrackingList<DocumentSpan>(), Optional.ToNullable(confidence));
+            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, valueArray ?? new ChangeTrackingList<DocumentField>(), valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(), Optional.ToNullable(valueCurrency), valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans ?? new ChangeTrackingList<DocumentSpan>(), Optional.ToNullable(confidence));
         }
     }
 }

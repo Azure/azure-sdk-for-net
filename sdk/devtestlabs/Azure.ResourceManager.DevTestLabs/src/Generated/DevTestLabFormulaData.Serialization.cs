@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabFormulaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, author.Value, osType.Value, Optional.ToNullable(creationDate), formulaContent.Value, vm.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabFormulaData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, author.Value, osType.Value, Optional.ToNullable(creationDate), formulaContent.Value, vm.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabFormulaData>.Write(ModelReaderWriterOptions options)

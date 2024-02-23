@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<DevCenterScheduledType> type = default;
             Optional<DevCenterScheduledFrequency> frequency = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterSchedulePatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, Optional.ToNullable(type), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state));
+            return new DevCenterSchedulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), serializedAdditionalRawData, Optional.ToNullable(type), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state));
         }
 
         BinaryData IPersistableModel<DevCenterSchedulePatch>.Write(ModelReaderWriterOptions options)

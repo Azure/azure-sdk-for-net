@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.FluidRelay
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.FluidRelay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku), serializedAdditionalRawData);
+            return new FluidRelayServerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options)
