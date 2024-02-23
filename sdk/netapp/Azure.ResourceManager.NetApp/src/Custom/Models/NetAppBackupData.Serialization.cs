@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -11,7 +12,7 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppBackupData : IUtf8JsonSerializable
+    public partial class NetAppBackupData : IUtf8JsonSerializable, IJsonModel<NetAppBackupData>
     {
         //void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         //{
