@@ -1,8 +1,10 @@
 # Release History
-## 1.0.0-beta.4 (Unreleased)
+
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Cluster Pool
     - Enable create cluster pool with user network profile.
     - Enable get cluster pool available upgrade versions.
@@ -13,12 +15,6 @@
     - Enable check if the cluster name is available.
     - Enable upgrade hot fix for cluster.
     - Enable upgrade node os for cluster.
-
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
