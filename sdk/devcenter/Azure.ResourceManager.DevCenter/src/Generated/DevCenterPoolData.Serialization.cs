@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<LocalAdminStatus> localAdministrator = default;
             Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
             Optional<DevCenterHealthStatus> healthStatus = default;
-            Optional<IReadOnlyList<DevCenterHealthStatusDetail>> healthStatusDetails = default;
+            IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails = default;
             Optional<DevCenterProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, Optional.ToNullable(healthStatus), Optional.ToList(healthStatusDetails), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DevCenterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, Optional.ToNullable(healthStatus), healthStatusDetails ?? new ChangeTrackingList<DevCenterHealthStatusDetail>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterPoolData>.Write(ModelReaderWriterOptions options)

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<IList<string>> appliedScopes = default;
+            IList<string> appliedScopes = default;
             Optional<AppliedScopeProperties> appliedScopeProperties = default;
             Optional<InstanceFlexibility> instanceFlexibility = default;
             Optional<string> name = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationDetailPatch(Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), appliedScopeProperties.Value, Optional.ToNullable(instanceFlexibility), name.Value, Optional.ToNullable(renew), renewProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationDetailPatch(Optional.ToNullable(appliedScopeType), appliedScopes ?? new ChangeTrackingList<string>(), appliedScopeProperties.Value, Optional.ToNullable(instanceFlexibility), name.Value, Optional.ToNullable(renew), renewProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationDetailPatch>.Write(ModelReaderWriterOptions options)

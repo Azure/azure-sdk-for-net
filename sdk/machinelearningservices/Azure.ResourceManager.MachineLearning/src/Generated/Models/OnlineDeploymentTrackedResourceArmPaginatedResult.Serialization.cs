@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningOnlineDeploymentData>> value = default;
+            IReadOnlyList<MachineLearningOnlineDeploymentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnlineDeploymentTrackedResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new OnlineDeploymentTrackedResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningOnlineDeploymentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OnlineDeploymentTrackedResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

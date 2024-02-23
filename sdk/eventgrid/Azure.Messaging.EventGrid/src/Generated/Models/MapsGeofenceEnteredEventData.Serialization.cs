@@ -22,9 +22,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> expiredGeofenceGeometryId = default;
-            Optional<IReadOnlyList<MapsGeofenceGeometry>> geometries = default;
-            Optional<IReadOnlyList<string>> invalidPeriodGeofenceGeometryId = default;
+            IReadOnlyList<string> expiredGeofenceGeometryId = default;
+            IReadOnlyList<MapsGeofenceGeometry> geometries = default;
+            IReadOnlyList<string> invalidPeriodGeofenceGeometryId = default;
             Optional<bool> isEventPublished = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MapsGeofenceEnteredEventData(Optional.ToList(expiredGeofenceGeometryId), Optional.ToList(geometries), Optional.ToList(invalidPeriodGeofenceGeometryId), Optional.ToNullable(isEventPublished));
+            return new MapsGeofenceEnteredEventData(expiredGeofenceGeometryId ?? new ChangeTrackingList<string>(), geometries ?? new ChangeTrackingList<MapsGeofenceGeometry>(), invalidPeriodGeofenceGeometryId ?? new ChangeTrackingList<string>(), Optional.ToNullable(isEventPublished));
         }
 
         internal partial class MapsGeofenceEnteredEventDataConverter : JsonConverter<MapsGeofenceEnteredEventData>

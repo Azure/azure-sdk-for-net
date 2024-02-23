@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Peering
             Optional<PeeringPrefixValidationState> prefixValidationState = default;
             Optional<PeeringLearnedType> learnedType = default;
             Optional<string> errorMessage = default;
-            Optional<IReadOnlyList<PeeringServicePrefixEvent>> events = default;
+            IReadOnlyList<PeeringServicePrefixEvent> events = default;
             Optional<string> peeringServicePrefixKey = default;
             Optional<PeeringProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServicePrefixData(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(prefixValidationState), Optional.ToNullable(learnedType), errorMessage.Value, Optional.ToList(events), peeringServicePrefixKey.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PeeringServicePrefixData(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(prefixValidationState), Optional.ToNullable(learnedType), errorMessage.Value, events ?? new ChangeTrackingList<PeeringServicePrefixEvent>(), peeringServicePrefixKey.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServicePrefixData>.Write(ModelReaderWriterOptions options)

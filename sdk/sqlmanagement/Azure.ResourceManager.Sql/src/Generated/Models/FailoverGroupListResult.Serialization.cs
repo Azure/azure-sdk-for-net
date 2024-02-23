@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FailoverGroupData>> value = default;
+            IReadOnlyList<FailoverGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FailoverGroupListResult(value ?? new ChangeTrackingList<FailoverGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupListResult>.Write(ModelReaderWriterOptions options)

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<MetricCriteria>> allOf = default;
+            IList<MetricCriteria> allOf = default;
             MonitorOdataType odataType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MetricAlertSingleResourceMultipleMetricCriteria(odataType, additionalProperties, Optional.ToList(allOf));
+            return new MetricAlertSingleResourceMultipleMetricCriteria(odataType, additionalProperties, allOf ?? new ChangeTrackingList<MetricCriteria>());
         }
 
         BinaryData IPersistableModel<MetricAlertSingleResourceMultipleMetricCriteria>.Write(ModelReaderWriterOptions options)

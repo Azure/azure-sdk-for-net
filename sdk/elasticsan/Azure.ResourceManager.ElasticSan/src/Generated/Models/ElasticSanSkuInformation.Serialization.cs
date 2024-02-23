@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanSkuName name = default;
             Optional<ElasticSanSkuTier> tier = default;
             Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<ElasticSanSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<ElasticSanSkuCapability>> capabilities = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<ElasticSanSkuLocationInfo> locationInfo = default;
+            IReadOnlyList<ElasticSanSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ElasticSanSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, locations ?? new ChangeTrackingList<string>(), locationInfo ?? new ChangeTrackingList<ElasticSanSkuLocationInfo>(), capabilities ?? new ChangeTrackingList<ElasticSanSkuCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanSkuInformation>.Write(ModelReaderWriterOptions options)

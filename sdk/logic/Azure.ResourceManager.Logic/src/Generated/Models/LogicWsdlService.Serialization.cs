@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             Optional<string> qualifiedName = default;
-            Optional<IReadOnlyList<string>> endpointQualifiedNames = default;
+            IReadOnlyList<string> endpointQualifiedNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWsdlService(qualifiedName.Value, Optional.ToList(endpointQualifiedNames), serializedAdditionalRawData);
+            return new LogicWsdlService(qualifiedName.Value, endpointQualifiedNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWsdlService>.Write(ModelReaderWriterOptions options)

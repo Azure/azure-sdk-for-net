@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             Optional<ContainerServiceFleetUpdateStatus> status = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<MemberUpdateStatus>> members = default;
+            IReadOnlyList<MemberUpdateStatus> members = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateGroupStatus(status.Value, name.Value, Optional.ToList(members), serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateGroupStatus(status.Value, name.Value, members ?? new ChangeTrackingList<MemberUpdateStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateGroupStatus>.Write(ModelReaderWriterOptions options)

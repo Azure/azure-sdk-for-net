@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<string>> scopes = default;
+            IList<string> scopes = default;
             Optional<AlertRuleAllOfCondition> condition = default;
             Optional<ActionList> actions = default;
             Optional<bool> enabled = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(scopes), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value, serializedAdditionalRawData);
+            return new ActivityLogAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, scopes ?? new ChangeTrackingList<string>(), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options)

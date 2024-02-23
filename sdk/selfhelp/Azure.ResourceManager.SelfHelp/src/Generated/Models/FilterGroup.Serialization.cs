@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IList<SelfHelpFilter>> filter = default;
+            IList<SelfHelpFilter> filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilterGroup(Optional.ToList(filter), serializedAdditionalRawData);
+            return new FilterGroup(filter ?? new ChangeTrackingList<SelfHelpFilter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilterGroup>.Write(ModelReaderWriterOptions options)

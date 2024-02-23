@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingPath>> streamingPaths = default;
-            Optional<IReadOnlyList<string>> downloadPaths = default;
+            IReadOnlyList<StreamingPath> streamingPaths = default;
+            IReadOnlyList<string> downloadPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPathsResult(Optional.ToList(streamingPaths), Optional.ToList(downloadPaths), serializedAdditionalRawData);
+            return new StreamingPathsResult(streamingPaths ?? new ChangeTrackingList<StreamingPath>(), downloadPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPathsResult>.Write(ModelReaderWriterOptions options)

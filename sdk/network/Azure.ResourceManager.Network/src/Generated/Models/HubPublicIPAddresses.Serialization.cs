@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<AzureFirewallPublicIPAddress>> addresses = default;
+            IList<AzureFirewallPublicIPAddress> addresses = default;
             Optional<int> count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubPublicIPAddresses(Optional.ToList(addresses), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new HubPublicIPAddresses(addresses ?? new ChangeTrackingList<AzureFirewallPublicIPAddress>(), Optional.ToNullable(count), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubPublicIPAddresses>.Write(ModelReaderWriterOptions options)

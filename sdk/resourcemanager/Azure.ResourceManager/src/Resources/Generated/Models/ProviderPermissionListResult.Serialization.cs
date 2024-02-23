@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProviderPermission>> value = default;
+            IReadOnlyList<ProviderPermission> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderPermissionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProviderPermissionListResult(value ?? new ChangeTrackingList<ProviderPermission>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderPermissionListResult>.Write(ModelReaderWriterOptions options)

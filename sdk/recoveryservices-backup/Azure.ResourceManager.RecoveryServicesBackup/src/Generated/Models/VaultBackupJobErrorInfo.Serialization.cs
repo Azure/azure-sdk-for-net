@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<int> errorCode = default;
             Optional<string> errorString = default;
-            Optional<IList<string>> recommendations = default;
+            IList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultBackupJobErrorInfo(Optional.ToNullable(errorCode), errorString.Value, Optional.ToList(recommendations), serializedAdditionalRawData);
+            return new VaultBackupJobErrorInfo(Optional.ToNullable(errorCode), errorString.Value, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultBackupJobErrorInfo>.Write(ModelReaderWriterOptions options)

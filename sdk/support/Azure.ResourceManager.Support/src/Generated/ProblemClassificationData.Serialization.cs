@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Support
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<SecondaryConsentEnabled>> secondaryConsentEnabled = default;
+            IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProblemClassificationData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(secondaryConsentEnabled), serializedAdditionalRawData);
+            return new ProblemClassificationData(id, name, type, systemData.Value, displayName.Value, secondaryConsentEnabled ?? new ChangeTrackingList<SecondaryConsentEnabled>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProblemClassificationData>.Write(ModelReaderWriterOptions options)

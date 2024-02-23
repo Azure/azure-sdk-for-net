@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
             Optional<ResourceIdentifier> targetNetworkId = default;
             Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<IList<VMwareCbtNicContent>> vmNics = default;
-            Optional<IList<VMwareCbtUpdateDiskContent>> vmDisks = default;
+            IList<VMwareCbtNicContent> vmNics = default;
+            IList<VMwareCbtUpdateDiskContent> vmDisks = default;
             Optional<SiteRecoveryLicenseType> licenseType = default;
             Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
             Optional<string> performAutoResync = default;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtUpdateMigrationItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToList(vmDisks), Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), performAutoResync.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(targetDiskTags), Optional.ToDictionary(targetNicTags));
+            return new VMwareCbtUpdateMigrationItemContent(instanceType, serializedAdditionalRawData, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(), vmDisks ?? new ChangeTrackingList<VMwareCbtUpdateDiskContent>(), Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), performAutoResync.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(targetDiskTags), Optional.ToDictionary(targetNicTags));
         }
 
         BinaryData IPersistableModel<VMwareCbtUpdateMigrationItemContent>.Write(ModelReaderWriterOptions options)

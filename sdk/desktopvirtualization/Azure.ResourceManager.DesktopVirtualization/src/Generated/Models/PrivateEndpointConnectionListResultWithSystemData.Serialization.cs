@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData>> value = default;
+            IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionListResultWithSystemData(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionListResultWithSystemData(value ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnectionDataData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionListResultWithSystemData>.Write(ModelReaderWriterOptions options)

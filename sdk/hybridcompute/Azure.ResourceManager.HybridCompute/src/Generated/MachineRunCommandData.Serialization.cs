@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.HybridCompute
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<MachineRunCommandScriptSource> source = default;
-            Optional<IList<RunCommandInputParameter>> parameters = default;
-            Optional<IList<RunCommandInputParameter>> protectedParameters = default;
+            IList<RunCommandInputParameter> parameters = default;
+            IList<RunCommandInputParameter> protectedParameters = default;
             Optional<bool> asyncExecution = default;
             Optional<string> runAsUser = default;
             Optional<string> runAsPassword = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
+            return new MachineRunCommandData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, parameters ?? new ChangeTrackingList<RunCommandInputParameter>(), protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandData>.Write(ModelReaderWriterOptions options)

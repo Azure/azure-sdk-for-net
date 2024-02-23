@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<LogicalNetworkPropertiesDhcpOptions> dhcpOptions = default;
-            Optional<IList<Subnet>> subnets = default;
+            IList<Subnet> subnets = default;
             Optional<ProvisioningStateEnum> provisioningState = default;
             Optional<string> vmSwitchName = default;
             Optional<LogicalNetworkStatus> status = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicalNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, dhcpOptions.Value, Optional.ToList(subnets), Optional.ToNullable(provisioningState), vmSwitchName.Value, status.Value, serializedAdditionalRawData);
+            return new LogicalNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, dhcpOptions.Value, subnets ?? new ChangeTrackingList<Subnet>(), Optional.ToNullable(provisioningState), vmSwitchName.Value, status.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicalNetworkData>.Write(ModelReaderWriterOptions options)

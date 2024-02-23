@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<IDictionary<string, string>> customHeaders = default;
             Optional<ContainerRegistryWebhookStatus> status = default;
             Optional<string> scope = default;
-            Optional<IList<ContainerRegistryWebhookAction>> actions = default;
+            IList<ContainerRegistryWebhookAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookPatch(Optional.ToDictionary(tags), serviceUri.Value, Optional.ToDictionary(customHeaders), Optional.ToNullable(status), scope.Value, Optional.ToList(actions), serializedAdditionalRawData);
+            return new ContainerRegistryWebhookPatch(Optional.ToDictionary(tags), serviceUri.Value, Optional.ToDictionary(customHeaders), Optional.ToNullable(status), scope.Value, actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookPatch>.Write(ModelReaderWriterOptions options)

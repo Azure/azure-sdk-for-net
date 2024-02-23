@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HealthcareApis
             Optional<DicomServiceAuthenticationConfiguration> authenticationConfiguration = default;
             Optional<DicomServiceCorsConfiguration> corsConfiguration = default;
             Optional<Uri> serviceUrl = default;
-            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             Optional<FhirServiceEventState> eventState = default;
             Optional<Encryption> encryption = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DicomServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), authenticationConfiguration.Value, corsConfiguration.Value, serviceUrl.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), encryption.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DicomServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), authenticationConfiguration.Value, corsConfiguration.Value, serviceUrl.Value, privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), encryption.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DicomServiceData>.Write(ModelReaderWriterOptions options)

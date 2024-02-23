@@ -219,8 +219,8 @@ namespace Azure.ResourceManager.Resources
             ArmApplicationLockLevel lockLevel = default;
             Optional<string> displayName = default;
             Optional<bool> isEnabled = default;
-            Optional<IList<ArmApplicationAuthorization>> authorizations = default;
-            Optional<IList<ArmApplicationDefinitionArtifact>> artifacts = default;
+            IList<ArmApplicationAuthorization> authorizations = default;
+            IList<ArmApplicationDefinitionArtifact> artifacts = default;
             Optional<string> description = default;
             Optional<Uri> packageFileUri = default;
             Optional<BinaryData> mainTemplate = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Resources
             Optional<ArmApplicationPackageLockingPolicy> lockingPolicy = default;
             Optional<ArmApplicationDeploymentPolicy> deploymentPolicy = default;
             Optional<ArmApplicationManagementPolicy> managementPolicy = default;
-            Optional<IList<ArmApplicationPolicy>> policies = default;
+            IList<ArmApplicationPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, serializedAdditionalRawData, lockLevel, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToList(authorizations), Optional.ToList(artifacts), description.Value, packageFileUri.Value, mainTemplate.Value, createUiDefinition.Value, notificationPolicy.Value, lockingPolicy.Value, deploymentPolicy.Value, managementPolicy.Value, Optional.ToList(policies));
+            return new ArmApplicationDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, serializedAdditionalRawData, lockLevel, displayName.Value, Optional.ToNullable(isEnabled), authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(), artifacts ?? new ChangeTrackingList<ArmApplicationDefinitionArtifact>(), description.Value, packageFileUri.Value, mainTemplate.Value, createUiDefinition.Value, notificationPolicy.Value, lockingPolicy.Value, deploymentPolicy.Value, managementPolicy.Value, policies ?? new ChangeTrackingList<ArmApplicationPolicy>());
         }
 
         BinaryData IPersistableModel<ArmApplicationDefinitionData>.Write(ModelReaderWriterOptions options)

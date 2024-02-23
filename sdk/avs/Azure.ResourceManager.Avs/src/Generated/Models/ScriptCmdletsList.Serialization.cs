@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScriptCmdletData>> value = default;
+            IReadOnlyList<ScriptCmdletData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptCmdletsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScriptCmdletsList(value ?? new ChangeTrackingList<ScriptCmdletData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptCmdletsList>.Write(ModelReaderWriterOptions options)

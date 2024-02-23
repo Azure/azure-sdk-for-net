@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             string action = default;
             IList<ThrottlingMetric> metrics = default;
-            Optional<IList<string>> requiredFeatures = default;
+            IList<string> requiredFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThrottlingRule(action, metrics, Optional.ToList(requiredFeatures), serializedAdditionalRawData);
+            return new ThrottlingRule(action, metrics, requiredFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThrottlingRule>.Write(ModelReaderWriterOptions options)

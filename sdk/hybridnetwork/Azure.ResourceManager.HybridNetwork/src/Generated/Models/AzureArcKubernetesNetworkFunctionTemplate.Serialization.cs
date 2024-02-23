@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IList<AzureArcKubernetesNetworkFunctionApplication>> networkFunctionApplications = default;
+            IList<AzureArcKubernetesNetworkFunctionApplication> networkFunctionApplications = default;
             ContainerizedNetworkFunctionNfviType nfviType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureArcKubernetesNetworkFunctionTemplate(nfviType, serializedAdditionalRawData, Optional.ToList(networkFunctionApplications));
+            return new AzureArcKubernetesNetworkFunctionTemplate(nfviType, serializedAdditionalRawData, networkFunctionApplications ?? new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>());
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesNetworkFunctionTemplate>.Write(ModelReaderWriterOptions options)

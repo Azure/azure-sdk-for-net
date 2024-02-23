@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> serviceUserPassword = default;
             Optional<string> searchBaseDistinguishedName = default;
             Optional<string> searchFilterTemplate = default;
-            Optional<IList<CassandraCertificate>> serverCertificates = default;
+            IList<CassandraCertificate> serverCertificates = default;
             Optional<int> connectionTimeoutInMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthenticationMethodLdapProperties(serverHostname.Value, Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, Optional.ToList(serverCertificates), Optional.ToNullable(connectionTimeoutInMs), serializedAdditionalRawData);
+            return new AuthenticationMethodLdapProperties(serverHostname.Value, Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, serverCertificates ?? new ChangeTrackingList<CassandraCertificate>(), Optional.ToNullable(connectionTimeoutInMs), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationMethodLdapProperties>.Write(ModelReaderWriterOptions options)

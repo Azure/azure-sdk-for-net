@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<ExpressRouteConnectionInformation>> infrastructureExpressRouteConnections = default;
-            Optional<IList<ExpressRouteConnectionInformation>> workloadExpressRouteConnections = default;
+            IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default;
+            IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricControllerPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(infrastructureExpressRouteConnections), Optional.ToList(workloadExpressRouteConnections));
+            return new NetworkFabricControllerPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>());
         }
 
         BinaryData IPersistableModel<NetworkFabricControllerPatch>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VirtualMachineScaleSetScaleInRule>> rules = default;
+            IList<VirtualMachineScaleSetScaleInRule> rules = default;
             Optional<bool> forceDeletion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScaleInPolicy(Optional.ToList(rules), Optional.ToNullable(forceDeletion), serializedAdditionalRawData);
+            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), Optional.ToNullable(forceDeletion), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScaleInPolicy>.Write(ModelReaderWriterOptions options)

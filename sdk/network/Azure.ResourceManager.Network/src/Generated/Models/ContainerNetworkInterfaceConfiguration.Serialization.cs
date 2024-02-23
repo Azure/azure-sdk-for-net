@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<NetworkIPConfigurationProfile>> ipConfigurations = default;
-            Optional<IList<WritableSubResource>> containerNetworkInterfaces = default;
+            IList<NetworkIPConfigurationProfile> ipConfigurations = default;
+            IList<WritableSubResource> containerNetworkInterfaces = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterfaceConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(ipConfigurations), Optional.ToList(containerNetworkInterfaces), Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterfaceConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), ipConfigurations ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(), containerNetworkInterfaces ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterfaceConfiguration>.Write(ModelReaderWriterOptions options)

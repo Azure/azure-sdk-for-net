@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BigDataPoolResourceInfo>> value = default;
+            IReadOnlyList<BigDataPoolResourceInfo> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new BigDataPoolResourceInfoListResult(nextLink.Value, Optional.ToList(value));
+            return new BigDataPoolResourceInfoListResult(nextLink.Value, value ?? new ChangeTrackingList<BigDataPoolResourceInfo>());
         }
 
         internal partial class BigDataPoolResourceInfoListResultConverter : JsonConverter<BigDataPoolResourceInfoListResult>

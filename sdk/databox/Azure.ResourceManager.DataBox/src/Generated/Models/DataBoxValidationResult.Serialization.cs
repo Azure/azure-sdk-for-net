@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             Optional<OverallValidationStatus> status = default;
-            Optional<IReadOnlyList<DataBoxValidationInputResult>> individualResponseDetails = default;
+            IReadOnlyList<DataBoxValidationInputResult> individualResponseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxValidationResult(Optional.ToNullable(status), Optional.ToList(individualResponseDetails), serializedAdditionalRawData);
+            return new DataBoxValidationResult(Optional.ToNullable(status), individualResponseDetails ?? new ChangeTrackingList<DataBoxValidationInputResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxValidationResult>.Write(ModelReaderWriterOptions options)

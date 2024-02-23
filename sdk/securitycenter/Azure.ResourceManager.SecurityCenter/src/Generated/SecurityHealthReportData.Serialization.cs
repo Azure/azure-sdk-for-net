@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<EnvironmentDetails> environmentDetails = default;
             Optional<HealthDataClassification> healthDataClassification = default;
             Optional<HealthReportStatus> status = default;
-            Optional<IList<string>> affectedDefendersPlans = default;
-            Optional<IList<string>> affectedDefendersSubPlans = default;
+            IList<string> affectedDefendersPlans = default;
+            IList<string> affectedDefendersSubPlans = default;
             Optional<IReadOnlyDictionary<string, string>> reportAdditionalData = default;
-            Optional<IList<SecurityHealthReportIssue>> issues = default;
+            IList<SecurityHealthReportIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityHealthReportData(id, name, type, systemData.Value, resourceDetails.Value, environmentDetails.Value, healthDataClassification.Value, status.Value, Optional.ToList(affectedDefendersPlans), Optional.ToList(affectedDefendersSubPlans), Optional.ToDictionary(reportAdditionalData), Optional.ToList(issues), serializedAdditionalRawData);
+            return new SecurityHealthReportData(id, name, type, systemData.Value, resourceDetails.Value, environmentDetails.Value, healthDataClassification.Value, status.Value, affectedDefendersPlans ?? new ChangeTrackingList<string>(), affectedDefendersSubPlans ?? new ChangeTrackingList<string>(), Optional.ToDictionary(reportAdditionalData), issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options)

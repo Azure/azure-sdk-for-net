@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             Optional<string> localizedValue = default;
-            Optional<IReadOnlyList<string>> skuInstances = default;
+            IReadOnlyList<string> skuInstances = default;
             Optional<string> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesUsageName(localizedValue.Value, Optional.ToList(skuInstances), value.Value, serializedAdditionalRawData);
+            return new LabServicesUsageName(localizedValue.Value, skuInstances ?? new ChangeTrackingList<string>(), value.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesUsageName>.Write(ModelReaderWriterOptions options)

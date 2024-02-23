@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SyncFullSchemaTableColumn>> columns = default;
+            IReadOnlyList<SyncFullSchemaTableColumn> columns = default;
             Optional<string> errorId = default;
             Optional<bool> hasError = default;
             Optional<string> name = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncFullSchemaTable(Optional.ToList(columns), errorId.Value, Optional.ToNullable(hasError), name.Value, quotedName.Value, serializedAdditionalRawData);
+            return new SyncFullSchemaTable(columns ?? new ChangeTrackingList<SyncFullSchemaTableColumn>(), errorId.Value, Optional.ToNullable(hasError), name.Value, quotedName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncFullSchemaTable>.Write(ModelReaderWriterOptions options)

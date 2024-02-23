@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> description = default;
             Optional<string> author = default;
             Optional<string> category = default;
-            Optional<IReadOnlyList<DetectorSupportTopic>> supportTopicList = default;
-            Optional<IReadOnlyList<string>> analysisType = default;
+            IReadOnlyList<DetectorSupportTopic> supportTopicList = default;
+            IReadOnlyList<string> analysisType = default;
             Optional<DetectorType> type = default;
             Optional<float> score = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorInfo(id.Value, name.Value, description.Value, author.Value, category.Value, Optional.ToList(supportTopicList), Optional.ToList(analysisType), Optional.ToNullable(type), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new DetectorInfo(id.Value, name.Value, description.Value, author.Value, category.Value, supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>(), analysisType ?? new ChangeTrackingList<string>(), Optional.ToNullable(type), Optional.ToNullable(score), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorInfo>.Write(ModelReaderWriterOptions options)

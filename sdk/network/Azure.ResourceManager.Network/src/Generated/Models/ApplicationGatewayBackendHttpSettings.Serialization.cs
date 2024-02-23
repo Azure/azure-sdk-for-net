@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ApplicationGatewayCookieBasedAffinity> cookieBasedAffinity = default;
             Optional<int> requestTimeout = default;
             Optional<WritableSubResource> probe = default;
-            Optional<IList<WritableSubResource>> authenticationCertificates = default;
-            Optional<IList<WritableSubResource>> trustedRootCertificates = default;
+            IList<WritableSubResource> authenticationCertificates = default;
+            IList<WritableSubResource> trustedRootCertificates = default;
             Optional<ApplicationGatewayConnectionDraining> connectionDraining = default;
             Optional<string> hostName = default;
             Optional<bool> pickHostNameFromBackendAddress = default;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe, Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe, authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>(), trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHttpSettings>.Write(ModelReaderWriterOptions options)

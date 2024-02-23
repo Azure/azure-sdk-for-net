@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Optional<AvailablePatchSummary> availablePatchSummary = default;
             Optional<LastPatchInstallationSummary> lastPatchInstallationSummary = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> configurationStatuses = default;
+            IReadOnlyList<InstanceViewStatus> configurationStatuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachinePatchStatus(availablePatchSummary.Value, lastPatchInstallationSummary.Value, Optional.ToList(configurationStatuses), serializedAdditionalRawData);
+            return new VirtualMachinePatchStatus(availablePatchSummary.Value, lastPatchInstallationSummary.Value, configurationStatuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachinePatchStatus>.Write(ModelReaderWriterOptions options)

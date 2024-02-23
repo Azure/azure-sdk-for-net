@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<AzureLocation>> skipRegions = default;
-            Optional<IList<AzureLocation>> regions = default;
+            IList<AzureLocation> skipRegions = default;
+            IList<AzureLocation> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CanaryTrafficRegionRolloutConfiguration(Optional.ToList(skipRegions), Optional.ToList(regions), serializedAdditionalRawData);
+            return new CanaryTrafficRegionRolloutConfiguration(skipRegions ?? new ChangeTrackingList<AzureLocation>(), regions ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CanaryTrafficRegionRolloutConfiguration>.Write(ModelReaderWriterOptions options)

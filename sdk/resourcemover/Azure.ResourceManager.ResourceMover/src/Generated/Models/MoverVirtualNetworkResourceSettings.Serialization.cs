@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             Optional<IDictionary<string, string>> tags = default;
             Optional<bool?> enableDdosProtection = default;
-            Optional<IList<string>> addressSpace = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<IList<SubnetResourceSettings>> subnets = default;
+            IList<string> addressSpace = default;
+            IList<string> dnsServers = default;
+            IList<SubnetResourceSettings> subnets = default;
             string resourceType = default;
             Optional<string> targetResourceName = default;
             Optional<string> targetResourceGroupName = default;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
+            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), addressSpace ?? new ChangeTrackingList<string>(), dnsServers ?? new ChangeTrackingList<string>(), subnets ?? new ChangeTrackingList<SubnetResourceSettings>());
         }
 
         BinaryData IPersistableModel<MoverVirtualNetworkResourceSettings>.Write(ModelReaderWriterOptions options)

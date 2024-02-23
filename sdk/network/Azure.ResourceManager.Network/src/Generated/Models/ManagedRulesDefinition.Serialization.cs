@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<OwaspCrsExclusionEntry>> exclusions = default;
+            IList<OwaspCrsExclusionEntry> exclusions = default;
             IList<ManagedRuleSet> managedRuleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRulesDefinition(Optional.ToList(exclusions), managedRuleSets, serializedAdditionalRawData);
+            return new ManagedRulesDefinition(exclusions ?? new ChangeTrackingList<OwaspCrsExclusionEntry>(), managedRuleSets, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRulesDefinition>.Write(ModelReaderWriterOptions options)

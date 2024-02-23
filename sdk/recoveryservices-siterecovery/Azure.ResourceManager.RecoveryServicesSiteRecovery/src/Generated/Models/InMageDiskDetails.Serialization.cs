@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> diskSizeInMB = default;
             Optional<string> diskType = default;
             Optional<string> diskConfiguration = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskVolumeDetails>> volumeList = default;
+            IReadOnlyList<SiteRecoveryDiskVolumeDetails> volumeList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageDiskDetails(diskId.Value, diskName.Value, diskSizeInMB.Value, diskType.Value, diskConfiguration.Value, Optional.ToList(volumeList), serializedAdditionalRawData);
+            return new InMageDiskDetails(diskId.Value, diskName.Value, diskSizeInMB.Value, diskType.Value, diskConfiguration.Value, volumeList ?? new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageDiskDetails>.Write(ModelReaderWriterOptions options)

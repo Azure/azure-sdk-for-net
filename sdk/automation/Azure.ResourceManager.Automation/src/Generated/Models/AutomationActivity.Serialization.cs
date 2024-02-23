@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<string> definition = default;
-            Optional<IReadOnlyList<AutomationActivityParameterSet>> parameterSets = default;
-            Optional<IReadOnlyList<AutomationActivityOutputType>> outputTypes = default;
+            IReadOnlyList<AutomationActivityParameterSet> parameterSets = default;
+            IReadOnlyList<AutomationActivityOutputType> outputTypes = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> description = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivity(id.Value, name.Value, definition.Value, Optional.ToList(parameterSets), Optional.ToList(outputTypes), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationActivity(id.Value, name.Value, definition.Value, parameterSets ?? new ChangeTrackingList<AutomationActivityParameterSet>(), outputTypes ?? new ChangeTrackingList<AutomationActivityOutputType>(), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivity>.Write(ModelReaderWriterOptions options)

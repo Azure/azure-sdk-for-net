@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ServiceAccountUsage>> value = default;
+            IReadOnlyList<ServiceAccountUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountUsageListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ServiceAccountUsageListResult(nextLink.Value, value ?? new ChangeTrackingList<ServiceAccountUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountUsageListResult>.Write(ModelReaderWriterOptions options)

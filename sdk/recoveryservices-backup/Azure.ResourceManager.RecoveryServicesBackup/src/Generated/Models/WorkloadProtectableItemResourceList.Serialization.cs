@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkloadProtectableItemResource>> value = default;
+            IReadOnlyList<WorkloadProtectableItemResource> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadProtectableItemResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadProtectableItemResourceList(value ?? new ChangeTrackingList<WorkloadProtectableItemResource>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadProtectableItemResourceList>.Write(ModelReaderWriterOptions options)

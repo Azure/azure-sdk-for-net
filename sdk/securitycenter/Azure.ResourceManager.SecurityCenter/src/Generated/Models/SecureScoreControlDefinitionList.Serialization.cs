@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecureScoreControlDefinitionItem>> value = default;
+            IReadOnlyList<SecureScoreControlDefinitionItem> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreControlDefinitionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecureScoreControlDefinitionList(value ?? new ChangeTrackingList<SecureScoreControlDefinitionItem>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreControlDefinitionList>.Write(ModelReaderWriterOptions options)

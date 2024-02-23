@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             Optional<LabServicesSkuRestrictionType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
+            IReadOnlyList<string> values = default;
             Optional<LabServicesSkuRestrictionReasonCode> reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableLabServicesSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new AvailableLabServicesSkuRestrictions(Optional.ToNullable(type), values ?? new ChangeTrackingList<string>(), Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableLabServicesSkuRestrictions>.Write(ModelReaderWriterOptions options)

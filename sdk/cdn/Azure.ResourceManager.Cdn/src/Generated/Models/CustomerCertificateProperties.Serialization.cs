@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> subject = default;
             Optional<DateTimeOffset> expirationDate = default;
             Optional<string> certificateAuthority = default;
-            Optional<IList<string>> subjectAlternativeNames = default;
+            IList<string> subjectAlternativeNames = default;
             Optional<string> thumbprint = default;
             SecretType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerCertificateProperties(type, serializedAdditionalRawData, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
+            return new CustomerCertificateProperties(type, serializedAdditionalRawData, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, subjectAlternativeNames ?? new ChangeTrackingList<string>(), thumbprint.Value);
         }
 
         BinaryData IPersistableModel<CustomerCertificateProperties>.Write(ModelReaderWriterOptions options)

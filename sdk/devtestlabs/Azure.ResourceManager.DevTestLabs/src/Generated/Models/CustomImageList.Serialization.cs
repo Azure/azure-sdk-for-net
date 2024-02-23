@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabCustomImageData>> value = default;
+            IReadOnlyList<DevTestLabCustomImageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomImageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CustomImageList(value ?? new ChangeTrackingList<DevTestLabCustomImageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomImageList>.Write(ModelReaderWriterOptions options)

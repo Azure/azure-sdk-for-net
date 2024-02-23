@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<StatusType> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;
             Optional<string> agentVersion = default;
-            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            IReadOnlyList<ResponseError> errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestAgentInstallStatus(vmUuid.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), agentVersion.Value, Optional.ToList(errorDetails), serializedAdditionalRawData);
+            return new GuestAgentInstallStatus(vmUuid.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), agentVersion.Value, errorDetails ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestAgentInstallStatus>.Write(ModelReaderWriterOptions options)

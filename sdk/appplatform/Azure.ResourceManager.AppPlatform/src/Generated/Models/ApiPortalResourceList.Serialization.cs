@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformApiPortalData>> value = default;
+            IReadOnlyList<AppPlatformApiPortalData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiPortalResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApiPortalResourceList(value ?? new ChangeTrackingList<AppPlatformApiPortalData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiPortalResourceList>.Write(ModelReaderWriterOptions options)

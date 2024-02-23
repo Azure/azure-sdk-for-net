@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Communication.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<string>> linkedDomains = default;
+            IList<string> linkedDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunicationServiceResourcePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToList(linkedDomains));
+            return new CommunicationServiceResourcePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity, linkedDomains ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<CommunicationServiceResourcePatch>.Write(ModelReaderWriterOptions options)

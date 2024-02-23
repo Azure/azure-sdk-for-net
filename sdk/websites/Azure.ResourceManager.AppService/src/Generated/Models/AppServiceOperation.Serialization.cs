@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<AppServiceOperationStatus> status = default;
-            Optional<IReadOnlyList<ResponseError>> errors = default;
+            IReadOnlyList<ResponseError> errors = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> modifiedTime = default;
             Optional<DateTimeOffset> expirationTime = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceOperation(id.Value, name.Value, Optional.ToNullable(status), Optional.ToList(errors), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId), serializedAdditionalRawData);
+            return new AppServiceOperation(id.Value, name.Value, Optional.ToNullable(status), errors ?? new ChangeTrackingList<ResponseError>(), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceOperation>.Write(ModelReaderWriterOptions options)

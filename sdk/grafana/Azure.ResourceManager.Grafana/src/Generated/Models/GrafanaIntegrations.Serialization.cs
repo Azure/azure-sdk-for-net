@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<IList<MonitorWorkspaceIntegration>> azureMonitorWorkspaceIntegrations = default;
+            IList<MonitorWorkspaceIntegration> azureMonitorWorkspaceIntegrations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrafanaIntegrations(Optional.ToList(azureMonitorWorkspaceIntegrations), serializedAdditionalRawData);
+            return new GrafanaIntegrations(azureMonitorWorkspaceIntegrations ?? new ChangeTrackingList<MonitorWorkspaceIntegration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaIntegrations>.Write(ModelReaderWriterOptions options)

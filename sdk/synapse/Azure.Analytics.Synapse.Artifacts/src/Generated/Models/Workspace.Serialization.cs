@@ -134,7 +134,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<VirtualNetworkProfile> virtualNetworkProfile = default;
             Optional<IDictionary<string, string>> connectivityEndpoints = default;
             Optional<string> managedVirtualNetwork = default;
-            Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
+            IList<PrivateEndpointConnection> privateEndpointConnections = default;
             Optional<EncryptionDetails> encryption = default;
             Optional<Guid> workspaceUID = default;
             Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
@@ -342,7 +342,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value);
+            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnection>(), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value);
         }
 
         internal partial class WorkspaceConverter : JsonConverter<Workspace>

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExternalSecuritySolution>> value = default;
+            IReadOnlyList<ExternalSecuritySolution> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExternalSecuritySolutionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExternalSecuritySolutionList(value ?? new ChangeTrackingList<ExternalSecuritySolution>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExternalSecuritySolutionList>.Write(ModelReaderWriterOptions options)

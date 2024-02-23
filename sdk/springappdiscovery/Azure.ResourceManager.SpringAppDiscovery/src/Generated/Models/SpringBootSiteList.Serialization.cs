@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SpringBootSiteData>> value = default;
+            IReadOnlyList<SpringBootSiteData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SpringBootSiteList(value ?? new ChangeTrackingList<SpringBootSiteData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteList>.Write(ModelReaderWriterOptions options)

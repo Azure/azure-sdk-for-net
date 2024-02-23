@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> serviceEndpoint = default;
             Optional<ResourceIdentifier> serviceResourceId = default;
             Optional<DataReplicationHealthStatus> health = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             FabricModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationFabricProperties(Optional.ToNullable(provisioningState), serviceEndpoint.Value, serviceResourceId.Value, Optional.ToNullable(health), Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationFabricProperties(Optional.ToNullable(provisioningState), serviceEndpoint.Value, serviceResourceId.Value, Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(), customProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationFabricProperties>.Write(ModelReaderWriterOptions options)

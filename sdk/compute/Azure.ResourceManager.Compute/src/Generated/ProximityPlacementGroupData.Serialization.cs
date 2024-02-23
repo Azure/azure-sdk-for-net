@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachines = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachineScaleSets = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachineScaleSets = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets = default;
             Optional<InstanceViewStatus> colocationStatus = default;
             Optional<ProximityPlacementGroupPropertiesIntent> intent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value, serializedAdditionalRawData);
+            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(proximityPlacementGroupType), virtualMachines ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(), virtualMachineScaleSets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(), availabilitySets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(), colocationStatus.Value, intent.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options)

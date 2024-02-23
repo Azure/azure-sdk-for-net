@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IList<string>> tags = default;
+            IList<string> tags = default;
             Optional<LabConnectionProfile> defaultConnectionProfile = default;
             Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
             Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<AzureLocation>> allowedRegions = default;
+            IList<AzureLocation> allowedRegions = default;
             Optional<ResourceIdentifier> sharedGalleryId = default;
             Optional<LabPlanSupportInfo> supportInfo = default;
             Optional<Uri> linkedLmsInstance = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanPatch(Optional.ToList(tags), serializedAdditionalRawData, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value);
+            return new LabPlanPatch(tags ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, allowedRegions ?? new ChangeTrackingList<AzureLocation>(), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value);
         }
 
         BinaryData IPersistableModel<LabPlanPatch>.Write(ModelReaderWriterOptions options)

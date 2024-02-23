@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<ConsumptionTag>> tags = default;
+            IList<ConsumptionTag> tags = default;
             Optional<string> nextLink = default;
             Optional<string> previousLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionTagsResult(id, name, type, systemData.Value, Optional.ToList(tags), nextLink.Value, previousLink.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionTagsResult(id, name, type, systemData.Value, tags ?? new ChangeTrackingList<ConsumptionTag>(), nextLink.Value, previousLink.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionTagsResult>.Write(ModelReaderWriterOptions options)

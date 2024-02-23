@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingEndpointData>> value = default;
+            IReadOnlyList<StreamingEndpointData> value = default;
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointListResult(Optional.ToList(value), Optional.ToNullable(odataCount), odataNextLink.Value, serializedAdditionalRawData);
+            return new StreamingEndpointListResult(value ?? new ChangeTrackingList<StreamingEndpointData>(), Optional.ToNullable(odataCount), odataNextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointListResult>.Write(ModelReaderWriterOptions options)

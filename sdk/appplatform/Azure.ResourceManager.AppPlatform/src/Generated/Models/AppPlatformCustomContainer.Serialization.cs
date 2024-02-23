@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<string> server = default;
             Optional<string> containerImage = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
+            IList<string> command = default;
+            IList<string> args = default;
             Optional<AppPlatformImageRegistryCredential> imageRegistryCredential = default;
             Optional<string> languageFramework = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomContainer(server.Value, containerImage.Value, Optional.ToList(command), Optional.ToList(args), imageRegistryCredential.Value, languageFramework.Value, serializedAdditionalRawData);
+            return new AppPlatformCustomContainer(server.Value, containerImage.Value, command ?? new ChangeTrackingList<string>(), args ?? new ChangeTrackingList<string>(), imageRegistryCredential.Value, languageFramework.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomContainer>.Write(ModelReaderWriterOptions options)

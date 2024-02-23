@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<FailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
             Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<IList<ResourceIdentifier>> databases = default;
-            Optional<IList<PartnerServerInfo>> partnerServers = default;
+            IList<ResourceIdentifier> databases = default;
+            IList<PartnerServerInfo> partnerServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupPatch(Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToList(databases), Optional.ToList(partnerServers), serializedAdditionalRawData);
+            return new FailoverGroupPatch(Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, databases ?? new ChangeTrackingList<ResourceIdentifier>(), partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupPatch>.Write(ModelReaderWriterOptions options)

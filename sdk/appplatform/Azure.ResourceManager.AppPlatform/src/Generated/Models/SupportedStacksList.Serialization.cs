@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformSupportedStackData>> value = default;
+            IReadOnlyList<AppPlatformSupportedStackData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedStacksList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SupportedStacksList(value ?? new ChangeTrackingList<AppPlatformSupportedStackData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedStacksList>.Write(ModelReaderWriterOptions options)

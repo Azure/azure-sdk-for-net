@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Optional<FirewallPanoramaConfiguration> panoramaConfig = default;
             Optional<RulestackDetails> associatedRulestack = default;
             FirewallDnsSettings dnsSettings = default;
-            Optional<IList<FirewallFrontendSetting>> frontEndSettings = default;
+            IList<FirewallFrontendSetting> frontEndSettings = default;
             Optional<FirewallProvisioningState> provisioningState = default;
             FirewallBillingPlanInfo planData = default;
             PanFirewallMarketplaceDetails marketplaceDetails = default;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaloAltoNetworksFirewallData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(panETag), networkProfile, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings, Optional.ToList(frontEndSettings), Optional.ToNullable(provisioningState), planData, marketplaceDetails, serializedAdditionalRawData);
+            return new PaloAltoNetworksFirewallData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(panETag), networkProfile, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings, frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(), Optional.ToNullable(provisioningState), planData, marketplaceDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaloAltoNetworksFirewallData>.Write(ModelReaderWriterOptions options)

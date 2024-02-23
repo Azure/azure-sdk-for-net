@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<MabBackupJobTaskDetails>> tasksList = default;
+            IList<MabBackupJobTaskDetails> tasksList = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<string> dynamicErrorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), dynamicErrorMessage.Value, serializedAdditionalRawData);
+            return new MabBackupJobExtendedInfo(tasksList ?? new ChangeTrackingList<MabBackupJobTaskDetails>(), Optional.ToDictionary(propertyBag), dynamicErrorMessage.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabBackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

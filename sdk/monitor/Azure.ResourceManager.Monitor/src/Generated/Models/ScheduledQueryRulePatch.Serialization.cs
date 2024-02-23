@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> displayName = default;
             Optional<AlertSeverity> severity = default;
             Optional<bool> enabled = default;
-            Optional<IList<string>> scopes = default;
+            IList<string> scopes = default;
             Optional<TimeSpan> evaluationFrequency = default;
             Optional<TimeSpan> windowSize = default;
             Optional<TimeSpan> overrideQueryTimeRange = default;
-            Optional<IList<string>> targetResourceTypes = default;
+            IList<string> targetResourceTypes = default;
             Optional<ScheduledQueryRuleCriteria> criteria = default;
             Optional<TimeSpan> muteActionsDuration = default;
             Optional<ScheduledQueryRuleActions> actions = default;
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRulePatch(Optional.ToDictionary(tags), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), Optional.ToList(targetResourceTypes), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate), serializedAdditionalRawData);
+            return new ScheduledQueryRulePatch(Optional.ToDictionary(tags), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), scopes ?? new ChangeTrackingList<string>(), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), targetResourceTypes ?? new ChangeTrackingList<string>(), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRulePatch>.Write(ModelReaderWriterOptions options)

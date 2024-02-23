@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> connectionString = default;
             Optional<DataFactoryElement<string>> server = default;
             Optional<DataFactoryElement<string>> database = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Db2LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, server.Value, database.Value, Optional.ToNullable(authenticationType), username.Value, password, packageCollection.Value, certificateCommonName.Value, encryptedCredential.Value);
+            return new Db2LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString.Value, server.Value, database.Value, Optional.ToNullable(authenticationType), username.Value, password, packageCollection.Value, certificateCommonName.Value, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<Db2LinkedService>.Write(ModelReaderWriterOptions options)

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Relay.Models
             Optional<DateTimeOffset> updatedAt = default;
             Optional<string> serviceBusEndpoint = default;
             Optional<string> metricId = default;
-            Optional<IList<RelayPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayNamespacePatch(id, name, type, systemData.Value, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new RelayNamespacePatch(id, name, type, systemData.Value, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayNamespacePatch>.Write(ModelReaderWriterOptions options)

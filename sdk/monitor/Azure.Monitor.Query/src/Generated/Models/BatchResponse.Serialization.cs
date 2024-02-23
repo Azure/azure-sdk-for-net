@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BatchQueryResponse>> responses = default;
+            IReadOnlyList<BatchQueryResponse> responses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("responses"u8))
@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new BatchResponse(Optional.ToList(responses));
+            return new BatchResponse(responses ?? new ChangeTrackingList<BatchQueryResponse>());
         }
     }
 }

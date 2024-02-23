@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
             Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
             Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
+            IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
             Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
             Optional<DataCollectionEndpointMetadata> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, metricsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateLinkScopedResources), failoverConfiguration.Value, metadata.Value, serializedAdditionalRawData);
+            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, metricsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState), privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>(), failoverConfiguration.Value, metadata.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionEndpointData>.Write(ModelReaderWriterOptions options)

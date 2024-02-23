@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<string> resourceId = default;
-            Optional<IList<AssignmentReportResourceComplianceReason>> reasons = default;
+            IList<AssignmentReportResourceComplianceReason> reasons = default;
             Optional<BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentReportResourceInfo(Optional.ToNullable(complianceStatus), resourceId.Value, Optional.ToList(reasons), properties.Value, serializedAdditionalRawData);
+            return new AssignmentReportResourceInfo(Optional.ToNullable(complianceStatus), resourceId.Value, reasons ?? new ChangeTrackingList<AssignmentReportResourceComplianceReason>(), properties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentReportResourceInfo>.Write(ModelReaderWriterOptions options)

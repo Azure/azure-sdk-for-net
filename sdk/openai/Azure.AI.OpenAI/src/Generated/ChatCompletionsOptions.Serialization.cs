@@ -217,7 +217,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             IList<ChatRequestMessage> messages = default;
-            Optional<IList<FunctionDefinition>> functions = default;
+            IList<FunctionDefinition> functions = default;
             Optional<FunctionDefinition> functionCall = default;
             Optional<int> maxTokens = default;
             Optional<float> temperature = default;
@@ -225,18 +225,18 @@ namespace Azure.AI.OpenAI
             Optional<IDictionary<int, int>> logitBias = default;
             Optional<string> user = default;
             Optional<int> n = default;
-            Optional<IList<string>> stop = default;
+            IList<string> stop = default;
             Optional<float> presencePenalty = default;
             Optional<float> frequencyPenalty = default;
             Optional<bool> stream = default;
             Optional<string> model = default;
-            Optional<IList<AzureChatExtensionConfiguration>> dataSources = default;
+            IList<AzureChatExtensionConfiguration> dataSources = default;
             Optional<AzureChatEnhancementConfiguration> enhancements = default;
             Optional<long> seed = default;
             Optional<bool?> logprobs = default;
             Optional<int?> topLogprobs = default;
             Optional<ChatCompletionsResponseFormat> responseFormat = default;
-            Optional<IList<ChatCompletionsToolDefinition>> tools = default;
+            IList<ChatCompletionsToolDefinition> tools = default;
             Optional<BinaryData> toolChoice = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -457,7 +457,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatCompletionsOptions(messages, Optional.ToList(functions), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, Optional.ToList(dataSources), enhancements.Value, Optional.ToNullable(seed), Optional.ToNullable(logprobs), Optional.ToNullable(topLogprobs), responseFormat.Value, Optional.ToList(tools), toolChoice.Value, serializedAdditionalRawData);
+            return new ChatCompletionsOptions(messages, functions ?? new ChangeTrackingList<FunctionDefinition>(), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), stop ?? new ChangeTrackingList<string>(), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(), enhancements.Value, Optional.ToNullable(seed), Optional.ToNullable(logprobs), Optional.ToNullable(topLogprobs), responseFormat.Value, tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(), toolChoice.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatCompletionsOptions>.Write(ModelReaderWriterOptions options)

@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<AlertRuleLeafCondition>> anyOf = default;
+            IList<AlertRuleLeafCondition> anyOf = default;
             Optional<string> field = default;
             Optional<string> @equals = default;
-            Optional<IList<string>> containsAny = default;
+            IList<string> containsAny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), serializedAdditionalRawData, Optional.ToList(anyOf));
+            return new ActivityLogAlertAnyOfOrLeafCondition(field.Value, @equals.Value, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>());
         }
 
         BinaryData IPersistableModel<ActivityLogAlertAnyOfOrLeafCondition>.Write(ModelReaderWriterOptions options)

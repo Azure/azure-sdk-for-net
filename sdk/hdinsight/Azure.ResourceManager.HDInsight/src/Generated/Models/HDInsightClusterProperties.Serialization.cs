@@ -216,8 +216,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> clusterState = default;
             Optional<QuotaInfo> quotaInfo = default;
-            Optional<IList<ResponseError>> errors = default;
-            Optional<IList<ConnectivityEndpoint>> connectivityEndpoints = default;
+            IList<ResponseError> errors = default;
+            IList<ConnectivityEndpoint> connectivityEndpoints = default;
             Optional<HDInsightDiskEncryptionProperties> diskEncryptionProperties = default;
             Optional<EncryptionInTransitProperties> encryptionInTransitProperties = default;
             Optional<StorageProfile> storageProfile = default;
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<ExcludedServicesConfig> excludedServicesConfig = default;
             Optional<HDInsightClusterNetworkProperties> networkProperties = default;
             Optional<HDInsightComputeIsolationProperties> computeIsolationProperties = default;
-            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
-            Optional<IReadOnlyList<HDInsightPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
+            IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterProperties(clusterVersion.Value, clusterHdpVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterId.Value, clusterDefinition, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdDate), clusterState.Value, quotaInfo.Value, Optional.ToList(errors), Optional.ToList(connectivityEndpoints), diskEncryptionProperties.Value, encryptionInTransitProperties.Value, storageProfile.Value, minSupportedTlsVersion.Value, excludedServicesConfig.Value, networkProperties.Value, computeIsolationProperties.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new HDInsightClusterProperties(clusterVersion.Value, clusterHdpVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterId.Value, clusterDefinition, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdDate), clusterState.Value, quotaInfo.Value, errors ?? new ChangeTrackingList<ResponseError>(), connectivityEndpoints ?? new ChangeTrackingList<ConnectivityEndpoint>(), diskEncryptionProperties.Value, encryptionInTransitProperties.Value, storageProfile.Value, minSupportedTlsVersion.Value, excludedServicesConfig.Value, networkProperties.Value, computeIsolationProperties.Value, privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(), privateEndpointConnections ?? new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterProperties>.Write(ModelReaderWriterOptions options)

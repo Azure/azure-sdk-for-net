@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             Optional<StorageNetworkBypass> bypass = default;
-            Optional<IList<StorageAccountResourceAccessRule>> resourceAccessRules = default;
-            Optional<IList<StorageAccountVirtualNetworkRule>> virtualNetworkRules = default;
-            Optional<IList<StorageAccountIPRule>> ipRules = default;
+            IList<StorageAccountResourceAccessRule> resourceAccessRules = default;
+            IList<StorageAccountVirtualNetworkRule> virtualNetworkRules = default;
+            IList<StorageAccountIPRule> ipRules = default;
             StorageNetworkDefaultAction defaultAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToList(resourceAccessRules), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), defaultAction, serializedAdditionalRawData);
+            return new StorageAccountNetworkRuleSet(Optional.ToNullable(bypass), resourceAccessRules ?? new ChangeTrackingList<StorageAccountResourceAccessRule>(), virtualNetworkRules ?? new ChangeTrackingList<StorageAccountVirtualNetworkRule>(), ipRules ?? new ChangeTrackingList<StorageAccountIPRule>(), defaultAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountNetworkRuleSet>.Write(ModelReaderWriterOptions options)

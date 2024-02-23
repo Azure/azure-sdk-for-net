@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> accountName = default;
             Optional<DataAccountType> dataAccountType = default;
             Optional<string> accountConnectionString = default;
-            Optional<IReadOnlyList<ShareCredentialDetails>> shareCredentialDetails = default;
+            IReadOnlyList<ShareCredentialDetails> shareCredentialDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxAccountCredentialDetails(accountName.Value, Optional.ToNullable(dataAccountType), accountConnectionString.Value, Optional.ToList(shareCredentialDetails), serializedAdditionalRawData);
+            return new DataBoxAccountCredentialDetails(accountName.Value, Optional.ToNullable(dataAccountType), accountConnectionString.Value, shareCredentialDetails ?? new ChangeTrackingList<ShareCredentialDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxAccountCredentialDetails>.Write(ModelReaderWriterOptions options)

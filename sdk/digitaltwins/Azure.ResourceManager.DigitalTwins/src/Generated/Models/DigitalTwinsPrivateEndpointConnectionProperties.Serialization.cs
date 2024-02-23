@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             Optional<DigitalTwinsPrivateLinkResourceProvisioningState?> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> groupIds = default;
             Optional<DigitalTwinsPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new DigitalTwinsPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             ResourceIdentifier keyVaultResourceId = default;
-            Optional<IList<ClusterSecretReference>> secrets = default;
+            IList<ClusterSecretReference> secrets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterSecretsProfile(keyVaultResourceId, Optional.ToList(secrets), serializedAdditionalRawData);
+            return new ClusterSecretsProfile(keyVaultResourceId, secrets ?? new ChangeTrackingList<ClusterSecretReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterSecretsProfile>.Write(ModelReaderWriterOptions options)

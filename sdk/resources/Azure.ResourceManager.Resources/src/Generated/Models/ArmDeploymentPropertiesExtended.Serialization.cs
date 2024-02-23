@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DateTimeOffset> timestamp = default;
             Optional<TimeSpan> duration = default;
             Optional<BinaryData> outputs = default;
-            Optional<IReadOnlyList<ResourceProviderData>> providers = default;
-            Optional<IReadOnlyList<ArmDependency>> dependencies = default;
+            IReadOnlyList<ResourceProviderData> providers = default;
+            IReadOnlyList<ArmDependency> dependencies = default;
             Optional<ArmDeploymentTemplateLink> templateLink = default;
             Optional<BinaryData> parameters = default;
             Optional<ArmDeploymentParametersLink> parametersLink = default;
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DebugSetting> debugSetting = default;
             Optional<ErrorDeploymentExtended> onErrorDeployment = default;
             Optional<string> templateHash = default;
-            Optional<IReadOnlyList<SubResource>> outputResources = default;
-            Optional<IReadOnlyList<SubResource>> validatedResources = default;
+            IReadOnlyList<SubResource> outputResources = default;
+            IReadOnlyList<SubResource> validatedResources = default;
             Optional<ResponseError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error.Value, serializedAdditionalRawData);
+            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, providers ?? new ChangeTrackingList<ResourceProviderData>(), dependencies ?? new ChangeTrackingList<ArmDependency>(), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, outputResources ?? new ChangeTrackingList<SubResource>(), validatedResources ?? new ChangeTrackingList<SubResource>(), error.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentPropertiesExtended>.Write(ModelReaderWriterOptions options)

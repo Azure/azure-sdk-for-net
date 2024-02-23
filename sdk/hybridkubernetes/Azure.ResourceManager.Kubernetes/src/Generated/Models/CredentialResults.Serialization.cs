@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 return null;
             }
             Optional<HybridConnectionConfig> hybridConnectionConfig = default;
-            Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
+            IReadOnlyList<CredentialResult> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CredentialResults(hybridConnectionConfig.Value, Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new CredentialResults(hybridConnectionConfig.Value, kubeconfigs ?? new ChangeTrackingList<CredentialResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CredentialResults>.Write(ModelReaderWriterOptions options)

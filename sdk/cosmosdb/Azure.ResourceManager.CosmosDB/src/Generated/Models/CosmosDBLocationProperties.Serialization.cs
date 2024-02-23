@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             Optional<bool> supportsAvailabilityZone = default;
             Optional<bool> isResidencyRestricted = default;
-            Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
+            IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = default;
             Optional<bool> isSubscriptionRegionAccessAllowedForRegular = default;
             Optional<bool> isSubscriptionRegionAccessAllowedForAz = default;
             Optional<CosmosDBStatus> status = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies), Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), backupStorageRedundancies ?? new ChangeTrackingList<CosmosDBBackupStorageRedundancy>(), Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Optional.ToNullable(status), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBLocationProperties>.Write(ModelReaderWriterOptions options)

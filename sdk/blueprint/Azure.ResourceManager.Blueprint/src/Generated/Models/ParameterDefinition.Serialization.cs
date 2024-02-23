@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             TemplateParameterType type = default;
             Optional<BinaryData> defaultValue = default;
-            Optional<IList<BinaryData>> allowedValues = default;
+            IList<BinaryData> allowedValues = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> strongType = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterDefinition(type, defaultValue.Value, Optional.ToList(allowedValues), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
+            return new ParameterDefinition(type, defaultValue.Value, allowedValues ?? new ChangeTrackingList<BinaryData>(), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterDefinition>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureChatExtensionDataSourceResponseCitation>> citations = default;
+            IReadOnlyList<AzureChatExtensionDataSourceResponseCitation> citations = default;
             Optional<string> intent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureChatExtensionsMessageContext(Optional.ToList(citations), intent.Value, serializedAdditionalRawData);
+            return new AzureChatExtensionsMessageContext(citations ?? new ChangeTrackingList<AzureChatExtensionDataSourceResponseCitation>(), intent.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureChatExtensionsMessageContext>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EndpointCertificateData>> value = default;
+            IReadOnlyList<EndpointCertificateData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointCertificateListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EndpointCertificateListResult(value ?? new ChangeTrackingList<EndpointCertificateData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointCertificateListResult>.Write(ModelReaderWriterOptions options)

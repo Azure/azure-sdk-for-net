@@ -23,8 +23,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             Optional<string> workerId = default;
-            Optional<IReadOnlyList<AcsRouterQueueDetails>> queueAssignments = default;
-            Optional<IReadOnlyList<AcsRouterChannelConfiguration>> channelConfigurations = default;
+            IReadOnlyList<AcsRouterQueueDetails> queueAssignments = default;
+            IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations = default;
             Optional<int> totalCapacity = default;
             Optional<IReadOnlyDictionary<string, string>> labels = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerRegisteredEventData(workerId.Value, Optional.ToList(queueAssignments), Optional.ToList(channelConfigurations), Optional.ToNullable(totalCapacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags));
+            return new AcsRouterWorkerRegisteredEventData(workerId.Value, queueAssignments ?? new ChangeTrackingList<AcsRouterQueueDetails>(), channelConfigurations ?? new ChangeTrackingList<AcsRouterChannelConfiguration>(), Optional.ToNullable(totalCapacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags));
         }
 
         internal partial class AcsRouterWorkerRegisteredEventDataConverter : JsonConverter<AcsRouterWorkerRegisteredEventData>

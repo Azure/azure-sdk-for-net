@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             Optional<ManagedHsmNetworkRuleBypassOption> bypass = default;
             Optional<ManagedHsmNetworkRuleAction> defaultAction = default;
-            Optional<IList<ManagedHsmIPRule>> ipRules = default;
-            Optional<IList<ManagedHsmVirtualNetworkRule>> virtualNetworkRules = default;
+            IList<ManagedHsmIPRule> ipRules = default;
+            IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            return new ManagedHsmNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmNetworkRuleSet>.Write(ModelReaderWriterOptions options)

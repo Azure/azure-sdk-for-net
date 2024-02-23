@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             Guid tenantId = default;
             KeyVaultSku sku = default;
-            Optional<IList<KeyVaultAccessPolicy>> accessPolicies = default;
+            IList<KeyVaultAccessPolicy> accessPolicies = default;
             Optional<Uri> vaultUri = default;
             Optional<string> hsmPoolResourceId = default;
             Optional<bool> enabledForDeployment = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<bool> enablePurgeProtection = default;
             Optional<KeyVaultNetworkRuleSet> networkAcls = default;
             Optional<KeyVaultProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
+            IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = default;
             Optional<string> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultProperties(tenantId, sku, Optional.ToList(accessPolicies), vaultUri.Value, hsmPoolResourceId.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), publicNetworkAccess.Value, serializedAdditionalRawData);
+            return new KeyVaultProperties(tenantId, sku, accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>(), vaultUri.Value, hsmPoolResourceId.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToNullable(provisioningState), privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>(), publicNetworkAccess.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultProperties>.Write(ModelReaderWriterOptions options)

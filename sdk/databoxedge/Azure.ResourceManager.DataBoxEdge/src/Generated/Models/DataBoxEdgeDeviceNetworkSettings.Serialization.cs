@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<DataBoxEdgeNetworkAdapter>> networkAdapters = default;
+            IReadOnlyList<DataBoxEdgeNetworkAdapter> networkAdapters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceNetworkSettings(id, name, type, systemData.Value, Optional.ToList(networkAdapters), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceNetworkSettings(id, name, type, systemData.Value, networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceNetworkSettings>.Write(ModelReaderWriterOptions options)

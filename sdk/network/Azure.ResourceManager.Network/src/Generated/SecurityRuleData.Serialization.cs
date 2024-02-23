@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.Network
             Optional<string> sourcePortRange = default;
             Optional<string> destinationPortRange = default;
             Optional<string> sourceAddressPrefix = default;
-            Optional<IList<string>> sourceAddressPrefixes = default;
-            Optional<IList<ApplicationSecurityGroupData>> sourceApplicationSecurityGroups = default;
+            IList<string> sourceAddressPrefixes = default;
+            IList<ApplicationSecurityGroupData> sourceApplicationSecurityGroups = default;
             Optional<string> destinationAddressPrefix = default;
-            Optional<IList<string>> destinationAddressPrefixes = default;
-            Optional<IList<ApplicationSecurityGroupData>> destinationApplicationSecurityGroups = default;
-            Optional<IList<string>> sourcePortRanges = default;
-            Optional<IList<string>> destinationPortRanges = default;
+            IList<string> destinationAddressPrefixes = default;
+            IList<ApplicationSecurityGroupData> destinationApplicationSecurityGroups = default;
+            IList<string> sourcePortRanges = default;
+            IList<string> destinationPortRanges = default;
             Optional<SecurityRuleAccess> access = default;
             Optional<int> priority = default;
             Optional<SecurityRuleDirection> direction = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), description.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourceAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(sourceApplicationSecurityGroups), destinationAddressPrefix.Value, Optional.ToList(destinationAddressPrefixes), Optional.ToList(destinationApplicationSecurityGroups), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState));
+            return new SecurityRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), description.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourceAddressPrefix.Value, sourceAddressPrefixes ?? new ChangeTrackingList<string>(), sourceApplicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(), destinationAddressPrefix.Value, destinationAddressPrefixes ?? new ChangeTrackingList<string>(), destinationApplicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(), sourcePortRanges ?? new ChangeTrackingList<string>(), destinationPortRanges ?? new ChangeTrackingList<string>(), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<SecurityRuleData>.Write(ModelReaderWriterOptions options)

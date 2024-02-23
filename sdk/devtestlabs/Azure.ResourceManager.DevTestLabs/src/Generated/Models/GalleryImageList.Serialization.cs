@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabGalleryImage>> value = default;
+            IReadOnlyList<DevTestLabGalleryImage> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GalleryImageList(value ?? new ChangeTrackingList<DevTestLabGalleryImage>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageList>.Write(ModelReaderWriterOptions options)

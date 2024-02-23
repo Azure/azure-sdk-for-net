@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<IstioIngressGateway>> ingressGateways = default;
-            Optional<IList<IstioEgressGateway>> egressGateways = default;
+            IList<IstioIngressGateway> ingressGateways = default;
+            IList<IstioEgressGateway> egressGateways = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioComponents(Optional.ToList(ingressGateways), Optional.ToList(egressGateways), serializedAdditionalRawData);
+            return new IstioComponents(ingressGateways ?? new ChangeTrackingList<IstioIngressGateway>(), egressGateways ?? new ChangeTrackingList<IstioEgressGateway>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioComponents>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DefaultRolloutData>> value = default;
+            IReadOnlyList<DefaultRolloutData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DefaultRolloutListResult(value ?? new ChangeTrackingList<DefaultRolloutData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultRolloutListResult>.Write(ModelReaderWriterOptions options)

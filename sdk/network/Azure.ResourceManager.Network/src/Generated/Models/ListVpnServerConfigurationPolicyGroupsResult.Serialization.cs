@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VpnServerConfigurationPolicyGroupData>> value = default;
+            IReadOnlyList<VpnServerConfigurationPolicyGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListVpnServerConfigurationPolicyGroupsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListVpnServerConfigurationPolicyGroupsResult(value ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListVpnServerConfigurationPolicyGroupsResult>.Write(ModelReaderWriterOptions options)

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             Optional<string> httpProxy = default;
             Optional<string> httpsProxy = default;
-            Optional<IList<string>> noProxy = default;
+            IList<string> noProxy = default;
             Optional<string> trustedCa = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpProxyConfiguration(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCa.Value, serializedAdditionalRawData);
+            return new HttpProxyConfiguration(httpProxy.Value, httpsProxy.Value, noProxy ?? new ChangeTrackingList<string>(), trustedCa.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpProxyConfiguration>.Write(ModelReaderWriterOptions options)

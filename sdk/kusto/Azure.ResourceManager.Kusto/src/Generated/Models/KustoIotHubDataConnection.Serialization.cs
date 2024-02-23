@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<string> tableName = default;
             Optional<string> mappingRuleName = default;
             Optional<KustoIotHubDataFormat> dataFormat = default;
-            Optional<IList<string>> eventSystemProperties = default;
+            IList<string> eventSystemProperties = default;
             Optional<string> sharedAccessPolicyName = default;
             Optional<KustoDatabaseRouting> databaseRouting = default;
             Optional<DateTimeOffset> retrievalStartDate = default;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), sharedAccessPolicyName.Value, Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            return new KustoIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), eventSystemProperties ?? new ChangeTrackingList<string>(), sharedAccessPolicyName.Value, Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<KustoIotHubDataConnection>.Write(ModelReaderWriterOptions options)

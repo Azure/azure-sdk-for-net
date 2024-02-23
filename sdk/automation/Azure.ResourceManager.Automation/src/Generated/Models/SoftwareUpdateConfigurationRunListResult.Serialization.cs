@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SoftwareUpdateConfigurationRun>> value = default;
+            IReadOnlyList<SoftwareUpdateConfigurationRun> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationRunListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationRunListResult(value ?? new ChangeTrackingList<SoftwareUpdateConfigurationRun>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationRunListResult>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProxyArtifactListOverview>> value = default;
+            IReadOnlyList<ProxyArtifactListOverview> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyArtifactOverviewListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProxyArtifactOverviewListResult(value ?? new ChangeTrackingList<ProxyArtifactListOverview>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyArtifactOverviewListResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> adminUsername = default;
-            Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
+            IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdministratorConfiguration(adminUsername.Value, Optional.ToList(sshPublicKeys), serializedAdditionalRawData);
+            return new AdministratorConfiguration(adminUsername.Value, sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdministratorConfiguration>.Write(ModelReaderWriterOptions options)

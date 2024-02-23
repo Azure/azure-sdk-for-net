@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Optional<IPAccessControlDefaultAction> defaultAction = default;
-            Optional<IList<IPAddress>> ipAllowList = default;
+            IList<IPAddress> ipAllowList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAccessControl(Optional.ToNullable(defaultAction), Optional.ToList(ipAllowList), serializedAdditionalRawData);
+            return new MediaAccessControl(Optional.ToNullable(defaultAction), ipAllowList ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAccessControl>.Write(ModelReaderWriterOptions options)
