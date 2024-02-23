@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(ResourceKind))
+            if (ResourceKind != null)
             {
                 writer.WritePropertyName("resourceKind"u8);
                 writer.WriteStringValue(ResourceKind);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

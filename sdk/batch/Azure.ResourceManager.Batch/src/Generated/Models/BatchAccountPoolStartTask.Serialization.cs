@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommandLine))
+            if (CommandLine != null)
             {
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (Optional.IsCollectionDefined(ResourceFiles))
+            if (!(ResourceFiles is ChangeTrackingList<BatchResourceFile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnvironmentSettings))
+            if (!(EnvironmentSettings is ChangeTrackingList<BatchEnvironmentSetting> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();
@@ -51,22 +51,22 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UserIdentity))
+            if (UserIdentity != null)
             {
                 writer.WritePropertyName("userIdentity"u8);
                 writer.WriteObjectValue(UserIdentity);
             }
-            if (Optional.IsDefined(MaxTaskRetryCount))
+            if (MaxTaskRetryCount.HasValue)
             {
                 writer.WritePropertyName("maxTaskRetryCount"u8);
                 writer.WriteNumberValue(MaxTaskRetryCount.Value);
             }
-            if (Optional.IsDefined(WaitForSuccess))
+            if (WaitForSuccess.HasValue)
             {
                 writer.WritePropertyName("waitForSuccess"u8);
                 writer.WriteBooleanValue(WaitForSuccess.Value);
             }
-            if (Optional.IsDefined(ContainerSettings))
+            if (ContainerSettings != null)
             {
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);

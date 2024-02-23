@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TemplateParameterType.ToString());
-            if (Optional.IsDefined(DefaultValue))
+            if (DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(AllowedValues))
+            if (!(AllowedValues is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             writer.WritePropertyName("metadata"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(StrongType))
+            if (StrongType != null)
             {
                 writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);

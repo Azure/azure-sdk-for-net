@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automanage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
 #if NET6_0_OR_GREATER

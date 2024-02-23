@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(AppliedScopeType))
+            if (AppliedScopeType.HasValue)
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Optional.IsDefined(AppliedScopeProperties))
+            if (AppliedScopeProperties != null)
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
-            if (Optional.IsDefined(IsRenewed))
+            if (IsRenewed.HasValue)
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewed.Value);
             }
-            if (Optional.IsDefined(RenewProperties))
+            if (RenewProperties != null)
             {
                 writer.WritePropertyName("renewProperties"u8);
                 writer.WriteObjectValue(RenewProperties);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationServerId))
+            if (AuthorizationServerId != null)
             {
                 writer.WritePropertyName("authorizationServerId"u8);
                 writer.WriteStringValue(AuthorizationServerId);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);

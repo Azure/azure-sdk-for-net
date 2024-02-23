@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResizeTimeout))
+            if (ResizeTimeout.HasValue)
             {
                 writer.WritePropertyName("resizeTimeout"u8);
                 writer.WriteStringValue(ResizeTimeout.Value, "P");
             }
-            if (Optional.IsDefined(TargetDedicatedNodes))
+            if (TargetDedicatedNodes.HasValue)
             {
                 writer.WritePropertyName("targetDedicatedNodes"u8);
                 writer.WriteNumberValue(TargetDedicatedNodes.Value);
             }
-            if (Optional.IsDefined(TargetLowPriorityNodes))
+            if (TargetLowPriorityNodes.HasValue)
             {
                 writer.WritePropertyName("targetLowPriorityNodes"u8);
                 writer.WriteNumberValue(TargetLowPriorityNodes.Value);
             }
-            if (Optional.IsDefined(NodeDeallocationOption))
+            if (NodeDeallocationOption.HasValue)
             {
                 writer.WritePropertyName("nodeDeallocationOption"u8);
                 writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());

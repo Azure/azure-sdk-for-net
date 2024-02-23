@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsMessagingEnabled))
+            if (IsMessagingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableMessaging"u8);
                 writer.WriteBooleanValue(IsMessagingEnabled.Value);
             }
-            if (Optional.IsDefined(IsMediaCardsEnabled))
+            if (IsMediaCardsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableMediaCards"u8);
                 writer.WriteBooleanValue(IsMediaCardsEnabled.Value);
             }
-            if (Optional.IsDefined(IsVideoEnabled))
+            if (IsVideoEnabled.HasValue)
             {
                 writer.WritePropertyName("enableVideo"u8);
                 writer.WriteBooleanValue(IsVideoEnabled.Value);
             }
-            if (Optional.IsDefined(IsCallingEnabled))
+            if (IsCallingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableCalling"u8);
                 writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
-            if (Optional.IsDefined(IsScreenSharingEnabled))
+            if (IsScreenSharingEnabled.HasValue)
             {
                 writer.WritePropertyName("enableScreenSharing"u8);
                 writer.WriteBooleanValue(IsScreenSharingEnabled.Value);
             }
-            if (Optional.IsDefined(IsGroupsEnabled))
+            if (IsGroupsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableGroups"u8);
                 writer.WriteBooleanValue(IsGroupsEnabled.Value);
             }
-            if (Optional.IsDefined(GroupsMode))
+            if (GroupsMode != null)
             {
                 writer.WritePropertyName("groupsMode"u8);
                 writer.WriteStringValue(GroupsMode);
             }
-            if (Optional.IsDefined(CallingWebHook))
+            if (CallingWebHook != null)
             {
                 writer.WritePropertyName("callingWebHook"u8);
                 writer.WriteStringValue(CallingWebHook);
             }
-            if (Optional.IsDefined(IncomingCallRoute))
+            if (IncomingCallRoute != null)
             {
                 writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);

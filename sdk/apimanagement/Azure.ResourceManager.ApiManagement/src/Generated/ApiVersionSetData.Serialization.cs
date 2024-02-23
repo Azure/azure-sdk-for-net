@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(VersionQueryName))
+            if (VersionQueryName != null)
             {
                 writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
-            if (Optional.IsDefined(VersionHeaderName))
+            if (VersionHeaderName != null)
             {
                 writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(VersioningScheme))
+            if (VersioningScheme.HasValue)
             {
                 writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());

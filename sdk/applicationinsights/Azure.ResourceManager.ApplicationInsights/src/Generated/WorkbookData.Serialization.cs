@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SerializedData))
+            if (SerializedData != null)
             {
                 if (SerializedData != null)
                 {
@@ -96,32 +96,32 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("serializedData");
                 }
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (options.Format != "W" && ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("timeModified"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserId))
+            if (options.Format != "W" && UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(SourceId))
+            if (SourceId != null)
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
             }
-            if (Optional.IsDefined(StorageUri))
+            if (StorageUri != null)
             {
                 if (StorageUri != null)
                 {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("storageUri");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("description");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Revision))
+            if (options.Format != "W" && Revision != null)
             {
                 if (Revision != null)
                 {

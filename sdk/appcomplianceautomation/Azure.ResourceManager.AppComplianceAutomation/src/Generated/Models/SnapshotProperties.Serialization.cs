@@ -27,37 +27,37 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(SnapshotName))
+            if (options.Format != "W" && SnapshotName != null)
             {
                 writer.WritePropertyName("snapshotName"u8);
                 writer.WriteStringValue(SnapshotName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportProperties))
+            if (options.Format != "W" && ReportProperties != null)
             {
                 writer.WritePropertyName("reportProperties"u8);
                 writer.WriteObjectValue(ReportProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
+            if (options.Format != "W" && ReportSystemData != null)
             {
                 writer.WritePropertyName("reportSystemData"u8);
                 JsonSerializer.Serialize(writer, ReportSystemData);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceResults))
+            if (options.Format != "W" && !(ComplianceResults is ChangeTrackingList<ComplianceResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("complianceResults"u8);
                 writer.WriteStartArray();

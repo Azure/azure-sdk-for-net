@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Conditions))
+            if (!(Conditions is ChangeTrackingList<AlertProcessingRuleCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
