@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(DBName))
+            if (DBName != null)
             {
                 writer.WritePropertyName("dbName"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (Optional.IsDefined(DBPort))
+            if (DBPort != null)
             {
                 writer.WritePropertyName("dbPort"u8);
                 writer.WriteStringValue(DBPort);
             }
-            if (Optional.IsDefined(DBUsername))
+            if (DBUsername != null)
             {
                 writer.WritePropertyName("dbUsername"u8);
                 writer.WriteStringValue(DBUsername);
             }
-            if (Optional.IsDefined(DBPassword))
+            if (DBPassword != null)
             {
                 writer.WritePropertyName("dbPassword"u8);
                 writer.WriteStringValue(DBPassword);
             }
-            if (Optional.IsDefined(DBPasswordUri))
+            if (DBPasswordUri != null)
             {
                 writer.WritePropertyName("dbPasswordUri"u8);
                 writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SapSid))
+            if (SapSid != null)
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (SslPreference.HasValue)
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (SslCertificateUri != null)
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);

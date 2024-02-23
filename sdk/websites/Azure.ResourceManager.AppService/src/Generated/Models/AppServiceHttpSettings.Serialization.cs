@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsHttpsRequired))
+            if (IsHttpsRequired.HasValue)
             {
                 writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(IsHttpsRequired.Value);
             }
-            if (Optional.IsDefined(Routes))
+            if (Routes != null)
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (Optional.IsDefined(ForwardProxy))
+            if (ForwardProxy != null)
             {
                 writer.WritePropertyName("forwardProxy"u8);
                 writer.WriteObjectValue(ForwardProxy);

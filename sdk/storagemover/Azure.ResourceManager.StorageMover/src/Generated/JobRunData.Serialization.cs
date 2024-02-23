@@ -43,119 +43,119 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanStatus))
+            if (options.Format != "W" && ScanStatus.HasValue)
             {
                 writer.WritePropertyName("scanStatus"u8);
                 writer.WriteStringValue(ScanStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentName))
+            if (options.Format != "W" && AgentName != null)
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentResourceId))
+            if (options.Format != "W" && AgentResourceId != null)
             {
                 writer.WritePropertyName("agentResourceId"u8);
                 writer.WriteStringValue(AgentResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionStartOn))
+            if (options.Format != "W" && ExecutionStartOn.HasValue)
             {
                 writer.WritePropertyName("executionStartTime"u8);
                 writer.WriteStringValue(ExecutionStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionEndOn))
+            if (options.Format != "W" && ExecutionEndOn.HasValue)
             {
                 writer.WritePropertyName("executionEndTime"u8);
                 writer.WriteStringValue(ExecutionEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
+            if (options.Format != "W" && LastStatusUpdate.HasValue)
             {
                 writer.WritePropertyName("lastStatusUpdate"u8);
                 writer.WriteStringValue(LastStatusUpdate.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ItemsScanned))
+            if (options.Format != "W" && ItemsScanned.HasValue)
             {
                 writer.WritePropertyName("itemsScanned"u8);
                 writer.WriteNumberValue(ItemsScanned.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ItemsExcluded))
+            if (options.Format != "W" && ItemsExcluded.HasValue)
             {
                 writer.WritePropertyName("itemsExcluded"u8);
                 writer.WriteNumberValue(ItemsExcluded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ItemsUnsupported))
+            if (options.Format != "W" && ItemsUnsupported.HasValue)
             {
                 writer.WritePropertyName("itemsUnsupported"u8);
                 writer.WriteNumberValue(ItemsUnsupported.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ItemsNoTransferNeeded))
+            if (options.Format != "W" && ItemsNoTransferNeeded.HasValue)
             {
                 writer.WritePropertyName("itemsNoTransferNeeded"u8);
                 writer.WriteNumberValue(ItemsNoTransferNeeded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ItemsFailed))
+            if (options.Format != "W" && ItemsFailed.HasValue)
             {
                 writer.WritePropertyName("itemsFailed"u8);
                 writer.WriteNumberValue(ItemsFailed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ItemsTransferred))
+            if (options.Format != "W" && ItemsTransferred.HasValue)
             {
                 writer.WritePropertyName("itemsTransferred"u8);
                 writer.WriteNumberValue(ItemsTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BytesScanned))
+            if (options.Format != "W" && BytesScanned.HasValue)
             {
                 writer.WritePropertyName("bytesScanned"u8);
                 writer.WriteNumberValue(BytesScanned.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BytesExcluded))
+            if (options.Format != "W" && BytesExcluded.HasValue)
             {
                 writer.WritePropertyName("bytesExcluded"u8);
                 writer.WriteNumberValue(BytesExcluded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BytesUnsupported))
+            if (options.Format != "W" && BytesUnsupported.HasValue)
             {
                 writer.WritePropertyName("bytesUnsupported"u8);
                 writer.WriteNumberValue(BytesUnsupported.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BytesNoTransferNeeded))
+            if (options.Format != "W" && BytesNoTransferNeeded.HasValue)
             {
                 writer.WritePropertyName("bytesNoTransferNeeded"u8);
                 writer.WriteNumberValue(BytesNoTransferNeeded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BytesFailed))
+            if (options.Format != "W" && BytesFailed.HasValue)
             {
                 writer.WritePropertyName("bytesFailed"u8);
                 writer.WriteNumberValue(BytesFailed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BytesTransferred))
+            if (options.Format != "W" && BytesTransferred.HasValue)
             {
                 writer.WritePropertyName("bytesTransferred"u8);
                 writer.WriteNumberValue(BytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceName))
+            if (options.Format != "W" && SourceName != null)
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
+            if (options.Format != "W" && SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceProperties))
+            if (options.Format != "W" && SourceProperties != null)
             {
                 writer.WritePropertyName("sourceProperties"u8);
 #if NET6_0_OR_GREATER
@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.StorageMover
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetName))
+            if (options.Format != "W" && TargetName != null)
             {
                 writer.WritePropertyName("targetName"u8);
                 writer.WriteStringValue(TargetName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            if (options.Format != "W" && TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetProperties))
+            if (options.Format != "W" && TargetProperties != null)
             {
                 writer.WritePropertyName("targetProperties"u8);
 #if NET6_0_OR_GREATER
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StorageMover
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(JobDefinitionProperties))
+            if (options.Format != "W" && JobDefinitionProperties != null)
             {
                 writer.WritePropertyName("jobDefinitionProperties"u8);
 #if NET6_0_OR_GREATER
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.StorageMover
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

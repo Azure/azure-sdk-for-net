@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -53,34 +53,34 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkerSizeId))
+            if (WorkerSizeId.HasValue)
             {
                 writer.WritePropertyName("workerSizeId"u8);
                 writer.WriteNumberValue(WorkerSizeId.Value);
             }
-            if (Optional.IsDefined(ComputeMode))
+            if (ComputeMode.HasValue)
             {
                 writer.WritePropertyName("computeMode"u8);
                 writer.WriteStringValue(ComputeMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(WorkerSize))
+            if (WorkerSize != null)
             {
                 writer.WritePropertyName("workerSize"u8);
                 writer.WriteStringValue(WorkerSize);
             }
-            if (Optional.IsDefined(WorkerCount))
+            if (WorkerCount.HasValue)
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InstanceNames))
+            if (options.Format != "W" && !(InstanceNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instanceNames"u8);
                 writer.WriteStartArray();

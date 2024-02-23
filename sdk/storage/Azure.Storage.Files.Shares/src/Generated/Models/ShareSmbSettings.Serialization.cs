@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.Shares.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "SMB");
-            if (Optional.IsDefined(Multichannel))
+            if (Multichannel != null)
             {
                 writer.WriteObjectValue(Multichannel, "Multichannel");
             }
