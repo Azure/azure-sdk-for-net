@@ -29,7 +29,7 @@ namespace Azure.Provisioning
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="parent">The parent.</param>
-        /// <param name="resourceName">The resouce name.</param>
+        /// <param name="resourceName">The resource name.</param>
         /// <param name="resourceType">The resourceType.</param>
         /// <param name="version">The version.</param>
         /// <param name="createProperties">Lambda to create the ARM properties.</param>
