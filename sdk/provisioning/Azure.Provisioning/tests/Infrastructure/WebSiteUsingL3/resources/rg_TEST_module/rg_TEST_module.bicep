@@ -179,24 +179,24 @@ SCRIPT_END
 ./sqlcmd -S ${DBSERVER} -d ${DBNAME} -U ${SQLADMIN} -i ./initDb.sql'''
     environmentVariables: [
       {
-        name: 'APPUSERNAME'
-        value: 'appUser'
-      }
-      {
         name: 'APPUSERPASSWORD'
-        secureValue: '_p_.appUserPassword'
-      }
-      {
-        name: 'DBNAME'
-        value: '_p_.sqlDatabase_U7NzorRJT.name'
-      }
-      {
-        name: 'DBSERVER'
-        value: '_p_.sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName'
+        secureValue: appUserPassword
       }
       {
         name: 'SQLCMDPASSWORD'
-        secureValue: '_p_.sqlAdminPassword'
+        secureValue: sqlAdminPassword
+      }
+      {
+        name: 'DBSERVER'
+        value: sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName
+      }
+      {
+        name: 'DBNAME'
+        value: 'db-TEST'
+      }
+      {
+        name: 'APPUSERNAME'
+        value: 'appUser'
       }
       {
         name: 'SQLADMIN'
@@ -243,3 +243,4 @@ resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-
 
 output vaultUri string = keyVault_CRoMbemLF.properties.vaultUri
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId
+output sqlServerName string = sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName

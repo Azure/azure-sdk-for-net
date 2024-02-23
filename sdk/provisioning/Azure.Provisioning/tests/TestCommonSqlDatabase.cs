@@ -38,7 +38,6 @@ namespace Azure.Provisioning.Tests
             Output sqlServerName = sqlServer.AddOutput(sql => sql.FullyQualifiedDomainName, "sqlServerName");
 
             SqlDatabase = new SqlDatabase(this, sqlServer);
-            Output sqlServerDatabaseName = SqlDatabase.AddOutput(db => db.Name, "sqlServerDatabaseName");
 
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(this, "connectionString", SqlDatabase.GetConnectionString(appUserPasswordParam));
 
@@ -49,7 +48,6 @@ namespace Azure.Provisioning.Tests
                 "cliScript",
                 SqlDatabase,
                 new Parameter(sqlServerName),
-                new Parameter(sqlServerDatabaseName),
                 appUserPasswordParam,
                 sqlAdminPasswordParam);
         }

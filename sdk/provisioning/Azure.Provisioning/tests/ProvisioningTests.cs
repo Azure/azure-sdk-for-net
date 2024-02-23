@@ -64,8 +64,6 @@ namespace Azure.Provisioning.Tests
 
             SqlDatabase sqlDatabase = new SqlDatabase(infra, sqlServer);
 
-            Output sqlServerDatabaseName = sqlDatabase.AddOutput(db => db.Name, "sqlServerDatabaseName");
-
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(infra, "connectionString", sqlDatabase.GetConnectionString(appUserPasswordParam));
 
             SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(infra, "firewallRule");
@@ -75,7 +73,6 @@ namespace Azure.Provisioning.Tests
                 "cliScript",
                 sqlDatabase,
                 new Parameter(sqlServerName),
-                new Parameter(sqlServerDatabaseName),
                 appUserPasswordParam,
                 sqlAdminPasswordParam);
 

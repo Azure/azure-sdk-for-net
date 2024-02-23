@@ -47,13 +47,12 @@ namespace Azure.Provisioning.Resources
         /// <param name="scope">The scope.</param>
         /// <param name="resourceName">The resource name.</param>
         /// <param name="database">The database.</param>
-        /// <param name="databaseName">The database name.</param>
         /// <param name="databaseServerName">The database server name.</param>
         /// <param name="appUserPasswordSecret">The app user password secret.</param>
         /// <param name="sqlAdminPasswordSecret">The sql admin password secret.</param>
         /// <param name="version">The resource version.</param>
         /// <param name="location">The resource location.</param>
-        public DeploymentScript(IConstruct scope, string resourceName, Resource database, Parameter databaseName, Parameter databaseServerName, Parameter appUserPasswordSecret, Parameter sqlAdminPasswordSecret, string version = _defaultVersion, AzureLocation? location = default)
+        public DeploymentScript(IConstruct scope, string resourceName, Resource database, Parameter databaseServerName, Parameter appUserPasswordSecret, Parameter sqlAdminPasswordSecret, string version = _defaultVersion, AzureLocation? location = default)
             : base(scope, null, resourceName, ResourceTypeName, version, (name) => ArmResourcesModelFactory.AzureCliScript(
                 name: name,
                 resourceType: ResourceTypeName,
@@ -66,8 +65,8 @@ namespace Azure.Provisioning.Resources
                 {
                     new ScriptEnvironmentVariable("APPUSERPASSWORD"),
                     new ScriptEnvironmentVariable("SQLCMDPASSWORD"),
-                    new ScriptEnvironmentVariable("DBNAME") { Value = $"_p_.{database.Name}.name" },
-                    new ScriptEnvironmentVariable("DBSERVER") { Value = $"_p_.{database.Parent!.Name}.properties.fullyQualifiedDomainName" },
+                    new ScriptEnvironmentVariable("DBSERVER"),
+                    new ScriptEnvironmentVariable("DBNAME") { Value = database.Id.Name },
                     new ScriptEnvironmentVariable("APPUSERNAME") { Value = "appUser" },
                     new ScriptEnvironmentVariable("SQLADMIN") { Value = "sqlAdmin" },
                 },
@@ -89,10 +88,7 @@ namespace Azure.Provisioning.Resources
         {
             AssignParameter(data => data.EnvironmentVariables[0].SecureValue, appUserPasswordSecret);
             AssignParameter(data => data.EnvironmentVariables[1].SecureValue, sqlAdminPasswordSecret);
-            AssignParameter(data => data.EnvironmentVariables[2].Value, databaseName);
-            AssignParameter(data => data.EnvironmentVariables[3].Value, databaseServerName);
-            Scope.AddParameter(appUserPasswordSecret);
-            Scope.AddParameter(sqlAdminPasswordSecret);
+            AssignParameter(data => data.EnvironmentVariables[2].Value, databaseServerName);
         }
 
         /// <inheritdoc/>

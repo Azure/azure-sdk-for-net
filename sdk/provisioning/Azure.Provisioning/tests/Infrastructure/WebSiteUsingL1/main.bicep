@@ -30,4 +30,3 @@ module rg_TEST_module './resources/rg_TEST_module/rg_TEST_module.bicep' = {
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = rg_TEST_module.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
 output vaultUri string = rg_TEST_module.outputs.vaultUri
 output sqlServerName string = rg_TEST_module.outputs.sqlServerName
-output sqlServerDatabaseName string = rg_TEST_module.outputs.sqlServerDatabaseName

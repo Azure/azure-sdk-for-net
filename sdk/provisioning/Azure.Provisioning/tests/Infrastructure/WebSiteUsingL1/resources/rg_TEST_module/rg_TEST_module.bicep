@@ -184,12 +184,12 @@ SCRIPT_END
         secureValue: sqlAdminPassword
       }
       {
-        name: 'DBNAME'
+        name: 'DBSERVER'
         value: sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName
       }
       {
-        name: 'DBSERVER'
-        value: sqlDatabase_U7NzorRJT.name
+        name: 'DBNAME'
+        value: 'db-TEST'
       }
       {
         name: 'APPUSERNAME'
@@ -241,4 +241,3 @@ resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId
 output vaultUri string = keyVault_CRoMbemLF.properties.vaultUri
 output sqlServerName string = sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName
-output sqlServerDatabaseName string = sqlDatabase_U7NzorRJT.name
