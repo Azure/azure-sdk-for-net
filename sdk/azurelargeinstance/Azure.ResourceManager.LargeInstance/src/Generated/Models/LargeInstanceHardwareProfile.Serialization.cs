@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HardwareType))
+            if (options.Format != "W" && HardwareType.HasValue)
             {
                 writer.WritePropertyName("hardwareType"u8);
                 writer.WriteStringValue(HardwareType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureLargeInstanceSize))
+            if (options.Format != "W" && AzureLargeInstanceSize.HasValue)
             {
                 writer.WritePropertyName("azureLargeInstanceSize"u8);
                 writer.WriteStringValue(AzureLargeInstanceSize.Value.ToString());

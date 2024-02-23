@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ValidationErrors))
+            if (!(ValidationErrors is ChangeTrackingList<HDInsightClusterValidationErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidationWarnings))
+            if (!(ValidationWarnings is ChangeTrackingList<HDInsightClusterValidationErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validationWarnings"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EstimatedCreationDuration))
+            if (EstimatedCreationDuration.HasValue)
             {
                 writer.WritePropertyName("estimatedCreationDuration"u8);
                 writer.WriteStringValue(EstimatedCreationDuration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(AaddsResourcesDetails))
+            if (!(AaddsResourcesDetails is ChangeTrackingList<HDInsightClusterAaddsDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("aaddsResourcesDetails"u8);
                 writer.WriteStartArray();

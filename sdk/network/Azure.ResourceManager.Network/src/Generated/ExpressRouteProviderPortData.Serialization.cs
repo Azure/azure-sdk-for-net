@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,49 +61,49 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PortPairDescriptor))
+            if (options.Format != "W" && PortPairDescriptor != null)
             {
                 writer.WritePropertyName("portPairDescriptor"u8);
                 writer.WriteStringValue(PortPairDescriptor);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryAzurePort))
+            if (options.Format != "W" && PrimaryAzurePort != null)
             {
                 writer.WritePropertyName("primaryAzurePort"u8);
                 writer.WriteStringValue(PrimaryAzurePort);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryAzurePort))
+            if (options.Format != "W" && SecondaryAzurePort != null)
             {
                 writer.WritePropertyName("secondaryAzurePort"u8);
                 writer.WriteStringValue(SecondaryAzurePort);
             }
-            if (Optional.IsDefined(PeeringLocation))
+            if (PeeringLocation != null)
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (Optional.IsDefined(OverprovisionFactor))
+            if (OverprovisionFactor.HasValue)
             {
                 writer.WritePropertyName("overprovisionFactor"u8);
                 writer.WriteNumberValue(OverprovisionFactor.Value);
             }
-            if (Optional.IsDefined(PortBandwidthInMbps))
+            if (PortBandwidthInMbps.HasValue)
             {
                 writer.WritePropertyName("portBandwidthInMbps"u8);
                 writer.WriteNumberValue(PortBandwidthInMbps.Value);
             }
-            if (Optional.IsDefined(UsedBandwidthInMbps))
+            if (UsedBandwidthInMbps.HasValue)
             {
                 writer.WritePropertyName("usedBandwidthInMbps"u8);
                 writer.WriteNumberValue(UsedBandwidthInMbps.Value);
             }
-            if (Optional.IsDefined(RemainingBandwidthInMbps))
+            if (RemainingBandwidthInMbps.HasValue)
             {
                 writer.WritePropertyName("remainingBandwidthInMbps"u8);
                 writer.WriteNumberValue(RemainingBandwidthInMbps.Value);

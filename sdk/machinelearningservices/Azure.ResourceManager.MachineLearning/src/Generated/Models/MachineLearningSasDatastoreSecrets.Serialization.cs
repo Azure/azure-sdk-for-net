@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SasToken))
+            if (SasToken != null)
             {
                 if (SasToken != null)
                 {

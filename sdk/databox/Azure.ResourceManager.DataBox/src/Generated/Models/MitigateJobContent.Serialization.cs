@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("customerResolutionCode"u8);
             writer.WriteStringValue(CustomerResolutionCode.ToSerialString());
-            if (Optional.IsCollectionDefined(SerialNumberCustomerResolutionMap))
+            if (!(SerialNumberCustomerResolutionMap is ChangeTrackingDictionary<string, CustomerResolutionCode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serialNumberCustomerResolutionMap"u8);
                 writer.WriteStartObject();

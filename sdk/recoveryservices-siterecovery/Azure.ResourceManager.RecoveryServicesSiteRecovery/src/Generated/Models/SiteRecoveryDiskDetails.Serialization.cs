@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxSizeMB))
+            if (MaxSizeMB.HasValue)
             {
                 writer.WritePropertyName("maxSizeMB"u8);
                 writer.WriteNumberValue(MaxSizeMB.Value);
             }
-            if (Optional.IsDefined(VhdType))
+            if (VhdType != null)
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (Optional.IsDefined(VhdId))
+            if (VhdId != null)
             {
                 writer.WritePropertyName("vhdId"u8);
                 writer.WriteStringValue(VhdId);
             }
-            if (Optional.IsDefined(VhdName))
+            if (VhdName != null)
             {
                 writer.WritePropertyName("vhdName"u8);
                 writer.WriteStringValue(VhdName);

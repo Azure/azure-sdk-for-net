@@ -15,31 +15,31 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "DelimitedTextConfiguration");
-            if (Optional.IsDefined(ColumnSeparator))
+            if (ColumnSeparator != null)
             {
                 writer.WriteStartElement("ColumnSeparator");
                 writer.WriteValue(ColumnSeparator);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(FieldQuote))
+            if (FieldQuote != null)
             {
                 writer.WriteStartElement("FieldQuote");
                 writer.WriteValue(FieldQuote);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(RecordSeparator))
+            if (RecordSeparator != null)
             {
                 writer.WriteStartElement("RecordSeparator");
                 writer.WriteValue(RecordSeparator);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(EscapeChar))
+            if (EscapeChar != null)
             {
                 writer.WriteStartElement("EscapeChar");
                 writer.WriteValue(EscapeChar);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(HeadersPresent))
+            if (HeadersPresent.HasValue)
             {
                 writer.WriteStartElement("HasHeaders");
                 writer.WriteValue(HeadersPresent.Value);

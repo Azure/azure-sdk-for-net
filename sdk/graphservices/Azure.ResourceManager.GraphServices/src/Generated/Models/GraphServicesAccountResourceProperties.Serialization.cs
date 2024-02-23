@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.GraphServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
-            if (options.Format != "W" && Optional.IsDefined(BillingPlanId))
+            if (options.Format != "W" && BillingPlanId != null)
             {
                 writer.WritePropertyName("billingPlanId"u8);
                 writer.WriteStringValue(BillingPlanId);

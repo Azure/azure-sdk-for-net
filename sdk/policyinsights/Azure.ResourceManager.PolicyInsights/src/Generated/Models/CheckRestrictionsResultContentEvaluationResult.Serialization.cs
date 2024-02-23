@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PolicyEvaluations))
+            if (!(PolicyEvaluations is ChangeTrackingList<PolicyEvaluationResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyEvaluations"u8);
                 writer.WriteStartArray();

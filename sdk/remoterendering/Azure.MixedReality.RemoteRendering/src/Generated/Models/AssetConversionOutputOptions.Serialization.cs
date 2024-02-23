@@ -18,17 +18,17 @@ namespace Azure.MixedReality.RemoteRendering
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
-            if (Optional.IsDefined(StorageContainerWriteSas))
+            if (StorageContainerWriteSas != null)
             {
                 writer.WritePropertyName("storageContainerWriteSas"u8);
                 writer.WriteStringValue(StorageContainerWriteSas);
             }
-            if (Optional.IsDefined(BlobPrefix))
+            if (BlobPrefix != null)
             {
                 writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
-            if (Optional.IsDefined(OutputAssetFilename))
+            if (OutputAssetFilename != null)
             {
                 writer.WritePropertyName("outputAssetFilename"u8);
                 writer.WriteStringValue(OutputAssetFilename);

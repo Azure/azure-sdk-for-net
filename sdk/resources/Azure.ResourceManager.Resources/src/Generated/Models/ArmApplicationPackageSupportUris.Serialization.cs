@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzurePublicCloudUri))
+            if (AzurePublicCloudUri != null)
             {
                 writer.WritePropertyName("publicAzure"u8);
                 writer.WriteStringValue(AzurePublicCloudUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(AzureGovernmentUri))
+            if (AzureGovernmentUri != null)
             {
                 writer.WritePropertyName("governmentCloud"u8);
                 writer.WriteStringValue(AzureGovernmentUri.AbsoluteUri);

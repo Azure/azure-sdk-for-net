@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AzureQueue))
+            if (AzureQueue != null)
             {
                 writer.WritePropertyName("azureQueue"u8);
                 writer.WriteObjectValue(AzureQueue);
             }
-            if (Optional.IsDefined(Custom))
+            if (Custom != null)
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteObjectValue(Custom);
             }
-            if (Optional.IsDefined(Http))
+            if (Http != null)
             {
                 writer.WritePropertyName("http"u8);
                 writer.WriteObjectValue(Http);
             }
-            if (Optional.IsDefined(Tcp))
+            if (Tcp != null)
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteObjectValue(Tcp);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PeeringFacilities))
+            if (!(PeeringFacilities is ChangeTrackingList<ExchangePeeringFacility> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();

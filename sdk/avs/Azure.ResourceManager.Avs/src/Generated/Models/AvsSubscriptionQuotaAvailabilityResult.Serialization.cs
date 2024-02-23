@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(HostsRemaining))
+            if (options.Format != "W" && !(HostsRemaining is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hostsRemaining"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(QuotaEnabled))
+            if (options.Format != "W" && QuotaEnabled.HasValue)
             {
                 writer.WritePropertyName("quotaEnabled"u8);
                 writer.WriteStringValue(QuotaEnabled.Value.ToString());

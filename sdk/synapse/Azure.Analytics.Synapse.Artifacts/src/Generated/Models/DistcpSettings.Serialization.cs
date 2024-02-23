@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
             writer.WriteObjectValue(TempScriptPath);
-            if (Optional.IsDefined(DistcpOptions))
+            if (DistcpOptions != null)
             {
                 writer.WritePropertyName("distcpOptions"u8);
                 writer.WriteObjectValue(DistcpOptions);

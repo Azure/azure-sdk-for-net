@@ -26,72 +26,72 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(DiskId))
+            if (DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxDiskSizeGB))
+            if (options.Format != "W" && MaxDiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("maxDiskSizeGB"u8);
                 writer.WriteNumberValue(MaxDiskSizeGB.Value);
             }
-            if (Optional.IsDefined(Bus))
+            if (Bus.HasValue)
             {
                 writer.WritePropertyName("bus"u8);
                 writer.WriteNumberValue(Bus.Value);
             }
-            if (Optional.IsDefined(Lun))
+            if (Lun.HasValue)
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
-            if (Optional.IsDefined(BusType))
+            if (BusType != null)
             {
                 writer.WritePropertyName("busType"u8);
                 writer.WriteStringValue(BusType);
             }
-            if (Optional.IsDefined(VhdType))
+            if (VhdType != null)
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumeType))
+            if (options.Format != "W" && VolumeType != null)
             {
                 writer.WritePropertyName("volumeType"u8);
                 writer.WriteStringValue(VolumeType);
             }
-            if (options.Format != "W" && Optional.IsDefined(VhdFormatType))
+            if (options.Format != "W" && VhdFormatType != null)
             {
                 writer.WritePropertyName("vhdFormatType"u8);
                 writer.WriteStringValue(VhdFormatType);
             }
-            if (Optional.IsDefined(TemplateDiskId))
+            if (TemplateDiskId != null)
             {
                 writer.WritePropertyName("templateDiskId"u8);
                 writer.WriteStringValue(TemplateDiskId);
             }
-            if (Optional.IsDefined(StorageQoSPolicy))
+            if (StorageQoSPolicy != null)
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
                 writer.WriteObjectValue(StorageQoSPolicy);
             }
-            if (Optional.IsDefined(CreateDiffDisk))
+            if (CreateDiffDisk.HasValue)
             {
                 writer.WritePropertyName("createDiffDisk"u8);
                 writer.WriteStringValue(CreateDiffDisk.Value.ToString());

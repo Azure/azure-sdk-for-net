@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkFunctionApplications))
+            if (!(NetworkFunctionApplications is ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkFunctionApplications"u8);
                 writer.WriteStartArray();

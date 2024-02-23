@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(HiddenPathsOnRequest))
+            if (!(HiddenPathsOnRequest is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hiddenPathsOnRequest"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HiddenPathsOnResponse))
+            if (!(HiddenPathsOnResponse is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hiddenPathsOnResponse"u8);
                 writer.WriteStartArray();

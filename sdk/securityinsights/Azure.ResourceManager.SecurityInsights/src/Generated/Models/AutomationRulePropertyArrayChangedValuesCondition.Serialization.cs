@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArrayType))
+            if (ArrayType.HasValue)
             {
                 writer.WritePropertyName("arrayType"u8);
                 writer.WriteStringValue(ArrayType.Value.ToString());
             }
-            if (Optional.IsDefined(ChangeType))
+            if (ChangeType.HasValue)
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());

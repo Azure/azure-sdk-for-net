@@ -100,7 +100,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _projectFileFilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<ProjectFileResource>(Response.FromValue(new ProjectFileResource(Client, response), response.GetRawResponse()));
+                var uri = _projectFileFilesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation<ProjectFileResource>(Response.FromValue(new ProjectFileResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -159,7 +161,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _projectFileFilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<ProjectFileResource>(Response.FromValue(new ProjectFileResource(Client, response), response.GetRawResponse()));
+                var uri = _projectFileFilesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fileName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation<ProjectFileResource>(Response.FromValue(new ProjectFileResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

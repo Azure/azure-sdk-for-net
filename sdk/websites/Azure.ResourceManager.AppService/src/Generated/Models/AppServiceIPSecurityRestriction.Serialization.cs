@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddressOrCidr))
+            if (IPAddressOrCidr != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddressOrCidr);
             }
-            if (Optional.IsDefined(SubnetMask))
+            if (SubnetMask != null)
             {
                 writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
             }
-            if (Optional.IsDefined(VnetSubnetResourceId))
+            if (VnetSubnetResourceId != null)
             {
                 writer.WritePropertyName("vnetSubnetResourceId"u8);
                 writer.WriteStringValue(VnetSubnetResourceId);
             }
-            if (Optional.IsDefined(VnetTrafficTag))
+            if (VnetTrafficTag.HasValue)
             {
                 writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteNumberValue(VnetTrafficTag.Value);
             }
-            if (Optional.IsDefined(SubnetTrafficTag))
+            if (SubnetTrafficTag.HasValue)
             {
                 writer.WritePropertyName("subnetTrafficTag"u8);
                 writer.WriteNumberValue(SubnetTrafficTag.Value);
             }
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Optional.IsDefined(Tag))
+            if (Tag.HasValue)
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag.Value.ToString());
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProductFamilyDisplayName))
+            if (options.Format != "W" && ProductFamilyDisplayName != null)
             {
                 writer.WritePropertyName("productFamilyDisplayName"u8);
                 writer.WriteStringValue(ProductFamilyDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationDisplayName))
+            if (options.Format != "W" && ConfigurationDisplayName != null)
             {
                 writer.WritePropertyName("configurationDisplayName"u8);
                 writer.WriteStringValue(ConfigurationDisplayName);

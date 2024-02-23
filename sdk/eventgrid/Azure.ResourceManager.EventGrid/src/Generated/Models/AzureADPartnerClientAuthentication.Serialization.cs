@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(ClientAuthenticationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
+            if (AzureActiveDirectoryTenantId != null)
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
+            if (AzureActiveDirectoryApplicationIdOrUri != null)
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri);

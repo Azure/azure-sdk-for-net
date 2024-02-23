@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TotalSnapshotsSupported))
+            if (options.Format != "W" && TotalSnapshotsSupported.HasValue)
             {
                 writer.WritePropertyName("totalSnapshotsSupported"u8);
                 writer.WriteNumberValue(TotalSnapshotsSupported.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalSnapshotsCreated))
+            if (options.Format != "W" && TotalSnapshotsCreated.HasValue)
             {
                 writer.WritePropertyName("totalSnapshotsCreated"u8);
                 writer.WriteNumberValue(TotalSnapshotsCreated.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataStoreName))
+            if (options.Format != "W" && DataStoreName != null)
             {
                 writer.WritePropertyName("dataStoreName"u8);
                 writer.WriteStringValue(DataStoreName);

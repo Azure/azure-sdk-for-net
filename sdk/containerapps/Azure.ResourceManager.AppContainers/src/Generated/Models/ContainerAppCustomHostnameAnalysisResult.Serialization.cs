@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsHostnameAlreadyVerified))
+            if (options.Format != "W" && IsHostnameAlreadyVerified.HasValue)
             {
                 writer.WritePropertyName("isHostnameAlreadyVerified"u8);
                 writer.WriteBooleanValue(IsHostnameAlreadyVerified.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationTest))
+            if (options.Format != "W" && CustomDomainVerificationTest.HasValue)
             {
                 writer.WritePropertyName("customDomainVerificationTest"u8);
                 writer.WriteStringValue(CustomDomainVerificationTest.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
+            if (options.Format != "W" && CustomDomainVerificationFailureInfo != null)
             {
                 writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
                 writer.WriteObjectValue(CustomDomainVerificationFailureInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(HasConflictOnManagedEnvironment))
+            if (options.Format != "W" && HasConflictOnManagedEnvironment.HasValue)
             {
                 writer.WritePropertyName("hasConflictOnManagedEnvironment"u8);
                 writer.WriteBooleanValue(HasConflictOnManagedEnvironment.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConflictWithEnvironmentCustomDomain))
+            if (options.Format != "W" && ConflictWithEnvironmentCustomDomain.HasValue)
             {
                 writer.WritePropertyName("conflictWithEnvironmentCustomDomain"u8);
                 writer.WriteBooleanValue(ConflictWithEnvironmentCustomDomain.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConflictingContainerAppResourceId))
+            if (options.Format != "W" && ConflictingContainerAppResourceId != null)
             {
                 writer.WritePropertyName("conflictingContainerAppResourceId"u8);
                 writer.WriteStringValue(ConflictingContainerAppResourceId);
             }
-            if (Optional.IsCollectionDefined(CNameRecords))
+            if (!(CNameRecords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("cNameRecords"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TxtRecords))
+            if (!(TxtRecords is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("txtRecords"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ARecords))
+            if (!(ARecords is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("aRecords"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlternateCNameRecords))
+            if (!(AlternateCNameRecords is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("alternateCNameRecords"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlternateTxtRecords))
+            if (!(AlternateTxtRecords is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("alternateTxtRecords"u8);
                 writer.WriteStartArray();

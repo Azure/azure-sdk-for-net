@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UploadUri))
+            if (UploadUri != null)
             {
                 writer.WritePropertyName("uploadUri"u8);
                 writer.WriteStringValue(UploadUri.AbsoluteUri);

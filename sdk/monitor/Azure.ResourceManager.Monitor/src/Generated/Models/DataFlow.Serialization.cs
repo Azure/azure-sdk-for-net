@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (!(Streams is ChangeTrackingList<DataFlowStream> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (!(Destinations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TransformKql))
+            if (TransformKql != null)
             {
                 writer.WritePropertyName("transformKql"u8);
                 writer.WriteStringValue(TransformKql);
             }
-            if (Optional.IsDefined(OutputStream))
+            if (OutputStream != null)
             {
                 writer.WritePropertyName("outputStream"u8);
                 writer.WriteStringValue(OutputStream);
             }
-            if (Optional.IsDefined(BuiltInTransform))
+            if (BuiltInTransform != null)
             {
                 writer.WritePropertyName("builtInTransform"u8);
                 writer.WriteStringValue(BuiltInTransform);

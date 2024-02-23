@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("query");
             }
-            if (QuerySubscriptions != null && Optional.IsCollectionDefined(QuerySubscriptions))
+            if (QuerySubscriptions != null && !(QuerySubscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("querySubscriptions"u8);
                 writer.WriteStartArray();

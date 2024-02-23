@@ -26,74 +26,74 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ContactPersonName))
+            if (options.Format != "W" && ContactPersonName != null)
             {
                 writer.WritePropertyName("contactPersonName"u8);
                 writer.WriteStringValue(ContactPersonName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Company))
+            if (options.Format != "W" && Company != null)
             {
                 writer.WritePropertyName("company"u8);
                 writer.WriteStringValue(Company);
             }
-            if (options.Format != "W" && Optional.IsDefined(Street1))
+            if (options.Format != "W" && Street1 != null)
             {
                 writer.WritePropertyName("street1"u8);
                 writer.WriteStringValue(Street1);
             }
-            if (options.Format != "W" && Optional.IsDefined(Street2))
+            if (options.Format != "W" && Street2 != null)
             {
                 writer.WritePropertyName("street2"u8);
                 writer.WriteStringValue(Street2);
             }
-            if (options.Format != "W" && Optional.IsDefined(Street3))
+            if (options.Format != "W" && Street3 != null)
             {
                 writer.WritePropertyName("street3"u8);
                 writer.WriteStringValue(Street3);
             }
-            if (options.Format != "W" && Optional.IsDefined(City))
+            if (options.Format != "W" && City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(Zip))
+            if (options.Format != "W" && Zip != null)
             {
                 writer.WritePropertyName("zip"u8);
                 writer.WriteStringValue(Zip);
             }
-            if (options.Format != "W" && Optional.IsDefined(Country))
+            if (options.Format != "W" && Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (options.Format != "W" && Optional.IsDefined(Phone))
+            if (options.Format != "W" && Phone != null)
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (options.Format != "W" && Optional.IsDefined(PhoneExtension))
+            if (options.Format != "W" && PhoneExtension != null)
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (options.Format != "W" && Optional.IsDefined(AddressType))
+            if (options.Format != "W" && AddressType != null)
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdditionalShippingInformation))
+            if (options.Format != "W" && AdditionalShippingInformation != null)
             {
                 writer.WritePropertyName("additionalShippingInformation"u8);
                 writer.WriteStringValue(AdditionalShippingInformation);
             }
             writer.WritePropertyName("datacenterAddressType"u8);
             writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
+            if (options.Format != "W" && !(SupportedCarriersForReturnShipment is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAzureLocation))
+            if (options.Format != "W" && DataCenterAzureLocation.HasValue)
             {
                 writer.WritePropertyName("dataCenterAzureLocation"u8);
                 writer.WriteStringValue(DataCenterAzureLocation.Value);

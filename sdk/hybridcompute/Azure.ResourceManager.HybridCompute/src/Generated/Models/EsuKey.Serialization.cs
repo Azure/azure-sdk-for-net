@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(LicenseStatus))
+            if (LicenseStatus != null)
             {
                 writer.WritePropertyName("licenseStatus"u8);
                 writer.WriteStringValue(LicenseStatus);

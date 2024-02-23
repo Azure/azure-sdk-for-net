@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlwaysLog))
+            if (AlwaysLog.HasValue)
             {
                 writer.WritePropertyName("alwaysLog"u8);
                 writer.WriteStringValue(AlwaysLog.Value.ToString());
             }
-            if (Optional.IsDefined(LoggerId))
+            if (LoggerId != null)
             {
                 writer.WritePropertyName("loggerId"u8);
                 writer.WriteStringValue(LoggerId);
             }
-            if (Optional.IsDefined(Sampling))
+            if (Sampling != null)
             {
                 writer.WritePropertyName("sampling"u8);
                 writer.WriteObjectValue(Sampling);
             }
-            if (Optional.IsDefined(Frontend))
+            if (Frontend != null)
             {
                 writer.WritePropertyName("frontend"u8);
                 writer.WriteObjectValue(Frontend);
             }
-            if (Optional.IsDefined(Backend))
+            if (Backend != null)
             {
                 writer.WritePropertyName("backend"u8);
                 writer.WriteObjectValue(Backend);
             }
-            if (Optional.IsDefined(IsLogClientIPEnabled))
+            if (IsLogClientIPEnabled.HasValue)
             {
                 writer.WritePropertyName("logClientIp"u8);
                 writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
-            if (Optional.IsDefined(HttpCorrelationProtocol))
+            if (HttpCorrelationProtocol.HasValue)
             {
                 writer.WritePropertyName("httpCorrelationProtocol"u8);
                 writer.WriteStringValue(HttpCorrelationProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(Verbosity))
+            if (Verbosity.HasValue)
             {
                 writer.WritePropertyName("verbosity"u8);
                 writer.WriteStringValue(Verbosity.Value.ToString());
             }
-            if (Optional.IsDefined(OperationNameFormat))
+            if (OperationNameFormat.HasValue)
             {
                 writer.WritePropertyName("operationNameFormat"u8);
                 writer.WriteStringValue(OperationNameFormat.Value.ToString());
             }
-            if (Optional.IsDefined(Metrics))
+            if (Metrics.HasValue)
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteBooleanValue(Metrics.Value);

@@ -16,22 +16,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteObjectValue(Hostname);
             }
-            if (Optional.IsDefined(SystemDateTime))
+            if (SystemDateTime != null)
             {
                 writer.WritePropertyName("systemDateTime"u8);
                 writer.WriteObjectValue(SystemDateTime);
             }
-            if (Optional.IsDefined(Dns))
+            if (Dns != null)
             {
                 writer.WritePropertyName("dns"u8);
                 writer.WriteObjectValue(Dns);
             }
-            if (Optional.IsCollectionDefined(MediaProfiles))
+            if (!(MediaProfiles is ChangeTrackingList<MediaProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("mediaProfiles"u8);
                 writer.WriteStartArray();

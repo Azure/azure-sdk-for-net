@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobStorageAbsoluteSasUri))
+            if (BlobStorageAbsoluteSasUri != null)
             {
                 writer.WritePropertyName("blobStorageAbsoluteSasUri"u8);
                 writer.WriteStringValue(BlobStorageAbsoluteSasUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(UsageStartOn))
+            if (UsageStartOn.HasValue)
             {
                 writer.WritePropertyName("usageStartDate"u8);
                 writer.WriteStringValue(UsageStartOn.Value, "O");

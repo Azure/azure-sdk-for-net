@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryVirtualNetworkResourceGroupName))
+            if (RecoveryVirtualNetworkResourceGroupName != null)
             {
                 writer.WritePropertyName("recoveryVirtualNetworkResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkResourceGroupName);
             }
-            if (Optional.IsDefined(RecoveryVirtualNetworkName))
+            if (RecoveryVirtualNetworkName != null)
             {
                 writer.WritePropertyName("recoveryVirtualNetworkName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkName);

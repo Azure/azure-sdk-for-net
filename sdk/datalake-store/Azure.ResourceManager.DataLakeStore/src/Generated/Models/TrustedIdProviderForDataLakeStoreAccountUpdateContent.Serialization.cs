@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdProvider))
+            if (IdProvider != null)
             {
                 writer.WritePropertyName("idProvider"u8);
                 writer.WriteStringValue(IdProvider.AbsoluteUri);

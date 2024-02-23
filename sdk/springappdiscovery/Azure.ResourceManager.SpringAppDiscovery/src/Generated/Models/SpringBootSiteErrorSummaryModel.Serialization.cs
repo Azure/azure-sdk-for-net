@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AffectedResourceType))
+            if (AffectedResourceType != null)
             {
                 writer.WritePropertyName("affectedResourceType"u8);
                 writer.WriteStringValue(AffectedResourceType);
             }
-            if (Optional.IsDefined(AffectedObjectsCount))
+            if (AffectedObjectsCount.HasValue)
             {
                 writer.WritePropertyName("affectedObjectsCount"u8);
                 writer.WriteNumberValue(AffectedObjectsCount.Value);

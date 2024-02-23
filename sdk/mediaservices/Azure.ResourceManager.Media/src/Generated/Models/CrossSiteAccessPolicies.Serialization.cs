@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientAccessPolicy))
+            if (ClientAccessPolicy != null)
             {
                 writer.WritePropertyName("clientAccessPolicy"u8);
                 writer.WriteStringValue(ClientAccessPolicy);
             }
-            if (Optional.IsDefined(CrossDomainPolicy))
+            if (CrossDomainPolicy != null)
             {
                 writer.WritePropertyName("crossDomainPolicy"u8);
                 writer.WriteStringValue(CrossDomainPolicy);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,48 +67,48 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
-            if (options.Format != "W" && Optional.IsDefined(AvailabilityZone))
+            if (options.Format != "W" && AvailabilityZone != null)
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (options.Format != "W" && Optional.IsDefined(BareMetalMachineId))
+            if (options.Format != "W" && BareMetalMachineId != null)
             {
                 writer.WritePropertyName("bareMetalMachineId"u8);
                 writer.WriteStringValue(BareMetalMachineId);
             }
-            if (Optional.IsDefined(BootMethod))
+            if (BootMethod.HasValue)
             {
                 writer.WritePropertyName("bootMethod"u8);
                 writer.WriteStringValue(BootMethod.Value.ToString());
             }
             writer.WritePropertyName("cloudServicesNetworkAttachment"u8);
             writer.WriteObjectValue(CloudServicesNetworkAttachment);
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
             writer.WritePropertyName("cpuCores"u8);
             writer.WriteNumberValue(CpuCores);
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (Optional.IsDefined(IsolateEmulatorThread))
+            if (IsolateEmulatorThread.HasValue)
             {
                 writer.WritePropertyName("isolateEmulatorThread"u8);
                 writer.WriteStringValue(IsolateEmulatorThread.Value.ToString());
             }
             writer.WritePropertyName("memorySizeGB"u8);
             writer.WriteNumberValue(MemorySizeInGB);
-            if (Optional.IsCollectionDefined(NetworkAttachments))
+            if (!(NetworkAttachments is ChangeTrackingList<NetworkAttachment> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkAttachments"u8);
                 writer.WriteStartArray();
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NetworkData))
+            if (NetworkData != null)
             {
                 writer.WritePropertyName("networkData"u8);
                 writer.WriteStringValue(NetworkData);
             }
-            if (Optional.IsCollectionDefined(PlacementHints))
+            if (!(PlacementHints is ChangeTrackingList<VirtualMachinePlacementHint> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("placementHints"u8);
                 writer.WriteStartArray();
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            if (options.Format != "W" && PowerState.HasValue)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SshPublicKeys))
+            if (!(SshPublicKeys is ChangeTrackingList<NetworkCloudSshPublicKey> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sshPublicKeys"u8);
                 writer.WriteStartArray();
@@ -155,29 +155,29 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("storageProfile"u8);
             writer.WriteObjectValue(StorageProfile);
-            if (Optional.IsDefined(UserData))
+            if (UserData != null)
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (Optional.IsDefined(VirtioInterface))
+            if (VirtioInterface.HasValue)
             {
                 writer.WritePropertyName("virtioInterface"u8);
                 writer.WriteStringValue(VirtioInterface.Value.ToString());
             }
-            if (Optional.IsDefined(VmDeviceModel))
+            if (VmDeviceModel.HasValue)
             {
                 writer.WritePropertyName("vmDeviceModel"u8);
                 writer.WriteStringValue(VmDeviceModel.Value.ToString());
             }
             writer.WritePropertyName("vmImage"u8);
             writer.WriteStringValue(VmImage);
-            if (Optional.IsDefined(VmImageRepositoryCredentials))
+            if (VmImageRepositoryCredentials != null)
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
                 writer.WriteObjectValue(VmImageRepositoryCredentials);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Volumes))
+            if (options.Format != "W" && !(Volumes is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();

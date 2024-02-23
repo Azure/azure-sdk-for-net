@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabasesToSourceTables))
+            if (options.Format != "W" && DatabasesToSourceTables != null)
             {
                 writer.WritePropertyName("databasesToSourceTables"u8);
                 writer.WriteStringValue(DatabasesToSourceTables);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabasesToTargetTables))
+            if (options.Format != "W" && DatabasesToTargetTables != null)
             {
                 writer.WritePropertyName("databasesToTargetTables"u8);
                 writer.WriteStringValue(DatabasesToTargetTables);
             }
-            if (options.Format != "W" && Optional.IsDefined(TableValidationErrors))
+            if (options.Format != "W" && TableValidationErrors != null)
             {
                 writer.WritePropertyName("tableValidationErrors"u8);
                 writer.WriteStringValue(TableValidationErrors);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

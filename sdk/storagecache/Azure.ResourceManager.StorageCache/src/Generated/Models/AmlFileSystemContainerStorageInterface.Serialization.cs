@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PersistentVolumeClaim))
+            if (options.Format != "W" && PersistentVolumeClaim != null)
             {
                 writer.WritePropertyName("persistentVolumeClaim"u8);
                 writer.WriteStringValue(PersistentVolumeClaim);
             }
-            if (options.Format != "W" && Optional.IsDefined(PersistentVolume))
+            if (options.Format != "W" && PersistentVolume != null)
             {
                 writer.WritePropertyName("persistentVolume"u8);
                 writer.WriteStringValue(PersistentVolume);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageClass))
+            if (options.Format != "W" && StorageClass != null)
             {
                 writer.WritePropertyName("storageClass"u8);
                 writer.WriteStringValue(StorageClass);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StopSellNotifications))
+            if (!(StopSellNotifications is ChangeTrackingList<StopSellNotifications> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stopSellNotifications"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NewNotifications))
+            if (!(NewNotifications is ChangeTrackingList<NewPlanNotification> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("newNotifications"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApprovalRequests))
+            if (!(ApprovalRequests is ChangeTrackingList<RequestApprovalsDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("approvalRequests"u8);
                 writer.WriteStartArray();

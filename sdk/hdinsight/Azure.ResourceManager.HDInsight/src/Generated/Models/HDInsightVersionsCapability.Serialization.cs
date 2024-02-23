@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Available))
+            if (!(Available is ChangeTrackingList<HDInsightVersionSpec> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStartArray();

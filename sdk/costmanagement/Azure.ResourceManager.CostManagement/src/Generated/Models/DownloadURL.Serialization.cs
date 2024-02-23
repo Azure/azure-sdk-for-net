@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ExpiryOn))
+            if (options.Format != "W" && ExpiryOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
-            if (Optional.IsDefined(ValidTill))
+            if (ValidTill.HasValue)
             {
                 writer.WritePropertyName("validTill"u8);
                 writer.WriteStringValue(ValidTill.Value, "O");
             }
-            if (Optional.IsDefined(DownloadUri))
+            if (DownloadUri != null)
             {
                 writer.WritePropertyName("downloadUrl"u8);
                 writer.WriteStringValue(DownloadUri.AbsoluteUri);

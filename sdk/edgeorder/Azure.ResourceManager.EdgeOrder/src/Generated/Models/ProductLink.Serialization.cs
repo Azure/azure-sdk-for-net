@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LinkType))
+            if (options.Format != "W" && LinkType.HasValue)
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkUri))
+            if (options.Format != "W" && LinkUri != null)
             {
                 writer.WritePropertyName("linkUrl"u8);
                 writer.WriteStringValue(LinkUri.AbsoluteUri);

@@ -38,6 +38,47 @@ namespace Azure.ResourceManager.AgFoodPlatform
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(IEnumerable<string> farmBeatsExtensionIds, IEnumerable<string> farmBeatsExtensionNames, IEnumerable<string> extensionCategories, IEnumerable<string> publisherIds, int? maxPageSize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions", false);
+            if (farmBeatsExtensionIds != null && !(farmBeatsExtensionIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in farmBeatsExtensionIds)
+                {
+                    uri.AppendQuery("farmBeatsExtensionIds", param, true);
+                }
+            }
+            if (farmBeatsExtensionNames != null && !(farmBeatsExtensionNames is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in farmBeatsExtensionNames)
+                {
+                    uri.AppendQuery("farmBeatsExtensionNames", param, true);
+                }
+            }
+            if (extensionCategories != null && !(extensionCategories is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var param in extensionCategories)
+                {
+                    uri.AppendQuery("extensionCategories", param, true);
+                }
+            }
+            if (publisherIds != null && !(publisherIds is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var param in publisherIds)
+                {
+                    uri.AppendQuery("publisherIds", param, true);
+                }
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(IEnumerable<string> farmBeatsExtensionIds, IEnumerable<string> farmBeatsExtensionNames, IEnumerable<string> extensionCategories, IEnumerable<string> publisherIds, int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
@@ -46,28 +87,28 @@ namespace Azure.ResourceManager.AgFoodPlatform
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions", false);
-            if (farmBeatsExtensionIds != null && Optional.IsCollectionDefined(farmBeatsExtensionIds))
+            if (farmBeatsExtensionIds != null && !(farmBeatsExtensionIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in farmBeatsExtensionIds)
                 {
                     uri.AppendQuery("farmBeatsExtensionIds", param, true);
                 }
             }
-            if (farmBeatsExtensionNames != null && Optional.IsCollectionDefined(farmBeatsExtensionNames))
+            if (farmBeatsExtensionNames != null && !(farmBeatsExtensionNames is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in farmBeatsExtensionNames)
                 {
                     uri.AppendQuery("farmBeatsExtensionNames", param, true);
                 }
             }
-            if (extensionCategories != null && Optional.IsCollectionDefined(extensionCategories))
+            if (extensionCategories != null && !(extensionCategories is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in extensionCategories)
                 {
                     uri.AppendQuery("extensionCategories", param, true);
                 }
             }
-            if (publisherIds != null && Optional.IsCollectionDefined(publisherIds))
+            if (publisherIds != null && !(publisherIds is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in publisherIds)
                 {
@@ -139,6 +180,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string farmBeatsExtensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/", false);
+            uri.AppendPath(farmBeatsExtensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string farmBeatsExtensionId)
@@ -223,6 +274,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, IEnumerable<string> farmBeatsExtensionIds, IEnumerable<string> farmBeatsExtensionNames, IEnumerable<string> extensionCategories, IEnumerable<string> publisherIds, int? maxPageSize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, IEnumerable<string> farmBeatsExtensionIds, IEnumerable<string> farmBeatsExtensionNames, IEnumerable<string> extensionCategories, IEnumerable<string> publisherIds, int? maxPageSize)

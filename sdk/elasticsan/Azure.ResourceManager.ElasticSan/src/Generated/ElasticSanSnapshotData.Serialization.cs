@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteStartObject();
             writer.WritePropertyName("creationData"u8);
             writer.WriteObjectValue(CreationData);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceVolumeSizeGiB))
+            if (options.Format != "W" && SourceVolumeSizeGiB.HasValue)
             {
                 writer.WritePropertyName("sourceVolumeSizeGiB"u8);
                 writer.WriteNumberValue(SourceVolumeSizeGiB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumeName))
+            if (options.Format != "W" && VolumeName != null)
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);

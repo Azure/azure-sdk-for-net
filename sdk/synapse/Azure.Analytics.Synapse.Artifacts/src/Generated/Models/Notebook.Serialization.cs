@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(BigDataPool))
+            if (BigDataPool != null)
             {
                 if (BigDataPool != null)
                 {
@@ -36,12 +36,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("bigDataPool");
                 }
             }
-            if (Optional.IsDefined(TargetSparkConfiguration))
+            if (TargetSparkConfiguration != null)
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (Optional.IsDefined(SessionProperties))
+            if (SessionProperties != null)
             {
                 if (SessionProperties != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 if (Folder != null)
                 {

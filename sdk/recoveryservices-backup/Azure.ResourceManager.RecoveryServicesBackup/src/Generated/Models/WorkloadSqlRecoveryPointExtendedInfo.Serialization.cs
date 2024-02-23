@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataDirectoryInfoCapturedOn))
+            if (DataDirectoryInfoCapturedOn.HasValue)
             {
                 writer.WritePropertyName("dataDirectoryTimeInUTC"u8);
                 writer.WriteStringValue(DataDirectoryInfoCapturedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(DataDirectoryPaths))
+            if (!(DataDirectoryPaths is ChangeTrackingList<SqlDataDirectory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();

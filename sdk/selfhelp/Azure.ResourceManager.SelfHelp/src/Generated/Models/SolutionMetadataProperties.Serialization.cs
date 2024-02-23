@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionId))
+            if (SolutionId != null)
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SolutionType))
+            if (options.Format != "W" && SolutionType.HasValue)
             {
                 writer.WritePropertyName("solutionType"u8);
                 writer.WriteStringValue(SolutionType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredInputs))
+            if (options.Format != "W" && !(RequiredInputs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredInputs"u8);
                 writer.WriteStartArray();

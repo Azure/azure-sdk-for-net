@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.Shares.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "ProtocolSettings");
-            if (Optional.IsDefined(Smb))
+            if (Smb != null)
             {
                 writer.WriteObjectValue(Smb, "SMB");
             }

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Deinterlace))
+            if (Deinterlace != null)
             {
                 writer.WritePropertyName("deinterlace"u8);
                 writer.WriteObjectValue(Deinterlace);
             }
-            if (Optional.IsDefined(Rotation))
+            if (Rotation.HasValue)
             {
                 writer.WritePropertyName("rotation"u8);
                 writer.WriteStringValue(Rotation.Value.ToString());
             }
-            if (Optional.IsDefined(Crop))
+            if (Crop != null)
             {
                 writer.WritePropertyName("crop"u8);
                 writer.WriteObjectValue(Crop);
             }
-            if (Optional.IsDefined(FadeIn))
+            if (FadeIn != null)
             {
                 writer.WritePropertyName("fadeIn"u8);
                 writer.WriteObjectValue(FadeIn);
             }
-            if (Optional.IsDefined(FadeOut))
+            if (FadeOut != null)
             {
                 writer.WritePropertyName("fadeOut"u8);
                 writer.WriteObjectValue(FadeOut);
             }
-            if (Optional.IsCollectionDefined(Overlays))
+            if (!(Overlays is ChangeTrackingList<MediaOverlayBase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("overlays"u8);
                 writer.WriteStartArray();

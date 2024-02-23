@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Backends))
+            if (!(Backends is ChangeTrackingList<FrontDoorBackend> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backends"u8);
                 writer.WriteStartArray();
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LoadBalancingSettings))
+            if (LoadBalancingSettings != null)
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 JsonSerializer.Serialize(writer, LoadBalancingSettings);
             }
-            if (Optional.IsDefined(HealthProbeSettings))
+            if (HealthProbeSettings != null)
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 JsonSerializer.Serialize(writer, HealthProbeSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());

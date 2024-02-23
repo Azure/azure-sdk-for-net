@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Polarization.ToString());
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (Optional.IsDefined(GainOverTemperature))
+            if (GainOverTemperature.HasValue)
             {
                 writer.WritePropertyName("gainOverTemperature"u8);
                 writer.WriteNumberValue(GainOverTemperature.Value);
             }
-            if (Optional.IsDefined(EirpdBW))
+            if (EirpdBW.HasValue)
             {
                 writer.WritePropertyName("eirpdBW"u8);
                 writer.WriteNumberValue(EirpdBW.Value);

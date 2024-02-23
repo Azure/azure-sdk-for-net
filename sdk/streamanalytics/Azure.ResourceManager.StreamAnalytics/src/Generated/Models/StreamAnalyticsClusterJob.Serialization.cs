@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(StreamingUnits))
+            if (options.Format != "W" && StreamingUnits.HasValue)
             {
                 writer.WritePropertyName("streamingUnits"u8);
                 writer.WriteNumberValue(StreamingUnits.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobState))
+            if (options.Format != "W" && JobState.HasValue)
             {
                 writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState.Value.ToString());

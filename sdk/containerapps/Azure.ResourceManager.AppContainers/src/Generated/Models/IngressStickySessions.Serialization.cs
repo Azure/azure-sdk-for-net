@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Affinity))
+            if (Affinity.HasValue)
             {
                 writer.WritePropertyName("affinity"u8);
                 writer.WriteStringValue(Affinity.Value.ToString());

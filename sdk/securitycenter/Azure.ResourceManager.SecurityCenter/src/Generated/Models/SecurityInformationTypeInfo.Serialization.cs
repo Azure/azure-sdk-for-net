@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Order))
+            if (Order.HasValue)
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsDefined(RecommendedLabelId))
+            if (RecommendedLabelId.HasValue)
             {
                 writer.WritePropertyName("recommendedLabelId"u8);
                 writer.WriteStringValue(RecommendedLabelId.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Custom))
+            if (Custom.HasValue)
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteBooleanValue(Custom.Value);
             }
-            if (Optional.IsCollectionDefined(Keywords))
+            if (!(Keywords is ChangeTrackingList<InformationProtectionKeyword> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();

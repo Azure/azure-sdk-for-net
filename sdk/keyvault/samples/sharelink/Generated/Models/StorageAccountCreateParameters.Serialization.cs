@@ -21,17 +21,17 @@ namespace Azure.Security.KeyVault.Storage.Models
             writer.WriteStringValue(ActiveKeyName);
             writer.WritePropertyName("autoRegenerateKey"u8);
             writer.WriteBooleanValue(AutoRegenerateKey);
-            if (Optional.IsDefined(RegenerationPeriod))
+            if (RegenerationPeriod != null)
             {
                 writer.WritePropertyName("regenerationPeriod"u8);
                 writer.WriteStringValue(RegenerationPeriod);
             }
-            if (Optional.IsDefined(StorageAccountAttributes))
+            if (StorageAccountAttributes != null)
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(StorageAccountAttributes);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

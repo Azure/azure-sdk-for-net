@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HivecatalogName))
+            if (HivecatalogName != null)
             {
                 writer.WritePropertyName("hivecatalogName"u8);
                 writer.WriteStringValue(HivecatalogName);
             }
-            if (Optional.IsDefined(HivecatalogSchema))
+            if (HivecatalogSchema != null)
             {
                 writer.WritePropertyName("hivecatalogSchema"u8);
                 writer.WriteStringValue(HivecatalogSchema);
             }
-            if (Optional.IsDefined(PartitionRetentionInDays))
+            if (PartitionRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("partitionRetentionInDays"u8);
                 writer.WriteNumberValue(PartitionRetentionInDays.Value);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

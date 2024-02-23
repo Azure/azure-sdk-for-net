@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WebChatEmbedCode))
+            if (options.Format != "W" && WebChatEmbedCode != null)
             {
                 writer.WritePropertyName("webChatEmbedCode"u8);
                 writer.WriteStringValue(WebChatEmbedCode);
             }
-            if (Optional.IsCollectionDefined(Sites))
+            if (!(Sites is ChangeTrackingList<WebChatSite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();

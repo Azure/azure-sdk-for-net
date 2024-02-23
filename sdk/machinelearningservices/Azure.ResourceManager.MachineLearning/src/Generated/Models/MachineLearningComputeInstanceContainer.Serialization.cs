@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Autosave))
+            if (Autosave.HasValue)
             {
                 writer.WritePropertyName("autosave"u8);
                 writer.WriteStringValue(Autosave.Value.ToString());
             }
-            if (Optional.IsDefined(Gpu))
+            if (Gpu != null)
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteStringValue(Gpu);
             }
-            if (Optional.IsDefined(Network))
+            if (Network.HasValue)
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteStringValue(Network.Value.ToString());
             }
-            if (Optional.IsDefined(Environment))
+            if (Environment != null)
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteObjectValue(Environment);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Services))
+            if (options.Format != "W" && !(Services is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteStartArray();

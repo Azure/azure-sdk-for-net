@@ -19,74 +19,74 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RowCount))
+            if (RowCount != null)
             {
                 writer.WritePropertyName("rowCount"u8);
                 writer.WriteObjectValue(RowCount);
             }
-            if (Optional.IsDefined(RowSkips))
+            if (RowSkips != null)
             {
                 writer.WritePropertyName("rowSkips"u8);
                 writer.WriteObjectValue(RowSkips);
             }
-            if (Optional.IsDefined(RfcTableFields))
+            if (RfcTableFields != null)
             {
                 writer.WritePropertyName("rfcTableFields"u8);
                 writer.WriteObjectValue(RfcTableFields);
             }
-            if (Optional.IsDefined(RfcTableOptions))
+            if (RfcTableOptions != null)
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
                 writer.WriteObjectValue(RfcTableOptions);
             }
-            if (Optional.IsDefined(BatchSize))
+            if (BatchSize != null)
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteObjectValue(BatchSize);
             }
-            if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
+            if (CustomRfcReadTableFunctionModule != null)
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
                 writer.WriteObjectValue(CustomRfcReadTableFunctionModule);
             }
-            if (Optional.IsDefined(SapDataColumnDelimiter))
+            if (SapDataColumnDelimiter != null)
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
                 writer.WriteObjectValue(SapDataColumnDelimiter);
             }
-            if (Optional.IsDefined(PartitionOption))
+            if (PartitionOption != null)
             {
                 writer.WritePropertyName("partitionOption"u8);
                 writer.WriteObjectValue(PartitionOption);
             }
-            if (Optional.IsDefined(PartitionSettings))
+            if (PartitionSettings != null)
             {
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (QueryTimeout != null)
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);

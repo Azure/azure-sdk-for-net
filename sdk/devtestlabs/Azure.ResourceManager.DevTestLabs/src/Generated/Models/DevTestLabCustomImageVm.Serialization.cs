@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVmId))
+            if (SourceVmId != null)
             {
                 writer.WritePropertyName("sourceVmId"u8);
                 writer.WriteStringValue(SourceVmId);
             }
-            if (Optional.IsDefined(WindowsOSInfo))
+            if (WindowsOSInfo != null)
             {
                 writer.WritePropertyName("windowsOsInfo"u8);
                 writer.WriteObjectValue(WindowsOSInfo);
             }
-            if (Optional.IsDefined(LinuxOSInfo))
+            if (LinuxOSInfo != null)
             {
                 writer.WritePropertyName("linuxOsInfo"u8);
                 writer.WriteObjectValue(LinuxOSInfo);

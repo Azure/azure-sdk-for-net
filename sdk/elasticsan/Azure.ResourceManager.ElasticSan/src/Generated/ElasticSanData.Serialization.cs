@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -84,32 +84,32 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteNumberValue(BaseSizeTiB);
             writer.WritePropertyName("extendedCapacitySizeTiB"u8);
             writer.WriteNumberValue(ExtendedCapacitySizeTiB);
-            if (options.Format != "W" && Optional.IsDefined(TotalVolumeSizeGiB))
+            if (options.Format != "W" && TotalVolumeSizeGiB.HasValue)
             {
                 writer.WritePropertyName("totalVolumeSizeGiB"u8);
                 writer.WriteNumberValue(TotalVolumeSizeGiB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumeGroupCount))
+            if (options.Format != "W" && VolumeGroupCount.HasValue)
             {
                 writer.WritePropertyName("volumeGroupCount"u8);
                 writer.WriteNumberValue(VolumeGroupCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalIops))
+            if (options.Format != "W" && TotalIops.HasValue)
             {
                 writer.WritePropertyName("totalIops"u8);
                 writer.WriteNumberValue(TotalIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalMbps))
+            if (options.Format != "W" && TotalMbps.HasValue)
             {
                 writer.WritePropertyName("totalMBps"u8);
                 writer.WriteNumberValue(TotalMbps.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalSizeTiB))
+            if (options.Format != "W" && TotalSizeTiB.HasValue)
             {
                 writer.WritePropertyName("totalSizeTiB"u8);
                 writer.WriteNumberValue(TotalSizeTiB.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ElasticSanPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

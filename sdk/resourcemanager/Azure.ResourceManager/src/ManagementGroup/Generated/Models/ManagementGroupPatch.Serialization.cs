@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(ParentGroupId))
+            if (ParentGroupId != null)
             {
                 if (ParentGroupId != null)
                 {

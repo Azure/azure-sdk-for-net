@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevSpaces
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,29 +58,29 @@ namespace Azure.ResourceManager.DevSpaces
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HostSuffix))
+            if (options.Format != "W" && HostSuffix != null)
             {
                 writer.WritePropertyName("hostSuffix"u8);
                 writer.WriteStringValue(HostSuffix);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataPlaneFqdn))
+            if (options.Format != "W" && DataPlaneFqdn != null)
             {
                 writer.WritePropertyName("dataPlaneFqdn"u8);
                 writer.WriteStringValue(DataPlaneFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetContainerHostApiServerFqdn))
+            if (options.Format != "W" && TargetContainerHostApiServerFqdn != null)
             {
                 writer.WritePropertyName("targetContainerHostApiServerFqdn"u8);
                 writer.WriteStringValue(TargetContainerHostApiServerFqdn);

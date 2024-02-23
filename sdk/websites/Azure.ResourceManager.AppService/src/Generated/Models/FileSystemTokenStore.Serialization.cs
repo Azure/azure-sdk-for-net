@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Directory))
+            if (Directory != null)
             {
                 writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);

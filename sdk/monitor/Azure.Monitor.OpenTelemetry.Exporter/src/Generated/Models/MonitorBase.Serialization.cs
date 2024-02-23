@@ -15,12 +15,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseType))
+            if (BaseType != null)
             {
                 writer.WritePropertyName("baseType"u8);
                 writer.WriteStringValue(BaseType);
             }
-            if (Optional.IsDefined(BaseData))
+            if (BaseData != null)
             {
                 writer.WritePropertyName("baseData"u8);
                 writer.WriteObjectValue(BaseData);

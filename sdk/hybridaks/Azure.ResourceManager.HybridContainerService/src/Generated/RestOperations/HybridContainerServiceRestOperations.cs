@@ -36,6 +36,17 @@ namespace Azure.ResourceManager.HybridContainerService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetKubernetesVersionsRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetKubernetesVersionsRequest(string customLocationResourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -109,6 +120,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePutKubernetesVersionsRequestUri(string customLocationResourceUri, KubernetesVersionProfileData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePutKubernetesVersionsRequest(string customLocationResourceUri, KubernetesVersionProfileData data)
@@ -188,6 +210,17 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteKubernetesVersionsRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteKubernetesVersionsRequest(string customLocationResourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -249,6 +282,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetVmSkusRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetVmSkusRequest(string customLocationResourceUri)
@@ -326,6 +370,17 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        internal RequestUriBuilder CreatePutVmSkusRequestUri(string customLocationResourceUri, HybridContainerServiceVmSkuData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePutVmSkusRequest(string customLocationResourceUri, HybridContainerServiceVmSkuData data)
         {
             var message = _pipeline.CreateMessage();
@@ -401,6 +456,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteVmSkusRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteVmSkusRequest(string customLocationResourceUri)

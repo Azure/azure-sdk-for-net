@@ -100,7 +100,9 @@ namespace Azure.ResourceManager.StorageMover
             try
             {
                 var response = await _storageMoverAgentAgentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageMoverArmOperation<StorageMoverAgentResource>(Response.FromValue(new StorageMoverAgentResource(Client, response), response.GetRawResponse()));
+                var uri = _storageMoverAgentAgentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageMoverArmOperation<StorageMoverAgentResource>(Response.FromValue(new StorageMoverAgentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -159,7 +161,9 @@ namespace Azure.ResourceManager.StorageMover
             try
             {
                 var response = _storageMoverAgentAgentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, data, cancellationToken);
-                var operation = new StorageMoverArmOperation<StorageMoverAgentResource>(Response.FromValue(new StorageMoverAgentResource(Client, response), response.GetRawResponse()));
+                var uri = _storageMoverAgentAgentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageMoverArmOperation<StorageMoverAgentResource>(Response.FromValue(new StorageMoverAgentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

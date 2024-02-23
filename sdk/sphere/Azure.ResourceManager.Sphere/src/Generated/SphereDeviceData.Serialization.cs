@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeviceId))
+            if (DeviceId != null)
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChipSku))
+            if (options.Format != "W" && ChipSku != null)
             {
                 writer.WritePropertyName("chipSku"u8);
                 writer.WriteStringValue(ChipSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAvailableOSVersion))
+            if (options.Format != "W" && LastAvailableOSVersion != null)
             {
                 writer.WritePropertyName("lastAvailableOsVersion"u8);
                 writer.WriteStringValue(LastAvailableOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastInstalledOSVersion))
+            if (options.Format != "W" && LastInstalledOSVersion != null)
             {
                 writer.WritePropertyName("lastInstalledOsVersion"u8);
                 writer.WriteStringValue(LastInstalledOSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastOSUpdateUtc))
+            if (options.Format != "W" && LastOSUpdateUtc.HasValue)
             {
                 writer.WritePropertyName("lastOsUpdateUtc"u8);
                 writer.WriteStringValue(LastOSUpdateUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateRequestUtc))
+            if (options.Format != "W" && LastUpdateRequestUtc.HasValue)
             {
                 writer.WritePropertyName("lastUpdateRequestUtc"u8);
                 writer.WriteStringValue(LastUpdateRequestUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

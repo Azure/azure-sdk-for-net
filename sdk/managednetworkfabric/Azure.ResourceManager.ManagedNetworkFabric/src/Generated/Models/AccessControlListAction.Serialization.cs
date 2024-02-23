@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AclActionType))
+            if (AclActionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AclActionType.Value.ToString());
             }
-            if (Optional.IsDefined(CounterName))
+            if (CounterName != null)
             {
                 writer.WritePropertyName("counterName"u8);
                 writer.WriteStringValue(CounterName);

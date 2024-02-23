@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExcludedServicesConfigId))
+            if (ExcludedServicesConfigId != null)
             {
                 writer.WritePropertyName("excludedServicesConfigId"u8);
                 writer.WriteStringValue(ExcludedServicesConfigId);
             }
-            if (Optional.IsDefined(ExcludedServicesList))
+            if (ExcludedServicesList != null)
             {
                 writer.WritePropertyName("excludedServicesList"u8);
                 writer.WriteStringValue(ExcludedServicesList);

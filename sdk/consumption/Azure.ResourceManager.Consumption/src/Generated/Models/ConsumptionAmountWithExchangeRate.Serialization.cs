@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ExchangeRate))
+            if (options.Format != "W" && ExchangeRate.HasValue)
             {
                 writer.WritePropertyName("exchangeRate"u8);
                 writer.WriteNumberValue(ExchangeRate.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExchangeRateMonth))
+            if (options.Format != "W" && ExchangeRateMonth.HasValue)
             {
                 writer.WritePropertyName("exchangeRateMonth"u8);
                 writer.WriteNumberValue(ExchangeRateMonth.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Currency))
+            if (options.Format != "W" && Currency != null)
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);

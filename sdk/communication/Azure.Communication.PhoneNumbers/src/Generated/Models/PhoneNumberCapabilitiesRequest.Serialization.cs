@@ -15,12 +15,12 @@ namespace Azure.Communication.PhoneNumbers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Calling))
+            if (Calling.HasValue)
             {
                 writer.WritePropertyName("calling"u8);
                 writer.WriteStringValue(Calling.Value.ToString());
             }
-            if (Optional.IsDefined(Sms))
+            if (Sms.HasValue)
             {
                 writer.WritePropertyName("sms"u8);
                 writer.WriteStringValue(Sms.Value.ToString());

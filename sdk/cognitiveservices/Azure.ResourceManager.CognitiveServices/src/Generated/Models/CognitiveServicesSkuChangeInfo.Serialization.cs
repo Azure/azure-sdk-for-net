@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CountOfDowngrades))
+            if (CountOfDowngrades.HasValue)
             {
                 writer.WritePropertyName("countOfDowngrades"u8);
                 writer.WriteNumberValue(CountOfDowngrades.Value);
             }
-            if (Optional.IsDefined(CountOfUpgradesAfterDowngrades))
+            if (CountOfUpgradesAfterDowngrades.HasValue)
             {
                 writer.WritePropertyName("countOfUpgradesAfterDowngrades"u8);
                 writer.WriteNumberValue(CountOfUpgradesAfterDowngrades.Value);
             }
-            if (Optional.IsDefined(LastChangedOn))
+            if (LastChangedOn.HasValue)
             {
                 writer.WritePropertyName("lastChangeDate"u8);
                 writer.WriteStringValue(LastChangedOn.Value, "O");

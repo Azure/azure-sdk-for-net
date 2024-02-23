@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.Billing
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -116,6 +127,18 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string billingAccountName, string billingSubscriptionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptions/", false);
+            uri.AppendPath(billingSubscriptionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string billingAccountName, string billingSubscriptionName)
@@ -220,6 +243,18 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string billingAccountName, string billingSubscriptionName, BillingSubscriptionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptions/", false);
+            uri.AppendPath(billingSubscriptionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string billingAccountName, string billingSubscriptionName, BillingSubscriptionData data)
@@ -328,6 +363,18 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string billingAccountName, string billingSubscriptionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptions/", false);
+            uri.AppendPath(billingSubscriptionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string billingAccountName, string billingSubscriptionName)
         {
             var message = _pipeline.CreateMessage();
@@ -420,6 +467,19 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMoveRequestUri(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptions/", false);
+            uri.AppendPath(billingSubscriptionName, true);
+            uri.AppendPath("/move", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMoveRequest(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content)
@@ -527,6 +587,19 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateMoveEligibilityRequestUri(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptions/", false);
+            uri.AppendPath(billingSubscriptionName, true);
+            uri.AppendPath("/validateMoveEligibility", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateMoveEligibilityRequest(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMoveContent content)
@@ -644,6 +717,19 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        internal RequestUriBuilder CreateMergeRequestUri(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMergeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptions/", false);
+            uri.AppendPath(billingSubscriptionName, true);
+            uri.AppendPath("/merge", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMergeRequest(string billingAccountName, string billingSubscriptionName, BillingSubscriptionMergeContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -751,6 +837,19 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        internal RequestUriBuilder CreateSplitRequestUri(string billingAccountName, string billingSubscriptionName, BillingSubscriptionSplitContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptions/", false);
+            uri.AppendPath(billingSubscriptionName, true);
+            uri.AppendPath("/split", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSplitRequest(string billingAccountName, string billingSubscriptionName, BillingSubscriptionSplitContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -856,6 +955,14 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountName)

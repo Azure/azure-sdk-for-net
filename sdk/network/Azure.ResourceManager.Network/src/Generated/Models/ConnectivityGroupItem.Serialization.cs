@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("networkGroupId"u8);
             writer.WriteStringValue(NetworkGroupId);
-            if (Optional.IsDefined(UseHubGateway))
+            if (UseHubGateway.HasValue)
             {
                 writer.WritePropertyName("useHubGateway"u8);
                 writer.WriteStringValue(UseHubGateway.Value.ToString());
             }
-            if (Optional.IsDefined(IsGlobal))
+            if (IsGlobal.HasValue)
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());

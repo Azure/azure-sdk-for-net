@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelatedResourceId))
+            if (RelatedResourceId != null)
             {
                 writer.WritePropertyName("relatedResourceId"u8);
                 writer.WriteStringValue(RelatedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelatedResourceName))
+            if (options.Format != "W" && RelatedResourceName != null)
             {
                 writer.WritePropertyName("relatedResourceName"u8);
                 writer.WriteStringValue(RelatedResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelatedResourceType))
+            if (options.Format != "W" && RelatedResourceType.HasValue)
             {
                 writer.WritePropertyName("relatedResourceType"u8);
                 writer.WriteStringValue(RelatedResourceType.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelatedResourceKind))
+            if (options.Format != "W" && RelatedResourceKind != null)
             {
                 writer.WritePropertyName("relatedResourceKind"u8);
                 writer.WriteStringValue(RelatedResourceKind);

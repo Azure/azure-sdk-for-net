@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocationOptionsType))
+            if (ExtendedLocationOptionsType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationOptionsType);
             }
-            if (Optional.IsDefined(SupportedPolicy))
+            if (SupportedPolicy != null)
             {
                 writer.WritePropertyName("supportedPolicy"u8);
                 writer.WriteStringValue(SupportedPolicy);

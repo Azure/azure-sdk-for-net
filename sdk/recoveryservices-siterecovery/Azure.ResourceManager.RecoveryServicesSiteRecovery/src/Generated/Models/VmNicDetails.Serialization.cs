@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NicId))
+            if (NicId != null)
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (Optional.IsDefined(ReplicaNicId))
+            if (ReplicaNicId != null)
             {
                 writer.WritePropertyName("replicaNicId"u8);
                 writer.WriteStringValue(ReplicaNicId);
             }
-            if (Optional.IsDefined(SourceNicArmId))
+            if (SourceNicArmId != null)
             {
                 writer.WritePropertyName("sourceNicArmId"u8);
                 writer.WriteStringValue(SourceNicArmId);
             }
-            if (Optional.IsDefined(VmNetworkName))
+            if (VmNetworkName != null)
             {
                 writer.WritePropertyName("vMNetworkName"u8);
                 writer.WriteStringValue(VmNetworkName);
             }
-            if (Optional.IsDefined(RecoveryVmNetworkId))
+            if (RecoveryVmNetworkId != null)
             {
                 writer.WritePropertyName("recoveryVMNetworkId"u8);
                 writer.WriteStringValue(RecoveryVmNetworkId);
             }
-            if (Optional.IsCollectionDefined(IPConfigs))
+            if (!(IPConfigs is ChangeTrackingList<HyperVIPConfigDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigs"u8);
                 writer.WriteStartArray();
@@ -61,67 +61,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SelectionType))
+            if (SelectionType != null)
             {
                 writer.WritePropertyName("selectionType"u8);
                 writer.WriteStringValue(SelectionType);
             }
-            if (Optional.IsDefined(RecoveryNetworkSecurityGroupId))
+            if (RecoveryNetworkSecurityGroupId != null)
             {
                 writer.WritePropertyName("recoveryNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(RecoveryNetworkSecurityGroupId);
             }
-            if (Optional.IsDefined(IsAcceleratedNetworkingOnRecoveryEnabled))
+            if (IsAcceleratedNetworkingOnRecoveryEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnRecovery"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingOnRecoveryEnabled.Value);
             }
-            if (Optional.IsDefined(TfoVmNetworkId))
+            if (TfoVmNetworkId != null)
             {
                 writer.WritePropertyName("tfoVMNetworkId"u8);
                 writer.WriteStringValue(TfoVmNetworkId);
             }
-            if (Optional.IsDefined(TfoNetworkSecurityGroupId))
+            if (TfoNetworkSecurityGroupId != null)
             {
                 writer.WritePropertyName("tfoNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(TfoNetworkSecurityGroupId);
             }
-            if (Optional.IsDefined(IsAcceleratedNetworkingOnTfoEnabled))
+            if (IsAcceleratedNetworkingOnTfoEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnTfo"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingOnTfoEnabled.Value);
             }
-            if (Optional.IsDefined(RecoveryNicName))
+            if (RecoveryNicName != null)
             {
                 writer.WritePropertyName("recoveryNicName"u8);
                 writer.WriteStringValue(RecoveryNicName);
             }
-            if (Optional.IsDefined(RecoveryNicResourceGroupName))
+            if (RecoveryNicResourceGroupName != null)
             {
                 writer.WritePropertyName("recoveryNicResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryNicResourceGroupName);
             }
-            if (Optional.IsDefined(IsReuseExistingNicAllowed))
+            if (IsReuseExistingNicAllowed.HasValue)
             {
                 writer.WritePropertyName("reuseExistingNic"u8);
                 writer.WriteBooleanValue(IsReuseExistingNicAllowed.Value);
             }
-            if (Optional.IsDefined(TfoRecoveryNicName))
+            if (TfoRecoveryNicName != null)
             {
                 writer.WritePropertyName("tfoRecoveryNicName"u8);
                 writer.WriteStringValue(TfoRecoveryNicName);
             }
-            if (Optional.IsDefined(TfoRecoveryNicResourceGroupName))
+            if (TfoRecoveryNicResourceGroupName != null)
             {
                 writer.WritePropertyName("tfoRecoveryNicResourceGroupName"u8);
                 writer.WriteStringValue(TfoRecoveryNicResourceGroupName);
             }
-            if (Optional.IsDefined(IsTfoReuseExistingNicAllowed))
+            if (IsTfoReuseExistingNicAllowed.HasValue)
             {
                 writer.WritePropertyName("tfoReuseExistingNic"u8);
                 writer.WriteBooleanValue(IsTfoReuseExistingNicAllowed.Value);
             }
-            if (Optional.IsDefined(TargetNicName))
+            if (TargetNicName != null)
             {
                 writer.WritePropertyName("targetNicName"u8);
                 writer.WriteStringValue(TargetNicName);

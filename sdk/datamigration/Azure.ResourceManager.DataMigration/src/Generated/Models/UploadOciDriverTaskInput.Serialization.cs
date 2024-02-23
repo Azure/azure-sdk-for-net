@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DriverShare))
+            if (DriverShare != null)
             {
                 writer.WritePropertyName("driverShare"u8);
                 writer.WriteObjectValue(DriverShare);

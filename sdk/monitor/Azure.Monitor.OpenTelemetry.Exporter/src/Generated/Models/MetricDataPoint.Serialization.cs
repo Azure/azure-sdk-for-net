@@ -15,21 +15,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("ns"u8);
                 writer.WriteStringValue(Namespace);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(DataPointType))
+            if (DataPointType.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(DataPointType.Value.ToString());
             }
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 if (Count != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("count");
                 }
             }
-            if (Optional.IsDefined(Min))
+            if (Min.HasValue)
             {
                 if (Min != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("min");
                 }
             }
-            if (Optional.IsDefined(Max))
+            if (Max.HasValue)
             {
                 if (Max != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("max");
                 }
             }
-            if (Optional.IsDefined(StdDev))
+            if (StdDev.HasValue)
             {
                 if (StdDev != null)
                 {

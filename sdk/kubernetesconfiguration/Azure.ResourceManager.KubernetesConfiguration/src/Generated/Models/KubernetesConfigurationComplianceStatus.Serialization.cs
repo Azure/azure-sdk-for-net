@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
+            if (options.Format != "W" && ComplianceState.HasValue)
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (Optional.IsDefined(LastConfigAppliedOn))
+            if (LastConfigAppliedOn.HasValue)
             {
                 writer.WritePropertyName("lastConfigApplied"u8);
                 writer.WriteStringValue(LastConfigAppliedOn.Value, "O");
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(MessageLevel))
+            if (MessageLevel.HasValue)
             {
                 writer.WritePropertyName("messageLevel"u8);
                 writer.WriteStringValue(MessageLevel.Value.ToString());

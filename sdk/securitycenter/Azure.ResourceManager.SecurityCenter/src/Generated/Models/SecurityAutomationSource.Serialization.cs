@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventSource))
+            if (EventSource.HasValue)
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RuleSets))
+            if (!(RuleSets is ChangeTrackingList<SecurityAutomationRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();

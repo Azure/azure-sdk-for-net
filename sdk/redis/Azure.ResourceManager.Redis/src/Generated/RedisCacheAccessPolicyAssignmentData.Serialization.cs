@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ObjectId))
+            if (ObjectId.HasValue)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
-            if (Optional.IsDefined(ObjectIdAlias))
+            if (ObjectIdAlias != null)
             {
                 writer.WritePropertyName("objectIdAlias"u8);
                 writer.WriteStringValue(ObjectIdAlias);
             }
-            if (Optional.IsDefined(AccessPolicyName))
+            if (AccessPolicyName != null)
             {
                 writer.WritePropertyName("accessPolicyName"u8);
                 writer.WriteStringValue(AccessPolicyName);

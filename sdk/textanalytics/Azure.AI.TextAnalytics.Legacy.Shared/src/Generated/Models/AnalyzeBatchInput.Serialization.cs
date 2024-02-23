@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             writer.WriteObjectValue(AnalysisInput);
             writer.WritePropertyName("tasks"u8);
             writer.WriteObjectValue(Tasks);
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

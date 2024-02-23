@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScoreName))
+            if (options.Format != "W" && ScoreName != null)
             {
                 writer.WritePropertyName("scoreName"u8);
                 writer.WriteStringValue(ScoreName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PredictionDistribution))
+            if (options.Format != "W" && PredictionDistribution != null)
             {
                 writer.WritePropertyName("predictionDistribution"u8);
                 writer.WriteObjectValue(PredictionDistribution);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CanonicalProfiles))
+            if (options.Format != "W" && !(CanonicalProfiles is ChangeTrackingList<CanonicalProfileDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("canonicalProfiles"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryProfileInstanceCount))
+            if (options.Format != "W" && PrimaryProfileInstanceCount.HasValue)
             {
                 writer.WritePropertyName("primaryProfileInstanceCount"u8);
                 writer.WriteNumberValue(PrimaryProfileInstanceCount.Value);

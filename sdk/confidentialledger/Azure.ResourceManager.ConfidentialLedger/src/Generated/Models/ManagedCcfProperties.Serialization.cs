@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AppName))
+            if (options.Format != "W" && AppName != null)
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AppUri))
+            if (options.Format != "W" && AppUri != null)
             {
                 writer.WritePropertyName("appUri"u8);
                 writer.WriteStringValue(AppUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(IdentityServiceUri))
+            if (options.Format != "W" && IdentityServiceUri != null)
             {
                 writer.WritePropertyName("identityServiceUri"u8);
                 writer.WriteStringValue(IdentityServiceUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(MemberIdentityCertificates))
+            if (!(MemberIdentityCertificates is ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("memberIdentityCertificates"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeploymentType))
+            if (DeploymentType != null)
             {
                 writer.WritePropertyName("deploymentType"u8);
                 writer.WriteObjectValue(DeploymentType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(NodeCount))
+            if (NodeCount.HasValue)
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);

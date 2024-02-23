@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(InternalName))
+            if (InternalName != null)
             {
                 writer.WritePropertyName("internalName"u8);
                 writer.WriteStringValue(InternalName);
             }
-            if (Optional.IsDefined(IsToBeExportedForShoebox))
+            if (IsToBeExportedForShoebox.HasValue)
             {
                 writer.WritePropertyName("toBeExportedForShoebox"u8);
                 writer.WriteBooleanValue(IsToBeExportedForShoebox.Value);

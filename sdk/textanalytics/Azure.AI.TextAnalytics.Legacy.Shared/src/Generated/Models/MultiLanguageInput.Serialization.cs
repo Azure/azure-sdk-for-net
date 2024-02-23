@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 writer.WriteNull("text");
             }
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);

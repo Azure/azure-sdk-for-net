@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
             JsonSerializer.Serialize(writer, TempScriptPath);
-            if (Optional.IsDefined(DistcpOptions))
+            if (DistcpOptions != null)
             {
                 writer.WritePropertyName("distcpOptions"u8);
                 JsonSerializer.Serialize(writer, DistcpOptions);

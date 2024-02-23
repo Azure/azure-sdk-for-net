@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Optional.IsDefined(Algorithm))
+            if (Algorithm.HasValue)
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ParameterNameOverride))
+            if (!(ParameterNameOverride is ChangeTrackingList<UriSigningParamIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameterNameOverride"u8);
                 writer.WriteStartArray();

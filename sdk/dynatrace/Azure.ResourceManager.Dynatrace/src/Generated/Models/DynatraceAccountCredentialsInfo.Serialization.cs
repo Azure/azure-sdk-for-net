@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            if (options.Format != "W" && AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiKey))
+            if (options.Format != "W" && ApiKey != null)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegionId))
+            if (options.Format != "W" && RegionId != null)
             {
                 writer.WritePropertyName("regionId"u8);
                 writer.WriteStringValue(RegionId);

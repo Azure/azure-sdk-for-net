@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StopSellNotifications))
+            if (!(StopSellNotifications is ChangeTrackingList<StopSellOffersPlansNotificationsResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stopSellNotifications"u8);
                 writer.WriteStartArray();

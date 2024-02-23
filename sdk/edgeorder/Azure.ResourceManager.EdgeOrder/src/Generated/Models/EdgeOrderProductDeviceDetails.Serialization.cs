@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementResourceId))
+            if (options.Format != "W" && ManagementResourceId != null)
             {
                 writer.WritePropertyName("managementResourceId"u8);
                 writer.WriteStringValue(ManagementResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementResourceTenantId))
+            if (options.Format != "W" && ManagementResourceTenantId != null)
             {
                 writer.WritePropertyName("managementResourceTenantId"u8);
                 writer.WriteStringValue(ManagementResourceTenantId);

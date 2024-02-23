@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilterName))
+            if (FilterName != null)
             {
                 writer.WritePropertyName("filterName"u8);
                 writer.WriteStringValue(FilterName);
             }
-            if (Optional.IsDefined(IPMask))
+            if (IPMask != null)
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);

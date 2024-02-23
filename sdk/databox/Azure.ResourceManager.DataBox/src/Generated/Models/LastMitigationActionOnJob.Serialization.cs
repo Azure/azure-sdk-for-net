@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionPerformedOn))
+            if (ActionPerformedOn.HasValue)
             {
                 writer.WritePropertyName("actionDateTimeInUtc"u8);
                 writer.WriteStringValue(ActionPerformedOn.Value, "O");
             }
-            if (Optional.IsDefined(IsPerformedByCustomer))
+            if (IsPerformedByCustomer.HasValue)
             {
                 writer.WritePropertyName("isPerformedByCustomer"u8);
                 writer.WriteBooleanValue(IsPerformedByCustomer.Value);
             }
-            if (Optional.IsDefined(CustomerResolution))
+            if (CustomerResolution.HasValue)
             {
                 writer.WritePropertyName("customerResolution"u8);
                 writer.WriteStringValue(CustomerResolution.Value.ToSerialString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsernameUriString))
+            if (UsernameUriString != null)
             {
                 writer.WritePropertyName("usernameUri"u8);
                 writer.WriteStringValue(UsernameUriString);
             }
-            if (Optional.IsDefined(PasswordUriString))
+            if (PasswordUriString != null)
             {
                 writer.WritePropertyName("passwordUri"u8);
                 writer.WriteStringValue(PasswordUriString);

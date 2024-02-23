@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Analysis
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(AnalysisSku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,64 +58,64 @@ namespace Azure.ResourceManager.Analysis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AsAdministrators))
+            if (AsAdministrators != null)
             {
                 writer.WritePropertyName("asAdministrators"u8);
                 writer.WriteObjectValue(AsAdministrators);
             }
-            if (Optional.IsDefined(BackupBlobContainerUri))
+            if (BackupBlobContainerUri != null)
             {
                 writer.WritePropertyName("backupBlobContainerUri"u8);
                 writer.WriteStringValue(BackupBlobContainerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(GatewayDetails))
+            if (GatewayDetails != null)
             {
                 writer.WritePropertyName("gatewayDetails"u8);
                 writer.WriteObjectValue(GatewayDetails);
             }
-            if (Optional.IsDefined(IPv4FirewallSettings))
+            if (IPv4FirewallSettings != null)
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
                 writer.WriteObjectValue(IPv4FirewallSettings);
             }
-            if (Optional.IsDefined(QueryPoolConnectionMode))
+            if (QueryPoolConnectionMode.HasValue)
             {
                 writer.WritePropertyName("querypoolConnectionMode"u8);
                 writer.WriteStringValue(QueryPoolConnectionMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ManagedMode))
+            if (ManagedMode.HasValue)
             {
                 writer.WritePropertyName("managedMode"u8);
                 writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
-            if (Optional.IsDefined(ServerMonitorMode))
+            if (ServerMonitorMode.HasValue)
             {
                 writer.WritePropertyName("serverMonitorMode"u8);
                 writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerFullName))
+            if (options.Format != "W" && ServerFullName != null)
             {
                 writer.WritePropertyName("serverFullName"u8);
                 writer.WriteStringValue(ServerFullName);
             }
-            if (Optional.IsDefined(AnalysisServerSku))
+            if (AnalysisServerSku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(AnalysisServerSku);

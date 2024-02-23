@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageCache
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Junctions))
+            if (!(Junctions is ChangeTrackingList<NamespaceJunction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("junctions"u8);
                 writer.WriteStartArray();
@@ -65,42 +65,42 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetType))
+            if (TargetType.HasValue)
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Nfs3))
+            if (Nfs3 != null)
             {
                 writer.WritePropertyName("nfs3"u8);
                 writer.WriteObjectValue(Nfs3);
             }
-            if (Optional.IsDefined(Clfs))
+            if (Clfs != null)
             {
                 writer.WritePropertyName("clfs"u8);
                 writer.WriteObjectValue(Clfs);
             }
-            if (Optional.IsDefined(Unknown))
+            if (Unknown != null)
             {
                 writer.WritePropertyName("unknown"u8);
                 writer.WriteObjectValue(Unknown);
             }
-            if (Optional.IsDefined(BlobNfs))
+            if (BlobNfs != null)
             {
                 writer.WritePropertyName("blobNfs"u8);
                 writer.WriteObjectValue(BlobNfs);
             }
-            if (options.Format != "W" && Optional.IsDefined(AllocationPercentage))
+            if (options.Format != "W" && AllocationPercentage.HasValue)
             {
                 writer.WritePropertyName("allocationPercentage"u8);
                 writer.WriteNumberValue(AllocationPercentage.Value);

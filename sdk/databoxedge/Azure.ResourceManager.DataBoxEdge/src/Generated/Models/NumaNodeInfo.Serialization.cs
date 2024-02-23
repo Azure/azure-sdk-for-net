@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NumaNodeIndex))
+            if (NumaNodeIndex.HasValue)
             {
                 writer.WritePropertyName("numaNodeIndex"u8);
                 writer.WriteNumberValue(NumaNodeIndex.Value);
             }
-            if (Optional.IsDefined(TotalMemoryInMB))
+            if (TotalMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("totalMemoryInMb"u8);
                 writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
-            if (Optional.IsDefined(LogicalCoreCountPerCore))
+            if (LogicalCoreCountPerCore.HasValue)
             {
                 writer.WritePropertyName("logicalCoreCountPerCore"u8);
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
-            if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
+            if (EffectiveAvailableMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("effectiveAvailableMemoryInMb"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
-            if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
+            if (!(FreeVCpuIndexesForHpn is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VCpuIndexesForHpn))
+            if (!(VCpuIndexesForHpn is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VCpuIndexesForRoot))
+            if (!(VCpuIndexesForRoot is ChangeTrackingList<int> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vCpuIndexesForRoot"u8);
                 writer.WriteStartArray();

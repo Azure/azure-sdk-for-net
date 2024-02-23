@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Regex))
+            if (Regex != null)
             {
                 writer.WritePropertyName("regex"u8);
                 writer.WriteStringValue(Regex);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (IsRequired.HasValue)
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsDefined(ValidationErrorMessage))
+            if (ValidationErrorMessage != null)
             {
                 writer.WritePropertyName("validationErrorMessage"u8);
                 writer.WriteStringValue(ValidationErrorMessage);
             }
-            if (Optional.IsDefined(MaxLength))
+            if (MaxLength.HasValue)
             {
                 writer.WritePropertyName("maxLength"u8);
                 writer.WriteNumberValue(MaxLength.Value);

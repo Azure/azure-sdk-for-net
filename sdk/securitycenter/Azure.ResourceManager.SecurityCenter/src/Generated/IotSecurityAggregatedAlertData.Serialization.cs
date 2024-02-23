@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,74 +54,74 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AlertType))
+            if (options.Format != "W" && AlertType != null)
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
+            if (options.Format != "W" && AlertDisplayName != null)
             {
                 writer.WritePropertyName("alertDisplayName"u8);
                 writer.WriteStringValue(AlertDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AggregatedOn))
+            if (options.Format != "W" && AggregatedOn.HasValue)
             {
                 writer.WritePropertyName("aggregatedDateUtc"u8);
                 writer.WriteStringValue(AggregatedOn.Value, "D");
             }
-            if (options.Format != "W" && Optional.IsDefined(VendorName))
+            if (options.Format != "W" && VendorName != null)
             {
                 writer.WritePropertyName("vendorName"u8);
                 writer.WriteStringValue(VendorName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
+            if (options.Format != "W" && ReportedSeverity.HasValue)
             {
                 writer.WritePropertyName("reportedSeverity"u8);
                 writer.WriteStringValue(ReportedSeverity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RemediationSteps))
+            if (options.Format != "W" && RemediationSteps != null)
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStringValue(RemediationSteps);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (options.Format != "W" && Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EffectedResourceType))
+            if (options.Format != "W" && EffectedResourceType != null)
             {
                 writer.WritePropertyName("effectedResourceType"u8);
                 writer.WriteStringValue(EffectedResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemSource))
+            if (options.Format != "W" && SystemSource != null)
             {
                 writer.WritePropertyName("systemSource"u8);
                 writer.WriteStringValue(SystemSource);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionTaken))
+            if (options.Format != "W" && ActionTaken != null)
             {
                 writer.WritePropertyName("actionTaken"u8);
                 writer.WriteStringValue(ActionTaken);
             }
-            if (options.Format != "W" && Optional.IsDefined(LogAnalyticsQuery))
+            if (options.Format != "W" && LogAnalyticsQuery != null)
             {
                 writer.WritePropertyName("logAnalyticsQuery"u8);
                 writer.WriteStringValue(LogAnalyticsQuery);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TopDevicesList))
+            if (options.Format != "W" && !(TopDevicesList is ChangeTrackingList<IotSecurityAggregatedAlertTopDevice> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("topDevicesList"u8);
                 writer.WriteStartArray();

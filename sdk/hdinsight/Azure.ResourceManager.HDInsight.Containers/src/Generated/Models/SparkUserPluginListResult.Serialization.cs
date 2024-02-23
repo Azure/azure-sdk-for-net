@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Plugins))
+            if (!(Plugins is ChangeTrackingList<SparkUserPlugin> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plugins"u8);
                 writer.WriteStartArray();

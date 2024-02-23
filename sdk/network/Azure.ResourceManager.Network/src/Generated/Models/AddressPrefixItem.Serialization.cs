@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressPrefix))
+            if (AddressPrefix != null)
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(AddressPrefixType))
+            if (AddressPrefixType.HasValue)
             {
                 writer.WritePropertyName("addressPrefixType"u8);
                 writer.WriteStringValue(AddressPrefixType.Value.ToString());

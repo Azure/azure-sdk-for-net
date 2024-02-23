@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(ChannelId);
             writer.WritePropertyName("capacityCostPerJob"u8);
             writer.WriteNumberValue(CapacityCostPerJob);
-            if (Optional.IsDefined(MaxNumberOfJobs))
+            if (MaxNumberOfJobs.HasValue)
             {
                 writer.WritePropertyName("maxNumberOfJobs"u8);
                 writer.WriteNumberValue(MaxNumberOfJobs.Value);

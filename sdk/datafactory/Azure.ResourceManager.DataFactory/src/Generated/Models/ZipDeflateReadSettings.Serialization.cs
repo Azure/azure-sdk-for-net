@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreserveZipFileNameAsFolder))
+            if (PreserveZipFileNameAsFolder != null)
             {
                 writer.WritePropertyName("preserveZipFileNameAsFolder"u8);
                 JsonSerializer.Serialize(writer, PreserveZipFileNameAsFolder);

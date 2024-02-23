@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureStorageResourceUri))
+            if (AzureStorageResourceUri != null)
             {
                 writer.WritePropertyName("azureStorageResourceUri"u8);
                 writer.WriteStringValue(AzureStorageResourceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastBackupOn))
+            if (options.Format != "W" && LastBackupOn.HasValue)
             {
                 writer.WritePropertyName("lastBackupDateTime"u8);
                 writer.WriteStringValue(LastBackupOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastBackupStatus))
+            if (options.Format != "W" && LastBackupStatus != null)
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);

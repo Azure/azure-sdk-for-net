@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
+            if (PreserveCompressionFileNameAsFolder != null)
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
                 writer.WriteObjectValue(PreserveCompressionFileNameAsFolder);

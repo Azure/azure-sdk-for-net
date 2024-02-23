@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,74 +77,74 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataBoxEdgeDeviceStatus))
+            if (options.Format != "W" && DataBoxEdgeDeviceStatus.HasValue)
             {
                 writer.WritePropertyName("dataBoxEdgeDeviceStatus"u8);
                 writer.WriteStringValue(DataBoxEdgeDeviceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ModelDescription))
+            if (options.Format != "W" && ModelDescription != null)
             {
                 writer.WritePropertyName("modelDescription"u8);
                 writer.WriteStringValue(ModelDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceType))
+            if (options.Format != "W" && DeviceType.HasValue)
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Culture))
+            if (options.Format != "W" && Culture != null)
             {
                 writer.WritePropertyName("culture"u8);
                 writer.WriteStringValue(Culture);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceModel))
+            if (options.Format != "W" && DeviceModel != null)
             {
                 writer.WritePropertyName("deviceModel"u8);
                 writer.WriteStringValue(DeviceModel);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceSoftwareVersion))
+            if (options.Format != "W" && DeviceSoftwareVersion != null)
             {
                 writer.WritePropertyName("deviceSoftwareVersion"u8);
                 writer.WriteStringValue(DeviceSoftwareVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceLocalCapacity))
+            if (options.Format != "W" && DeviceLocalCapacity.HasValue)
             {
                 writer.WritePropertyName("deviceLocalCapacity"u8);
                 writer.WriteNumberValue(DeviceLocalCapacity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeZone))
+            if (options.Format != "W" && TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceHcsVersion))
+            if (options.Format != "W" && DeviceHcsVersion != null)
             {
                 writer.WritePropertyName("deviceHcsVersion"u8);
                 writer.WriteStringValue(DeviceHcsVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfiguredRoleTypes))
+            if (options.Format != "W" && !(ConfiguredRoleTypes is ChangeTrackingList<DataBoxEdgeRoleType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configuredRoleTypes"u8);
                 writer.WriteStartArray();
@@ -154,22 +154,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeCount))
+            if (options.Format != "W" && NodeCount.HasValue)
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
+            if (options.Format != "W" && ResourceMoveDetails != null)
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
                 writer.WriteObjectValue(ResourceMoveDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
+            if (options.Format != "W" && EdgeProfile != null)
             {
                 writer.WritePropertyName("edgeProfile"u8);
                 writer.WriteObjectValue(EdgeProfile);
             }
-            if (Optional.IsDefined(DataResidency))
+            if (DataResidency != null)
             {
                 writer.WritePropertyName("dataResidency"u8);
                 writer.WriteObjectValue(DataResidency);

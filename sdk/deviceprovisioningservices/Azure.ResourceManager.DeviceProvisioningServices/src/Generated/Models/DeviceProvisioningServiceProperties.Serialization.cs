@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPFilterRules))
+            if (!(IPFilterRules is ChangeTrackingList<DeviceProvisioningServicesIPFilterRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(IotHubs))
+            if (!(IotHubs is ChangeTrackingList<IotHubDefinitionDescription> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -72,27 +72,27 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllocationPolicy))
+            if (AllocationPolicy.HasValue)
             {
                 writer.WritePropertyName("allocationPolicy"u8);
                 writer.WriteStringValue(AllocationPolicy.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceOperationsHostName))
+            if (options.Format != "W" && ServiceOperationsHostName != null)
             {
                 writer.WritePropertyName("serviceOperationsHostName"u8);
                 writer.WriteStringValue(ServiceOperationsHostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceProvisioningHostName))
+            if (options.Format != "W" && DeviceProvisioningHostName != null)
             {
                 writer.WritePropertyName("deviceProvisioningHostName"u8);
                 writer.WriteStringValue(DeviceProvisioningHostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IdScope))
+            if (options.Format != "W" && IdScope != null)
             {
                 writer.WritePropertyName("idScope"u8);
                 writer.WriteStringValue(IdScope);
             }
-            if (Optional.IsCollectionDefined(AuthorizationPolicies))
+            if (!(AuthorizationPolicies is ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("authorizationPolicies"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDataResidencyEnabled))
+            if (IsDataResidencyEnabled.HasValue)
             {
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(IsDataResidencyEnabled.Value);

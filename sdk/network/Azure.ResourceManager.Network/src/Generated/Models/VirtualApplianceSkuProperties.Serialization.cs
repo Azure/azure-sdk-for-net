@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Vendor))
+            if (Vendor != null)
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Optional.IsDefined(BundledScaleUnit))
+            if (BundledScaleUnit != null)
             {
                 writer.WritePropertyName("bundledScaleUnit"u8);
                 writer.WriteStringValue(BundledScaleUnit);
             }
-            if (Optional.IsDefined(MarketPlaceVersion))
+            if (MarketPlaceVersion != null)
             {
                 writer.WritePropertyName("marketPlaceVersion"u8);
                 writer.WriteStringValue(MarketPlaceVersion);

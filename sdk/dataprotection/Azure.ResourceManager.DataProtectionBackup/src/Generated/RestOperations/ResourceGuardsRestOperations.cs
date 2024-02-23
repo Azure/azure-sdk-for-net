@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetResourcesInSubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourcesInSubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -116,6 +127,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetResourcesInResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetResourcesInResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -217,6 +241,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardData data)
@@ -355,6 +393,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -479,6 +531,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -589,6 +655,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePatchRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, ResourceGuardPatch patch)
@@ -725,6 +805,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDisableSoftDeleteRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/disableSoftDeleteRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -844,6 +939,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeleteResourceGuardProxyRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteResourceGuardProxyRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
@@ -967,6 +1077,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetBackupSecurityPinRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/getBackupSecurityPINRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBackupSecurityPinRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1086,6 +1211,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeleteProtectedItemRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteProtectedItemRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
@@ -1209,6 +1349,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdateProtectionPolicyRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectionPolicyRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1330,6 +1485,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdateProtectedItemRequestsObjectsRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectedItemRequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateProtectedItemRequestsObjectsRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1449,6 +1619,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDefaultDisableSoftDeleteRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/disableSoftDeleteRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
@@ -1591,6 +1777,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteResourceGuardProxyRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -1729,6 +1931,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDefaultBackupSecurityPinRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/getBackupSecurityPINRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDefaultBackupSecurityPinRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
@@ -1871,6 +2089,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultDeleteProtectedItemRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/deleteProtectedItemRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -2009,6 +2243,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectionPolicyRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
@@ -2151,6 +2401,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDefaultUpdateProtectedItemRequestsObjectRequestUri(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataProtection/resourceGuards/", false);
+            uri.AppendPath(resourceGuardsName, true);
+            uri.AppendPath("/updateProtectedItemRequests/", false);
+            uri.AppendPath(requestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(string subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName)
         {
             var message = _pipeline.CreateMessage();
@@ -2291,6 +2557,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetResourcesInSubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourcesInSubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -2377,6 +2651,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetResourcesInResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetResourcesInResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -2483,6 +2765,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDisableSoftDeleteRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
@@ -2609,6 +2899,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -2731,6 +3029,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetBackupSecurityPinRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
@@ -2857,6 +3163,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetDeleteProtectedItemRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -2981,6 +3295,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
         {
             var message = _pipeline.CreateMessage();
@@ -3103,6 +3425,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUpdateProtectedItemRequestsObjectsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetUpdateProtectedItemRequestsObjectsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceGuardsName)

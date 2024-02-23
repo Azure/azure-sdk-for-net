@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteObjectValue(StreamingJob);
             writer.WritePropertyName("diagnostics"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(WriteUri))
+            if (WriteUri != null)
             {
                 writer.WritePropertyName("writeUri"u8);
                 writer.WriteStringValue(WriteUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -17,27 +18,27 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
             writer.WriteObjectValue(CallLocator);
-            if (Optional.IsDefined(RecordingStateCallbackUri))
+            if (RecordingStateCallbackUri != null)
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
                 writer.WriteStringValue(RecordingStateCallbackUri);
             }
-            if (Optional.IsDefined(RecordingContentType))
+            if (RecordingContentType.HasValue)
             {
                 writer.WritePropertyName("recordingContentType"u8);
                 writer.WriteStringValue(RecordingContentType.Value.ToString());
             }
-            if (Optional.IsDefined(RecordingChannelType))
+            if (RecordingChannelType.HasValue)
             {
                 writer.WritePropertyName("recordingChannelType"u8);
                 writer.WriteStringValue(RecordingChannelType.Value.ToString());
             }
-            if (Optional.IsDefined(RecordingFormatType))
+            if (RecordingFormatType.HasValue)
             {
                 writer.WritePropertyName("recordingFormatType"u8);
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AudioChannelParticipantOrdering))
+            if (!(AudioChannelParticipantOrdering is ChangeTrackingList<CommunicationIdentifierModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("audioChannelParticipantOrdering"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ChannelAffinity))
+            if (!(ChannelAffinity is ChangeTrackingList<ChannelAffinityInternal> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("channelAffinity"u8);
                 writer.WriteStartArray();
@@ -57,12 +58,12 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExternalStorage))
+            if (ExternalStorage != null)
             {
                 writer.WritePropertyName("externalStorage"u8);
                 writer.WriteObjectValue(ExternalStorage);
             }
-            if (Optional.IsDefined(PauseOnStart))
+            if (PauseOnStart.HasValue)
             {
                 writer.WritePropertyName("pauseOnStart"u8);
                 writer.WriteBooleanValue(PauseOnStart.Value);

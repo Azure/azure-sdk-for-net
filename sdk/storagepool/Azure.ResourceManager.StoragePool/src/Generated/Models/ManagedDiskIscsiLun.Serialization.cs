@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("managedDiskAzureResourceId"u8);
             writer.WriteStringValue(ManagedDiskAzureResourceId);
-            if (options.Format != "W" && Optional.IsDefined(Lun))
+            if (options.Format != "W" && Lun.HasValue)
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);

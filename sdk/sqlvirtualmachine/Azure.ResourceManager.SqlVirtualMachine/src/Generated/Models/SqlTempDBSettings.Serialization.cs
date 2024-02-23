@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataFileSize))
+            if (DataFileSize.HasValue)
             {
                 writer.WritePropertyName("dataFileSize"u8);
                 writer.WriteNumberValue(DataFileSize.Value);
             }
-            if (Optional.IsDefined(DataGrowth))
+            if (DataGrowth.HasValue)
             {
                 writer.WritePropertyName("dataGrowth"u8);
                 writer.WriteNumberValue(DataGrowth.Value);
             }
-            if (Optional.IsDefined(LogFileSize))
+            if (LogFileSize.HasValue)
             {
                 writer.WritePropertyName("logFileSize"u8);
                 writer.WriteNumberValue(LogFileSize.Value);
             }
-            if (Optional.IsDefined(LogGrowth))
+            if (LogGrowth.HasValue)
             {
                 writer.WritePropertyName("logGrowth"u8);
                 writer.WriteNumberValue(LogGrowth.Value);
             }
-            if (Optional.IsDefined(DataFileCount))
+            if (DataFileCount.HasValue)
             {
                 writer.WritePropertyName("dataFileCount"u8);
                 writer.WriteNumberValue(DataFileCount.Value);
             }
-            if (Optional.IsDefined(PersistFolder))
+            if (PersistFolder.HasValue)
             {
                 writer.WritePropertyName("persistFolder"u8);
                 writer.WriteBooleanValue(PersistFolder.Value);
             }
-            if (Optional.IsDefined(PersistFolderPath))
+            if (PersistFolderPath != null)
             {
                 writer.WritePropertyName("persistFolderPath"u8);
                 writer.WriteStringValue(PersistFolderPath);
             }
-            if (Optional.IsCollectionDefined(LogicalUnitNumbers))
+            if (!(LogicalUnitNumbers is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultFilePath))
+            if (DefaultFilePath != null)
             {
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);

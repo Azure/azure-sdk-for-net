@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinResourcePercent))
+            if (MinResourcePercent.HasValue)
             {
                 writer.WritePropertyName("minResourcePercent"u8);
                 writer.WriteNumberValue(MinResourcePercent.Value);
             }
-            if (Optional.IsDefined(MaxResourcePercent))
+            if (MaxResourcePercent.HasValue)
             {
                 writer.WritePropertyName("maxResourcePercent"u8);
                 writer.WriteNumberValue(MaxResourcePercent.Value);
             }
-            if (Optional.IsDefined(MinResourcePercentPerRequest))
+            if (MinResourcePercentPerRequest.HasValue)
             {
                 writer.WritePropertyName("minResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MinResourcePercentPerRequest.Value);
             }
-            if (Optional.IsDefined(MaxResourcePercentPerRequest))
+            if (MaxResourcePercentPerRequest.HasValue)
             {
                 writer.WritePropertyName("maxResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MaxResourcePercentPerRequest.Value);
             }
-            if (Optional.IsDefined(Importance))
+            if (Importance != null)
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance);
             }
-            if (Optional.IsDefined(QueryExecutionTimeout))
+            if (QueryExecutionTimeout.HasValue)
             {
                 writer.WritePropertyName("queryExecutionTimeout"u8);
                 writer.WriteNumberValue(QueryExecutionTimeout.Value);

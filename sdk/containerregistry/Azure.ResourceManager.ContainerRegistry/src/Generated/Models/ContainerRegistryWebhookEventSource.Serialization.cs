@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Addr))
+            if (Addr != null)
             {
                 writer.WritePropertyName("addr"u8);
                 writer.WriteStringValue(Addr);
             }
-            if (Optional.IsDefined(InstanceId))
+            if (InstanceId != null)
             {
                 writer.WritePropertyName("instanceID"u8);
                 writer.WriteStringValue(InstanceId);

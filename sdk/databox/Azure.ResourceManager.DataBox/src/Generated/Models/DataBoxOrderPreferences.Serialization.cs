@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PreferredDataCenterRegion))
+            if (!(PreferredDataCenterRegion is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("preferredDataCenterRegion"u8);
                 writer.WriteStartArray();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TransportPreferences))
+            if (TransportPreferences != null)
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
-            if (Optional.IsDefined(ReverseTransportPreferences))
+            if (ReverseTransportPreferences != null)
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
                 writer.WriteObjectValue(ReverseTransportPreferences);
             }
-            if (Optional.IsDefined(EncryptionPreferences))
+            if (EncryptionPreferences != null)
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
-            if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
+            if (!(StorageAccountAccessTierPreferences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("storageAccountAccessTierPreferences"u8);
                 writer.WriteStartArray();

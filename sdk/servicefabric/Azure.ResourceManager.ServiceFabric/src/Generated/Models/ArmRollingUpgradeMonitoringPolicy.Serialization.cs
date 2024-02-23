@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FailureAction))
+            if (FailureAction.HasValue)
             {
                 writer.WritePropertyName("failureAction"u8);
                 writer.WriteStringValue(FailureAction.Value.ToString());
             }
-            if (Optional.IsDefined(HealthCheckWaitDuration))
+            if (HealthCheckWaitDuration.HasValue)
             {
                 writer.WritePropertyName("healthCheckWaitDuration"u8);
                 writer.WriteStringValue(HealthCheckWaitDuration.Value, "c");
             }
-            if (Optional.IsDefined(HealthCheckStableDuration))
+            if (HealthCheckStableDuration.HasValue)
             {
                 writer.WritePropertyName("healthCheckStableDuration"u8);
                 writer.WriteStringValue(HealthCheckStableDuration.Value, "c");
             }
-            if (Optional.IsDefined(HealthCheckRetryTimeout))
+            if (HealthCheckRetryTimeout.HasValue)
             {
                 writer.WritePropertyName("healthCheckRetryTimeout"u8);
                 writer.WriteStringValue(HealthCheckRetryTimeout.Value, "c");
             }
-            if (Optional.IsDefined(UpgradeTimeout))
+            if (UpgradeTimeout.HasValue)
             {
                 writer.WritePropertyName("upgradeTimeout"u8);
                 writer.WriteStringValue(UpgradeTimeout.Value, "c");
             }
-            if (Optional.IsDefined(UpgradeDomainTimeout))
+            if (UpgradeDomainTimeout.HasValue)
             {
                 writer.WritePropertyName("upgradeDomainTimeout"u8);
                 writer.WriteStringValue(UpgradeDomainTimeout.Value, "c");

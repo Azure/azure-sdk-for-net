@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpdateType))
+            if (UpdateType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UpdateType.Value.ToString());
             }
-            if (Optional.IsDefined(DoesUseSessionHostLocalTime))
+            if (DoesUseSessionHostLocalTime.HasValue)
             {
                 writer.WritePropertyName("useSessionHostLocalTime"u8);
                 writer.WriteBooleanValue(DoesUseSessionHostLocalTime.Value);
             }
-            if (Optional.IsDefined(MaintenanceWindowTimeZone))
+            if (MaintenanceWindowTimeZone != null)
             {
                 writer.WritePropertyName("maintenanceWindowTimeZone"u8);
                 writer.WriteStringValue(MaintenanceWindowTimeZone);
             }
-            if (Optional.IsCollectionDefined(MaintenanceWindows))
+            if (!(MaintenanceWindows is ChangeTrackingList<MaintenanceWindowPatchProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("maintenanceWindows"u8);
                 writer.WriteStartArray();

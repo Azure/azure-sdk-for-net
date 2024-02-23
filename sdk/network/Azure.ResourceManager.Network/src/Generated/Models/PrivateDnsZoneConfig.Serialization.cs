@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateDnsZoneId))
+            if (PrivateDnsZoneId != null)
             {
                 writer.WritePropertyName("privateDnsZoneId"u8);
                 writer.WriteStringValue(PrivateDnsZoneId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecordSets))
+            if (options.Format != "W" && !(RecordSets is ChangeTrackingList<RecordSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recordSets"u8);
                 writer.WriteStartArray();

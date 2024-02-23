@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStringValue(Phone);
             writer.WritePropertyName("accountSID"u8);
             writer.WriteStringValue(AccountSID);
-            if (Optional.IsDefined(AuthToken))
+            if (AuthToken != null)
             {
                 writer.WritePropertyName("authToken"u8);
                 writer.WriteStringValue(AuthToken);
             }
-            if (Optional.IsDefined(IsValidated))
+            if (IsValidated.HasValue)
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);

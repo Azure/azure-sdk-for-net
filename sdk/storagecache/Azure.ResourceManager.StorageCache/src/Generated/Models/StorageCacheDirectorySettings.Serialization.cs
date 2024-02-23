@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActiveDirectory))
+            if (ActiveDirectory != null)
             {
                 writer.WritePropertyName("activeDirectory"u8);
                 writer.WriteObjectValue(ActiveDirectory);
             }
-            if (Optional.IsDefined(UsernameDownload))
+            if (UsernameDownload != null)
             {
                 writer.WritePropertyName("usernameDownload"u8);
                 writer.WriteObjectValue(UsernameDownload);

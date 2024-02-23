@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteStringValue(Action.ToString());
             writer.WritePropertyName("sequenceNumber"u8);
             writer.WriteNumberValue(SequenceNumber);
-            if (Optional.IsCollectionDefined(WellKnownCommunities))
+            if (!(WellKnownCommunities is ChangeTrackingList<WellKnownCommunity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("wellKnownCommunities"u8);
                 writer.WriteStartArray();

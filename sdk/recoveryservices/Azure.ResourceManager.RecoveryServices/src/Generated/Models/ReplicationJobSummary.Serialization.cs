@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FailedJobs))
+            if (FailedJobs.HasValue)
             {
                 writer.WritePropertyName("failedJobs"u8);
                 writer.WriteNumberValue(FailedJobs.Value);
             }
-            if (Optional.IsDefined(SuspendedJobs))
+            if (SuspendedJobs.HasValue)
             {
                 writer.WritePropertyName("suspendedJobs"u8);
                 writer.WriteNumberValue(SuspendedJobs.Value);
             }
-            if (Optional.IsDefined(InProgressJobs))
+            if (InProgressJobs.HasValue)
             {
                 writer.WritePropertyName("inProgressJobs"u8);
                 writer.WriteNumberValue(InProgressJobs.Value);

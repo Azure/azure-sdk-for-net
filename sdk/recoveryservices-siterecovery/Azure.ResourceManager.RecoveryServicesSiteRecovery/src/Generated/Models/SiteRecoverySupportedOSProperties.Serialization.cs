@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportedOSList))
+            if (!(SupportedOSList is ChangeTrackingList<SiteRecoverySupportedOSProperty> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedOsList"u8);
                 writer.WriteStartArray();

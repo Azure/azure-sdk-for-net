@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (UserAssignedIdentity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(UserAssignedIdentity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Installation))
+            if (Installation != null)
             {
                 writer.WritePropertyName("installation"u8);
                 writer.WriteObjectValue(Installation);
@@ -88,29 +88,29 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteEndArray();
             writer.WritePropertyName("platform"u8);
             writer.WriteObjectValue(Platform);
-            if (Optional.IsDefined(CoreNetworkTechnology))
+            if (CoreNetworkTechnology.HasValue)
             {
                 writer.WritePropertyName("coreNetworkTechnology"u8);
                 writer.WriteStringValue(CoreNetworkTechnology.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstalledVersion))
+            if (options.Format != "W" && InstalledVersion != null)
             {
                 writer.WritePropertyName("installedVersion"u8);
                 writer.WriteStringValue(InstalledVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(RollbackVersion))
+            if (options.Format != "W" && RollbackVersion != null)
             {
                 writer.WritePropertyName("rollbackVersion"u8);
                 writer.WriteStringValue(RollbackVersion);
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
             writer.WriteObjectValue(ControlPlaneAccessInterface);
-            if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
+            if (!(ControlPlaneAccessVirtualIPv4Addresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("controlPlaneAccessVirtualIpv4Addresses"u8);
                 writer.WriteStartArray();
@@ -122,29 +122,29 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku.ToString());
-            if (Optional.IsDefined(UeMtu))
+            if (UeMtu.HasValue)
             {
                 writer.WritePropertyName("ueMtu"u8);
                 writer.WriteNumberValue(UeMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
             writer.WriteObjectValue(LocalDiagnosticsAccess);
-            if (Optional.IsDefined(DiagnosticsUpload))
+            if (DiagnosticsUpload != null)
             {
                 writer.WritePropertyName("diagnosticsUpload"u8);
                 writer.WriteObjectValue(DiagnosticsUpload);
             }
-            if (Optional.IsDefined(EventHub))
+            if (EventHub != null)
             {
                 writer.WritePropertyName("eventHub"u8);
                 writer.WriteObjectValue(EventHub);
             }
-            if (Optional.IsDefined(Signaling))
+            if (Signaling != null)
             {
                 writer.WritePropertyName("signaling"u8);
                 writer.WriteObjectValue(Signaling);
             }
-            if (Optional.IsDefined(InteropSettings))
+            if (InteropSettings != null)
             {
                 writer.WritePropertyName("interopSettings"u8);
 #if NET6_0_OR_GREATER

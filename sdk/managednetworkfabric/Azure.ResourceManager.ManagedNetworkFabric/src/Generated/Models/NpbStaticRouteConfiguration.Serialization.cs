@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BfdConfiguration))
+            if (BfdConfiguration != null)
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
             }
-            if (Optional.IsCollectionDefined(IPv4Routes))
+            if (!(IPv4Routes is ChangeTrackingList<StaticRouteProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6Routes))
+            if (!(IPv6Routes is ChangeTrackingList<StaticRouteProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();

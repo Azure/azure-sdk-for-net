@@ -36,6 +36,25 @@ namespace Azure.ResourceManager.DataBoxEdge
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckResourceCreationFeasibilityRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DeviceCapacityRequestContent content, string capacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/deviceCapacityCheck", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (capacityName != null)
+            {
+                uri.AppendQuery("capacityName", capacityName, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCheckResourceCreationFeasibilityRequest(string subscriptionId, string resourceGroupName, string deviceName, DeviceCapacityRequestContent content, string capacityName)
         {
             var message = _pipeline.CreateMessage();

@@ -17,17 +17,17 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Layout))
+            if (Layout != null)
             {
                 writer.WritePropertyName("layout"u8);
                 writer.WriteObjectValue(Layout);
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingDictionary<string, MediaInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.Communication.MediaComposition
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingDictionary<string, MediaOutput> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Communication.MediaComposition
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(StreamState))
+            if (StreamState != null)
             {
                 writer.WritePropertyName("streamState"u8);
                 writer.WriteObjectValue(StreamState);

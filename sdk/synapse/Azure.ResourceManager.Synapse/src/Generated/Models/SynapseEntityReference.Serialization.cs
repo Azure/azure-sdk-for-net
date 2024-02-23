@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
+            if (IntegrationRuntimeEntityReferenceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
             }
-            if (Optional.IsDefined(ReferenceName))
+            if (ReferenceName != null)
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);

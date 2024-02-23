@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableDiagnosticsSupport))
+            if (EnableDiagnosticsSupport.HasValue)
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
-            if (Optional.IsDefined(Logging))
+            if (Logging != null)
             {
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
-            if (Optional.IsDefined(ScalingProperties))
+            if (ScalingProperties != null)
             {
                 writer.WritePropertyName("scalingProperties"u8);
                 writer.WriteObjectValue(ScalingProperties);
             }
-            if (Optional.IsDefined(UserProfile))
+            if (UserProfile != null)
             {
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile);

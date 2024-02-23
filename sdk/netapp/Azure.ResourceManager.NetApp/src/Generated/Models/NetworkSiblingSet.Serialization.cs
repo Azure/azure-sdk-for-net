@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkSiblingSetId))
+            if (NetworkSiblingSetId != null)
             {
                 writer.WritePropertyName("networkSiblingSetId"u8);
                 writer.WriteStringValue(NetworkSiblingSetId);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(NetworkSiblingSetStateId))
+            if (NetworkSiblingSetStateId != null)
             {
                 writer.WritePropertyName("networkSiblingSetStateId"u8);
                 writer.WriteStringValue(NetworkSiblingSetStateId);
             }
-            if (Optional.IsDefined(NetworkFeatures))
+            if (NetworkFeatures.HasValue)
             {
                 writer.WritePropertyName("networkFeatures"u8);
                 writer.WriteStringValue(NetworkFeatures.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NicInfoList))
+            if (!(NicInfoList is ChangeTrackingList<NicInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nicInfoList"u8);
                 writer.WriteStartArray();

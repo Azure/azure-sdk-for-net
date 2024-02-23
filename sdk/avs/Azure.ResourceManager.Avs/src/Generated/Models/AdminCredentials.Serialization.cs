@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NsxtUsername))
+            if (options.Format != "W" && NsxtUsername != null)
             {
                 writer.WritePropertyName("nsxtUsername"u8);
                 writer.WriteStringValue(NsxtUsername);
             }
-            if (options.Format != "W" && Optional.IsDefined(NsxtPassword))
+            if (options.Format != "W" && NsxtPassword != null)
             {
                 writer.WritePropertyName("nsxtPassword"u8);
                 writer.WriteStringValue(NsxtPassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCenterUsername))
+            if (options.Format != "W" && VCenterUsername != null)
             {
                 writer.WritePropertyName("vcenterUsername"u8);
                 writer.WriteStringValue(VCenterUsername);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCenterPassword))
+            if (options.Format != "W" && VCenterPassword != null)
             {
                 writer.WritePropertyName("vcenterPassword"u8);
                 writer.WriteStringValue(VCenterPassword);

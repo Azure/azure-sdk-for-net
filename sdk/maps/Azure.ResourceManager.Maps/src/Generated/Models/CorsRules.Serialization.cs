@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CorsRulesValue))
+            if (!(CorsRulesValue is ChangeTrackingList<MapsCorsRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();

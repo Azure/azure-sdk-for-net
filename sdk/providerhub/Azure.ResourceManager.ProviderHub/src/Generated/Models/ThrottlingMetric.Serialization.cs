@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(MetricType.ToString());
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");

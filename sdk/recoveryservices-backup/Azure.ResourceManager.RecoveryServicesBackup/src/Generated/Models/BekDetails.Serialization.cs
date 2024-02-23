@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretUri))
+            if (SecretUri != null)
             {
                 writer.WritePropertyName("secretUrl"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SecretVaultId))
+            if (SecretVaultId != null)
             {
                 writer.WritePropertyName("secretVaultId"u8);
                 writer.WriteStringValue(SecretVaultId);
             }
-            if (Optional.IsDefined(SecretData))
+            if (SecretData != null)
             {
                 writer.WritePropertyName("secretData"u8);
                 writer.WriteStringValue(SecretData);

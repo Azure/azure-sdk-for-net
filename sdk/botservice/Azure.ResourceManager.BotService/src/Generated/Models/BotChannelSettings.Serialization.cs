@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtensionKey1))
+            if (ExtensionKey1 != null)
             {
                 writer.WritePropertyName("extensionKey1"u8);
                 writer.WriteStringValue(ExtensionKey1);
             }
-            if (Optional.IsDefined(ExtensionKey2))
+            if (ExtensionKey2 != null)
             {
                 writer.WritePropertyName("extensionKey2"u8);
                 writer.WriteStringValue(ExtensionKey2);
             }
-            if (Optional.IsCollectionDefined(Sites))
+            if (!(Sites is ChangeTrackingList<BotChannelSite> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
@@ -46,37 +46,37 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ChannelId))
+            if (ChannelId != null)
             {
                 writer.WritePropertyName("channelId"u8);
                 writer.WriteStringValue(ChannelId);
             }
-            if (Optional.IsDefined(ChannelDisplayName))
+            if (ChannelDisplayName != null)
             {
                 writer.WritePropertyName("channelDisplayName"u8);
                 writer.WriteStringValue(ChannelDisplayName);
             }
-            if (Optional.IsDefined(BotId))
+            if (BotId != null)
             {
                 writer.WritePropertyName("botId"u8);
                 writer.WriteStringValue(BotId);
             }
-            if (Optional.IsDefined(BotIconUri))
+            if (BotIconUri != null)
             {
                 writer.WritePropertyName("botIconUrl"u8);
                 writer.WriteStringValue(BotIconUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(RequireTermsAgreement))
+            if (RequireTermsAgreement.HasValue)
             {
                 writer.WritePropertyName("requireTermsAgreement"u8);
                 writer.WriteBooleanValue(RequireTermsAgreement.Value);

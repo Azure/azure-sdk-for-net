@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxNodeCount"u8);
             writer.WriteNumberValue(MaxNodeCount);
-            if (Optional.IsDefined(MinNodeCount))
+            if (MinNodeCount.HasValue)
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (Optional.IsDefined(NodeIdleTimeBeforeScaleDown))
+            if (NodeIdleTimeBeforeScaleDown.HasValue)
             {
                 if (NodeIdleTimeBeforeScaleDown != null)
                 {

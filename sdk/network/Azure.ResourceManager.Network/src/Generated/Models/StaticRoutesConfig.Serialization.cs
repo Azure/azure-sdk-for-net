@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PropagateStaticRoutes))
+            if (options.Format != "W" && PropagateStaticRoutes.HasValue)
             {
                 writer.WritePropertyName("propagateStaticRoutes"u8);
                 writer.WriteBooleanValue(PropagateStaticRoutes.Value);
             }
-            if (Optional.IsDefined(VnetLocalRouteOverrideCriteria))
+            if (VnetLocalRouteOverrideCriteria.HasValue)
             {
                 writer.WritePropertyName("vnetLocalRouteOverrideCriteria"u8);
                 writer.WriteStringValue(VnetLocalRouteOverrideCriteria.Value.ToString());

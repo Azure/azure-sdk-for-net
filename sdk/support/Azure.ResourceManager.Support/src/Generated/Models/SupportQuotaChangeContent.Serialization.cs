@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Region))
+            if (Region != null)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Optional.IsDefined(Payload))
+            if (Payload != null)
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStringValue(Payload);

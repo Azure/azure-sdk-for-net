@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("requestor"u8);
             writer.WriteStringValue(Requestor);
-            if (Optional.IsDefined(Justification))
+            if (Justification != null)
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);

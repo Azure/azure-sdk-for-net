@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateData))
+            if (CertificateData != null)
             {
                 writer.WritePropertyName("certificateData"u8);
                 writer.WriteStringValue(CertificateData);

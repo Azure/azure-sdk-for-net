@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NewReplicationProtectedItemId))
+            if (NewReplicationProtectedItemId != null)
             {
                 writer.WritePropertyName("newReplicationProtectedItemId"u8);
                 writer.WriteStringValue(NewReplicationProtectedItemId);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (Optional.IsCollectionDefined(AffectedObjectDetails))
+            if (!(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();

@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("line"u8);
             writer.WriteObjectValue(Line);
-            if (Optional.IsCollectionDefined(Events))
+            if (!(Events is ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(RentalAndLeaseKeyType.ToString());
             writer.WritePropertyName("rentalDuration"u8);
             writer.WriteNumberValue(RentalDuration);
-            if (Optional.IsDefined(OfflineRentalConfiguration))
+            if (OfflineRentalConfiguration != null)
             {
                 writer.WritePropertyName("offlineRentalConfiguration"u8);
                 writer.WriteObjectValue(OfflineRentalConfiguration);

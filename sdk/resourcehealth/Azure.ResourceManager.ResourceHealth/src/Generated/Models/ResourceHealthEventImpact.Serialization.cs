@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImpactedService))
+            if (ImpactedService != null)
             {
                 writer.WritePropertyName("impactedService"u8);
                 writer.WriteStringValue(ImpactedService);
             }
-            if (Optional.IsCollectionDefined(ImpactedRegions))
+            if (!(ImpactedRegions is ChangeTrackingList<ResourceHealthEventImpactedServiceRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("impactedRegions"u8);
                 writer.WriteStartArray();

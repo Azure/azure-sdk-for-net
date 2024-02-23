@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Allow))
+            if (Allow.HasValue)
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteBooleanValue(Allow.Value);
             }
-            if (Optional.IsDefined(Optimize))
+            if (Optimize.HasValue)
             {
                 writer.WritePropertyName("optimize"u8);
                 writer.WriteBooleanValue(Optimize.Value);
             }
-            if (Optional.IsDefined(Default))
+            if (Default.HasValue)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(Default.Value);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EffectiveFrom))
+            if (EffectiveFrom.HasValue)
             {
                 writer.WritePropertyName("effectiveFrom"u8);
                 writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
-            if (Optional.IsDefined(EffectiveUntil))
+            if (EffectiveUntil.HasValue)
             {
                 writer.WritePropertyName("effectiveUntil"u8);
                 writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsCollectionDefined(Recurrences))
+            if (!(Recurrences is ChangeTrackingList<AlertProcessingRuleRecurrence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recurrences"u8);
                 writer.WriteStartArray();

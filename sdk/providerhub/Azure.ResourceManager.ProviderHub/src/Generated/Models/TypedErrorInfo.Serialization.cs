@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TypedErrorInfoType);
-            if (options.Format != "W" && Optional.IsDefined(Info))
+            if (options.Format != "W" && Info != null)
             {
                 writer.WritePropertyName("info"u8);
 #if NET6_0_OR_GREATER

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddressType))
+            if (IPAddressType.HasValue)
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (Optional.IsDefined(LoadBalancerBackendAddressPoolId))
+            if (LoadBalancerBackendAddressPoolId != null)
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPoolId"u8);
                 writer.WriteStringValue(LoadBalancerBackendAddressPoolId);
             }
-            if (Optional.IsDefined(LoadBalancerInboundNatPoolId))
+            if (LoadBalancerInboundNatPoolId != null)
             {
                 writer.WritePropertyName("loadBalancerInboundNatPoolId"u8);
                 writer.WriteStringValue(LoadBalancerInboundNatPoolId);
             }
-            if (Optional.IsDefined(ApplicationGatewayBackendAddressPoolId))
+            if (ApplicationGatewayBackendAddressPoolId != null)
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPoolId"u8);
                 writer.WriteStringValue(ApplicationGatewayBackendAddressPoolId);

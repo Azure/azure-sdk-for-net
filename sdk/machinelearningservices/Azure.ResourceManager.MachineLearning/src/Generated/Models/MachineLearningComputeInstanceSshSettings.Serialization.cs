@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SshPublicAccess))
+            if (SshPublicAccess.HasValue)
             {
                 writer.WritePropertyName("sshPublicAccess"u8);
                 writer.WriteStringValue(SshPublicAccess.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AdminUserName))
+            if (options.Format != "W" && AdminUserName != null)
             {
                 writer.WritePropertyName("adminUserName"u8);
                 writer.WriteStringValue(AdminUserName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SshPort))
+            if (options.Format != "W" && SshPort.HasValue)
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (Optional.IsDefined(AdminPublicKey))
+            if (AdminPublicKey != null)
             {
                 writer.WritePropertyName("adminPublicKey"u8);
                 writer.WriteStringValue(AdminPublicKey);

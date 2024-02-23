@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PollingIntervalInSeconds))
+            if (PollingIntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("pollingInterval"u8);
                 writer.WriteNumberValue(PollingIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(MinExecutions))
+            if (MinExecutions.HasValue)
             {
                 writer.WritePropertyName("minExecutions"u8);
                 writer.WriteNumberValue(MinExecutions.Value);
             }
-            if (Optional.IsDefined(MaxExecutions))
+            if (MaxExecutions.HasValue)
             {
                 writer.WritePropertyName("maxExecutions"u8);
                 writer.WriteNumberValue(MaxExecutions.Value);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<ContainerAppJobScaleRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

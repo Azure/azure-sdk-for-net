@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WebTest))
+            if (WebTest != null)
             {
                 writer.WritePropertyName("WebTest"u8);
                 writer.WriteStringValue(WebTest);

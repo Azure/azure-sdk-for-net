@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SparkRuntimeVersion))
+            if (SparkRuntimeVersion != null)
             {
                 writer.WritePropertyName("sparkRuntimeVersion"u8);
                 writer.WriteStringValue(SparkRuntimeVersion);

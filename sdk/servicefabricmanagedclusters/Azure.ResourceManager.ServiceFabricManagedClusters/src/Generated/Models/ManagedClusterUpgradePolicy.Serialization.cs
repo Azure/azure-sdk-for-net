@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceRestart))
+            if (ForceRestart.HasValue)
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (Optional.IsDefined(HealthPolicy))
+            if (HealthPolicy != null)
             {
                 writer.WritePropertyName("healthPolicy"u8);
                 writer.WriteObjectValue(HealthPolicy);
             }
-            if (Optional.IsDefined(DeltaHealthPolicy))
+            if (DeltaHealthPolicy != null)
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
                 writer.WriteObjectValue(DeltaHealthPolicy);
             }
-            if (Optional.IsDefined(MonitoringPolicy))
+            if (MonitoringPolicy != null)
             {
                 writer.WritePropertyName("monitoringPolicy"u8);
                 writer.WriteObjectValue(MonitoringPolicy);
             }
-            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
+            if (UpgradeReplicaSetCheckTimeout != null)
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteStringValue(UpgradeReplicaSetCheckTimeout);

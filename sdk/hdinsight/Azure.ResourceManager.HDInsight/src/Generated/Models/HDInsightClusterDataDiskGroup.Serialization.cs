@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisksPerNode))
+            if (DisksPerNode.HasValue)
             {
                 writer.WritePropertyName("disksPerNode"u8);
                 writer.WriteNumberValue(DisksPerNode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountType))
+            if (options.Format != "W" && StorageAccountType != null)
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskSizeInGB))
+            if (options.Format != "W" && DiskSizeInGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeInGB.Value);

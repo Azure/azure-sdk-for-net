@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RuleId))
+            if (options.Format != "W" && RuleId != null)
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultState))
+            if (options.Format != "W" && DefaultState.HasValue)
             {
                 writer.WritePropertyName("defaultState"u8);
                 writer.WriteStringValue(DefaultState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultAction))
+            if (options.Format != "W" && DefaultAction.HasValue)
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

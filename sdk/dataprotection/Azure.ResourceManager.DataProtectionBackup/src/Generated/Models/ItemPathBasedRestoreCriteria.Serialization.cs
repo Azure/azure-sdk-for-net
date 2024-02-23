@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ItemPath);
             writer.WritePropertyName("isPathRelativeToBackupItem"u8);
             writer.WriteBooleanValue(IsPathRelativeToBackupItem);
-            if (Optional.IsCollectionDefined(SubItemPathPrefix))
+            if (!(SubItemPathPrefix is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subItemPathPrefix"u8);
                 writer.WriteStartArray();

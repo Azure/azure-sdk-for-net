@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
             writer.WriteStringValue(Name);
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<MessageTemplateValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Bindings))
+            if (Bindings != null)
             {
                 writer.WritePropertyName("bindings"u8);
                 writer.WriteObjectValue(Bindings);

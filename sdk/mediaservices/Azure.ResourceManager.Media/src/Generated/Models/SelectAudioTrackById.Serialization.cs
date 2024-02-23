@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("trackId"u8);
             writer.WriteNumberValue(TrackId);
-            if (Optional.IsDefined(ChannelMapping))
+            if (ChannelMapping.HasValue)
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());

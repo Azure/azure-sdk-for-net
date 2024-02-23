@@ -37,17 +37,17 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(FallbackQueueId))
+            if (FallbackQueueId != null)
             {
                 writer.WritePropertyName("fallbackQueueId"u8);
                 writer.WriteStringValue(FallbackQueueId);
             }
-            if (Optional.IsCollectionDefined(QueueSelectorAttachments))
+            if (!(QueueSelectorAttachments is ChangeTrackingList<QueueSelectorAttachment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queueSelectorAttachments"u8);
                 writer.WriteStartArray();
@@ -57,12 +57,12 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrioritizationRule))
+            if (PrioritizationRule != null)
             {
                 writer.WritePropertyName("prioritizationRule"u8);
                 writer.WriteObjectValue(PrioritizationRule);
             }
-            if (Optional.IsCollectionDefined(WorkerSelectorAttachments))
+            if (!(WorkerSelectorAttachments is ChangeTrackingList<WorkerSelectorAttachment> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("workerSelectorAttachments"u8);
                 writer.WriteStartArray();

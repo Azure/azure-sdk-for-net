@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdditionalWorkspaceStorageAccounts))
+            if (!(AdditionalWorkspaceStorageAccounts is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalWorkspaceStorageAccounts"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultWorkspaceResourceGroup))
+            if (DefaultWorkspaceResourceGroup != null)
             {
                 writer.WritePropertyName("defaultWorkspaceResourceGroup"u8);
                 writer.WriteStringValue(DefaultWorkspaceResourceGroup);

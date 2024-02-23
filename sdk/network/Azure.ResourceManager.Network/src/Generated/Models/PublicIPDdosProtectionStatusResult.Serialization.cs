@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicIPAddressId))
+            if (PublicIPAddressId != null)
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(PublicIPAddress))
+            if (PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress.ToString());
             }
-            if (Optional.IsDefined(IsWorkloadProtected))
+            if (IsWorkloadProtected.HasValue)
             {
                 writer.WritePropertyName("isWorkloadProtected"u8);
                 writer.WriteStringValue(IsWorkloadProtected.Value.ToString());
             }
-            if (Optional.IsDefined(DdosProtectionPlanId))
+            if (DdosProtectionPlanId != null)
             {
                 writer.WritePropertyName("ddosProtectionPlanId"u8);
                 writer.WriteStringValue(DdosProtectionPlanId);

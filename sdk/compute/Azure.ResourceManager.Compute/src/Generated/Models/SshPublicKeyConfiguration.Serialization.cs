@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(KeyData))
+            if (KeyData != null)
             {
                 writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);

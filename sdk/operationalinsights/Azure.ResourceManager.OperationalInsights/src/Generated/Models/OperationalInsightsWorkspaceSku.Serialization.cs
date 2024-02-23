@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(CapacityReservationLevel))
+            if (CapacityReservationLevel.HasValue)
             {
                 writer.WritePropertyName("capacityReservationLevel"u8);
                 writer.WriteNumberValue((int)CapacityReservationLevel.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSkuUpdatedOn))
+            if (options.Format != "W" && LastSkuUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastSkuUpdate"u8);
                 writer.WriteStringValue(LastSkuUpdatedOn.Value, "O");

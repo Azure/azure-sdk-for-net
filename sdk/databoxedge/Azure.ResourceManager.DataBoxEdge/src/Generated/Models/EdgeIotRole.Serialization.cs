@@ -44,29 +44,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostPlatform))
+            if (HostPlatform.HasValue)
             {
                 writer.WritePropertyName("hostPlatform"u8);
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
-            if (Optional.IsDefined(IotDeviceDetails))
+            if (IotDeviceDetails != null)
             {
                 writer.WritePropertyName("ioTDeviceDetails"u8);
                 writer.WriteObjectValue(IotDeviceDetails);
             }
-            if (Optional.IsDefined(IotEdgeDeviceDetails))
+            if (IotEdgeDeviceDetails != null)
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
                 writer.WriteObjectValue(IotEdgeDeviceDetails);
             }
-            if (Optional.IsCollectionDefined(ShareMappings))
+            if (!(ShareMappings is ChangeTrackingList<DataBoxEdgeMountPointMap> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();
@@ -76,22 +76,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IotEdgeAgentInfo))
+            if (IotEdgeAgentInfo != null)
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo"u8);
                 writer.WriteObjectValue(IotEdgeAgentInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
+            if (options.Format != "W" && HostPlatformType.HasValue)
             {
                 writer.WritePropertyName("hostPlatformType"u8);
                 writer.WriteStringValue(HostPlatformType.Value.ToString());
             }
-            if (Optional.IsDefined(ComputeResource))
+            if (ComputeResource != null)
             {
                 writer.WritePropertyName("computeResource"u8);
                 writer.WriteObjectValue(ComputeResource);
             }
-            if (Optional.IsDefined(RoleStatus))
+            if (RoleStatus.HasValue)
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());

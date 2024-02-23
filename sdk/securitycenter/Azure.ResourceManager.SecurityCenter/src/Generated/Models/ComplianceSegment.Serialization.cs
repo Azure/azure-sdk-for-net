@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SegmentType))
+            if (options.Format != "W" && SegmentType != null)
             {
                 writer.WritePropertyName("segmentType"u8);
                 writer.WriteStringValue(SegmentType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentage))
+            if (options.Format != "W" && Percentage.HasValue)
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);

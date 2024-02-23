@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStringValue(RuleName);
             writer.WritePropertyName("rulePrecedence"u8);
             writer.WriteNumberValue(RulePrecedence);
-            if (Optional.IsDefined(RuleQosPolicy))
+            if (RuleQosPolicy != null)
             {
                 writer.WritePropertyName("ruleQosPolicy"u8);
                 writer.WriteObjectValue(RuleQosPolicy);
             }
-            if (Optional.IsDefined(TrafficControl))
+            if (TrafficControl.HasValue)
             {
                 writer.WritePropertyName("trafficControl"u8);
                 writer.WriteStringValue(TrafficControl.Value.ToString());

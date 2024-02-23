@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ManagedRuleSets))
+            if (!(ManagedRuleSets is ChangeTrackingList<ManagedRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedRuleSets"u8);
                 writer.WriteStartArray();

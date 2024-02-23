@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsCollectionDefined(Subclasses))
+            if (!(Subclasses is ChangeTrackingDictionary<string, LabelClass> collection && collection.IsUndefined))
             {
                 if (Subclasses != null)
                 {

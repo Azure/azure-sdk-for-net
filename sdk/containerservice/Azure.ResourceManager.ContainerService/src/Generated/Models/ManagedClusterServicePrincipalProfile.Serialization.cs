@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Optional.IsDefined(Secret))
+            if (Secret != null)
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Format))
+            if (Format.HasValue)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteObjectValue(DeliveryInfo);
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition);
-            if (Optional.IsDefined(RunHistory))
+            if (RunHistory != null)
             {
                 writer.WritePropertyName("runHistory"u8);
                 writer.WriteObjectValue(RunHistory);
             }
-            if (Optional.IsDefined(PartitionData))
+            if (PartitionData.HasValue)
             {
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
+            if (options.Format != "W" && NextRunTimeEstimate.HasValue)
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");

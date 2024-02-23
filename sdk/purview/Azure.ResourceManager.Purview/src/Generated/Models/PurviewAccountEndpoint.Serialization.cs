@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Catalog))
+            if (options.Format != "W" && Catalog != null)
             {
                 writer.WritePropertyName("catalog"u8);
                 writer.WriteStringValue(Catalog);
             }
-            if (options.Format != "W" && Optional.IsDefined(Scan))
+            if (options.Format != "W" && Scan != null)
             {
                 writer.WritePropertyName("scan"u8);
                 writer.WriteStringValue(Scan);

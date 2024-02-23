@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SupportExpiryDate))
+            if (options.Format != "W" && SupportExpiryDate != null)
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpiryDate);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetClusterVersion))
+            if (options.Format != "W" && TargetClusterVersion != null)
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);

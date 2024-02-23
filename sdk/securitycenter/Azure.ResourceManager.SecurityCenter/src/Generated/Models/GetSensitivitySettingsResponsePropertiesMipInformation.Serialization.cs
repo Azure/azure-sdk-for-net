@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MipIntegrationStatus))
+            if (MipIntegrationStatus.HasValue)
             {
                 writer.WritePropertyName("mipIntegrationStatus"u8);
                 writer.WriteStringValue(MipIntegrationStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<MipSensitivityLabel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomInfoTypes))
+            if (!(CustomInfoTypes is ChangeTrackingList<UserDefinedInformationType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customInfoTypes"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BuiltInInfoTypes))
+            if (!(BuiltInInfoTypes is ChangeTrackingList<BuiltInInfoType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("builtInInfoTypes"u8);
                 writer.WriteStartArray();

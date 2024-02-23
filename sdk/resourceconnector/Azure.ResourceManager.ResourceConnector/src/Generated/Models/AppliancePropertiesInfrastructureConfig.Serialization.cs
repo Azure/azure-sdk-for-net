@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Provider))
+            if (Provider.HasValue)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider.Value.ToString());

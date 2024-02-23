@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,49 +47,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FunctionAppId))
+            if (FunctionAppId != null)
             {
                 writer.WritePropertyName("function_app_id"u8);
                 writer.WriteStringValue(FunctionAppId);
             }
-            if (Optional.IsDefined(ScriptRootPathHref))
+            if (ScriptRootPathHref != null)
             {
                 writer.WritePropertyName("script_root_path_href"u8);
                 writer.WriteStringValue(ScriptRootPathHref);
             }
-            if (Optional.IsDefined(ScriptHref))
+            if (ScriptHref != null)
             {
                 writer.WritePropertyName("script_href"u8);
                 writer.WriteStringValue(ScriptHref);
             }
-            if (Optional.IsDefined(ConfigHref))
+            if (ConfigHref != null)
             {
                 writer.WritePropertyName("config_href"u8);
                 writer.WriteStringValue(ConfigHref);
             }
-            if (Optional.IsDefined(TestDataHref))
+            if (TestDataHref != null)
             {
                 writer.WritePropertyName("test_data_href"u8);
                 writer.WriteStringValue(TestDataHref);
             }
-            if (Optional.IsDefined(SecretsFileHref))
+            if (SecretsFileHref != null)
             {
                 writer.WritePropertyName("secrets_file_href"u8);
                 writer.WriteStringValue(SecretsFileHref);
             }
-            if (Optional.IsDefined(Href))
+            if (Href != null)
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Optional.IsDefined(Config))
+            if (Config != null)
             {
                 writer.WritePropertyName("config"u8);
 #if NET6_0_OR_GREATER
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartObject();
@@ -112,22 +112,22 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TestData))
+            if (TestData != null)
             {
                 writer.WritePropertyName("test_data"u8);
                 writer.WriteStringValue(TestData);
             }
-            if (Optional.IsDefined(InvokeUrlTemplate))
+            if (InvokeUrlTemplate != null)
             {
                 writer.WritePropertyName("invoke_url_template"u8);
                 writer.WriteStringValue(InvokeUrlTemplate);
             }
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(IsDisabled))
+            if (IsDisabled.HasValue)
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);

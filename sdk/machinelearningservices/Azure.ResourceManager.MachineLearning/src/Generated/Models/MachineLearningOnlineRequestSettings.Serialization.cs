@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
+            if (MaxConcurrentRequestsPerInstance.HasValue)
             {
                 writer.WritePropertyName("maxConcurrentRequestsPerInstance"u8);
                 writer.WriteNumberValue(MaxConcurrentRequestsPerInstance.Value);
             }
-            if (Optional.IsDefined(MaxQueueWait))
+            if (MaxQueueWait.HasValue)
             {
                 writer.WritePropertyName("maxQueueWait"u8);
                 writer.WriteStringValue(MaxQueueWait.Value, "P");
             }
-            if (Optional.IsDefined(RequestTimeout))
+            if (RequestTimeout.HasValue)
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteStringValue(RequestTimeout.Value, "P");

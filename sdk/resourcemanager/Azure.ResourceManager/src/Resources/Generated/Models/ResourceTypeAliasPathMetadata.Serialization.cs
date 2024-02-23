@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TokenType))
+            if (options.Format != "W" && TokenType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Attributes))
+            if (options.Format != "W" && Attributes.HasValue)
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStringValue(Attributes.Value.ToString());

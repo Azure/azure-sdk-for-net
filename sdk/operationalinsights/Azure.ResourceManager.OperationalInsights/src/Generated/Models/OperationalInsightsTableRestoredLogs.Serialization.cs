@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartRestoreOn))
+            if (StartRestoreOn.HasValue)
             {
                 writer.WritePropertyName("startRestoreTime"u8);
                 writer.WriteStringValue(StartRestoreOn.Value, "O");
             }
-            if (Optional.IsDefined(EndRestoreOn))
+            if (EndRestoreOn.HasValue)
             {
                 writer.WritePropertyName("endRestoreTime"u8);
                 writer.WriteStringValue(EndRestoreOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceTable))
+            if (SourceTable != null)
             {
                 writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureAsyncOperationId))
+            if (options.Format != "W" && AzureAsyncOperationId.HasValue)
             {
                 writer.WritePropertyName("azureAsyncOperationId"u8);
                 writer.WriteStringValue(AzureAsyncOperationId.Value);

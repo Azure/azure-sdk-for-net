@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AvailablePromotion))
+            if (AvailablePromotion.HasValue)
             {
                 writer.WritePropertyName("availablePromotion"u8);
                 writer.WriteStringValue(AvailablePromotion.Value.ToString());
             }
-            if (Optional.IsDefined(GrafanaResourceId))
+            if (GrafanaResourceId != null)
             {
                 writer.WritePropertyName("grafanaResourceId"u8);
                 writer.WriteStringValue(GrafanaResourceId);
             }
-            if (Optional.IsDefined(TrialStartOn))
+            if (TrialStartOn.HasValue)
             {
                 writer.WritePropertyName("trialStartAt"u8);
                 writer.WriteStringValue(TrialStartOn.Value, "O");
             }
-            if (Optional.IsDefined(TrialEndOn))
+            if (TrialEndOn.HasValue)
             {
                 writer.WritePropertyName("trialEndAt"u8);
                 writer.WriteStringValue(TrialEndOn.Value, "O");

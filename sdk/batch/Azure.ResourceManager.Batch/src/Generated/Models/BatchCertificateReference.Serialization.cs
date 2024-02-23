@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(StoreLocation))
+            if (StoreLocation.HasValue)
             {
                 writer.WritePropertyName("storeLocation"u8);
                 writer.WriteStringValue(StoreLocation.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StoreName))
+            if (StoreName != null)
             {
                 writer.WritePropertyName("storeName"u8);
                 writer.WriteStringValue(StoreName);
             }
-            if (Optional.IsCollectionDefined(Visibility))
+            if (!(Visibility is ChangeTrackingList<BatchCertificateVisibility> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStartArray();

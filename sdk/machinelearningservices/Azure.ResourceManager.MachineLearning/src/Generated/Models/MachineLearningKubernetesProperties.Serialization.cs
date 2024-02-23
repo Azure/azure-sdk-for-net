@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelayConnectionString))
+            if (RelayConnectionString != null)
             {
                 if (RelayConnectionString != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("relayConnectionString");
                 }
             }
-            if (Optional.IsDefined(ServiceBusConnectionString))
+            if (ServiceBusConnectionString != null)
             {
                 if (ServiceBusConnectionString != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("serviceBusConnectionString");
                 }
             }
-            if (Optional.IsDefined(ExtensionPrincipalId))
+            if (ExtensionPrincipalId != null)
             {
                 if (ExtensionPrincipalId != null)
                 {
@@ -62,27 +62,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("extensionPrincipalId");
                 }
             }
-            if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
+            if (ExtensionInstanceReleaseTrain != null)
             {
                 writer.WritePropertyName("extensionInstanceReleaseTrain"u8);
                 writer.WriteStringValue(ExtensionInstanceReleaseTrain);
             }
-            if (Optional.IsDefined(VcName))
+            if (VcName != null)
             {
                 writer.WritePropertyName("vcName"u8);
                 writer.WriteStringValue(VcName);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(DefaultInstanceType))
+            if (DefaultInstanceType != null)
             {
                 writer.WritePropertyName("defaultInstanceType"u8);
                 writer.WriteStringValue(DefaultInstanceType);
             }
-            if (Optional.IsCollectionDefined(InstanceTypes))
+            if (!(InstanceTypes is ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instanceTypes"u8);
                 writer.WriteStartObject();

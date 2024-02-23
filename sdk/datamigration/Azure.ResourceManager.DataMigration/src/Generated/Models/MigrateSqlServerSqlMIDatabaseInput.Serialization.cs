@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("restoreDatabaseName"u8);
             writer.WriteStringValue(RestoreDatabaseName);
-            if (Optional.IsDefined(BackupFileShare))
+            if (BackupFileShare != null)
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
-            if (Optional.IsCollectionDefined(BackupFilePaths))
+            if (!(BackupFilePaths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupFilePaths"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TrackedResourceId))
+            if (options.Format != "W" && TrackedResourceId != null)
             {
                 writer.WritePropertyName("trackedResourceId"u8);
                 writer.WriteStringValue(TrackedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
+            if (options.Format != "W" && PolicyDetails != null)
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteObjectValue(PolicyDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (options.Format != "W" && CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
+            if (options.Format != "W" && LastModifiedBy != null)
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteObjectValue(LastModifiedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
+            if (options.Format != "W" && LastUpdateOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdateUtc"u8);
                 writer.WriteStringValue(LastUpdateOn.Value, "O");

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuestionId))
+            if (QuestionId != null)
             {
                 writer.WritePropertyName("questionId"u8);
                 writer.WriteStringValue(QuestionId);
             }
-            if (Optional.IsDefined(QuestionType))
+            if (QuestionType.HasValue)
             {
                 writer.WritePropertyName("questionType"u8);
                 writer.WriteStringValue(QuestionType.Value.ToString());
             }
-            if (Optional.IsDefined(Response))
+            if (Response != null)
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteStringValue(Response);

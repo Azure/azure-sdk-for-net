@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(IgnoreCase))
+            if (IgnoreCase.HasValue)
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Optional.IsDefined(UseQueryMode))
+            if (UseQueryMode.HasValue)
             {
                 writer.WritePropertyName("queryMode"u8);
                 writer.WriteBooleanValue(UseQueryMode.Value);

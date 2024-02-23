@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.ServiceLinker
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -106,6 +117,18 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string linkerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceUri, string linkerName)
@@ -202,6 +225,18 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string linkerName, LinkerResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string linkerName, LinkerResourceData data)
@@ -302,6 +337,18 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri, string linkerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string resourceUri, string linkerName)
         {
             var message = _pipeline.CreateMessage();
@@ -386,6 +433,18 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, string linkerName, LinkerResourcePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string resourceUri, string linkerName, LinkerResourcePatch patch)
@@ -486,6 +545,19 @@ namespace Azure.ResourceManager.ServiceLinker
             }
         }
 
+        internal RequestUriBuilder CreateValidateRequestUri(string resourceUri, string linkerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendPath("/validateLinker", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateRequest(string resourceUri, string linkerName)
         {
             var message = _pipeline.CreateMessage();
@@ -569,6 +641,19 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListConfigurationsRequestUri(string resourceUri, string linkerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ServiceLinker/linkers/", false);
+            uri.AppendPath(linkerName, true);
+            uri.AppendPath("/listConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListConfigurationsRequest(string resourceUri, string linkerName)
@@ -662,6 +747,14 @@ namespace Azure.ResourceManager.ServiceLinker
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceUri)

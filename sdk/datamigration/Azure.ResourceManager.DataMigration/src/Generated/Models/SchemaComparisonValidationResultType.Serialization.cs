@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ObjectName))
+            if (ObjectName != null)
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
             }
-            if (Optional.IsDefined(ObjectType))
+            if (ObjectType.HasValue)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateAction))
+            if (UpdateAction.HasValue)
             {
                 writer.WritePropertyName("updateAction"u8);
                 writer.WriteStringValue(UpdateAction.Value.ToString());

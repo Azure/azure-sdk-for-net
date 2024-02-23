@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageName))
+            if (ImageName != null)
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (Optional.IsDefined(ImageVersion))
+            if (ImageVersion != null)
             {
                 writer.WritePropertyName("imageVersion"u8);
                 writer.WriteStringValue(ImageVersion);

@@ -27,12 +27,12 @@ namespace Azure.AI.ContentSafety
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteBase64StringValue(Content.ToArray(), "D");
             }
-            if (Optional.IsDefined(BlobUri))
+            if (BlobUri != null)
             {
                 writer.WritePropertyName("blobUrl"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);

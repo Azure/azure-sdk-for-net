@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MountTargetId))
+            if (options.Format != "W" && MountTargetId.HasValue)
             {
                 writer.WritePropertyName("mountTargetId"u8);
                 writer.WriteStringValue(MountTargetId.Value);
             }
             writer.WritePropertyName("fileSystemId"u8);
             writer.WriteStringValue(FileSystemId);
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(SmbServerFqdn))
+            if (SmbServerFqdn != null)
             {
                 writer.WritePropertyName("smbServerFqdn"u8);
                 writer.WriteStringValue(SmbServerFqdn);

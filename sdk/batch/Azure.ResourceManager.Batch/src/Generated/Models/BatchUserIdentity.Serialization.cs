@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(AutoUser))
+            if (AutoUser != null)
             {
                 writer.WritePropertyName("autoUser"u8);
                 writer.WriteObjectValue(AutoUser);

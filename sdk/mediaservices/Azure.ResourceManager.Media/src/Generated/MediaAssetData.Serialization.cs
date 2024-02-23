@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AssetId))
+            if (options.Format != "W" && AssetId.HasValue)
             {
                 writer.WritePropertyName("assetId"u8);
                 writer.WriteStringValue(AssetId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(AlternateId))
+            if (AlternateId != null)
             {
                 writer.WritePropertyName("alternateId"u8);
                 writer.WriteStringValue(AlternateId);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Container))
+            if (Container != null)
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (Optional.IsDefined(StorageAccountName))
+            if (StorageAccountName != null)
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageEncryptionFormat))
+            if (options.Format != "W" && StorageEncryptionFormat.HasValue)
             {
                 writer.WritePropertyName("storageEncryptionFormat"u8);
                 writer.WriteStringValue(StorageEncryptionFormat.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionScope))
+            if (EncryptionScope != null)
             {
                 writer.WritePropertyName("encryptionScope"u8);
                 writer.WriteStringValue(EncryptionScope);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MlflowAutologger))
+            if (MlflowAutologger.HasValue)
             {
                 writer.WritePropertyName("mlflowAutologger"u8);
                 writer.WriteStringValue(MlflowAutologger.Value.ToString());

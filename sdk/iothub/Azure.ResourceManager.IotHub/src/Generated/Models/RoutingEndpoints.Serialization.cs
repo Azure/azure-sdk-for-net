@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ServiceBusQueues))
+            if (!(ServiceBusQueues is ChangeTrackingList<RoutingServiceBusQueueEndpointProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceBusQueues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceBusTopics))
+            if (!(ServiceBusTopics is ChangeTrackingList<RoutingServiceBusTopicEndpointProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceBusTopics"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventHubs))
+            if (!(EventHubs is ChangeTrackingList<RoutingEventHubProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StorageContainers))
+            if (!(StorageContainers is ChangeTrackingList<RoutingStorageContainerProperties> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("storageContainers"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CosmosDBSqlContainers))
+            if (!(CosmosDBSqlContainers is ChangeTrackingList<RoutingCosmosDBSqlApiProperties> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("cosmosDBSqlContainers"u8);
                 writer.WriteStartArray();

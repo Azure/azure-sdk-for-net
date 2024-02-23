@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationMode))
+            if (options.Format != "W" && ConfigurationMode.HasValue)
             {
                 writer.WritePropertyName("configurationMode"u8);
                 writer.WriteStringValue(ConfigurationMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsModuleOverwriteAllowed))
+            if (options.Format != "W" && IsModuleOverwriteAllowed.HasValue)
             {
                 writer.WritePropertyName("allowModuleOverwrite"u8);
                 writer.WriteBooleanValue(IsModuleOverwriteAllowed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionAfterReboot))
+            if (options.Format != "W" && ActionAfterReboot.HasValue)
             {
                 writer.WritePropertyName("actionAfterReboot"u8);
                 writer.WriteStringValue(ActionAfterReboot.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RefreshFrequencyInMins))
+            if (options.Format != "W" && RefreshFrequencyInMins.HasValue)
             {
                 writer.WritePropertyName("refreshFrequencyMins"u8);
                 writer.WriteNumberValue(RefreshFrequencyInMins.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RebootIfNeeded))
+            if (options.Format != "W" && RebootIfNeeded.HasValue)
             {
                 writer.WritePropertyName("rebootIfNeeded"u8);
                 writer.WriteBooleanValue(RebootIfNeeded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationModeFrequencyInMins))
+            if (options.Format != "W" && ConfigurationModeFrequencyInMins.HasValue)
             {
                 writer.WritePropertyName("configurationModeFrequencyMins"u8);
                 writer.WriteNumberValue(ConfigurationModeFrequencyInMins.Value);

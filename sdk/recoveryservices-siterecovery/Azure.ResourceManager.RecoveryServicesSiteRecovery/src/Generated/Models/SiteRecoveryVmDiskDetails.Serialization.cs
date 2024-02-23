@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VhdType))
+            if (VhdType != null)
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (Optional.IsDefined(VhdId))
+            if (VhdId != null)
             {
                 writer.WritePropertyName("vhdId"u8);
                 writer.WriteStringValue(VhdId);
             }
-            if (Optional.IsDefined(DiskId))
+            if (DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(VhdName))
+            if (VhdName != null)
             {
                 writer.WritePropertyName("vhdName"u8);
                 writer.WriteStringValue(VhdName);
             }
-            if (Optional.IsDefined(MaxSizeMB))
+            if (MaxSizeMB != null)
             {
                 writer.WritePropertyName("maxSizeMB"u8);
                 writer.WriteStringValue(MaxSizeMB);
             }
-            if (Optional.IsDefined(TargetDiskLocation))
+            if (TargetDiskLocation != null)
             {
                 writer.WritePropertyName("targetDiskLocation"u8);
                 writer.WriteStringValue(TargetDiskLocation);
             }
-            if (Optional.IsDefined(TargetDiskName))
+            if (TargetDiskName != null)
             {
                 writer.WritePropertyName("targetDiskName"u8);
                 writer.WriteStringValue(TargetDiskName);
             }
-            if (Optional.IsDefined(LunId))
+            if (LunId != null)
             {
                 writer.WritePropertyName("lunId"u8);
                 writer.WriteStringValue(LunId);
             }
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsDefined(CustomTargetDiskName))
+            if (CustomTargetDiskName != null)
             {
                 writer.WritePropertyName("customTargetDiskName"u8);
                 writer.WriteStringValue(CustomTargetDiskName);

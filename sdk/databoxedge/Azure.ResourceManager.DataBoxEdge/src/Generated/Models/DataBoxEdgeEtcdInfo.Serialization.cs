@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EtcdInfoType))
+            if (options.Format != "W" && EtcdInfoType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EtcdInfoType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<CassandraColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PartitionKeys))
+            if (!(PartitionKeys is ChangeTrackingList<CassandraPartitionKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("partitionKeys"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClusterKeys))
+            if (!(ClusterKeys is ChangeTrackingList<CassandraClusterKey> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("clusterKeys"u8);
                 writer.WriteStartArray();

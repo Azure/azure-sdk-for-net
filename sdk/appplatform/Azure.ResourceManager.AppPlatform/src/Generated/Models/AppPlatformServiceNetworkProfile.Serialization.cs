@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceRuntimeSubnetId))
+            if (ServiceRuntimeSubnetId != null)
             {
                 writer.WritePropertyName("serviceRuntimeSubnetId"u8);
                 writer.WriteStringValue(ServiceRuntimeSubnetId);
             }
-            if (Optional.IsDefined(AppSubnetId))
+            if (AppSubnetId != null)
             {
                 writer.WritePropertyName("appSubnetId"u8);
                 writer.WriteStringValue(AppSubnetId);
             }
-            if (Optional.IsDefined(ServiceCidr))
+            if (ServiceCidr != null)
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (Optional.IsDefined(ServiceRuntimeNetworkResourceGroup))
+            if (ServiceRuntimeNetworkResourceGroup != null)
             {
                 writer.WritePropertyName("serviceRuntimeNetworkResourceGroup"u8);
                 writer.WriteStringValue(ServiceRuntimeNetworkResourceGroup);
             }
-            if (Optional.IsDefined(AppNetworkResourceGroup))
+            if (AppNetworkResourceGroup != null)
             {
                 writer.WritePropertyName("appNetworkResourceGroup"u8);
                 writer.WriteStringValue(AppNetworkResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(OutboundIPs))
+            if (options.Format != "W" && OutboundIPs != null)
             {
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredTraffics))
+            if (options.Format != "W" && !(RequiredTraffics is ChangeTrackingList<AppPlatformServiceRequiredTraffic> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredTraffics"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IngressConfig))
+            if (IngressConfig != null)
             {
                 writer.WritePropertyName("ingressConfig"u8);
                 writer.WriteObjectValue(IngressConfig);
             }
-            if (Optional.IsDefined(OutboundType))
+            if (OutboundType != null)
             {
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType);

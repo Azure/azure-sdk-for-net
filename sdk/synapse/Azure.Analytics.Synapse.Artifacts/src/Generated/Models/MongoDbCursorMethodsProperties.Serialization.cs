@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Project))
+            if (Project != null)
             {
                 writer.WritePropertyName("project"u8);
                 writer.WriteObjectValue(Project);
             }
-            if (Optional.IsDefined(Sort))
+            if (Sort != null)
             {
                 writer.WritePropertyName("sort"u8);
                 writer.WriteObjectValue(Sort);
             }
-            if (Optional.IsDefined(Skip))
+            if (Skip != null)
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteObjectValue(Skip);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit != null)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteObjectValue(Limit);

@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RejectType))
+            if (RejectType.HasValue)
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (Optional.IsDefined(RejectValue))
+            if (RejectValue != null)
             {
                 writer.WritePropertyName("rejectValue"u8);
                 JsonSerializer.Serialize(writer, RejectValue);
             }
-            if (Optional.IsDefined(RejectSampleValue))
+            if (RejectSampleValue != null)
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
                 JsonSerializer.Serialize(writer, RejectSampleValue);
             }
-            if (Optional.IsDefined(UseTypeDefault))
+            if (UseTypeDefault != null)
             {
                 writer.WritePropertyName("useTypeDefault"u8);
                 JsonSerializer.Serialize(writer, UseTypeDefault);

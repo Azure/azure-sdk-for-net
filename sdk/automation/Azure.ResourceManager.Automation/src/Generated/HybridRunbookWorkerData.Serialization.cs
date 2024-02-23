@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IP))
+            if (IP != null)
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (Optional.IsDefined(RegisteredOn))
+            if (RegisteredOn.HasValue)
             {
                 writer.WritePropertyName("registeredDateTime"u8);
                 writer.WriteStringValue(RegisteredOn.Value, "O");
             }
-            if (Optional.IsDefined(LastSeenOn))
+            if (LastSeenOn.HasValue)
             {
                 writer.WritePropertyName("lastSeenDateTime"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
             }
-            if (Optional.IsDefined(VmResourceId))
+            if (VmResourceId != null)
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
-            if (Optional.IsDefined(WorkerType))
+            if (WorkerType.HasValue)
             {
                 writer.WritePropertyName("workerType"u8);
                 writer.WriteStringValue(WorkerType.Value.ToString());
             }
-            if (Optional.IsDefined(WorkerName))
+            if (WorkerName != null)
             {
                 writer.WritePropertyName("workerName"u8);
                 writer.WriteStringValue(WorkerName);

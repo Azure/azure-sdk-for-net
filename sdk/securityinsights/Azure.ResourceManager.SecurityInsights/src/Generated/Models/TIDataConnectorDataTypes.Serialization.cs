@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Indicators))
+            if (Indicators != null)
             {
                 writer.WritePropertyName("indicators"u8);
                 writer.WriteObjectValue(Indicators);

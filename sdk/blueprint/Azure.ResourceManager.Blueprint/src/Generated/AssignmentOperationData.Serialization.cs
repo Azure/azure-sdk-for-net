@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlueprintVersion))
+            if (BlueprintVersion != null)
             {
                 writer.WritePropertyName("blueprintVersion"u8);
                 writer.WriteStringValue(BlueprintVersion);
             }
-            if (Optional.IsDefined(AssignmentState))
+            if (AssignmentState != null)
             {
                 writer.WritePropertyName("assignmentState"u8);
                 writer.WriteStringValue(AssignmentState);
             }
-            if (Optional.IsDefined(TimeCreated))
+            if (TimeCreated != null)
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated);
             }
-            if (Optional.IsDefined(TimeStarted))
+            if (TimeStarted != null)
             {
                 writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted);
             }
-            if (Optional.IsDefined(TimeFinished))
+            if (TimeFinished != null)
             {
                 writer.WritePropertyName("timeFinished"u8);
                 writer.WriteStringValue(TimeFinished);
             }
-            if (Optional.IsCollectionDefined(Deployments))
+            if (!(Deployments is ChangeTrackingList<AssignmentDeploymentJob> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();

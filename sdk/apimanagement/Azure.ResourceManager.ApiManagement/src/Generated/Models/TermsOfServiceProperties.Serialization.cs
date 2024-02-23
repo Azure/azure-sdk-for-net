@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsDefined(IsDisplayEnabled))
+            if (IsDisplayEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDisplayEnabled.Value);
             }
-            if (Optional.IsDefined(IsConsentRequired))
+            if (IsConsentRequired.HasValue)
             {
                 writer.WritePropertyName("consentRequired"u8);
                 writer.WriteBooleanValue(IsConsentRequired.Value);

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(NotBefore))
+            if (NotBefore.HasValue)
             {
                 writer.WritePropertyName("nbf"u8);
                 writer.WriteNumberValue(NotBefore.Value, "U");
             }
-            if (Optional.IsDefined(Expires))
+            if (Expires.HasValue)
             {
                 writer.WritePropertyName("exp"u8);
                 writer.WriteNumberValue(Expires.Value, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Created.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteNumberValue(Created.Value, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(Updated))
+            if (options.Format != "W" && Updated.HasValue)
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteNumberValue(Updated.Value, "U");

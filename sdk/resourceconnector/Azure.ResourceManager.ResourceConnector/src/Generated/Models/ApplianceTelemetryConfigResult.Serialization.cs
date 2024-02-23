@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TelemetryInstrumentationKey))
+            if (options.Format != "W" && TelemetryInstrumentationKey != null)
             {
                 writer.WritePropertyName("telemetryInstrumentationKey"u8);
                 writer.WriteStringValue(TelemetryInstrumentationKey);

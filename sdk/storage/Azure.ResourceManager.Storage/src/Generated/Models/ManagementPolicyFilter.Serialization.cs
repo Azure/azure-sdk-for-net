@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PrefixMatch))
+            if (!(PrefixMatch is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(BlobIndexMatch))
+            if (!(BlobIndexMatch is ChangeTrackingList<ManagementPolicyTagFilter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("blobIndexMatch"u8);
                 writer.WriteStartArray();

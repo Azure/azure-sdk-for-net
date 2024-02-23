@@ -32,27 +32,27 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime"u8);
             writer.WriteStringValue(ToTime, "O");
-            if (Optional.IsDefined(GroupByThrottlePolicy))
+            if (GroupByThrottlePolicy.HasValue)
             {
                 writer.WritePropertyName("groupByThrottlePolicy"u8);
                 writer.WriteBooleanValue(GroupByThrottlePolicy.Value);
             }
-            if (Optional.IsDefined(GroupByOperationName))
+            if (GroupByOperationName.HasValue)
             {
                 writer.WritePropertyName("groupByOperationName"u8);
                 writer.WriteBooleanValue(GroupByOperationName.Value);
             }
-            if (Optional.IsDefined(GroupByResourceName))
+            if (GroupByResourceName.HasValue)
             {
                 writer.WritePropertyName("groupByResourceName"u8);
                 writer.WriteBooleanValue(GroupByResourceName.Value);
             }
-            if (Optional.IsDefined(GroupByClientApplicationId))
+            if (GroupByClientApplicationId.HasValue)
             {
                 writer.WritePropertyName("groupByClientApplicationId"u8);
                 writer.WriteBooleanValue(GroupByClientApplicationId.Value);
             }
-            if (Optional.IsDefined(GroupByUserAgent))
+            if (GroupByUserAgent.HasValue)
             {
                 writer.WritePropertyName("groupByUserAgent"u8);
                 writer.WriteBooleanValue(GroupByUserAgent.Value);

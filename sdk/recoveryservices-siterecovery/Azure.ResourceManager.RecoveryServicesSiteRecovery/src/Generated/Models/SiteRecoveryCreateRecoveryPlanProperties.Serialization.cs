@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(PrimaryFabricId);
             writer.WritePropertyName("recoveryFabricId"u8);
             writer.WriteStringValue(RecoveryFabricId);
-            if (Optional.IsDefined(FailoverDeploymentModel))
+            if (FailoverDeploymentModel.HasValue)
             {
                 writer.WritePropertyName("failoverDeploymentModel"u8);
                 writer.WriteStringValue(FailoverDeploymentModel.Value.ToString());
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ProviderSpecificContent))
+            if (!(ProviderSpecificContent is ChangeTrackingList<RecoveryPlanProviderSpecificContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteStartArray();

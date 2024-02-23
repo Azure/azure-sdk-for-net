@@ -19,12 +19,12 @@ namespace Azure.AI.Translation.Document
             writer.WriteStringValue(GlossaryUri.AbsoluteUri);
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
-            if (Optional.IsDefined(FormatVersion))
+            if (FormatVersion != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(FormatVersion);
             }
-            if (Optional.IsDefined(StorageSource))
+            if (StorageSource != null)
             {
                 writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);

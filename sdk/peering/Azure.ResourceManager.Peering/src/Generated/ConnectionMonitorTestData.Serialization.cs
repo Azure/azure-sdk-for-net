@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceAgent))
+            if (SourceAgent != null)
             {
                 writer.WritePropertyName("sourceAgent"u8);
                 writer.WriteStringValue(SourceAgent);
             }
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
-            if (Optional.IsDefined(DestinationPort))
+            if (DestinationPort.HasValue)
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (Optional.IsDefined(TestFrequencyInSec))
+            if (TestFrequencyInSec.HasValue)
             {
                 writer.WritePropertyName("testFrequencyInSec"u8);
                 writer.WriteNumberValue(TestFrequencyInSec.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsTestSuccessful))
+            if (options.Format != "W" && IsTestSuccessful.HasValue)
             {
                 writer.WritePropertyName("isTestSuccessful"u8);
                 writer.WriteBooleanValue(IsTestSuccessful.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Path))
+            if (options.Format != "W" && !(Path is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Peering
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

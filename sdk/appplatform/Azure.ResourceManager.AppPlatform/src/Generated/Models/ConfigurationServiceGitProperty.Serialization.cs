@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ConfigurationServiceGitRepositories))
+            if (!(ConfigurationServiceGitRepositories is ChangeTrackingList<AppPlatformConfigurationServiceGitRepository> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();

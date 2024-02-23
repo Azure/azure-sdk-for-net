@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RenewCertificateType))
+            if (RenewCertificateType != null)
             {
                 writer.WritePropertyName("renewCertificateType"u8);
                 writer.WriteStringValue(RenewCertificateType);

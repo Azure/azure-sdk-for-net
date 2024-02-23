@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationIP))
+            if (DestinationIP != null)
             {
                 writer.WritePropertyName("destinationIp"u8);
                 writer.WriteStringValue(DestinationIP.ToString());
             }
-            if (Optional.IsCollectionDefined(SourceIPs))
+            if (!(SourceIPs is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceIps"u8);
                 writer.WriteStartArray();

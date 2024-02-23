@@ -17,22 +17,22 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(SourceLocale))
+            if (SourceLocale != null)
             {
                 writer.WritePropertyName("sourceLocale"u8);
                 writer.WriteStringValue(SourceLocale);
             }
-            if (Optional.IsDefined(VoiceKind))
+            if (VoiceKind.HasValue)
             {
                 writer.WritePropertyName("voiceKind"u8);
                 writer.WriteStringValue(VoiceKind.Value.ToString());
             }
-            if (Optional.IsDefined(VoiceName))
+            if (VoiceName != null)
             {
                 writer.WritePropertyName("voiceName"u8);
                 writer.WriteStringValue(VoiceName);
             }
-            if (Optional.IsDefined(CustomVoiceEndpointId))
+            if (CustomVoiceEndpointId != null)
             {
                 writer.WritePropertyName("customVoiceEndpointId"u8);
                 writer.WriteStringValue(CustomVoiceEndpointId);

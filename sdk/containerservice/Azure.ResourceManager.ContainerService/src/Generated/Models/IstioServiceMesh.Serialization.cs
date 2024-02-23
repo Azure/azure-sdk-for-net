@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Components))
+            if (Components != null)
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteObjectValue(Components);
             }
-            if (Optional.IsDefined(CertificateAuthority))
+            if (CertificateAuthority != null)
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteObjectValue(CertificateAuthority);
             }
-            if (Optional.IsCollectionDefined(Revisions))
+            if (!(Revisions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("revisions"u8);
                 writer.WriteStartArray();

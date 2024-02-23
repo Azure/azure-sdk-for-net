@@ -26,44 +26,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NativeCloudConnection))
+            if (NativeCloudConnection != null)
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
                 writer.WriteObjectValue(NativeCloudConnection);
             }
-            if (Optional.IsDefined(DataPipelineNativeCloudConnection))
+            if (DataPipelineNativeCloudConnection != null)
             {
                 writer.WritePropertyName("dataPipelineNativeCloudConnection"u8);
                 writer.WriteObjectValue(DataPipelineNativeCloudConnection);
             }
-            if (Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
+            if (IsAuditLogsAutoProvisioningEnabled.HasValue)
             {
                 writer.WritePropertyName("auditLogsAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsAuditLogsAutoProvisioningEnabled.Value);
             }
-            if (Optional.IsDefined(IsDefenderAgentAutoProvisioningEnabled))
+            if (IsDefenderAgentAutoProvisioningEnabled.HasValue)
             {
                 writer.WritePropertyName("defenderAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsDefenderAgentAutoProvisioningEnabled.Value);
             }
-            if (Optional.IsDefined(IsPolicyAgentAutoProvisioningEnabled))
+            if (IsPolicyAgentAutoProvisioningEnabled.HasValue)
             {
                 writer.WritePropertyName("policyAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsPolicyAgentAutoProvisioningEnabled.Value);
             }
-            if (Optional.IsDefined(MdcContainersImageAssessment))
+            if (MdcContainersImageAssessment != null)
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
                 writer.WriteObjectValue(MdcContainersImageAssessment);
             }
-            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            if (MdcContainersAgentlessDiscoveryK8S != null)
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

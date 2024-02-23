@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(CoreQuota))
+            if (options.Format != "W" && CoreQuota.HasValue)
             {
                 writer.WritePropertyName("coreQuota"u8);
                 writer.WriteNumberValue(CoreQuota.Value);

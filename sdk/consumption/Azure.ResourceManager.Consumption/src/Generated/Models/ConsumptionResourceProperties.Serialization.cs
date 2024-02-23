@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedScopes))
+            if (options.Format != "W" && !(AppliedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appliedScopes"u8);
                 writer.WriteStartArray();
@@ -36,27 +36,27 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(OnDemandRate))
+            if (options.Format != "W" && OnDemandRate.HasValue)
             {
                 writer.WritePropertyName("onDemandRate"u8);
                 writer.WriteNumberValue(OnDemandRate.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Product))
+            if (options.Format != "W" && Product != null)
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (options.Format != "W" && Optional.IsDefined(Region))
+            if (options.Format != "W" && Region != null)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReservationRate))
+            if (options.Format != "W" && ReservationRate.HasValue)
             {
                 writer.WritePropertyName("reservationRate"u8);
                 writer.WriteNumberValue(ReservationRate.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);

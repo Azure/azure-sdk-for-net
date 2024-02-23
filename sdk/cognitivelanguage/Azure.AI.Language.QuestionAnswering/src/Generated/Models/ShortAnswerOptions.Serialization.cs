@@ -17,12 +17,12 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartObject();
             writer.WritePropertyName("enable"u8);
             writer.WriteBooleanValue(Enable);
-            if (Optional.IsDefined(ConfidenceThreshold))
+            if (ConfidenceThreshold.HasValue)
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (Optional.IsDefined(Size))
+            if (Size.HasValue)
             {
                 writer.WritePropertyName("topAnswersWithSpan"u8);
                 writer.WriteNumberValue(Size.Value);

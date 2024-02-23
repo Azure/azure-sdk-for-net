@@ -27,22 +27,22 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EligibilityCriteriaEvidence))
+            if (EligibilityCriteriaEvidence != null)
             {
                 writer.WritePropertyName("eligibilityCriteriaEvidence"u8);
                 writer.WriteStringValue(EligibilityCriteriaEvidence);
             }
-            if (Optional.IsDefined(PatientDataEvidence))
+            if (PatientDataEvidence != null)
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
                 writer.WriteObjectValue(PatientDataEvidence);
             }
-            if (Optional.IsDefined(PatientInfoEvidence))
+            if (PatientInfoEvidence != null)
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
                 writer.WriteObjectValue(PatientInfoEvidence);
             }
-            if (Optional.IsDefined(Importance))
+            if (Importance.HasValue)
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteNumberValue(Importance.Value);

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
-            if (Optional.IsDefined(CloudServiceCreationOption))
+            if (CloudServiceCreationOption != null)
             {
                 writer.WritePropertyName("cloudServiceCreationOption"u8);
                 writer.WriteStringValue(CloudServiceCreationOption);
             }
-            if (Optional.IsDefined(MultiVmSyncPointOption))
+            if (MultiVmSyncPointOption.HasValue)
             {
                 writer.WritePropertyName("multiVmSyncPointOption"u8);
                 writer.WriteStringValue(MultiVmSyncPointOption.Value.ToString());

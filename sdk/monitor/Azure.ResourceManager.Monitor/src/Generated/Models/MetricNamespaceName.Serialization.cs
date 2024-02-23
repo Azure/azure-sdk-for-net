@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MetricNamespaceNameValue))
+            if (MetricNamespaceNameValue != null)
             {
                 writer.WritePropertyName("metricNamespaceName"u8);
                 writer.WriteStringValue(MetricNamespaceNameValue);

@@ -60,7 +60,7 @@ namespace Azure.Monitor.Query
                 uri.AppendQuery("interval", interval.Value, "P", true);
             }
             uri.AppendQuery("metricnamespace", metricnamespace, true);
-            if (metricnames != null && Optional.IsCollectionDefined(metricnames))
+            if (metricnames != null && !(metricnames is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("metricnames", metricnames, ",", true);
             }

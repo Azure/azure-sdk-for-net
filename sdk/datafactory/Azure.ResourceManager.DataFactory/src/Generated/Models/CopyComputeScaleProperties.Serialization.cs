@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataIntegrationUnit))
+            if (DataIntegrationUnit.HasValue)
             {
                 writer.WritePropertyName("dataIntegrationUnit"u8);
                 writer.WriteNumberValue(DataIntegrationUnit.Value);
             }
-            if (Optional.IsDefined(TimeToLive))
+            if (TimeToLive.HasValue)
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);

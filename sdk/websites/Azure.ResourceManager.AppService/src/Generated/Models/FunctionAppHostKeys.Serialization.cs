@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MasterKey))
+            if (MasterKey != null)
             {
                 writer.WritePropertyName("masterKey"u8);
                 writer.WriteStringValue(MasterKey);
             }
-            if (Optional.IsCollectionDefined(FunctionKeys))
+            if (!(FunctionKeys is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("functionKeys"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SystemKeys))
+            if (!(SystemKeys is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("systemKeys"u8);
                 writer.WriteStartObject();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumCount))
+            if (MinimumCount.HasValue)
             {
                 writer.WritePropertyName("minimumCount"u8);
                 writer.WriteNumberValue(MinimumCount.Value);
             }
-            if (Optional.IsDefined(MaximumCount))
+            if (MaximumCount.HasValue)
             {
                 writer.WritePropertyName("maximumCount"u8);
                 writer.WriteNumberValue(MaximumCount.Value);
             }
-            if (Optional.IsDefined(CurrentCount))
+            if (CurrentCount.HasValue)
             {
                 writer.WritePropertyName("currentCount"u8);
                 writer.WriteNumberValue(CurrentCount.Value);

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BuildResultId))
+            if (BuildResultId != null)
             {
                 writer.WritePropertyName("buildResultId"u8);
                 writer.WriteStringValue(BuildResultId);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetDiagnosticProactiveLogCollectionSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/diagnosticProactiveLogCollectionSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDiagnosticProactiveLogCollectionSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
@@ -159,6 +174,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateDiagnosticProactiveLogCollectionSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/diagnosticProactiveLogCollectionSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data)
@@ -288,6 +318,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
+        internal RequestUriBuilder CreateGetDiagnosticRemoteSupportSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/diagnosticRemoteSupportSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDiagnosticRemoteSupportSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName)
         {
             var message = _pipeline.CreateMessage();
@@ -411,6 +456,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateDiagnosticRemoteSupportSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/diagnosticRemoteSupportSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDiagnosticRemoteSupportSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data)

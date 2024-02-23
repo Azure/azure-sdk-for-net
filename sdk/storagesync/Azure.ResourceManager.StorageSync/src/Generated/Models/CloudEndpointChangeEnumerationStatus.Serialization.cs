@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastEnumerationStatus))
+            if (options.Format != "W" && LastEnumerationStatus != null)
             {
                 writer.WritePropertyName("lastEnumerationStatus"u8);
                 writer.WriteObjectValue(LastEnumerationStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(Activity))
+            if (options.Format != "W" && Activity != null)
             {
                 writer.WritePropertyName("activity"u8);
                 writer.WriteObjectValue(Activity);

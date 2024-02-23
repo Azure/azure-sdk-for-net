@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScriptCmdletId))
+            if (ScriptCmdletId != null)
             {
                 writer.WritePropertyName("scriptCmdletId"u8);
                 writer.WriteStringValue(ScriptCmdletId);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<ScriptExecutionParameterDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HiddenParameters))
+            if (!(HiddenParameters is ChangeTrackingList<ScriptExecutionParameterDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hiddenParameters"u8);
                 writer.WriteStartArray();
@@ -75,42 +75,42 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FailureReason))
+            if (FailureReason != null)
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout != null)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
-            if (Optional.IsDefined(Retention))
+            if (Retention != null)
             {
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubmittedOn))
+            if (options.Format != "W" && SubmittedOn.HasValue)
             {
                 writer.WritePropertyName("submittedAt"u8);
                 writer.WriteStringValue(SubmittedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
+            if (options.Format != "W" && FinishedOn.HasValue)
             {
                 writer.WritePropertyName("finishedAt"u8);
                 writer.WriteStringValue(FinishedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Output))
+            if (!(Output is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NamedOutputs))
+            if (NamedOutputs != null)
             {
                 writer.WritePropertyName("namedOutputs"u8);
 #if NET6_0_OR_GREATER
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Avs
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Information))
+            if (options.Format != "W" && !(Information is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("information"u8);
                 writer.WriteStartArray();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
+            if (options.Format != "W" && !(Warnings is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

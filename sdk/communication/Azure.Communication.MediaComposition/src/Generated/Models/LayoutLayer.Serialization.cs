@@ -18,7 +18,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteStartObject();
             writer.WritePropertyName("zIndex"u8);
             writer.WriteNumberValue(ZIndex);
-            if (Optional.IsDefined(Visibility))
+            if (Visibility.HasValue)
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());

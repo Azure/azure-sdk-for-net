@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RebootSetting))
+            if (RebootSetting.HasValue)
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
-            if (Optional.IsDefined(BypassPlatformSafetyChecksOnUserSchedule))
+            if (BypassPlatformSafetyChecksOnUserSchedule.HasValue)
             {
                 writer.WritePropertyName("bypassPlatformSafetyChecksOnUserSchedule"u8);
                 writer.WriteBooleanValue(BypassPlatformSafetyChecksOnUserSchedule.Value);

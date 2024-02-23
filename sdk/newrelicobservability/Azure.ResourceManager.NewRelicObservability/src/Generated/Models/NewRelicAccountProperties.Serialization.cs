@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(AccountInfo))
+            if (AccountInfo != null)
             {
                 writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
-            if (Optional.IsDefined(OrganizationInfo))
+            if (OrganizationInfo != null)
             {
                 writer.WritePropertyName("organizationInfo"u8);
                 writer.WriteObjectValue(OrganizationInfo);
             }
-            if (Optional.IsDefined(SingleSignOnProperties))
+            if (SingleSignOnProperties != null)
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);

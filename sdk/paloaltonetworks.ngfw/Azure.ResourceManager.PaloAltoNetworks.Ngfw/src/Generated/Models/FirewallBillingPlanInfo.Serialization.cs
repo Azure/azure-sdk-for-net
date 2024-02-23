@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageType))
+            if (UsageType.HasValue)
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType.Value.ToString());
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStringValue(BillingCycle.ToString());
             writer.WritePropertyName("planId"u8);
             writer.WriteStringValue(PlanId);
-            if (options.Format != "W" && Optional.IsDefined(EffectiveOn))
+            if (options.Format != "W" && EffectiveOn.HasValue)
             {
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");

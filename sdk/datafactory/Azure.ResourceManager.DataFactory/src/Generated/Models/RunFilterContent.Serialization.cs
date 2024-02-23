@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContinuationToken))
+            if (ContinuationToken != null)
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(LastUpdatedAfter, "O");
             writer.WritePropertyName("lastUpdatedBefore"u8);
             writer.WriteStringValue(LastUpdatedBefore, "O");
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<RunQueryFilter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OrderBy))
+            if (!(OrderBy is ChangeTrackingList<RunQueryOrderBy> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("orderBy"u8);
                 writer.WriteStartArray();

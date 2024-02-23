@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(EncryptionDetails))
+            if (EncryptionDetails != null)
             {
                 writer.WritePropertyName("encryptionDetails"u8);
                 writer.WriteObjectValue(EncryptionDetails);
             }
-            if (Optional.IsDefined(RolloverEncryptionDetails))
+            if (RolloverEncryptionDetails != null)
             {
                 writer.WritePropertyName("rolloverEncryptionDetails"u8);
                 writer.WriteObjectValue(RolloverEncryptionDetails);
             }
-            if (Optional.IsDefined(InternalIdentifier))
+            if (InternalIdentifier != null)
             {
                 writer.WritePropertyName("internalIdentifier"u8);
                 writer.WriteStringValue(InternalIdentifier);
             }
-            if (Optional.IsDefined(BcdrState))
+            if (BcdrState != null)
             {
                 writer.WritePropertyName("bcdrState"u8);
                 writer.WriteStringValue(BcdrState);
             }
-            if (Optional.IsDefined(CustomDetails))
+            if (CustomDetails != null)
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
             }
-            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            if (!(HealthErrorDetails is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrorDetails"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Health))
+            if (Health != null)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health);

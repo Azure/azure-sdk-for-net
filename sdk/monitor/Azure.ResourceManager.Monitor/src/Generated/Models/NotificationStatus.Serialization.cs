@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(Context);
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
-            if (Optional.IsDefined(CompletedOn))
+            if (CompletedOn.HasValue)
             {
                 writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ActionDetails))
+            if (!(ActionDetails is ChangeTrackingList<NotificationActionDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionDetails"u8);
                 writer.WriteStartArray();

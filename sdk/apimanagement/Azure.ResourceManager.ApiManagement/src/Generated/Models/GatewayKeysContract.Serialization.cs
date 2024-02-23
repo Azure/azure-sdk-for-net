@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Primary))
+            if (Primary != null)
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteStringValue(Primary);
             }
-            if (Optional.IsDefined(Secondary))
+            if (Secondary != null)
             {
                 writer.WritePropertyName("secondary"u8);
                 writer.WriteStringValue(Secondary);

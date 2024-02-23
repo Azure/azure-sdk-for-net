@@ -19,12 +19,12 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(Op.ToString());
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
             }
-            if (Optional.IsDefined(From))
+            if (From != null)
             {
                 writer.WritePropertyName("from"u8);
                 writer.WriteStringValue(From);

@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AzureDnsRecord))
+            if (options.Format != "W" && AzureDnsRecord != null)
             {
                 writer.WritePropertyName("azureDnsRecord"u8);
                 writer.WriteStringValue(AzureDnsRecord);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicAzureDnsRecord))
+            if (options.Format != "W" && PublicAzureDnsRecord != null)
             {
                 writer.WritePropertyName("publicAzureDnsRecord"u8);
                 writer.WriteStringValue(PublicAzureDnsRecord);

@@ -15,29 +15,29 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CommandName))
+            if (CommandName != null)
             {
                 writer.WritePropertyName("CommandName"u8);
                 writer.WriteStringValue(CommandName);
             }
-            if (Optional.IsDefined(ResultCode))
+            if (ResultCode != null)
             {
                 writer.WritePropertyName("ResultCode"u8);
                 writer.WriteStringValue(ResultCode);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration != null)
             {
                 writer.WritePropertyName("Duration"u8);
                 writer.WriteStringValue(Duration);
             }
             writer.WritePropertyName("DocumentType"u8);
             writer.WriteStringValue(DocumentType.ToString());
-            if (Optional.IsCollectionDefined(DocumentStreamIds))
+            if (!(DocumentStreamIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingList<KeyValuePairString> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStartArray();

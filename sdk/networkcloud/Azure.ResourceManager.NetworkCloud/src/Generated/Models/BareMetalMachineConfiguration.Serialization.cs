@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BmcConnectionString))
+            if (options.Format != "W" && BmcConnectionString != null)
             {
                 writer.WritePropertyName("bmcConnectionString"u8);
                 writer.WriteStringValue(BmcConnectionString);
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
             writer.WriteStringValue(BootMacAddress);
-            if (Optional.IsDefined(MachineDetails))
+            if (MachineDetails != null)
             {
                 writer.WritePropertyName("machineDetails"u8);
                 writer.WriteStringValue(MachineDetails);
             }
-            if (Optional.IsDefined(MachineName))
+            if (MachineName != null)
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);

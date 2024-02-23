@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value.Value.ToString());
             }
-            if (Optional.IsDefined(Platform))
+            if (Platform.HasValue)
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteStringValue(Platform.Value.ToString());
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

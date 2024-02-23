@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EffectiveVolumeFreeSpacePolicy))
+            if (options.Format != "W" && EffectiveVolumeFreeSpacePolicy.HasValue)
             {
                 writer.WritePropertyName("effectiveVolumeFreeSpacePolicy"u8);
                 writer.WriteNumberValue(EffectiveVolumeFreeSpacePolicy.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentVolumeFreeSpacePercent))
+            if (options.Format != "W" && CurrentVolumeFreeSpacePercent.HasValue)
             {
                 writer.WritePropertyName("currentVolumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(CurrentVolumeFreeSpacePercent.Value);

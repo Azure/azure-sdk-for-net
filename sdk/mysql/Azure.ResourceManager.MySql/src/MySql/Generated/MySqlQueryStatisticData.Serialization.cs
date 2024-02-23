@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryId))
+            if (QueryId != null)
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(AggregationFunction))
+            if (AggregationFunction != null)
             {
                 writer.WritePropertyName("aggregationFunction"u8);
                 writer.WriteStringValue(AggregationFunction);
             }
-            if (Optional.IsCollectionDefined(DatabaseNames))
+            if (!(DatabaseNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databaseNames"u8);
                 writer.WriteStartArray();
@@ -79,27 +79,27 @@ namespace Azure.ResourceManager.MySql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(QueryExecutionCount))
+            if (QueryExecutionCount.HasValue)
             {
                 writer.WritePropertyName("queryExecutionCount"u8);
                 writer.WriteNumberValue(QueryExecutionCount.Value);
             }
-            if (Optional.IsDefined(MetricName))
+            if (MetricName != null)
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            if (Optional.IsDefined(MetricDisplayName))
+            if (MetricDisplayName != null)
             {
                 writer.WritePropertyName("metricDisplayName"u8);
                 writer.WriteStringValue(MetricDisplayName);
             }
-            if (Optional.IsDefined(MetricValue))
+            if (MetricValue.HasValue)
             {
                 writer.WritePropertyName("metricValue"u8);
                 writer.WriteNumberValue(MetricValue.Value);
             }
-            if (Optional.IsDefined(MetricValueUnit))
+            if (MetricValueUnit != null)
             {
                 writer.WritePropertyName("metricValueUnit"u8);
                 writer.WriteStringValue(MetricValueUnit);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Include))
+            if (Include != null)
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteObjectValue(Include);

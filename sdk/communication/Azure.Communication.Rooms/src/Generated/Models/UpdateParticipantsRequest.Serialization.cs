@@ -15,7 +15,7 @@ namespace Azure.Communication.Rooms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Participants))
+            if (!(Participants is ChangeTrackingDictionary<string, ParticipantProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartObject();

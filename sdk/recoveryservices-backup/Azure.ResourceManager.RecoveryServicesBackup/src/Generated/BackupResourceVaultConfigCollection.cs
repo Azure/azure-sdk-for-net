@@ -98,7 +98,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = await _backupResourceVaultConfigRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _backupResourceVaultConfigRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -157,7 +159,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             try
             {
                 var response = _backupResourceVaultConfigRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _backupResourceVaultConfigRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

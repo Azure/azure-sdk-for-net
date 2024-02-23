@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateName))
+            if (TemplateName != null)
             {
                 writer.WritePropertyName("templateName"u8);
                 writer.WriteStringValue(TemplateName);
             }
-            if (Optional.IsDefined(TemplateVersion))
+            if (TemplateVersion != null)
             {
                 writer.WritePropertyName("templateVersion"u8);
                 writer.WriteStringValue(TemplateVersion);

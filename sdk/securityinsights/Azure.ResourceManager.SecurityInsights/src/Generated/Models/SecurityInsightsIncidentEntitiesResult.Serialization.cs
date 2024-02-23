@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Entities))
+            if (!(Entities is ChangeTrackingList<SecurityInsightsEntity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MetaData))
+            if (!(MetaData is ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDefault))
+            if (IsDefault.HasValue)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(IsForced))
+            if (IsForced.HasValue)
             {
                 writer.WritePropertyName("forced"u8);
                 writer.WriteBooleanValue(IsForced.Value);
             }
-            if (Optional.IsDefined(Characteristics))
+            if (Characteristics != null)
             {
                 writer.WritePropertyName("characteristics"u8);
                 writer.WriteStringValue(Characteristics);

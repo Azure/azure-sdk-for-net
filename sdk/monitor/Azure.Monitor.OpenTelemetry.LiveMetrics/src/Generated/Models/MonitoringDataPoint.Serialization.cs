@@ -15,57 +15,57 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("Version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(InvariantVersion))
+            if (InvariantVersion.HasValue)
             {
                 writer.WritePropertyName("InvariantVersion"u8);
                 writer.WriteNumberValue(InvariantVersion.Value);
             }
-            if (Optional.IsDefined(Instance))
+            if (Instance != null)
             {
                 writer.WritePropertyName("Instance"u8);
                 writer.WriteStringValue(Instance);
             }
-            if (Optional.IsDefined(RoleName))
+            if (RoleName != null)
             {
                 writer.WritePropertyName("RoleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(MachineName))
+            if (MachineName != null)
             {
                 writer.WritePropertyName("MachineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (Optional.IsDefined(StreamId))
+            if (StreamId != null)
             {
                 writer.WritePropertyName("StreamId"u8);
                 writer.WriteStringValue(StreamId);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp.HasValue)
             {
                 writer.WritePropertyName("Timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(TransmissionTime))
+            if (TransmissionTime.HasValue)
             {
                 writer.WritePropertyName("TransmissionTime"u8);
                 writer.WriteStringValue(TransmissionTime.Value, "O");
             }
-            if (Optional.IsDefined(IsWebApp))
+            if (IsWebApp.HasValue)
             {
                 writer.WritePropertyName("IsWebApp"u8);
                 writer.WriteBooleanValue(IsWebApp.Value);
             }
-            if (Optional.IsDefined(PerformanceCollectionSupported))
+            if (PerformanceCollectionSupported.HasValue)
             {
                 writer.WritePropertyName("PerformanceCollectionSupported"u8);
                 writer.WriteBooleanValue(PerformanceCollectionSupported.Value);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<MetricPoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Metrics"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Documents))
+            if (!(Documents is ChangeTrackingList<DocumentIngress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("Documents"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TopCpuProcesses))
+            if (!(TopCpuProcesses is ChangeTrackingList<ProcessCpuData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("TopCpuProcesses"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CollectionConfigurationErrors))
+            if (!(CollectionConfigurationErrors is ChangeTrackingList<CollectionConfigurationError> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("CollectionConfigurationErrors"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PassedCount))
+            if (PassedCount.HasValue)
             {
                 writer.WritePropertyName("passedCount"u8);
                 writer.WriteNumberValue(PassedCount.Value);
             }
-            if (Optional.IsDefined(FailedCount))
+            if (FailedCount.HasValue)
             {
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (Optional.IsDefined(ManualCount))
+            if (ManualCount.HasValue)
             {
                 writer.WritePropertyName("manualCount"u8);
                 writer.WriteNumberValue(ManualCount.Value);

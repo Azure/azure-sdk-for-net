@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PartnerServer))
+            if (options.Format != "W" && PartnerServer != null)
             {
                 writer.WritePropertyName("partnerServer"u8);
                 writer.WriteStringValue(PartnerServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerDatabase))
+            if (options.Format != "W" && PartnerDatabase != null)
             {
                 writer.WritePropertyName("partnerDatabase"u8);
                 writer.WriteStringValue(PartnerDatabase);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerLocation))
+            if (options.Format != "W" && PartnerLocation.HasValue)
             {
                 writer.WritePropertyName("partnerLocation"u8);
                 writer.WriteStringValue(PartnerLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Role))
+            if (options.Format != "W" && Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerRole))
+            if (options.Format != "W" && PartnerRole.HasValue)
             {
                 writer.WritePropertyName("partnerRole"u8);
                 writer.WriteStringValue(PartnerRole.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationMode))
+            if (options.Format != "W" && ReplicationMode != null)
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
+            if (options.Format != "W" && ReplicationState.HasValue)
             {
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsTerminationAllowed))
+            if (options.Format != "W" && IsTerminationAllowed.HasValue)
             {
                 writer.WritePropertyName("isTerminationAllowed"u8);
                 writer.WriteBooleanValue(IsTerminationAllowed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkType))
+            if (options.Format != "W" && LinkType.HasValue)
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());

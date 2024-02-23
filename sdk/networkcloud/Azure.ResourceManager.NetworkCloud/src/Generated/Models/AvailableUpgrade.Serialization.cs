@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AvailabilityLifecycle))
+            if (options.Format != "W" && AvailabilityLifecycle.HasValue)
             {
                 writer.WritePropertyName("availabilityLifecycle"u8);
                 writer.WriteStringValue(AvailabilityLifecycle.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

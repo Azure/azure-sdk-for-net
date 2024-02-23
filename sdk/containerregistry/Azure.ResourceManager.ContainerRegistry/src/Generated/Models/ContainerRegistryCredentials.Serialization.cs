@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceRegistry))
+            if (SourceRegistry != null)
             {
                 writer.WritePropertyName("sourceRegistry"u8);
                 writer.WriteObjectValue(SourceRegistry);
             }
-            if (Optional.IsCollectionDefined(CustomRegistries))
+            if (!(CustomRegistries is ChangeTrackingDictionary<string, CustomRegistryCredentials> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartObject();

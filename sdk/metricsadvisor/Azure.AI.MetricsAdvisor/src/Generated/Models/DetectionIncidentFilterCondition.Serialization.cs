@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DimensionFilter))
+            if (!(DimensionFilter is ChangeTrackingList<DimensionKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UpdateStatus))
+            if (options.Format != "W" && UpdateStatus.HasValue)
             {
                 writer.WritePropertyName("updateStatus"u8);
                 writer.WriteStringValue(UpdateStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdateStartedOn))
+            if (options.Format != "W" && UpdateStartedOn.HasValue)
             {
                 writer.WritePropertyName("updateStartedOn"u8);
                 writer.WriteStringValue(UpdateStartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdateCompletedOn))
+            if (options.Format != "W" && UpdateCompletedOn.HasValue)
             {
                 writer.WritePropertyName("updateCompletedOn"u8);
                 writer.WriteStringValue(UpdateCompletedOn.Value, "O");

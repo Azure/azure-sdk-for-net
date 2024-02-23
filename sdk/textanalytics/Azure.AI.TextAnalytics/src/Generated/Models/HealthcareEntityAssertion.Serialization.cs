@@ -15,17 +15,17 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Conditionality))
+            if (Conditionality.HasValue)
             {
                 writer.WritePropertyName("conditionality"u8);
                 writer.WriteStringValue(Conditionality.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Certainty))
+            if (Certainty.HasValue)
             {
                 writer.WritePropertyName("certainty"u8);
                 writer.WriteStringValue(Certainty.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Association))
+            if (Association.HasValue)
             {
                 writer.WritePropertyName("association"u8);
                 writer.WriteStringValue(Association.Value.ToSerialString());

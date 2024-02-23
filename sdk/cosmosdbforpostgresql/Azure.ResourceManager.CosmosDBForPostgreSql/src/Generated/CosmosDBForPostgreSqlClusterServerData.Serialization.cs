@@ -43,79 +43,79 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerEdition))
+            if (ServerEdition != null)
             {
                 writer.WritePropertyName("serverEdition"u8);
                 writer.WriteStringValue(ServerEdition);
             }
-            if (Optional.IsDefined(StorageQuotaInMb))
+            if (StorageQuotaInMb.HasValue)
             {
                 writer.WritePropertyName("storageQuotaInMb"u8);
                 writer.WriteNumberValue(StorageQuotaInMb.Value);
             }
-            if (Optional.IsDefined(VCores))
+            if (VCores.HasValue)
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (Optional.IsDefined(IsHAEnabled))
+            if (IsHAEnabled.HasValue)
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(IsHAEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPublicIPAccessEnabled))
+            if (options.Format != "W" && IsPublicIPAccessEnabled.HasValue)
             {
                 writer.WritePropertyName("enablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsPublicIPAccessEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsReadOnly))
+            if (options.Format != "W" && IsReadOnly.HasValue)
             {
                 writer.WritePropertyName("isReadOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdministratorLogin))
+            if (options.Format != "W" && AdministratorLogin != null)
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
+            if (options.Format != "W" && FullyQualifiedDomainName != null)
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
-            if (Optional.IsDefined(Role))
+            if (Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(HaState))
+            if (options.Format != "W" && HaState != null)
             {
                 writer.WritePropertyName("haState"u8);
                 writer.WriteStringValue(HaState);
             }
-            if (Optional.IsDefined(AvailabilityZone))
+            if (AvailabilityZone != null)
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (Optional.IsDefined(PostgresqlVersion))
+            if (PostgresqlVersion != null)
             {
                 writer.WritePropertyName("postgresqlVersion"u8);
                 writer.WriteStringValue(PostgresqlVersion);
             }
-            if (Optional.IsDefined(CitusVersion))
+            if (CitusVersion != null)
             {
                 writer.WritePropertyName("citusVersion"u8);
                 writer.WriteStringValue(CitusVersion);

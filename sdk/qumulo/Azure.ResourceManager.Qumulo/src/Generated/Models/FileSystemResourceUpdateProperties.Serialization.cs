@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MarketplaceDetails))
+            if (MarketplaceDetails != null)
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
                 writer.WriteObjectValue(MarketplaceDetails);
             }
-            if (Optional.IsDefined(UserDetails))
+            if (UserDetails != null)
             {
                 writer.WritePropertyName("userDetails"u8);
                 writer.WriteObjectValue(UserDetails);
             }
-            if (Optional.IsDefined(DelegatedSubnetId))
+            if (DelegatedSubnetId != null)
             {
                 writer.WritePropertyName("delegatedSubnetId"u8);
                 writer.WriteStringValue(DelegatedSubnetId);
             }
-            if (Optional.IsDefined(ClusterLoginUri))
+            if (ClusterLoginUri != null)
             {
                 writer.WritePropertyName("clusterLoginUrl"u8);
                 writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(PrivateIPs))
+            if (!(PrivateIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateIPs"u8);
                 writer.WriteStartArray();

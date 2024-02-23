@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProfileVersion))
+            if (options.Format != "W" && ProfileVersion != null)
             {
                 writer.WritePropertyName("profileVersion"u8);
                 writer.WriteStringValue(ProfileVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApiVersion))
+            if (options.Format != "W" && ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);

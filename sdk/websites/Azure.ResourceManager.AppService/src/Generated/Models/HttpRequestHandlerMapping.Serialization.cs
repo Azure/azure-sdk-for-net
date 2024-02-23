@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Extension))
+            if (Extension != null)
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension);
             }
-            if (Optional.IsDefined(ScriptProcessor))
+            if (ScriptProcessor != null)
             {
                 writer.WritePropertyName("scriptProcessor"u8);
                 writer.WriteStringValue(ScriptProcessor);
             }
-            if (Optional.IsDefined(Arguments))
+            if (Arguments != null)
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);

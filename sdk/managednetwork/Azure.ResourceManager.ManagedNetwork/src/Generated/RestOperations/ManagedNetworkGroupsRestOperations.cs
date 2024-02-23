@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.ManagedNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/managedNetworks/", false);
+            uri.AppendPath(managedNetworkName, true);
+            uri.AppendPath("/managedNetworkGroups/", false);
+            uri.AppendPath(managedNetworkGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -179,6 +195,22 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName, ManagedNetworkGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/managedNetworks/", false);
+            uri.AppendPath(managedNetworkName, true);
+            uri.AppendPath("/managedNetworkGroups/", false);
+            uri.AppendPath(managedNetworkGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName, ManagedNetworkGroupData data)
@@ -327,6 +359,22 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/managedNetworks/", false);
+            uri.AppendPath(managedNetworkName, true);
+            uri.AppendPath("/managedNetworkGroups/", false);
+            uri.AppendPath(managedNetworkGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -461,6 +509,29 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
         }
 
+        internal RequestUriBuilder CreateListByManagedNetworkRequestUri(string subscriptionId, string resourceGroupName, string managedNetworkName, int? top, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/managedNetworks/", false);
+            uri.AppendPath(managedNetworkName, true);
+            uri.AppendPath("/managedNetworkGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByManagedNetworkRequest(string subscriptionId, string resourceGroupName, string managedNetworkName, int? top, string skiptoken)
         {
             var message = _pipeline.CreateMessage();
@@ -592,6 +663,14 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByManagedNetworkNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string managedNetworkName, int? top, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByManagedNetworkNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string managedNetworkName, int? top, string skiptoken)

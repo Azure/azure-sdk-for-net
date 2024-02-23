@@ -33,7 +33,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteNumberValue(Severity);
             writer.WritePropertyName("score"u8);
             writer.WriteNumberValue(Score);
-            if (Optional.IsCollectionDefined(Interpretation))
+            if (!(Interpretation is ChangeTrackingList<AnomalyInterpretation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("interpretation"u8);
                 writer.WriteStartArray();

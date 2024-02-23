@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,59 +48,59 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LatestRun))
+            if (LatestRun != null)
             {
                 writer.WritePropertyName("latest_run"u8);
                 writer.WriteObjectValue(LatestRun);
             }
-            if (Optional.IsDefined(HistoryUri))
+            if (HistoryUri != null)
             {
                 writer.WritePropertyName("history_url"u8);
                 writer.WriteStringValue(HistoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SchedulerLogsUri))
+            if (SchedulerLogsUri != null)
             {
                 writer.WritePropertyName("scheduler_logs_url"u8);
                 writer.WriteStringValue(SchedulerLogsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RunCommand))
+            if (RunCommand != null)
             {
                 writer.WritePropertyName("run_command"u8);
                 writer.WriteStringValue(RunCommand);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExtraInfoUri))
+            if (ExtraInfoUri != null)
             {
                 writer.WritePropertyName("extra_info_url"u8);
                 writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(WebJobType))
+            if (WebJobType.HasValue)
             {
                 writer.WritePropertyName("web_job_type"u8);
                 writer.WriteStringValue(WebJobType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(IsUsingSdk))
+            if (IsUsingSdk.HasValue)
             {
                 writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
             }
-            if (Optional.IsCollectionDefined(Settings))
+            if (!(Settings is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();

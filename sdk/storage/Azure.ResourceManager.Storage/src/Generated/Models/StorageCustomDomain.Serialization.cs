@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(IsUseSubDomainNameEnabled))
+            if (IsUseSubDomainNameEnabled.HasValue)
             {
                 writer.WritePropertyName("useSubDomainName"u8);
                 writer.WriteBooleanValue(IsUseSubDomainNameEnabled.Value);

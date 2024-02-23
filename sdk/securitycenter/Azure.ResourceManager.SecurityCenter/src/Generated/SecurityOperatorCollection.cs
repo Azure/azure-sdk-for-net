@@ -95,7 +95,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityOperatorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()));
+                var uri = _securityOperatorRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, securityOperatorName);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -149,7 +151,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityOperatorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()));
+                var uri = _securityOperatorRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, securityOperatorName);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

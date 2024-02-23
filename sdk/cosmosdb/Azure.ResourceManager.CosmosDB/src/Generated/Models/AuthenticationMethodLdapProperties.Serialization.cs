@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerHostname))
+            if (ServerHostname != null)
             {
                 writer.WritePropertyName("serverHostname"u8);
                 writer.WriteStringValue(ServerHostname);
             }
-            if (Optional.IsDefined(ServerPort))
+            if (ServerPort.HasValue)
             {
                 writer.WritePropertyName("serverPort"u8);
                 writer.WriteNumberValue(ServerPort.Value);
             }
-            if (Optional.IsDefined(ServiceUserDistinguishedName))
+            if (ServiceUserDistinguishedName != null)
             {
                 writer.WritePropertyName("serviceUserDistinguishedName"u8);
                 writer.WriteStringValue(ServiceUserDistinguishedName);
             }
-            if (Optional.IsDefined(ServiceUserPassword))
+            if (ServiceUserPassword != null)
             {
                 writer.WritePropertyName("serviceUserPassword"u8);
                 writer.WriteStringValue(ServiceUserPassword);
             }
-            if (Optional.IsDefined(SearchBaseDistinguishedName))
+            if (SearchBaseDistinguishedName != null)
             {
                 writer.WritePropertyName("searchBaseDistinguishedName"u8);
                 writer.WriteStringValue(SearchBaseDistinguishedName);
             }
-            if (Optional.IsDefined(SearchFilterTemplate))
+            if (SearchFilterTemplate != null)
             {
                 writer.WritePropertyName("searchFilterTemplate"u8);
                 writer.WriteStringValue(SearchFilterTemplate);
             }
-            if (Optional.IsCollectionDefined(ServerCertificates))
+            if (!(ServerCertificates is ChangeTrackingList<CassandraCertificate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serverCertificates"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ConnectionTimeoutInMs))
+            if (ConnectionTimeoutInMs.HasValue)
             {
                 writer.WritePropertyName("connectionTimeoutInMs"u8);
                 writer.WriteNumberValue(ConnectionTimeoutInMs.Value);

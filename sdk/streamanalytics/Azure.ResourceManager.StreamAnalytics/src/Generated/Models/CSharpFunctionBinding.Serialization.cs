@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DllPath))
+            if (DllPath != null)
             {
                 writer.WritePropertyName("dllPath"u8);
                 writer.WriteStringValue(DllPath);
             }
-            if (Optional.IsDefined(Class))
+            if (Class != null)
             {
                 writer.WritePropertyName("class"u8);
                 writer.WriteStringValue(Class);
             }
-            if (Optional.IsDefined(Method))
+            if (Method != null)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UpdateMode))
+            if (UpdateMode.HasValue)
             {
                 writer.WritePropertyName("updateMode"u8);
                 writer.WriteStringValue(UpdateMode.Value.ToString());

@@ -17,24 +17,24 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("recognizeInputType"u8);
             writer.WriteStringValue(RecognizeInputType.ToString());
-            if (Optional.IsDefined(PlayPrompt))
+            if (PlayPrompt != null)
             {
                 writer.WritePropertyName("playPrompt"u8);
                 writer.WriteObjectValue(PlayPrompt);
             }
-            if (Optional.IsDefined(InterruptCallMediaOperation))
+            if (InterruptCallMediaOperation.HasValue)
             {
                 writer.WritePropertyName("interruptCallMediaOperation"u8);
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
             writer.WriteObjectValue(RecognizeOptions);
-            if (Optional.IsDefined(OperationContext))
+            if (OperationContext != null)
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(OperationCallbackUri))
+            if (OperationCallbackUri != null)
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);

@@ -28,29 +28,29 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("attachedNetworkId"u8);
             writer.WriteStringValue(AttachedNetworkId);
-            if (Optional.IsDefined(DefaultGateway))
+            if (DefaultGateway.HasValue)
             {
                 writer.WritePropertyName("defaultGateway"u8);
                 writer.WriteStringValue(DefaultGateway.Value.ToString());
             }
             writer.WritePropertyName("ipAllocationMethod"u8);
             writer.WriteStringValue(IPAllocationMethod.ToString());
-            if (Optional.IsDefined(IPv4Address))
+            if (IPv4Address != null)
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
-            if (Optional.IsDefined(IPv6Address))
+            if (IPv6Address != null)
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (Optional.IsDefined(NetworkAttachmentName))
+            if (NetworkAttachmentName != null)
             {
                 writer.WritePropertyName("networkAttachmentName"u8);
                 writer.WriteStringValue(NetworkAttachmentName);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationItemName))
+            if (options.Format != "W" && MigrationItemName != null)
             {
                 writer.WritePropertyName("migrationItemName"u8);
                 writer.WriteStringValue(MigrationItemName);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(NetworkVirtualizationStatus))
+            if (NetworkVirtualizationStatus != null)
             {
                 writer.WritePropertyName("networkVirtualizationStatus"u8);
                 writer.WriteStringValue(NetworkVirtualizationStatus);
             }
-            if (Optional.IsDefined(LogicalNetworkUsage))
+            if (LogicalNetworkUsage != null)
             {
                 writer.WritePropertyName("logicalNetworkUsage"u8);
                 writer.WriteStringValue(LogicalNetworkUsage);
             }
-            if (Optional.IsDefined(LogicalNetworkDefinitionsStatus))
+            if (LogicalNetworkDefinitionsStatus != null)
             {
                 writer.WritePropertyName("logicalNetworkDefinitionsStatus"u8);
                 writer.WriteStringValue(LogicalNetworkDefinitionsStatus);

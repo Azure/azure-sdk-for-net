@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserConfiguration))
+            if (UserConfiguration != null)
             {
                 writer.WritePropertyName("userConfiguration"u8);
                 writer.WriteStringValue(UserConfiguration);

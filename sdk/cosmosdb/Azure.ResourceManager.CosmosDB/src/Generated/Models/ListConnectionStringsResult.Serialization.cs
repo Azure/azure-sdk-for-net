@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectionStrings))
+            if (options.Format != "W" && !(ConnectionStrings is ChangeTrackingList<CosmosDBConnectionString> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionStrings"u8);
                 writer.WriteStartArray();

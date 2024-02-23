@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Fields))
+            if (!(Fields is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (Fields != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fields");
                 }
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 if (Parameters != null)
                 {

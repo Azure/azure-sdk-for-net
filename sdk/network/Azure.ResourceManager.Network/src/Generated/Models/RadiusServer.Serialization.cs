@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("radiusServerAddress"u8);
             writer.WriteStringValue(RadiusServerAddress);
-            if (Optional.IsDefined(RadiusServerScore))
+            if (RadiusServerScore.HasValue)
             {
                 writer.WritePropertyName("radiusServerScore"u8);
                 writer.WriteNumberValue(RadiusServerScore.Value);
             }
-            if (Optional.IsDefined(RadiusServerSecret))
+            if (RadiusServerSecret != null)
             {
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
+            if (options.Format != "W" && DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(Source))
+            if (options.Format != "W" && Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
+            if (options.Format != "W" && WorkspaceId != null)
             {
                 writer.WritePropertyName("workspaceID"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Key))
+            if (options.Format != "W" && Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectedAgents))
+            if (options.Format != "W" && !(ConnectedAgents is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectedAgents"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RegistryServer))
+            if (RegistryServer != null)
             {
                 writer.WritePropertyName("registryUrl"u8);
                 writer.WriteStringValue(RegistryServer);
             }
-            if (Optional.IsDefined(RegistryUserName))
+            if (RegistryUserName != null)
             {
                 writer.WritePropertyName("registryUserName"u8);
                 writer.WriteStringValue(RegistryUserName);
             }
-            if (Optional.IsDefined(RegistryPassword))
+            if (RegistryPassword != null)
             {
                 writer.WritePropertyName("registryPassword"u8);
                 writer.WriteStringValue(RegistryPassword);

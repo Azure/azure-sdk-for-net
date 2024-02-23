@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -36,19 +36,19 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteNumberValue(RowIndex);
             writer.WritePropertyName("columnIndex"u8);
             writer.WriteNumberValue(ColumnIndex);
-            if (Optional.IsDefined(RowSpan))
+            if (RowSpan.HasValue)
             {
                 writer.WritePropertyName("rowSpan"u8);
                 writer.WriteNumberValue(RowSpan.Value);
             }
-            if (Optional.IsDefined(ColumnSpan))
+            if (ColumnSpan.HasValue)
             {
                 writer.WritePropertyName("columnSpan"u8);
                 writer.WriteNumberValue(ColumnSpan.Value);
             }
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Elements))
+            if (!(Elements is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();

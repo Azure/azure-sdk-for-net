@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LanguageCode))
+            if (options.Format != "W" && LanguageCode != null)
             {
                 writer.WritePropertyName("languageCode"u8);
                 writer.WriteStringValue(LanguageCode);
             }
-            if (Optional.IsDefined(PlayerVisibility))
+            if (PlayerVisibility.HasValue)
             {
                 writer.WritePropertyName("playerVisibility"u8);
                 writer.WriteStringValue(PlayerVisibility.Value.ToString());
             }
-            if (Optional.IsDefined(HlsSettings))
+            if (HlsSettings != null)
             {
                 writer.WritePropertyName("hlsSettings"u8);
                 writer.WriteObjectValue(HlsSettings);

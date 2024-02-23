@@ -19,12 +19,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Default))
+            if (Default != null)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default);

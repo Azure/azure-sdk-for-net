@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirewallRuleName))
+            if (FirewallRuleName != null)
             {
                 writer.WritePropertyName("firewallRuleName"u8);
                 writer.WriteStringValue(FirewallRuleName);
             }
-            if (Optional.IsDefined(RangeStart))
+            if (RangeStart != null)
             {
                 writer.WritePropertyName("rangeStart"u8);
                 writer.WriteStringValue(RangeStart);
             }
-            if (Optional.IsDefined(RangeEnd))
+            if (RangeEnd != null)
             {
                 writer.WritePropertyName("rangeEnd"u8);
                 writer.WriteStringValue(RangeEnd);

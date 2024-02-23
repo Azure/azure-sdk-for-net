@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(StorageAccountName);
             writer.WritePropertyName("protectedAccountKeyName"u8);
             writer.WriteStringValue(ProtectedAccountKeyName);
-            if (Optional.IsDefined(ProtectedAccountKeyName2))
+            if (ProtectedAccountKeyName2 != null)
             {
                 writer.WritePropertyName("protectedAccountKeyName2"u8);
                 writer.WriteStringValue(ProtectedAccountKeyName2);

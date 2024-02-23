@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authorizationQualifier"u8);
             writer.WriteStringValue(AuthorizationQualifier);
-            if (Optional.IsDefined(AuthorizationValue))
+            if (AuthorizationValue != null)
             {
                 writer.WritePropertyName("authorizationValue"u8);
                 writer.WriteStringValue(AuthorizationValue);
             }
             writer.WritePropertyName("securityQualifier"u8);
             writer.WriteStringValue(SecurityQualifier);
-            if (Optional.IsDefined(PasswordValue))
+            if (PasswordValue != null)
             {
                 writer.WritePropertyName("passwordValue"u8);
                 writer.WriteStringValue(PasswordValue);

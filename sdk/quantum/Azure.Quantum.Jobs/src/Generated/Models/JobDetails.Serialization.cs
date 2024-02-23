@@ -17,26 +17,26 @@ namespace Azure.Quantum.Jobs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("containerUri"u8);
             writer.WriteStringValue(ContainerUri);
-            if (Optional.IsDefined(InputDataUri))
+            if (InputDataUri != null)
             {
                 writer.WritePropertyName("inputDataUri"u8);
                 writer.WriteStringValue(InputDataUri);
             }
             writer.WritePropertyName("inputDataFormat"u8);
             writer.WriteStringValue(InputDataFormat);
-            if (Optional.IsDefined(InputParams))
+            if (InputParams != null)
             {
                 writer.WritePropertyName("inputParams"u8);
                 writer.WriteObjectValue(InputParams);
@@ -45,7 +45,7 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(ProviderId);
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Metadata != null)
                 {
@@ -63,17 +63,17 @@ namespace Azure.Quantum.Jobs.Models
                     writer.WriteNull("metadata");
                 }
             }
-            if (Optional.IsDefined(OutputDataUri))
+            if (OutputDataUri != null)
             {
                 writer.WritePropertyName("outputDataUri"u8);
                 writer.WriteStringValue(OutputDataUri);
             }
-            if (Optional.IsDefined(OutputDataFormat))
+            if (OutputDataFormat != null)
             {
                 writer.WritePropertyName("outputDataFormat"u8);
                 writer.WriteStringValue(OutputDataFormat);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (Tags != null)
                 {

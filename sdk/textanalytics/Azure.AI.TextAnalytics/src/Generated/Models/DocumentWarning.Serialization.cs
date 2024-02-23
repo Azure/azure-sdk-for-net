@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Code.ToSerialString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(TargetRef))
+            if (TargetRef != null)
             {
                 writer.WritePropertyName("targetRef"u8);
                 writer.WriteStringValue(TargetRef);

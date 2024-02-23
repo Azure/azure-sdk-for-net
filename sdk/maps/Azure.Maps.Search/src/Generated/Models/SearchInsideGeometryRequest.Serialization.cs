@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Geometry))
+            if (Geometry != null)
             {
                 writer.WritePropertyName("geometry"u8);
                 writer.WriteObjectValue(Geometry);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(GeneratedId))
+            if (options.Format != "W" && GeneratedId != null)
             {
                 writer.WritePropertyName("generatedId"u8);
                 writer.WriteStringValue(GeneratedId);
             }
-            if (Optional.IsDefined(ChannelSecret))
+            if (ChannelSecret != null)
             {
                 writer.WritePropertyName("channelSecret"u8);
                 writer.WriteStringValue(ChannelSecret);
             }
-            if (Optional.IsDefined(ChannelAccessToken))
+            if (ChannelAccessToken != null)
             {
                 writer.WritePropertyName("channelAccessToken"u8);
                 writer.WriteStringValue(ChannelAccessToken);

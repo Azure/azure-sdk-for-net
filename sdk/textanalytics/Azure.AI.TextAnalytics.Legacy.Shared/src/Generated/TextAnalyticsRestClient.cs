@@ -532,7 +532,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            if (piiCategories != null && Optional.IsCollectionDefined(piiCategories))
+            if (piiCategories != null && !(piiCategories is ChangeTrackingList<PiiEntityLegacyCategory> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("piiCategories", piiCategories, ",", true);
             }

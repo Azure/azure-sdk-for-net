@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConsoleScreenshotBlobUri))
+            if (options.Format != "W" && ConsoleScreenshotBlobUri != null)
             {
                 writer.WritePropertyName("consoleScreenshotBlobUri"u8);
                 writer.WriteStringValue(ConsoleScreenshotBlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(SerialConsoleLogBlobUri))
+            if (options.Format != "W" && SerialConsoleLogBlobUri != null)
             {
                 writer.WritePropertyName("serialConsoleLogBlobUri"u8);
                 writer.WriteStringValue(SerialConsoleLogBlobUri.AbsoluteUri);

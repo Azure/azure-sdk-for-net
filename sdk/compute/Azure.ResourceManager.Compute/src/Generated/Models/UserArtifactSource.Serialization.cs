@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mediaLink"u8);
             writer.WriteStringValue(MediaLink);
-            if (Optional.IsDefined(DefaultConfigurationLink))
+            if (DefaultConfigurationLink != null)
             {
                 writer.WritePropertyName("defaultConfigurationLink"u8);
                 writer.WriteStringValue(DefaultConfigurationLink);

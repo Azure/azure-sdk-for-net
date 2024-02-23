@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventCode))
+            if (EventCode != null)
             {
                 writer.WritePropertyName("eventCode"u8);
                 writer.WriteStringValue(EventCode);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(EventType))
+            if (EventType != null)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (Optional.IsDefined(AffectedObjectFriendlyName))
+            if (AffectedObjectFriendlyName != null)
             {
                 writer.WritePropertyName("affectedObjectFriendlyName"u8);
                 writer.WriteStringValue(AffectedObjectFriendlyName);
             }
-            if (Optional.IsDefined(AffectedObjectCorrelationId))
+            if (AffectedObjectCorrelationId != null)
             {
                 writer.WritePropertyName("affectedObjectCorrelationId"u8);
                 writer.WriteStringValue(AffectedObjectCorrelationId);
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (Optional.IsDefined(OccurredOn))
+            if (OccurredOn.HasValue)
             {
                 writer.WritePropertyName("timeOfOccurrence"u8);
                 writer.WriteStringValue(OccurredOn.Value, "O");
             }
-            if (Optional.IsDefined(FabricId))
+            if (FabricId != null)
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
-            if (Optional.IsDefined(EventSpecificDetails))
+            if (EventSpecificDetails != null)
             {
                 writer.WritePropertyName("eventSpecificDetails"u8);
                 writer.WriteObjectValue(EventSpecificDetails);
             }
-            if (Optional.IsCollectionDefined(HealthErrors))
+            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();

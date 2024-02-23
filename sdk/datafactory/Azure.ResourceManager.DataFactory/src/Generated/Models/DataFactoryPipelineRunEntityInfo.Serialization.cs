@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(InvokedByType))
+            if (options.Format != "W" && InvokedByType != null)
             {
                 writer.WritePropertyName("invokedByType"u8);
                 writer.WriteStringValue(InvokedByType);
             }
-            if (options.Format != "W" && Optional.IsDefined(PipelineName))
+            if (options.Format != "W" && PipelineName != null)
             {
                 writer.WritePropertyName("pipelineName"u8);
                 writer.WriteStringValue(PipelineName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PipelineRunId))
+            if (options.Format != "W" && PipelineRunId.HasValue)
             {
                 writer.WritePropertyName("pipelineRunId"u8);
                 writer.WriteStringValue(PipelineRunId.Value);

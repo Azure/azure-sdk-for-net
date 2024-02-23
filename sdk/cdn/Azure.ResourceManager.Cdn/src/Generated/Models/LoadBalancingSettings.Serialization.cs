@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SampleSize))
+            if (SampleSize.HasValue)
             {
                 writer.WritePropertyName("sampleSize"u8);
                 writer.WriteNumberValue(SampleSize.Value);
             }
-            if (Optional.IsDefined(SuccessfulSamplesRequired))
+            if (SuccessfulSamplesRequired.HasValue)
             {
                 writer.WritePropertyName("successfulSamplesRequired"u8);
                 writer.WriteNumberValue(SuccessfulSamplesRequired.Value);
             }
-            if (Optional.IsDefined(AdditionalLatencyInMilliseconds))
+            if (AdditionalLatencyInMilliseconds.HasValue)
             {
                 writer.WritePropertyName("additionalLatencyInMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyInMilliseconds.Value);

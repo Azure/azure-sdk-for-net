@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _scheduledActionRestClient.CreateOrUpdateByScopeAsync(Id, name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()));
+                var uri = _scheduledActionRestClient.CreateCreateOrUpdateByScopeRequestUri(Id, name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -151,7 +153,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _scheduledActionRestClient.CreateOrUpdateByScope(Id, name, data, ifMatch, cancellationToken);
-                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()));
+                var uri = _scheduledActionRestClient.CreateCreateOrUpdateByScopeRequestUri(Id, name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

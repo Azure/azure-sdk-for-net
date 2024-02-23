@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DaysAfterModificationGreaterThan))
+            if (DaysAfterModificationGreaterThan.HasValue)
             {
                 writer.WritePropertyName("daysAfterModificationGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterModificationGreaterThan.Value);
             }
-            if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan))
+            if (DaysAfterLastAccessTimeGreaterThan.HasValue)
             {
                 writer.WritePropertyName("daysAfterLastAccessTimeGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterLastAccessTimeGreaterThan.Value);
             }
-            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
+            if (DaysAfterLastTierChangeGreaterThan.HasValue)
             {
                 writer.WritePropertyName("daysAfterLastTierChangeGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterLastTierChangeGreaterThan.Value);
             }
-            if (Optional.IsDefined(DaysAfterCreationGreaterThan))
+            if (DaysAfterCreationGreaterThan.HasValue)
             {
                 writer.WritePropertyName("daysAfterCreationGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterCreationGreaterThan.Value);

@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "JsonTextConfiguration");
-            if (Optional.IsDefined(RecordSeparator))
+            if (RecordSeparator != null)
             {
                 writer.WriteStartElement("RecordSeparator");
                 writer.WriteValue(RecordSeparator);

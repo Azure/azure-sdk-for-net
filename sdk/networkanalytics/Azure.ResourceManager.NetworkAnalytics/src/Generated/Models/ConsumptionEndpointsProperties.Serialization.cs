@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IngestionUri))
+            if (options.Format != "W" && IngestionUri != null)
             {
                 writer.WritePropertyName("ingestionUrl"u8);
                 writer.WriteStringValue(IngestionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(IngestionResourceId))
+            if (options.Format != "W" && IngestionResourceId != null)
             {
                 writer.WritePropertyName("ingestionResourceId"u8);
                 writer.WriteStringValue(IngestionResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(FileAccessUri))
+            if (options.Format != "W" && FileAccessUri != null)
             {
                 writer.WritePropertyName("fileAccessUrl"u8);
                 writer.WriteStringValue(FileAccessUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(FileAccessResourceId))
+            if (options.Format != "W" && FileAccessResourceId != null)
             {
                 writer.WritePropertyName("fileAccessResourceId"u8);
                 writer.WriteStringValue(FileAccessResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryUri))
+            if (options.Format != "W" && QueryUri != null)
             {
                 writer.WritePropertyName("queryUrl"u8);
                 writer.WriteStringValue(QueryUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryResourceId))
+            if (options.Format != "W" && QueryResourceId != null)
             {
                 writer.WritePropertyName("queryResourceId"u8);
                 writer.WriteStringValue(QueryResourceId);

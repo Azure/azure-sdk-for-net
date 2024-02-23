@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ThumbprintAlgorithm))
+            if (ThumbprintAlgorithm != null)
             {
                 writer.WritePropertyName("thumbprintAlgorithm"u8);
                 writer.WriteStringValue(ThumbprintAlgorithm);
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Optional.IsDefined(Format))
+            if (Format.HasValue)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
+            if (options.Format != "W" && ProvisioningStateTransitOn.HasValue)
             {
                 writer.WritePropertyName("provisioningStateTransitionTime"u8);
                 writer.WriteStringValue(ProvisioningStateTransitOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningState))
+            if (options.Format != "W" && PreviousProvisioningState.HasValue)
             {
                 writer.WritePropertyName("previousProvisioningState"u8);
                 writer.WriteStringValue(PreviousProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningStateTransitOn))
+            if (options.Format != "W" && PreviousProvisioningStateTransitOn.HasValue)
             {
                 writer.WritePropertyName("previousProvisioningStateTransitionTime"u8);
                 writer.WriteStringValue(PreviousProvisioningStateTransitOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicData))
+            if (options.Format != "W" && PublicData != null)
             {
                 writer.WritePropertyName("publicData"u8);
                 writer.WriteStringValue(PublicData);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeleteCertificateError))
+            if (options.Format != "W" && DeleteCertificateError != null)
             {
                 writer.WritePropertyName("deleteCertificateError"u8);
                 JsonSerializer.Serialize(writer, DeleteCertificateError);

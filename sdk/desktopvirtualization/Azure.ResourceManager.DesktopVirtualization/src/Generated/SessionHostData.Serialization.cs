@@ -43,94 +43,94 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            if (options.Format != "W" && ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(LastHeartBeatOn))
+            if (LastHeartBeatOn.HasValue)
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartBeatOn.Value, "O");
             }
-            if (Optional.IsDefined(Sessions))
+            if (Sessions.HasValue)
             {
                 writer.WritePropertyName("sessions"u8);
                 writer.WriteNumberValue(Sessions.Value);
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(AllowNewSession))
+            if (AllowNewSession.HasValue)
             {
                 writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmId))
+            if (options.Format != "W" && VmId != null)
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(AssignedUser))
+            if (AssignedUser != null)
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusTimestamp))
+            if (options.Format != "W" && StatusTimestamp.HasValue)
             {
                 writer.WritePropertyName("statusTimestamp"u8);
                 writer.WriteStringValue(StatusTimestamp.Value, "O");
             }
-            if (Optional.IsDefined(OSVersion))
+            if (OSVersion != null)
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(SxsStackVersion))
+            if (SxsStackVersion != null)
             {
                 writer.WritePropertyName("sxSStackVersion"u8);
                 writer.WriteStringValue(SxsStackVersion);
             }
-            if (Optional.IsDefined(UpdateState))
+            if (UpdateState.HasValue)
             {
                 writer.WritePropertyName("updateState"u8);
                 writer.WriteStringValue(UpdateState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdateErrorMessage))
+            if (UpdateErrorMessage != null)
             {
                 writer.WritePropertyName("updateErrorMessage"u8);
                 writer.WriteStringValue(UpdateErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SessionHostHealthCheckResults))
+            if (options.Format != "W" && !(SessionHostHealthCheckResults is ChangeTrackingList<SessionHostHealthCheckReport> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sessionHostHealthCheckResults"u8);
                 writer.WriteStartArray();

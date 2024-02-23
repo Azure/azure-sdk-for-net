@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TotalDeviceCount))
+            if (options.Format != "W" && TotalDeviceCount.HasValue)
             {
                 writer.WritePropertyName("totalDeviceCount"u8);
                 writer.WriteNumberValue(TotalDeviceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnabledDeviceCount))
+            if (options.Format != "W" && EnabledDeviceCount.HasValue)
             {
                 writer.WritePropertyName("enabledDeviceCount"u8);
                 writer.WriteNumberValue(EnabledDeviceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisabledDeviceCount))
+            if (options.Format != "W" && DisabledDeviceCount.HasValue)
             {
                 writer.WritePropertyName("disabledDeviceCount"u8);
                 writer.WriteNumberValue(DisabledDeviceCount.Value);

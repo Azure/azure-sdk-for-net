@@ -27,17 +27,17 @@ namespace Azure.Health.Insights.CancerProfiling
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Verbose))
+            if (Verbose.HasValue)
             {
                 writer.WritePropertyName("verbose"u8);
                 writer.WriteBooleanValue(Verbose.Value);
             }
-            if (Optional.IsDefined(IncludeEvidence))
+            if (IncludeEvidence.HasValue)
             {
                 writer.WritePropertyName("includeEvidence"u8);
                 writer.WriteBooleanValue(IncludeEvidence.Value);
             }
-            if (Optional.IsCollectionDefined(InferenceTypes))
+            if (!(InferenceTypes is ChangeTrackingList<OncoPhenotypeInferenceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inferenceTypes"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CheckForCancerCase))
+            if (CheckForCancerCase.HasValue)
             {
                 writer.WritePropertyName("checkForCancerCase"u8);
                 writer.WriteBooleanValue(CheckForCancerCase.Value);

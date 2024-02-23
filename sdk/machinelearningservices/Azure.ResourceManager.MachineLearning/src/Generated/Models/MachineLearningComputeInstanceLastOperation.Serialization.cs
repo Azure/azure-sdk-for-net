@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationName))
+            if (OperationName.HasValue)
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName.Value.ToString());
             }
-            if (Optional.IsDefined(OperationOn))
+            if (OperationOn.HasValue)
             {
                 writer.WritePropertyName("operationTime"u8);
                 writer.WriteStringValue(OperationOn.Value, "O");
             }
-            if (Optional.IsDefined(OperationStatus))
+            if (OperationStatus.HasValue)
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteStringValue(OperationStatus.Value.ToString());
             }
-            if (Optional.IsDefined(OperationTrigger))
+            if (OperationTrigger.HasValue)
             {
                 writer.WritePropertyName("operationTrigger"u8);
                 writer.WriteStringValue(OperationTrigger.Value.ToString());

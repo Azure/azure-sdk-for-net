@@ -15,12 +15,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LowerBound))
+            if (LowerBound.HasValue)
             {
                 writer.WritePropertyName("lowerBound"u8);
                 writer.WriteNumberValue(LowerBound.Value);
             }
-            if (Optional.IsDefined(UpperBound))
+            if (UpperBound.HasValue)
             {
                 writer.WritePropertyName("upperBound"u8);
                 writer.WriteNumberValue(UpperBound.Value);

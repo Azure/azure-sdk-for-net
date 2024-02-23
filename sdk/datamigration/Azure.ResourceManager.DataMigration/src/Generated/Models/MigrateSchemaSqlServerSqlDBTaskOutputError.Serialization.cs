@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CommandText))
+            if (options.Format != "W" && CommandText != null)
             {
                 writer.WritePropertyName("commandText"u8);
                 writer.WriteStringValue(CommandText);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorText))
+            if (options.Format != "W" && ErrorText != null)
             {
                 writer.WritePropertyName("errorText"u8);
                 writer.WriteStringValue(ErrorText);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

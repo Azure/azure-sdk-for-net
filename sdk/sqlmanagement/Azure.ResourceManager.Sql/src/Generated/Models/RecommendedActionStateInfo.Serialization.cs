@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("currentValue"u8);
             writer.WriteStringValue(CurrentValue.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ActionInitiatedBy))
+            if (options.Format != "W" && ActionInitiatedBy.HasValue)
             {
                 writer.WritePropertyName("actionInitiatedBy"u8);
                 writer.WriteStringValue(ActionInitiatedBy.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            if (options.Format != "W" && LastModified.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");

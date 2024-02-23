@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ManagedRuleSets))
+            if (!(ManagedRuleSets is ChangeTrackingList<WafPolicyManagedRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedRuleSets"u8);
                 writer.WriteStartArray();

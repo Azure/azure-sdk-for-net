@@ -29,22 +29,22 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartObject();
             writer.WritePropertyName("assistant_id"u8);
             writer.WriteStringValue(AssistantId);
-            if (Optional.IsDefined(Thread))
+            if (Thread != null)
             {
                 writer.WritePropertyName("thread"u8);
                 writer.WriteObjectValue(Thread);
             }
-            if (Optional.IsDefined(OverrideModelName))
+            if (OverrideModelName != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(OverrideModelName);
             }
-            if (Optional.IsDefined(OverrideInstructions))
+            if (OverrideInstructions != null)
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(OverrideInstructions);
             }
-            if (Optional.IsCollectionDefined(OverrideTools))
+            if (!(OverrideTools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Metadata != null)
                 {

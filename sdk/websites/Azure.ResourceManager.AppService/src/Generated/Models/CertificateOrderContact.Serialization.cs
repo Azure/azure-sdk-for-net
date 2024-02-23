@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(NameFirst))
+            if (NameFirst != null)
             {
                 writer.WritePropertyName("nameFirst"u8);
                 writer.WriteStringValue(NameFirst);
             }
-            if (Optional.IsDefined(NameLast))
+            if (NameLast != null)
             {
                 writer.WritePropertyName("nameLast"u8);
                 writer.WriteStringValue(NameLast);
             }
-            if (Optional.IsDefined(Phone))
+            if (Phone != null)
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);

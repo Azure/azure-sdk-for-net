@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParentHierarchyId))
+            if (ParentHierarchyId != null)
             {
                 writer.WritePropertyName("parentHierarchyId"u8);
                 writer.WriteStringValue(ParentHierarchyId);
             }
-            if (Optional.IsDefined(ManagementProjectNumber))
+            if (ManagementProjectNumber != null)
             {
                 writer.WritePropertyName("managementProjectNumber"u8);
                 writer.WriteStringValue(ManagementProjectNumber);

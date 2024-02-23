@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(AccountKey);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Optional.IsDefined(MountOptions))
+            if (MountOptions != null)
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);

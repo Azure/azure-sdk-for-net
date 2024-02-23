@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PhoneNumbers))
+            if (!(PhoneNumbers is ChangeTrackingList<TelephonyPhoneNumbers> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApiConfigurations))
+            if (!(ApiConfigurations is ChangeTrackingList<TelephonyChannelResourceApiConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apiConfigurations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (CognitiveServiceSubscriptionKey != null)
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (CognitiveServiceRegion != null)
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (Optional.IsDefined(DefaultLocale))
+            if (DefaultLocale != null)
             {
                 if (DefaultLocale != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("defaultLocale");
                 }
             }
-            if (Optional.IsDefined(PremiumSku))
+            if (PremiumSku != null)
             {
                 if (PremiumSku != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("premiumSKU");
                 }
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(ParametersValueInfo))
+            if (ParametersValueInfo != null)
             {
                 writer.WritePropertyName("parametersValueInfo"u8);
 #if NET6_0_OR_GREATER

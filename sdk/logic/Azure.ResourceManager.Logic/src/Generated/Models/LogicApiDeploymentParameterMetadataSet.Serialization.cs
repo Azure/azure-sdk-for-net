@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageContentLink))
+            if (PackageContentLink != null)
             {
                 writer.WritePropertyName("packageContentLink"u8);
                 writer.WriteObjectValue(PackageContentLink);
             }
-            if (Optional.IsDefined(RedisCacheConnectionString))
+            if (RedisCacheConnectionString != null)
             {
                 writer.WritePropertyName("redisCacheConnectionString"u8);
                 writer.WriteObjectValue(RedisCacheConnectionString);

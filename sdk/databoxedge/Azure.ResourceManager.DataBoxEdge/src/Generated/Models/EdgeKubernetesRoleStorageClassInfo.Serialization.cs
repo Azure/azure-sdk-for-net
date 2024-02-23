@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(KubernetesRoleStorageClassInfoType))
+            if (options.Format != "W" && KubernetesRoleStorageClassInfoType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KubernetesRoleStorageClassInfoType);
             }
-            if (options.Format != "W" && Optional.IsDefined(PosixCompliant))
+            if (options.Format != "W" && PosixCompliant.HasValue)
             {
                 writer.WritePropertyName("posixCompliant"u8);
                 writer.WriteStringValue(PosixCompliant.Value.ToString());

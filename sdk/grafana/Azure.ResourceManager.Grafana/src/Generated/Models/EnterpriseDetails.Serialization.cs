@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SaasSubscriptionDetails))
+            if (SaasSubscriptionDetails != null)
             {
                 writer.WritePropertyName("saasSubscriptionDetails"u8);
                 writer.WriteObjectValue(SaasSubscriptionDetails);
             }
-            if (Optional.IsDefined(MarketplaceTrialQuota))
+            if (MarketplaceTrialQuota != null)
             {
                 writer.WritePropertyName("marketplaceTrialQuota"u8);
                 writer.WriteObjectValue(MarketplaceTrialQuota);

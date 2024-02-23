@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             JsonSerializer.Serialize(writer, KeyVault);
             writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
-            if (Optional.IsDefined(SecretVersion))
+            if (SecretVersion != null)
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);

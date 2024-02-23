@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("defaultConsistencyLevel"u8);
             writer.WriteStringValue(DefaultConsistencyLevel.ToSerialString());
-            if (Optional.IsDefined(MaxStalenessPrefix))
+            if (MaxStalenessPrefix.HasValue)
             {
                 writer.WritePropertyName("maxStalenessPrefix"u8);
                 writer.WriteNumberValue(MaxStalenessPrefix.Value);
             }
-            if (Optional.IsDefined(MaxIntervalInSeconds))
+            if (MaxIntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("maxIntervalInSeconds"u8);
                 writer.WriteNumberValue(MaxIntervalInSeconds.Value);

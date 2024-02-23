@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Kubernetes.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
+            if (options.Format != "W" && ExpirationTime.HasValue)
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteNumberValue(ExpirationTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HybridConnectionName))
+            if (options.Format != "W" && HybridConnectionName != null)
             {
                 writer.WritePropertyName("hybridConnectionName"u8);
                 writer.WriteStringValue(HybridConnectionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Relay))
+            if (options.Format != "W" && Relay != null)
             {
                 writer.WritePropertyName("relay"u8);
                 writer.WriteStringValue(Relay);
             }
-            if (options.Format != "W" && Optional.IsDefined(Token))
+            if (options.Format != "W" && Token != null)
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);

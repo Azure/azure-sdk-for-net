@@ -27,7 +27,7 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EpochIds))
+            if (!(EpochIds is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("epochIds"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrainLosses))
+            if (!(TrainLosses is ChangeTrackingList<float> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trainLosses"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidationLosses))
+            if (!(ValidationLosses is ChangeTrackingList<float> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("validationLosses"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LatenciesInSeconds))
+            if (!(LatenciesInSeconds is ChangeTrackingList<float> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("latenciesInSeconds"u8);
                 writer.WriteStartArray();

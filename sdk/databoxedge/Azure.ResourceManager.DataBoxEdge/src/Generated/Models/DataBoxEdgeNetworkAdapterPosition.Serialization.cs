@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NetworkGroup))
+            if (options.Format != "W" && NetworkGroup.HasValue)
             {
                 writer.WritePropertyName("networkGroup"u8);
                 writer.WriteStringValue(NetworkGroup.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Port))
+            if (options.Format != "W" && Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);

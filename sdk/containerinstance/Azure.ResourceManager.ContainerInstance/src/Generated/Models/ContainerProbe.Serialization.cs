@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exec))
+            if (Exec != null)
             {
                 writer.WritePropertyName("exec"u8);
                 writer.WriteObjectValue(Exec);
             }
-            if (Optional.IsDefined(HttpGet))
+            if (HttpGet != null)
             {
                 writer.WritePropertyName("httpGet"u8);
                 writer.WriteObjectValue(HttpGet);
             }
-            if (Optional.IsDefined(InitialDelayInSeconds))
+            if (InitialDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(PeriodInSeconds))
+            if (PeriodInSeconds.HasValue)
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodInSeconds.Value);
             }
-            if (Optional.IsDefined(FailureThreshold))
+            if (FailureThreshold.HasValue)
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (Optional.IsDefined(SuccessThreshold))
+            if (SuccessThreshold.HasValue)
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (TimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);

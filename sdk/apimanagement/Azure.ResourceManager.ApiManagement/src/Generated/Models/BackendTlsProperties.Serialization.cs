@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ShouldValidateCertificateChain))
+            if (ShouldValidateCertificateChain.HasValue)
             {
                 writer.WritePropertyName("validateCertificateChain"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateChain.Value);
             }
-            if (Optional.IsDefined(ShouldValidateCertificateName))
+            if (ShouldValidateCertificateName.HasValue)
             {
                 writer.WritePropertyName("validateCertificateName"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateName.Value);

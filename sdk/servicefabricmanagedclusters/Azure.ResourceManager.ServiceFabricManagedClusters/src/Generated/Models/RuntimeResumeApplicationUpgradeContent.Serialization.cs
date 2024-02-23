@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpgradeDomainName))
+            if (UpgradeDomainName != null)
             {
                 writer.WritePropertyName("upgradeDomainName"u8);
                 writer.WriteStringValue(UpgradeDomainName);

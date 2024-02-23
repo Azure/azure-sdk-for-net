@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PreferredDisks))
+            if (!(PreferredDisks is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("preferredDisks"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CopyProgress))
+            if (options.Format != "W" && !(CopyProgress is ChangeTrackingList<DataBoxDiskCopyProgress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("copyProgress"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GranularCopyProgress))
+            if (options.Format != "W" && !(GranularCopyProgress is ChangeTrackingList<DataBoxDiskGranularCopyProgress> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("granularCopyProgress"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GranularCopyLogDetails))
+            if (options.Format != "W" && !(GranularCopyLogDetails is ChangeTrackingList<DataBoxDiskGranularCopyLogDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("granularCopyLogDetails"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DisksAndSizeDetails))
+            if (options.Format != "W" && !(DisksAndSizeDetails is ChangeTrackingDictionary<string, int> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("disksAndSizeDetails"u8);
                 writer.WriteStartObject();
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Passkey))
+            if (Passkey != null)
             {
                 writer.WritePropertyName("passkey"u8);
                 writer.WriteStringValue(Passkey);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(JobStages))
+            if (options.Format != "W" && !(JobStages is ChangeTrackingList<DataBoxJobStage> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("jobStages"u8);
                 writer.WriteStartArray();
@@ -95,22 +95,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
-            if (Optional.IsDefined(ShippingAddress))
+            if (ShippingAddress != null)
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
+            if (options.Format != "W" && DeliveryPackage != null)
             {
                 writer.WritePropertyName("deliveryPackage"u8);
                 writer.WriteObjectValue(DeliveryPackage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
+            if (options.Format != "W" && ReturnPackage != null)
             {
                 writer.WritePropertyName("returnPackage"u8);
                 writer.WriteObjectValue(ReturnPackage);
             }
-            if (Optional.IsCollectionDefined(DataImportDetails))
+            if (!(DataImportDetails is ChangeTrackingList<DataImportDetails> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataExportDetails))
+            if (!(DataExportDetails is ChangeTrackingList<DataExportDetails> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
@@ -132,17 +132,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobDetailsType"u8);
             writer.WriteStringValue(JobDetailsType.ToSerialString());
-            if (Optional.IsDefined(Preferences))
+            if (Preferences != null)
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (Optional.IsDefined(ReverseShippingDetails))
+            if (ReverseShippingDetails != null)
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
+            if (options.Format != "W" && !(CopyLogDetails is ChangeTrackingList<CopyLogDetails> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("copyLogDetails"u8);
                 writer.WriteStartArray();
@@ -152,32 +152,32 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ReverseShipmentLabelSasKey))
+            if (options.Format != "W" && ReverseShipmentLabelSasKey != null)
             {
                 writer.WritePropertyName("reverseShipmentLabelSasKey"u8);
                 writer.WriteStringValue(ReverseShipmentLabelSasKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChainOfCustodySasKey))
+            if (options.Format != "W" && ChainOfCustodySasKey != null)
             {
                 writer.WritePropertyName("chainOfCustodySasKey"u8);
                 writer.WriteStringValue(ChainOfCustodySasKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
+            if (options.Format != "W" && DeviceErasureDetails != null)
             {
                 writer.WritePropertyName("deviceErasureDetails"u8);
                 writer.WriteObjectValue(DeviceErasureDetails);
             }
-            if (Optional.IsDefined(KeyEncryptionKey))
+            if (KeyEncryptionKey != null)
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
+            if (ExpectedDataSizeInTerabytes.HasValue)
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
+            if (options.Format != "W" && !(Actions is ChangeTrackingList<CustomerResolutionCode> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
+            if (options.Format != "W" && LastMitigationActionOnJob != null)
             {
                 writer.WritePropertyName("lastMitigationActionOnJob"u8);
                 writer.WriteObjectValue(LastMitigationActionOnJob);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
+            if (options.Format != "W" && DataCenterAddress != null)
             {
                 writer.WritePropertyName("datacenterAddress"u8);
                 writer.WriteObjectValue(DataCenterAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
+            if (options.Format != "W" && DataCenterCode.HasValue)
             {
                 writer.WritePropertyName("dataCenterCode"u8);
                 writer.WriteStringValue(DataCenterCode.Value.ToString());

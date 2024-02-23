@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Text
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Translation))
+            if (!(Translation is ChangeTrackingDictionary<string, TranslationLanguage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("translation"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Transliteration))
+            if (!(Transliteration is ChangeTrackingDictionary<string, TransliterationLanguage> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("transliteration"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Dictionary))
+            if (!(Dictionary is ChangeTrackingDictionary<string, SourceDictionaryLanguage> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dictionary"u8);
                 writer.WriteStartObject();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SwapSource))
+            if (SwapSource != null)
             {
                 writer.WritePropertyName("swapSource"u8);
                 writer.WriteStringValue(SwapSource);
             }
-            if (Optional.IsDefined(SwapDestination))
+            if (SwapDestination != null)
             {
                 writer.WritePropertyName("swapDestination"u8);
                 writer.WriteStringValue(SwapDestination);

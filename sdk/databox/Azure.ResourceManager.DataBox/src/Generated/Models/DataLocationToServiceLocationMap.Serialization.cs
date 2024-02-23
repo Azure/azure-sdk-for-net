@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataLocation))
+            if (options.Format != "W" && DataLocation.HasValue)
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceLocation))
+            if (options.Format != "W" && ServiceLocation.HasValue)
             {
                 writer.WritePropertyName("serviceLocation"u8);
                 writer.WriteStringValue(ServiceLocation.Value);

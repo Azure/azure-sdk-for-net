@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
-            if (Optional.IsDefined(UserEventPattern))
+            if (UserEventPattern != null)
             {
                 writer.WritePropertyName("userEventPattern"u8);
                 writer.WriteStringValue(UserEventPattern);
             }
-            if (Optional.IsCollectionDefined(SystemEvents))
+            if (!(SystemEvents is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("systemEvents"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Auth))
+            if (Auth != null)
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);

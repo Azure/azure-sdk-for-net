@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Usable))
+            if (options.Format != "W" && Usable != null)
             {
                 writer.WritePropertyName("usable"u8);
                 writer.WriteStringValue(Usable);
             }
-            if (options.Format != "W" && Optional.IsDefined(Maximum))
+            if (options.Format != "W" && Maximum != null)
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteStringValue(Maximum);

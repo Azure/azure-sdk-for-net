@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PeeringFacilities))
+            if (!(PeeringFacilities is ChangeTrackingList<DirectPeeringFacility> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BandwidthOffers))
+            if (!(BandwidthOffers is ChangeTrackingList<PeeringBandwidthOffer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bandwidthOffers"u8);
                 writer.WriteStartArray();

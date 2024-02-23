@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AggregatedState))
+            if (options.Format != "W" && AggregatedState.HasValue)
             {
                 writer.WritePropertyName("aggregatedState"u8);
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Summary))
+            if (options.Format != "W" && !(Summary is ChangeTrackingList<RegionalReplicationStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();

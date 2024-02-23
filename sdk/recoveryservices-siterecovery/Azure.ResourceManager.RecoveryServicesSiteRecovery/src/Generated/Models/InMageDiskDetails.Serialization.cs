@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskId))
+            if (DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(DiskName))
+            if (DiskName != null)
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (Optional.IsDefined(DiskSizeInMB))
+            if (DiskSizeInMB != null)
             {
                 writer.WritePropertyName("diskSizeInMB"u8);
                 writer.WriteStringValue(DiskSizeInMB);
             }
-            if (Optional.IsDefined(DiskType))
+            if (DiskType != null)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
             }
-            if (Optional.IsDefined(DiskConfiguration))
+            if (DiskConfiguration != null)
             {
                 writer.WritePropertyName("diskConfiguration"u8);
                 writer.WriteStringValue(DiskConfiguration);
             }
-            if (Optional.IsCollectionDefined(VolumeList))
+            if (!(VolumeList is ChangeTrackingList<SiteRecoveryDiskVolumeDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("volumeList"u8);
                 writer.WriteStartArray();

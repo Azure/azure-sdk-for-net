@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(PropertyName);
             writer.WritePropertyName("columnName"u8);
             writer.WriteStringValue(ColumnName);
-            if (Optional.IsDefined(CustomFormatSpecifier))
+            if (CustomFormatSpecifier != null)
             {
                 writer.WritePropertyName("customFormatSpecifier"u8);
                 writer.WriteStringValue(CustomFormatSpecifier);
             }
-            if (Optional.IsDefined(IsEncrypted))
+            if (IsEncrypted.HasValue)
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);

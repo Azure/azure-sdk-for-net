@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WatermarkMode))
+            if (WatermarkMode.HasValue)
             {
                 writer.WritePropertyName("watermarkMode"u8);
                 writer.WriteStringValue(WatermarkMode.Value.ToString());
             }
-            if (Optional.IsDefined(MaxWatermarkDifferenceAcrossPartitions))
+            if (MaxWatermarkDifferenceAcrossPartitions != null)
             {
                 writer.WritePropertyName("maxWatermarkDifferenceAcrossPartitions"u8);
                 writer.WriteStringValue(MaxWatermarkDifferenceAcrossPartitions);

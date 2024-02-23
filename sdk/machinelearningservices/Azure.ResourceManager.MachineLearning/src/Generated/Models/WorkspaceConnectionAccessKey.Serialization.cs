@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessKeyId))
+            if (AccessKeyId != null)
             {
                 writer.WritePropertyName("accessKeyId"u8);
                 writer.WriteStringValue(AccessKeyId);
             }
-            if (Optional.IsDefined(SecretAccessKey))
+            if (SecretAccessKey != null)
             {
                 writer.WritePropertyName("secretAccessKey"u8);
                 writer.WriteStringValue(SecretAccessKey);

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStringValue(TargetId);
             writer.WritePropertyName("lunName"u8);
             writer.WriteStringValue(LunName);
-            if (Optional.IsDefined(MountOption))
+            if (MountOption.HasValue)
             {
                 writer.WritePropertyName("mountOption"u8);
                 writer.WriteStringValue(MountOption.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Path))
+            if (options.Format != "W" && Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

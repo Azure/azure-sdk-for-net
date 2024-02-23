@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MonitoringSettings))
+            if (MonitoringSettings != null)
             {
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceMoveState))
+            if (options.Format != "W" && ResourceMoveState.HasValue)
             {
                 writer.WritePropertyName("resourceMoveState"u8);
                 writer.WriteStringValue(ResourceMoveState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
+            if (options.Format != "W" && ResourceMoveDetails != null)
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
                 writer.WriteObjectValue(ResourceMoveDetails);
             }
-            if (Optional.IsDefined(SecuritySettings))
+            if (SecuritySettings != null)
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
@@ -58,22 +58,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
+            if (options.Format != "W" && IsVaultProtectedByResourceGuard.HasValue)
             {
                 writer.WritePropertyName("isVaultProtectedByResourceGuard"u8);
                 writer.WriteBooleanValue(IsVaultProtectedByResourceGuard.Value);
             }
-            if (Optional.IsDefined(FeatureSettings))
+            if (FeatureSettings != null)
             {
                 writer.WritePropertyName("featureSettings"u8);
                 writer.WriteObjectValue(FeatureSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecureScore))
+            if (options.Format != "W" && SecureScore.HasValue)
             {
                 writer.WritePropertyName("secureScore"u8);
                 writer.WriteStringValue(SecureScore.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ReplicatedRegions))
+            if (!(ReplicatedRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replicatedRegions"u8);
                 writer.WriteStartArray();

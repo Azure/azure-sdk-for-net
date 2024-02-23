@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (Optional.IsDefined(ThumbprintSecondary))
+            if (ThumbprintSecondary != null)
             {
                 writer.WritePropertyName("thumbprintSecondary"u8);
                 writer.WriteStringValue(ThumbprintSecondary);
             }
-            if (Optional.IsDefined(X509StoreName))
+            if (X509StoreName.HasValue)
             {
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());

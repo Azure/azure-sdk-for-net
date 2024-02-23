@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CidrAddress))
+            if (CidrAddress != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(CidrAddress);

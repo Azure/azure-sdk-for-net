@@ -100,7 +100,9 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _snapshotPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<SnapshotPolicyResource>(Response.FromValue(new SnapshotPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _snapshotPolicyRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetAppArmOperation<SnapshotPolicyResource>(Response.FromValue(new SnapshotPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -159,7 +161,9 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _snapshotPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, data, cancellationToken);
-                var operation = new NetAppArmOperation<SnapshotPolicyResource>(Response.FromValue(new SnapshotPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _snapshotPolicyRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetAppArmOperation<SnapshotPolicyResource>(Response.FromValue(new SnapshotPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

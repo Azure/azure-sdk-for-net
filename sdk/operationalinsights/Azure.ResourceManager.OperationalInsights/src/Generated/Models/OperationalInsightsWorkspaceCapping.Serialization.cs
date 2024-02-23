@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DailyQuotaInGB))
+            if (DailyQuotaInGB.HasValue)
             {
                 writer.WritePropertyName("dailyQuotaGb"u8);
                 writer.WriteNumberValue(DailyQuotaInGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(QuotaNextResetTime))
+            if (options.Format != "W" && QuotaNextResetTime != null)
             {
                 writer.WritePropertyName("quotaNextResetTime"u8);
                 writer.WriteStringValue(QuotaNextResetTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataIngestionStatus))
+            if (options.Format != "W" && DataIngestionStatus.HasValue)
             {
                 writer.WritePropertyName("dataIngestionStatus"u8);
                 writer.WriteStringValue(DataIngestionStatus.Value.ToString());

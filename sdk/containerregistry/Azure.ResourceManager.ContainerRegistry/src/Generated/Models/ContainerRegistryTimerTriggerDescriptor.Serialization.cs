@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimerTriggerName))
+            if (TimerTriggerName != null)
             {
                 writer.WritePropertyName("timerTriggerName"u8);
                 writer.WriteStringValue(TimerTriggerName);
             }
-            if (Optional.IsDefined(ScheduleOccurrence))
+            if (ScheduleOccurrence != null)
             {
                 writer.WritePropertyName("scheduleOccurrence"u8);
                 writer.WriteStringValue(ScheduleOccurrence);

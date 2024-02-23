@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GitPropertyValidationResult))
+            if (GitPropertyValidationResult != null)
             {
                 writer.WritePropertyName("gitPropertyValidationResult"u8);
                 writer.WriteObjectValue(GitPropertyValidationResult);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Types))
+            if (!(Types is ChangeTrackingList<CosmosDBSpatialType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("types"u8);
                 writer.WriteStartArray();

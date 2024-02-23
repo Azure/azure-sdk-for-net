@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,34 +49,34 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateStrategyId))
+            if (UpdateStrategyId != null)
             {
                 writer.WritePropertyName("updateStrategyId"u8);
                 writer.WriteStringValue(UpdateStrategyId);
             }
-            if (Optional.IsDefined(Strategy))
+            if (Strategy != null)
             {
                 writer.WritePropertyName("strategy"u8);
                 writer.WriteObjectValue(Strategy);
             }
-            if (Optional.IsDefined(ManagedClusterUpdate))
+            if (ManagedClusterUpdate != null)
             {
                 writer.WritePropertyName("managedClusterUpdate"u8);
                 writer.WriteObjectValue(ManagedClusterUpdate);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);

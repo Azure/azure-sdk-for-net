@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Used))
+            if (options.Format != "W" && Used != null)
             {
                 writer.WritePropertyName("used"u8);
                 writer.WriteStringValue(Used);
             }
-            if (options.Format != "W" && Optional.IsDefined(Available))
+            if (options.Format != "W" && Available != null)
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStringValue(Available);

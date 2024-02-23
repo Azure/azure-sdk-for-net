@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByResourceRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/dataCollectionRuleAssociations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -106,6 +117,21 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByRuleRequestUri(string subscriptionId, string resourceGroupName, string dataCollectionRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/dataCollectionRules/", false);
+            uri.AppendPath(dataCollectionRuleName, true);
+            uri.AppendPath("/associations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByRuleRequest(string subscriptionId, string resourceGroupName, string dataCollectionRuleName)
@@ -229,6 +255,21 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateListByDataCollectionEndpointRequestUri(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/dataCollectionEndpoints/", false);
+            uri.AppendPath(dataCollectionEndpointName, true);
+            uri.AppendPath("/associations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByDataCollectionEndpointRequest(string subscriptionId, string resourceGroupName, string dataCollectionEndpointName)
         {
             var message = _pipeline.CreateMessage();
@@ -350,6 +391,18 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string associationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/dataCollectionRuleAssociations/", false);
+            uri.AppendPath(associationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string resourceUri, string associationName)
         {
             var message = _pipeline.CreateMessage();
@@ -444,6 +497,18 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string resourceUri, string associationName, DataCollectionRuleAssociationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/dataCollectionRuleAssociations/", false);
+            uri.AppendPath(associationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string resourceUri, string associationName, DataCollectionRuleAssociationData data)
@@ -554,6 +619,18 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri, string associationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/dataCollectionRuleAssociations/", false);
+            uri.AppendPath(associationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string resourceUri, string associationName)
         {
             var message = _pipeline.CreateMessage();
@@ -638,6 +715,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceNextPageRequestUri(string nextLink, string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceNextPageRequest(string nextLink, string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -714,6 +799,14 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByRuleNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByRuleNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionRuleName)
@@ -838,6 +931,14 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDataCollectionEndpointNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByDataCollectionEndpointNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string dataCollectionEndpointName)

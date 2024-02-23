@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Profile))
+            if (Profile != null)
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile);
             }
-            if (Optional.IsDefined(NetworkSecurityGroupResult))
+            if (NetworkSecurityGroupResult != null)
             {
                 writer.WritePropertyName("networkSecurityGroupResult"u8);
                 writer.WriteObjectValue(NetworkSecurityGroupResult);

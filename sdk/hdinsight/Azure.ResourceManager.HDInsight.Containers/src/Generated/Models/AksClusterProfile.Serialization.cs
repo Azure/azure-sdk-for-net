@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AksClusterResourceId))
+            if (AksClusterResourceId != null)
             {
                 writer.WritePropertyName("aksClusterResourceId"u8);
                 writer.WriteStringValue(AksClusterResourceId);
             }
-            if (Optional.IsDefined(AksClusterAgentPoolIdentityProfile))
+            if (AksClusterAgentPoolIdentityProfile != null)
             {
                 writer.WritePropertyName("aksClusterAgentPoolIdentityProfile"u8);
                 writer.WriteObjectValue(AksClusterAgentPoolIdentityProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(AksVersion))
+            if (options.Format != "W" && AksVersion != null)
             {
                 writer.WritePropertyName("aksVersion"u8);
                 writer.WriteStringValue(AksVersion);

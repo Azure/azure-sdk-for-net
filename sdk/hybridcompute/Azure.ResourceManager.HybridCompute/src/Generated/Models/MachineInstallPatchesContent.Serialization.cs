@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStringValue(MaximumDuration, "P");
             writer.WritePropertyName("rebootSetting"u8);
             writer.WriteStringValue(RebootSetting.ToString());
-            if (Optional.IsDefined(WindowsParameters))
+            if (WindowsParameters != null)
             {
                 writer.WritePropertyName("windowsParameters"u8);
                 writer.WriteObjectValue(WindowsParameters);
             }
-            if (Optional.IsDefined(LinuxParameters))
+            if (LinuxParameters != null)
             {
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);

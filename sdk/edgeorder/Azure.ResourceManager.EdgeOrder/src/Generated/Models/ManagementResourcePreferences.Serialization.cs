@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreferredManagementResourceId))
+            if (PreferredManagementResourceId != null)
             {
                 writer.WritePropertyName("preferredManagementResourceId"u8);
                 writer.WriteStringValue(PreferredManagementResourceId);

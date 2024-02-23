@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,69 +62,69 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DaprAIInstrumentationKey))
+            if (DaprAIInstrumentationKey != null)
             {
                 writer.WritePropertyName("daprAIInstrumentationKey"u8);
                 writer.WriteStringValue(DaprAIInstrumentationKey);
             }
-            if (Optional.IsDefined(DaprAIConnectionString))
+            if (DaprAIConnectionString != null)
             {
                 writer.WritePropertyName("daprAIConnectionString"u8);
                 writer.WriteStringValue(DaprAIConnectionString);
             }
-            if (Optional.IsDefined(VnetConfiguration))
+            if (VnetConfiguration != null)
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
                 writer.WriteObjectValue(VnetConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            if (options.Format != "W" && DeploymentErrors != null)
             {
                 writer.WritePropertyName("deploymentErrors"u8);
                 writer.WriteStringValue(DeploymentErrors);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
+            if (options.Format != "W" && DefaultDomain != null)
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (options.Format != "W" && Optional.IsDefined(StaticIP))
+            if (options.Format != "W" && StaticIP != null)
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
-            if (Optional.IsDefined(AppLogsConfiguration))
+            if (AppLogsConfiguration != null)
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
-            if (Optional.IsDefined(IsZoneRedundant))
+            if (IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Optional.IsDefined(CustomDomainConfiguration))
+            if (CustomDomainConfiguration != null)
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
                 writer.WriteObjectValue(CustomDomainConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
+            if (options.Format != "W" && EventStreamEndpoint != null)
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
             }
-            if (Optional.IsCollectionDefined(WorkloadProfiles))
+            if (!(WorkloadProfiles is ChangeTrackingList<ContainerAppWorkloadProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("workloadProfiles"u8);
                 writer.WriteStartArray();
@@ -134,22 +134,22 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(KedaConfiguration))
+            if (KedaConfiguration != null)
             {
                 writer.WritePropertyName("kedaConfiguration"u8);
                 writer.WriteObjectValue(KedaConfiguration);
             }
-            if (Optional.IsDefined(DaprConfiguration))
+            if (DaprConfiguration != null)
             {
                 writer.WritePropertyName("daprConfiguration"u8);
                 writer.WriteObjectValue(DaprConfiguration);
             }
-            if (Optional.IsDefined(InfrastructureResourceGroup))
+            if (InfrastructureResourceGroup != null)
             {
                 writer.WritePropertyName("infrastructureResourceGroup"u8);
                 writer.WriteStringValue(InfrastructureResourceGroup);
             }
-            if (Optional.IsDefined(PeerAuthentication))
+            if (PeerAuthentication != null)
             {
                 writer.WritePropertyName("peerAuthentication"u8);
                 writer.WriteObjectValue(PeerAuthentication);

@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessCredential))
+            if (AccessCredential != null)
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (Optional.IsDefined(LogRefreshInterval))
+            if (LogRefreshInterval != null)
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
                 JsonSerializer.Serialize(writer, LogRefreshInterval);

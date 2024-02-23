@@ -163,7 +163,7 @@ namespace Azure.DigitalTwins.Core
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
-            if (dependenciesFor != null && Optional.IsCollectionDefined(dependenciesFor))
+            if (dependenciesFor != null && !(dependenciesFor is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in dependenciesFor)
                 {

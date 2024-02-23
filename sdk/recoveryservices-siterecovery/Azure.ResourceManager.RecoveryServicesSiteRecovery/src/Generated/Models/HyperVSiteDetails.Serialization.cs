@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(HyperVHosts))
+            if (!(HyperVHosts is ChangeTrackingList<HyperVHostDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hyperVHosts"u8);
                 writer.WriteStartArray();

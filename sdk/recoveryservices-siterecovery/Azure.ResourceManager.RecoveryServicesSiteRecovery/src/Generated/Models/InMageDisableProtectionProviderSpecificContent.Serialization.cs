@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicaVmDeletionStatus))
+            if (ReplicaVmDeletionStatus != null)
             {
                 writer.WritePropertyName("replicaVmDeletionStatus"u8);
                 writer.WriteStringValue(ReplicaVmDeletionStatus);

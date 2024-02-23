@@ -17,17 +17,17 @@ namespace Azure.AI.Translation.Document
             writer.WriteStartObject();
             writer.WritePropertyName("sourceUrl"u8);
             writer.WriteStringValue(SourceUri.AbsoluteUri);
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsDefined(LanguageCode))
+            if (LanguageCode != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(LanguageCode);
             }
-            if (Optional.IsDefined(StorageSource))
+            if (StorageSource != null)
             {
                 writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);

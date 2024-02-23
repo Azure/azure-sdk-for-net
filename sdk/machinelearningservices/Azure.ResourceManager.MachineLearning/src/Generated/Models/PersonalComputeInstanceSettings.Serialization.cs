@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssignedUser))
+            if (AssignedUser != null)
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteObjectValue(AssignedUser);

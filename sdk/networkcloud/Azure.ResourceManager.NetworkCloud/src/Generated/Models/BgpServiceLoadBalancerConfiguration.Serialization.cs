@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BgpAdvertisements))
+            if (!(BgpAdvertisements is ChangeTrackingList<BgpAdvertisement> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bgpAdvertisements"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BgpPeers))
+            if (!(BgpPeers is ChangeTrackingList<ServiceLoadBalancerBgpPeer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bgpPeers"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FabricPeeringEnabled))
+            if (FabricPeeringEnabled.HasValue)
             {
                 writer.WritePropertyName("fabricPeeringEnabled"u8);
                 writer.WriteStringValue(FabricPeeringEnabled.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPAddressPools))
+            if (!(IPAddressPools is ChangeTrackingList<IPAddressPool> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipAddressPools"u8);
                 writer.WriteStartArray();

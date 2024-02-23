@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlDataSettings))
+            if (SqlDataSettings != null)
             {
                 writer.WritePropertyName("sqlDataSettings"u8);
                 writer.WriteObjectValue(SqlDataSettings);
             }
-            if (Optional.IsDefined(SqlLogSettings))
+            if (SqlLogSettings != null)
             {
                 writer.WritePropertyName("sqlLogSettings"u8);
                 writer.WriteObjectValue(SqlLogSettings);
             }
-            if (Optional.IsDefined(SqlTempDBSettings))
+            if (SqlTempDBSettings != null)
             {
                 writer.WritePropertyName("sqlTempDbSettings"u8);
                 writer.WriteObjectValue(SqlTempDBSettings);
             }
-            if (Optional.IsDefined(IsSqlSystemDBOnDataDisk))
+            if (IsSqlSystemDBOnDataDisk.HasValue)
             {
                 writer.WritePropertyName("sqlSystemDbOnDataDisk"u8);
                 writer.WriteBooleanValue(IsSqlSystemDBOnDataDisk.Value);
             }
-            if (Optional.IsDefined(DiskConfigurationType))
+            if (DiskConfigurationType.HasValue)
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageWorkloadType))
+            if (StorageWorkloadType.HasValue)
             {
                 writer.WritePropertyName("storageWorkloadType"u8);
                 writer.WriteStringValue(StorageWorkloadType.Value.ToString());

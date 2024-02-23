@@ -15,12 +15,12 @@ namespace Azure.Maps.Routing
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GeoJsonMultiPointOrigins))
+            if (GeoJsonMultiPointOrigins != null)
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointOrigins);
             }
-            if (Optional.IsDefined(GeoJsonMultiPointDestinations))
+            if (GeoJsonMultiPointDestinations != null)
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointDestinations);

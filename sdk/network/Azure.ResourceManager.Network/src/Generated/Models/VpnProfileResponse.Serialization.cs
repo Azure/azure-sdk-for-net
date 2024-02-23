@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProfileUri))
+            if (ProfileUri != null)
             {
                 writer.WritePropertyName("profileUrl"u8);
                 writer.WriteStringValue(ProfileUri.AbsoluteUri);

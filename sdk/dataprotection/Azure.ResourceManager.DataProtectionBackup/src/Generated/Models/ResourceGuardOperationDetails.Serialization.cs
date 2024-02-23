@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VaultCriticalOperation))
+            if (options.Format != "W" && VaultCriticalOperation != null)
             {
                 writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestResourceType))
+            if (options.Format != "W" && RequestResourceType.HasValue)
             {
                 writer.WritePropertyName("requestResourceType"u8);
                 writer.WriteStringValue(RequestResourceType.Value);

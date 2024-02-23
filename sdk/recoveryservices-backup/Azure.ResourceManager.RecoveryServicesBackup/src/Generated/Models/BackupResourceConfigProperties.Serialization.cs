@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageModelType))
+            if (StorageModelType.HasValue)
             {
                 writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageType))
+            if (StorageType.HasValue)
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageTypeState))
+            if (StorageTypeState.HasValue)
             {
                 writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCrossRegionRestore))
+            if (EnableCrossRegionRestore.HasValue)
             {
                 writer.WritePropertyName("crossRegionRestoreFlag"u8);
                 writer.WriteBooleanValue(EnableCrossRegionRestore.Value);
             }
-            if (Optional.IsDefined(DedupState))
+            if (DedupState.HasValue)
             {
                 writer.WritePropertyName("dedupState"u8);
                 writer.WriteStringValue(DedupState.Value.ToString());
             }
-            if (Optional.IsDefined(XcoolState))
+            if (XcoolState.HasValue)
             {
                 writer.WritePropertyName("xcoolState"u8);
                 writer.WriteStringValue(XcoolState.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 if (ClientId != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (Optional.IsDefined(DataCollectionMode))
+            if (DataCollectionMode.HasValue)
             {
                 writer.WritePropertyName("dataCollectionMode"u8);
                 writer.WriteStringValue(DataCollectionMode.Value.ToString());
             }
-            if (Optional.IsDefined(DataId))
+            if (DataId != null)
             {
                 if (DataId != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataId");
                 }
             }
-            if (Optional.IsDefined(SamplingRate))
+            if (SamplingRate.HasValue)
             {
                 writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Transport))
+            if (Transport != null)
             {
                 writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport);

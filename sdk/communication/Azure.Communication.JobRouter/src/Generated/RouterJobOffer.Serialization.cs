@@ -36,12 +36,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(JobId);
             writer.WritePropertyName("capacityCost"u8);
             writer.WriteNumberValue(CapacityCost);
-            if (Optional.IsDefined(OfferedAt))
+            if (OfferedAt.HasValue)
             {
                 writer.WritePropertyName("offeredAt"u8);
                 writer.WriteStringValue(OfferedAt.Value, "O");
             }
-            if (Optional.IsDefined(ExpiresAt))
+            if (ExpiresAt.HasValue)
             {
                 writer.WritePropertyName("expiresAt"u8);
                 writer.WriteStringValue(ExpiresAt.Value, "O");

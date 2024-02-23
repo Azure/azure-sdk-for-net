@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Token))
+            if (Token != null)
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (Optional.IsDefined(ExpiryTimeInUtcTicks))
+            if (ExpiryTimeInUtcTicks.HasValue)
             {
                 writer.WritePropertyName("expiryTimeInUtcTicks"u8);
                 writer.WriteNumberValue(ExpiryTimeInUtcTicks.Value);
             }
-            if (Optional.IsDefined(SecurityPin))
+            if (SecurityPin != null)
             {
                 writer.WritePropertyName("securityPIN"u8);
                 writer.WriteStringValue(SecurityPin);

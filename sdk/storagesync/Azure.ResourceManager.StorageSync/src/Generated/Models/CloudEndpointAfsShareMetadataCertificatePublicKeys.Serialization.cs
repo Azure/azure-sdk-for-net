@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FirstKey))
+            if (options.Format != "W" && FirstKey != null)
             {
                 writer.WritePropertyName("firstKey"u8);
                 writer.WriteStringValue(FirstKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondKey))
+            if (options.Format != "W" && SecondKey != null)
             {
                 writer.WritePropertyName("secondKey"u8);
                 writer.WriteStringValue(SecondKey);

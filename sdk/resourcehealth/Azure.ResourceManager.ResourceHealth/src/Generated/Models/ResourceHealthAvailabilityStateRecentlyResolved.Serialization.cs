@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UnavailableOccuredOn))
+            if (UnavailableOccuredOn.HasValue)
             {
                 writer.WritePropertyName("unavailableOccuredTime"u8);
                 writer.WriteStringValue(UnavailableOccuredOn.Value, "O");
             }
-            if (Optional.IsDefined(ResolvedOn))
+            if (ResolvedOn.HasValue)
             {
                 writer.WritePropertyName("resolvedTime"u8);
                 writer.WriteStringValue(ResolvedOn.Value, "O");
             }
-            if (Optional.IsDefined(UnavailableSummary))
+            if (UnavailableSummary != null)
             {
                 writer.WritePropertyName("unavailableSummary"u8);
                 writer.WriteStringValue(UnavailableSummary);

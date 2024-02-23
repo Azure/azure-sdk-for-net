@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(UniqueKeys))
+            if (!(UniqueKeys is ChangeTrackingList<CosmosDBUniqueKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("uniqueKeys"u8);
                 writer.WriteStartArray();

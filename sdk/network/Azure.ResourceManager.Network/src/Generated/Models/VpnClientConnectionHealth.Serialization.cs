@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TotalIngressBytesTransferred))
+            if (options.Format != "W" && TotalIngressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("totalIngressBytesTransferred"u8);
                 writer.WriteNumberValue(TotalIngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalEgressBytesTransferred))
+            if (options.Format != "W" && TotalEgressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("totalEgressBytesTransferred"u8);
                 writer.WriteNumberValue(TotalEgressBytesTransferred.Value);
             }
-            if (Optional.IsDefined(VpnClientConnectionsCount))
+            if (VpnClientConnectionsCount.HasValue)
             {
                 writer.WritePropertyName("vpnClientConnectionsCount"u8);
                 writer.WriteNumberValue(VpnClientConnectionsCount.Value);
             }
-            if (Optional.IsCollectionDefined(AllocatedIPAddresses))
+            if (!(AllocatedIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allocatedIpAddresses"u8);
                 writer.WriteStartArray();

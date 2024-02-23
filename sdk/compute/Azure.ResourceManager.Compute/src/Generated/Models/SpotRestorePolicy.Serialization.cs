@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(RestoreTimeout))
+            if (RestoreTimeout != null)
             {
                 writer.WritePropertyName("restoreTimeout"u8);
                 writer.WriteStringValue(RestoreTimeout);

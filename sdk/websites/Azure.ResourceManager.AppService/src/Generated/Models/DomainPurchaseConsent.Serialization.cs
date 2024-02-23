@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AgreementKeys))
+            if (!(AgreementKeys is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("agreementKeys"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AgreedBy))
+            if (AgreedBy != null)
             {
                 writer.WritePropertyName("agreedBy"u8);
                 writer.WriteStringValue(AgreedBy);
             }
-            if (Optional.IsDefined(AgreedOn))
+            if (AgreedOn.HasValue)
             {
                 writer.WritePropertyName("agreedAt"u8);
                 writer.WriteStringValue(AgreedOn.Value, "O");

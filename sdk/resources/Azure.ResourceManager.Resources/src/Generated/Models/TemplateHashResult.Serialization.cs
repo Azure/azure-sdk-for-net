@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinifiedTemplate))
+            if (MinifiedTemplate != null)
             {
                 writer.WritePropertyName("minifiedTemplate"u8);
                 writer.WriteStringValue(MinifiedTemplate);
             }
-            if (Optional.IsDefined(TemplateHash))
+            if (TemplateHash != null)
             {
                 writer.WritePropertyName("templateHash"u8);
                 writer.WriteStringValue(TemplateHash);

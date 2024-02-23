@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteNumberValue(Number);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (Optional.IsDefined(AllowedSourceAddressPrefix))
+            if (AllowedSourceAddressPrefix != null)
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
+            if (!(AllowedSourceAddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();

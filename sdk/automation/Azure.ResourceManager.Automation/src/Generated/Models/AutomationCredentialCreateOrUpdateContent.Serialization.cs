@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(UserName);
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

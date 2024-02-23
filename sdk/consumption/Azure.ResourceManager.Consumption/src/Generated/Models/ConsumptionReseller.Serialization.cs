@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResellerId))
+            if (options.Format != "W" && ResellerId != null)
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResellerDescription))
+            if (options.Format != "W" && ResellerDescription != null)
             {
                 writer.WritePropertyName("resellerDescription"u8);
                 writer.WriteStringValue(ResellerDescription);

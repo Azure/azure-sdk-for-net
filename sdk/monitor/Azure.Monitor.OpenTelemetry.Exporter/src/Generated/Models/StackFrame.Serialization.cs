@@ -19,17 +19,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteNumberValue(Level);
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method);
-            if (Optional.IsDefined(Assembly))
+            if (Assembly != null)
             {
                 writer.WritePropertyName("assembly"u8);
                 writer.WriteStringValue(Assembly);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(Line))
+            if (Line.HasValue)
             {
                 writer.WritePropertyName("line"u8);
                 writer.WriteNumberValue(Line.Value);

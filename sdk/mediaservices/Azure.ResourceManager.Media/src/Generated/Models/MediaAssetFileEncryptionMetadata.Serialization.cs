@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InitializationVector))
+            if (InitializationVector != null)
             {
                 writer.WritePropertyName("initializationVector"u8);
                 writer.WriteStringValue(InitializationVector);
             }
-            if (Optional.IsDefined(AssetFileName))
+            if (AssetFileName != null)
             {
                 writer.WritePropertyName("assetFileName"u8);
                 writer.WriteStringValue(AssetFileName);

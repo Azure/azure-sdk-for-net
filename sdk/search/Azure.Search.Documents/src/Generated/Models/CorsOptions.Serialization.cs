@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MaxAgeInSeconds))
+            if (MaxAgeInSeconds.HasValue)
             {
                 if (MaxAgeInSeconds != null)
                 {

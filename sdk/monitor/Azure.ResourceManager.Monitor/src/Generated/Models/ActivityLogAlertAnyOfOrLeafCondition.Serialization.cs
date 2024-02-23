@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AnyOf))
+            if (!(AnyOf is ChangeTrackingList<AlertRuleLeafCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("anyOf"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Field))
+            if (Field != null)
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Optional.IsDefined(EqualsValue))
+            if (EqualsValue != null)
             {
                 writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
-            if (Optional.IsCollectionDefined(ContainsAny))
+            if (!(ContainsAny is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Akamai))
+            if (Akamai != null)
             {
                 writer.WritePropertyName("akamai"u8);
                 writer.WriteObjectValue(Akamai);
             }
-            if (Optional.IsDefined(IPs))
+            if (IPs != null)
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteObjectValue(IPs);

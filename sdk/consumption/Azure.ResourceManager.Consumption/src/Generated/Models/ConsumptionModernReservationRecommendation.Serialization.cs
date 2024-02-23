@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Sku))
+            if (options.Format != "W" && Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
@@ -71,84 +71,84 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LocationPropertiesLocation))
+            if (options.Format != "W" && LocationPropertiesLocation != null)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(LocationPropertiesLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(LookBackPeriod))
+            if (options.Format != "W" && LookBackPeriod.HasValue)
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteNumberValue(LookBackPeriod.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceFlexibilityRatio))
+            if (options.Format != "W" && InstanceFlexibilityRatio.HasValue)
             {
                 writer.WritePropertyName("instanceFlexibilityRatio"u8);
                 writer.WriteNumberValue(InstanceFlexibilityRatio.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceFlexibilityGroup))
+            if (options.Format != "W" && InstanceFlexibilityGroup != null)
             {
                 writer.WritePropertyName("instanceFlexibilityGroup"u8);
                 writer.WriteStringValue(InstanceFlexibilityGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(NormalizedSize))
+            if (options.Format != "W" && NormalizedSize != null)
             {
                 writer.WritePropertyName("normalizedSize"u8);
                 writer.WriteStringValue(NormalizedSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedQuantityNormalized))
+            if (options.Format != "W" && RecommendedQuantityNormalized.HasValue)
             {
                 writer.WritePropertyName("recommendedQuantityNormalized"u8);
                 writer.WriteNumberValue(RecommendedQuantityNormalized.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId.HasValue)
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Term))
+            if (options.Format != "W" && Term != null)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term);
             }
-            if (options.Format != "W" && Optional.IsDefined(CostWithNoReservedInstances))
+            if (options.Format != "W" && CostWithNoReservedInstances != null)
             {
                 writer.WritePropertyName("costWithNoReservedInstances"u8);
                 writer.WriteObjectValue(CostWithNoReservedInstances);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedQuantity))
+            if (options.Format != "W" && RecommendedQuantity.HasValue)
             {
                 writer.WritePropertyName("recommendedQuantity"u8);
                 writer.WriteNumberValue(RecommendedQuantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalCostWithReservedInstances))
+            if (options.Format != "W" && TotalCostWithReservedInstances != null)
             {
                 writer.WritePropertyName("totalCostWithReservedInstances"u8);
                 writer.WriteObjectValue(TotalCostWithReservedInstances);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetSavings))
+            if (options.Format != "W" && NetSavings != null)
             {
                 writer.WritePropertyName("netSavings"u8);
                 writer.WriteObjectValue(NetSavings);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstUsageOn))
+            if (options.Format != "W" && FirstUsageOn.HasValue)
             {
                 writer.WritePropertyName("firstUsageDate"u8);
                 writer.WriteStringValue(FirstUsageOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Scope))
+            if (options.Format != "W" && Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SkuProperties))
+            if (options.Format != "W" && !(SkuProperties is ChangeTrackingList<ConsumptionSkuProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("skuProperties"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(SkuName))
+            if (options.Format != "W" && SkuName != null)
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);

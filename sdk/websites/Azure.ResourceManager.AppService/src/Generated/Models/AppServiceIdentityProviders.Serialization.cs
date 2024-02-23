@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureActiveDirectory))
+            if (AzureActiveDirectory != null)
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
-            if (Optional.IsDefined(Facebook))
+            if (Facebook != null)
             {
                 writer.WritePropertyName("facebook"u8);
                 writer.WriteObjectValue(Facebook);
             }
-            if (Optional.IsDefined(GitHub))
+            if (GitHub != null)
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (Optional.IsDefined(Google))
+            if (Google != null)
             {
                 writer.WritePropertyName("google"u8);
                 writer.WriteObjectValue(Google);
             }
-            if (Optional.IsDefined(LegacyMicrosoftAccount))
+            if (LegacyMicrosoftAccount != null)
             {
                 writer.WritePropertyName("legacyMicrosoftAccount"u8);
                 writer.WriteObjectValue(LegacyMicrosoftAccount);
             }
-            if (Optional.IsDefined(Twitter))
+            if (Twitter != null)
             {
                 writer.WritePropertyName("twitter"u8);
                 writer.WriteObjectValue(Twitter);
             }
-            if (Optional.IsDefined(Apple))
+            if (Apple != null)
             {
                 writer.WritePropertyName("apple"u8);
                 writer.WriteObjectValue(Apple);
             }
-            if (Optional.IsDefined(AzureStaticWebApps))
+            if (AzureStaticWebApps != null)
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
                 writer.WriteObjectValue(AzureStaticWebApps);
             }
-            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
+            if (!(CustomOpenIdConnectProviders is ChangeTrackingDictionary<string, CustomOpenIdConnectProvider> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customOpenIdConnectProviders"u8);
                 writer.WriteStartObject();

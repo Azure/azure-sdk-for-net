@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ActiveRevisionsMode))
+            if (ActiveRevisionsMode.HasValue)
             {
                 writer.WritePropertyName("activeRevisionsMode"u8);
                 writer.WriteStringValue(ActiveRevisionsMode.Value.ToString());
             }
-            if (Optional.IsDefined(Ingress))
+            if (Ingress != null)
             {
                 writer.WritePropertyName("ingress"u8);
                 writer.WriteObjectValue(Ingress);
             }
-            if (Optional.IsCollectionDefined(Registries))
+            if (!(Registries is ChangeTrackingList<ContainerAppRegistryCredentials> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("registries"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Dapr))
+            if (Dapr != null)
             {
                 writer.WritePropertyName("dapr"u8);
                 writer.WriteObjectValue(Dapr);
             }
-            if (Optional.IsDefined(MaxInactiveRevisions))
+            if (MaxInactiveRevisions.HasValue)
             {
                 writer.WritePropertyName("maxInactiveRevisions"u8);
                 writer.WriteNumberValue(MaxInactiveRevisions.Value);
             }
-            if (Optional.IsDefined(Service))
+            if (Service != null)
             {
                 writer.WritePropertyName("service"u8);
                 writer.WriteObjectValue(Service);

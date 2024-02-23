@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PendingUploadId))
+            if (PendingUploadId != null)
             {
                 if (PendingUploadId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("pendingUploadId");
                 }
             }
-            if (Optional.IsDefined(PendingUploadType))
+            if (PendingUploadType.HasValue)
             {
                 writer.WritePropertyName("pendingUploadType"u8);
                 writer.WriteStringValue(PendingUploadType.Value.ToString());

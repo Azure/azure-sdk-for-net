@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScaleType))
+            if (ScaleType.HasValue)
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActiveCapacity))
+            if (options.Format != "W" && ActiveCapacity.HasValue)
             {
                 writer.WritePropertyName("activeCapacity"u8);
                 writer.WriteNumberValue(ActiveCapacity.Value);

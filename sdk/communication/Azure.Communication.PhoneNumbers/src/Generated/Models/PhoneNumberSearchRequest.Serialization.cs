@@ -21,12 +21,12 @@ namespace Azure.Communication.PhoneNumbers
             writer.WriteStringValue(AssignmentType.ToString());
             writer.WritePropertyName("capabilities"u8);
             writer.WriteObjectValue(Capabilities);
-            if (Optional.IsDefined(AreaCode))
+            if (AreaCode != null)
             {
                 writer.WritePropertyName("areaCode"u8);
                 writer.WriteStringValue(AreaCode);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);

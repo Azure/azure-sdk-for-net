@@ -27,17 +27,17 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FunctionKey))
+            if (FunctionKey != null)
             {
                 writer.WritePropertyName("functionKey"u8);
                 writer.WriteStringValue(FunctionKey);
             }
-            if (Optional.IsDefined(AppKey))
+            if (AppKey != null)
             {
                 writer.WritePropertyName("appKey"u8);
                 writer.WriteStringValue(AppKey);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Neighbor))
+            if (Neighbor != null)
             {
                 writer.WritePropertyName("neighbor"u8);
                 writer.WriteStringValue(Neighbor);
             }
-            if (Optional.IsDefined(Asn))
+            if (Asn.HasValue)
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (Optional.IsDefined(UpDown))
+            if (UpDown != null)
             {
                 writer.WritePropertyName("upDown"u8);
                 writer.WriteStringValue(UpDown);
             }
-            if (Optional.IsDefined(StateOrPrefixesReceived))
+            if (StateOrPrefixesReceived != null)
             {
                 writer.WritePropertyName("stateOrPrefixesReceived"u8);
                 writer.WriteStringValue(StateOrPrefixesReceived);

@@ -15,52 +15,52 @@ namespace Azure.AI.Language.QuestionAnswering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QnaId))
+            if (QnaId.HasValue)
             {
                 writer.WritePropertyName("qnaId"u8);
                 writer.WriteNumberValue(QnaId.Value);
             }
-            if (Optional.IsDefined(Question))
+            if (Question != null)
             {
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Optional.IsDefined(Size))
+            if (Size.HasValue)
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(ConfidenceThreshold))
+            if (ConfidenceThreshold.HasValue)
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (Optional.IsDefined(AnswerContext))
+            if (AnswerContext != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(AnswerContext);
             }
-            if (Optional.IsDefined(RankerKind))
+            if (RankerKind.HasValue)
             {
                 writer.WritePropertyName("rankerType"u8);
                 writer.WriteStringValue(RankerKind.Value.ToString());
             }
-            if (Optional.IsDefined(Filters))
+            if (Filters != null)
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
             }
-            if (Optional.IsDefined(ShortAnswerOptions))
+            if (ShortAnswerOptions != null)
             {
                 writer.WritePropertyName("answerSpanRequest"u8);
                 writer.WriteObjectValue(ShortAnswerOptions);
             }
-            if (Optional.IsDefined(IncludeUnstructuredSources))
+            if (IncludeUnstructuredSources.HasValue)
             {
                 writer.WritePropertyName("includeUnstructuredSources"u8);
                 writer.WriteBooleanValue(IncludeUnstructuredSources.Value);

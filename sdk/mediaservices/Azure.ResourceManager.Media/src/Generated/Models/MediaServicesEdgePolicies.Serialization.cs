@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageDataCollectionPolicy))
+            if (UsageDataCollectionPolicy != null)
             {
                 writer.WritePropertyName("usageDataCollectionPolicy"u8);
                 writer.WriteObjectValue(UsageDataCollectionPolicy);

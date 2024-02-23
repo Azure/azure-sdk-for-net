@@ -17,7 +17,7 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(BlobName))
+            if (BlobName != null)
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);

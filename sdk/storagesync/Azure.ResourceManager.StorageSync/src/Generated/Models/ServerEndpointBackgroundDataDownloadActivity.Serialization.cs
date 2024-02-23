@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedTimestamp"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentProgress))
+            if (options.Format != "W" && PercentProgress.HasValue)
             {
                 writer.WritePropertyName("percentProgress"u8);
                 writer.WriteNumberValue(PercentProgress.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DownloadedBytes))
+            if (options.Format != "W" && DownloadedBytes.HasValue)
             {
                 writer.WritePropertyName("downloadedBytes"u8);
                 writer.WriteNumberValue(DownloadedBytes.Value);

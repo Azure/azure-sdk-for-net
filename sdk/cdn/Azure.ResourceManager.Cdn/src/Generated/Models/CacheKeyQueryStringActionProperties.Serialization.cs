@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("queryStringBehavior"u8);
             writer.WriteStringValue(QueryStringBehavior.ToString());
-            if (Optional.IsDefined(QueryParameters))
+            if (QueryParameters != null)
             {
                 if (QueryParameters != null)
                 {

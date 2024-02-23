@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Zone))
+            if (options.Format != "W" && Zone != null)
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHAMode))
+            if (options.Format != "W" && !(SupportedHAMode is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedHAMode"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedGeoBackupRegions))
+            if (options.Format != "W" && !(SupportedGeoBackupRegions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedGeoBackupRegions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFlexibleServerEditions))
+            if (options.Format != "W" && !(SupportedFlexibleServerEditions is ChangeTrackingList<MySqlFlexibleServerEditionCapability> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedFlexibleServerEditions"u8);
                 writer.WriteStartArray();

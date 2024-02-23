@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlConnectivityUpdateSettings))
+            if (SqlConnectivityUpdateSettings != null)
             {
                 writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
                 writer.WriteObjectValue(SqlConnectivityUpdateSettings);
             }
-            if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
+            if (SqlWorkloadTypeUpdateSettings != null)
             {
                 writer.WritePropertyName("sqlWorkloadTypeUpdateSettings"u8);
                 writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings);
             }
-            if (Optional.IsDefined(SqlStorageUpdateSettings))
+            if (SqlStorageUpdateSettings != null)
             {
                 writer.WritePropertyName("sqlStorageUpdateSettings"u8);
                 writer.WriteObjectValue(SqlStorageUpdateSettings);
             }
-            if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
+            if (AdditionalFeaturesServerConfigurations != null)
             {
                 writer.WritePropertyName("additionalFeaturesServerConfigurations"u8);
                 writer.WriteObjectValue(AdditionalFeaturesServerConfigurations);
             }
-            if (Optional.IsDefined(SqlInstanceSettings))
+            if (SqlInstanceSettings != null)
             {
                 writer.WritePropertyName("sqlInstanceSettings"u8);
                 writer.WriteObjectValue(SqlInstanceSettings);

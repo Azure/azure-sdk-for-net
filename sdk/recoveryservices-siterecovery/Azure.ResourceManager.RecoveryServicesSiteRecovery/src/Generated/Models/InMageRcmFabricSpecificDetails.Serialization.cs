@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VMwareSiteId))
+            if (options.Format != "W" && VMwareSiteId != null)
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PhysicalSiteId))
+            if (options.Format != "W" && PhysicalSiteId != null)
             {
                 writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
+            if (options.Format != "W" && ServiceEndpoint != null)
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
+            if (options.Format != "W" && ServiceResourceId != null)
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceContainerId))
+            if (options.Format != "W" && ServiceContainerId != null)
             {
                 writer.WritePropertyName("serviceContainerId"u8);
                 writer.WriteStringValue(ServiceContainerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataPlaneUri))
+            if (options.Format != "W" && DataPlaneUri != null)
             {
                 writer.WritePropertyName("dataPlaneUri"u8);
                 writer.WriteStringValue(DataPlaneUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlPlaneUri))
+            if (options.Format != "W" && ControlPlaneUri != null)
             {
                 writer.WritePropertyName("controlPlaneUri"u8);
                 writer.WriteStringValue(ControlPlaneUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SourceAgentIdentityDetails))
+            if (SourceAgentIdentityDetails != null)
             {
                 writer.WritePropertyName("sourceAgentIdentityDetails"u8);
                 writer.WriteObjectValue(SourceAgentIdentityDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
+            if (options.Format != "W" && !(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServerDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RcmProxies))
+            if (options.Format != "W" && !(RcmProxies is ChangeTrackingList<RcmProxyDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("rcmProxies"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PushInstallers))
+            if (options.Format != "W" && !(PushInstallers is ChangeTrackingList<PushInstallerDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("pushInstallers"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReplicationAgents))
+            if (options.Format != "W" && !(ReplicationAgents is ChangeTrackingList<ReplicationAgentDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("replicationAgents"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReprotectAgents))
+            if (options.Format != "W" && !(ReprotectAgents is ChangeTrackingList<ReprotectAgentDetails> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("reprotectAgents"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MarsAgents))
+            if (options.Format != "W" && !(MarsAgents is ChangeTrackingList<MarsAgentDetails> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("marsAgents"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Dras))
+            if (options.Format != "W" && !(Dras is ChangeTrackingList<SiteRecoveryDraDetails> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("dras"u8);
                 writer.WriteStartArray();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AgentDetails))
+            if (options.Format != "W" && !(AgentDetails is ChangeTrackingList<SiteRecoveryAgentDetails> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("agentDetails"u8);
                 writer.WriteStartArray();

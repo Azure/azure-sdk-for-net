@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReadTimeoutInSeconds))
+            if (ReadTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("readTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ReadTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(SendTimeoutInSeconds))
+            if (SendTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("sendTimeoutInSeconds"u8);
                 writer.WriteNumberValue(SendTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(SessionAffinity))
+            if (SessionAffinity.HasValue)
             {
                 writer.WritePropertyName("sessionAffinity"u8);
                 writer.WriteStringValue(SessionAffinity.Value.ToString());
             }
-            if (Optional.IsDefined(SessionCookieMaxAge))
+            if (SessionCookieMaxAge.HasValue)
             {
                 writer.WritePropertyName("sessionCookieMaxAge"u8);
                 writer.WriteNumberValue(SessionCookieMaxAge.Value);
             }
-            if (Optional.IsDefined(BackendProtocol))
+            if (BackendProtocol.HasValue)
             {
                 writer.WritePropertyName("backendProtocol"u8);
                 writer.WriteStringValue(BackendProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(ClientAuth))
+            if (ClientAuth != null)
             {
                 writer.WritePropertyName("clientAuth"u8);
                 writer.WriteObjectValue(ClientAuth);

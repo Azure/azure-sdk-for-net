@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConfirmationNumber))
+            if (options.Format != "W" && ConfirmationNumber != null)
             {
                 writer.WritePropertyName("confirmationNumber"u8);
                 writer.WriteStringValue(ConfirmationNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReadyBy))
+            if (options.Format != "W" && ReadyBy.HasValue)
             {
                 writer.WritePropertyName("readyByTime"u8);
                 writer.WriteStringValue(ReadyBy.Value, "O");

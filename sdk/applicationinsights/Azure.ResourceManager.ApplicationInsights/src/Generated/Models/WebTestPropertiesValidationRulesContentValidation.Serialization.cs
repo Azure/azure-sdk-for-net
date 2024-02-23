@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentMatch))
+            if (ContentMatch != null)
             {
                 writer.WritePropertyName("ContentMatch"u8);
                 writer.WriteStringValue(ContentMatch);
             }
-            if (Optional.IsDefined(IgnoreCase))
+            if (IgnoreCase.HasValue)
             {
                 writer.WritePropertyName("IgnoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Optional.IsDefined(PassIfTextFound))
+            if (PassIfTextFound.HasValue)
             {
                 writer.WritePropertyName("PassIfTextFound"u8);
                 writer.WriteBooleanValue(PassIfTextFound.Value);

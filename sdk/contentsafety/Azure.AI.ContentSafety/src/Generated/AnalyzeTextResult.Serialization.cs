@@ -27,7 +27,7 @@ namespace Azure.AI.ContentSafety
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BlocklistsMatch))
+            if (!(BlocklistsMatch is ChangeTrackingList<TextBlocklistMatch> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("blocklistsMatch"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,119 +48,119 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TransactOn))
+            if (options.Format != "W" && TransactOn.HasValue)
             {
                 writer.WritePropertyName("transactionDate"u8);
                 writer.WriteStringValue(TransactOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(NewCredit))
+            if (options.Format != "W" && NewCredit != null)
             {
                 writer.WritePropertyName("newCredit"u8);
                 writer.WriteObjectValue(NewCredit);
             }
-            if (options.Format != "W" && Optional.IsDefined(Adjustments))
+            if (options.Format != "W" && Adjustments != null)
             {
                 writer.WritePropertyName("adjustments"u8);
                 writer.WriteObjectValue(Adjustments);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreditExpired))
+            if (options.Format != "W" && CreditExpired != null)
             {
                 writer.WritePropertyName("creditExpired"u8);
                 writer.WriteObjectValue(CreditExpired);
             }
-            if (options.Format != "W" && Optional.IsDefined(Charges))
+            if (options.Format != "W" && Charges != null)
             {
                 writer.WritePropertyName("charges"u8);
                 writer.WriteObjectValue(Charges);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
+            if (options.Format != "W" && ClosedBalance != null)
             {
                 writer.WritePropertyName("closedBalance"u8);
                 writer.WriteObjectValue(ClosedBalance);
             }
-            if (Optional.IsDefined(EventType))
+            if (EventType.HasValue)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InvoiceNumber))
+            if (options.Format != "W" && InvoiceNumber != null)
             {
                 writer.WritePropertyName("invoiceNumber"u8);
                 writer.WriteStringValue(InvoiceNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            if (options.Format != "W" && BillingProfileId != null)
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingProfileDisplayName))
+            if (options.Format != "W" && BillingProfileDisplayName != null)
             {
                 writer.WritePropertyName("billingProfileDisplayName"u8);
                 writer.WriteStringValue(BillingProfileDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LotId))
+            if (options.Format != "W" && LotId != null)
             {
                 writer.WritePropertyName("lotId"u8);
                 writer.WriteStringValue(LotId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LotSource))
+            if (options.Format != "W" && LotSource != null)
             {
                 writer.WritePropertyName("lotSource"u8);
                 writer.WriteStringValue(LotSource);
             }
-            if (options.Format != "W" && Optional.IsDefined(CanceledCredit))
+            if (options.Format != "W" && CanceledCredit != null)
             {
                 writer.WritePropertyName("canceledCredit"u8);
                 writer.WriteObjectValue(CanceledCredit);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
+            if (options.Format != "W" && CreditCurrency != null)
             {
                 writer.WritePropertyName("creditCurrency"u8);
                 writer.WriteStringValue(CreditCurrency);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
+            if (options.Format != "W" && BillingCurrency != null)
             {
                 writer.WritePropertyName("billingCurrency"u8);
                 writer.WriteStringValue(BillingCurrency);
             }
-            if (options.Format != "W" && Optional.IsDefined(Reseller))
+            if (options.Format != "W" && Reseller != null)
             {
                 writer.WritePropertyName("reseller"u8);
                 writer.WriteObjectValue(Reseller);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreditExpiredInBillingCurrency))
+            if (options.Format != "W" && CreditExpiredInBillingCurrency != null)
             {
                 writer.WritePropertyName("creditExpiredInBillingCurrency"u8);
                 writer.WriteObjectValue(CreditExpiredInBillingCurrency);
             }
-            if (options.Format != "W" && Optional.IsDefined(NewCreditInBillingCurrency))
+            if (options.Format != "W" && NewCreditInBillingCurrency != null)
             {
                 writer.WritePropertyName("newCreditInBillingCurrency"u8);
                 writer.WriteObjectValue(NewCreditInBillingCurrency);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdjustmentsInBillingCurrency))
+            if (options.Format != "W" && AdjustmentsInBillingCurrency != null)
             {
                 writer.WritePropertyName("adjustmentsInBillingCurrency"u8);
                 writer.WriteObjectValue(AdjustmentsInBillingCurrency);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargesInBillingCurrency))
+            if (options.Format != "W" && ChargesInBillingCurrency != null)
             {
                 writer.WritePropertyName("chargesInBillingCurrency"u8);
                 writer.WriteObjectValue(ChargesInBillingCurrency);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
+            if (options.Format != "W" && ClosedBalanceInBillingCurrency != null)
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
                 writer.WriteObjectValue(ClosedBalanceInBillingCurrency);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
             writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
-            if (Optional.IsDefined(AnalyticsWorkspaceId))
+            if (AnalyticsWorkspaceId != null)
             {
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
                 writer.WriteStringValue(AnalyticsWorkspaceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableUpgradeVersions))
+            if (options.Format != "W" && !(AvailableUpgradeVersions is ChangeTrackingList<ClusterAvailableUpgradeVersion> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availableUpgradeVersions"u8);
                 writer.WriteStartArray();
@@ -82,37 +82,37 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterCapacity))
+            if (options.Format != "W" && ClusterCapacity != null)
             {
                 writer.WritePropertyName("clusterCapacity"u8);
                 writer.WriteObjectValue(ClusterCapacity);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterConnectionStatus))
+            if (options.Format != "W" && ClusterConnectionStatus.HasValue)
             {
                 writer.WritePropertyName("clusterConnectionStatus"u8);
                 writer.WriteStringValue(ClusterConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterExtendedLocation))
+            if (options.Format != "W" && ClusterExtendedLocation != null)
             {
                 writer.WritePropertyName("clusterExtendedLocation"u8);
                 writer.WriteObjectValue(ClusterExtendedLocation);
             }
-            if (Optional.IsDefined(ClusterLocation))
+            if (ClusterLocation != null)
             {
                 writer.WritePropertyName("clusterLocation"u8);
                 writer.WriteStringValue(ClusterLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterManagerConnectionStatus))
+            if (options.Format != "W" && ClusterManagerConnectionStatus.HasValue)
             {
                 writer.WritePropertyName("clusterManagerConnectionStatus"u8);
                 writer.WriteStringValue(ClusterManagerConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterManagerId))
+            if (options.Format != "W" && ClusterManagerId != null)
             {
                 writer.WritePropertyName("clusterManagerId"u8);
                 writer.WriteStringValue(ClusterManagerId);
             }
-            if (Optional.IsDefined(ClusterServicePrincipal))
+            if (ClusterServicePrincipal != null)
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
                 writer.WriteObjectValue(ClusterServicePrincipal);
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(ClusterType.ToString());
             writer.WritePropertyName("clusterVersion"u8);
             writer.WriteStringValue(ClusterVersion);
-            if (Optional.IsDefined(ComputeDeploymentThreshold))
+            if (ComputeDeploymentThreshold != null)
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
                 writer.WriteObjectValue(ComputeDeploymentThreshold);
             }
-            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
+            if (!(ComputeRackDefinitions is ChangeTrackingList<NetworkCloudRackDefinition> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("computeRackDefinitions"u8);
                 writer.WriteStartArray();
@@ -136,44 +136,44 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(HybridAksExtendedLocation))
+            if (options.Format != "W" && HybridAksExtendedLocation != null)
             {
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
                 writer.WriteObjectValue(HybridAksExtendedLocation);
             }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (ManagedResourceGroupConfiguration != null)
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManualActionCount))
+            if (options.Format != "W" && ManualActionCount.HasValue)
             {
                 writer.WritePropertyName("manualActionCount"u8);
                 writer.WriteNumberValue(ManualActionCount.Value);
             }
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
+            if (options.Format != "W" && SupportExpireOn.HasValue)
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadResourceIds))
+            if (options.Format != "W" && !(WorkloadResourceIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("workloadResourceIds"u8);
                 writer.WriteStartArray();

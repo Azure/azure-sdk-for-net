@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(FabricName))
+            if (FabricName != null)
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (Optional.IsDefined(RemoteContainerName))
+            if (RemoteContainerName != null)
             {
                 writer.WritePropertyName("remoteContainerName"u8);
                 writer.WriteStringValue(RemoteContainerName);

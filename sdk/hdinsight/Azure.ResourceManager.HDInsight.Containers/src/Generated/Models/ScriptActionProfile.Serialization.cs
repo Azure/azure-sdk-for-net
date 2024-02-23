@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(UriString);
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(TimeoutInMinutes))
+            if (TimeoutInMinutes.HasValue)
             {
                 writer.WritePropertyName("timeoutInMinutes"u8);
                 writer.WriteNumberValue(TimeoutInMinutes.Value);
             }
-            if (Optional.IsDefined(ShouldPersist))
+            if (ShouldPersist.HasValue)
             {
                 writer.WritePropertyName("shouldPersist"u8);
                 writer.WriteBooleanValue(ShouldPersist.Value);

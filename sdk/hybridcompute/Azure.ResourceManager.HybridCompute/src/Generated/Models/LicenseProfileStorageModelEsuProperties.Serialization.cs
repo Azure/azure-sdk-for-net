@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AssignedLicenseImmutableId))
+            if (options.Format != "W" && AssignedLicenseImmutableId.HasValue)
             {
                 writer.WritePropertyName("assignedLicenseImmutableId"u8);
                 writer.WriteStringValue(AssignedLicenseImmutableId.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EsuKeys))
+            if (options.Format != "W" && !(EsuKeys is ChangeTrackingList<EsuKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("esuKeys"u8);
                 writer.WriteStartArray();

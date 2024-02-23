@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RuleGroupName))
+            if (options.Format != "W" && RuleGroupName != null)
             {
                 writer.WritePropertyName("ruleGroupName"u8);
                 writer.WriteStringValue(RuleGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Rules))
+            if (options.Format != "W" && !(Rules is ChangeTrackingList<ManagedRuleDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

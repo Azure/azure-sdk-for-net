@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KekState))
+            if (KekState != null)
             {
                 writer.WritePropertyName("kekState"u8);
                 writer.WriteStringValue(KekState);
             }
-            if (Optional.IsDefined(KekCertThumbprint))
+            if (KekCertThumbprint != null)
             {
                 writer.WritePropertyName("kekCertThumbprint"u8);
                 writer.WriteStringValue(KekCertThumbprint);
             }
-            if (Optional.IsDefined(KekCertExpireOn))
+            if (KekCertExpireOn.HasValue)
             {
                 writer.WritePropertyName("kekCertExpiryDate"u8);
                 writer.WriteStringValue(KekCertExpireOn.Value, "O");

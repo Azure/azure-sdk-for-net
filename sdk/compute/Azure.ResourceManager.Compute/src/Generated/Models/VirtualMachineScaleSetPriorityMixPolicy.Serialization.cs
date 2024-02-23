@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseRegularPriorityCount))
+            if (BaseRegularPriorityCount.HasValue)
             {
                 writer.WritePropertyName("baseRegularPriorityCount"u8);
                 writer.WriteNumberValue(BaseRegularPriorityCount.Value);
             }
-            if (Optional.IsDefined(RegularPriorityPercentageAboveBase))
+            if (RegularPriorityPercentageAboveBase.HasValue)
             {
                 writer.WritePropertyName("regularPriorityPercentageAboveBase"u8);
                 writer.WriteNumberValue(RegularPriorityPercentageAboveBase.Value);

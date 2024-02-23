@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VCpus))
+            if (VCpus != null)
             {
                 writer.WritePropertyName("vCPUs"u8);
                 writer.WriteObjectValue(VCpus);
             }
-            if (Optional.IsDefined(Memory))
+            if (Memory != null)
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteObjectValue(Memory);

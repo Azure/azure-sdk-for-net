@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(MaxBackupRetentionDays))
+            if (MaxBackupRetentionDays.HasValue)
             {
                 writer.WritePropertyName("maxBackupRetentionDays"u8);
                 writer.WriteNumberValue(MaxBackupRetentionDays.Value);
             }
-            if (Optional.IsDefined(MinBackupRetentionDays))
+            if (MinBackupRetentionDays.HasValue)
             {
                 writer.WritePropertyName("minBackupRetentionDays"u8);
                 writer.WriteNumberValue(MinBackupRetentionDays.Value);
             }
-            if (Optional.IsDefined(MaxStorageInMB))
+            if (MaxStorageInMB.HasValue)
             {
                 writer.WritePropertyName("maxStorageMB"u8);
                 writer.WriteNumberValue(MaxStorageInMB.Value);
             }
-            if (Optional.IsDefined(MinLargeStorageInMB))
+            if (MinLargeStorageInMB.HasValue)
             {
                 writer.WritePropertyName("minLargeStorageMB"u8);
                 writer.WriteNumberValue(MinLargeStorageInMB.Value);
             }
-            if (Optional.IsDefined(MaxLargeStorageInMB))
+            if (MaxLargeStorageInMB.HasValue)
             {
                 writer.WritePropertyName("maxLargeStorageMB"u8);
                 writer.WriteNumberValue(MaxLargeStorageInMB.Value);
             }
-            if (Optional.IsDefined(MinStorageInMB))
+            if (MinStorageInMB.HasValue)
             {
                 writer.WritePropertyName("minStorageMB"u8);
                 writer.WriteNumberValue(MinStorageInMB.Value);
             }
-            if (Optional.IsCollectionDefined(ServiceLevelObjectives))
+            if (!(ServiceLevelObjectives is ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceLevelObjectives"u8);
                 writer.WriteStartArray();

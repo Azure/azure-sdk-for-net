@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CompletionOperationType))
+            if (CompletionOperationType.HasValue)
             {
                 writer.WritePropertyName("completionOperationType"u8);
                 writer.WriteStringValue(CompletionOperationType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DestinationFolder))
+            if (DestinationFolder != null)
             {
                 writer.WritePropertyName("destinationFolder"u8);
                 writer.WriteStringValue(DestinationFolder);

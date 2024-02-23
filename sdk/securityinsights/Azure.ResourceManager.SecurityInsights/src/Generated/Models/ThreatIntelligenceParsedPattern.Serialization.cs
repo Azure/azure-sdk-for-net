@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PatternTypeKey))
+            if (PatternTypeKey != null)
             {
                 writer.WritePropertyName("patternTypeKey"u8);
                 writer.WriteStringValue(PatternTypeKey);
             }
-            if (Optional.IsCollectionDefined(PatternTypeValues))
+            if (!(PatternTypeValues is ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patternTypeValues"u8);
                 writer.WriteStartArray();

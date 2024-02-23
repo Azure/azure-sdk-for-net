@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Findings))
+            if (!(Findings is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("findings"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoutingType))
+            if (RoutingType.HasValue)
             {
                 writer.WritePropertyName("routingType"u8);
                 writer.WriteStringValue(RoutingType.Value.ToString());
             }
-            if (Optional.IsDefined(Regionality))
+            if (Regionality.HasValue)
             {
                 writer.WritePropertyName("regionality"u8);
                 writer.WriteStringValue(Regionality.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<ResourceTypeEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtensionOptions))
+            if (ExtensionOptions != null)
             {
                 writer.WritePropertyName("extensionOptions"u8);
                 writer.WriteObjectValue(ExtensionOptions);
             }
-            if (Optional.IsDefined(MarketplaceType))
+            if (MarketplaceType.HasValue)
             {
                 writer.WritePropertyName("marketplaceType"u8);
                 writer.WriteStringValue(MarketplaceType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(SwaggerSpecifications))
+            if (!(SwaggerSpecifications is ChangeTrackingList<SwaggerSpecification> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("swaggerSpecifications"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedUnauthorizedActions))
+            if (!(AllowedUnauthorizedActions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowedUnauthorizedActions"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AuthorizationActionMappings))
+            if (!(AuthorizationActionMappings is ChangeTrackingList<AuthorizationActionMapping> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("authorizationActionMappings"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedAccessChecks))
+            if (!(LinkedAccessChecks is ChangeTrackingList<LinkedAccessCheck> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("linkedAccessChecks"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultApiVersion))
+            if (DefaultApiVersion != null)
             {
                 writer.WritePropertyName("defaultApiVersion"u8);
                 writer.WriteStringValue(DefaultApiVersion);
             }
-            if (Optional.IsCollectionDefined(LoggingRules))
+            if (!(LoggingRules is ChangeTrackingList<LoggingRule> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("loggingRules"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ThrottlingRules))
+            if (!(ThrottlingRules is ChangeTrackingList<ThrottlingRule> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("throttlingRules"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredFeatures))
+            if (!(RequiredFeatures is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -131,47 +131,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FeaturesRule))
+            if (FeaturesRule != null)
             {
                 writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
-            if (Optional.IsDefined(IsAsyncOperationEnabled))
+            if (IsAsyncOperationEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAsyncOperation"u8);
                 writer.WriteBooleanValue(IsAsyncOperationEnabled.Value);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(IsThirdPartyS2SEnabled))
+            if (IsThirdPartyS2SEnabled.HasValue)
             {
                 writer.WritePropertyName("enableThirdPartyS2S"u8);
                 writer.WriteBooleanValue(IsThirdPartyS2SEnabled.Value);
             }
-            if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
+            if (SubscriptionLifecycleNotificationSpecifications != null)
             {
                 writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
                 writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications);
             }
-            if (Optional.IsDefined(IsPureProxy))
+            if (IsPureProxy.HasValue)
             {
                 writer.WritePropertyName("isPureProxy"u8);
                 writer.WriteBooleanValue(IsPureProxy.Value);
             }
-            if (Optional.IsDefined(IdentityManagement))
+            if (IdentityManagement != null)
             {
                 writer.WritePropertyName("identityManagement"u8);
                 writer.WriteObjectValue(IdentityManagement);
             }
-            if (Optional.IsDefined(CheckNameAvailabilitySpecifications))
+            if (CheckNameAvailabilitySpecifications != null)
             {
                 writer.WritePropertyName("checkNameAvailabilitySpecifications"u8);
                 writer.WriteObjectValue(CheckNameAvailabilitySpecifications);
             }
-            if (Optional.IsCollectionDefined(DisallowedActionVerbs))
+            if (!(DisallowedActionVerbs is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("disallowedActionVerbs"u8);
                 writer.WriteStartArray();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceTreeInfos))
+            if (!(ServiceTreeInfos is ChangeTrackingList<ServiceTreeInfo> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
@@ -191,12 +191,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequestHeaderOptions))
+            if (RequestHeaderOptions != null)
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
                 writer.WriteObjectValue(RequestHeaderOptions);
             }
-            if (Optional.IsCollectionDefined(SubscriptionStateRules))
+            if (!(SubscriptionStateRules is ChangeTrackingList<ProviderSubscriptionStateRule> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("subscriptionStateRules"u8);
                 writer.WriteStartArray();
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TemplateDeploymentOptions))
+            if (TemplateDeploymentOptions != null)
             {
                 writer.WritePropertyName("templateDeploymentOptions"u8);
                 writer.WriteObjectValue(TemplateDeploymentOptions);
             }
-            if (Optional.IsCollectionDefined(ExtendedLocations))
+            if (!(ExtendedLocations is ChangeTrackingList<ProviderHubExtendedLocationOptions> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResourceMovePolicy))
+            if (ResourceMovePolicy != null)
             {
                 writer.WritePropertyName("resourceMovePolicy"u8);
                 writer.WriteObjectValue(ResourceMovePolicy);
             }
-            if (Optional.IsDefined(ResourceDeletionPolicy))
+            if (ResourceDeletionPolicy.HasValue)
             {
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultStorageUriString))
+            if (DefaultStorageUriString != null)
             {
                 writer.WritePropertyName("defaultStorageUrl"u8);
                 writer.WriteStringValue(DefaultStorageUriString);
             }
-            if (Optional.IsDefined(MetastoreSpec))
+            if (MetastoreSpec != null)
             {
                 writer.WritePropertyName("metastoreSpec"u8);
                 writer.WriteObjectValue(MetastoreSpec);
             }
-            if (Optional.IsDefined(UserPluginsSpec))
+            if (UserPluginsSpec != null)
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HeaderFieldName))
+            if (HeaderFieldName != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(HeaderFieldName);
             }
-            if (Optional.IsDefined(HeaderFieldValue))
+            if (HeaderFieldValue != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(HeaderFieldValue);

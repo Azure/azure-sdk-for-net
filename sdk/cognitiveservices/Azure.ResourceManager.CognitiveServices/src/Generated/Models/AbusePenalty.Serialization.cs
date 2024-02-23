@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(RateLimitPercentage))
+            if (RateLimitPercentage.HasValue)
             {
                 writer.WritePropertyName("rateLimitPercentage"u8);
                 writer.WriteNumberValue(RateLimitPercentage.Value);
             }
-            if (Optional.IsDefined(Expiration))
+            if (Expiration.HasValue)
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(Expiration.Value, "O");

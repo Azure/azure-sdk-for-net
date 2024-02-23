@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ActiveDeploymentNames))
+            if (!(ActiveDeploymentNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activeDeploymentNames"u8);
                 writer.WriteStartArray();

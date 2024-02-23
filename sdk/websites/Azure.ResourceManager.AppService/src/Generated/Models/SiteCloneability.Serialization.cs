@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Result))
+            if (Result.HasValue)
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(BlockingFeatures))
+            if (!(BlockingFeatures is ChangeTrackingList<SiteCloneabilityCriterion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("blockingFeatures"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UnsupportedFeatures))
+            if (!(UnsupportedFeatures is ChangeTrackingList<SiteCloneabilityCriterion> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("unsupportedFeatures"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BlockingCharacteristics))
+            if (!(BlockingCharacteristics is ChangeTrackingList<SiteCloneabilityCriterion> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("blockingCharacteristics"u8);
                 writer.WriteStartArray();

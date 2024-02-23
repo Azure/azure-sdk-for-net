@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(KeyVaultId))
+            if (options.Format != "W" && KeyVaultId != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
+            if (options.Format != "W" && KeyVaultUri != null)
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
+            if (options.Format != "W" && StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountSasSecretName))
+            if (options.Format != "W" && StorageAccountSasSecretName != null)
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceBusConnectionStringSecretName))
+            if (options.Format != "W" && ServiceBusConnectionStringSecretName != null)
             {
                 writer.WritePropertyName("serviceBusConnectionStringSecretName"u8);
                 writer.WriteStringValue(ServiceBusConnectionStringSecretName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetLocation))
+            if (options.Format != "W" && TargetLocation != null)
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteStringValue(TargetLocation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RoleSizeToNicCountMap))
+            if (options.Format != "W" && !(RoleSizeToNicCountMap is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roleSizeToNicCountMap"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ExcludedSkus))
+            if (!(ExcludedSkus is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("excludedSkus"u8);
                 writer.WriteStartArray();

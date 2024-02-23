@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AssessedOn))
+            if (options.Format != "W" && AssessedOn.HasValue)
             {
                 writer.WritePropertyName("assessmentTimestampUtcDate"u8);
                 writer.WriteStringValue(AssessedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceCount))
+            if (options.Format != "W" && ResourceCount.HasValue)
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentResult))
+            if (options.Format != "W" && !(AssessmentResult is ChangeTrackingList<ComplianceSegment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assessmentResult"u8);
                 writer.WriteStartArray();

@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("ver"u8);
                 writer.WriteNumberValue(Version.Value);
@@ -24,22 +24,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("time"u8);
             writer.WriteStringValue(Time, "O");
-            if (Optional.IsDefined(SampleRate))
+            if (SampleRate.HasValue)
             {
                 writer.WritePropertyName("sampleRate"u8);
                 writer.WriteNumberValue(SampleRate.Value);
             }
-            if (Optional.IsDefined(Sequence))
+            if (Sequence != null)
             {
                 writer.WritePropertyName("seq"u8);
                 writer.WriteStringValue(Sequence);
             }
-            if (Optional.IsDefined(InstrumentationKey))
+            if (InstrumentationKey != null)
             {
                 writer.WritePropertyName("iKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Data))
+            if (Data != null)
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteObjectValue(Data);

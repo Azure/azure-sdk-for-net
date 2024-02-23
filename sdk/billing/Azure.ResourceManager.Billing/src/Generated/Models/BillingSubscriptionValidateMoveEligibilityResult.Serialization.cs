@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsMoveEligible))
+            if (options.Format != "W" && IsMoveEligible.HasValue)
             {
                 writer.WritePropertyName("isMoveEligible"u8);
                 writer.WriteBooleanValue(IsMoveEligible.Value);
             }
-            if (Optional.IsDefined(ErrorDetails))
+            if (ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);

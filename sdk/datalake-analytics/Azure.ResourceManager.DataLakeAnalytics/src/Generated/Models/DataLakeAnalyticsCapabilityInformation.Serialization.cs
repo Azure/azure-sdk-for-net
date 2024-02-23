@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId.HasValue)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxAccountCount))
+            if (options.Format != "W" && MaxAccountCount.HasValue)
             {
                 writer.WritePropertyName("maxAccountCount"u8);
                 writer.WriteNumberValue(MaxAccountCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountCount))
+            if (options.Format != "W" && AccountCount.HasValue)
             {
                 writer.WritePropertyName("accountCount"u8);
                 writer.WriteNumberValue(AccountCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUnderMigrationState))
+            if (options.Format != "W" && IsUnderMigrationState.HasValue)
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteBooleanValue(IsUnderMigrationState.Value);

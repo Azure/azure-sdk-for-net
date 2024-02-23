@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageGrain))
+            if (UsageGrain.HasValue)
             {
                 writer.WritePropertyName("usageGrain"u8);
                 writer.WriteStringValue(UsageGrain.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Charges))
+            if (options.Format != "W" && !(Charges is ChangeTrackingList<decimal> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("charges"u8);
                 writer.WriteStartArray();

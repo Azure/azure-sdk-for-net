@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(EsrpAddresses))
+            if (!(EsrpAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("esrpAddresses"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedSignalingSourceAddressPrefixes))
+            if (!(AllowedSignalingSourceAddressPrefixes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedSignalingSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedMediaSourceAddressPrefixes))
+            if (!(AllowedMediaSourceAddressPrefixes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowedMediaSourceAddressPrefixes"u8);
                 writer.WriteStartArray();

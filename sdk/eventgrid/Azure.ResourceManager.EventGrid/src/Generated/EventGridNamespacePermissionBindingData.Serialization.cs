@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TopicSpaceName))
+            if (TopicSpaceName != null)
             {
                 writer.WritePropertyName("topicSpaceName"u8);
                 writer.WriteStringValue(TopicSpaceName);
             }
-            if (Optional.IsDefined(Permission))
+            if (Permission.HasValue)
             {
                 writer.WritePropertyName("permission"u8);
                 writer.WriteStringValue(Permission.Value.ToString());
             }
-            if (Optional.IsDefined(ClientGroupName))
+            if (ClientGroupName != null)
             {
                 writer.WritePropertyName("clientGroupName"u8);
                 writer.WriteStringValue(ClientGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

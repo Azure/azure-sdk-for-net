@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(CertificateId))
+            if (CertificateId != null)
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
             }
-            if (Optional.IsDefined(IsClientCertificateRequired))
+            if (IsClientCertificateRequired.HasValue)
             {
                 writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateRequired.Value);
             }
-            if (Optional.IsDefined(IsTls1_0Enabled))
+            if (IsTls1_0Enabled.HasValue)
             {
                 writer.WritePropertyName("tls10Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_0Enabled.Value);
             }
-            if (Optional.IsDefined(IsTls1_1Enabled))
+            if (IsTls1_1Enabled.HasValue)
             {
                 writer.WritePropertyName("tls11Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_1Enabled.Value);
             }
-            if (Optional.IsDefined(IsHttp2_0Enabled))
+            if (IsHttp2_0Enabled.HasValue)
             {
                 writer.WritePropertyName("http2Enabled"u8);
                 writer.WriteBooleanValue(IsHttp2_0Enabled.Value);

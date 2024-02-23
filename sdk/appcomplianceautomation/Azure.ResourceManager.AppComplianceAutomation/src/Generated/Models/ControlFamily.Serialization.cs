@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FamilyName))
+            if (options.Format != "W" && FamilyName != null)
             {
                 writer.WritePropertyName("familyName"u8);
                 writer.WriteStringValue(FamilyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FamilyType))
+            if (options.Format != "W" && FamilyType.HasValue)
             {
                 writer.WritePropertyName("familyType"u8);
                 writer.WriteStringValue(FamilyType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FamilyStatus))
+            if (options.Format != "W" && FamilyStatus.HasValue)
             {
                 writer.WritePropertyName("familyStatus"u8);
                 writer.WriteStringValue(FamilyStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Controls))
+            if (options.Format != "W" && !(Controls is ChangeTrackingList<Control> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("controls"u8);
                 writer.WriteStartArray();

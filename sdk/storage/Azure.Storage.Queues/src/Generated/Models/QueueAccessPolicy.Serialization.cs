@@ -17,19 +17,19 @@ namespace Azure.Storage.Queues.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (Optional.IsDefined(StartsOn))
+            if (StartsOn.HasValue)
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(StartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (ExpiresOn.HasValue)
             {
                 writer.WriteStartElement("Expiry");
                 writer.WriteValue(ExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Permissions))
+            if (Permissions != null)
             {
                 writer.WriteStartElement("Permission");
                 writer.WriteValue(Permissions);

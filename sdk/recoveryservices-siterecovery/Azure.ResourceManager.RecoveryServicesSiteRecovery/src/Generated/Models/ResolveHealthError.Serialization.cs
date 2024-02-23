@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HealthErrorId))
+            if (HealthErrorId != null)
             {
                 writer.WritePropertyName("healthErrorId"u8);
                 writer.WriteStringValue(HealthErrorId);

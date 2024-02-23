@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Static))
+            if (!(Static is ChangeTrackingList<StaticRoutingEnrichment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("static"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Dynamic))
+            if (!(Dynamic is ChangeTrackingList<DynamicRoutingEnrichment> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dynamic"u8);
                 writer.WriteStartArray();

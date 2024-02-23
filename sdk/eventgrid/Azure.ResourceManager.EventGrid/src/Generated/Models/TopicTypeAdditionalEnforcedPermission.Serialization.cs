@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PermissionName))
+            if (PermissionName != null)
             {
                 writer.WritePropertyName("permissionName"u8);
                 writer.WriteStringValue(PermissionName);
             }
-            if (Optional.IsDefined(IsDataAction))
+            if (IsDataAction.HasValue)
             {
                 writer.WritePropertyName("isDataAction"u8);
                 writer.WriteBooleanValue(IsDataAction.Value);

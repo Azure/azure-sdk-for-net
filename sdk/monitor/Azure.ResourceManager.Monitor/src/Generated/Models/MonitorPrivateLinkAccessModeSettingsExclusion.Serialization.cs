@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpointConnectionName))
+            if (PrivateEndpointConnectionName != null)
             {
                 writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
-            if (Optional.IsDefined(QueryAccessMode))
+            if (QueryAccessMode.HasValue)
             {
                 writer.WritePropertyName("queryAccessMode"u8);
                 writer.WriteStringValue(QueryAccessMode.Value.ToString());
             }
-            if (Optional.IsDefined(IngestionAccessMode))
+            if (IngestionAccessMode.HasValue)
             {
                 writer.WritePropertyName("ingestionAccessMode"u8);
                 writer.WriteStringValue(IngestionAccessMode.Value.ToString());

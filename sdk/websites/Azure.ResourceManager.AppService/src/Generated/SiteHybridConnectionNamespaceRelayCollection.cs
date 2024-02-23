@@ -106,7 +106,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
+                var uri = _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateCreateOrUpdateHybridConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +176,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
+                var uri = _siteHybridConnectionNamespaceRelayWebAppsRestClient.CreateCreateOrUpdateHybridConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namespaceName, relayName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Communication
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,49 +56,49 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DataLocation))
+            if (options.Format != "W" && DataLocation != null)
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(FromSenderDomain))
+            if (options.Format != "W" && FromSenderDomain != null)
             {
                 writer.WritePropertyName("fromSenderDomain"u8);
                 writer.WriteStringValue(FromSenderDomain);
             }
-            if (options.Format != "W" && Optional.IsDefined(MailFromSenderDomain))
+            if (options.Format != "W" && MailFromSenderDomain != null)
             {
                 writer.WritePropertyName("mailFromSenderDomain"u8);
                 writer.WriteStringValue(MailFromSenderDomain);
             }
-            if (Optional.IsDefined(DomainManagement))
+            if (DomainManagement.HasValue)
             {
                 writer.WritePropertyName("domainManagement"u8);
                 writer.WriteStringValue(DomainManagement.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VerificationStates))
+            if (options.Format != "W" && VerificationStates != null)
             {
                 writer.WritePropertyName("verificationStates"u8);
                 writer.WriteObjectValue(VerificationStates);
             }
-            if (options.Format != "W" && Optional.IsDefined(VerificationRecords))
+            if (options.Format != "W" && VerificationRecords != null)
             {
                 writer.WritePropertyName("verificationRecords"u8);
                 writer.WriteObjectValue(VerificationRecords);
             }
-            if (Optional.IsDefined(UserEngagementTracking))
+            if (UserEngagementTracking.HasValue)
             {
                 writer.WritePropertyName("userEngagementTracking"u8);
                 writer.WriteStringValue(UserEngagementTracking.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MonitorWorkspaceIntegrations))
+            if (!(MonitorWorkspaceIntegrations is ChangeTrackingList<MonitorWorkspaceIntegration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureMonitorWorkspaceIntegrations"u8);
                 writer.WriteStartArray();

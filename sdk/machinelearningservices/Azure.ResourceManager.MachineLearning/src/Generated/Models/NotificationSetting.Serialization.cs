@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EmailOn))
+            if (!(EmailOn is ChangeTrackingList<EmailNotificationEnableType> collection && collection.IsUndefined))
             {
                 if (EmailOn != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("emailOn");
                 }
             }
-            if (Optional.IsCollectionDefined(Emails))
+            if (!(Emails is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (Emails != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("emails");
                 }
             }
-            if (Optional.IsCollectionDefined(Webhooks))
+            if (!(Webhooks is ChangeTrackingDictionary<string, MachineLearningWebhook> collection1 && collection1.IsUndefined))
             {
                 if (Webhooks != null)
                 {

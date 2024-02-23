@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirstPlayExpiration))
+            if (FirstPlayExpiration.HasValue)
             {
                 writer.WritePropertyName("firstPlayExpiration"u8);
                 writer.WriteStringValue(FirstPlayExpiration.Value, "P");
             }
-            if (Optional.IsDefined(ScmsRestriction))
+            if (ScmsRestriction.HasValue)
             {
                 writer.WritePropertyName("scmsRestriction"u8);
                 writer.WriteNumberValue(ScmsRestriction.Value);
             }
-            if (Optional.IsDefined(AgcAndColorStripeRestriction))
+            if (AgcAndColorStripeRestriction.HasValue)
             {
                 writer.WritePropertyName("agcAndColorStripeRestriction"u8);
                 writer.WriteNumberValue(AgcAndColorStripeRestriction.Value);
             }
-            if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
+            if (ExplicitAnalogTelevisionOutputRestriction != null)
             {
                 writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction"u8);
                 writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction);
@@ -54,27 +54,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteBooleanValue(HasImageConstraintForAnalogComputerMonitorRestriction);
             writer.WritePropertyName("allowPassingVideoContentToUnknownOutput"u8);
             writer.WriteStringValue(AllowPassingVideoContentToUnknownOutput.ToString());
-            if (Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
+            if (UncompressedDigitalVideoOutputProtectionLevel.HasValue)
             {
                 writer.WritePropertyName("uncompressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalVideoOutputProtectionLevel.Value);
             }
-            if (Optional.IsDefined(CompressedDigitalVideoOutputProtectionLevel))
+            if (CompressedDigitalVideoOutputProtectionLevel.HasValue)
             {
                 writer.WritePropertyName("compressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalVideoOutputProtectionLevel.Value);
             }
-            if (Optional.IsDefined(AnalogVideoOutputProtectionLevel))
+            if (AnalogVideoOutputProtectionLevel.HasValue)
             {
                 writer.WritePropertyName("analogVideoOpl"u8);
                 writer.WriteNumberValue(AnalogVideoOutputProtectionLevel.Value);
             }
-            if (Optional.IsDefined(CompressedDigitalAudioOutputProtectionLevel))
+            if (CompressedDigitalAudioOutputProtectionLevel.HasValue)
             {
                 writer.WritePropertyName("compressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalAudioOutputProtectionLevel.Value);
             }
-            if (Optional.IsDefined(UncompressedDigitalAudioOutputProtectionLevel))
+            if (UncompressedDigitalAudioOutputProtectionLevel.HasValue)
             {
                 writer.WritePropertyName("uncompressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalAudioOutputProtectionLevel.Value);

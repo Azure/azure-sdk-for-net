@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Bundles))
+            if (!(Bundles is ChangeTrackingList<SecurityAlertSimulatorBundleType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bundles"u8);
                 writer.WriteStartArray();

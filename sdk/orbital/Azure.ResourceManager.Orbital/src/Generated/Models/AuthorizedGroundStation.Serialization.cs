@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroundStationName))
+            if (GroundStationName != null)
             {
                 writer.WritePropertyName("groundStation"u8);
                 writer.WriteStringValue(GroundStationName);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "D");

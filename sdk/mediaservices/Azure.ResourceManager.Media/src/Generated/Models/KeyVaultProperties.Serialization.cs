@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyIdentifier))
+            if (KeyIdentifier != null)
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentKeyIdentifier))
+            if (options.Format != "W" && CurrentKeyIdentifier != null)
             {
                 writer.WritePropertyName("currentKeyIdentifier"u8);
                 writer.WriteStringValue(CurrentKeyIdentifier);

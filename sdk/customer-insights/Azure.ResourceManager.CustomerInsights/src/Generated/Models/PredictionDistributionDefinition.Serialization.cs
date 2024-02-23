@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalPositives))
+            if (TotalPositives.HasValue)
             {
                 writer.WritePropertyName("totalPositives"u8);
                 writer.WriteNumberValue(TotalPositives.Value);
             }
-            if (Optional.IsDefined(TotalNegatives))
+            if (TotalNegatives.HasValue)
             {
                 writer.WritePropertyName("totalNegatives"u8);
                 writer.WriteNumberValue(TotalNegatives.Value);
             }
-            if (Optional.IsCollectionDefined(Distributions))
+            if (!(Distributions is ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("distributions"u8);
                 writer.WriteStartArray();

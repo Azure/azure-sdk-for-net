@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WaitType))
+            if (WaitType != null)
             {
                 writer.WritePropertyName("waitType"u8);
                 writer.WriteStringValue(WaitType);
             }
-            if (Optional.IsDefined(WaitTimeMs))
+            if (WaitTimeMs.HasValue)
             {
                 writer.WritePropertyName("waitTimeMs"u8);
                 writer.WriteNumberValue(WaitTimeMs.Value);
             }
-            if (Optional.IsDefined(WaitCount))
+            if (WaitCount.HasValue)
             {
                 writer.WritePropertyName("waitCount"u8);
                 writer.WriteNumberValue(WaitCount.Value);

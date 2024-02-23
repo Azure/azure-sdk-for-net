@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsUsCoreMissingDataEnabled))
+            if (IsUsCoreMissingDataEnabled.HasValue)
             {
                 writer.WritePropertyName("usCoreMissingData"u8);
                 writer.WriteBooleanValue(IsUsCoreMissingDataEnabled.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MetricSpecifications))
+            if (!(MetricSpecifications is ChangeTrackingList<MetricSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricSpecifications"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogSpecifications))
+            if (!(LogSpecifications is ChangeTrackingList<LogSpecification> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("logSpecifications"u8);
                 writer.WriteStartArray();

@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PrincipalType.ToString());
-            if (Optional.IsDefined(Fqn))
+            if (Fqn != null)
             {
                 writer.WritePropertyName("fqn"u8);
                 writer.WriteStringValue(Fqn);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(AppId))
+            if (AppId != null)
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantName))
+            if (options.Format != "W" && TenantName != null)
             {
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);

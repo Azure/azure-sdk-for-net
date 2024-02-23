@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Avs
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,24 +63,24 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagementCluster))
+            if (ManagementCluster != null)
             {
                 writer.WritePropertyName("managementCluster"u8);
                 writer.WriteObjectValue(ManagementCluster);
             }
-            if (Optional.IsDefined(Internet))
+            if (Internet.HasValue)
             {
                 writer.WritePropertyName("internet"u8);
                 writer.WriteStringValue(Internet.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IdentitySources))
+            if (!(IdentitySources is ChangeTrackingList<SingleSignOnIdentitySource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("identitySources"u8);
                 writer.WriteStartArray();
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Availability))
+            if (Availability != null)
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteObjectValue(Availability);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
+            if (!(ExtendedNetworkBlocks is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedNetworkBlocks"u8);
                 writer.WriteStartArray();
@@ -110,62 +110,62 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Circuit))
+            if (Circuit != null)
             {
                 writer.WritePropertyName("circuit"u8);
                 writer.WriteObjectValue(Circuit);
             }
-            if (options.Format != "W" && Optional.IsDefined(Endpoints))
+            if (options.Format != "W" && Endpoints != null)
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteObjectValue(Endpoints);
             }
-            if (Optional.IsDefined(NetworkBlock))
+            if (NetworkBlock != null)
             {
                 writer.WritePropertyName("networkBlock"u8);
                 writer.WriteStringValue(NetworkBlock);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementNetwork))
+            if (options.Format != "W" && ManagementNetwork != null)
             {
                 writer.WritePropertyName("managementNetwork"u8);
                 writer.WriteStringValue(ManagementNetwork);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningNetwork))
+            if (options.Format != "W" && ProvisioningNetwork != null)
             {
                 writer.WritePropertyName("provisioningNetwork"u8);
                 writer.WriteStringValue(ProvisioningNetwork);
             }
-            if (options.Format != "W" && Optional.IsDefined(VMotionNetwork))
+            if (options.Format != "W" && VMotionNetwork != null)
             {
                 writer.WritePropertyName("vmotionNetwork"u8);
                 writer.WriteStringValue(VMotionNetwork);
             }
-            if (Optional.IsDefined(VCenterPassword))
+            if (VCenterPassword != null)
             {
                 writer.WritePropertyName("vcenterPassword"u8);
                 writer.WriteStringValue(VCenterPassword);
             }
-            if (Optional.IsDefined(NsxtPassword))
+            if (NsxtPassword != null)
             {
                 writer.WritePropertyName("nsxtPassword"u8);
                 writer.WriteStringValue(NsxtPassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCenterCertificateThumbprint))
+            if (options.Format != "W" && VCenterCertificateThumbprint != null)
             {
                 writer.WritePropertyName("vcenterCertificateThumbprint"u8);
                 writer.WriteStringValue(VCenterCertificateThumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(NsxtCertificateThumbprint))
+            if (options.Format != "W" && NsxtCertificateThumbprint != null)
             {
                 writer.WritePropertyName("nsxtCertificateThumbprint"u8);
                 writer.WriteStringValue(NsxtCertificateThumbprint);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalCloudLinks))
+            if (options.Format != "W" && !(ExternalCloudLinks is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("externalCloudLinks"u8);
                 writer.WriteStartArray();
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SecondaryCircuit))
+            if (SecondaryCircuit != null)
             {
                 writer.WritePropertyName("secondaryCircuit"u8);
                 writer.WriteObjectValue(SecondaryCircuit);
             }
-            if (options.Format != "W" && Optional.IsDefined(NsxPublicIPQuotaRaised))
+            if (options.Format != "W" && NsxPublicIPQuotaRaised.HasValue)
             {
                 writer.WritePropertyName("nsxPublicIpQuotaRaised"u8);
                 writer.WriteStringValue(NsxPublicIPQuotaRaised.Value.ToString());

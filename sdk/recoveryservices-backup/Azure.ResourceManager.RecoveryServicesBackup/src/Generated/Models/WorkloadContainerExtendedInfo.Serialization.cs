@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostServerName))
+            if (HostServerName != null)
             {
                 writer.WritePropertyName("hostServerName"u8);
                 writer.WriteStringValue(HostServerName);
             }
-            if (Optional.IsDefined(InquiryInfo))
+            if (InquiryInfo != null)
             {
                 writer.WritePropertyName("inquiryInfo"u8);
                 writer.WriteObjectValue(InquiryInfo);
             }
-            if (Optional.IsCollectionDefined(NodesList))
+            if (!(NodesList is ChangeTrackingList<DistributedNodesInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();

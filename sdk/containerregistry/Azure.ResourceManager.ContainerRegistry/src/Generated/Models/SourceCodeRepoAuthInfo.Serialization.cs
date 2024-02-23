@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStringValue(TokenType.ToString());
             writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
-            if (Optional.IsDefined(RefreshToken))
+            if (RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ExpireInSeconds))
+            if (ExpireInSeconds.HasValue)
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpireInSeconds.Value);

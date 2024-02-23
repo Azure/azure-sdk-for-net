@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MaxMemoryInGB))
+            if (options.Format != "W" && MaxMemoryInGB.HasValue)
             {
                 writer.WritePropertyName("maxMemoryInGB"u8);
                 writer.WriteNumberValue(MaxMemoryInGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxCpu))
+            if (options.Format != "W" && MaxCpu.HasValue)
             {
                 writer.WritePropertyName("maxCpu"u8);
                 writer.WriteNumberValue(MaxCpu.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxGpuCount))
+            if (options.Format != "W" && MaxGpuCount.HasValue)
             {
                 writer.WritePropertyName("maxGpuCount"u8);
                 writer.WriteNumberValue(MaxGpuCount.Value);

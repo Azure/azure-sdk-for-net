@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(FullyQualifiedResourceType))
+            if (FullyQualifiedResourceType.HasValue)
             {
                 writer.WritePropertyName("fullyQualifiedResourceType"u8);
                 writer.WriteStringValue(FullyQualifiedResourceType.Value);
             }
-            if (Optional.IsCollectionDefined(DefaultProperties))
+            if (!(DefaultProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("defaultProperties"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowCustomProperties))
+            if (AllowCustomProperties.HasValue)
             {
                 writer.WritePropertyName("allowCustomProperties"u8);
                 writer.WriteBooleanValue(AllowCustomProperties.Value);

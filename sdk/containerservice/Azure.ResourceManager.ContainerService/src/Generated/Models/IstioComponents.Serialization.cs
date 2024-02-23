@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IngressGateways))
+            if (!(IngressGateways is ChangeTrackingList<IstioIngressGateway> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ingressGateways"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EgressGateways))
+            if (!(EgressGateways is ChangeTrackingList<IstioEgressGateway> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("egressGateways"u8);
                 writer.WriteStartArray();

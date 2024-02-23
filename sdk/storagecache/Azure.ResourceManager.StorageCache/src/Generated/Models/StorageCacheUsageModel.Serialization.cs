@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Optional.IsDefined(ModelName))
+            if (ModelName != null)
             {
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName);
             }
-            if (Optional.IsDefined(TargetType))
+            if (TargetType != null)
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType);

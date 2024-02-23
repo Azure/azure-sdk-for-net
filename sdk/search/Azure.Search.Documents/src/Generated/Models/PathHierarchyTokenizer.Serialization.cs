@@ -15,27 +15,27 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Delimiter))
+            if (Delimiter.HasValue)
             {
                 writer.WritePropertyName("delimiter"u8);
                 writer.WriteStringValue(Delimiter.Value);
             }
-            if (Optional.IsDefined(Replacement))
+            if (Replacement.HasValue)
             {
                 writer.WritePropertyName("replacement"u8);
                 writer.WriteStringValue(Replacement.Value);
             }
-            if (Optional.IsDefined(MaxTokenLength))
+            if (MaxTokenLength.HasValue)
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (Optional.IsDefined(ReverseTokenOrder))
+            if (ReverseTokenOrder.HasValue)
             {
                 writer.WritePropertyName("reverse"u8);
                 writer.WriteBooleanValue(ReverseTokenOrder.Value);
             }
-            if (Optional.IsDefined(NumberOfTokensToSkip))
+            if (NumberOfTokensToSkip.HasValue)
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteNumberValue(NumberOfTokensToSkip.Value);

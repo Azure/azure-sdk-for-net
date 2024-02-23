@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("preferredShipmentType"u8);
             writer.WriteStringValue(PreferredShipmentType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(IsUpdated))
+            if (options.Format != "W" && IsUpdated.HasValue)
             {
                 writer.WritePropertyName("isUpdated"u8);
                 writer.WriteBooleanValue(IsUpdated.Value);

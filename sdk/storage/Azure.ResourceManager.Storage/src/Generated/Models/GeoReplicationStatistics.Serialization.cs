@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
+            if (options.Format != "W" && LastSyncOn.HasValue)
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CanFailover))
+            if (options.Format != "W" && CanFailover.HasValue)
             {
                 writer.WritePropertyName("canFailover"u8);
                 writer.WriteBooleanValue(CanFailover.Value);

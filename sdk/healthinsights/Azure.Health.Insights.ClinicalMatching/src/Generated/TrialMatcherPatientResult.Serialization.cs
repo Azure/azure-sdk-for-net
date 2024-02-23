@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(NeededClinicalInfo))
+            if (!(NeededClinicalInfo is ChangeTrackingList<ExtendedClinicalCodedElement> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("neededClinicalInfo"u8);
                 writer.WriteStartArray();

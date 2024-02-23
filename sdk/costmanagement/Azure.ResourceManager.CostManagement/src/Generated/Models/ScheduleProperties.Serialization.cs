@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
-            if (Optional.IsDefined(HourOfDay))
+            if (HourOfDay.HasValue)
             {
                 writer.WritePropertyName("hourOfDay"u8);
                 writer.WriteNumberValue(HourOfDay.Value);
             }
-            if (Optional.IsCollectionDefined(DaysOfWeek))
+            if (!(DaysOfWeek is ChangeTrackingList<ScheduledActionDaysOfWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WeeksOfMonth))
+            if (!(WeeksOfMonth is ChangeTrackingList<ScheduledActionWeeksOfMonth> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("weeksOfMonth"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DayOfMonth))
+            if (DayOfMonth.HasValue)
             {
                 writer.WritePropertyName("dayOfMonth"u8);
                 writer.WriteNumberValue(DayOfMonth.Value);

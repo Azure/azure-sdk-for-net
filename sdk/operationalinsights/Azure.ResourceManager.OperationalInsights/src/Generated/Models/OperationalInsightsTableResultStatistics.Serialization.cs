@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Progress))
+            if (options.Format != "W" && Progress.HasValue)
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IngestedRecords))
+            if (options.Format != "W" && IngestedRecords.HasValue)
             {
                 writer.WritePropertyName("ingestedRecords"u8);
                 writer.WriteNumberValue(IngestedRecords.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScannedGB))
+            if (options.Format != "W" && ScannedGB.HasValue)
             {
                 writer.WritePropertyName("scannedGb"u8);
                 writer.WriteNumberValue(ScannedGB.Value);

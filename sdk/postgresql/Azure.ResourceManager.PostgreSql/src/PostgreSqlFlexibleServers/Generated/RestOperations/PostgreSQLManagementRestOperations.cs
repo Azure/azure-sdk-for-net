@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckMigrationNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlCheckMigrationNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath("/checkMigrationNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckMigrationNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlCheckMigrationNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();

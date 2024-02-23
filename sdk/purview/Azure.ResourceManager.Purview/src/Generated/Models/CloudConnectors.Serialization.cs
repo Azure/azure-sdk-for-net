@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AwsExternalId))
+            if (options.Format != "W" && AwsExternalId != null)
             {
                 writer.WritePropertyName("awsExternalId"u8);
                 writer.WriteStringValue(AwsExternalId);

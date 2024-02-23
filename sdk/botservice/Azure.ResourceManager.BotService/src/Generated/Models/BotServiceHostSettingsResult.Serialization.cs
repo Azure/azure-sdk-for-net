@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OAuthUri))
+            if (OAuthUri != null)
             {
                 writer.WritePropertyName("OAuthUrl"u8);
                 writer.WriteStringValue(OAuthUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ToBotFromChannelOpenIdMetadataUri))
+            if (ToBotFromChannelOpenIdMetadataUri != null)
             {
                 writer.WritePropertyName("ToBotFromChannelOpenIdMetadataUrl"u8);
                 writer.WriteStringValue(ToBotFromChannelOpenIdMetadataUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ToBotFromChannelTokenIssuer))
+            if (ToBotFromChannelTokenIssuer != null)
             {
                 writer.WritePropertyName("ToBotFromChannelTokenIssuer"u8);
                 writer.WriteStringValue(ToBotFromChannelTokenIssuer);
             }
-            if (Optional.IsDefined(ToBotFromEmulatorOpenIdMetadataUri))
+            if (ToBotFromEmulatorOpenIdMetadataUri != null)
             {
                 writer.WritePropertyName("ToBotFromEmulatorOpenIdMetadataUrl"u8);
                 writer.WriteStringValue(ToBotFromEmulatorOpenIdMetadataUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ToChannelFromBotLoginUri))
+            if (ToChannelFromBotLoginUri != null)
             {
                 writer.WritePropertyName("ToChannelFromBotLoginUrl"u8);
                 writer.WriteStringValue(ToChannelFromBotLoginUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ToChannelFromBotOAuthScope))
+            if (ToChannelFromBotOAuthScope != null)
             {
                 writer.WritePropertyName("ToChannelFromBotOAuthScope"u8);
                 writer.WriteStringValue(ToChannelFromBotOAuthScope);
             }
-            if (Optional.IsDefined(ValidateAuthority))
+            if (ValidateAuthority.HasValue)
             {
                 writer.WritePropertyName("ValidateAuthority"u8);
                 writer.WriteBooleanValue(ValidateAuthority.Value);
             }
-            if (Optional.IsDefined(BotOpenIdMetadata))
+            if (BotOpenIdMetadata != null)
             {
                 writer.WritePropertyName("BotOpenIdMetadata"u8);
                 writer.WriteStringValue(BotOpenIdMetadata);

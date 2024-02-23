@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstallOptions))
+            if (InstallOptions != null)
             {
                 writer.WritePropertyName("installOptions"u8);
                 writer.WriteObjectValue(InstallOptions);
             }
-            if (Optional.IsDefined(UpgradeOptions))
+            if (UpgradeOptions != null)
             {
                 writer.WritePropertyName("upgradeOptions"u8);
                 writer.WriteObjectValue(UpgradeOptions);

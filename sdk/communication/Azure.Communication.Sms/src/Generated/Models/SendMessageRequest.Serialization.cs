@@ -26,7 +26,7 @@ namespace Azure.Communication.Sms.Models
             writer.WriteEndArray();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(SmsSendOptions))
+            if (SmsSendOptions != null)
             {
                 writer.WritePropertyName("smsSendOptions"u8);
                 writer.WriteObjectValue(SmsSendOptions);

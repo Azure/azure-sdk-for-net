@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartIP))
+            if (StartIP != null)
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
             }
-            if (Optional.IsDefined(EndIP))
+            if (EndIP != null)
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);

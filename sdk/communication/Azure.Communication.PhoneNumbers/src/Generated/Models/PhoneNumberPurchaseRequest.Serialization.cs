@@ -15,7 +15,7 @@ namespace Azure.Communication.PhoneNumbers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SearchId))
+            if (SearchId != null)
             {
                 writer.WritePropertyName("searchId"u8);
                 writer.WriteStringValue(SearchId);

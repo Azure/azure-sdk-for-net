@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SourceEntities))
+            if (!(SourceEntities is ChangeTrackingList<MapperTable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceEntities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Connection))
+            if (Connection != null)
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection);

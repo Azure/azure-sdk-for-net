@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataDisksToAttach))
+            if (!(DataDisksToAttach is ChangeTrackingList<DataDisksToAttach> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDisksToAttach"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataDisksToDetach))
+            if (!(DataDisksToDetach is ChangeTrackingList<DataDisksToDetach> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataDisksToDetach"u8);
                 writer.WriteStartArray();

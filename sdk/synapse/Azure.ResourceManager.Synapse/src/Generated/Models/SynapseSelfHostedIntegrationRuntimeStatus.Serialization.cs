@@ -28,44 +28,44 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuntimeType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
+            if (options.Format != "W" && DataFactoryName != null)
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreateOn))
+            if (options.Format != "W" && CreateOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TaskQueueId))
+            if (options.Format != "W" && TaskQueueId != null)
             {
                 writer.WritePropertyName("taskQueueId"u8);
                 writer.WriteStringValue(TaskQueueId);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeCommunicationChannelEncryptionMode))
+            if (options.Format != "W" && NodeCommunicationChannelEncryptionMode != null)
             {
                 writer.WritePropertyName("nodeCommunicationChannelEncryptionMode"u8);
                 writer.WriteStringValue(NodeCommunicationChannelEncryptionMode);
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalChannelEncryption))
+            if (options.Format != "W" && InternalChannelEncryption.HasValue)
             {
                 writer.WritePropertyName("internalChannelEncryption"u8);
                 writer.WriteStringValue(InternalChannelEncryption.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledUpdateOn))
+            if (options.Format != "W" && ScheduledUpdateOn.HasValue)
             {
                 writer.WritePropertyName("scheduledUpdateDate"u8);
                 writer.WriteStringValue(ScheduledUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdateDelayOffset))
+            if (options.Format != "W" && UpdateDelayOffset != null)
             {
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset);
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalTimeZoneOffset))
+            if (options.Format != "W" && LocalTimeZoneOffset != null)
             {
                 writer.WritePropertyName("localTimeZoneOffset"u8);
                 writer.WriteStringValue(LocalTimeZoneOffset);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceUrls))
+            if (options.Format != "W" && !(ServiceUrls is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceUrls"u8);
                 writer.WriteStartArray();
@@ -111,17 +111,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AutoUpdate))
+            if (options.Format != "W" && AutoUpdate.HasValue)
             {
                 writer.WritePropertyName("autoUpdate"u8);
                 writer.WriteStringValue(AutoUpdate.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionStatus))
+            if (options.Format != "W" && VersionStatus != null)
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<SynapseLinkedIntegrationRuntime> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -131,27 +131,27 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PushedVersion))
+            if (options.Format != "W" && PushedVersion != null)
             {
                 writer.WritePropertyName("pushedVersion"u8);
                 writer.WriteStringValue(PushedVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestVersion))
+            if (options.Format != "W" && LatestVersion != null)
             {
                 writer.WritePropertyName("latestVersion"u8);
                 writer.WriteStringValue(LatestVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(AutoUpdateEta))
+            if (options.Format != "W" && AutoUpdateEta.HasValue)
             {
                 writer.WritePropertyName("autoUpdateETA"u8);
                 writer.WriteStringValue(AutoUpdateEta.Value, "O");
             }
-            if (Optional.IsDefined(ServiceRegion))
+            if (ServiceRegion != null)
             {
                 writer.WritePropertyName("serviceRegion"u8);
                 writer.WriteStringValue(ServiceRegion);
             }
-            if (Optional.IsCollectionDefined(NewerVersions))
+            if (!(NewerVersions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("newerVersions"u8);
                 writer.WriteStartArray();

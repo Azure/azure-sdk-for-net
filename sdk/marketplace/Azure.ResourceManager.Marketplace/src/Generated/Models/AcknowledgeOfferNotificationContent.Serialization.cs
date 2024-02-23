@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAcknowledgeActionFlagEnabled))
+            if (IsAcknowledgeActionFlagEnabled.HasValue)
             {
                 writer.WritePropertyName("acknowledge"u8);
                 writer.WriteBooleanValue(IsAcknowledgeActionFlagEnabled.Value);
             }
-            if (Optional.IsDefined(IsDismissActionFlagEnabled))
+            if (IsDismissActionFlagEnabled.HasValue)
             {
                 writer.WritePropertyName("dismiss"u8);
                 writer.WriteBooleanValue(IsDismissActionFlagEnabled.Value);
             }
-            if (Optional.IsDefined(IsRemoveOfferActionFlagEnabled))
+            if (IsRemoveOfferActionFlagEnabled.HasValue)
             {
                 writer.WritePropertyName("removeOffer"u8);
                 writer.WriteBooleanValue(IsRemoveOfferActionFlagEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AddPlans))
+            if (!(AddPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addPlans"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RemovePlans))
+            if (!(RemovePlans is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("removePlans"u8);
                 writer.WriteStartArray();

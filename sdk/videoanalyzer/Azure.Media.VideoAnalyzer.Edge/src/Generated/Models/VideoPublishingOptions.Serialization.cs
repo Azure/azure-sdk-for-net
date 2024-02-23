@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableVideoPreviewImage))
+            if (EnableVideoPreviewImage != null)
             {
                 writer.WritePropertyName("enableVideoPreviewImage"u8);
                 writer.WriteStringValue(EnableVideoPreviewImage);

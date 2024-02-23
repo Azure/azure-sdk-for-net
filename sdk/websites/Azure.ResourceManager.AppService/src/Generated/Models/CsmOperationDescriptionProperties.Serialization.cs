@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceSpecification))
+            if (ServiceSpecification != null)
             {
                 writer.WritePropertyName("serviceSpecification"u8);
                 writer.WriteObjectValue(ServiceSpecification);

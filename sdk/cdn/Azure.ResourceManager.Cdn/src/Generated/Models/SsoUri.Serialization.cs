@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AvailableSsoUri))
+            if (options.Format != "W" && AvailableSsoUri != null)
             {
                 writer.WritePropertyName("ssoUriValue"u8);
                 writer.WriteStringValue(AvailableSsoUri.AbsoluteUri);

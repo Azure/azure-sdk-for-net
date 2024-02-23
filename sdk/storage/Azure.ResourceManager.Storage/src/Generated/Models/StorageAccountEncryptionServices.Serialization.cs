@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Blob))
+            if (Blob != null)
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteObjectValue(Blob);
             }
-            if (Optional.IsDefined(File))
+            if (File != null)
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteObjectValue(File);
             }
-            if (Optional.IsDefined(Table))
+            if (Table != null)
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (Optional.IsDefined(Queue))
+            if (Queue != null)
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);

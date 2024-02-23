@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.StorageCache
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,24 +67,24 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CacheSizeGB))
+            if (CacheSizeGB.HasValue)
             {
                 writer.WritePropertyName("cacheSizeGB"u8);
                 writer.WriteNumberValue(CacheSizeGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health != null)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteObjectValue(Health);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MountAddresses))
+            if (options.Format != "W" && !(MountAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("mountAddresses"u8);
                 writer.WriteStartArray();
@@ -99,47 +99,47 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpgradeStatus))
+            if (options.Format != "W" && UpgradeStatus != null)
             {
                 writer.WritePropertyName("upgradeStatus"u8);
                 writer.WriteObjectValue(UpgradeStatus);
             }
-            if (Optional.IsDefined(UpgradeSettings))
+            if (UpgradeSettings != null)
             {
                 writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
             }
-            if (Optional.IsDefined(NetworkSettings))
+            if (NetworkSettings != null)
             {
                 writer.WritePropertyName("networkSettings"u8);
                 writer.WriteObjectValue(NetworkSettings);
             }
-            if (Optional.IsDefined(EncryptionSettings))
+            if (EncryptionSettings != null)
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (Optional.IsDefined(SecuritySettings))
+            if (SecuritySettings != null)
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (Optional.IsDefined(DirectoryServicesSettings))
+            if (DirectoryServicesSettings != null)
             {
                 writer.WritePropertyName("directoryServicesSettings"u8);
                 writer.WriteObjectValue(DirectoryServicesSettings);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrimingJobs))
+            if (options.Format != "W" && !(PrimingJobs is ChangeTrackingList<PrimingJob> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("primingJobs"u8);
                 writer.WriteStartArray();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SpaceAllocation))
+            if (options.Format != "W" && !(SpaceAllocation is ChangeTrackingList<StorageTargetSpaceAllocation> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("spaceAllocation"u8);
                 writer.WriteStartArray();

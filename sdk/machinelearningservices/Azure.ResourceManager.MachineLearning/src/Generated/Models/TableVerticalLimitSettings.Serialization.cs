@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableEarlyTermination))
+            if (EnableEarlyTermination.HasValue)
             {
                 writer.WritePropertyName("enableEarlyTermination"u8);
                 writer.WriteBooleanValue(EnableEarlyTermination.Value);
             }
-            if (Optional.IsDefined(ExitScore))
+            if (ExitScore.HasValue)
             {
                 if (ExitScore != null)
                 {
@@ -43,42 +43,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("exitScore");
                 }
             }
-            if (Optional.IsDefined(MaxConcurrentTrials))
+            if (MaxConcurrentTrials.HasValue)
             {
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
-            if (Optional.IsDefined(MaxCoresPerTrial))
+            if (MaxCoresPerTrial.HasValue)
             {
                 writer.WritePropertyName("maxCoresPerTrial"u8);
                 writer.WriteNumberValue(MaxCoresPerTrial.Value);
             }
-            if (Optional.IsDefined(MaxNodes))
+            if (MaxNodes.HasValue)
             {
                 writer.WritePropertyName("maxNodes"u8);
                 writer.WriteNumberValue(MaxNodes.Value);
             }
-            if (Optional.IsDefined(MaxTrials))
+            if (MaxTrials.HasValue)
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
-            if (Optional.IsDefined(SweepConcurrentTrials))
+            if (SweepConcurrentTrials.HasValue)
             {
                 writer.WritePropertyName("sweepConcurrentTrials"u8);
                 writer.WriteNumberValue(SweepConcurrentTrials.Value);
             }
-            if (Optional.IsDefined(SweepTrials))
+            if (SweepTrials.HasValue)
             {
                 writer.WritePropertyName("sweepTrials"u8);
                 writer.WriteNumberValue(SweepTrials.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (Optional.IsDefined(TrialTimeout))
+            if (TrialTimeout.HasValue)
             {
                 writer.WritePropertyName("trialTimeout"u8);
                 writer.WriteStringValue(TrialTimeout.Value, "P");

@@ -19,7 +19,7 @@ namespace Azure.Data.Tables
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(Days))
+            if (Days.HasValue)
             {
                 writer.WriteStartElement("Days");
                 writer.WriteValue(Days.Value);

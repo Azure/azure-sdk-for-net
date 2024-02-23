@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enforcement))
+            if (Enforcement.HasValue)
             {
                 writer.WritePropertyName("enforcement"u8);
                 writer.WriteStringValue(Enforcement.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EncryptionComplianceStatus))
+            if (options.Format != "W" && EncryptionComplianceStatus.HasValue)
             {
                 writer.WritePropertyName("encryptionComplianceStatus"u8);
                 writer.WriteStringValue(EncryptionComplianceStatus.Value.ToSerialString());

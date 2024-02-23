@@ -18,19 +18,19 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Type");
             writer.WriteValue(Type.ToSerialString());
             writer.WriteEndElement();
-            if (Optional.IsDefined(DelimitedTextConfiguration))
+            if (DelimitedTextConfiguration != null)
             {
                 writer.WriteObjectValue(DelimitedTextConfiguration, "DelimitedTextConfiguration");
             }
-            if (Optional.IsDefined(JsonTextConfiguration))
+            if (JsonTextConfiguration != null)
             {
                 writer.WriteObjectValue(JsonTextConfiguration, "JsonTextConfiguration");
             }
-            if (Optional.IsDefined(ArrowConfiguration))
+            if (ArrowConfiguration != null)
             {
                 writer.WriteObjectValue(ArrowConfiguration, "ArrowConfiguration");
             }
-            if (Optional.IsDefined(ParquetTextConfiguration))
+            if (ParquetTextConfiguration != null)
             {
                 writer.WriteObjectValue(ParquetTextConfiguration, "ParquetTextConfiguration");
             }

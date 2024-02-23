@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KekDetails))
+            if (KekDetails != null)
             {
                 writer.WritePropertyName("kekDetails"u8);
                 writer.WriteObjectValue(KekDetails);
             }
-            if (Optional.IsDefined(BekDetails))
+            if (BekDetails != null)
             {
                 writer.WritePropertyName("bekDetails"u8);
                 writer.WriteObjectValue(BekDetails);
             }
-            if (Optional.IsDefined(EncryptionMechanism))
+            if (EncryptionMechanism != null)
             {
                 writer.WritePropertyName("encryptionMechanism"u8);
                 writer.WriteStringValue(EncryptionMechanism);

@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(SearchDomains))
+            if (SearchDomains != null)
             {
                 writer.WritePropertyName("searchDomains"u8);
                 writer.WriteStringValue(SearchDomains);
             }
-            if (Optional.IsDefined(Options))
+            if (Options != null)
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStringValue(Options);

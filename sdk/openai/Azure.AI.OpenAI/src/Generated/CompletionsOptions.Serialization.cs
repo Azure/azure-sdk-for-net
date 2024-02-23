@@ -34,47 +34,47 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MaxTokens))
+            if (MaxTokens.HasValue)
             {
                 writer.WritePropertyName("max_tokens"u8);
                 writer.WriteNumberValue(MaxTokens.Value);
             }
-            if (Optional.IsDefined(Temperature))
+            if (Temperature.HasValue)
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(NucleusSamplingFactor))
+            if (NucleusSamplingFactor.HasValue)
             {
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
-            if (Optional.IsCollectionDefined(TokenSelectionBiases))
+            if (!(TokenSelectionBiases is ChangeTrackingDictionary<int, int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("logit_bias"u8);
                 SerializeTokenSelectionBiases(writer);
             }
-            if (Optional.IsDefined(User))
+            if (User != null)
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(ChoicesPerPrompt))
+            if (ChoicesPerPrompt.HasValue)
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteNumberValue(ChoicesPerPrompt.Value);
             }
-            if (Optional.IsDefined(LogProbabilityCount))
+            if (LogProbabilityCount.HasValue)
             {
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteNumberValue(LogProbabilityCount.Value);
             }
-            if (Optional.IsDefined(Echo))
+            if (Echo.HasValue)
             {
                 writer.WritePropertyName("echo"u8);
                 writer.WriteBooleanValue(Echo.Value);
             }
-            if (Optional.IsCollectionDefined(StopSequences))
+            if (!(StopSequences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("stop"u8);
                 writer.WriteStartArray();
@@ -84,27 +84,27 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PresencePenalty))
+            if (PresencePenalty.HasValue)
             {
                 writer.WritePropertyName("presence_penalty"u8);
                 writer.WriteNumberValue(PresencePenalty.Value);
             }
-            if (Optional.IsDefined(FrequencyPenalty))
+            if (FrequencyPenalty.HasValue)
             {
                 writer.WritePropertyName("frequency_penalty"u8);
                 writer.WriteNumberValue(FrequencyPenalty.Value);
             }
-            if (Optional.IsDefined(GenerationSampleCount))
+            if (GenerationSampleCount.HasValue)
             {
                 writer.WritePropertyName("best_of"u8);
                 writer.WriteNumberValue(GenerationSampleCount.Value);
             }
-            if (Optional.IsDefined(InternalShouldStreamResponse))
+            if (InternalShouldStreamResponse.HasValue)
             {
                 writer.WritePropertyName("stream"u8);
                 writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
             }
-            if (Optional.IsDefined(DeploymentName))
+            if (DeploymentName != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);

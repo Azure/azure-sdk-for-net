@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Sku))
+            if (options.Format != "W" && Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataLocationToServiceLocationMap))
+            if (options.Format != "W" && !(DataLocationToServiceLocationMap is ChangeTrackingList<DataLocationToServiceLocationMap> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataLocationToServiceLocationMap"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Capacity))
+            if (options.Format != "W" && Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
+            if (options.Format != "W" && !(Costs is ChangeTrackingList<DataBoxSkuCost> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
+            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DisabledReason))
+            if (options.Format != "W" && DisabledReason.HasValue)
             {
                 writer.WritePropertyName("disabledReason"u8);
                 writer.WriteStringValue(DisabledReason.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisabledReasonMessage))
+            if (options.Format != "W" && DisabledReasonMessage != null)
             {
                 writer.WritePropertyName("disabledReasonMessage"u8);
                 writer.WriteStringValue(DisabledReasonMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequiredFeature))
+            if (options.Format != "W" && RequiredFeature != null)
             {
                 writer.WritePropertyName("requiredFeature"u8);
                 writer.WriteStringValue(RequiredFeature);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CountriesWithinCommerceBoundary))
+            if (options.Format != "W" && !(CountriesWithinCommerceBoundary is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("countriesWithinCommerceBoundary"u8);
                 writer.WriteStartArray();

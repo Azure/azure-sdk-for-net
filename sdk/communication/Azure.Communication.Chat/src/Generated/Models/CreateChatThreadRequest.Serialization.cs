@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("topic"u8);
             writer.WriteStringValue(Topic);
-            if (Optional.IsCollectionDefined(Participants))
+            if (!(Participants is ChangeTrackingList<ChatParticipantInternal> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartArray();

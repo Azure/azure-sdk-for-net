@@ -15,22 +15,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BitRateLimit))
+            if (BitRateLimit.HasValue)
             {
                 writer.WritePropertyName("bitRateLimit"u8);
                 writer.WriteNumberValue(BitRateLimit.Value);
             }
-            if (Optional.IsDefined(EncodingInterval))
+            if (EncodingInterval.HasValue)
             {
                 writer.WritePropertyName("encodingInterval"u8);
                 writer.WriteNumberValue(EncodingInterval.Value);
             }
-            if (Optional.IsDefined(FrameRateLimit))
+            if (FrameRateLimit.HasValue)
             {
                 writer.WritePropertyName("frameRateLimit"u8);
                 writer.WriteNumberValue(FrameRateLimit.Value);
             }
-            if (Optional.IsDefined(GuaranteedFrameRate))
+            if (GuaranteedFrameRate.HasValue)
             {
                 writer.WritePropertyName("guaranteedFrameRate"u8);
                 writer.WriteBooleanValue(GuaranteedFrameRate.Value);

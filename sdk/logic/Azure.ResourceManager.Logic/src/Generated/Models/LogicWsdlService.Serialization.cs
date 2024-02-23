@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QualifiedName))
+            if (QualifiedName != null)
             {
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
             }
-            if (Optional.IsCollectionDefined(EndpointQualifiedNames))
+            if (!(EndpointQualifiedNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("EndpointQualifiedNames"u8);
                 writer.WriteStartArray();

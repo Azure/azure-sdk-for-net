@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
-            if (Optional.IsDefined(Instance))
+            if (Instance.HasValue)
             {
                 writer.WritePropertyName("instance"u8);
                 writer.WriteNumberValue(Instance.Value);

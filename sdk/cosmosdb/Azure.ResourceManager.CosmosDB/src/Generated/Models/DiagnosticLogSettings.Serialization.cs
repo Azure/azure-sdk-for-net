@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableFullTextQuery))
+            if (EnableFullTextQuery.HasValue)
             {
                 writer.WritePropertyName("enableFullTextQuery"u8);
                 writer.WriteStringValue(EnableFullTextQuery.Value.ToSerialString());

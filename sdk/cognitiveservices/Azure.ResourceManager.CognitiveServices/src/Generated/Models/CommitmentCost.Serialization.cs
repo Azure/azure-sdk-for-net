@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommitmentMeterId))
+            if (CommitmentMeterId != null)
             {
                 writer.WritePropertyName("commitmentMeterId"u8);
                 writer.WriteStringValue(CommitmentMeterId);
             }
-            if (Optional.IsDefined(OverageMeterId))
+            if (OverageMeterId != null)
             {
                 writer.WritePropertyName("overageMeterId"u8);
                 writer.WriteStringValue(OverageMeterId);

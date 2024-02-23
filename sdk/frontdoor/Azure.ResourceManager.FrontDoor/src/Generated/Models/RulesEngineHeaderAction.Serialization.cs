@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(HeaderActionType.ToString());
             writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceList))
+            if (options.Format != "W" && !(ResourceList is ChangeTrackingList<ResourceItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceReport))
+            if (options.Format != "W" && !(ComplianceReport is ChangeTrackingList<ComplianceReportItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("complianceReport"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CompliancePdfReport))
+            if (options.Format != "W" && CompliancePdfReport != null)
             {
                 writer.WritePropertyName("compliancePdfReport"u8);
                 writer.WriteObjectValue(CompliancePdfReport);
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceDetailedPdfReport))
+            if (options.Format != "W" && ComplianceDetailedPdfReport != null)
             {
                 writer.WritePropertyName("complianceDetailedPdfReport"u8);
                 writer.WriteObjectValue(ComplianceDetailedPdfReport);

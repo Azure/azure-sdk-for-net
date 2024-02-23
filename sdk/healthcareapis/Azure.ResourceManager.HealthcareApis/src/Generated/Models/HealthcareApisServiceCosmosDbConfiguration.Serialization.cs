@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferThroughput))
+            if (OfferThroughput.HasValue)
             {
                 writer.WritePropertyName("offerThroughput"u8);
                 writer.WriteNumberValue(OfferThroughput.Value);
             }
-            if (Optional.IsDefined(KeyVaultKeyUri))
+            if (KeyVaultKeyUri != null)
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CrossTenantCmkApplicationId))
+            if (CrossTenantCmkApplicationId.HasValue)
             {
                 writer.WritePropertyName("crossTenantCmkApplicationId"u8);
                 writer.WriteStringValue(CrossTenantCmkApplicationId.Value);

@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CollectionId))
+            if (options.Format != "W" && CollectionId.HasValue)
             {
                 writer.WritePropertyName("collectionId"u8);
                 writer.WriteStringValue(CollectionId.Value);
             }
-            if (Optional.IsDefined(CollectionName))
+            if (CollectionName != null)
             {
                 writer.WritePropertyName("collectionName"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (Optional.IsDefined(Claim))
+            if (Claim != null)
             {
                 writer.WritePropertyName("claim"u8);
                 writer.WriteStringValue(Claim);
             }
-            if (Optional.IsDefined(AreAllSubscriptionsSelected))
+            if (AreAllSubscriptionsSelected.HasValue)
             {
                 writer.WritePropertyName("allSubscriptions"u8);
                 writer.WriteBooleanValue(AreAllSubscriptionsSelected.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AreAllItemsApproved))
+            if (options.Format != "W" && AreAllItemsApproved.HasValue)
             {
                 writer.WritePropertyName("approveAllItems"u8);
                 writer.WriteBooleanValue(AreAllItemsApproved.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApproveAllItemsModifiedOn))
+            if (options.Format != "W" && ApproveAllItemsModifiedOn.HasValue)
             {
                 writer.WritePropertyName("approveAllItemsModifiedAt"u8);
                 writer.WriteStringValue(ApproveAllItemsModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(SubscriptionsList))
+            if (!(SubscriptionsList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptionsList"u8);
                 writer.WriteStartArray();
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfOffers))
+            if (options.Format != "W" && NumberOfOffers.HasValue)
             {
                 writer.WritePropertyName("numberOfOffers"u8);
                 writer.WriteNumberValue(NumberOfOffers.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedRules))
+            if (options.Format != "W" && !(AppliedRules is ChangeTrackingList<MarketplaceRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("appliedRules"u8);
                 writer.WriteStartArray();

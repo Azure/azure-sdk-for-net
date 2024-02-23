@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublisherUriString))
+            if (PublisherUriString != null)
             {
                 writer.WritePropertyName("publisherUri"u8);
                 writer.WriteStringValue(PublisherUriString);
             }
-            if (Optional.IsDefined(PublisherContact))
+            if (PublisherContact != null)
             {
                 writer.WritePropertyName("publisherContact"u8);
                 writer.WriteStringValue(PublisherContact);
             }
-            if (Optional.IsDefined(Eula))
+            if (Eula != null)
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (Optional.IsDefined(PublicNamePrefix))
+            if (PublicNamePrefix != null)
             {
                 writer.WritePropertyName("publicNamePrefix"u8);
                 writer.WriteStringValue(PublicNamePrefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(CommunityGalleryEnabled))
+            if (options.Format != "W" && CommunityGalleryEnabled.HasValue)
             {
                 writer.WritePropertyName("communityGalleryEnabled"u8);
                 writer.WriteBooleanValue(CommunityGalleryEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicNames))
+            if (options.Format != "W" && !(PublicNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publicNames"u8);
                 writer.WriteStartArray();

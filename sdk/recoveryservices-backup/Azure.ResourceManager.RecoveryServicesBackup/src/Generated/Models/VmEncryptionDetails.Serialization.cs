@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEncryptionEnabled))
+            if (IsEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("encryptionEnabled"u8);
                 writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(KekUri))
+            if (KekUri != null)
             {
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SecretKeyUri))
+            if (SecretKeyUri != null)
             {
                 writer.WritePropertyName("secretKeyUrl"u8);
                 writer.WriteStringValue(SecretKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KekVaultId))
+            if (KekVaultId != null)
             {
                 writer.WritePropertyName("kekVaultId"u8);
                 writer.WriteStringValue(KekVaultId);
             }
-            if (Optional.IsDefined(SecretKeyVaultId))
+            if (SecretKeyVaultId != null)
             {
                 writer.WritePropertyName("secretKeyVaultId"u8);
                 writer.WriteStringValue(SecretKeyVaultId);

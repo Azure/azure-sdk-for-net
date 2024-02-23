@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsResourceReferences))
+            if (!(DnsResourceReferences is ChangeTrackingList<DnsResourceReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsResourceReferences"u8);
                 writer.WriteStartArray();

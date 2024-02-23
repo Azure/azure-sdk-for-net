@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Access.ToString());
             writer.WritePropertyName("durationInSeconds"u8);
             writer.WriteNumberValue(DurationInSeconds);
-            if (Optional.IsDefined(GetSecureVmGuestStateSas))
+            if (GetSecureVmGuestStateSas.HasValue)
             {
                 writer.WritePropertyName("getSecureVMGuestStateSAS"u8);
                 writer.WriteBooleanValue(GetSecureVmGuestStateSas.Value);
             }
-            if (Optional.IsDefined(FileFormat))
+            if (FileFormat.HasValue)
             {
                 writer.WritePropertyName("fileFormat"u8);
                 writer.WriteStringValue(FileFormat.Value.ToString());

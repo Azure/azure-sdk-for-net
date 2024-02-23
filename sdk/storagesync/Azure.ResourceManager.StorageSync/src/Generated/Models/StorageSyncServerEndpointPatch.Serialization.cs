@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CloudTiering))
+            if (CloudTiering.HasValue)
             {
                 writer.WritePropertyName("cloudTiering"u8);
                 writer.WriteStringValue(CloudTiering.Value.ToString());
             }
-            if (Optional.IsDefined(VolumeFreeSpacePercent))
+            if (VolumeFreeSpacePercent.HasValue)
             {
                 writer.WritePropertyName("volumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
             }
-            if (Optional.IsDefined(TierFilesOlderThanDays))
+            if (TierFilesOlderThanDays.HasValue)
             {
                 writer.WritePropertyName("tierFilesOlderThanDays"u8);
                 writer.WriteNumberValue(TierFilesOlderThanDays.Value);
             }
-            if (Optional.IsDefined(OfflineDataTransfer))
+            if (OfflineDataTransfer.HasValue)
             {
                 writer.WritePropertyName("offlineDataTransfer"u8);
                 writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
             }
-            if (Optional.IsDefined(OfflineDataTransferShareName))
+            if (OfflineDataTransferShareName != null)
             {
                 writer.WritePropertyName("offlineDataTransferShareName"u8);
                 writer.WriteStringValue(OfflineDataTransferShareName);
             }
-            if (Optional.IsDefined(LocalCacheMode))
+            if (LocalCacheMode.HasValue)
             {
                 writer.WritePropertyName("localCacheMode"u8);
                 writer.WriteStringValue(LocalCacheMode.Value.ToString());

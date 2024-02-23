@@ -106,7 +106,9 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = await _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateEventHubConsumerGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation<EventHubConsumerGroupInfoResource>(Response.FromValue(new EventHubConsumerGroupInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateCreateEventHubConsumerGroupRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotHubArmOperation<EventHubConsumerGroupInfoResource>(Response.FromValue(new EventHubConsumerGroupInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -165,7 +167,9 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateEventHubConsumerGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, content, cancellationToken);
-                var operation = new IotHubArmOperation<EventHubConsumerGroupInfoResource>(Response.FromValue(new EventHubConsumerGroupInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubConsumerGroupInfoIotHubResourceRestClient.CreateCreateEventHubConsumerGroupRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotHubArmOperation<EventHubConsumerGroupInfoResource>(Response.FromValue(new EventHubConsumerGroupInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

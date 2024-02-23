@@ -37,6 +37,15 @@ namespace Azure.ResourceManager.Billing
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByUserRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByUserRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -90,6 +99,16 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByUserRequestUri(string paymentMethodName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods/", false);
+            uri.AppendPath(paymentMethodName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByUserRequest(string paymentMethodName)
@@ -176,6 +195,16 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        internal RequestUriBuilder CreateDeleteByUserRequestUri(string paymentMethodName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/paymentMethods/", false);
+            uri.AppendPath(paymentMethodName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteByUserRequest(string paymentMethodName)
         {
             var message = _pipeline.CreateMessage();
@@ -246,6 +275,17 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/paymentMethods", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName)
@@ -327,6 +367,18 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByBillingAccountRequestUri(string billingAccountName, string paymentMethodName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/paymentMethods/", false);
+            uri.AppendPath(paymentMethodName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string paymentMethodName)
@@ -433,6 +485,19 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        internal RequestUriBuilder CreateListByBillingProfileRequestUri(string billingAccountName, string billingProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/paymentMethodLinks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByBillingProfileRequest(string billingAccountName, string billingProfileName)
         {
             var message = _pipeline.CreateMessage();
@@ -532,6 +597,20 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByBillingProfileRequestUri(string billingAccountName, string billingProfileName, string paymentMethodName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/paymentMethodLinks/", false);
+            uri.AppendPath(paymentMethodName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, string paymentMethodName)
@@ -658,6 +737,20 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        internal RequestUriBuilder CreateDeleteAtBillingProfileRequestUri(string billingAccountName, string billingProfileName, string paymentMethodName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/paymentMethodLinks/", false);
+            uri.AppendPath(paymentMethodName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteAtBillingProfileRequest(string billingAccountName, string billingProfileName, string paymentMethodName)
         {
             var message = _pipeline.CreateMessage();
@@ -772,6 +865,14 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        internal RequestUriBuilder CreateListByUserNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByUserNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -838,6 +939,14 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountName)
@@ -926,6 +1035,14 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileNextPageRequestUri(string nextLink, string billingAccountName, string billingProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileNextPageRequest(string nextLink, string billingAccountName, string billingProfileName)

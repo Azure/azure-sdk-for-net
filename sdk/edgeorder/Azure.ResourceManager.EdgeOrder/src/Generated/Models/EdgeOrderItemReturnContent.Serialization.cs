@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReturnAddress))
+            if (ReturnAddress != null)
             {
                 writer.WritePropertyName("returnAddress"u8);
                 writer.WriteObjectValue(ReturnAddress);
             }
             writer.WritePropertyName("returnReason"u8);
             writer.WriteStringValue(ReturnReason);
-            if (Optional.IsDefined(ServiceTag))
+            if (ServiceTag != null)
             {
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
             }
-            if (Optional.IsDefined(IsShippingBoxRequired))
+            if (IsShippingBoxRequired.HasValue)
             {
                 writer.WritePropertyName("shippingBoxRequired"u8);
                 writer.WriteBooleanValue(IsShippingBoxRequired.Value);

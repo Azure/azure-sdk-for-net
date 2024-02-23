@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPercentUnhealthyServices))
+            if (MaxPercentUnhealthyServices.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);
             }
-            if (Optional.IsDefined(MaxPercentUnhealthyPartitionsPerService))
+            if (MaxPercentUnhealthyPartitionsPerService.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyPartitionsPerService"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyPartitionsPerService.Value);
             }
-            if (Optional.IsDefined(MaxPercentUnhealthyReplicasPerPartition))
+            if (MaxPercentUnhealthyReplicasPerPartition.HasValue)
             {
                 writer.WritePropertyName("maxPercentUnhealthyReplicasPerPartition"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyReplicasPerPartition.Value);

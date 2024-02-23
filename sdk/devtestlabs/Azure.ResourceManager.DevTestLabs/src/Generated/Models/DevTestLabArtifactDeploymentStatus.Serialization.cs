@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentStatus))
+            if (DeploymentStatus != null)
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus);
             }
-            if (Optional.IsDefined(ArtifactsApplied))
+            if (ArtifactsApplied.HasValue)
             {
                 writer.WritePropertyName("artifactsApplied"u8);
                 writer.WriteNumberValue(ArtifactsApplied.Value);
             }
-            if (Optional.IsDefined(TotalArtifacts))
+            if (TotalArtifacts.HasValue)
             {
                 writer.WritePropertyName("totalArtifacts"u8);
                 writer.WriteNumberValue(TotalArtifacts.Value);

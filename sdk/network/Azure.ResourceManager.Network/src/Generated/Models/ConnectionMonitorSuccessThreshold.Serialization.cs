@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChecksFailedPercent))
+            if (ChecksFailedPercent.HasValue)
             {
                 writer.WritePropertyName("checksFailedPercent"u8);
                 writer.WriteNumberValue(ChecksFailedPercent.Value);
             }
-            if (Optional.IsDefined(RoundTripTimeMs))
+            if (RoundTripTimeMs.HasValue)
             {
                 writer.WritePropertyName("roundTripTimeMs"u8);
                 writer.WriteNumberValue(RoundTripTimeMs.Value);

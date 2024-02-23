@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdvSecurityObjectModelType))
+            if (AdvSecurityObjectModelType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AdvSecurityObjectModelType);

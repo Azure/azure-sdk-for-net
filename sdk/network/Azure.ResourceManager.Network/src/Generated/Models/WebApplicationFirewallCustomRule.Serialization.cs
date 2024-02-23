@@ -27,29 +27,29 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(RateLimitDuration))
+            if (RateLimitDuration.HasValue)
             {
                 writer.WritePropertyName("rateLimitDuration"u8);
                 writer.WriteStringValue(RateLimitDuration.Value.ToString());
             }
-            if (Optional.IsDefined(RateLimitThreshold))
+            if (RateLimitThreshold.HasValue)
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(GroupByUserSession))
+            if (!(GroupByUserSession is ChangeTrackingList<GroupByUserSession> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupByUserSession"u8);
                 writer.WriteStartArray();

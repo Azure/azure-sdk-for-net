@@ -26,77 +26,77 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AdapterId))
+            if (options.Format != "W" && AdapterId != null)
             {
                 writer.WritePropertyName("adapterId"u8);
                 writer.WriteStringValue(AdapterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdapterPosition))
+            if (options.Format != "W" && AdapterPosition != null)
             {
                 writer.WritePropertyName("adapterPosition"u8);
                 writer.WriteObjectValue(AdapterPosition);
             }
-            if (options.Format != "W" && Optional.IsDefined(Index))
+            if (options.Format != "W" && Index.HasValue)
             {
                 writer.WritePropertyName("index"u8);
                 writer.WriteNumberValue(Index.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeId))
+            if (options.Format != "W" && NodeId.HasValue)
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkAdapterName))
+            if (options.Format != "W" && NetworkAdapterName != null)
             {
                 writer.WritePropertyName("networkAdapterName"u8);
                 writer.WriteStringValue(NetworkAdapterName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Label))
+            if (options.Format != "W" && Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkSpeed))
+            if (options.Format != "W" && LinkSpeed.HasValue)
             {
                 writer.WritePropertyName("linkSpeed"u8);
                 writer.WriteNumberValue(LinkSpeed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(RdmaStatus))
+            if (RdmaStatus.HasValue)
             {
                 writer.WritePropertyName("rdmaStatus"u8);
                 writer.WriteStringValue(RdmaStatus.Value.ToString());
             }
-            if (Optional.IsDefined(DhcpStatus))
+            if (DhcpStatus.HasValue)
             {
                 writer.WritePropertyName("dhcpStatus"u8);
                 writer.WriteStringValue(DhcpStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv4Configuration))
+            if (options.Format != "W" && IPv4Configuration != null)
             {
                 writer.WritePropertyName("ipv4Configuration"u8);
                 writer.WriteObjectValue(IPv4Configuration);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv6Configuration))
+            if (options.Format != "W" && IPv6Configuration != null)
             {
                 writer.WritePropertyName("ipv6Configuration"u8);
                 writer.WriteObjectValue(IPv6Configuration);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv6LinkLocalAddress))
+            if (options.Format != "W" && IPv6LinkLocalAddress != null)
             {
                 writer.WritePropertyName("ipv6LinkLocalAddress"u8);
                 writer.WriteStringValue(IPv6LinkLocalAddress);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DnsServers))
+            if (options.Format != "W" && !(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();

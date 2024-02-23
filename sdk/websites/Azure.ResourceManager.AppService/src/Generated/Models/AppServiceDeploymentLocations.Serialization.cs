@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AppServiceGeoRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostingEnvironments))
+            if (!(HostingEnvironments is ChangeTrackingList<AppServiceEnvironmentProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hostingEnvironments"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos))
+            if (!(HostingEnvironmentDeploymentInfos is ChangeTrackingList<HostingEnvironmentDeploymentInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostingEnvironmentDeploymentInfos"u8);
                 writer.WriteStartArray();

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataSetId"u8);
             writer.WriteStringValue(DataSetId);
-            if (options.Format != "W" && Optional.IsDefined(DataSetMappingStatus))
+            if (options.Format != "W" && DataSetMappingStatus.HasValue)
             {
                 writer.WritePropertyName("dataSetMappingStatus"u8);
                 writer.WriteStringValue(DataSetMappingStatus.Value.ToString());
             }
             writer.WritePropertyName("dataWarehouseName"u8);
             writer.WriteStringValue(DataWarehouseName);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinMatchingValue))
+            if (MinMatchingValue != null)
             {
                 writer.WritePropertyName("minMatchingValue"u8);
                 writer.WriteStringValue(MinMatchingValue);
             }
-            if (Optional.IsDefined(MaxMatchingValue))
+            if (MaxMatchingValue != null)
             {
                 writer.WritePropertyName("maxMatchingValue"u8);
                 writer.WriteStringValue(MaxMatchingValue);

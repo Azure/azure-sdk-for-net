@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Directory))
+            if (Directory != null)
             {
                 writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);
             }
             writer.WritePropertyName("repository"u8);
             writer.WriteStringValue(Repository);
-            if (Optional.IsDefined(Revision))
+            if (Revision != null)
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteStringValue(Revision);

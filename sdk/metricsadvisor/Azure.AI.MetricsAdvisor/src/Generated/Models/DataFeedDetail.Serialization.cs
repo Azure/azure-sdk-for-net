@@ -19,14 +19,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName"u8);
             writer.WriteStringValue(DataFeedName);
-            if (Optional.IsDefined(DataFeedDescription))
+            if (DataFeedDescription != null)
             {
                 writer.WritePropertyName("dataFeedDescription"u8);
                 writer.WriteStringValue(DataFeedDescription);
             }
             writer.WritePropertyName("granularityName"u8);
             writer.WriteStringValue(GranularityName.ToString());
-            if (Optional.IsDefined(GranularityAmount))
+            if (GranularityAmount.HasValue)
             {
                 if (GranularityAmount != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Dimension))
+            if (!(Dimension is ChangeTrackingList<DataFeedDimension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimension"u8);
                 writer.WriteStartArray();
@@ -55,44 +55,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TimestampColumn))
+            if (TimestampColumn != null)
             {
                 writer.WritePropertyName("timestampColumn"u8);
                 writer.WriteStringValue(TimestampColumn);
             }
             writer.WritePropertyName("dataStartFrom"u8);
             writer.WriteStringValue(DataStartFrom, "O");
-            if (Optional.IsDefined(StartOffsetInSeconds))
+            if (StartOffsetInSeconds.HasValue)
             {
                 writer.WritePropertyName("startOffsetInSeconds"u8);
                 writer.WriteNumberValue(StartOffsetInSeconds.Value);
             }
-            if (Optional.IsDefined(MaxConcurrency))
+            if (MaxConcurrency.HasValue)
             {
                 writer.WritePropertyName("maxConcurrency"u8);
                 writer.WriteNumberValue(MaxConcurrency.Value);
             }
-            if (Optional.IsDefined(MinRetryIntervalInSeconds))
+            if (MinRetryIntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("minRetryIntervalInSeconds"u8);
                 writer.WriteNumberValue(MinRetryIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(StopRetryAfterInSeconds))
+            if (StopRetryAfterInSeconds.HasValue)
             {
                 writer.WritePropertyName("stopRetryAfterInSeconds"u8);
                 writer.WriteNumberValue(StopRetryAfterInSeconds.Value);
             }
-            if (Optional.IsDefined(NeedRollup))
+            if (NeedRollup.HasValue)
             {
                 writer.WritePropertyName("needRollup"u8);
                 writer.WriteStringValue(NeedRollup.Value.ToString());
             }
-            if (Optional.IsDefined(RollUpMethod))
+            if (RollUpMethod.HasValue)
             {
                 writer.WritePropertyName("rollUpMethod"u8);
                 writer.WriteStringValue(RollUpMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RollUpColumns))
+            if (!(RollUpColumns is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("rollUpColumns"u8);
                 writer.WriteStartArray();
@@ -102,27 +102,27 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllUpIdentification))
+            if (AllUpIdentification != null)
             {
                 writer.WritePropertyName("allUpIdentification"u8);
                 writer.WriteStringValue(AllUpIdentification);
             }
-            if (Optional.IsDefined(FillMissingPointType))
+            if (FillMissingPointType.HasValue)
             {
                 writer.WritePropertyName("fillMissingPointType"u8);
                 writer.WriteStringValue(FillMissingPointType.Value.ToString());
             }
-            if (Optional.IsDefined(FillMissingPointValue))
+            if (FillMissingPointValue.HasValue)
             {
                 writer.WritePropertyName("fillMissingPointValue"u8);
                 writer.WriteNumberValue(FillMissingPointValue.Value);
             }
-            if (Optional.IsDefined(ViewMode))
+            if (ViewMode.HasValue)
             {
                 writer.WritePropertyName("viewMode"u8);
                 writer.WriteStringValue(ViewMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Admins))
+            if (!(Admins is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Viewers))
+            if (!(Viewers is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("viewers"u8);
                 writer.WriteStartArray();
@@ -142,17 +142,17 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ActionLinkTemplate))
+            if (ActionLinkTemplate != null)
             {
                 writer.WritePropertyName("actionLinkTemplate"u8);
                 writer.WriteStringValue(ActionLinkTemplate);
             }
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(CredentialId))
+            if (CredentialId != null)
             {
                 writer.WritePropertyName("credentialId"u8);
                 writer.WriteStringValue(CredentialId);

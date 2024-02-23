@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssessmentType))
+            if (options.Format != "W" && AssessmentType != null)
             {
                 writer.WritePropertyName("assessmentType"u8);
                 writer.WriteStringValue(AssessmentType);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssessmentDetailsLink))
+            if (options.Format != "W" && AssessmentDetailsLink != null)
             {
                 writer.WritePropertyName("assessmentDetailsLink"u8);
                 writer.WriteStringValue(AssessmentDetailsLink);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PassedResources))
+            if (options.Format != "W" && PassedResources.HasValue)
             {
                 writer.WritePropertyName("passedResources"u8);
                 writer.WriteNumberValue(PassedResources.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedResources))
+            if (options.Format != "W" && FailedResources.HasValue)
             {
                 writer.WritePropertyName("failedResources"u8);
                 writer.WriteNumberValue(FailedResources.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkippedResources))
+            if (options.Format != "W" && SkippedResources.HasValue)
             {
                 writer.WritePropertyName("skippedResources"u8);
                 writer.WriteNumberValue(SkippedResources.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnsupportedResources))
+            if (options.Format != "W" && UnsupportedResources.HasValue)
             {
                 writer.WritePropertyName("unsupportedResources"u8);
                 writer.WriteNumberValue(UnsupportedResources.Value);

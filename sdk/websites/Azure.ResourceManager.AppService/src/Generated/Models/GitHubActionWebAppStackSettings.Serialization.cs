@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsSupported))
+            if (options.Format != "W" && IsSupported.HasValue)
             {
                 writer.WritePropertyName("isSupported"u8);
                 writer.WriteBooleanValue(IsSupported.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedVersion))
+            if (options.Format != "W" && SupportedVersion != null)
             {
                 writer.WritePropertyName("supportedVersion"u8);
                 writer.WriteStringValue(SupportedVersion);

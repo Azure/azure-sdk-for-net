@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VolumeName))
+            if (VolumeName != null)
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
-            if (Optional.IsDefined(MountPath))
+            if (MountPath != null)
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
-            if (Optional.IsDefined(SubPath))
+            if (SubPath != null)
             {
                 writer.WritePropertyName("subPath"u8);
                 writer.WriteStringValue(SubPath);

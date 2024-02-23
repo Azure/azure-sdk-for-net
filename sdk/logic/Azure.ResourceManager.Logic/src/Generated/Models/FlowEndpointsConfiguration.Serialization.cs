@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Workflow))
+            if (Workflow != null)
             {
                 writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
             }
-            if (Optional.IsDefined(Connector))
+            if (Connector != null)
             {
                 writer.WritePropertyName("connector"u8);
                 writer.WriteObjectValue(Connector);

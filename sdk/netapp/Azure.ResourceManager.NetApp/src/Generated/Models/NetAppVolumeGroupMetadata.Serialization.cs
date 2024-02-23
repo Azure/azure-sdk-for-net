@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupDescription))
+            if (GroupDescription != null)
             {
                 writer.WritePropertyName("groupDescription"u8);
                 writer.WriteStringValue(GroupDescription);
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (ApplicationType.HasValue)
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (Optional.IsDefined(ApplicationIdentifier))
+            if (ApplicationIdentifier != null)
             {
                 writer.WritePropertyName("applicationIdentifier"u8);
                 writer.WriteStringValue(ApplicationIdentifier);
             }
-            if (Optional.IsCollectionDefined(GlobalPlacementRules))
+            if (!(GlobalPlacementRules is ChangeTrackingList<NetAppVolumePlacementRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("globalPlacementRules"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeploymentSpecId))
+            if (DeploymentSpecId != null)
             {
                 writer.WritePropertyName("deploymentSpecId"u8);
                 writer.WriteStringValue(DeploymentSpecId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumesCount))
+            if (options.Format != "W" && VolumesCount.HasValue)
             {
                 writer.WritePropertyName("volumesCount"u8);
                 writer.WriteNumberValue(VolumesCount.Value);

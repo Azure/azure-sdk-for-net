@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultSkuName))
+            if (options.Format != "W" && DefaultSkuName != null)
             {
                 writer.WritePropertyName("defaultSkuName"u8);
                 writer.WriteStringValue(DefaultSkuName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageEditions))
+            if (options.Format != "W" && !(SupportedStorageEditions is ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageEditions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerSkus))
+            if (options.Format != "W" && !(SupportedServerSkus is ChangeTrackingList<PostgreSqlFlexibleServerSkuCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedServerSkus"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && CapabilityStatus.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

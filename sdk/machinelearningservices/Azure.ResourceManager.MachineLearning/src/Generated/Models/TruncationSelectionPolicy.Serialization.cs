@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TruncationPercentage))
+            if (TruncationPercentage.HasValue)
             {
                 writer.WritePropertyName("truncationPercentage"u8);
                 writer.WriteNumberValue(TruncationPercentage.Value);
             }
-            if (Optional.IsDefined(DelayEvaluation))
+            if (DelayEvaluation.HasValue)
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (Optional.IsDefined(EvaluationInterval))
+            if (EvaluationInterval.HasValue)
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);

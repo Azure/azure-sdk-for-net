@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkType))
+            if (LinkType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayText))
+            if (DisplayText != null)
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteObjectValue(DisplayText);
             }
-            if (Optional.IsDefined(ExtensionName))
+            if (ExtensionName != null)
             {
                 writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
-            if (Optional.IsDefined(BladeName))
+            if (BladeName != null)
             {
                 writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER

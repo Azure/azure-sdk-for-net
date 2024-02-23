@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Quota.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            if (Optional.IsDefined(LimitType))
+            if (LimitType.HasValue)
             {
                 writer.WritePropertyName("limitType"u8);
                 writer.WriteStringValue(LimitType.Value.ToString());

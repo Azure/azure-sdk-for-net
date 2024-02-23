@@ -43,7 +43,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteBooleanValue(IsNegativeAnomaly);
             writer.WritePropertyName("isPositiveAnomaly"u8);
             writer.WriteBooleanValue(IsPositiveAnomaly);
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);

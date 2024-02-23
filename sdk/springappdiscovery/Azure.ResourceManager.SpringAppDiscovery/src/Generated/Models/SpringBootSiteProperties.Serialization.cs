@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MasterSiteId))
+            if (MasterSiteId != null)
             {
                 writer.WritePropertyName("masterSiteId"u8);
                 writer.WriteStringValue(MasterSiteId);
             }
-            if (Optional.IsDefined(MigrateProjectId))
+            if (MigrateProjectId != null)
             {
                 writer.WritePropertyName("migrateProjectId"u8);
                 writer.WriteStringValue(MigrateProjectId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

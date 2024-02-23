@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(AddedAt))
+            if (AddedAt.HasValue)
             {
                 writer.WritePropertyName("addedAt"u8);
                 writer.WriteStringValue(AddedAt.Value, "O");

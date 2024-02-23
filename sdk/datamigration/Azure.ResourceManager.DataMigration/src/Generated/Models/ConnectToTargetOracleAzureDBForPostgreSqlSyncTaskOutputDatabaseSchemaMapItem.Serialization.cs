@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Database))
+            if (Database != null)
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (Optional.IsCollectionDefined(Schemas))
+            if (!(Schemas is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("schemas"u8);
                 writer.WriteStartArray();

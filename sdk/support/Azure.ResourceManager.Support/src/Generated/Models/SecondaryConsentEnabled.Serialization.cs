@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(SecondaryConsentEnabledType))
+            if (SecondaryConsentEnabledType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecondaryConsentEnabledType);

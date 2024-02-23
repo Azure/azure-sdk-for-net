@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableUpgradeSchedule))
+            if (EnableUpgradeSchedule.HasValue)
             {
                 writer.WritePropertyName("upgradeScheduleEnabled"u8);
                 writer.WriteBooleanValue(EnableUpgradeSchedule.Value);
             }
-            if (Optional.IsDefined(ScheduledOn))
+            if (ScheduledOn.HasValue)
             {
                 writer.WritePropertyName("scheduledTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");

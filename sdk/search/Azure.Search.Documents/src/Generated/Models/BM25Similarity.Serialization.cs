@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(K1))
+            if (K1.HasValue)
             {
                 if (K1 != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("k1");
                 }
             }
-            if (Optional.IsDefined(B))
+            if (B.HasValue)
             {
                 if (B != null)
                 {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(DayOfWeek.ToSerialString());
             writer.WritePropertyName("startHourUtc"u8);
             writer.WriteNumberValue(StartHourUtc);
-            if (Optional.IsDefined(MaintenanceWindow))
+            if (MaintenanceWindow.HasValue)
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteStringValue(MaintenanceWindow.Value, "P");

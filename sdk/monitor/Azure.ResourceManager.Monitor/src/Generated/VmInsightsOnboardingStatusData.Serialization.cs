@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(OnboardingStatus))
+            if (OnboardingStatus.HasValue)
             {
                 writer.WritePropertyName("onboardingStatus"u8);
                 writer.WriteStringValue(OnboardingStatus.Value.ToString());
             }
-            if (Optional.IsDefined(DataStatus))
+            if (DataStatus.HasValue)
             {
                 writer.WritePropertyName("dataStatus"u8);
                 writer.WriteStringValue(DataStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<DataContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

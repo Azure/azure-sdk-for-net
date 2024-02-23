@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentityId))
+            if (UserAssignedIdentityId != null)
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentityId);
             }
-            if (Optional.IsDefined(UseSystemAssignedIdentity))
+            if (UseSystemAssignedIdentity != null)
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
 #if NET6_0_OR_GREATER

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CassandraColumnType))
+            if (CassandraColumnType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CassandraColumnType);

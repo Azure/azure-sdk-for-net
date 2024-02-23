@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtectionLevel))
+            if (ProtectionLevel.HasValue)
             {
                 writer.WritePropertyName("protectionLevel"u8);
                 writer.WriteStringValue(ProtectionLevel.Value.ToString());

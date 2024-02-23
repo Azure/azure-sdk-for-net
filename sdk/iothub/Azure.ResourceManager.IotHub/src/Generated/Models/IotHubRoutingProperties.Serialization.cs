@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoints))
+            if (Endpoints != null)
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteObjectValue(Endpoints);
             }
-            if (Optional.IsCollectionDefined(Routes))
+            if (!(Routes is ChangeTrackingList<RoutingRuleProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FallbackRoute))
+            if (FallbackRoute != null)
             {
                 writer.WritePropertyName("fallbackRoute"u8);
                 writer.WriteObjectValue(FallbackRoute);
             }
-            if (Optional.IsCollectionDefined(Enrichments))
+            if (!(Enrichments is ChangeTrackingList<IotHubEnrichmentProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("enrichments"u8);
                 writer.WriteStartArray();

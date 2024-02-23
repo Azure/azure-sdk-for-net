@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Instance))
+            if (Instance != null)
             {
                 writer.WritePropertyName("instance"u8);
                 writer.WriteStringValue(Instance);
             }
-            if (Optional.IsCollectionDefined(DimensionFilter))
+            if (!(DimensionFilter is ChangeTrackingList<DataBoxEdgeMetricDimension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdditionalDimensions))
+            if (!(AdditionalDimensions is ChangeTrackingList<DataBoxEdgeMetricDimension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("additionalDimensions"u8);
                 writer.WriteStartArray();

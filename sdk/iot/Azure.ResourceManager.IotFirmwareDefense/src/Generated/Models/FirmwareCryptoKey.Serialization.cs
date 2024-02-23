@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirmwareCryptoKeyId))
+            if (FirmwareCryptoKeyId != null)
             {
                 if (FirmwareCryptoKeyId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cryptoKeyId");
                 }
             }
-            if (Optional.IsDefined(KeyType))
+            if (KeyType != null)
             {
                 if (KeyType != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keyType");
                 }
             }
-            if (Optional.IsDefined(KeySize))
+            if (KeySize.HasValue)
             {
                 if (KeySize != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keySize");
                 }
             }
-            if (Optional.IsDefined(KeyAlgorithm))
+            if (KeyAlgorithm != null)
             {
                 if (KeyAlgorithm != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keyAlgorithm");
                 }
             }
-            if (Optional.IsCollectionDefined(Usage))
+            if (!(Usage is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (Usage != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("usage");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FilePaths))
+            if (options.Format != "W" && !(FilePaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (FilePaths != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("filePaths");
                 }
             }
-            if (Optional.IsDefined(PairedKey))
+            if (PairedKey != null)
             {
                 if (PairedKey != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("pairedKey");
                 }
             }
-            if (Optional.IsDefined(IsShortKeySize))
+            if (IsShortKeySize.HasValue)
             {
                 if (IsShortKeySize != null)
                 {

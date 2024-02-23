@@ -101,7 +101,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _dataCollectionEndpointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<DataCollectionEndpointResource>(Response.FromValue(new DataCollectionEndpointResource(Client, response), response.GetRawResponse()));
+                var uri = _dataCollectionEndpointRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<DataCollectionEndpointResource>(Response.FromValue(new DataCollectionEndpointResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -160,7 +162,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _dataCollectionEndpointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, data, cancellationToken);
-                var operation = new MonitorArmOperation<DataCollectionEndpointResource>(Response.FromValue(new DataCollectionEndpointResource(Client, response), response.GetRawResponse()));
+                var uri = _dataCollectionEndpointRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionEndpointName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<DataCollectionEndpointResource>(Response.FromValue(new DataCollectionEndpointResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

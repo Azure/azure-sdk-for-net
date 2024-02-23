@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChartVersion))
+            if (ChartVersion != null)
             {
                 writer.WritePropertyName("chartVersion"u8);
                 writer.WriteStringValue(ChartVersion);
             }
-            if (Optional.IsDefined(ChartValues))
+            if (ChartValues != null)
             {
                 writer.WritePropertyName("chartValues"u8);
                 writer.WriteStringValue(ChartValues);

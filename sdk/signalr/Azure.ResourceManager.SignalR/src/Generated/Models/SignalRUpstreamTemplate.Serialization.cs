@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HubPattern))
+            if (HubPattern != null)
             {
                 writer.WritePropertyName("hubPattern"u8);
                 writer.WriteStringValue(HubPattern);
             }
-            if (Optional.IsDefined(EventPattern))
+            if (EventPattern != null)
             {
                 writer.WritePropertyName("eventPattern"u8);
                 writer.WriteStringValue(EventPattern);
             }
-            if (Optional.IsDefined(CategoryPattern))
+            if (CategoryPattern != null)
             {
                 writer.WritePropertyName("categoryPattern"u8);
                 writer.WriteStringValue(CategoryPattern);
             }
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
-            if (Optional.IsDefined(Auth))
+            if (Auth != null)
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);

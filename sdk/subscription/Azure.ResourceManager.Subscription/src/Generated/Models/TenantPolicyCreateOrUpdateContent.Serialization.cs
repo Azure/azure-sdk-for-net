@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlockSubscriptionsLeavingTenant))
+            if (BlockSubscriptionsLeavingTenant.HasValue)
             {
                 writer.WritePropertyName("blockSubscriptionsLeavingTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsLeavingTenant.Value);
             }
-            if (Optional.IsDefined(BlockSubscriptionsIntoTenant))
+            if (BlockSubscriptionsIntoTenant.HasValue)
             {
                 writer.WritePropertyName("blockSubscriptionsIntoTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsIntoTenant.Value);
             }
-            if (Optional.IsCollectionDefined(ExemptedPrincipals))
+            if (!(ExemptedPrincipals is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exemptedPrincipals"u8);
                 writer.WriteStartArray();

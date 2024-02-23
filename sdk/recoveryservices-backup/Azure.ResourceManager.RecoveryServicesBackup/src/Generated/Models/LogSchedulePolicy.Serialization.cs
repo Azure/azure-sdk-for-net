@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduleFrequencyInMins))
+            if (ScheduleFrequencyInMins.HasValue)
             {
                 writer.WritePropertyName("scheduleFrequencyInMins"u8);
                 writer.WriteNumberValue(ScheduleFrequencyInMins.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseIPAddress))
+            if (BaseIPAddress != null)
             {
                 writer.WritePropertyName("baseIpAddress"u8);
                 writer.WriteStringValue(BaseIPAddress);
             }
-            if (Optional.IsDefined(PrefixLength))
+            if (PrefixLength.HasValue)
             {
                 writer.WritePropertyName("prefixLength"u8);
                 writer.WriteNumberValue(PrefixLength.Value);

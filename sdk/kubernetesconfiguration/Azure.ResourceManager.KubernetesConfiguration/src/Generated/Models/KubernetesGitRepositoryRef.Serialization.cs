@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 if (Branch != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("branch");
                 }
             }
-            if (Optional.IsDefined(Tag))
+            if (Tag != null)
             {
                 if (Tag != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("tag");
                 }
             }
-            if (Optional.IsDefined(Semver))
+            if (Semver != null)
             {
                 if (Semver != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("semver");
                 }
             }
-            if (Optional.IsDefined(Commit))
+            if (Commit != null)
             {
                 if (Commit != null)
                 {

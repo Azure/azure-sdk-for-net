@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("componentName"u8);
             writer.WriteStringValue(ComponentName);
-            if (Optional.IsDefined(LicenseKey))
+            if (LicenseKey != null)
             {
                 writer.WritePropertyName("licenseKey"u8);
                 writer.WriteObjectValue(LicenseKey);

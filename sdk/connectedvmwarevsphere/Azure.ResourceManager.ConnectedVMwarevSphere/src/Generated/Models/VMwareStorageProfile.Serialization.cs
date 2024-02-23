@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Disks))
+            if (!(Disks is ChangeTrackingList<VMwareVirtualDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ScsiControllers))
+            if (options.Format != "W" && !(ScsiControllers is ChangeTrackingList<VirtualScsiController> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scsiControllers"u8);
                 writer.WriteStartArray();

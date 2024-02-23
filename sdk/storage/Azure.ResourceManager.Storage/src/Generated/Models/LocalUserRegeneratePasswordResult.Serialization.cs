@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SshPassword))
+            if (options.Format != "W" && SshPassword != null)
             {
                 writer.WritePropertyName("sshPassword"u8);
                 writer.WriteStringValue(SshPassword);

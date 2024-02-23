@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Advisor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Problem))
+            if (Problem != null)
             {
                 writer.WritePropertyName("problem"u8);
                 writer.WriteStringValue(Problem);
             }
-            if (Optional.IsDefined(Solution))
+            if (Solution != null)
             {
                 writer.WritePropertyName("solution"u8);
                 writer.WriteStringValue(Solution);

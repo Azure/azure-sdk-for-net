@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NumberOfContainers))
+            if (NumberOfContainers.HasValue)
             {
                 writer.WritePropertyName("numberOfContainers"u8);
                 writer.WriteNumberValue(NumberOfContainers.Value);
