@@ -1,10 +1,11 @@
 # Azure.Developer.Signing client library for .NET
 
-Azure.Developer.Signing is a managed service that helps developers get secret simply and securely.
+Azure.Developer.Signing is a managed service that simplifies the signing process for developers, making it more accessible to all.
 
-Use the client library for to:
+Use the client library for Azure Developer Signing to:
 
-* [Get secret](https://docs.microsoft.com/azure)
+* [Perform Signing of bits](https://docs.microsoft.com/azure)
+* [Access Signing information](https://docs.microsoft.com/azure)
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
 
@@ -12,11 +13,7 @@ Use the client library for to:
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
-
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
@@ -26,21 +23,32 @@ dotnet add package Azure.Developer.Signing --prerelease
 
 ### Prerequisites
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
-
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 6.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 ### Authenticate the client
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+To access the client, you can use the [Token Credential authentication](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential) method provided by Standard Azure Active Directory. The identity interacting with the resource must have the role of `Code Signing Certificate Profile Signer` on the resource. These roles need to be assigned from the Azure portal or by using the Azure CLI.
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+To use Azure Active Directory authentication, add the Azure Identity package:
+
+`dotnet add package Azure.Identity`
+
+You will also need to register a new AAD application, or run locally or in an environment with a managed identity. If using an application, set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+This library interacts with the Azure Developer Signing service using two principal concepts, these are:
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+- `Code Signing Accounts` – Logical container holding certificate profiles and considered the Azure Developer Signing resource.
+- `Certificate Profile` – Template with the information that is used in the issued certificates, and a sub-resource to a Code Signing Account resource.
+
+Since the interaction of the client is at the certificate profile level, the client is designed to interact with this entity.
+
+```C# Snippet:Azure_Developer_Signing_CreateCertificateProfileClient_Scenario
+    var credential = new DefaultAzureCredential();
+    var signClient = new SigningClient(credential);
+    var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
+```
 
 ### Thread safety
 
@@ -61,26 +69,60 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/developer-signing/Azure.Developer.Signing/samples).
 
+### Sign bits
+
+```C# Snippet:Azure_Developer_Signing_SigningASampleFile
+    var credential = new DefaultAzureCredential();
+    var signClient = new SigningClient(credential);
+    var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
+    //Add Signing here...
+```
+
+### List Available customer EKUs
+
+```C# Snippet:Azure_Developer_Signing_ListAvailableCustomerEKUs
+    var credential = new DefaultAzureCredential();
+    var signClient = new SigningClient(credential);
+    var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
+    //List Available customer EKUs here...
+```
+
+### Download Root Certificate
+
+```C# Snippet:Azure_Developer_Signing_GetRootCertificate
+    var credential = new DefaultAzureCredential();
+    var signClient = new SigningClient(credential);
+    var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
+    //Get Root Certificate here...
+```
+
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+Errors may occur during the Signing Action due to problems with Azure resources or your Azure configuration. You can view the `errorDetails` property on the SignResult if the signing action fails, it will show more information about the problem and how to resolve it.
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
-
-## Next steps
-
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+Ensure that your client has the correct permissions to perform the action you are trying to perform. For example, if you are trying to sign a file, ensure that your client has the `Code Signing Certificate Profile Signer` role on the resource.
 
 ## Contributing
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+See the [DeveloperSigning CONTRIBUTING.md][developersigning_contrib] for details on building, testing, and contributing to this library.
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
 <!-- LINKS -->
+[developersigning_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developersigning/CONTRIBUTING.md
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+[cla]: https://cla.microsoft.com
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[email_opencode]: mailto:opencode@microsoft.com
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/developer-signing/Azure.Developer.Signing/README.png)
+
+## Next steps
+
+For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
