@@ -21,7 +21,6 @@ namespace Azure.Provisioning
 
         private static string GetScopeName(Resource resource)
         {
-            // for subscriptions we cannot use the Id.Name as
             var prefix = resource is Subscription ? resource.Name : resource.Id.Name.Replace('-', '_');
             return $"{prefix}_module";
         }
