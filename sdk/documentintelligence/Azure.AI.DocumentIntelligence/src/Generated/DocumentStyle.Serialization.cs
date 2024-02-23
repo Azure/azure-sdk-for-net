@@ -27,32 +27,32 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsHandwritten))
+            if (IsHandwritten.HasValue)
             {
                 writer.WritePropertyName("isHandwritten"u8);
                 writer.WriteBooleanValue(IsHandwritten.Value);
             }
-            if (Optional.IsDefined(SimilarFontFamily))
+            if (SimilarFontFamily != null)
             {
                 writer.WritePropertyName("similarFontFamily"u8);
                 writer.WriteStringValue(SimilarFontFamily);
             }
-            if (Optional.IsDefined(FontStyle))
+            if (FontStyle.HasValue)
             {
                 writer.WritePropertyName("fontStyle"u8);
                 writer.WriteStringValue(FontStyle.Value.ToString());
             }
-            if (Optional.IsDefined(FontWeight))
+            if (FontWeight.HasValue)
             {
                 writer.WritePropertyName("fontWeight"u8);
                 writer.WriteStringValue(FontWeight.Value.ToString());
             }
-            if (Optional.IsDefined(Color))
+            if (Color != null)
             {
                 writer.WritePropertyName("color"u8);
                 writer.WriteStringValue(Color);
             }
-            if (Optional.IsDefined(BackgroundColor))
+            if (BackgroundColor != null)
             {
                 writer.WritePropertyName("backgroundColor"u8);
                 writer.WriteStringValue(BackgroundColor);

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkLink))
+            if (VirtualNetworkLink != null)
             {
                 writer.WritePropertyName("virtualNetworkLink"u8);
                 JsonSerializer.Serialize(writer, VirtualNetworkLink);

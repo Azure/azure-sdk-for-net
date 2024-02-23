@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EmailAddress))
+            if (options.Format != "W" && EmailAddress != null)
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(ElasticCloudSsoDefaultUri))
+            if (options.Format != "W" && ElasticCloudSsoDefaultUri != null)
             {
                 writer.WritePropertyName("elasticCloudSsoDefaultUrl"u8);
                 writer.WriteStringValue(ElasticCloudSsoDefaultUri.AbsoluteUri);

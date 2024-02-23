@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemoryCapacity))
+            if (options.Format != "W" && MemoryCapacity != null)
             {
                 writer.WritePropertyName("memoryCapacity"u8);
                 writer.WriteStringValue(MemoryCapacity);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskCapacity))
+            if (options.Format != "W" && DiskCapacity != null)
             {
                 writer.WritePropertyName("diskCapacity"u8);
                 writer.WriteStringValue(DiskCapacity);
