@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CategoryConfigurations))
+            if (!(CategoryConfigurations is ChangeTrackingList<CategoryConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categoryConfigurations"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BranchConfiguration))
+            if (BranchConfiguration != null)
             {
                 writer.WritePropertyName("branchConfiguration"u8);
                 writer.WriteObjectValue(BranchConfiguration);
             }
-            if (Optional.IsDefined(InheritFromParentState))
+            if (InheritFromParentState.HasValue)
             {
                 writer.WritePropertyName("inheritFromParentState"u8);
                 writer.WriteStringValue(InheritFromParentState.Value.ToString());
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<CategoryConfiguration> array = new List<CategoryConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CategoryConfiguration.DeserializeCategoryConfiguration(item));
+                        array.Add(CategoryConfiguration.DeserializeCategoryConfiguration(item, options));
                     }
                     categoryConfigurations = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value);
+                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inheritFromParentState"u8))

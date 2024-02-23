@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.Storage
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Sku))
+            if (options.Format != "W" && Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -78,134 +78,134 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryEndpoints))
+            if (options.Format != "W" && PrimaryEndpoints != null)
             {
                 writer.WritePropertyName("primaryEndpoints"u8);
                 writer.WriteObjectValue(PrimaryEndpoints);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryLocation))
+            if (options.Format != "W" && PrimaryLocation.HasValue)
             {
                 writer.WritePropertyName("primaryLocation"u8);
                 writer.WriteStringValue(PrimaryLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusOfPrimary))
+            if (options.Format != "W" && StatusOfPrimary.HasValue)
             {
                 writer.WritePropertyName("statusOfPrimary"u8);
                 writer.WriteStringValue(StatusOfPrimary.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastGeoFailoverOn))
+            if (options.Format != "W" && LastGeoFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastGeoFailoverTime"u8);
                 writer.WriteStringValue(LastGeoFailoverOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryLocation))
+            if (options.Format != "W" && SecondaryLocation.HasValue)
             {
                 writer.WritePropertyName("secondaryLocation"u8);
                 writer.WriteStringValue(SecondaryLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusOfSecondary))
+            if (options.Format != "W" && StatusOfSecondary.HasValue)
             {
                 writer.WritePropertyName("statusOfSecondary"u8);
                 writer.WriteStringValue(StatusOfSecondary.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomDomain))
+            if (options.Format != "W" && CustomDomain != null)
             {
                 writer.WritePropertyName("customDomain"u8);
                 writer.WriteObjectValue(CustomDomain);
             }
-            if (options.Format != "W" && Optional.IsDefined(SasPolicy))
+            if (options.Format != "W" && SasPolicy != null)
             {
                 writer.WritePropertyName("sasPolicy"u8);
                 writer.WriteObjectValue(SasPolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyPolicy))
+            if (options.Format != "W" && KeyPolicy != null)
             {
                 writer.WritePropertyName("keyPolicy"u8);
                 writer.WriteObjectValue(KeyPolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyCreationTime))
+            if (options.Format != "W" && KeyCreationTime != null)
             {
                 writer.WritePropertyName("keyCreationTime"u8);
                 writer.WriteObjectValue(KeyCreationTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryEndpoints))
+            if (options.Format != "W" && SecondaryEndpoints != null)
             {
                 writer.WritePropertyName("secondaryEndpoints"u8);
                 writer.WriteObjectValue(SecondaryEndpoints);
             }
-            if (options.Format != "W" && Optional.IsDefined(Encryption))
+            if (options.Format != "W" && Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccessTier))
+            if (options.Format != "W" && AccessTier.HasValue)
             {
                 writer.WritePropertyName("accessTier"u8);
                 writer.WriteStringValue(AccessTier.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AzureFilesIdentityBasedAuthentication))
+            if (AzureFilesIdentityBasedAuthentication != null)
             {
                 writer.WritePropertyName("azureFilesIdentityBasedAuthentication"u8);
                 writer.WriteObjectValue(AzureFilesIdentityBasedAuthentication);
             }
-            if (Optional.IsDefined(EnableHttpsTrafficOnly))
+            if (EnableHttpsTrafficOnly.HasValue)
             {
                 writer.WritePropertyName("supportsHttpsTrafficOnly"u8);
                 writer.WriteBooleanValue(EnableHttpsTrafficOnly.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkRuleSet))
+            if (options.Format != "W" && NetworkRuleSet != null)
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsDefined(IsSftpEnabled))
+            if (IsSftpEnabled.HasValue)
             {
                 writer.WritePropertyName("isSftpEnabled"u8);
                 writer.WriteBooleanValue(IsSftpEnabled.Value);
             }
-            if (Optional.IsDefined(IsLocalUserEnabled))
+            if (IsLocalUserEnabled.HasValue)
             {
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
-            if (Optional.IsDefined(IsHnsEnabled))
+            if (IsHnsEnabled.HasValue)
             {
                 writer.WritePropertyName("isHnsEnabled"u8);
                 writer.WriteBooleanValue(IsHnsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(GeoReplicationStats))
+            if (options.Format != "W" && GeoReplicationStats != null)
             {
                 writer.WritePropertyName("geoReplicationStats"u8);
                 writer.WriteObjectValue(GeoReplicationStats);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsFailoverInProgress))
+            if (options.Format != "W" && IsFailoverInProgress.HasValue)
             {
                 writer.WritePropertyName("failoverInProgress"u8);
                 writer.WriteBooleanValue(IsFailoverInProgress.Value);
             }
-            if (Optional.IsDefined(LargeFileSharesState))
+            if (LargeFileSharesState.HasValue)
             {
                 writer.WritePropertyName("largeFileSharesState"u8);
                 writer.WriteStringValue(LargeFileSharesState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<StoragePrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -215,67 +215,67 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RoutingPreference))
+            if (RoutingPreference != null)
             {
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteObjectValue(RoutingPreference);
             }
-            if (options.Format != "W" && Optional.IsDefined(BlobRestoreStatus))
+            if (options.Format != "W" && BlobRestoreStatus != null)
             {
                 writer.WritePropertyName("blobRestoreStatus"u8);
                 writer.WriteObjectValue(BlobRestoreStatus);
             }
-            if (Optional.IsDefined(AllowBlobPublicAccess))
+            if (AllowBlobPublicAccess.HasValue)
             {
                 writer.WritePropertyName("allowBlobPublicAccess"u8);
                 writer.WriteBooleanValue(AllowBlobPublicAccess.Value);
             }
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(AllowSharedKeyAccess))
+            if (AllowSharedKeyAccess.HasValue)
             {
                 writer.WritePropertyName("allowSharedKeyAccess"u8);
                 writer.WriteBooleanValue(AllowSharedKeyAccess.Value);
             }
-            if (Optional.IsDefined(IsNfsV3Enabled))
+            if (IsNfsV3Enabled.HasValue)
             {
                 writer.WritePropertyName("isNfsV3Enabled"u8);
                 writer.WriteBooleanValue(IsNfsV3Enabled.Value);
             }
-            if (Optional.IsDefined(AllowCrossTenantReplication))
+            if (AllowCrossTenantReplication.HasValue)
             {
                 writer.WritePropertyName("allowCrossTenantReplication"u8);
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
-            if (Optional.IsDefined(IsDefaultToOAuthAuthentication))
+            if (IsDefaultToOAuthAuthentication.HasValue)
             {
                 writer.WritePropertyName("defaultToOAuthAuthentication"u8);
                 writer.WriteBooleanValue(IsDefaultToOAuthAuthentication.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(ImmutableStorageWithVersioning))
+            if (ImmutableStorageWithVersioning != null)
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
             }
-            if (Optional.IsDefined(AllowedCopyScope))
+            if (AllowedCopyScope.HasValue)
             {
                 writer.WritePropertyName("allowedCopyScope"u8);
                 writer.WriteStringValue(AllowedCopyScope.Value.ToString());
             }
-            if (Optional.IsDefined(StorageAccountSkuConversionStatus))
+            if (StorageAccountSkuConversionStatus != null)
             {
                 writer.WritePropertyName("storageAccountSkuConversionStatus"u8);
                 writer.WriteObjectValue(StorageAccountSkuConversionStatus);
             }
-            if (Optional.IsDefined(DnsEndpointType))
+            if (DnsEndpointType.HasValue)
             {
                 writer.WritePropertyName("dnsEndpointType"u8);
                 writer.WriteStringValue(DnsEndpointType.Value.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    sku = StorageSku.DeserializeStorageSku(property.Value);
+                    sku = StorageSku.DeserializeStorageSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            primaryEndpoints = StorageAccountEndpoints.DeserializeStorageAccountEndpoints(property0.Value);
+                            primaryEndpoints = StorageAccountEndpoints.DeserializeStorageAccountEndpoints(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("primaryLocation"u8))
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            customDomain = StorageCustomDomain.DeserializeStorageCustomDomain(property0.Value);
+                            customDomain = StorageCustomDomain.DeserializeStorageCustomDomain(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sasPolicy"u8))
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            sasPolicy = StorageAccountSasPolicy.DeserializeStorageAccountSasPolicy(property0.Value);
+                            sasPolicy = StorageAccountSasPolicy.DeserializeStorageAccountSasPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyPolicy"u8))
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            keyPolicy = StorageAccountKeyPolicy.DeserializeStorageAccountKeyPolicy(property0.Value);
+                            keyPolicy = StorageAccountKeyPolicy.DeserializeStorageAccountKeyPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyCreationTime"u8))
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            keyCreationTime = StorageAccountKeyCreationTime.DeserializeStorageAccountKeyCreationTime(property0.Value);
+                            keyCreationTime = StorageAccountKeyCreationTime.DeserializeStorageAccountKeyCreationTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secondaryEndpoints"u8))
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            secondaryEndpoints = StorageAccountEndpoints.DeserializeStorageAccountEndpoints(property0.Value);
+                            secondaryEndpoints = StorageAccountEndpoints.DeserializeStorageAccountEndpoints(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            encryption = StorageAccountEncryption.DeserializeStorageAccountEncryption(property0.Value);
+                            encryption = StorageAccountEncryption.DeserializeStorageAccountEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("accessTier"u8))
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            azureFilesIdentityBasedAuthentication = FilesIdentityBasedAuthentication.DeserializeFilesIdentityBasedAuthentication(property0.Value);
+                            azureFilesIdentityBasedAuthentication = FilesIdentityBasedAuthentication.DeserializeFilesIdentityBasedAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportsHttpsTrafficOnly"u8))
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            networkAcls = StorageAccountNetworkRuleSet.DeserializeStorageAccountNetworkRuleSet(property0.Value);
+                            networkAcls = StorageAccountNetworkRuleSet.DeserializeStorageAccountNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isSftpEnabled"u8))
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            geoReplicationStats = GeoReplicationStatistics.DeserializeGeoReplicationStatistics(property0.Value);
+                            geoReplicationStats = GeoReplicationStatistics.DeserializeGeoReplicationStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("failoverInProgress"u8))
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Storage
                             List<StoragePrivateEndpointConnectionData> array = new List<StoragePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item));
+                                array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value);
+                            routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("blobRestoreStatus"u8))
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            blobRestoreStatus = BlobRestoreStatus.DeserializeBlobRestoreStatus(property0.Value);
+                            blobRestoreStatus = BlobRestoreStatus.DeserializeBlobRestoreStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowBlobPublicAccess"u8))
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            immutableStorageWithVersioning = ImmutableStorageAccount.DeserializeImmutableStorageAccount(property0.Value);
+                            immutableStorageWithVersioning = ImmutableStorageAccount.DeserializeImmutableStorageAccount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowedCopyScope"u8))
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            storageAccountSkuConversionStatus = StorageAccountSkuConversionStatus.DeserializeStorageAccountSkuConversionStatus(property0.Value);
+                            storageAccountSkuConversionStatus = StorageAccountSkuConversionStatus.DeserializeStorageAccountSkuConversionStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dnsEndpointType"u8))

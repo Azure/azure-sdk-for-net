@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ServiceTenants))
+            if (!(ServiceTenants is ChangeTrackingList<ServiceTenant> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceTenants"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowTransfers))
+            if (AllowTransfers.HasValue)
             {
                 writer.WritePropertyName("allowTransfers"u8);
                 writer.WriteBooleanValue(AllowTransfers.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     List<ServiceTenant> array = new List<ServiceTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTenant.DeserializeServiceTenant(item));
+                        array.Add(ServiceTenant.DeserializeServiceTenant(item, options));
                     }
                     serviceTenants = array;
                     continue;

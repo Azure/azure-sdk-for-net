@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceType))
+            if (options.Format != "W" && TargetResourceType != null)
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionId))
+            if (options.Format != "W" && FarmBeatsExtensionId != null)
             {
                 writer.WritePropertyName("farmBeatsExtensionId"u8);
                 writer.WriteStringValue(FarmBeatsExtensionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionName))
+            if (options.Format != "W" && FarmBeatsExtensionName != null)
             {
                 writer.WritePropertyName("farmBeatsExtensionName"u8);
                 writer.WriteStringValue(FarmBeatsExtensionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionVersion))
+            if (options.Format != "W" && FarmBeatsExtensionVersion != null)
             {
                 writer.WritePropertyName("farmBeatsExtensionVersion"u8);
                 writer.WriteStringValue(FarmBeatsExtensionVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherId))
+            if (options.Format != "W" && PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionCategory))
+            if (options.Format != "W" && ExtensionCategory != null)
             {
                 writer.WritePropertyName("extensionCategory"u8);
                 writer.WriteStringValue(ExtensionCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionAuthLink))
+            if (options.Format != "W" && ExtensionAuthLink != null)
             {
                 writer.WritePropertyName("extensionAuthLink"u8);
                 writer.WriteStringValue(ExtensionAuthLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtensionApiDocsLink))
+            if (options.Format != "W" && ExtensionApiDocsLink != null)
             {
                 writer.WritePropertyName("extensionApiDocsLink"u8);
                 writer.WriteStringValue(ExtensionApiDocsLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
+            if (options.Format != "W" && !(DetailedInformation is ChangeTrackingList<DetailedInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("detailedInformation"u8);
                 writer.WriteStartArray();
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                             List<DetailedInformation> array = new List<DetailedInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.DetailedInformation.DeserializeDetailedInformation(item));
+                                array.Add(Models.DetailedInformation.DeserializeDetailedInformation(item, options));
                             }
                             detailedInformation = array;
                             continue;

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayText))
+            if (options.Format != "W" && DisplayText != null)
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteStringValue(DisplayText);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MinorVersions))
+            if (options.Format != "W" && !(MinorVersions is ChangeTrackingList<FunctionAppMinorVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("minorVersions"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<FunctionAppMinorVersion> array = new List<FunctionAppMinorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionAppMinorVersion.DeserializeFunctionAppMinorVersion(item));
+                        array.Add(FunctionAppMinorVersion.DeserializeFunctionAppMinorVersion(item, options));
                     }
                     minorVersions = array;
                     continue;

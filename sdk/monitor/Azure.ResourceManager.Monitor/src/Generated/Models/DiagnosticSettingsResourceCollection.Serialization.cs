@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DiagnosticSettingData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DiagnosticSettingData> array = new List<DiagnosticSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSettingData.DeserializeDiagnosticSettingData(item));
+                        array.Add(DiagnosticSettingData.DeserializeDiagnosticSettingData(item, options));
                     }
                     value = array;
                     continue;

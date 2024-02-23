@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageSid))
+            if (PackageSid != null)
             {
                 writer.WritePropertyName("packageSid"u8);
                 writer.WriteStringValue(PackageSid);
             }
-            if (Optional.IsDefined(SecretKey))
+            if (SecretKey != null)
             {
                 writer.WritePropertyName("secretKey"u8);
                 writer.WriteStringValue(SecretKey);
             }
-            if (Optional.IsDefined(WindowsLiveEndpoint))
+            if (WindowsLiveEndpoint != null)
             {
                 writer.WritePropertyName("windowsLiveEndpoint"u8);
                 writer.WriteStringValue(WindowsLiveEndpoint.AbsoluteUri);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Entities))
+            if (!(Entities is ChangeTrackingList<SecurityInsightsEntity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MetaData))
+            if (!(MetaData is ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsEntity> array = new List<SecurityInsightsEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsEntity.DeserializeSecurityInsightsEntity(item));
+                        array.Add(SecurityInsightsEntity.DeserializeSecurityInsightsEntity(item, options));
                     }
                     entities = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsIncidentEntitiesMetadata> array = new List<SecurityInsightsIncidentEntitiesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsIncidentEntitiesMetadata.DeserializeSecurityInsightsIncidentEntitiesMetadata(item));
+                        array.Add(SecurityInsightsIncidentEntitiesMetadata.DeserializeSecurityInsightsIncidentEntitiesMetadata(item, options));
                     }
                     metaData = array;
                     continue;

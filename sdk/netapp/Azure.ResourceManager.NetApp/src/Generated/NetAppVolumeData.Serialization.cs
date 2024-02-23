@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.NetApp
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,33 +72,33 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FileSystemId))
+            if (options.Format != "W" && FileSystemId.HasValue)
             {
                 writer.WritePropertyName("fileSystemId"u8);
                 writer.WriteStringValue(FileSystemId.Value);
             }
             writer.WritePropertyName("creationToken"u8);
             writer.WriteStringValue(CreationToken);
-            if (Optional.IsDefined(ServiceLevel))
+            if (ServiceLevel.HasValue)
             {
                 writer.WritePropertyName("serviceLevel"u8);
                 writer.WriteStringValue(ServiceLevel.Value.ToString());
             }
             writer.WritePropertyName("usageThreshold"u8);
             writer.WriteNumberValue(UsageThreshold);
-            if (Optional.IsDefined(ExportPolicy))
+            if (ExportPolicy != null)
             {
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
-            if (Optional.IsCollectionDefined(ProtocolTypes))
+            if (!(ProtocolTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(SnapshotId))
+            if (SnapshotId != null)
             {
                 if (SnapshotId != null)
                 {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("snapshotId");
                 }
             }
-            if (Optional.IsDefined(DeleteBaseSnapshot))
+            if (DeleteBaseSnapshot.HasValue)
             {
                 writer.WritePropertyName("deleteBaseSnapshot"u8);
                 writer.WriteBooleanValue(DeleteBaseSnapshot.Value);
             }
-            if (Optional.IsDefined(BackupId))
+            if (BackupId != null)
             {
                 if (BackupId != null)
                 {
@@ -142,29 +142,29 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("backupId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(BaremetalTenantId))
+            if (options.Format != "W" && BaremetalTenantId != null)
             {
                 writer.WritePropertyName("baremetalTenantId"u8);
                 writer.WriteStringValue(BaremetalTenantId);
             }
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (Optional.IsDefined(NetworkFeatures))
+            if (NetworkFeatures.HasValue)
             {
                 writer.WritePropertyName("networkFeatures"u8);
                 writer.WriteStringValue(NetworkFeatures.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkSiblingSetId))
+            if (options.Format != "W" && NetworkSiblingSetId.HasValue)
             {
                 writer.WritePropertyName("networkSiblingSetId"u8);
                 writer.WriteStringValue(NetworkSiblingSetId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageToNetworkProximity))
+            if (options.Format != "W" && StorageToNetworkProximity.HasValue)
             {
                 writer.WritePropertyName("storageToNetworkProximity"u8);
                 writer.WriteStringValue(StorageToNetworkProximity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MountTargets))
+            if (options.Format != "W" && !(MountTargets is ChangeTrackingList<NetAppVolumeMountTarget> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("mountTargets"u8);
                 writer.WriteStartArray();
@@ -174,42 +174,42 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VolumeType))
+            if (VolumeType != null)
             {
                 writer.WritePropertyName("volumeType"u8);
                 writer.WriteStringValue(VolumeType);
             }
-            if (Optional.IsDefined(DataProtection))
+            if (DataProtection != null)
             {
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection);
             }
-            if (Optional.IsDefined(IsRestoring))
+            if (IsRestoring.HasValue)
             {
                 writer.WritePropertyName("isRestoring"u8);
                 writer.WriteBooleanValue(IsRestoring.Value);
             }
-            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
+            if (IsSnapshotDirectoryVisible.HasValue)
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (Optional.IsDefined(IsKerberosEnabled))
+            if (IsKerberosEnabled.HasValue)
             {
                 writer.WritePropertyName("kerberosEnabled"u8);
                 writer.WriteBooleanValue(IsKerberosEnabled.Value);
             }
-            if (Optional.IsDefined(SecurityStyle))
+            if (SecurityStyle.HasValue)
             {
                 writer.WritePropertyName("securityStyle"u8);
                 writer.WriteStringValue(SecurityStyle.Value.ToString());
             }
-            if (Optional.IsDefined(IsSmbEncryptionEnabled))
+            if (IsSmbEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("smbEncryption"u8);
                 writer.WriteBooleanValue(IsSmbEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (SmbAccessBasedEnumeration.HasValue)
             {
                 if (SmbAccessBasedEnumeration != null)
                 {
@@ -221,17 +221,17 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("smbAccessBasedEnumeration");
                 }
             }
-            if (Optional.IsDefined(SmbNonBrowsable))
+            if (SmbNonBrowsable.HasValue)
             {
                 writer.WritePropertyName("smbNonBrowsable"u8);
                 writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
             }
-            if (Optional.IsDefined(IsSmbContinuouslyAvailable))
+            if (IsSmbContinuouslyAvailable.HasValue)
             {
                 writer.WritePropertyName("smbContinuouslyAvailable"u8);
                 writer.WriteBooleanValue(IsSmbContinuouslyAvailable.Value);
             }
-            if (Optional.IsDefined(ThroughputMibps))
+            if (ThroughputMibps.HasValue)
             {
                 if (ThroughputMibps != null)
                 {
@@ -243,42 +243,42 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("throughputMibps");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ActualThroughputMibps))
+            if (options.Format != "W" && ActualThroughputMibps.HasValue)
             {
                 writer.WritePropertyName("actualThroughputMibps"u8);
                 writer.WriteNumberValue(ActualThroughputMibps.Value);
             }
-            if (Optional.IsDefined(EncryptionKeySource))
+            if (EncryptionKeySource.HasValue)
             {
                 writer.WritePropertyName("encryptionKeySource"u8);
                 writer.WriteStringValue(EncryptionKeySource.Value.ToString());
             }
-            if (Optional.IsDefined(KeyVaultPrivateEndpointResourceId))
+            if (KeyVaultPrivateEndpointResourceId != null)
             {
                 writer.WritePropertyName("keyVaultPrivateEndpointResourceId"u8);
                 writer.WriteStringValue(KeyVaultPrivateEndpointResourceId);
             }
-            if (Optional.IsDefined(IsLdapEnabled))
+            if (IsLdapEnabled.HasValue)
             {
                 writer.WritePropertyName("ldapEnabled"u8);
                 writer.WriteBooleanValue(IsLdapEnabled.Value);
             }
-            if (Optional.IsDefined(IsCoolAccessEnabled))
+            if (IsCoolAccessEnabled.HasValue)
             {
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (Optional.IsDefined(CoolnessPeriod))
+            if (CoolnessPeriod.HasValue)
             {
                 writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
             }
-            if (Optional.IsDefined(CoolAccessRetrievalPolicy))
+            if (CoolAccessRetrievalPolicy.HasValue)
             {
                 writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
                 writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(UnixPermissions))
+            if (UnixPermissions != null)
             {
                 if (UnixPermissions != null)
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("unixPermissions");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CloneProgress))
+            if (options.Format != "W" && CloneProgress.HasValue)
             {
                 if (CloneProgress != null)
                 {
@@ -302,17 +302,17 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("cloneProgress");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(FileAccessLogs))
+            if (options.Format != "W" && FileAccessLogs.HasValue)
             {
                 writer.WritePropertyName("fileAccessLogs"u8);
                 writer.WriteStringValue(FileAccessLogs.Value.ToString());
             }
-            if (Optional.IsDefined(AvsDataStore))
+            if (AvsDataStore.HasValue)
             {
                 writer.WritePropertyName("avsDataStore"u8);
                 writer.WriteStringValue(AvsDataStore.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataStoreResourceId))
+            if (options.Format != "W" && !(DataStoreResourceId is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("dataStoreResourceId"u8);
                 writer.WriteStartArray();
@@ -327,57 +327,57 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDefaultQuotaEnabled))
+            if (IsDefaultQuotaEnabled.HasValue)
             {
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
-            if (Optional.IsDefined(DefaultUserQuotaInKiBs))
+            if (DefaultUserQuotaInKiBs.HasValue)
             {
                 writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultUserQuotaInKiBs.Value);
             }
-            if (Optional.IsDefined(DefaultGroupQuotaInKiBs))
+            if (DefaultGroupQuotaInKiBs.HasValue)
             {
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfFiles))
+            if (options.Format != "W" && MaximumNumberOfFiles.HasValue)
             {
                 writer.WritePropertyName("maximumNumberOfFiles"u8);
                 writer.WriteNumberValue(MaximumNumberOfFiles.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumeGroupName))
+            if (options.Format != "W" && VolumeGroupName != null)
             {
                 writer.WritePropertyName("volumeGroupName"u8);
                 writer.WriteStringValue(VolumeGroupName);
             }
-            if (Optional.IsDefined(CapacityPoolResourceId))
+            if (CapacityPoolResourceId != null)
             {
                 writer.WritePropertyName("capacityPoolResourceId"u8);
                 writer.WriteStringValue(CapacityPoolResourceId);
             }
-            if (Optional.IsDefined(ProximityPlacementGroupId))
+            if (ProximityPlacementGroupId != null)
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 writer.WriteStringValue(ProximityPlacementGroupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(T2Network))
+            if (options.Format != "W" && T2Network != null)
             {
                 writer.WritePropertyName("t2Network"u8);
                 writer.WriteStringValue(T2Network);
             }
-            if (Optional.IsDefined(VolumeSpecName))
+            if (VolumeSpecName != null)
             {
                 writer.WritePropertyName("volumeSpecName"u8);
                 writer.WriteStringValue(VolumeSpecName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEncrypted))
+            if (options.Format != "W" && IsEncrypted.HasValue)
             {
                 writer.WritePropertyName("encrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
-            if (Optional.IsCollectionDefined(PlacementRules))
+            if (!(PlacementRules is ChangeTrackingList<NetAppVolumePlacementRule> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("placementRules"u8);
                 writer.WriteStartArray();
@@ -387,12 +387,12 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableSubvolumes))
+            if (EnableSubvolumes.HasValue)
             {
                 writer.WritePropertyName("enableSubvolumes"u8);
                 writer.WriteStringValue(EnableSubvolumes.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedAvailabilityZone))
+            if (options.Format != "W" && ProvisionedAvailabilityZone != null)
             {
                 if (ProvisionedAvailabilityZone != null)
                 {
@@ -404,12 +404,12 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("provisionedAvailabilityZone");
                 }
             }
-            if (Optional.IsDefined(IsLargeVolume))
+            if (IsLargeVolume.HasValue)
             {
                 writer.WritePropertyName("isLargeVolume"u8);
                 writer.WriteBooleanValue(IsLargeVolume.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OriginatingResourceId))
+            if (options.Format != "W" && OriginatingResourceId != null)
             {
                 if (OriginatingResourceId != null)
                 {
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            exportPolicy = VolumePropertiesExportPolicy.DeserializeVolumePropertiesExportPolicy(property0.Value);
+                            exportPolicy = VolumePropertiesExportPolicy.DeserializeVolumePropertiesExportPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("protocolTypes"u8))
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumeMountTarget> array = new List<NetAppVolumeMountTarget>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeMountTarget.DeserializeNetAppVolumeMountTarget(item));
+                                array.Add(NetAppVolumeMountTarget.DeserializeNetAppVolumeMountTarget(item, options));
                             }
                             mountTargets = array;
                             continue;
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value);
+                            dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isRestoring"u8))
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                                array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item, options));
                             }
                             placementRules = array;
                             continue;

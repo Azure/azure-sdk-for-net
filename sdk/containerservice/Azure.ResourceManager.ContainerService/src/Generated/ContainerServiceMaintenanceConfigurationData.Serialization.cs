@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimesInWeek))
+            if (!(TimesInWeek is ChangeTrackingList<ContainerServiceTimeInWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("timeInWeek"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotAllowedTimes))
+            if (!(NotAllowedTimes is ChangeTrackingList<ContainerServiceTimeSpan> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notAllowedTime"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaintenanceWindow))
+            if (MaintenanceWindow != null)
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceTimeInWeek> array = new List<ContainerServiceTimeInWeek>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceTimeInWeek.DeserializeContainerServiceTimeInWeek(item));
+                                array.Add(ContainerServiceTimeInWeek.DeserializeContainerServiceTimeInWeek(item, options));
                             }
                             timeInWeek = array;
                             continue;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceTimeSpan> array = new List<ContainerServiceTimeSpan>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceTimeSpan.DeserializeContainerServiceTimeSpan(item));
+                                array.Add(ContainerServiceTimeSpan.DeserializeContainerServiceTimeSpan(item, options));
                             }
                             notAllowedTime = array;
                             continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value);
+                            maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                     }

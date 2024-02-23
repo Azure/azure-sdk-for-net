@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.PrivateDns
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,49 +62,49 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfRecords))
+            if (options.Format != "W" && MaxNumberOfRecords.HasValue)
             {
                 writer.WritePropertyName("maxNumberOfRecordSets"u8);
                 writer.WriteNumberValue(MaxNumberOfRecords.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfRecords))
+            if (options.Format != "W" && NumberOfRecords.HasValue)
             {
                 writer.WritePropertyName("numberOfRecordSets"u8);
                 writer.WriteNumberValue(NumberOfRecords.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfVirtualNetworkLinks))
+            if (options.Format != "W" && MaxNumberOfVirtualNetworkLinks.HasValue)
             {
                 writer.WritePropertyName("maxNumberOfVirtualNetworkLinks"u8);
                 writer.WriteNumberValue(MaxNumberOfVirtualNetworkLinks.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfVirtualNetworkLinks))
+            if (options.Format != "W" && NumberOfVirtualNetworkLinks.HasValue)
             {
                 writer.WritePropertyName("numberOfVirtualNetworkLinks"u8);
                 writer.WriteNumberValue(NumberOfVirtualNetworkLinks.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfVirtualNetworkLinksWithRegistration))
+            if (options.Format != "W" && MaxNumberOfVirtualNetworkLinksWithRegistration.HasValue)
             {
                 writer.WritePropertyName("maxNumberOfVirtualNetworkLinksWithRegistration"u8);
                 writer.WriteNumberValue(MaxNumberOfVirtualNetworkLinksWithRegistration.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfVirtualNetworkLinksWithRegistration))
+            if (options.Format != "W" && NumberOfVirtualNetworkLinksWithRegistration.HasValue)
             {
                 writer.WritePropertyName("numberOfVirtualNetworkLinksWithRegistration"u8);
                 writer.WriteNumberValue(NumberOfVirtualNetworkLinksWithRegistration.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateDnsProvisioningState))
+            if (options.Format != "W" && PrivateDnsProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(PrivateDnsProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalId))
+            if (options.Format != "W" && InternalId != null)
             {
                 writer.WritePropertyName("internalId"u8);
                 writer.WriteStringValue(InternalId);

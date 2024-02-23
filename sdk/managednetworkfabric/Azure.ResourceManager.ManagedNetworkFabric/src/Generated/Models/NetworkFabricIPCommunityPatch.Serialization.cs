@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPCommunityRules))
+            if (!(IPCommunityRules is ChangeTrackingList<IPCommunityRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipCommunityRules"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<IPCommunityRule> array = new List<IPCommunityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPCommunityRule.DeserializeIPCommunityRule(item));
+                                array.Add(IPCommunityRule.DeserializeIPCommunityRule(item, options));
                             }
                             ipCommunityRules = array;
                             continue;

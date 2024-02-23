@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OperationState))
+            if (options.Format != "W" && OperationState.HasValue)
             {
                 writer.WritePropertyName("operationState"u8);
                 writer.WriteStringValue(OperationState.Value.ToString());
             }
-            if (Optional.IsDefined(RepoUri))
+            if (RepoUri != null)
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(GitHubActionConfiguration))
+            if (GitHubActionConfiguration != null)
             {
                 writer.WritePropertyName("githubActionConfiguration"u8);
                 writer.WriteObjectValue(GitHubActionConfiguration);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            gitHubActionConfiguration = ContainerAppGitHubActionConfiguration.DeserializeContainerAppGitHubActionConfiguration(property0.Value);
+                            gitHubActionConfiguration = ContainerAppGitHubActionConfiguration.DeserializeContainerAppGitHubActionConfiguration(property0.Value, options);
                             continue;
                         }
                     }

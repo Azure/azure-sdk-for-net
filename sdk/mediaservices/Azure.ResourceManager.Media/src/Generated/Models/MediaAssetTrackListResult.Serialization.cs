@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MediaAssetTrackData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetTrackData> array = new List<MediaAssetTrackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetTrackData.DeserializeMediaAssetTrackData(item));
+                        array.Add(MediaAssetTrackData.DeserializeMediaAssetTrackData(item, options));
                     }
                     value = array;
                     continue;

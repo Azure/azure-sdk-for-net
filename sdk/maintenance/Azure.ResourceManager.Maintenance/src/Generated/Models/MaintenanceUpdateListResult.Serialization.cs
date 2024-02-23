@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MaintenanceUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     List<MaintenanceUpdate> array = new List<MaintenanceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item));
+                        array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item, options));
                     }
                     value = array;
                     continue;

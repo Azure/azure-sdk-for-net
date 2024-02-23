@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks", false);
             uri.AppendQuery("category", category.ToString(), true);
-            if (tags != null && Optional.IsCollectionDefined(tags))
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/workbooks", false);
             uri.AppendQuery("category", category.ToString(), true);
-            if (tags != null && Optional.IsCollectionDefined(tags))
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }

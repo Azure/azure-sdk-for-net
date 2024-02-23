@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceName))
+            if (ServiceName != null)
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (Optional.IsCollectionDefined(NetworkIntentPolicyConfigurations))
+            if (!(NetworkIntentPolicyConfigurations is ChangeTrackingList<NetworkIntentPolicyConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkIntentPolicyConfigurations"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkIntentPolicyConfiguration> array = new List<NetworkIntentPolicyConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkIntentPolicyConfiguration.DeserializeNetworkIntentPolicyConfiguration(item));
+                        array.Add(NetworkIntentPolicyConfiguration.DeserializeNetworkIntentPolicyConfiguration(item, options));
                     }
                     networkIntentPolicyConfigurations = array;
                     continue;

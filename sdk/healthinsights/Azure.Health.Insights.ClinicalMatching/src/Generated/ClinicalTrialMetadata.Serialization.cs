@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Phases))
+            if (!(Phases is ChangeTrackingList<ClinicalTrialPhase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("phases"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StudyType))
+            if (StudyType.HasValue)
             {
                 writer.WritePropertyName("studyType"u8);
                 writer.WriteStringValue(StudyType.Value.ToString());
             }
-            if (Optional.IsDefined(RecruitmentStatus))
+            if (RecruitmentStatus.HasValue)
             {
                 writer.WritePropertyName("recruitmentStatus"u8);
                 writer.WriteStringValue(RecruitmentStatus.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Sponsors))
+            if (!(Sponsors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sponsors"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Contacts))
+            if (!(Contacts is ChangeTrackingList<ContactDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("contacts"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Facilities))
+            if (!(Facilities is ChangeTrackingList<ClinicalTrialResearchFacility> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("facilities"u8);
                 writer.WriteStartArray();
@@ -198,7 +198,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ContactDetails> array = new List<ContactDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContactDetails.DeserializeContactDetails(item));
+                        array.Add(ContactDetails.DeserializeContactDetails(item, options));
                     }
                     contacts = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialResearchFacility> array = new List<ClinicalTrialResearchFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialResearchFacility.DeserializeClinicalTrialResearchFacility(item));
+                        array.Add(ClinicalTrialResearchFacility.DeserializeClinicalTrialResearchFacility(item, options));
                     }
                     facilities = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Conditions))
+            if (options.Format != "W" && !(Conditions is ChangeTrackingList<StreamingJobDiagnosticCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobDiagnosticCondition> array = new List<StreamingJobDiagnosticCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobDiagnosticCondition.DeserializeStreamingJobDiagnosticCondition(item));
+                        array.Add(StreamingJobDiagnosticCondition.DeserializeStreamingJobDiagnosticCondition(item, options));
                     }
                     conditions = array;
                     continue;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled != null)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<SignalRLiveTraceCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRLiveTraceCategory> array = new List<SignalRLiveTraceCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRLiveTraceCategory.DeserializeSignalRLiveTraceCategory(item));
+                        array.Add(SignalRLiveTraceCategory.DeserializeSignalRLiveTraceCategory(item, options));
                     }
                     categories = array;
                     continue;

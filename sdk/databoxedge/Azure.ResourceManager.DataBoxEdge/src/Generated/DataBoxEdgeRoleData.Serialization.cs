@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 switch (discriminator.GetString())
                 {
-                    case "CloudEdgeManagement": return CloudEdgeManagementRole.DeserializeCloudEdgeManagementRole(element);
-                    case "IOT": return EdgeIotRole.DeserializeEdgeIotRole(element);
-                    case "Kubernetes": return EdgeKubernetesRole.DeserializeEdgeKubernetesRole(element);
-                    case "MEC": return MecRole.DeserializeMecRole(element);
+                    case "CloudEdgeManagement": return CloudEdgeManagementRole.DeserializeCloudEdgeManagementRole(element, options);
+                    case "IOT": return EdgeIotRole.DeserializeEdgeIotRole(element, options);
+                    case "Kubernetes": return EdgeKubernetesRole.DeserializeEdgeKubernetesRole(element, options);
+                    case "MEC": return MecRole.DeserializeMecRole(element, options);
                 }
             }
-            return UnknownRole.DeserializeUnknownRole(element);
+            return UnknownRole.DeserializeUnknownRole(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeRoleData>.Write(ModelReaderWriterOptions options)

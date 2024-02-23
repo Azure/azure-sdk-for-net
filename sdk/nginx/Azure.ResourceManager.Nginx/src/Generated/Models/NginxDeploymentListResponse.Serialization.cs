@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NginxDeploymentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxDeploymentData> array = new List<NginxDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxDeploymentData.DeserializeNginxDeploymentData(item));
+                        array.Add(NginxDeploymentData.DeserializeNginxDeploymentData(item, options));
                     }
                     value = array;
                     continue;

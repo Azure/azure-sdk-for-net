@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MySqlPerformanceTier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlPerformanceTier> array = new List<MySqlPerformanceTier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlPerformanceTier.DeserializeMySqlPerformanceTier(item));
+                        array.Add(MySqlPerformanceTier.DeserializeMySqlPerformanceTier(item, options));
                     }
                     value = array;
                     continue;

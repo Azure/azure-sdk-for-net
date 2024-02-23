@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.TrafficManager
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GeographicHierarchy))
+            if (GeographicHierarchy != null)
             {
                 writer.WritePropertyName("geographicHierarchy"u8);
                 writer.WriteObjectValue(GeographicHierarchy);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(property0.Value);
+                            geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(property0.Value, options);
                             continue;
                         }
                     }

@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("serviceUri"u8);
             writer.WriteStringValue(ServiceUri.AbsoluteUri);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (UseCommonAlertSchema.HasValue)
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (Optional.IsDefined(UseAadAuth))
+            if (UseAadAuth.HasValue)
             {
                 writer.WritePropertyName("useAadAuth"u8);
                 writer.WriteBooleanValue(UseAadAuth.Value);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(IdentifierUri))
+            if (IdentifierUri != null)
             {
                 writer.WritePropertyName("identifierUri"u8);
                 writer.WriteStringValue(IdentifierUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

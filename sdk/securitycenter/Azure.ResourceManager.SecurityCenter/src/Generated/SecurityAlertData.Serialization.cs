@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertType))
+            if (options.Format != "W" && AlertType != null)
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemAlertId))
+            if (options.Format != "W" && SystemAlertId != null)
             {
                 writer.WritePropertyName("systemAlertId"u8);
                 writer.WriteStringValue(SystemAlertId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductComponentName))
+            if (options.Format != "W" && ProductComponentName != null)
             {
                 writer.WritePropertyName("productComponentName"u8);
                 writer.WriteStringValue(ProductComponentName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
+            if (options.Format != "W" && AlertDisplayName != null)
             {
                 writer.WritePropertyName("alertDisplayName"u8);
                 writer.WriteStringValue(AlertDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Intent))
+            if (options.Format != "W" && Intent.HasValue)
             {
                 writer.WritePropertyName("intent"u8);
                 writer.WriteStringValue(Intent.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceIdentifiers))
+            if (options.Format != "W" && !(ResourceIdentifiers is ChangeTrackingList<SecurityAlertResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceIdentifiers"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RemediationSteps))
+            if (options.Format != "W" && !(RemediationSteps is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStartArray();
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(VendorName))
+            if (options.Format != "W" && VendorName != null)
             {
                 writer.WritePropertyName("vendorName"u8);
                 writer.WriteStringValue(VendorName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtendedLinks))
+            if (options.Format != "W" && !(ExtendedLinks is ChangeTrackingList<IDictionary<string, string>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedLinks"u8);
                 writer.WriteStartArray();
@@ -151,27 +151,27 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AlertUri))
+            if (options.Format != "W" && AlertUri != null)
             {
                 writer.WritePropertyName("alertUri"u8);
                 writer.WriteStringValue(AlertUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
+            if (options.Format != "W" && GeneratedOn.HasValue)
             {
                 writer.WritePropertyName("timeGeneratedUtc"u8);
                 writer.WriteStringValue(GeneratedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductName))
+            if (options.Format != "W" && ProductName != null)
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessingEndOn))
+            if (options.Format != "W" && ProcessingEndOn.HasValue)
             {
                 writer.WritePropertyName("processingEndTimeUtc"u8);
                 writer.WriteStringValue(ProcessingEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Entities))
+            if (options.Format != "W" && !(Entities is ChangeTrackingList<SecurityAlertEntity> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsIncident))
+            if (options.Format != "W" && IsIncident.HasValue)
             {
                 writer.WritePropertyName("isIncident"u8);
                 writer.WriteBooleanValue(IsIncident.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CorrelationKey))
+            if (options.Format != "W" && CorrelationKey != null)
             {
                 writer.WritePropertyName("correlationKey"u8);
                 writer.WriteStringValue(CorrelationKey);
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(CompromisedEntity))
+            if (options.Format != "W" && CompromisedEntity != null)
             {
                 writer.WritePropertyName("compromisedEntity"u8);
                 writer.WriteStringValue(CompromisedEntity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Techniques))
+            if (options.Format != "W" && !(Techniques is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SubTechniques))
+            if (options.Format != "W" && !(SubTechniques is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("subTechniques"u8);
                 writer.WriteStartArray();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SupportingEvidence))
+            if (SupportingEvidence != null)
             {
                 writer.WritePropertyName("supportingEvidence"u8);
                 writer.WriteObjectValue(SupportingEvidence);
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAlertResourceIdentifier> array = new List<SecurityAlertResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item));
+                                array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item, options));
                             }
                             resourceIdentifiers = array;
                             continue;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAlertEntity> array = new List<SecurityAlertEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item));
+                                array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item, options));
                             }
                             entities = array;
                             continue;
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value);
+                            supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value, options);
                             continue;
                         }
                     }

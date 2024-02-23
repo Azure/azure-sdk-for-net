@@ -43,139 +43,139 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SupportTicketId))
+            if (SupportTicketId != null)
             {
                 writer.WritePropertyName("supportTicketId"u8);
                 writer.WriteStringValue(SupportTicketId);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ProblemClassificationId))
+            if (ProblemClassificationId != null)
             {
                 writer.WritePropertyName("problemClassificationId"u8);
                 writer.WriteStringValue(ProblemClassificationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProblemClassificationDisplayName))
+            if (options.Format != "W" && ProblemClassificationDisplayName != null)
             {
                 writer.WritePropertyName("problemClassificationDisplayName"u8);
                 writer.WriteStringValue(ProblemClassificationDisplayName);
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EnrollmentId))
+            if (options.Format != "W" && EnrollmentId != null)
             {
                 writer.WritePropertyName("enrollmentId"u8);
                 writer.WriteStringValue(EnrollmentId);
             }
-            if (Optional.IsDefined(Require24X7Response))
+            if (Require24X7Response.HasValue)
             {
                 writer.WritePropertyName("require24X7Response"u8);
                 writer.WriteBooleanValue(Require24X7Response.Value);
             }
-            if (Optional.IsDefined(AdvancedDiagnosticConsent))
+            if (AdvancedDiagnosticConsent.HasValue)
             {
                 writer.WritePropertyName("advancedDiagnosticConsent"u8);
                 writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
             }
-            if (Optional.IsDefined(ProblemScopingQuestions))
+            if (ProblemScopingQuestions != null)
             {
                 writer.WritePropertyName("problemScopingQuestions"u8);
                 writer.WriteStringValue(ProblemScopingQuestions);
             }
-            if (Optional.IsDefined(SupportPlanId))
+            if (SupportPlanId != null)
             {
                 writer.WritePropertyName("supportPlanId"u8);
                 writer.WriteStringValue(SupportPlanId);
             }
-            if (Optional.IsDefined(ContactDetails))
+            if (ContactDetails != null)
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (Optional.IsDefined(ServiceLevelAgreement))
+            if (ServiceLevelAgreement != null)
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
                 writer.WriteObjectValue(ServiceLevelAgreement);
             }
-            if (Optional.IsDefined(SupportEngineer))
+            if (SupportEngineer != null)
             {
                 writer.WritePropertyName("supportEngineer"u8);
                 writer.WriteObjectValue(SupportEngineer);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportPlanType))
+            if (options.Format != "W" && SupportPlanType != null)
             {
                 writer.WritePropertyName("supportPlanType"u8);
                 writer.WriteStringValue(SupportPlanType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportPlanDisplayName))
+            if (options.Format != "W" && SupportPlanDisplayName != null)
             {
                 writer.WritePropertyName("supportPlanDisplayName"u8);
                 writer.WriteStringValue(SupportPlanDisplayName);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(ProblemStartOn))
+            if (ProblemStartOn.HasValue)
             {
                 writer.WritePropertyName("problemStartTime"u8);
                 writer.WriteStringValue(ProblemStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ServiceId))
+            if (ServiceId != null)
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceDisplayName))
+            if (options.Format != "W" && ServiceDisplayName != null)
             {
                 writer.WritePropertyName("serviceDisplayName"u8);
                 writer.WriteStringValue(ServiceDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (options.Format != "W" && ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modifiedDate"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(FileWorkspaceName))
+            if (FileWorkspaceName != null)
             {
                 writer.WritePropertyName("fileWorkspaceName"u8);
                 writer.WriteStringValue(FileWorkspaceName);
             }
-            if (Optional.IsDefined(TechnicalTicketDetails))
+            if (TechnicalTicketDetails != null)
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
                 writer.WriteObjectValue(TechnicalTicketDetails);
             }
-            if (Optional.IsDefined(QuotaTicketDetails))
+            if (QuotaTicketDetails != null)
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
                 writer.WriteObjectValue(QuotaTicketDetails);
             }
-            if (Optional.IsCollectionDefined(SecondaryConsent))
+            if (!(SecondaryConsent is ChangeTrackingList<SecondaryConsent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secondaryConsent"u8);
                 writer.WriteStartArray();
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value);
+                            contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceLevelAgreement"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            serviceLevelAgreement = SupportServiceLevelAgreement.DeserializeSupportServiceLevelAgreement(property0.Value);
+                            serviceLevelAgreement = SupportServiceLevelAgreement.DeserializeSupportServiceLevelAgreement(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportEngineer"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            supportEngineer = SupportEngineer.DeserializeSupportEngineer(property0.Value);
+                            supportEngineer = SupportEngineer.DeserializeSupportEngineer(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportPlanType"u8))
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            technicalTicketDetails = TechnicalTicketDetails.DeserializeTechnicalTicketDetails(property0.Value);
+                            technicalTicketDetails = TechnicalTicketDetails.DeserializeTechnicalTicketDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("quotaTicketDetails"u8))
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            quotaTicketDetails = QuotaTicketDetails.DeserializeQuotaTicketDetails(property0.Value);
+                            quotaTicketDetails = QuotaTicketDetails.DeserializeQuotaTicketDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secondaryConsent"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Support
                             List<SecondaryConsent> array = new List<SecondaryConsent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item));
+                                array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item, options));
                             }
                             secondaryConsent = array;
                             continue;

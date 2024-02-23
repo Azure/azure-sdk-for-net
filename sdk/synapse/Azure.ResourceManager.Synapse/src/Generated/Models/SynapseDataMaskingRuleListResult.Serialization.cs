@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseDataMaskingRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDataMaskingRuleData> array = new List<SynapseDataMaskingRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(item));
+                        array.Add(SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(item, options));
                     }
                     value = array;
                     continue;

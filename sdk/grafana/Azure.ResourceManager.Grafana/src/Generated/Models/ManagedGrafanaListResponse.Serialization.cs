@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ManagedGrafanaData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<ManagedGrafanaData> array = new List<ManagedGrafanaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedGrafanaData.DeserializeManagedGrafanaData(item));
+                        array.Add(ManagedGrafanaData.DeserializeManagedGrafanaData(item, options));
                     }
                     value = array;
                     continue;

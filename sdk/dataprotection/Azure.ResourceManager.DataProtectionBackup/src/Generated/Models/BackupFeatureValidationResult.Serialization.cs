@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FeatureType))
+            if (FeatureType.HasValue)
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (!(Features is ChangeTrackingList<BackupSupportedFeature> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupSupportedFeature> array = new List<BackupSupportedFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupSupportedFeature.DeserializeBackupSupportedFeature(item));
+                        array.Add(BackupSupportedFeature.DeserializeBackupSupportedFeature(item, options));
                     }
                     features = array;
                     continue;

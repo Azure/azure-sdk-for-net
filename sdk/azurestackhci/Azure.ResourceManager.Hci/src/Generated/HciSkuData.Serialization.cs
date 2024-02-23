@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(PublisherId))
+            if (PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsDefined(OfferId))
+            if (OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(ContentVersion))
+            if (ContentVersion != null)
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (Optional.IsCollectionDefined(SkuMappings))
+            if (!(SkuMappings is ChangeTrackingList<HciSkuMappings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skuMappings"u8);
                 writer.WriteStartArray();
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Hci
                             List<HciSkuMappings> array = new List<HciSkuMappings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HciSkuMappings.DeserializeHciSkuMappings(item));
+                                array.Add(HciSkuMappings.DeserializeHciSkuMappings(item, options));
                             }
                             skuMappings = array;
                             continue;

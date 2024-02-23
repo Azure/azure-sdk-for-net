@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<StorageSkuInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuInformation> array = new List<StorageSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuInformation.DeserializeStorageSkuInformation(item));
+                        array.Add(StorageSkuInformation.DeserializeStorageSkuInformation(item, options));
                     }
                     value = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PostgreSqlConfigurationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlConfigurationData> array = new List<PostgreSqlConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlConfigurationData.DeserializePostgreSqlConfigurationData(item));
+                        array.Add(PostgreSqlConfigurationData.DeserializePostgreSqlConfigurationData(item, options));
                     }
                     value = array;
                     continue;

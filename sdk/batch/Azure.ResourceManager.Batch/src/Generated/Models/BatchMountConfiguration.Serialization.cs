@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobFileSystemConfiguration))
+            if (BlobFileSystemConfiguration != null)
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration"u8);
                 writer.WriteObjectValue(BlobFileSystemConfiguration);
             }
-            if (Optional.IsDefined(NfsMountConfiguration))
+            if (NfsMountConfiguration != null)
             {
                 writer.WritePropertyName("nfsMountConfiguration"u8);
                 writer.WriteObjectValue(NfsMountConfiguration);
             }
-            if (Optional.IsDefined(CifsMountConfiguration))
+            if (CifsMountConfiguration != null)
             {
                 writer.WritePropertyName("cifsMountConfiguration"u8);
                 writer.WriteObjectValue(CifsMountConfiguration);
             }
-            if (Optional.IsDefined(FileShareConfiguration))
+            if (FileShareConfiguration != null)
             {
                 writer.WritePropertyName("azureFileShareConfiguration"u8);
                 writer.WriteObjectValue(FileShareConfiguration);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    azureBlobFileSystemConfiguration = BatchBlobFileSystemConfiguration.DeserializeBatchBlobFileSystemConfiguration(property.Value);
+                    azureBlobFileSystemConfiguration = BatchBlobFileSystemConfiguration.DeserializeBatchBlobFileSystemConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfsMountConfiguration"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nfsMountConfiguration = BatchNfsMountConfiguration.DeserializeBatchNfsMountConfiguration(property.Value);
+                    nfsMountConfiguration = BatchNfsMountConfiguration.DeserializeBatchNfsMountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cifsMountConfiguration"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    cifsMountConfiguration = BatchCifsMountConfiguration.DeserializeBatchCifsMountConfiguration(property.Value);
+                    cifsMountConfiguration = BatchCifsMountConfiguration.DeserializeBatchCifsMountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureFileShareConfiguration"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    azureFileShareConfiguration = BatchFileShareConfiguration.DeserializeBatchFileShareConfiguration(property.Value);
+                    azureFileShareConfiguration = BatchFileShareConfiguration.DeserializeBatchFileShareConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "Anomaly": return AnomalySecurityMLAnalyticsSettings.DeserializeAnomalySecurityMLAnalyticsSettings(element);
+                    case "Anomaly": return AnomalySecurityMLAnalyticsSettings.DeserializeAnomalySecurityMLAnalyticsSettings(element, options);
                 }
             }
-            return UnknownSecurityMLAnalyticsSetting.DeserializeUnknownSecurityMLAnalyticsSetting(element);
+            return UnknownSecurityMLAnalyticsSetting.DeserializeUnknownSecurityMLAnalyticsSetting(element, options);
         }
 
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingData>.Write(ModelReaderWriterOptions options)

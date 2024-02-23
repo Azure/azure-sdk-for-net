@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("web"u8);
                 writer.WriteObjectValue(Web);
             }
-            if (Optional.IsCollectionDefined(Ssh))
+            if (!(Ssh is ChangeTrackingList<SshConnectivityEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("web"u8))
                 {
-                    web = WebConnectivityEndpoint.DeserializeWebConnectivityEndpoint(property.Value);
+                    web = WebConnectivityEndpoint.DeserializeWebConnectivityEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ssh"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<SshConnectivityEndpoint> array = new List<SshConnectivityEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshConnectivityEndpoint.DeserializeSshConnectivityEndpoint(item));
+                        array.Add(SshConnectivityEndpoint.DeserializeSshConnectivityEndpoint(item, options));
                     }
                     ssh = array;
                     continue;

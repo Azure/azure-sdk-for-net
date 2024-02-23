@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CurrentState))
+            if (options.Format != "W" && CurrentState.HasValue)
             {
                 writer.WritePropertyName("currentState"u8);
                 writer.WriteStringValue(CurrentState.Value.ToString());
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsCollectionDefined(ReadyReplicas))
+            if (!(ReadyReplicas is ChangeTrackingList<AgentPoolUpdateProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("readyReplicas"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<AgentPoolUpdateProfile> array = new List<AgentPoolUpdateProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item));
+                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item, options));
                     }
                     readyReplicas = array;
                     continue;

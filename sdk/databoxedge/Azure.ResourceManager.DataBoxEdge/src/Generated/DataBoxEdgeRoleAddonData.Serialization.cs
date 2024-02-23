@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArcForKubernetes": return EdgeArcAddon.DeserializeEdgeArcAddon(element);
-                    case "IotEdge": return EdgeIotAddon.DeserializeEdgeIotAddon(element);
+                    case "ArcForKubernetes": return EdgeArcAddon.DeserializeEdgeArcAddon(element, options);
+                    case "IotEdge": return EdgeIotAddon.DeserializeEdgeIotAddon(element, options);
                 }
             }
-            return UnknownAddon.DeserializeUnknownAddon(element);
+            return UnknownAddon.DeserializeUnknownAddon(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeRoleAddonData>.Write(ModelReaderWriterOptions options)

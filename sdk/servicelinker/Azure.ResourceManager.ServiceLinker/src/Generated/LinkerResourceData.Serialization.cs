@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.ServiceLinker
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetService))
+            if (TargetService != null)
             {
                 writer.WritePropertyName("targetService"u8);
                 writer.WriteObjectValue(TargetService);
             }
-            if (Optional.IsDefined(AuthInfo))
+            if (AuthInfo != null)
             {
                 writer.WritePropertyName("authInfo"u8);
                 writer.WriteObjectValue(AuthInfo);
             }
-            if (Optional.IsDefined(ClientType))
+            if (ClientType.HasValue)
             {
                 writer.WritePropertyName("clientType"u8);
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(VnetSolution))
+            if (VnetSolution != null)
             {
                 if (VnetSolution != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     writer.WriteNull("vNetSolution");
                 }
             }
-            if (Optional.IsDefined(SecretStore))
+            if (SecretStore != null)
             {
                 if (SecretStore != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     writer.WriteNull("secretStore");
                 }
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 if (Scope != null)
                 {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceLinker
                             {
                                 continue;
                             }
-                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value);
+                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authInfo"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ServiceLinker
                             {
                                 continue;
                             }
-                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value);
+                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientType"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 vnetSolution = null;
                                 continue;
                             }
-                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
+                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ServiceLinker
                                 secretStore = null;
                                 continue;
                             }
-                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value);
+                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))

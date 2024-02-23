@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RawContent))
+            if (RawContent != null)
             {
                 if (RawContent != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("rawContent");
                 }
             }
-            if (Optional.IsDefined(GraphRunbookJson))
+            if (GraphRunbookJson != null)
             {
                 if (GraphRunbookJson != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                         rawContent = null;
                         continue;
                     }
-                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value);
+                    rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("graphRunbookJson"u8))

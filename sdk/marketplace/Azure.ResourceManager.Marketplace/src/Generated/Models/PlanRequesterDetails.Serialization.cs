@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PlanId))
+            if (options.Format != "W" && PlanId != null)
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PlanDisplayName))
+            if (options.Format != "W" && PlanDisplayName != null)
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Requesters))
+            if (options.Format != "W" && !(Requesters is ChangeTrackingList<PlanRequesterInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requesters"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PlanRequesterInfo> array = new List<PlanRequesterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item));
+                        array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item, options));
                     }
                     requesters = array;
                     continue;

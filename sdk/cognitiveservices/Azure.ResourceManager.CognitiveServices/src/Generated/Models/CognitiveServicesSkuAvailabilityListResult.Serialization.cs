@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CognitiveServicesSkuAvailabilityList> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesSkuAvailabilityList> array = new List<CognitiveServicesSkuAvailabilityList>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList(item));
+                        array.Add(CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList(item, options));
                     }
                     value = array;
                     continue;

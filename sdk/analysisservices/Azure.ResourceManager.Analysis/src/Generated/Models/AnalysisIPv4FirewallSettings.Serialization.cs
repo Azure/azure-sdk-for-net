@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FirewallRules))
+            if (!(FirewallRules is ChangeTrackingList<AnalysisIPv4FirewallRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPowerBIServiceEnabled))
+            if (IsPowerBIServiceEnabled.HasValue)
             {
                 writer.WritePropertyName("enablePowerBIService"u8);
                 writer.WriteBooleanValue(IsPowerBIServiceEnabled.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisIPv4FirewallRule> array = new List<AnalysisIPv4FirewallRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisIPv4FirewallRule.DeserializeAnalysisIPv4FirewallRule(item));
+                        array.Add(AnalysisIPv4FirewallRule.DeserializeAnalysisIPv4FirewallRule(item, options));
                     }
                     firewallRules = array;
                     continue;

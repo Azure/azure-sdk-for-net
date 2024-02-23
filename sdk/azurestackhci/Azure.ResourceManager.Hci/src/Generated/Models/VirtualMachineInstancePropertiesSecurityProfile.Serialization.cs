@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableTPM))
+            if (EnableTPM.HasValue)
             {
                 writer.WritePropertyName("enableTPM"u8);
                 writer.WriteBooleanValue(EnableTPM.Value);
             }
-            if (Optional.IsDefined(UefiSettings))
+            if (UefiSettings != null)
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
             }
-            if (Optional.IsDefined(SecurityType))
+            if (SecurityType.HasValue)
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    uefiSettings = VirtualMachineInstancePropertiesSecurityProfileUefiSettings.DeserializeVirtualMachineInstancePropertiesSecurityProfileUefiSettings(property.Value);
+                    uefiSettings = VirtualMachineInstancePropertiesSecurityProfileUefiSettings.DeserializeVirtualMachineInstancePropertiesSecurityProfileUefiSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityType"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NotificationPreferences))
+            if (!(NotificationPreferences is ChangeTrackingList<NotificationPreference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notificationPreferences"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TransportPreferences))
+            if (TransportPreferences != null)
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
-            if (Optional.IsDefined(EncryptionPreferences))
+            if (EncryptionPreferences != null)
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
-            if (Optional.IsDefined(ManagementResourcePreferences))
+            if (ManagementResourcePreferences != null)
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
                 writer.WriteObjectValue(ManagementResourcePreferences);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<NotificationPreference> array = new List<NotificationPreference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationPreference.DeserializeNotificationPreference(item));
+                        array.Add(NotificationPreference.DeserializeNotificationPreference(item, options));
                     }
                     notificationPreferences = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
+                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionPreferences"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value);
+                    encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managementResourcePreferences"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value);
+                    managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataVolumeCap))
+            if (DataVolumeCap != null)
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
                 writer.WriteObjectValue(DataVolumeCap);
             }
-            if (Optional.IsCollectionDefined(CurrentBillingFeatures))
+            if (!(CurrentBillingFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("CurrentBillingFeatures"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value);
+                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("CurrentBillingFeatures"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Policies))
+            if (!(Policies is ChangeTrackingList<DevTestLabEvaluatePolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabEvaluatePolicy> array = new List<DevTestLabEvaluatePolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabEvaluatePolicy.DeserializeDevTestLabEvaluatePolicy(item));
+                        array.Add(DevTestLabEvaluatePolicy.DeserializeDevTestLabEvaluatePolicy(item, options));
                     }
                     policies = array;
                     continue;

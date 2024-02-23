@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeData> array = new List<SynapseIntegrationRuntimeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(item));
+                        array.Add(SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<LocationExpanded> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<LocationExpanded> array = new List<LocationExpanded>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocationExpanded.DeserializeLocationExpanded(item));
+                        array.Add(LocationExpanded.DeserializeLocationExpanded(item, options));
                     }
                     value = array;
                     continue;

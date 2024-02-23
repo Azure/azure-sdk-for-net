@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,84 +66,84 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceBusEndpoint))
+            if (options.Format != "W" && ServiceBusEndpoint != null)
             {
                 writer.WritePropertyName("serviceBusEndpoint"u8);
                 writer.WriteStringValue(ServiceBusEndpoint);
             }
-            if (Optional.IsDefined(ClusterArmId))
+            if (ClusterArmId != null)
             {
                 writer.WritePropertyName("clusterArmId"u8);
                 writer.WriteStringValue(ClusterArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MetricId))
+            if (options.Format != "W" && MetricId != null)
             {
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(MetricId);
             }
-            if (Optional.IsDefined(IsAutoInflateEnabled))
+            if (IsAutoInflateEnabled.HasValue)
             {
                 writer.WritePropertyName("isAutoInflateEnabled"u8);
                 writer.WriteBooleanValue(IsAutoInflateEnabled.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(MaximumThroughputUnits))
+            if (MaximumThroughputUnits.HasValue)
             {
                 writer.WritePropertyName("maximumThroughputUnits"u8);
                 writer.WriteNumberValue(MaximumThroughputUnits.Value);
             }
-            if (Optional.IsDefined(KafkaEnabled))
+            if (KafkaEnabled.HasValue)
             {
                 writer.WritePropertyName("kafkaEnabled"u8);
                 writer.WriteBooleanValue(KafkaEnabled.Value);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (ZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(ZoneRedundant.Value);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<EventHubsPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Optional.IsDefined(AlternateName))
+            if (AlternateName != null)
             {
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    sku = EventHubsSku.DeserializeEventHubsSku(property.Value);
+                    sku = EventHubsSku.DeserializeEventHubsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            encryption = EventHubsEncryption.DeserializeEventHubsEncryption(property0.Value);
+                            encryption = EventHubsEncryption.DeserializeEventHubsEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.EventHubs
                             List<EventHubsPrivateEndpointConnectionData> array = new List<EventHubsPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(item));
+                                array.Add(EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyAssignmentId))
+            if (PolicyAssignmentId != null)
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);
             }
-            if (Optional.IsDefined(PolicySetDefinitionId))
+            if (PolicySetDefinitionId != null)
             {
                 writer.WritePropertyName("policySetDefinitionId"u8);
                 writer.WriteStringValue(PolicySetDefinitionId);
             }
-            if (Optional.IsDefined(Results))
+            if (Results != null)
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitions))
+            if (!(PolicyDefinitions is ChangeTrackingList<PolicyDefinitionSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyGroups))
+            if (!(PolicyGroups is ChangeTrackingList<PolicyGroupSummary> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("policyGroups"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyDefinitions"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyDefinitionSummary> array = new List<PolicyDefinitionSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyDefinitionSummary.DeserializePolicyDefinitionSummary(item));
+                        array.Add(PolicyDefinitionSummary.DeserializePolicyDefinitionSummary(item, options));
                     }
                     policyDefinitions = array;
                     continue;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyGroupSummary> array = new List<PolicyGroupSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyGroupSummary.DeserializePolicyGroupSummary(item));
+                        array.Add(PolicyGroupSummary.DeserializePolicyGroupSummary(item, options));
                     }
                     policyGroups = array;
                     continue;

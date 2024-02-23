@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(SelectedNodeImageVersions))
+            if (options.Format != "W" && !(SelectedNodeImageVersions is ChangeTrackingList<NodeImageVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("selectedNodeImageVersions"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<NodeImageVersion> array = new List<NodeImageVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item));
+                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item, options));
                     }
                     selectedNodeImageVersions = array;
                     continue;

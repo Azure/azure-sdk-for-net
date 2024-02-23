@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportedSkus))
+            if (!(SupportedSkus is ChangeTrackingList<SapSupportedSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedSkus"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapSupportedSku> array = new List<SapSupportedSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapSupportedSku.DeserializeSapSupportedSku(item));
+                        array.Add(SapSupportedSku.DeserializeSapSupportedSku(item, options));
                     }
                     supportedSkus = array;
                     continue;

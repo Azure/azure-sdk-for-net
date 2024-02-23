@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsCollectionDefined(ContainerCredentials))
+            if (!(ContainerCredentials is ChangeTrackingList<AzureStorageAccountContainerCredential> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containerCredentials"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Expiry))
+            if (Expiry.HasValue)
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(Expiry.Value, "O");
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureStorageAccountContainerCredential> array = new List<AzureStorageAccountContainerCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item));
+                        array.Add(AzureStorageAccountContainerCredential.DeserializeAzureStorageAccountContainerCredential(item, options));
                     }
                     containerCredentials = array;
                     continue;

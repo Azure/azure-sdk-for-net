@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.FluidRelay
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,34 +61,34 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FrsTenantId))
+            if (options.Format != "W" && FrsTenantId.HasValue)
             {
                 writer.WritePropertyName("frsTenantId"u8);
                 writer.WriteStringValue(FrsTenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FluidRelayEndpoints))
+            if (options.Format != "W" && FluidRelayEndpoints != null)
             {
                 writer.WritePropertyName("fluidRelayEndpoints"u8);
                 writer.WriteObjectValue(FluidRelayEndpoints);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(StorageSku))
+            if (StorageSku.HasValue)
             {
                 writer.WritePropertyName("storagesku"u8);
                 writer.WriteStringValue(StorageSku.Value.ToString());
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.FluidRelay
                             {
                                 continue;
                             }
-                            fluidRelayEndpoints = FluidRelayEndpoints.DeserializeFluidRelayEndpoints(property0.Value);
+                            fluidRelayEndpoints = FluidRelayEndpoints.DeserializeFluidRelayEndpoints(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.FluidRelay
                             {
                                 continue;
                             }
-                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storagesku"u8))

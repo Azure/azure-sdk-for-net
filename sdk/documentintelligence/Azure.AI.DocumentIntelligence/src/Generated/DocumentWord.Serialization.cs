@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(Polygon))
+            if (!(Polygon is ChangeTrackingList<float> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("polygon"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("span"u8))
                 {
-                    span = DocumentSpan.DeserializeDocumentSpan(property.Value);
+                    span = DocumentSpan.DeserializeDocumentSpan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

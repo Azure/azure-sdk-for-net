@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(ErrorDetail))
+            if (ErrorDetail != null)
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (Optional.IsCollectionDefined(InquiryDetails))
+            if (!(InquiryDetails is ChangeTrackingList<WorkloadInquiryDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inquiryDetails"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inquiryDetails"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadInquiryDetails> array = new List<WorkloadInquiryDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item));
+                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item, options));
                     }
                     inquiryDetails = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MonitorWorkspaceIntegrations))
+            if (!(MonitorWorkspaceIntegrations is ChangeTrackingList<MonitorWorkspaceIntegration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureMonitorWorkspaceIntegrations"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<MonitorWorkspaceIntegration> array = new List<MonitorWorkspaceIntegration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWorkspaceIntegration.DeserializeMonitorWorkspaceIntegration(item));
+                        array.Add(MonitorWorkspaceIntegration.DeserializeMonitorWorkspaceIntegration(item, options));
                     }
                     azureMonitorWorkspaceIntegrations = array;
                     continue;

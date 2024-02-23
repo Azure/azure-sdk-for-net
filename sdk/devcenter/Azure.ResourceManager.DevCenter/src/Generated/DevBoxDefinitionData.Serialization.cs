@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,49 +56,49 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageReference))
+            if (ImageReference != null)
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(OSStorageType))
+            if (OSStorageType != null)
             {
                 writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
-            if (Optional.IsDefined(HibernateSupport))
+            if (HibernateSupport.HasValue)
             {
                 writer.WritePropertyName("hibernateSupport"u8);
                 writer.WriteStringValue(HibernateSupport.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ImageValidationStatus))
+            if (options.Format != "W" && ImageValidationStatus.HasValue)
             {
                 writer.WritePropertyName("imageValidationStatus"u8);
                 writer.WriteStringValue(ImageValidationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ImageValidationErrorDetails))
+            if (options.Format != "W" && ImageValidationErrorDetails != null)
             {
                 writer.WritePropertyName("imageValidationErrorDetails"u8);
                 writer.WriteObjectValue(ImageValidationErrorDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActiveImageReference))
+            if (options.Format != "W" && ActiveImageReference != null)
             {
                 writer.WritePropertyName("activeImageReference"u8);
                 writer.WriteObjectValue(ActiveImageReference);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
+                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value);
+                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osStorageType"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value);
+                            imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("activeImageReference"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
+                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
                             continue;
                         }
                     }

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeGrainType))
+            if (TimeGrainType.HasValue)
             {
                 writer.WritePropertyName("timeGrainType"u8);
                 writer.WriteStringValue(TimeGrainType.Value.ToString());
             }
-            if (Optional.IsDefined(PeriodStartDate))
+            if (PeriodStartDate != null)
             {
                 writer.WritePropertyName("periodStartDate"u8);
                 writer.WriteStringValue(PeriodStartDate);
             }
-            if (Optional.IsDefined(TriggeredBy))
+            if (TriggeredBy != null)
             {
                 writer.WritePropertyName("triggeredBy"u8);
                 writer.WriteStringValue(TriggeredBy);
             }
-            if (Optional.IsCollectionDefined(ResourceGroupFilter))
+            if (!(ResourceGroupFilter is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGroupFilter"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResourceFilter))
+            if (!(ResourceFilter is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceFilter"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MeterFilter))
+            if (!(MeterFilter is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("meterFilter"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TagFilter))
+            if (TagFilter != null)
             {
                 writer.WritePropertyName("tagFilter"u8);
 #if NET6_0_OR_GREATER
@@ -119,32 +119,32 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Threshold))
+            if (Threshold.HasValue)
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Optional.IsDefined(Operator))
+            if (Operator.HasValue)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Optional.IsDefined(Amount))
+            if (Amount.HasValue)
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(CurrentSpend))
+            if (CurrentSpend.HasValue)
             {
                 writer.WritePropertyName("currentSpend"u8);
                 writer.WriteNumberValue(CurrentSpend.Value);
             }
-            if (Optional.IsCollectionDefined(ContactEmails))
+            if (!(ContactEmails is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("contactEmails"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContactGroups))
+            if (!(ContactGroups is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContactRoles))
+            if (!(ContactRoles is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
@@ -174,37 +174,37 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OverridingAlert))
+            if (OverridingAlert != null)
             {
                 writer.WritePropertyName("overridingAlert"u8);
                 writer.WriteStringValue(OverridingAlert);
             }
-            if (Optional.IsDefined(DepartmentName))
+            if (DepartmentName != null)
             {
                 writer.WritePropertyName("departmentName"u8);
                 writer.WriteStringValue(DepartmentName);
             }
-            if (Optional.IsDefined(CompanyName))
+            if (CompanyName != null)
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (Optional.IsDefined(EnrollmentNumber))
+            if (EnrollmentNumber != null)
             {
                 writer.WritePropertyName("enrollmentNumber"u8);
                 writer.WriteStringValue(EnrollmentNumber);
             }
-            if (Optional.IsDefined(EnrollmentStartDate))
+            if (EnrollmentStartDate != null)
             {
                 writer.WritePropertyName("enrollmentStartDate"u8);
                 writer.WriteStringValue(EnrollmentStartDate);
             }
-            if (Optional.IsDefined(EnrollmentEndDate))
+            if (EnrollmentEndDate != null)
             {
                 writer.WritePropertyName("enrollmentEndDate"u8);
                 writer.WriteStringValue(EnrollmentEndDate);
             }
-            if (Optional.IsDefined(InvoicingThreshold))
+            if (InvoicingThreshold.HasValue)
             {
                 writer.WritePropertyName("invoicingThreshold"u8);
                 writer.WriteNumberValue(InvoicingThreshold.Value);

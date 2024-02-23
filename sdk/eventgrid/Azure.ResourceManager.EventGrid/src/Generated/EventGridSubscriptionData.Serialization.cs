@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Topic))
+            if (options.Format != "W" && Topic != null)
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Optional.IsDefined(DeliveryWithResourceIdentity))
+            if (DeliveryWithResourceIdentity != null)
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -85,27 +85,27 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(EventDeliverySchema))
+            if (EventDeliverySchema.HasValue)
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (Optional.IsDefined(RetryPolicy))
+            if (RetryPolicy != null)
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (Optional.IsDefined(DeadLetterDestination))
+            if (DeadLetterDestination != null)
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);
             }
-            if (Optional.IsDefined(DeadLetterWithResourceIdentity))
+            if (DeadLetterWithResourceIdentity != null)
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterWithResourceIdentity);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property0.Value);
+                            destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deliveryWithResourceIdentity"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property0.Value);
+                            deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filter"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property0.Value);
+                            filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labels"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property0.Value);
+                            retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deadLetterDestination"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property0.Value);
+                            deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deadLetterWithResourceIdentity"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property0.Value);
+                            deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property0.Value, options);
                             continue;
                         }
                     }

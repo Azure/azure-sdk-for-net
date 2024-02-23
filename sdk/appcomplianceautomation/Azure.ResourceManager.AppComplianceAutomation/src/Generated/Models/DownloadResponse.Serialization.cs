@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceList))
+            if (options.Format != "W" && !(ResourceList is ChangeTrackingList<ResourceItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceReport))
+            if (options.Format != "W" && !(ComplianceReport is ChangeTrackingList<ComplianceReportItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("complianceReport"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CompliancePdfReport))
+            if (options.Format != "W" && CompliancePdfReport != null)
             {
                 writer.WritePropertyName("compliancePdfReport"u8);
                 writer.WriteObjectValue(CompliancePdfReport);
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceDetailedPdfReport))
+            if (options.Format != "W" && ComplianceDetailedPdfReport != null)
             {
                 writer.WritePropertyName("complianceDetailedPdfReport"u8);
                 writer.WriteObjectValue(ComplianceDetailedPdfReport);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ResourceItem> array = new List<ResourceItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceItem.DeserializeResourceItem(item));
+                        array.Add(ResourceItem.DeserializeResourceItem(item, options));
                     }
                     resourceList = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ComplianceReportItem> array = new List<ComplianceReportItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceReportItem.DeserializeComplianceReportItem(item));
+                        array.Add(ComplianceReportItem.DeserializeComplianceReportItem(item, options));
                     }
                     complianceReport = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    compliancePdfReport = DownloadResponseCompliancePdfReport.DeserializeDownloadResponseCompliancePdfReport(property.Value);
+                    compliancePdfReport = DownloadResponseCompliancePdfReport.DeserializeDownloadResponseCompliancePdfReport(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("complianceDetailedPdfReport"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    complianceDetailedPdfReport = DownloadResponseComplianceDetailedPdfReport.DeserializeDownloadResponseComplianceDetailedPdfReport(property.Value);
+                    complianceDetailedPdfReport = DownloadResponseComplianceDetailedPdfReport.DeserializeDownloadResponseComplianceDetailedPdfReport(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

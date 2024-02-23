@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicResourceMonitorResult> array = new List<NewRelicResourceMonitorResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult(item));
+                        array.Add(NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult(item, options));
                     }
                     value = array;
                     continue;

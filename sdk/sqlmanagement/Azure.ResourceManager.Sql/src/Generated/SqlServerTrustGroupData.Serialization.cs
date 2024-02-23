@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GroupMembers))
+            if (!(GroupMembers is ChangeTrackingList<ServerTrustGroupServerInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupMembers"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustScopes))
+            if (!(TrustScopes is ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trustScopes"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql
                             List<ServerTrustGroupServerInfo> array = new List<ServerTrustGroupServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerTrustGroupServerInfo.DeserializeServerTrustGroupServerInfo(item));
+                                array.Add(ServerTrustGroupServerInfo.DeserializeServerTrustGroupServerInfo(item, options));
                             }
                             groupMembers = array;
                             continue;

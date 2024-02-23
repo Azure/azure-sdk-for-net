@@ -27,7 +27,7 @@ namespace Azure.AI.ContentSafety
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BlocklistsMatch))
+            if (!(BlocklistsMatch is ChangeTrackingList<TextBlocklistMatch> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("blocklistsMatch"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.AI.ContentSafety
                     List<TextBlocklistMatch> array = new List<TextBlocklistMatch>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item));
+                        array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item, options));
                     }
                     blocklistsMatch = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.AI.ContentSafety
                     List<TextCategoriesAnalysis> array = new List<TextCategoriesAnalysis>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item));
+                        array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item, options));
                     }
                     categoriesAnalysis = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Citations))
+            if (!(Citations is ChangeTrackingList<AzureChatExtensionDataSourceResponseCitation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("citations"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Intent))
+            if (Intent != null)
             {
                 writer.WritePropertyName("intent"u8);
                 writer.WriteStringValue(Intent);
@@ -95,7 +95,7 @@ namespace Azure.AI.OpenAI
                     List<AzureChatExtensionDataSourceResponseCitation> array = new List<AzureChatExtensionDataSourceResponseCitation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureChatExtensionDataSourceResponseCitation.DeserializeAzureChatExtensionDataSourceResponseCitation(item));
+                        array.Add(AzureChatExtensionDataSourceResponseCitation.DeserializeAzureChatExtensionDataSourceResponseCitation(item, options));
                     }
                     citations = array;
                     continue;

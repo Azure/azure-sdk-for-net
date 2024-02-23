@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 if (property.NameEquals("targetDetails"u8))
                 {
-                    targetDetails = MySqlFlexibleServerBackupStoreDetails.DeserializeMySqlFlexibleServerBackupStoreDetails(property.Value);
+                    targetDetails = MySqlFlexibleServerBackupStoreDetails.DeserializeMySqlFlexibleServerBackupStoreDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupSettings"u8))
                 {
-                    backupSettings = MySqlFlexibleServerBackupSettings.DeserializeMySqlFlexibleServerBackupSettings(property.Value);
+                    backupSettings = MySqlFlexibleServerBackupSettings.DeserializeMySqlFlexibleServerBackupSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

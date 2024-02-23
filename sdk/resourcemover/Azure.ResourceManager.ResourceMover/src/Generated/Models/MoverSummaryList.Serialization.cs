@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FieldName))
+            if (FieldName != null)
             {
                 writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
             }
-            if (Optional.IsCollectionDefined(Summary))
+            if (!(Summary is ChangeTrackingList<MoverSummaryItemInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverSummaryItemInfo> array = new List<MoverSummaryItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverSummaryItemInfo.DeserializeMoverSummaryItemInfo(item));
+                        array.Add(MoverSummaryItemInfo.DeserializeMoverSummaryItemInfo(item, options));
                     }
                     summary = array;
                     continue;

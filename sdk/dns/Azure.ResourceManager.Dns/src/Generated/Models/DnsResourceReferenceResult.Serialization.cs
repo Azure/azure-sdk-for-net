@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsResourceReferences))
+            if (!(DnsResourceReferences is ChangeTrackingList<DnsResourceReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsResourceReferences"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Dns.Models
                             List<DnsResourceReference> array = new List<DnsResourceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item));
+                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item, options));
                             }
                             dnsResourceReferences = array;
                             continue;

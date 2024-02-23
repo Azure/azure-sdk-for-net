@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ProtocolMatched))
+            if (ProtocolMatched.HasValue)
             {
                 writer.WritePropertyName("protocolMatched"u8);
                 writer.WriteBooleanValue(ProtocolMatched.Value);
             }
-            if (Optional.IsDefined(SourceMatched))
+            if (SourceMatched.HasValue)
             {
                 writer.WritePropertyName("sourceMatched"u8);
                 writer.WriteBooleanValue(SourceMatched.Value);
             }
-            if (Optional.IsDefined(SourcePortMatched))
+            if (SourcePortMatched.HasValue)
             {
                 writer.WritePropertyName("sourcePortMatched"u8);
                 writer.WriteBooleanValue(SourcePortMatched.Value);
             }
-            if (Optional.IsDefined(DestinationMatched))
+            if (DestinationMatched.HasValue)
             {
                 writer.WritePropertyName("destinationMatched"u8);
                 writer.WriteBooleanValue(DestinationMatched.Value);
             }
-            if (Optional.IsDefined(DestinationPortMatched))
+            if (DestinationPortMatched.HasValue)
             {
                 writer.WritePropertyName("destinationPortMatched"u8);
                 writer.WriteBooleanValue(DestinationPortMatched.Value);

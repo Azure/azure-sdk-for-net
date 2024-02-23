@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SecuritySolutionsReferenceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecuritySolutionsReferenceData> array = new List<SecuritySolutionsReferenceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData(item));
+                        array.Add(SecuritySolutionsReferenceData.DeserializeSecuritySolutionsReferenceData(item, options));
                     }
                     value = array;
                     continue;

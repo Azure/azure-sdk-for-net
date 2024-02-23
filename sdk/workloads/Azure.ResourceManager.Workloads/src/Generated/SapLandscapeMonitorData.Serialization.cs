@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Grouping))
+            if (Grouping != null)
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteObjectValue(Grouping);
             }
-            if (Optional.IsCollectionDefined(TopMetricsThresholds))
+            if (!(TopMetricsThresholds is ChangeTrackingList<SapLandscapeMonitorMetricThresholds> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("topMetricsThresholds"u8);
                 writer.WriteStartArray();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            grouping = SapLandscapeMonitorPropertiesGrouping.DeserializeSapLandscapeMonitorPropertiesGrouping(property0.Value);
+                            grouping = SapLandscapeMonitorPropertiesGrouping.DeserializeSapLandscapeMonitorPropertiesGrouping(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("topMetricsThresholds"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Workloads
                             List<SapLandscapeMonitorMetricThresholds> array = new List<SapLandscapeMonitorMetricThresholds>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SapLandscapeMonitorMetricThresholds.DeserializeSapLandscapeMonitorMetricThresholds(item));
+                                array.Add(SapLandscapeMonitorMetricThresholds.DeserializeSapLandscapeMonitorMetricThresholds(item, options));
                             }
                             topMetricsThresholds = array;
                             continue;

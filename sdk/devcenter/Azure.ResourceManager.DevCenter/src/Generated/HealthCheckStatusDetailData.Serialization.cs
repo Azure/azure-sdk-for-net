@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthChecks))
+            if (options.Format != "W" && !(HealthChecks is ChangeTrackingList<DevCenterHealthCheck> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthChecks"u8);
                 writer.WriteStartArray();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter
                             List<DevCenterHealthCheck> array = new List<DevCenterHealthCheck>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item));
+                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item, options));
                             }
                             healthChecks = array;
                             continue;

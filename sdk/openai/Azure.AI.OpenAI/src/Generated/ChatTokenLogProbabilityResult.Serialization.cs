@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Token);
             writer.WritePropertyName("logprob"u8);
             writer.WriteNumberValue(LogProbability);
-            if (Utf8ByteValues != null && Optional.IsCollectionDefined(Utf8ByteValues))
+            if (Utf8ByteValues != null && !(Utf8ByteValues is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bytes"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("bytes");
             }
-            if (TopLogProbabilityEntries != null && Optional.IsCollectionDefined(TopLogProbabilityEntries))
+            if (TopLogProbabilityEntries != null && !(TopLogProbabilityEntries is ChangeTrackingList<ChatTokenLogProbabilityInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("top_logprobs"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.AI.OpenAI
                     List<ChatTokenLogProbabilityInfo> array = new List<ChatTokenLogProbabilityInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatTokenLogProbabilityInfo.DeserializeChatTokenLogProbabilityInfo(item));
+                        array.Add(ChatTokenLogProbabilityInfo.DeserializeChatTokenLogProbabilityInfo(item, options));
                     }
                     topLogprobs = array;
                     continue;

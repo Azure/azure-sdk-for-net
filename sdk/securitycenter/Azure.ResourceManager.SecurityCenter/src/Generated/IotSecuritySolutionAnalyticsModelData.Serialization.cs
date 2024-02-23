@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Metrics))
+            if (options.Format != "W" && Metrics != null)
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteObjectValue(Metrics);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnhealthyDeviceCount))
+            if (options.Format != "W" && UnhealthyDeviceCount.HasValue)
             {
                 writer.WritePropertyName("unhealthyDeviceCount"u8);
                 writer.WriteNumberValue(UnhealthyDeviceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DevicesMetrics))
+            if (options.Format != "W" && !(DevicesMetrics is ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("devicesMetrics"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TopAlertedDevices))
+            if (!(TopAlertedDevices is ChangeTrackingList<IotSecurityAlertedDevice> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("topAlertedDevices"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MostPrevalentDeviceAlerts))
+            if (!(MostPrevalentDeviceAlerts is ChangeTrackingList<IotSecurityDeviceAlert> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mostPrevalentDeviceAlerts"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MostPrevalentDeviceRecommendations))
+            if (!(MostPrevalentDeviceRecommendations is ChangeTrackingList<IotSecurityDeviceRecommendation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("mostPrevalentDeviceRecommendations"u8);
                 writer.WriteStartArray();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            metrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property0.Value);
+                            metrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("unhealthyDeviceCount"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecuritySolutionAnalyticsModelDevicesMetrics> array = new List<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecuritySolutionAnalyticsModelDevicesMetrics.DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(item));
+                                array.Add(IotSecuritySolutionAnalyticsModelDevicesMetrics.DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(item, options));
                             }
                             devicesMetrics = array;
                             continue;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecurityAlertedDevice> array = new List<IotSecurityAlertedDevice>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityAlertedDevice.DeserializeIotSecurityAlertedDevice(item));
+                                array.Add(IotSecurityAlertedDevice.DeserializeIotSecurityAlertedDevice(item, options));
                             }
                             topAlertedDevices = array;
                             continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecurityDeviceAlert> array = new List<IotSecurityDeviceAlert>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityDeviceAlert.DeserializeIotSecurityDeviceAlert(item));
+                                array.Add(IotSecurityDeviceAlert.DeserializeIotSecurityDeviceAlert(item, options));
                             }
                             mostPrevalentDeviceAlerts = array;
                             continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<IotSecurityDeviceRecommendation> array = new List<IotSecurityDeviceRecommendation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityDeviceRecommendation.DeserializeIotSecurityDeviceRecommendation(item));
+                                array.Add(IotSecurityDeviceRecommendation.DeserializeIotSecurityDeviceRecommendation(item, options));
                             }
                             mostPrevalentDeviceRecommendations = array;
                             continue;

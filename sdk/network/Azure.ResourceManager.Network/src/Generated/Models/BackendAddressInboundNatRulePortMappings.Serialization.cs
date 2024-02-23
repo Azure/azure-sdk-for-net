@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InboundNatRulePortMappings))
+            if (!(InboundNatRulePortMappings is ChangeTrackingList<InboundNatRulePortMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatRulePortMappings"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<InboundNatRulePortMapping> array = new List<InboundNatRulePortMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatRulePortMapping.DeserializeInboundNatRulePortMapping(item));
+                        array.Add(InboundNatRulePortMapping.DeserializeInboundNatRulePortMapping(item, options));
                     }
                     inboundNatRulePortMappings = array;
                     continue;

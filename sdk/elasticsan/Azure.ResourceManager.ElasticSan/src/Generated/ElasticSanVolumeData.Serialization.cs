@@ -43,36 +43,36 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VolumeId))
+            if (options.Format != "W" && VolumeId.HasValue)
             {
                 writer.WritePropertyName("volumeId"u8);
                 writer.WriteStringValue(VolumeId.Value);
             }
-            if (Optional.IsDefined(CreationData))
+            if (CreationData != null)
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
             writer.WritePropertyName("sizeGiB"u8);
             writer.WriteNumberValue(SizeGiB);
-            if (options.Format != "W" && Optional.IsDefined(StorageTarget))
+            if (options.Format != "W" && StorageTarget != null)
             {
                 writer.WritePropertyName("storageTarget"u8);
                 writer.WriteObjectValue(StorageTarget);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteObjectValue(ManagedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value);
+                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sizeGiB"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value);
+                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedBy"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value);
+                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

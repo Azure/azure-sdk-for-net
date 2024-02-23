@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AlertId))
+            if (options.Format != "W" && AlertId.HasValue)
             {
                 writer.WritePropertyName("alertId"u8);
                 writer.WriteStringValue(AlertId.Value);
             }
-            if (Optional.IsCollectionDefined(Modifications))
+            if (!(Modifications is ChangeTrackingList<ServiceAlertModificationItemInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ServiceAlertModificationItemInfo> array = new List<ServiceAlertModificationItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item));
+                        array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item, options));
                     }
                     modifications = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            if (options.Format != "W" && CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteObjectValue(AuthenticationIdentity);
             writer.WritePropertyName("resourceAccessIdentity"u8);
             writer.WriteObjectValue(ResourceAccessIdentity);
-            if (options.Format != "W" && Optional.IsDefined(IsResponsive))
+            if (options.Format != "W" && IsResponsive.HasValue)
             {
                 writer.WritePropertyName("isResponsive"u8);
                 writer.WriteBooleanValue(IsResponsive.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatOn))
+            if (options.Format != "W" && LastHeartbeatOn.HasValue)
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionNumber))
+            if (options.Format != "W" && VersionNumber != null)
             {
                 writer.WritePropertyName("versionNumber"u8);
                 writer.WriteStringValue(VersionNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
+            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("authenticationIdentity"u8))
                 {
-                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value);
+                    authenticationIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentity"u8))
                 {
-                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value);
+                    resourceAccessIdentity = DataReplicationIdentity.DeserializeDataReplicationIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isResponsive"u8))
@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DraModelCustomProperties.DeserializeDraModelCustomProperties(property.Value);
+                    customProperties = DraModelCustomProperties.DeserializeDraModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.MixedReality
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteObjectValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -76,24 +76,24 @@ namespace Azure.ResourceManager.MixedReality
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountName))
+            if (StorageAccountName != null)
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            if (options.Format != "W" && AccountId.HasValue)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountDomain))
+            if (options.Format != "W" && AccountDomain != null)
             {
                 writer.WritePropertyName("accountDomain"u8);
                 writer.WriteStringValue(AccountDomain);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    sku = MixedRealitySku.DeserializeMixedRealitySku(property.Value);
+                    sku = MixedRealitySku.DeserializeMixedRealitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    kind = MixedRealitySku.DeserializeMixedRealitySku(property.Value);
+                    kind = MixedRealitySku.DeserializeMixedRealitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WriteObjectValue(OrderItemDetails);
             writer.WritePropertyName("addressDetails"u8);
             writer.WriteObjectValue(AddressDetails);
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.EdgeOrder
                     {
                         if (property0.NameEquals("orderItemDetails"u8))
                         {
-                            orderItemDetails = EdgeOrderItemDetails.DeserializeEdgeOrderItemDetails(property0.Value);
+                            orderItemDetails = EdgeOrderItemDetails.DeserializeEdgeOrderItemDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("addressDetails"u8))
                         {
-                            addressDetails = EdgeOrderItemAddressDetails.DeserializeEdgeOrderItemAddressDetails(property0.Value);
+                            addressDetails = EdgeOrderItemAddressDetails.DeserializeEdgeOrderItemAddressDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("startTime"u8))

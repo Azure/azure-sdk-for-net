@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsCollectionDefined(InfrastructureExpressRouteConnections))
+            if (!(InfrastructureExpressRouteConnections is ChangeTrackingList<ExpressRouteConnectionInformation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("infrastructureExpressRouteConnections"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WorkloadExpressRouteConnections))
+            if (!(WorkloadExpressRouteConnections is ChangeTrackingList<ExpressRouteConnectionInformation> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("workloadExpressRouteConnections"u8);
                 writer.WriteStartArray();
@@ -88,22 +88,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(InfrastructureServices))
+            if (options.Format != "W" && InfrastructureServices != null)
             {
                 writer.WritePropertyName("infrastructureServices"u8);
                 writer.WriteObjectValue(InfrastructureServices);
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadServices))
+            if (options.Format != "W" && WorkloadServices != null)
             {
                 writer.WritePropertyName("workloadServices"u8);
                 writer.WriteObjectValue(WorkloadServices);
             }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (ManagedResourceGroupConfiguration != null)
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkFabricIds))
+            if (options.Format != "W" && !(NetworkFabricIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("networkFabricIds"u8);
                 writer.WriteStartArray();
@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsWorkloadManagementNetwork))
+            if (options.Format != "W" && IsWorkloadManagementNetwork.HasValue)
             {
                 writer.WritePropertyName("workloadManagementNetwork"u8);
                 writer.WriteBooleanValue(IsWorkloadManagementNetwork.Value);
             }
-            if (Optional.IsDefined(IsWorkloadManagementNetworkEnabled))
+            if (IsWorkloadManagementNetworkEnabled.HasValue)
             {
                 writer.WritePropertyName("isWorkloadManagementNetworkEnabled"u8);
                 writer.WriteStringValue(IsWorkloadManagementNetworkEnabled.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TenantInternetGatewayIds))
+            if (options.Format != "W" && !(TenantInternetGatewayIds is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("tenantInternetGatewayIds"u8);
                 writer.WriteStartArray();
@@ -143,22 +143,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IPv4AddressSpace))
+            if (IPv4AddressSpace != null)
             {
                 writer.WritePropertyName("ipv4AddressSpace"u8);
                 writer.WriteStringValue(IPv4AddressSpace);
             }
-            if (Optional.IsDefined(IPv6AddressSpace))
+            if (IPv6AddressSpace != null)
             {
                 writer.WritePropertyName("ipv6AddressSpace"u8);
                 writer.WriteStringValue(IPv6AddressSpace);
             }
-            if (Optional.IsDefined(NfcSku))
+            if (NfcSku.HasValue)
             {
                 writer.WritePropertyName("nfcSku"u8);
                 writer.WriteStringValue(NfcSku.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item, options));
                             }
                             infrastructureExpressRouteConnections = array;
                             continue;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item, options));
                             }
                             workloadExpressRouteConnections = array;
                             continue;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value);
+                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workloadServices"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value);
+                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkFabricIds"u8))

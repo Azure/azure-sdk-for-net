@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InteractionType))
+            if (InteractionType != null)
             {
                 writer.WritePropertyName("interactionType"u8);
                 writer.WriteStringValue(InteractionType);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkName))
+            if (options.Format != "W" && LinkName != null)
             {
                 writer.WritePropertyName("linkName"u8);
                 writer.WriteStringValue(LinkName);
             }
-            if (Optional.IsCollectionDefined(Mappings))
+            if (!(Mappings is ChangeTrackingList<RelationshipLinkFieldMapping> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProfilePropertyReferences))
+            if (!(ProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
+            if (!(RelatedProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RelationshipName))
+            if (RelationshipName != null)
             {
                 writer.WritePropertyName("relationshipName"u8);
                 writer.WriteStringValue(RelationshipName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelationshipGuidId))
+            if (options.Format != "W" && RelationshipGuidId != null)
             {
                 writer.WritePropertyName("relationshipGuidId"u8);
                 writer.WriteStringValue(RelationshipGuidId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<RelationshipLinkFieldMapping> array = new List<RelationshipLinkFieldMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelationshipLinkFieldMapping.DeserializeRelationshipLinkFieldMapping(item));
+                                array.Add(RelationshipLinkFieldMapping.DeserializeRelationshipLinkFieldMapping(item, options));
                             }
                             mappings = array;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                                array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item, options));
                             }
                             profilePropertyReferences = array;
                             continue;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                                array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item, options));
                             }
                             relatedProfilePropertyReferences = array;
                             continue;

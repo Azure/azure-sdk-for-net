@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(StatusDescription))
+            if (StatusDescription != null)
             {
                 writer.WritePropertyName("statusDescription"u8);
                 writer.WriteStringValue(StatusDescription);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Conditions))
+            if (options.Format != "W" && !(Conditions is ChangeTrackingList<OutstandingCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<OutstandingCondition> array = new List<OutstandingCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item));
+                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item, options));
                     }
                     conditions = array;
                     continue;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(AlertRuleName);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("condition"u8);
             writer.WriteObjectValue(Condition);
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<AlertRuleAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("condition"u8))
                         {
-                            condition = AlertRuleCondition.DeserializeAlertRuleCondition(property0.Value);
+                            condition = AlertRuleCondition.DeserializeAlertRuleCondition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("action"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            action = AlertRuleAction.DeserializeAlertRuleAction(property0.Value);
+                            action = AlertRuleAction.DeserializeAlertRuleAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("actions"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Monitor
                             List<AlertRuleAction> array = new List<AlertRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertRuleAction.DeserializeAlertRuleAction(item));
+                                array.Add(AlertRuleAction.DeserializeAlertRuleAction(item, options));
                             }
                             actions = array;
                             continue;

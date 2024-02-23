@@ -26,49 +26,49 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LicenseStatus))
+            if (options.Format != "W" && LicenseStatus.HasValue)
             {
                 writer.WritePropertyName("licenseStatus"u8);
                 writer.WriteStringValue(LicenseStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LicenseChannel))
+            if (options.Format != "W" && LicenseChannel != null)
             {
                 writer.WritePropertyName("licenseChannel"u8);
                 writer.WriteStringValue(LicenseChannel);
             }
-            if (Optional.IsDefined(EsuProfile))
+            if (EsuProfile != null)
             {
                 writer.WritePropertyName("esuProfile"u8);
                 writer.WriteObjectValue(EsuProfile);
             }
             writer.WritePropertyName("productProfile"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubscriptionStatus))
+            if (SubscriptionStatus.HasValue)
             {
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(ProductType))
+            if (ProductType.HasValue)
             {
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
+            if (options.Format != "W" && BillingStartOn.HasValue)
             {
                 writer.WritePropertyName("billingStartDate"u8);
                 writer.WriteStringValue(BillingStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EnrollmentOn))
+            if (options.Format != "W" && EnrollmentOn.HasValue)
             {
                 writer.WritePropertyName("enrollmentDate"u8);
                 writer.WriteStringValue(EnrollmentOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
+            if (options.Format != "W" && DisenrollmentOn.HasValue)
             {
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ProductFeatures))
+            if (!(ProductFeatures is ChangeTrackingList<HybridComputeProductFeature> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("productFeatures"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
             writer.WritePropertyName("softwareAssurance"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSoftwareAssuranceCustomer))
+            if (IsSoftwareAssuranceCustomer.HasValue)
             {
                 writer.WritePropertyName("softwareAssuranceCustomer"u8);
                 writer.WriteBooleanValue(IsSoftwareAssuranceCustomer.Value);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    esuProfile = LicenseProfileMachineInstanceViewEsuProperties.DeserializeLicenseProfileMachineInstanceViewEsuProperties(property.Value);
+                    esuProfile = LicenseProfileMachineInstanceViewEsuProperties.DeserializeLicenseProfileMachineInstanceViewEsuProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("productProfile"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             List<HybridComputeProductFeature> array = new List<HybridComputeProductFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridComputeProductFeature.DeserializeHybridComputeProductFeature(item));
+                                array.Add(HybridComputeProductFeature.DeserializeHybridComputeProductFeature(item, options));
                             }
                             productFeatures = array;
                             continue;

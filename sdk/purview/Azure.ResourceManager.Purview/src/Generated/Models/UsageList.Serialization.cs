@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<PurviewUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewUsage> array = new List<PurviewUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewUsage.DeserializePurviewUsage(item));
+                        array.Add(PurviewUsage.DeserializePurviewUsage(item, options));
                     }
                     value = array;
                     continue;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Input))
+            if (Input != null)
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Optional.IsDefined(Preview))
+            if (Preview != null)
             {
                 writer.WritePropertyName("preview"u8);
                 writer.WriteObjectValue(Preview);
             }
-            if (Optional.IsDefined(Encoding))
+            if (Encoding != null)
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteObjectValue(Encoding);
             }
-            if (Optional.IsCollectionDefined(Transcriptions))
+            if (!(Transcriptions is ChangeTrackingList<LiveEventTranscription> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("transcriptions"u8);
                 writer.WriteStartArray();
@@ -93,32 +93,32 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (Optional.IsDefined(CrossSiteAccessPolicies))
+            if (CrossSiteAccessPolicies != null)
             {
                 writer.WritePropertyName("crossSiteAccessPolicies"u8);
                 writer.WriteObjectValue(CrossSiteAccessPolicies);
             }
-            if (Optional.IsDefined(UseStaticHostname))
+            if (UseStaticHostname.HasValue)
             {
                 writer.WritePropertyName("useStaticHostname"u8);
                 writer.WriteBooleanValue(UseStaticHostname.Value);
             }
-            if (Optional.IsDefined(HostnamePrefix))
+            if (HostnamePrefix != null)
             {
                 writer.WritePropertyName("hostnamePrefix"u8);
                 writer.WriteStringValue(HostnamePrefix);
             }
-            if (Optional.IsCollectionDefined(StreamOptions))
+            if (!(StreamOptions is ChangeTrackingList<StreamOptionsFlag> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("streamOptions"u8);
                 writer.WriteStartArray();
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            input = LiveEventInput.DeserializeLiveEventInput(property0.Value);
+                            input = LiveEventInput.DeserializeLiveEventInput(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("preview"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            preview = LiveEventPreview.DeserializeLiveEventPreview(property0.Value);
+                            preview = LiveEventPreview.DeserializeLiveEventPreview(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encoding"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            encoding = LiveEventEncoding.DeserializeLiveEventEncoding(property0.Value);
+                            encoding = LiveEventEncoding.DeserializeLiveEventEncoding(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("transcriptions"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Media
                             List<LiveEventTranscription> array = new List<LiveEventTranscription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LiveEventTranscription.DeserializeLiveEventTranscription(item));
+                                array.Add(LiveEventTranscription.DeserializeLiveEventTranscription(item, options));
                             }
                             transcriptions = array;
                             continue;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value);
+                            crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("useStaticHostname"u8))

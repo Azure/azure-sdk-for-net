@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataShare
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.DataShare
             {
                 switch (discriminator.GetString())
                 {
-                    case "ScheduleBased": return ScheduledSynchronizationSetting.DeserializeScheduledSynchronizationSetting(element);
+                    case "ScheduleBased": return ScheduledSynchronizationSetting.DeserializeScheduledSynchronizationSetting(element, options);
                 }
             }
-            return UnknownSynchronizationSetting.DeserializeUnknownSynchronizationSetting(element);
+            return UnknownSynchronizationSetting.DeserializeUnknownSynchronizationSetting(element, options);
         }
 
         BinaryData IPersistableModel<DataShareSynchronizationSettingData>.Write(ModelReaderWriterOptions options)

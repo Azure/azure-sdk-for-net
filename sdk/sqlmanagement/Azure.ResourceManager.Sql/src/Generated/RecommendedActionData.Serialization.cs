@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,104 +53,104 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RecommendationReason))
+            if (options.Format != "W" && RecommendationReason != null)
             {
                 writer.WritePropertyName("recommendationReason"u8);
                 writer.WriteStringValue(RecommendationReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidSince))
+            if (options.Format != "W" && ValidSince.HasValue)
             {
                 writer.WritePropertyName("validSince"u8);
                 writer.WriteStringValue(ValidSince.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRefresh))
+            if (options.Format != "W" && LastRefresh.HasValue)
             {
                 writer.WritePropertyName("lastRefresh"u8);
                 writer.WriteStringValue(LastRefresh.Value, "O");
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteObjectValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsExecutableAction))
+            if (options.Format != "W" && IsExecutableAction.HasValue)
             {
                 writer.WritePropertyName("isExecutableAction"u8);
                 writer.WriteBooleanValue(IsExecutableAction.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsRevertableAction))
+            if (options.Format != "W" && IsRevertableAction.HasValue)
             {
                 writer.WritePropertyName("isRevertableAction"u8);
                 writer.WriteBooleanValue(IsRevertableAction.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsArchivedAction))
+            if (options.Format != "W" && IsArchivedAction.HasValue)
             {
                 writer.WritePropertyName("isArchivedAction"u8);
                 writer.WriteBooleanValue(IsArchivedAction.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecuteActionStartOn))
+            if (options.Format != "W" && ExecuteActionStartOn.HasValue)
             {
                 writer.WritePropertyName("executeActionStartTime"u8);
                 writer.WriteStringValue(ExecuteActionStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecuteActionDuration))
+            if (options.Format != "W" && ExecuteActionDuration.HasValue)
             {
                 writer.WritePropertyName("executeActionDuration"u8);
                 writer.WriteStringValue(ExecuteActionDuration.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(RevertActionStartOn))
+            if (options.Format != "W" && RevertActionStartOn.HasValue)
             {
                 writer.WritePropertyName("revertActionStartTime"u8);
                 writer.WriteStringValue(RevertActionStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RevertActionDuration))
+            if (options.Format != "W" && RevertActionDuration.HasValue)
             {
                 writer.WritePropertyName("revertActionDuration"u8);
                 writer.WriteStringValue(RevertActionDuration.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecuteActionInitiatedBy))
+            if (options.Format != "W" && ExecuteActionInitiatedBy.HasValue)
             {
                 writer.WritePropertyName("executeActionInitiatedBy"u8);
                 writer.WriteStringValue(ExecuteActionInitiatedBy.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecuteActionInitiatedOn))
+            if (options.Format != "W" && ExecuteActionInitiatedOn.HasValue)
             {
                 writer.WritePropertyName("executeActionInitiatedTime"u8);
                 writer.WriteStringValue(ExecuteActionInitiatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RevertActionInitiatedBy))
+            if (options.Format != "W" && RevertActionInitiatedBy.HasValue)
             {
                 writer.WritePropertyName("revertActionInitiatedBy"u8);
                 writer.WriteStringValue(RevertActionInitiatedBy.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RevertActionInitiatedOn))
+            if (options.Format != "W" && RevertActionInitiatedOn.HasValue)
             {
                 writer.WritePropertyName("revertActionInitiatedTime"u8);
                 writer.WriteStringValue(RevertActionInitiatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Score))
+            if (options.Format != "W" && Score.HasValue)
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ImplementationDetails))
+            if (options.Format != "W" && ImplementationDetails != null)
             {
                 writer.WritePropertyName("implementationDetails"u8);
                 writer.WriteObjectValue(ImplementationDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            if (options.Format != "W" && ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EstimatedImpact))
+            if (options.Format != "W" && !(EstimatedImpact is ChangeTrackingList<RecommendedActionImpactRecord> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("estimatedImpact"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ObservedImpact))
+            if (options.Format != "W" && !(ObservedImpact is ChangeTrackingList<RecommendedActionImpactRecord> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("observedImpact"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TimeSeries))
+            if (options.Format != "W" && !(TimeSeries is ChangeTrackingList<RecommendedActionMetricInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("timeSeries"u8);
                 writer.WriteStartArray();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LinkedObjects))
+            if (options.Format != "W" && !(LinkedObjects is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("linkedObjects"u8);
                 writer.WriteStartArray();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && !(Details is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            state = RecommendedActionStateInfo.DeserializeRecommendedActionStateInfo(property0.Value);
+                            state = RecommendedActionStateInfo.DeserializeRecommendedActionStateInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isExecutableAction"u8))
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            implementationDetails = RecommendedActionImplementationInfo.DeserializeRecommendedActionImplementationInfo(property0.Value);
+                            implementationDetails = RecommendedActionImplementationInfo.DeserializeRecommendedActionImplementationInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("errorDetails"u8))
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            errorDetails = RecommendedActionErrorInfo.DeserializeRecommendedActionErrorInfo(property0.Value);
+                            errorDetails = RecommendedActionErrorInfo.DeserializeRecommendedActionErrorInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("estimatedImpact"u8))
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
+                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item, options));
                             }
                             estimatedImpact = array;
                             continue;
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
+                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item, options));
                             }
                             observedImpact = array;
                             continue;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionMetricInfo> array = new List<RecommendedActionMetricInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionMetricInfo.DeserializeRecommendedActionMetricInfo(item));
+                                array.Add(RecommendedActionMetricInfo.DeserializeRecommendedActionMetricInfo(item, options));
                             }
                             timeSeries = array;
                             continue;

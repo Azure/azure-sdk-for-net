@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(PartitionIds))
+            if (options.Format != "W" && !(PartitionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("partitionIds"u8);
                 writer.WriteStartArray();
@@ -65,32 +65,32 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(PartitionCount))
+            if (PartitionCount.HasValue)
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CaptureDescription))
+            if (CaptureDescription != null)
             {
                 writer.WritePropertyName("captureDescription"u8);
                 writer.WriteObjectValue(CaptureDescription);
             }
-            if (Optional.IsDefined(RetentionDescription))
+            if (RetentionDescription != null)
             {
                 writer.WritePropertyName("retentionDescription"u8);
                 writer.WriteObjectValue(RetentionDescription);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value);
+                            captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("retentionDescription"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.EventHubs
                             {
                                 continue;
                             }
-                            retentionDescription = RetentionDescription.DeserializeRetentionDescription(property0.Value);
+                            retentionDescription = RetentionDescription.DeserializeRetentionDescription(property0.Value, options);
                             continue;
                         }
                     }

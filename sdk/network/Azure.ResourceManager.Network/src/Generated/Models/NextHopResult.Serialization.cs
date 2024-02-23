@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextHopType))
+            if (NextHopType.HasValue)
             {
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType.Value.ToString());
             }
-            if (Optional.IsDefined(NextHopIPAddress))
+            if (NextHopIPAddress != null)
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
             }
-            if (Optional.IsDefined(RouteTableId))
+            if (RouteTableId != null)
             {
                 writer.WritePropertyName("routeTableId"u8);
                 writer.WriteStringValue(RouteTableId);

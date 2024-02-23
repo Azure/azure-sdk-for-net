@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Criteria))
+            if (!(Criteria is ChangeTrackingList<DataProtectionBackupCriteria> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupCriteria> array = new List<DataProtectionBackupCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupCriteria.DeserializeDataProtectionBackupCriteria(item));
+                        array.Add(DataProtectionBackupCriteria.DeserializeDataProtectionBackupCriteria(item, options));
                     }
                     criteria = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("tagInfo"u8))
                 {
-                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value);
+                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

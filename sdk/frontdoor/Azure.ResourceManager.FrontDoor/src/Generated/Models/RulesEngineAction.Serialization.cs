@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RequestHeaderActions))
+            if (!(RequestHeaderActions is ChangeTrackingList<RulesEngineHeaderAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requestHeaderActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResponseHeaderActions))
+            if (!(ResponseHeaderActions is ChangeTrackingList<RulesEngineHeaderAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("responseHeaderActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RouteConfigurationOverride))
+            if (RouteConfigurationOverride != null)
             {
                 if (RouteConfigurationOverride != null)
                 {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
+                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item, options));
                     }
                     requestHeaderActions = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item));
+                        array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item, options));
                     }
                     responseHeaderActions = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         routeConfigurationOverride = null;
                         continue;
                     }
-                    routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value);
+                    routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

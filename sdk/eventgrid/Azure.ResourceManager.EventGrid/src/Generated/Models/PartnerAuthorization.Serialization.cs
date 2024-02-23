@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
+            if (DefaultMaximumExpirationTimeInDays.HasValue)
             {
                 writer.WritePropertyName("defaultMaximumExpirationTimeInDays"u8);
                 writer.WriteNumberValue(DefaultMaximumExpirationTimeInDays.Value);
             }
-            if (Optional.IsCollectionDefined(AuthorizedPartnersList))
+            if (!(AuthorizedPartnersList is ChangeTrackingList<EventGridPartnerContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizedPartnersList"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridPartnerContent> array = new List<EventGridPartnerContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridPartnerContent.DeserializeEventGridPartnerContent(item));
+                        array.Add(EventGridPartnerContent.DeserializeEventGridPartnerContent(item, options));
                     }
                     authorizedPartnersList = array;
                     continue;

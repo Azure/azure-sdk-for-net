@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ssh))
+            if (Ssh != null)
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    ssh = LinuxSshConfiguration.DeserializeLinuxSshConfiguration(property.Value);
+                    ssh = LinuxSshConfiguration.DeserializeLinuxSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

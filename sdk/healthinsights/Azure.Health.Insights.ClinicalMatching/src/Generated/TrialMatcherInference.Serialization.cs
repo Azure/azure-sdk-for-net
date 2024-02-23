@@ -31,17 +31,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ConfidenceScore))
+            if (ConfidenceScore.HasValue)
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (Optional.IsCollectionDefined(Evidence))
+            if (!(Evidence is ChangeTrackingList<TrialMatcherInferenceEvidence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Source))
+            if (Source.HasValue)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -149,7 +149,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherInferenceEvidence> array = new List<TrialMatcherInferenceEvidence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherInferenceEvidence.DeserializeTrialMatcherInferenceEvidence(item));
+                        array.Add(TrialMatcherInferenceEvidence.DeserializeTrialMatcherInferenceEvidence(item, options));
                     }
                     evidence = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value);
+                    metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

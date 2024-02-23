@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(CpuCoresCount))
+            if (CpuCoresCount.HasValue)
             {
                 writer.WritePropertyName("cpuCoresCount"u8);
                 writer.WriteNumberValue(CpuCoresCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCpusAvailable))
+            if (options.Format != "W" && VCpusAvailable.HasValue)
             {
                 writer.WritePropertyName("vCPUsAvailable"u8);
                 writer.WriteNumberValue(VCpusAvailable.Value);
             }
-            if (Optional.IsDefined(MemoryInGB))
+            if (MemoryInGB.HasValue)
             {
                 writer.WritePropertyName("memoryInGB"u8);
                 writer.WriteNumberValue(MemoryInGB.Value);
             }
-            if (Optional.IsDefined(MaxDataDiskCount))
+            if (MaxDataDiskCount.HasValue)
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
             }
-            if (Optional.IsDefined(MaxNicsCount))
+            if (MaxNicsCount.HasValue)
             {
                 writer.WritePropertyName("maxNicsCount"u8);
                 writer.WriteNumberValue(MaxNicsCount.Value);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HighIopsSupported))
+            if (HighIopsSupported != null)
             {
                 writer.WritePropertyName("highIopsSupported"u8);
                 writer.WriteStringValue(HighIopsSupported);
             }
-            if (Optional.IsCollectionDefined(HyperVGenerations))
+            if (!(HyperVGenerations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hyperVGenerations"u8);
                 writer.WriteStartArray();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryComputeSizeErrorDetails> array = new List<SiteRecoveryComputeSizeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item));
+                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item, options));
                     }
                     errors = array;
                     continue;

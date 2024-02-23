@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory
                     Dictionary<string, DataFactoryGlobalParameterProperties> dictionary = new Dictionary<string, DataFactoryGlobalParameterProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property0.Value));
+                        dictionary.Add(property0.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property0.Value, options));
                     }
                     properties = dictionary;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (TokenLogProbabilityResults != null && Optional.IsCollectionDefined(TokenLogProbabilityResults))
+            if (TokenLogProbabilityResults != null && !(TokenLogProbabilityResults is ChangeTrackingList<ChatTokenLogProbabilityResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.AI.OpenAI
                     List<ChatTokenLogProbabilityResult> array = new List<ChatTokenLogProbabilityResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatTokenLogProbabilityResult.DeserializeChatTokenLogProbabilityResult(item));
+                        array.Add(ChatTokenLogProbabilityResult.DeserializeChatTokenLogProbabilityResult(item, options));
                     }
                     content = array;
                     continue;

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cardinality))
+            if (Cardinality.HasValue)
             {
                 writer.WritePropertyName("cardinality"u8);
                 writer.WriteStringValue(Cardinality.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ExpiryDateTimeUtc))
+            if (ExpiryDateTimeUtc.HasValue)
             {
                 writer.WritePropertyName("expiryDateTimeUtc"u8);
                 writer.WriteStringValue(ExpiryDateTimeUtc.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Fields))
+            if (!(Fields is ChangeTrackingList<PropertyDefinition> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LookupMappings))
+            if (!(LookupMappings is ChangeTrackingList<RelationshipTypeMapping> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("lookupMappings"u8);
                 writer.WriteStartArray();
@@ -102,32 +102,32 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProfileType))
+            if (ProfileType != null)
             {
                 writer.WritePropertyName("profileType"u8);
                 writer.WriteStringValue(ProfileType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RelationshipName))
+            if (options.Format != "W" && RelationshipName != null)
             {
                 writer.WritePropertyName("relationshipName"u8);
                 writer.WriteStringValue(RelationshipName);
             }
-            if (Optional.IsDefined(RelatedProfileType))
+            if (RelatedProfileType != null)
             {
                 writer.WritePropertyName("relatedProfileType"u8);
                 writer.WriteStringValue(RelatedProfileType);
             }
-            if (options.Format != "W" && Optional.IsDefined(RelationshipGuidId))
+            if (options.Format != "W" && RelationshipGuidId != null)
             {
                 writer.WritePropertyName("relationshipGuidId"u8);
                 writer.WriteStringValue(RelationshipGuidId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PropertyDefinition> array = new List<PropertyDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item));
+                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item, options));
                             }
                             fields = array;
                             continue;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<RelationshipTypeMapping> array = new List<RelationshipTypeMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelationshipTypeMapping.DeserializeRelationshipTypeMapping(item));
+                                array.Add(RelationshipTypeMapping.DeserializeRelationshipTypeMapping(item, options));
                             }
                             lookupMappings = array;
                             continue;

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ODataId))
+            if (ODataId != null)
             {
                 writer.WritePropertyName("@odata.id"u8);
                 writer.WriteStringValue(ODataId);
             }
-            if (Optional.IsDefined(ODataContext))
+            if (ODataContext != null)
             {
                 writer.WritePropertyName("@odata.context"u8);
                 writer.WriteStringValue(ODataContext);
             }
-            if (Optional.IsDefined(Results))
+            if (Results != null)
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);
             }
-            if (Optional.IsCollectionDefined(PolicyAssignments))
+            if (!(PolicyAssignments is ChangeTrackingList<PolicyAssignmentSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyAssignments"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyAssignments"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyAssignmentSummary> array = new List<PolicyAssignmentSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyAssignmentSummary.DeserializePolicyAssignmentSummary(item));
+                        array.Add(PolicyAssignmentSummary.DeserializePolicyAssignmentSummary(item, options));
                     }
                     policyAssignments = array;
                     continue;

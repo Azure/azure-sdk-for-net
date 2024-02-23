@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                     {
                         continue;
                     }
-                    properties = SpringBootServerProperties.DeserializeSpringBootServerProperties(property.Value);
+                    properties = SpringBootServerProperties.DeserializeSpringBootServerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

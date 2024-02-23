@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdditionalEgressEndpoints))
+            if (!(AdditionalEgressEndpoints is ChangeTrackingList<EgressEndpoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("additionalEgressEndpoints"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableDefaultEgressEndpoints))
+            if (EnableDefaultEgressEndpoints.HasValue)
             {
                 writer.WritePropertyName("enableDefaultEgressEndpoints"u8);
                 writer.WriteStringValue(EnableDefaultEgressEndpoints.Value.ToString());
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<EgressEndpoint> array = new List<EgressEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item));
+                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item, options));
                             }
                             additionalEgressEndpoints = array;
                             continue;

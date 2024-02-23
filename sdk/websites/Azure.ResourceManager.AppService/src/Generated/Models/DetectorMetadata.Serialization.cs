@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSource))
+            if (DataSource != null)
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    dataSource = DetectorDataSource.DeserializeDetectorDataSource(property.Value);
+                    dataSource = DetectorDataSource.DeserializeDetectorDataSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

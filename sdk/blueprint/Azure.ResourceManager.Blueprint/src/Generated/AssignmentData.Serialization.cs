@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(BlueprintId))
+            if (BlueprintId != null)
             {
                 writer.WritePropertyName("blueprintId"u8);
                 writer.WriteStringValue(BlueprintId);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsDefined(Locks))
+            if (Locks != null)
             {
                 writer.WritePropertyName("locks"u8);
                 writer.WriteObjectValue(Locks);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Blueprint
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ParameterValue> dictionary = new Dictionary<string, ParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ResourceGroupValue> dictionary = new Dictionary<string, ResourceGroupValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ResourceGroupValue.DeserializeResourceGroupValue(property1.Value));
+                                dictionary.Add(property1.Name, ResourceGroupValue.DeserializeResourceGroupValue(property1.Value, options));
                             }
                             resourceGroups = dictionary;
                             continue;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            status = AssignmentStatus.DeserializeAssignmentStatus(property0.Value);
+                            status = AssignmentStatus.DeserializeAssignmentStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("locks"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            locks = AssignmentLockSettings.DeserializeAssignmentLockSettings(property0.Value);
+                            locks = AssignmentLockSettings.DeserializeAssignmentLockSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

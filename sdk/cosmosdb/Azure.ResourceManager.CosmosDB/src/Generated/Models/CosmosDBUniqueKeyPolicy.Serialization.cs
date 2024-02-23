@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(UniqueKeys))
+            if (!(UniqueKeys is ChangeTrackingList<CosmosDBUniqueKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("uniqueKeys"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBUniqueKey> array = new List<CosmosDBUniqueKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBUniqueKey.DeserializeCosmosDBUniqueKey(item));
+                        array.Add(CosmosDBUniqueKey.DeserializeCosmosDBUniqueKey(item, options));
                     }
                     uniqueKeys = array;
                     continue;

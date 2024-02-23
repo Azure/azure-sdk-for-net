@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionProfile))
+            if (options.Format != "W" && ConnectionProfile != null)
             {
                 writer.WritePropertyName("connectionProfile"u8);
                 writer.WriteObjectValue(ConnectionProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClaimedByUserId))
+            if (options.Format != "W" && ClaimedByUserId != null)
             {
                 writer.WritePropertyName("claimedByUserId"u8);
                 writer.WriteStringValue(ClaimedByUserId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmType))
+            if (options.Format != "W" && VmType.HasValue)
             {
                 writer.WritePropertyName("vmType"u8);
                 writer.WriteStringValue(VmType.Value.ToSerialString());
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value);
+                            connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("claimedByUserId"u8))

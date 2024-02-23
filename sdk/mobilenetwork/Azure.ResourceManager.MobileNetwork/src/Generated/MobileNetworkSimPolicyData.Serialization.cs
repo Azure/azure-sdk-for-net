@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SiteProvisioningState))
+            if (options.Format != "W" && !(SiteProvisioningState is ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("siteProvisioningState"u8);
                 writer.WriteStartObject();
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteObjectValue(UeAmbr);
             writer.WritePropertyName("defaultSlice"u8);
             JsonSerializer.Serialize(writer, DefaultSlice);
-            if (Optional.IsDefined(RfspIndex))
+            if (RfspIndex.HasValue)
             {
                 writer.WritePropertyName("rfspIndex"u8);
                 writer.WriteNumberValue(RfspIndex.Value);
             }
-            if (Optional.IsDefined(RegistrationTimer))
+            if (RegistrationTimer.HasValue)
             {
                 writer.WritePropertyName("registrationTimer"u8);
                 writer.WriteNumberValue(RegistrationTimer.Value);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("ueAmbr"u8))
                         {
-                            ueAmbr = Ambr.DeserializeAmbr(property0.Value);
+                            ueAmbr = Ambr.DeserializeAmbr(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultSlice"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<MobileNetworkSliceConfiguration> array = new List<MobileNetworkSliceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item));
+                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item, options));
                             }
                             sliceConfigurations = array;
                             continue;

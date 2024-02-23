@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportedOSList))
+            if (!(SupportedOSList is ChangeTrackingList<SiteRecoverySupportedOSProperty> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedOsList"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySupportedOSProperty> array = new List<SiteRecoverySupportedOSProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySupportedOSProperty.DeserializeSiteRecoverySupportedOSProperty(item));
+                        array.Add(SiteRecoverySupportedOSProperty.DeserializeSiteRecoverySupportedOSProperty(item, options));
                     }
                     supportedOSList = array;
                     continue;

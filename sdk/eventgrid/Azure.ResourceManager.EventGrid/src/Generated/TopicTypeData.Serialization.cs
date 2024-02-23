@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Provider))
+            if (Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ResourceRegionType))
+            if (ResourceRegionType.HasValue)
             {
                 writer.WritePropertyName("resourceRegionType"u8);
                 writer.WriteStringValue(ResourceRegionType.Value.ToString());
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SupportedLocations))
+            if (!(SupportedLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedLocations"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceResourceFormat))
+            if (SourceResourceFormat != null)
             {
                 writer.WritePropertyName("sourceResourceFormat"u8);
                 writer.WriteStringValue(SourceResourceFormat);
             }
-            if (Optional.IsCollectionDefined(SupportedScopesForSource))
+            if (!(SupportedScopesForSource is ChangeTrackingList<TopicTypeSourceScope> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedScopesForSource"u8);
                 writer.WriteStartArray();
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AreRegionalAndGlobalSourcesSupported))
+            if (AreRegionalAndGlobalSourcesSupported.HasValue)
             {
                 writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
                 writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
             }
-            if (Optional.IsCollectionDefined(AdditionalEnforcedPermissions))
+            if (!(AdditionalEnforcedPermissions is ChangeTrackingList<TopicTypeAdditionalEnforcedPermission> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("additionalEnforcedPermissions"u8);
                 writer.WriteStartArray();
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<TopicTypeAdditionalEnforcedPermission> array = new List<TopicTypeAdditionalEnforcedPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TopicTypeAdditionalEnforcedPermission.DeserializeTopicTypeAdditionalEnforcedPermission(item));
+                                array.Add(TopicTypeAdditionalEnforcedPermission.DeserializeTopicTypeAdditionalEnforcedPermission(item, options));
                             }
                             additionalEnforcedPermissions = array;
                             continue;

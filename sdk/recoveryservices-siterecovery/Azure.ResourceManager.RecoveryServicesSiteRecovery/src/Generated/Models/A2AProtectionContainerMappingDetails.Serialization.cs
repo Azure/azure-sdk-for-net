@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AgentAutoUpdateStatus))
+            if (AgentAutoUpdateStatus.HasValue)
             {
                 writer.WritePropertyName("agentAutoUpdateStatus"u8);
                 writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
             }
-            if (Optional.IsDefined(AutomationAccountArmId))
+            if (AutomationAccountArmId != null)
             {
                 writer.WritePropertyName("automationAccountArmId"u8);
                 writer.WriteStringValue(AutomationAccountArmId);
             }
-            if (Optional.IsDefined(AutomationAccountAuthenticationType))
+            if (AutomationAccountAuthenticationType.HasValue)
             {
                 writer.WritePropertyName("automationAccountAuthenticationType"u8);
                 writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduleName))
+            if (ScheduleName != null)
             {
                 writer.WritePropertyName("scheduleName"u8);
                 writer.WriteStringValue(ScheduleName);
             }
-            if (Optional.IsDefined(JobScheduleName))
+            if (JobScheduleName != null)
             {
                 writer.WritePropertyName("jobScheduleName"u8);
                 writer.WriteStringValue(JobScheduleName);

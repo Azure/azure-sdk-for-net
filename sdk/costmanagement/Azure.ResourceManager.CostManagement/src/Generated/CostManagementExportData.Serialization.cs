@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,44 +49,44 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Format))
+            if (Format.HasValue)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (Optional.IsDefined(DeliveryInfo))
+            if (DeliveryInfo != null)
             {
                 writer.WritePropertyName("deliveryInfo"u8);
                 writer.WriteObjectValue(DeliveryInfo);
             }
-            if (Optional.IsDefined(Definition))
+            if (Definition != null)
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            if (Optional.IsDefined(RunHistory))
+            if (RunHistory != null)
             {
                 writer.WritePropertyName("runHistory"u8);
                 writer.WriteObjectValue(RunHistory);
             }
-            if (Optional.IsDefined(PartitionData))
+            if (PartitionData.HasValue)
             {
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
+            if (options.Format != "W" && NextRunTimeEstimate.HasValue)
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
             }
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value);
+                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value);
+                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runHistory"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value);
+                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partitionData"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value);
+                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value, options);
                             continue;
                         }
                     }

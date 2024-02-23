@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVault))
+            if (SourceVault != null)
             {
                 writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
             }
-            if (Optional.IsCollectionDefined(VaultCertificates))
+            if (!(VaultCertificates is ChangeTrackingList<CloudServiceVaultCertificate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vaultCertificates"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceVaultCertificate> array = new List<CloudServiceVaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceVaultCertificate.DeserializeCloudServiceVaultCertificate(item));
+                        array.Add(CloudServiceVaultCertificate.DeserializeCloudServiceVaultCertificate(item, options));
                     }
                     vaultCertificates = array;
                     continue;

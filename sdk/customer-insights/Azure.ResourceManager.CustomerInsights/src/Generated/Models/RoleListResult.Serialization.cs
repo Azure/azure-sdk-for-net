@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RoleResourceFormat> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RoleResourceFormat> array = new List<RoleResourceFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleResourceFormat.DeserializeRoleResourceFormat(item));
+                        array.Add(RoleResourceFormat.DeserializeRoleResourceFormat(item, options));
                     }
                     value = array;
                     continue;

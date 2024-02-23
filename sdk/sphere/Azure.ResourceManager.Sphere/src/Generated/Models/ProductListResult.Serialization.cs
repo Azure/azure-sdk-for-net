@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereProductData> array = new List<SphereProductData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereProductData.DeserializeSphereProductData(item));
+                        array.Add(SphereProductData.DeserializeSphereProductData(item, options));
                     }
                     value = array;
                     continue;

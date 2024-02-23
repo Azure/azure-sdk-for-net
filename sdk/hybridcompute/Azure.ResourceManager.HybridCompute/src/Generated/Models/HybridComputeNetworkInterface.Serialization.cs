@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (!(IPAddresses is ChangeTrackingList<HybridComputeIPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeIPAddress> array = new List<HybridComputeIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeIPAddress.DeserializeHybridComputeIPAddress(item));
+                        array.Add(HybridComputeIPAddress.DeserializeHybridComputeIPAddress(item, options));
                     }
                     ipAddresses = array;
                     continue;

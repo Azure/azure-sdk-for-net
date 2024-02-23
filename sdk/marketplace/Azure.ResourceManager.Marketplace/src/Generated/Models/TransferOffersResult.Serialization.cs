@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Succeeded))
+            if (!(Succeeded is ChangeTrackingList<PrivateStoreCollectionDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("succeeded"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Failed))
+            if (!(Failed is ChangeTrackingList<PrivateStoreCollectionDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("failed"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item, options));
                     }
                     succeeded = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item, options));
                     }
                     failed = array;
                     continue;

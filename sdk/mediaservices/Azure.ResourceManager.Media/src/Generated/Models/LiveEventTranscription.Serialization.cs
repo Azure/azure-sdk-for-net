@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsCollectionDefined(InputTrackSelection))
+            if (!(InputTrackSelection is ChangeTrackingList<LiveEventInputTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputTrackSelection"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputTranscriptionTrack))
+            if (OutputTranscriptionTrack != null)
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
                 writer.WriteObjectValue(OutputTranscriptionTrack);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<LiveEventInputTrackSelection> array = new List<LiveEventInputTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventInputTrackSelection.DeserializeLiveEventInputTrackSelection(item));
+                        array.Add(LiveEventInputTrackSelection.DeserializeLiveEventInputTrackSelection(item, options));
                     }
                     inputTrackSelection = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    outputTranscriptionTrack = LiveEventOutputTranscriptionTrack.DeserializeLiveEventOutputTranscriptionTrack(property.Value);
+                    outputTranscriptionTrack = LiveEventOutputTranscriptionTrack.DeserializeLiveEventOutputTranscriptionTrack(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

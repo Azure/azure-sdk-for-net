@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = ChatCompletionsFunctionToolSelection.DeserializeChatCompletionsFunctionToolSelection(property.Value);
+                    function = ChatCompletionsFunctionToolSelection.DeserializeChatCompletionsFunctionToolSelection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,34 +71,34 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(ManagementNetworkProfile))
+            if (ManagementNetworkProfile != null)
             {
                 writer.WritePropertyName("managementNetworkProfile"u8);
                 writer.WriteObjectValue(ManagementNetworkProfile);
             }
-            if (Optional.IsDefined(StampId))
+            if (StampId != null)
             {
                 writer.WritePropertyName("stampId"u8);
                 writer.WriteStringValue(StampId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
+            if (options.Format != "W" && StatusMessage != null)
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    sku = HardwareSecurityModulesSku.DeserializeHardwareSecurityModulesSku(property.Value);
+                    sku = HardwareSecurityModulesSku.DeserializeHardwareSecurityModulesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkProfile"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("stampId"u8))

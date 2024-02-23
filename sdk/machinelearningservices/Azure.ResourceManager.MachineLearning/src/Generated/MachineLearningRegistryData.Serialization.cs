@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.MachineLearning
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiscoveryUri))
+            if (DiscoveryUri != null)
             {
                 if (DiscoveryUri != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("discoveryUrl");
                 }
             }
-            if (Optional.IsDefined(IntellectualPropertyPublisher))
+            if (IntellectualPropertyPublisher != null)
             {
                 if (IntellectualPropertyPublisher != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("intellectualPropertyPublisher");
                 }
             }
-            if (Optional.IsDefined(ManagedResourceGroup))
+            if (ManagedResourceGroup != null)
             {
                 if (ManagedResourceGroup != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("managedResourceGroup");
                 }
             }
-            if (Optional.IsDefined(MlFlowRegistryUri))
+            if (MlFlowRegistryUri != null)
             {
                 if (MlFlowRegistryUri != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("mlFlowRegistryUri");
                 }
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<RegistryPrivateEndpointConnection> collection0 && collection0.IsUndefined))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("privateEndpointConnections");
                 }
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess != null)
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (Optional.IsCollectionDefined(RegionDetails))
+            if (!(RegionDetails is ChangeTrackingList<RegistryRegionArmDetails> collection1 && collection1.IsUndefined))
             {
                 if (RegionDetails != null)
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 managedResourceGroup = null;
                                 continue;
                             }
-                            managedResourceGroup = ArmResourceId.DeserializeArmResourceId(property0.Value);
+                            managedResourceGroup = ArmResourceId.DeserializeArmResourceId(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mlFlowRegistryUri"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearning
                             List<RegistryPrivateEndpointConnection> array = new List<RegistryPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RegistryPrivateEndpointConnection.DeserializeRegistryPrivateEndpointConnection(item));
+                                array.Add(RegistryPrivateEndpointConnection.DeserializeRegistryPrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.MachineLearning
                             List<RegistryRegionArmDetails> array = new List<RegistryRegionArmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RegistryRegionArmDetails.DeserializeRegistryRegionArmDetails(item));
+                                array.Add(RegistryRegionArmDetails.DeserializeRegistryRegionArmDetails(item, options));
                             }
                             regionDetails = array;
                             continue;

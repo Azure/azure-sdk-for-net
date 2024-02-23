@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CoresUsed))
+            if (CoresUsed.HasValue)
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
-            if (Optional.IsDefined(MaxCoresAllowed))
+            if (MaxCoresAllowed.HasValue)
             {
                 writer.WritePropertyName("maxCoresAllowed"u8);
                 writer.WriteNumberValue(MaxCoresAllowed.Value);
             }
-            if (Optional.IsCollectionDefined(RegionalQuotas))
+            if (!(RegionalQuotas is ChangeTrackingList<RegionalQuotaCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regionalQuotas"u8);
                 writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RegionalQuotaCapability> array = new List<RegionalQuotaCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item));
+                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item, options));
                     }
                     regionalQuotas = array;
                     continue;

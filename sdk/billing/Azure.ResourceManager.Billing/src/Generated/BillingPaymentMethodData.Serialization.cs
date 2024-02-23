@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Family))
+            if (Family.HasValue)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PaymentMethodType))
+            if (options.Format != "W" && PaymentMethodType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PaymentMethodType);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountHolderName))
+            if (options.Format != "W" && AccountHolderName != null)
             {
                 writer.WritePropertyName("accountHolderName"u8);
                 writer.WriteStringValue(AccountHolderName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Expiration))
+            if (options.Format != "W" && Expiration != null)
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(Expiration);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastFourDigits))
+            if (options.Format != "W" && LastFourDigits != null)
             {
                 writer.WritePropertyName("lastFourDigits"u8);
                 writer.WriteStringValue(LastFourDigits);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Logos))
+            if (!(Logos is ChangeTrackingList<PaymentMethodLogo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("logos"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Billing
                             List<PaymentMethodLogo> array = new List<PaymentMethodLogo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item));
+                                array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item, options));
                             }
                             logos = array;
                             continue;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,49 +56,49 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationData))
+            if (CreationData != null)
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
-            if (Optional.IsDefined(SnapshotType))
+            if (SnapshotType.HasValue)
             {
                 writer.WritePropertyName("snapshotType"u8);
                 writer.WriteStringValue(SnapshotType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
+            if (options.Format != "W" && KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeImageVersion))
+            if (options.Format != "W" && NodeImageVersion != null)
             {
                 writer.WritePropertyName("nodeImageVersion"u8);
                 writer.WriteStringValue(NodeImageVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OSSku))
+            if (options.Format != "W" && OSSku.HasValue)
             {
                 writer.WritePropertyName("osSku"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VmSize))
+            if (options.Format != "W" && VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnableFips))
+            if (options.Format != "W" && EnableFips.HasValue)
             {
                 writer.WritePropertyName("enableFIPS"u8);
                 writer.WriteBooleanValue(EnableFips.Value);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
+                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("snapshotType"u8))

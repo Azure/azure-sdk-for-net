@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArmTemplateId))
+            if (ArmTemplateId != null)
             {
                 writer.WritePropertyName("armTemplateId"u8);
                 writer.WriteStringValue(ArmTemplateId);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<DevTestLabArmTemplateParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabArmTemplateParameter> array = new List<DevTestLabArmTemplateParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabArmTemplateParameter.DeserializeDevTestLabArmTemplateParameter(item));
+                        array.Add(DevTestLabArmTemplateParameter.DeserializeDevTestLabArmTemplateParameter(item, options));
                     }
                     parameters = array;
                     continue;

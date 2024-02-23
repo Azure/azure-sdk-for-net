@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetAppBackupPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppBackupPolicyData> array = new List<NetAppBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(item));
+                        array.Add(NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(item, options));
                     }
                     value = array;
                     continue;

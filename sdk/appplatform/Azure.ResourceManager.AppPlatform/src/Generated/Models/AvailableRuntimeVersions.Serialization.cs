@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<AppPlatformSupportedRuntimeVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSupportedRuntimeVersion> array = new List<AppPlatformSupportedRuntimeVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(item));
+                        array.Add(AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(item, options));
                     }
                     value = array;
                     continue;

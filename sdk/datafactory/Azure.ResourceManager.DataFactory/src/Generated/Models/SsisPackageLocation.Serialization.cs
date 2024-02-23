@@ -27,54 +27,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackagePath))
+            if (PackagePath != null)
             {
                 writer.WritePropertyName("packagePath"u8);
                 JsonSerializer.Serialize(writer, PackagePath);
             }
-            if (Optional.IsDefined(LocationType))
+            if (LocationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackagePassword))
+            if (PackagePassword != null)
             {
                 writer.WritePropertyName("packagePassword"u8);
                 JsonSerializer.Serialize(writer, PackagePassword);
             }
-            if (Optional.IsDefined(AccessCredential))
+            if (AccessCredential != null)
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (Optional.IsDefined(ConfigurationPath))
+            if (ConfigurationPath != null)
             {
                 writer.WritePropertyName("configurationPath"u8);
                 JsonSerializer.Serialize(writer, ConfigurationPath);
             }
-            if (Optional.IsDefined(ConfigurationAccessCredential))
+            if (ConfigurationAccessCredential != null)
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
                 writer.WriteObjectValue(ConfigurationAccessCredential);
             }
-            if (Optional.IsDefined(PackageName))
+            if (PackageName != null)
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
-            if (Optional.IsDefined(PackageContent))
+            if (PackageContent != null)
             {
                 writer.WritePropertyName("packageContent"u8);
                 JsonSerializer.Serialize(writer, PackageContent);
             }
-            if (Optional.IsDefined(PackageLastModifiedDate))
+            if (PackageLastModifiedDate != null)
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
-            if (Optional.IsCollectionDefined(ChildPackages))
+            if (!(ChildPackages is ChangeTrackingList<SsisChildPackage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("childPackages"u8);
                 writer.WriteStartArray();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationPath"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("packageName"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SsisChildPackage> array = new List<SsisChildPackage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SsisChildPackage.DeserializeSsisChildPackage(item));
+                                array.Add(SsisChildPackage.DeserializeSsisChildPackage(item, options));
                             }
                             childPackages = array;
                             continue;

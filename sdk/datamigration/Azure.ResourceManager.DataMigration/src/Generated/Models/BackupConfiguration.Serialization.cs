@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceLocation))
+            if (SourceLocation != null)
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteObjectValue(SourceLocation);
             }
-            if (Optional.IsDefined(TargetLocation))
+            if (TargetLocation != null)
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteObjectValue(TargetLocation);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceLocation = SourceLocation.DeserializeSourceLocation(property.Value);
+                    sourceLocation = SourceLocation.DeserializeSourceLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetLocation"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetLocation = TargetLocation.DeserializeTargetLocation(property.Value);
+                    targetLocation = TargetLocation.DeserializeTargetLocation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
+            if (options.Format != "W" && ProvisioningStatusMessage != null)
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Authorization))
+            if (Authorization != null)
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (Optional.IsDefined(AutoDiscovery))
+            if (AutoDiscovery.HasValue)
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TopLevelInventoryList))
+            if (!(TopLevelInventoryList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("topLevelInventoryList"u8);
                 writer.WriteStartArray();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    authorization = DevOpsAuthorization.DeserializeDevOpsAuthorization(property.Value);
+                    authorization = DevOpsAuthorization.DeserializeDevOpsAuthorization(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoDiscovery"u8))

@@ -27,34 +27,34 @@ namespace Azure.ResourceManager.TrafficManager
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<TrafficManagerHeatMapEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrafficFlows))
+            if (!(TrafficFlows is ChangeTrackingList<TrafficManagerHeatMapTrafficFlow> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trafficFlows"u8);
                 writer.WriteStartArray();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerHeatMapEndpoint> array = new List<TrafficManagerHeatMapEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerHeatMapEndpoint.DeserializeTrafficManagerHeatMapEndpoint(item));
+                                array.Add(TrafficManagerHeatMapEndpoint.DeserializeTrafficManagerHeatMapEndpoint(item, options));
                             }
                             endpoints = array;
                             continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerHeatMapTrafficFlow> array = new List<TrafficManagerHeatMapTrafficFlow>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerHeatMapTrafficFlow.DeserializeTrafficManagerHeatMapTrafficFlow(item));
+                                array.Add(TrafficManagerHeatMapTrafficFlow.DeserializeTrafficManagerHeatMapTrafficFlow(item, options));
                             }
                             trafficFlows = array;
                             continue;

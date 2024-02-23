@@ -37,12 +37,12 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(ExceptionRules))
+            if (!(ExceptionRules is ChangeTrackingList<ExceptionRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exceptionRules"u8);
                 writer.WriteStartArray();
@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter
                     List<ExceptionRule> array = new List<ExceptionRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExceptionRule.DeserializeExceptionRule(item));
+                        array.Add(ExceptionRule.DeserializeExceptionRule(item, options));
                     }
                     exceptionRules = array;
                     continue;

@@ -28,54 +28,54 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(CookieBasedAffinity))
+            if (CookieBasedAffinity.HasValue)
             {
                 writer.WritePropertyName("cookieBasedAffinity"u8);
                 writer.WriteStringValue(CookieBasedAffinity.Value.ToString());
             }
-            if (Optional.IsDefined(RequestTimeoutInSeconds))
+            if (RequestTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteNumberValue(RequestTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(Probe))
+            if (Probe != null)
             {
                 writer.WritePropertyName("probe"u8);
                 JsonSerializer.Serialize(writer, Probe);
             }
-            if (Optional.IsCollectionDefined(AuthenticationCertificates))
+            if (!(AuthenticationCertificates is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authenticationCertificates"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedRootCertificates))
+            if (!(TrustedRootCertificates is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();
@@ -95,37 +95,37 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ConnectionDraining))
+            if (ConnectionDraining != null)
             {
                 writer.WritePropertyName("connectionDraining"u8);
                 writer.WriteObjectValue(ConnectionDraining);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(PickHostNameFromBackendAddress))
+            if (PickHostNameFromBackendAddress.HasValue)
             {
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            if (Optional.IsDefined(AffinityCookieName))
+            if (AffinityCookieName != null)
             {
                 writer.WritePropertyName("affinityCookieName"u8);
                 writer.WriteStringValue(AffinityCookieName);
             }
-            if (Optional.IsDefined(ProbeEnabled))
+            if (ProbeEnabled.HasValue)
             {
                 writer.WritePropertyName("probeEnabled"u8);
                 writer.WriteBooleanValue(ProbeEnabled.Value);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value);
+                            connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))

@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferId))
+            if (OfferId != null)
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PlansContext))
+            if (!(PlansContext is ChangeTrackingList<ContextAndPlansDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plansContext"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                             List<ContextAndPlansDetails> array = new List<ContextAndPlansDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item));
+                                array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item, options));
                             }
                             plansContext = array;
                             continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<GremlinGraphData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GremlinGraphData> array = new List<GremlinGraphData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GremlinGraphData.DeserializeGremlinGraphData(item));
+                        array.Add(GremlinGraphData.DeserializeGremlinGraphData(item, options));
                     }
                     value = array;
                     continue;

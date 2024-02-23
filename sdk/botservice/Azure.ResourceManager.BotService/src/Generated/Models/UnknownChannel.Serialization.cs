@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 if (ETag != null)
                 {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChannel(document.RootElement, options);
+            return DeserializeBotChannelProperties(document.RootElement, options);
         }
 
         internal static UnknownChannel DeserializeUnknownChannel(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownChannel(document.RootElement, options);
+                        return DeserializeBotChannelProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BotChannelProperties)} does not support '{options.Format}' format.");

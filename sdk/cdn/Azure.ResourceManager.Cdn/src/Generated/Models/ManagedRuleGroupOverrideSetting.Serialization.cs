@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<ManagedRuleOverrideSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ManagedRuleOverrideSetting> array = new List<ManagedRuleOverrideSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleOverrideSetting.DeserializeManagedRuleOverrideSetting(item));
+                        array.Add(ManagedRuleOverrideSetting.DeserializeManagedRuleOverrideSetting(item, options));
                     }
                     rules = array;
                     continue;

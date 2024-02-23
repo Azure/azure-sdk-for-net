@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsReportedForPolicyViolation))
+            if (options.Format != "W" && IsReportedForPolicyViolation.HasValue)
             {
                 writer.WritePropertyName("reportedForPolicyViolation"u8);
                 writer.WriteBooleanValue(IsReportedForPolicyViolation.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PolicyViolations))
+            if (options.Format != "W" && !(PolicyViolations is ChangeTrackingList<GalleryImageVersionPolicyViolation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policyViolations"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
+            if (AllowDeletionOfReplicatedLocations.HasValue)
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryImageVersionPolicyViolation> array = new List<GalleryImageVersionPolicyViolation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryImageVersionPolicyViolation.DeserializeGalleryImageVersionPolicyViolation(item));
+                        array.Add(GalleryImageVersionPolicyViolation.DeserializeGalleryImageVersionPolicyViolation(item, options));
                     }
                     policyViolations = array;
                     continue;

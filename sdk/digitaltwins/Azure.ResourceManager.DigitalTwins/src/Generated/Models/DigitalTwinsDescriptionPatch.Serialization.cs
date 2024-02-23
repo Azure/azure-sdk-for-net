@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 if (Properties != null)
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         properties = null;
                         continue;
                     }
-                    properties = DigitalTwinsPatchProperties.DeserializeDigitalTwinsPatchProperties(property.Value);
+                    properties = DigitalTwinsPatchProperties.DeserializeDigitalTwinsPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

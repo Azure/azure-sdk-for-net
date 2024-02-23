@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceStatus))
+            if (SourceStatus.HasValue)
             {
                 writer.WritePropertyName("sourceStatus"u8);
                 writer.WriteStringValue(SourceStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(States))
+            if (!(States is ChangeTrackingList<ConnectionStateSnapshot> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionStateSnapshot> array = new List<ConnectionStateSnapshot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item));
+                        array.Add(ConnectionStateSnapshot.DeserializeConnectionStateSnapshot(item, options));
                     }
                     states = array;
                     continue;

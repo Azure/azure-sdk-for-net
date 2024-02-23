@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendToSubscriptionAdministrator))
+            if (SendToSubscriptionAdministrator.HasValue)
             {
                 writer.WritePropertyName("sendToSubscriptionAdministrator"u8);
                 writer.WriteBooleanValue(SendToSubscriptionAdministrator.Value);
             }
-            if (Optional.IsDefined(SendToSubscriptionCoAdministrators))
+            if (SendToSubscriptionCoAdministrators.HasValue)
             {
                 writer.WritePropertyName("sendToSubscriptionCoAdministrators"u8);
                 writer.WriteBooleanValue(SendToSubscriptionCoAdministrators.Value);
             }
-            if (Optional.IsCollectionDefined(CustomEmails))
+            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();

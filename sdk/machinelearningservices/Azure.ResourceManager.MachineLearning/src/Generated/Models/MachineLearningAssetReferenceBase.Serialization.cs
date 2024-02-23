@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataPath": return MachineLearningDataPathAssetReference.DeserializeMachineLearningDataPathAssetReference(element);
-                    case "OutputPath": return MachineLearningOutputPathAssetReference.DeserializeMachineLearningOutputPathAssetReference(element);
-                    case "Id": return MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(element);
+                    case "DataPath": return MachineLearningDataPathAssetReference.DeserializeMachineLearningDataPathAssetReference(element, options);
+                    case "OutputPath": return MachineLearningOutputPathAssetReference.DeserializeMachineLearningOutputPathAssetReference(element, options);
+                    case "Id": return MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(element, options);
                 }
             }
-            return UnknownAssetReferenceBase.DeserializeUnknownAssetReferenceBase(element);
+            return UnknownAssetReferenceBase.DeserializeUnknownAssetReferenceBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningAssetReferenceBase>.Write(ModelReaderWriterOptions options)

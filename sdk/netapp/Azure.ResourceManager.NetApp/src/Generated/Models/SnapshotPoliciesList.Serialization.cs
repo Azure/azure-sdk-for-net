@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SnapshotPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<SnapshotPolicyData> array = new List<SnapshotPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SnapshotPolicyData.DeserializeSnapshotPolicyData(item));
+                        array.Add(SnapshotPolicyData.DeserializeSnapshotPolicyData(item, options));
                     }
                     value = array;
                     continue;

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MixedReality.Models
             writer.WriteStartObject();
             writer.WritePropertyName("nameAvailable"u8);
             writer.WriteBooleanValue(IsNameAvailable);
-            if (Optional.IsDefined(Reason))
+            if (Reason.HasValue)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

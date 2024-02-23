@@ -43,69 +43,69 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionInDays))
+            if (RetentionInDays.HasValue)
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Optional.IsDefined(TotalRetentionInDays))
+            if (TotalRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("totalRetentionInDays"u8);
                 writer.WriteNumberValue(TotalRetentionInDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ArchiveRetentionInDays))
+            if (options.Format != "W" && ArchiveRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("archiveRetentionInDays"u8);
                 writer.WriteNumberValue(ArchiveRetentionInDays.Value);
             }
-            if (Optional.IsDefined(SearchResults))
+            if (SearchResults != null)
             {
                 writer.WritePropertyName("searchResults"u8);
                 writer.WriteObjectValue(SearchResults);
             }
-            if (Optional.IsDefined(RestoredLogs))
+            if (RestoredLogs != null)
             {
                 writer.WritePropertyName("restoredLogs"u8);
                 writer.WriteObjectValue(RestoredLogs);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResultStatistics))
+            if (options.Format != "W" && ResultStatistics != null)
             {
                 writer.WritePropertyName("resultStatistics"u8);
                 writer.WriteObjectValue(ResultStatistics);
             }
-            if (Optional.IsDefined(Plan))
+            if (Plan.HasValue)
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastPlanModifiedDate))
+            if (options.Format != "W" && LastPlanModifiedDate != null)
             {
                 writer.WritePropertyName("lastPlanModifiedDate"u8);
                 writer.WriteStringValue(LastPlanModifiedDate);
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema != null)
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsRetentionInDaysAsDefault))
+            if (options.Format != "W" && IsRetentionInDaysAsDefault.HasValue)
             {
                 writer.WritePropertyName("retentionInDaysAsDefault"u8);
                 writer.WriteBooleanValue(IsRetentionInDaysAsDefault.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsTotalRetentionInDaysAsDefault))
+            if (options.Format != "W" && IsTotalRetentionInDaysAsDefault.HasValue)
             {
                 writer.WritePropertyName("totalRetentionInDaysAsDefault"u8);
                 writer.WriteBooleanValue(IsTotalRetentionInDaysAsDefault.Value);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            searchResults = OperationalInsightsTableSearchResults.DeserializeOperationalInsightsTableSearchResults(property0.Value);
+                            searchResults = OperationalInsightsTableSearchResults.DeserializeOperationalInsightsTableSearchResults(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restoredLogs"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            restoredLogs = OperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsTableRestoredLogs(property0.Value);
+                            restoredLogs = OperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsTableRestoredLogs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resultStatistics"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            resultStatistics = OperationalInsightsTableResultStatistics.DeserializeOperationalInsightsTableResultStatistics(property0.Value);
+                            resultStatistics = OperationalInsightsTableResultStatistics.DeserializeOperationalInsightsTableResultStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("plan"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            schema = OperationalInsightsSchema.DeserializeOperationalInsightsSchema(property0.Value);
+                            schema = OperationalInsightsSchema.DeserializeOperationalInsightsSchema(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

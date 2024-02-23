@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Disks))
+            if (!(Disks is ChangeTrackingList<VirtualDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<VirtualDisk> array = new List<VirtualDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDisk.DeserializeVirtualDisk(item));
+                        array.Add(VirtualDisk.DeserializeVirtualDisk(item, options));
                     }
                     disks = array;
                     continue;

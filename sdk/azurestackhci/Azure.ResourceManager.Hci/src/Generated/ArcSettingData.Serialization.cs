@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ArcInstanceResourceGroup))
+            if (ArcInstanceResourceGroup != null)
             {
                 writer.WritePropertyName("arcInstanceResourceGroup"u8);
                 writer.WriteStringValue(ArcInstanceResourceGroup);
             }
-            if (Optional.IsDefined(ArcApplicationClientId))
+            if (ArcApplicationClientId.HasValue)
             {
                 writer.WritePropertyName("arcApplicationClientId"u8);
                 writer.WriteStringValue(ArcApplicationClientId.Value);
             }
-            if (Optional.IsDefined(ArcApplicationTenantId))
+            if (ArcApplicationTenantId.HasValue)
             {
                 writer.WritePropertyName("arcApplicationTenantId"u8);
                 writer.WriteStringValue(ArcApplicationTenantId.Value);
             }
-            if (Optional.IsDefined(ArcServicePrincipalObjectId))
+            if (ArcServicePrincipalObjectId.HasValue)
             {
                 writer.WritePropertyName("arcServicePrincipalObjectId"u8);
                 writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
             }
-            if (Optional.IsDefined(ArcApplicationObjectId))
+            if (ArcApplicationObjectId.HasValue)
             {
                 writer.WritePropertyName("arcApplicationObjectId"u8);
                 writer.WriteStringValue(ArcApplicationObjectId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AggregateState))
+            if (options.Format != "W" && AggregateState.HasValue)
             {
                 writer.WritePropertyName("aggregateState"u8);
                 writer.WriteStringValue(AggregateState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PerNodeDetails))
+            if (options.Format != "W" && !(PerNodeDetails is ChangeTrackingList<PerNodeArcState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("perNodeDetails"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ConnectivityProperties))
+            if (ConnectivityProperties != null)
             {
                 writer.WritePropertyName("connectivityProperties"u8);
 #if NET6_0_OR_GREATER
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Hci
                             List<PerNodeArcState> array = new List<PerNodeArcState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PerNodeArcState.DeserializePerNodeArcState(item));
+                                array.Add(PerNodeArcState.DeserializePerNodeArcState(item, options));
                             }
                             perNodeDetails = array;
                             continue;

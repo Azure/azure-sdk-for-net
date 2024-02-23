@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GitHub))
+            if (GitHub != null)
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (Optional.IsDefined(AdoGit))
+            if (AdoGit != null)
             {
                 writer.WritePropertyName("adoGit"u8);
                 writer.WriteObjectValue(AdoGit);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SyncState))
+            if (options.Format != "W" && SyncState.HasValue)
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
+            if (options.Format != "W" && LastSyncOn.HasValue)
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncOn.Value, "O");
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            gitHub = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value);
+                            gitHub = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adoGit"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value);
+                            adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

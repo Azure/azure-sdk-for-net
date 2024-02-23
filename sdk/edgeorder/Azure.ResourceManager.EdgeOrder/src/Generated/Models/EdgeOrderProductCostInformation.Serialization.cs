@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(BillingMeterDetails))
+            if (options.Format != "W" && !(BillingMeterDetails is ChangeTrackingList<EdgeOrderProductBillingMeterDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("billingMeterDetails"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingInfoUri))
+            if (options.Format != "W" && BillingInfoUri != null)
             {
                 writer.WritePropertyName("billingInfoUrl"u8);
                 writer.WriteStringValue(BillingInfoUri.AbsoluteUri);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderProductBillingMeterDetails> array = new List<EdgeOrderProductBillingMeterDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderProductBillingMeterDetails.DeserializeEdgeOrderProductBillingMeterDetails(item));
+                        array.Add(EdgeOrderProductBillingMeterDetails.DeserializeEdgeOrderProductBillingMeterDetails(item, options));
                     }
                     billingMeterDetails = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseKustoPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseKustoPoolData> array = new List<SynapseKustoPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseKustoPoolData.DeserializeSynapseKustoPoolData(item));
+                        array.Add(SynapseKustoPoolData.DeserializeSynapseKustoPoolData(item, options));
                     }
                     value = array;
                     continue;

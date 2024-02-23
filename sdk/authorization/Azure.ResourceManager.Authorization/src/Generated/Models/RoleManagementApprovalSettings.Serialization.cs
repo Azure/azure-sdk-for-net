@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsApprovalRequired))
+            if (IsApprovalRequired.HasValue)
             {
                 writer.WritePropertyName("isApprovalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
-            if (Optional.IsDefined(IsApprovalRequiredForExtension))
+            if (IsApprovalRequiredForExtension.HasValue)
             {
                 writer.WritePropertyName("isApprovalRequiredForExtension"u8);
                 writer.WriteBooleanValue(IsApprovalRequiredForExtension.Value);
             }
-            if (Optional.IsDefined(IsRequestorJustificationRequired))
+            if (IsRequestorJustificationRequired.HasValue)
             {
                 writer.WritePropertyName("isRequestorJustificationRequired"u8);
                 writer.WriteBooleanValue(IsRequestorJustificationRequired.Value);
             }
-            if (Optional.IsDefined(ApprovalMode))
+            if (ApprovalMode.HasValue)
             {
                 writer.WritePropertyName("approvalMode"u8);
                 writer.WriteStringValue(ApprovalMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ApprovalStages))
+            if (!(ApprovalStages is ChangeTrackingList<RoleManagementApprovalStage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("approvalStages"u8);
                 writer.WriteStartArray();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementApprovalStage> array = new List<RoleManagementApprovalStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementApprovalStage.DeserializeRoleManagementApprovalStage(item));
+                        array.Add(RoleManagementApprovalStage.DeserializeRoleManagementApprovalStage(item, options));
                     }
                     approvalStages = array;
                     continue;

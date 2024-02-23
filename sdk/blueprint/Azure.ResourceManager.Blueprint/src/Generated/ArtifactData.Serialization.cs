@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Blueprint
             {
                 switch (discriminator.GetString())
                 {
-                    case "policyAssignment": return PolicyAssignmentArtifact.DeserializePolicyAssignmentArtifact(element);
-                    case "roleAssignment": return RoleAssignmentArtifact.DeserializeRoleAssignmentArtifact(element);
-                    case "template": return TemplateArtifact.DeserializeTemplateArtifact(element);
+                    case "policyAssignment": return PolicyAssignmentArtifact.DeserializePolicyAssignmentArtifact(element, options);
+                    case "roleAssignment": return RoleAssignmentArtifact.DeserializeRoleAssignmentArtifact(element, options);
+                    case "template": return TemplateArtifact.DeserializeTemplateArtifact(element, options);
                 }
             }
-            return UnknownArtifact.DeserializeUnknownArtifact(element);
+            return UnknownArtifact.DeserializeUnknownArtifact(element, options);
         }
 
         BinaryData IPersistableModel<ArtifactData>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LargeInstance
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,59 +56,59 @@ namespace Azure.ResourceManager.LargeInstance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HardwareProfile))
+            if (HardwareProfile != null)
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (StorageProfile != null)
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (OSProfile != null)
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureLargeInstanceId))
+            if (options.Format != "W" && AzureLargeInstanceId != null)
             {
                 writer.WritePropertyName("azureLargeInstanceId"u8);
                 writer.WriteStringValue(AzureLargeInstanceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            if (options.Format != "W" && PowerState.HasValue)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProximityPlacementGroup))
+            if (options.Format != "W" && ProximityPlacementGroup != null)
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 writer.WriteStringValue(ProximityPlacementGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(HwRevision))
+            if (options.Format != "W" && HwRevision != null)
             {
                 writer.WritePropertyName("hwRevision"u8);
                 writer.WriteStringValue(HwRevision);
             }
-            if (Optional.IsDefined(PartnerNodeId))
+            if (PartnerNodeId != null)
             {
                 writer.WritePropertyName("partnerNodeId"u8);
                 writer.WriteStringValue(PartnerNodeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            hardwareProfile = LargeInstanceHardwareProfile.DeserializeLargeInstanceHardwareProfile(property0.Value);
+                            hardwareProfile = LargeInstanceHardwareProfile.DeserializeLargeInstanceHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            storageProfile = LargeInstanceStorageProfile.DeserializeLargeInstanceStorageProfile(property0.Value);
+                            storageProfile = LargeInstanceStorageProfile.DeserializeLargeInstanceStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            osProfile = LargeInstanceOSProfile.DeserializeLargeInstanceOSProfile(property0.Value);
+                            osProfile = LargeInstanceOSProfile.DeserializeLargeInstanceOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            networkProfile = LargeInstanceNetworkProfile.DeserializeLargeInstanceNetworkProfile(property0.Value);
+                            networkProfile = LargeInstanceNetworkProfile.DeserializeLargeInstanceNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureLargeInstanceId"u8))

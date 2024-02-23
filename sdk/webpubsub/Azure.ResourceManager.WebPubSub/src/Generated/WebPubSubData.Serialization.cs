@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.WebPubSub
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,44 +66,44 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExternalIP))
+            if (options.Format != "W" && ExternalIP != null)
             {
                 writer.WritePropertyName("externalIP"u8);
                 writer.WriteStringValue(ExternalIP);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicPort))
+            if (options.Format != "W" && PublicPort.HasValue)
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerPort))
+            if (options.Format != "W" && ServerPort.HasValue)
             {
                 writer.WritePropertyName("serverPort"u8);
                 writer.WriteNumberValue(ServerPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<WebPubSubPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SharedPrivateLinkResources))
+            if (options.Format != "W" && !(SharedPrivateLinkResources is ChangeTrackingList<WebPubSubSharedPrivateLinkData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sharedPrivateLinkResources"u8);
                 writer.WriteStartArray();
@@ -123,42 +123,42 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Tls))
+            if (Tls != null)
             {
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostNamePrefix))
+            if (options.Format != "W" && HostNamePrefix != null)
             {
                 writer.WritePropertyName("hostNamePrefix"u8);
                 writer.WriteStringValue(HostNamePrefix);
             }
-            if (Optional.IsDefined(LiveTraceConfiguration))
+            if (LiveTraceConfiguration != null)
             {
                 writer.WritePropertyName("liveTraceConfiguration"u8);
                 writer.WriteObjectValue(LiveTraceConfiguration);
             }
-            if (Optional.IsDefined(ResourceLogConfiguration))
+            if (ResourceLogConfiguration != null)
             {
                 writer.WritePropertyName("resourceLogConfiguration"u8);
                 writer.WriteObjectValue(ResourceLogConfiguration);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (NetworkAcls != null)
             {
                 writer.WritePropertyName("networkACLs"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess != null)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (IsLocalAuthDisabled.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Optional.IsDefined(IsAadAuthDisabled))
+            if (IsAadAuthDisabled.HasValue)
             {
                 writer.WritePropertyName("disableAadAuth"u8);
                 writer.WriteBooleanValue(IsAadAuthDisabled.Value);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         continue;
                     }
-                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value);
+                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.WebPubSub
                             List<WebPubSubPrivateEndpointConnectionData> array = new List<WebPubSubPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(item));
+                                array.Add(WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.WebPubSub
                             List<WebPubSubSharedPrivateLinkData> array = new List<WebPubSubSharedPrivateLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item));
+                                array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item, options));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            tls = WebPubSubTlsSettings.DeserializeWebPubSubTlsSettings(property0.Value);
+                            tls = WebPubSubTlsSettings.DeserializeWebPubSubTlsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostNamePrefix"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value);
+                            liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceLogConfiguration"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value);
+                            resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkACLs"u8))
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.WebPubSub
                             {
                                 continue;
                             }
-                            networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value);
+                            networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

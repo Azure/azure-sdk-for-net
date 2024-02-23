@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteNumberValue(FrontendPortRangeStart);
             writer.WritePropertyName("frontendPortRangeEnd"u8);
             writer.WriteNumberValue(FrontendPortRangeEnd);
-            if (Optional.IsCollectionDefined(NetworkSecurityGroupRules))
+            if (!(NetworkSecurityGroupRules is ChangeTrackingList<BatchNetworkSecurityGroupRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityGroupRules"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchNetworkSecurityGroupRule> array = new List<BatchNetworkSecurityGroupRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item));
+                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item, options));
                     }
                     networkSecurityGroupRules = array;
                     continue;

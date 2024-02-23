@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AvailableRuleSets))
+            if (!(AvailableRuleSets is ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availableRuleSets"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("defaultRuleSet"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuleSetType))
+            if (RuleSetType != null)
             {
                 writer.WritePropertyName("ruleSetType"u8);
                 writer.WriteStringValue(RuleSetType);
             }
-            if (Optional.IsDefined(RuleSetVersion))
+            if (RuleSetVersion != null)
             {
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayFirewallManifestRuleSet> array = new List<ApplicationGatewayFirewallManifestRuleSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayFirewallManifestRuleSet.DeserializeApplicationGatewayFirewallManifestRuleSet(item));
+                                array.Add(ApplicationGatewayFirewallManifestRuleSet.DeserializeApplicationGatewayFirewallManifestRuleSet(item, options));
                             }
                             availableRuleSets = array;
                             continue;

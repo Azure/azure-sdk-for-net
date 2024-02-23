@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
+            if (options.Format != "W" && AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
@@ -64,42 +64,42 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteStringValue(ArcResourceId);
             writer.WritePropertyName("arcVmUuid"u8);
             writer.WriteStringValue(ArcVmUuid);
-            if (options.Format != "W" && Optional.IsDefined(AgentStatus))
+            if (options.Format != "W" && AgentStatus.HasValue)
             {
                 writer.WritePropertyName("agentStatus"u8);
                 writer.WriteStringValue(AgentStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
+            if (options.Format != "W" && LastStatusUpdate.HasValue)
             {
                 writer.WritePropertyName("lastStatusUpdate"u8);
                 writer.WriteStringValue(LastStatusUpdate.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalIPAddress))
+            if (options.Format != "W" && LocalIPAddress != null)
             {
                 writer.WritePropertyName("localIPAddress"u8);
                 writer.WriteStringValue(LocalIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemoryInMB))
+            if (options.Format != "W" && MemoryInMB.HasValue)
             {
                 writer.WritePropertyName("memoryInMB"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfCores))
+            if (options.Format != "W" && NumberOfCores.HasValue)
             {
                 writer.WritePropertyName("numberOfCores"u8);
                 writer.WriteNumberValue(NumberOfCores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UptimeInSeconds))
+            if (options.Format != "W" && UptimeInSeconds.HasValue)
             {
                 writer.WritePropertyName("uptimeInSeconds"u8);
                 writer.WriteNumberValue(UptimeInSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            if (options.Format != "W" && ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.StorageMover
                             {
                                 continue;
                             }
-                            errorDetails = StorageMoverAgentPropertiesErrorDetails.DeserializeStorageMoverAgentPropertiesErrorDetails(property0.Value);
+                            errorDetails = StorageMoverAgentPropertiesErrorDetails.DeserializeStorageMoverAgentPropertiesErrorDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

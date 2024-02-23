@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserDN))
+            if (UserDN != null)
             {
                 writer.WritePropertyName("userDN"u8);
                 writer.WriteStringValue(UserDN);
             }
-            if (Optional.IsDefined(GroupDN))
+            if (GroupDN != null)
             {
                 writer.WritePropertyName("groupDN"u8);
                 writer.WriteStringValue(GroupDN);
             }
-            if (Optional.IsDefined(GroupMembershipFilter))
+            if (GroupMembershipFilter != null)
             {
                 writer.WritePropertyName("groupMembershipFilter"u8);
                 writer.WriteStringValue(GroupMembershipFilter);

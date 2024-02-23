@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Replicas))
+            if (!(Replicas is ChangeTrackingList<AvailabilityGroupReplica> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<AvailabilityGroupReplica> array = new List<AvailabilityGroupReplica>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item));
+                        array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item, options));
                     }
                     replicas = array;
                     continue;

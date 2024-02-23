@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DhcpOptions))
+            if (DhcpOptions != null)
             {
                 writer.WritePropertyName("dhcpOptions"u8);
                 writer.WriteObjectValue(DhcpOptions);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<Subnet> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(VmSwitchName))
+            if (VmSwitchName != null)
             {
                 writer.WritePropertyName("vmSwitchName"u8);
                 writer.WriteStringValue(VmSwitchName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            dhcpOptions = LogicalNetworkPropertiesDhcpOptions.DeserializeLogicalNetworkPropertiesDhcpOptions(property0.Value);
+                            dhcpOptions = LogicalNetworkPropertiesDhcpOptions.DeserializeLogicalNetworkPropertiesDhcpOptions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subnets"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci
                             List<Subnet> array = new List<Subnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Subnet.DeserializeSubnet(item));
+                                array.Add(Subnet.DeserializeSubnet(item, options));
                             }
                             subnets = array;
                             continue;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = LogicalNetworkStatus.DeserializeLogicalNetworkStatus(property0.Value);
+                            status = LogicalNetworkStatus.DeserializeLogicalNetworkStatus(property0.Value, options);
                             continue;
                         }
                     }

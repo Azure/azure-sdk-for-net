@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<DataColumnDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataColumnDefinition> array = new List<DataColumnDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataColumnDefinition.DeserializeDataColumnDefinition(item));
+                        array.Add(DataColumnDefinition.DeserializeDataColumnDefinition(item, options));
                     }
                     columns = array;
                     continue;

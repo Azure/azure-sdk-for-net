@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Landscape))
+            if (!(Landscape is ChangeTrackingList<SapLandscapeMonitorSidMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("landscape"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SapApplication))
+            if (!(SapApplication is ChangeTrackingList<SapLandscapeMonitorSidMapping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sapApplication"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item, options));
                     }
                     landscape = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item, options));
                     }
                     sapApplication = array;
                     continue;

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(IotSecurityRecommendationType))
+            if (IotSecurityRecommendationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IotSecurityRecommendationType.Value.ToString());
             }
-            if (Optional.IsDefined(PublisherInfo))
+            if (PublisherInfo != null)
             {
                 writer.WritePropertyName("publisherInfo"u8);
                 writer.WriteObjectValue(PublisherInfo);
             }
-            if (Optional.IsDefined(IsCommon))
+            if (IsCommon.HasValue)
             {
                 writer.WritePropertyName("common"u8);
                 writer.WriteBooleanValue(IsCommon.Value);
             }
-            if (Optional.IsCollectionDefined(UserSids))
+            if (!(UserSids is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userSids"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Usernames))
+            if (!(Usernames is ChangeTrackingList<UserRecommendation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("usernames"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FileType))
+            if (FileType.HasValue)
             {
                 writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
-            if (Optional.IsDefined(ConfigurationStatus))
+            if (ConfigurationStatus.HasValue)
             {
                 writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value);
+                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("common"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<UserRecommendation> array = new List<UserRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserRecommendation.DeserializeUserRecommendation(item));
+                        array.Add(UserRecommendation.DeserializeUserRecommendation(item, options));
                     }
                     usernames = array;
                     continue;

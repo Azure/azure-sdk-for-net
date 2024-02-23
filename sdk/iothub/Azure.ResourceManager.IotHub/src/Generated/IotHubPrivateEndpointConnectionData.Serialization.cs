@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotHub
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = IotHubPrivateEndpointConnectionProperties.DeserializeIotHubPrivateEndpointConnectionProperties(property.Value);
+                    properties = IotHubPrivateEndpointConnectionProperties.DeserializeIotHubPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

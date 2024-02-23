@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,74 +56,74 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(AutoScale))
+            if (AutoScale != null)
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(AutoPause))
+            if (AutoPause != null)
             {
                 writer.WritePropertyName("autoPause"u8);
                 writer.WriteObjectValue(AutoPause);
             }
-            if (Optional.IsDefined(IsComputeIsolationEnabled))
+            if (IsComputeIsolationEnabled.HasValue)
             {
                 writer.WritePropertyName("isComputeIsolationEnabled"u8);
                 writer.WriteBooleanValue(IsComputeIsolationEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutotuneEnabled))
+            if (IsAutotuneEnabled.HasValue)
             {
                 writer.WritePropertyName("isAutotuneEnabled"u8);
                 writer.WriteBooleanValue(IsAutotuneEnabled.Value);
             }
-            if (Optional.IsDefined(IsSessionLevelPackagesEnabled))
+            if (IsSessionLevelPackagesEnabled.HasValue)
             {
                 writer.WritePropertyName("sessionLevelPackagesEnabled"u8);
                 writer.WriteBooleanValue(IsSessionLevelPackagesEnabled.Value);
             }
-            if (Optional.IsDefined(CacheSize))
+            if (CacheSize.HasValue)
             {
                 writer.WritePropertyName("cacheSize"u8);
                 writer.WriteNumberValue(CacheSize.Value);
             }
-            if (Optional.IsDefined(DynamicExecutorAllocation))
+            if (DynamicExecutorAllocation != null)
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
                 writer.WriteObjectValue(DynamicExecutorAllocation);
             }
-            if (Optional.IsDefined(SparkEventsFolder))
+            if (SparkEventsFolder != null)
             {
                 writer.WritePropertyName("sparkEventsFolder"u8);
                 writer.WriteStringValue(SparkEventsFolder);
             }
-            if (Optional.IsDefined(NodeCount))
+            if (NodeCount.HasValue)
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Optional.IsDefined(LibraryRequirements))
+            if (LibraryRequirements != null)
             {
                 writer.WritePropertyName("libraryRequirements"u8);
                 writer.WriteObjectValue(LibraryRequirements);
             }
-            if (Optional.IsCollectionDefined(CustomLibraries))
+            if (!(CustomLibraries is ChangeTrackingList<BigDataPoolLibraryInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customLibraries"u8);
                 writer.WriteStartArray();
@@ -133,32 +133,32 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SparkConfigProperties))
+            if (SparkConfigProperties != null)
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
                 writer.WriteObjectValue(SparkConfigProperties);
             }
-            if (Optional.IsDefined(SparkVersion))
+            if (SparkVersion != null)
             {
                 writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
-            if (Optional.IsDefined(DefaultSparkLogFolder))
+            if (DefaultSparkLogFolder != null)
             {
                 writer.WritePropertyName("defaultSparkLogFolder"u8);
                 writer.WriteStringValue(DefaultSparkLogFolder);
             }
-            if (Optional.IsDefined(NodeSize))
+            if (NodeSize.HasValue)
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize.Value.ToString());
             }
-            if (Optional.IsDefined(NodeSizeFamily))
+            if (NodeSizeFamily.HasValue)
             {
                 writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSucceededOn))
+            if (options.Format != "W" && LastSucceededOn.HasValue)
             {
                 writer.WritePropertyName("lastSucceededTimestamp"u8);
                 writer.WriteStringValue(LastSucceededOn.Value, "O");
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            autoScale = BigDataPoolAutoScaleProperties.DeserializeBigDataPoolAutoScaleProperties(property0.Value);
+                            autoScale = BigDataPoolAutoScaleProperties.DeserializeBigDataPoolAutoScaleProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationDate"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            autoPause = BigDataPoolAutoPauseProperties.DeserializeBigDataPoolAutoPauseProperties(property0.Value);
+                            autoPause = BigDataPoolAutoPauseProperties.DeserializeBigDataPoolAutoPauseProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isComputeIsolationEnabled"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            dynamicExecutorAllocation = SynapseDynamicExecutorAllocation.DeserializeSynapseDynamicExecutorAllocation(property0.Value);
+                            dynamicExecutorAllocation = SynapseDynamicExecutorAllocation.DeserializeSynapseDynamicExecutorAllocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sparkEventsFolder"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            libraryRequirements = BigDataPoolLibraryRequirements.DeserializeBigDataPoolLibraryRequirements(property0.Value);
+                            libraryRequirements = BigDataPoolLibraryRequirements.DeserializeBigDataPoolLibraryRequirements(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customLibraries"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Synapse
                             List<BigDataPoolLibraryInfo> array = new List<BigDataPoolLibraryInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BigDataPoolLibraryInfo.DeserializeBigDataPoolLibraryInfo(item));
+                                array.Add(BigDataPoolLibraryInfo.DeserializeBigDataPoolLibraryInfo(item, options));
                             }
                             customLibraries = array;
                             continue;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            sparkConfigProperties = BigDataPoolSparkConfigProperties.DeserializeBigDataPoolSparkConfigProperties(property0.Value);
+                            sparkConfigProperties = BigDataPoolSparkConfigProperties.DeserializeBigDataPoolSparkConfigProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sparkVersion"u8))

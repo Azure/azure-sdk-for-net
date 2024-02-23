@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BackendAddressPools))
+            if (!(BackendAddressPools is ChangeTrackingList<ApplicationGatewayBackendHealthPool> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayBackendHealthPool> array = new List<ApplicationGatewayBackendHealthPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayBackendHealthPool.DeserializeApplicationGatewayBackendHealthPool(item));
+                        array.Add(ApplicationGatewayBackendHealthPool.DeserializeApplicationGatewayBackendHealthPool(item, options));
                     }
                     backendAddressPools = array;
                     continue;

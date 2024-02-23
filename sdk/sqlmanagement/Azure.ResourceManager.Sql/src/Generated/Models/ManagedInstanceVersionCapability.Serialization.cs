@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedEditions))
+            if (options.Format != "W" && !(SupportedEditions is ChangeTrackingList<ManagedInstanceEditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedEditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedInstancePoolEditions))
+            if (options.Format != "W" && !(SupportedInstancePoolEditions is ChangeTrackingList<InstancePoolEditionCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedInstancePoolEditions"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEditionCapability> array = new List<ManagedInstanceEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEditionCapability.DeserializeManagedInstanceEditionCapability(item));
+                        array.Add(ManagedInstanceEditionCapability.DeserializeManagedInstanceEditionCapability(item, options));
                     }
                     supportedEditions = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolEditionCapability> array = new List<InstancePoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolEditionCapability.DeserializeInstancePoolEditionCapability(item));
+                        array.Add(InstancePoolEditionCapability.DeserializeInstancePoolEditionCapability(item, options));
                     }
                     supportedInstancePoolEditions = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PostgreSqlPerformanceTierProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlPerformanceTierProperties> array = new List<PostgreSqlPerformanceTierProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties(item));
+                        array.Add(PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties(item, options));
                     }
                     value = array;
                     continue;

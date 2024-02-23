@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    properties = ProjectFileProperties.DeserializeProjectFileProperties(property.Value);
+                    properties = ProjectFileProperties.DeserializeProjectFileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

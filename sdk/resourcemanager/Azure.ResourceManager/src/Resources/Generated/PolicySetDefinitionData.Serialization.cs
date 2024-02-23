@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyType))
+            if (PolicyType.HasValue)
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ArmPolicyParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitions))
+            if (!(PolicyDefinitions is ChangeTrackingList<PolicyDefinitionReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitions"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitionGroups))
+            if (!(PolicyDefinitionGroups is ChangeTrackingList<PolicyDefinitionGroup> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("policyDefinitionGroups"u8);
                 writer.WriteStartArray();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, ArmPolicyParameter> dictionary = new Dictionary<string, ArmPolicyParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyDefinitionReference> array = new List<PolicyDefinitionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item));
+                                array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item, options));
                             }
                             policyDefinitions = array;
                             continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyDefinitionGroup> array = new List<PolicyDefinitionGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item));
+                                array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item, options));
                             }
                             policyDefinitionGroups = array;
                             continue;

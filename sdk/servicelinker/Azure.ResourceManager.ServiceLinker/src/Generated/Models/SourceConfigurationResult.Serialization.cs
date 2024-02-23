@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Configurations))
+            if (!(Configurations is ChangeTrackingList<SourceConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     List<SourceConfiguration> array = new List<SourceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceConfiguration.DeserializeSourceConfiguration(item));
+                        array.Add(SourceConfiguration.DeserializeSourceConfiguration(item, options));
                     }
                     configurations = array;
                     continue;

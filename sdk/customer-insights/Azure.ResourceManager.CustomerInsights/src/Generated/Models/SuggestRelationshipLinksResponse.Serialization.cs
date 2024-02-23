@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(InteractionName))
+            if (options.Format != "W" && InteractionName != null)
             {
                 writer.WritePropertyName("interactionName"u8);
                 writer.WriteStringValue(InteractionName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SuggestedRelationships))
+            if (options.Format != "W" && !(SuggestedRelationships is ChangeTrackingList<RelationshipsLookup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("suggestedRelationships"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipsLookup> array = new List<RelationshipsLookup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item));
+                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item, options));
                     }
                     suggestedRelationships = array;
                     continue;

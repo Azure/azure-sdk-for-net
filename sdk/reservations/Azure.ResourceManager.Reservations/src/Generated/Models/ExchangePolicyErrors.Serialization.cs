@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PolicyErrors))
+            if (!(PolicyErrors is ChangeTrackingList<ExchangePolicyError> collection && collection.IsUndefined))
             {
                 if (PolicyErrors != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ExchangePolicyError> array = new List<ExchangePolicyError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExchangePolicyError.DeserializeExchangePolicyError(item));
+                        array.Add(ExchangePolicyError.DeserializeExchangePolicyError(item, options));
                     }
                     policyErrors = array;
                     continue;

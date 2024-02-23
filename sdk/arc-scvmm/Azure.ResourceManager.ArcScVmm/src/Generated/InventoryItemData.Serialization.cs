@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = InventoryItemProperties.DeserializeInventoryItemProperties(property.Value);
+                    properties = InventoryItemProperties.DeserializeInventoryItemProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

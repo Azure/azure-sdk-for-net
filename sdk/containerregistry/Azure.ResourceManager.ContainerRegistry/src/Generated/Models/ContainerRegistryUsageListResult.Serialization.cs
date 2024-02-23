@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerRegistryUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryUsage> array = new List<ContainerRegistryUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryUsage.DeserializeContainerRegistryUsage(item));
+                        array.Add(ContainerRegistryUsage.DeserializeContainerRegistryUsage(item, options));
                     }
                     value = array;
                     continue;

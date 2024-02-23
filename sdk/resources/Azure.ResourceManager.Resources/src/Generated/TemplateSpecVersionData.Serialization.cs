@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(LinkedTemplates))
+            if (!(LinkedTemplates is ChangeTrackingList<LinkedTemplateArtifact> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("linkedTemplates"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Optional.IsDefined(MainTemplate))
+            if (MainTemplate != null)
             {
                 writer.WritePropertyName("mainTemplate"u8);
 #if NET6_0_OR_GREATER
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Optional.IsDefined(UiFormDefinition))
+            if (UiFormDefinition != null)
             {
                 writer.WritePropertyName("uiFormDefinition"u8);
 #if NET6_0_OR_GREATER
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Resources
                             List<LinkedTemplateArtifact> array = new List<LinkedTemplateArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedTemplateArtifact.DeserializeLinkedTemplateArtifact(item));
+                                array.Add(LinkedTemplateArtifact.DeserializeLinkedTemplateArtifact(item, options));
                             }
                             linkedTemplates = array;
                             continue;

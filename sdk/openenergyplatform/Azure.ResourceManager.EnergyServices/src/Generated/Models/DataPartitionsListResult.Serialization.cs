@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataPartitionInfo))
+            if (!(DataPartitionInfo is ChangeTrackingList<DataPartition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataPartitionInfo"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<DataPartition> array = new List<DataPartition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPartition.DeserializeDataPartition(item));
+                        array.Add(DataPartition.DeserializeDataPartition(item, options));
                     }
                     dataPartitionInfo = array;
                     continue;

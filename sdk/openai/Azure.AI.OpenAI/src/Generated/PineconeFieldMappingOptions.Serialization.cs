@@ -27,17 +27,17 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TitleFieldName))
+            if (TitleFieldName != null)
             {
                 writer.WritePropertyName("title_field"u8);
                 writer.WriteStringValue(TitleFieldName);
             }
-            if (Optional.IsDefined(UrlFieldName))
+            if (UrlFieldName != null)
             {
                 writer.WritePropertyName("url_field"u8);
                 writer.WriteStringValue(UrlFieldName);
             }
-            if (Optional.IsDefined(FilepathFieldName))
+            if (FilepathFieldName != null)
             {
                 writer.WritePropertyName("filepath_field"u8);
                 writer.WriteStringValue(FilepathFieldName);
@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ContentFieldSeparator))
+            if (ContentFieldSeparator != null)
             {
                 writer.WritePropertyName("content_fields_separator"u8);
                 writer.WriteStringValue(ContentFieldSeparator);

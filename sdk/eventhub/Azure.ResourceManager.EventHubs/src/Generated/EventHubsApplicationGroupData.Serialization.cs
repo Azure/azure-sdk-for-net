@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(ClientAppGroupIdentifier))
+            if (ClientAppGroupIdentifier != null)
             {
                 writer.WritePropertyName("clientAppGroupIdentifier"u8);
                 writer.WriteStringValue(ClientAppGroupIdentifier);
             }
-            if (Optional.IsCollectionDefined(Policies))
+            if (!(Policies is ChangeTrackingList<EventHubsApplicationGroupPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventHubs
                             List<EventHubsApplicationGroupPolicy> array = new List<EventHubsApplicationGroupPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsApplicationGroupPolicy.DeserializeEventHubsApplicationGroupPolicy(item));
+                                array.Add(EventHubsApplicationGroupPolicy.DeserializeEventHubsApplicationGroupPolicy(item, options));
                             }
                             policies = array;
                             continue;

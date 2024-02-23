@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataShare
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -90,21 +90,21 @@ namespace Azure.ResourceManager.DataShare
             {
                 switch (discriminator.GetString())
                 {
-                    case "AdlsGen2File": return AdlsGen2FileDataSetMapping.DeserializeAdlsGen2FileDataSetMapping(element);
-                    case "AdlsGen2FileSystem": return AdlsGen2FileSystemDataSetMapping.DeserializeAdlsGen2FileSystemDataSetMapping(element);
-                    case "AdlsGen2Folder": return AdlsGen2FolderDataSetMapping.DeserializeAdlsGen2FolderDataSetMapping(element);
-                    case "Blob": return BlobDataSetMapping.DeserializeBlobDataSetMapping(element);
-                    case "BlobFolder": return BlobFolderDataSetMapping.DeserializeBlobFolderDataSetMapping(element);
-                    case "Container": return BlobContainerDataSetMapping.DeserializeBlobContainerDataSetMapping(element);
-                    case "KustoCluster": return KustoClusterDataSetMapping.DeserializeKustoClusterDataSetMapping(element);
-                    case "KustoDatabase": return KustoDatabaseDataSetMapping.DeserializeKustoDatabaseDataSetMapping(element);
-                    case "KustoTable": return KustoTableDataSetMapping.DeserializeKustoTableDataSetMapping(element);
-                    case "SqlDBTable": return SqlDBTableDataSetMapping.DeserializeSqlDBTableDataSetMapping(element);
-                    case "SqlDWTable": return SqlDWTableDataSetMapping.DeserializeSqlDWTableDataSetMapping(element);
-                    case "SynapseWorkspaceSqlPoolTable": return SynapseWorkspaceSqlPoolTableDataSetMapping.DeserializeSynapseWorkspaceSqlPoolTableDataSetMapping(element);
+                    case "AdlsGen2File": return AdlsGen2FileDataSetMapping.DeserializeAdlsGen2FileDataSetMapping(element, options);
+                    case "AdlsGen2FileSystem": return AdlsGen2FileSystemDataSetMapping.DeserializeAdlsGen2FileSystemDataSetMapping(element, options);
+                    case "AdlsGen2Folder": return AdlsGen2FolderDataSetMapping.DeserializeAdlsGen2FolderDataSetMapping(element, options);
+                    case "Blob": return BlobDataSetMapping.DeserializeBlobDataSetMapping(element, options);
+                    case "BlobFolder": return BlobFolderDataSetMapping.DeserializeBlobFolderDataSetMapping(element, options);
+                    case "Container": return BlobContainerDataSetMapping.DeserializeBlobContainerDataSetMapping(element, options);
+                    case "KustoCluster": return KustoClusterDataSetMapping.DeserializeKustoClusterDataSetMapping(element, options);
+                    case "KustoDatabase": return KustoDatabaseDataSetMapping.DeserializeKustoDatabaseDataSetMapping(element, options);
+                    case "KustoTable": return KustoTableDataSetMapping.DeserializeKustoTableDataSetMapping(element, options);
+                    case "SqlDBTable": return SqlDBTableDataSetMapping.DeserializeSqlDBTableDataSetMapping(element, options);
+                    case "SqlDWTable": return SqlDWTableDataSetMapping.DeserializeSqlDWTableDataSetMapping(element, options);
+                    case "SynapseWorkspaceSqlPoolTable": return SynapseWorkspaceSqlPoolTableDataSetMapping.DeserializeSynapseWorkspaceSqlPoolTableDataSetMapping(element, options);
                 }
             }
-            return UnknownDataSetMapping.DeserializeUnknownDataSetMapping(element);
+            return UnknownDataSetMapping.DeserializeUnknownDataSetMapping(element, options);
         }
 
         BinaryData IPersistableModel<ShareDataSetMappingData>.Write(ModelReaderWriterOptions options)

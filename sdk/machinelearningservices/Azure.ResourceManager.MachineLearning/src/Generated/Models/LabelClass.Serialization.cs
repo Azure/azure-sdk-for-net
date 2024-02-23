@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsCollectionDefined(Subclasses))
+            if (!(Subclasses is ChangeTrackingDictionary<string, LabelClass> collection && collection.IsUndefined))
             {
                 if (Subclasses != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelClass> dictionary = new Dictionary<string, LabelClass>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeLabelClass(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeLabelClass(property0.Value, options));
                     }
                     subclasses = dictionary;
                     continue;

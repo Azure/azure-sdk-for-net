@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Namespaces))
+            if (!(Namespaces is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("namespaces"u8);
                 writer.WriteStartArray();
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyMode))
+            if (PolicyMode != null)
             {
                 writer.WritePropertyName("policyMode"u8);
                 writer.WriteStringValue(PolicyMode);
             }
-            if (Optional.IsDefined(IsBuiltInOnly))
+            if (IsBuiltInOnly.HasValue)
             {
                 writer.WritePropertyName("isBuiltInOnly"u8);
                 writer.WriteBooleanValue(IsBuiltInOnly.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceTypeAliases))
+            if (!(ResourceTypeAliases is ChangeTrackingList<ResourceTypeAliases> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypeAliases"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Effects))
+            if (!(Effects is ChangeTrackingList<DataPolicyManifestEffect> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("effects"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FieldValues))
+            if (!(FieldValues is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("fieldValues"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("resourceFunctions"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Standard))
+            if (!(Standard is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("standard"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomDefinitions))
+            if (!(CustomDefinitions is ChangeTrackingList<DataManifestCustomResourceFunctionDefinition> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteStartArray();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Resources
                             List<ResourceTypeAliases> array = new List<ResourceTypeAliases>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ResourceTypeAliases.DeserializeResourceTypeAliases(item));
+                                array.Add(Models.ResourceTypeAliases.DeserializeResourceTypeAliases(item, options));
                             }
                             resourceTypeAliases = array;
                             continue;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Resources
                             List<DataPolicyManifestEffect> array = new List<DataPolicyManifestEffect>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataPolicyManifestEffect.DeserializeDataPolicyManifestEffect(item));
+                                array.Add(DataPolicyManifestEffect.DeserializeDataPolicyManifestEffect(item, options));
                             }
                             effects = array;
                             continue;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Resources
                                     List<DataManifestCustomResourceFunctionDefinition> array = new List<DataManifestCustomResourceFunctionDefinition>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(DataManifestCustomResourceFunctionDefinition.DeserializeDataManifestCustomResourceFunctionDefinition(item));
+                                        array.Add(DataManifestCustomResourceFunctionDefinition.DeserializeDataManifestCustomResourceFunctionDefinition(item, options));
                                     }
                                     custom = array;
                                     continue;

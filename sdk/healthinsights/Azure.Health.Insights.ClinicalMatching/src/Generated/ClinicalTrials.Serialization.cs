@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CustomTrials))
+            if (!(CustomTrials is ChangeTrackingList<ClinicalTrialDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customTrials"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistryFilters))
+            if (!(RegistryFilters is ChangeTrackingList<ClinicalTrialRegistryFilter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("registryFilters"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialDetails> array = new List<ClinicalTrialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialDetails.DeserializeClinicalTrialDetails(item));
+                        array.Add(ClinicalTrialDetails.DeserializeClinicalTrialDetails(item, options));
                     }
                     customTrials = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialRegistryFilter> array = new List<ClinicalTrialRegistryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialRegistryFilter.DeserializeClinicalTrialRegistryFilter(item));
+                        array.Add(ClinicalTrialRegistryFilter.DeserializeClinicalTrialRegistryFilter(item, options));
                     }
                     registryFilters = array;
                     continue;

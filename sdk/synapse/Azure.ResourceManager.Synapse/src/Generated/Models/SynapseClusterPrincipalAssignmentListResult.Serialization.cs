@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseClusterPrincipalAssignmentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseClusterPrincipalAssignmentData> array = new List<SynapseClusterPrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(item));
+                        array.Add(SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(item, options));
                     }
                     value = array;
                     continue;

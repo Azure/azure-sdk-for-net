@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SelectorMatchOperator.ToString());
             writer.WritePropertyName("selector"u8);
             writer.WriteStringValue(Selector);
-            if (Optional.IsCollectionDefined(ExclusionManagedRuleSets))
+            if (!(ExclusionManagedRuleSets is ChangeTrackingList<ExclusionManagedRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exclusionManagedRuleSets"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExclusionManagedRuleSet> array = new List<ExclusionManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExclusionManagedRuleSet.DeserializeExclusionManagedRuleSet(item));
+                        array.Add(ExclusionManagedRuleSet.DeserializeExclusionManagedRuleSet(item, options));
                     }
                     exclusionManagedRuleSets = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(UserDefinedRouteResults))
+            if (!(UserDefinedRouteResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("userDefinedRouteResults"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityRuleResults))
+            if (!(NetworkSecurityRuleResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityRuleResults"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResourceLockResults))
+            if (!(ResourceLockResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resourceLockResults"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsResolutionResults))
+            if (!(DnsResolutionResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("dnsResolutionResults"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StorageAccountResults))
+            if (!(StorageAccountResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("storageAccountResults"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KeyVaultResults))
+            if (!(KeyVaultResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("keyVaultResults"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContainerRegistryResults))
+            if (!(ContainerRegistryResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("containerRegistryResults"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicationInsightsResults))
+            if (!(ApplicationInsightsResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("applicationInsightsResults"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OtherResults))
+            if (!(OtherResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("otherResults"u8);
                 writer.WriteStartArray();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     userDefinedRouteResults = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     networkSecurityRuleResults = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     resourceLockResults = array;
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     dnsResolutionResults = array;
                     continue;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     storageAccountResults = array;
                     continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     keyVaultResults = array;
                     continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     containerRegistryResults = array;
                     continue;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     applicationInsightsResults = array;
                     continue;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     otherResults = array;
                     continue;

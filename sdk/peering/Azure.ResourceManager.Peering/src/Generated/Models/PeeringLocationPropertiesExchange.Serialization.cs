@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PeeringFacilities))
+            if (!(PeeringFacilities is ChangeTrackingList<ExchangePeeringFacility> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<ExchangePeeringFacility> array = new List<ExchangePeeringFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExchangePeeringFacility.DeserializeExchangePeeringFacility(item));
+                        array.Add(ExchangePeeringFacility.DeserializeExchangePeeringFacility(item, options));
                     }
                     peeringFacilities = array;
                     continue;

@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -80,64 +80,64 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationSenderEmail))
+            if (NotificationSenderEmail != null)
             {
                 writer.WritePropertyName("notificationSenderEmail"u8);
                 writer.WriteStringValue(NotificationSenderEmail);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetProvisioningState))
+            if (options.Format != "W" && TargetProvisioningState != null)
             {
                 writer.WritePropertyName("targetProvisioningState"u8);
                 writer.WriteStringValue(TargetProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedAtUtc))
+            if (options.Format != "W" && CreatedAtUtc.HasValue)
             {
                 writer.WritePropertyName("createdAtUtc"u8);
                 writer.WriteStringValue(CreatedAtUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayUri))
+            if (options.Format != "W" && GatewayUri != null)
             {
                 writer.WritePropertyName("gatewayUrl"u8);
                 writer.WriteStringValue(GatewayUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayRegionalUri))
+            if (options.Format != "W" && GatewayRegionalUri != null)
             {
                 writer.WritePropertyName("gatewayRegionalUrl"u8);
                 writer.WriteStringValue(GatewayRegionalUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(PortalUri))
+            if (options.Format != "W" && PortalUri != null)
             {
                 writer.WritePropertyName("portalUrl"u8);
                 writer.WriteStringValue(PortalUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementApiUri))
+            if (options.Format != "W" && ManagementApiUri != null)
             {
                 writer.WritePropertyName("managementApiUrl"u8);
                 writer.WriteStringValue(ManagementApiUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScmUri))
+            if (options.Format != "W" && ScmUri != null)
             {
                 writer.WritePropertyName("scmUrl"u8);
                 writer.WriteStringValue(ScmUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeveloperPortalUri))
+            if (options.Format != "W" && DeveloperPortalUri != null)
             {
                 writer.WritePropertyName("developerPortalUrl"u8);
                 writer.WriteStringValue(DeveloperPortalUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(HostnameConfigurations))
+            if (!(HostnameConfigurations is ChangeTrackingList<HostnameConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostnameConfigurations"u8);
                 writer.WriteStartArray();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPAddresses))
+            if (options.Format != "W" && !(PublicIPAddresses is ChangeTrackingList<IPAddress> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIPAddresses))
+            if (options.Format != "W" && !(PrivateIPAddresses is ChangeTrackingList<IPAddress> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
@@ -177,22 +177,22 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicIPAddressId))
+            if (PublicIPAddressId != null)
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualNetworkConfiguration))
+            if (VirtualNetworkConfiguration != null)
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (Optional.IsCollectionDefined(AdditionalLocations))
+            if (!(AdditionalLocations is ChangeTrackingList<AdditionalLocation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("additionalLocations"u8);
                 writer.WriteStartArray();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomProperties))
+            if (!(CustomProperties is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingList<CertificateConfiguration> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -223,32 +223,32 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableClientCertificate))
+            if (EnableClientCertificate.HasValue)
             {
                 writer.WritePropertyName("enableClientCertificate"u8);
                 writer.WriteBooleanValue(EnableClientCertificate.Value);
             }
-            if (Optional.IsDefined(DisableGateway))
+            if (DisableGateway.HasValue)
             {
                 writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
-            if (Optional.IsDefined(VirtualNetworkType))
+            if (VirtualNetworkType.HasValue)
             {
                 writer.WritePropertyName("virtualNetworkType"u8);
                 writer.WriteStringValue(VirtualNetworkType.Value.ToString());
             }
-            if (Optional.IsDefined(ApiVersionConstraint))
+            if (ApiVersionConstraint != null)
             {
                 writer.WritePropertyName("apiVersionConstraint"u8);
                 writer.WriteObjectValue(ApiVersionConstraint);
             }
-            if (Optional.IsDefined(Restore))
+            if (Restore.HasValue)
             {
                 writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<RemotePrivateEndpointConnectionWrapper> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PlatformVersion))
+            if (options.Format != "W" && PlatformVersion.HasValue)
             {
                 writer.WritePropertyName("platformVersion"u8);
                 writer.WriteStringValue(PlatformVersion.Value.ToString());
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value);
+                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ApiManagement
                             List<HostnameConfiguration> array = new List<HostnameConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostnameConfiguration.DeserializeHostnameConfiguration(item));
+                                array.Add(HostnameConfiguration.DeserializeHostnameConfiguration(item, options));
                             }
                             hostnameConfigurations = array;
                             continue;
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value);
+                            virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalLocations"u8))
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.ApiManagement
                             List<AdditionalLocation> array = new List<AdditionalLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdditionalLocation.DeserializeAdditionalLocation(item));
+                                array.Add(AdditionalLocation.DeserializeAdditionalLocation(item, options));
                             }
                             additionalLocations = array;
                             continue;
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ApiManagement
                             List<CertificateConfiguration> array = new List<CertificateConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CertificateConfiguration.DeserializeCertificateConfiguration(item));
+                                array.Add(CertificateConfiguration.DeserializeCertificateConfiguration(item, options));
                             }
                             certificates = array;
                             continue;
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value);
+                            apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restore"u8))
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.ApiManagement
                             List<RemotePrivateEndpointConnectionWrapper> array = new List<RemotePrivateEndpointConnectionWrapper>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RemotePrivateEndpointConnectionWrapper.DeserializeRemotePrivateEndpointConnectionWrapper(item));
+                                array.Add(RemotePrivateEndpointConnectionWrapper.DeserializeRemotePrivateEndpointConnectionWrapper(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

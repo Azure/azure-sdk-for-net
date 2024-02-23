@@ -42,44 +42,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationResultIdentifier))
+            if (OperationResultIdentifier != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(OperationResultIdentifier);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartedOn))
+            if (StartedOn.HasValue)
             {
                 writer.WritePropertyName("started"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ResultInfo))
+            if (ResultInfo != null)
             {
                 writer.WritePropertyName("resultInfo"u8);
                 writer.WriteStringValue(ResultInfo);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActionLog))
+            if (options.Format != "W" && !(ActionLog is ChangeTrackingList<OperationResultLogItemContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionLog"u8);
                 writer.WriteStartArray();
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            error = ErrorResponseBody.DeserializeErrorResponseBody(property0.Value);
+                            error = ErrorResponseBody.DeserializeErrorResponseBody(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("actionLog"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<OperationResultLogItemContract> array = new List<OperationResultLogItemContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(item));
+                                array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(item, options));
                             }
                             actionLog = array;
                             continue;

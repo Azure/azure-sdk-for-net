@@ -28,69 +28,69 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RouterName))
+            if (options.Format != "W" && RouterName != null)
             {
                 writer.WritePropertyName("routerName"u8);
                 writer.WriteStringValue(RouterName);
             }
-            if (options.Format != "W" && Optional.IsDefined(InterfaceName))
+            if (options.Format != "W" && InterfaceName != null)
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PatchPanelId))
+            if (options.Format != "W" && PatchPanelId != null)
             {
                 writer.WritePropertyName("patchPanelId"u8);
                 writer.WriteStringValue(PatchPanelId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RackId))
+            if (options.Format != "W" && RackId != null)
             {
                 writer.WritePropertyName("rackId"u8);
                 writer.WriteStringValue(RackId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ColoLocation))
+            if (options.Format != "W" && ColoLocation != null)
             {
                 writer.WritePropertyName("coloLocation"u8);
                 writer.WriteStringValue(ColoLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectorType))
+            if (options.Format != "W" && ConnectorType.HasValue)
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (Optional.IsDefined(AdminState))
+            if (AdminState.HasValue)
             {
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(MacSecConfig))
+            if (MacSecConfig != null)
             {
                 writer.WritePropertyName("macSecConfig"u8);
                 writer.WriteObjectValue(MacSecConfig);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            macSecConfig = ExpressRouteLinkMacSecConfig.DeserializeExpressRouteLinkMacSecConfig(property0.Value);
+                            macSecConfig = ExpressRouteLinkMacSecConfig.DeserializeExpressRouteLinkMacSecConfig(property0.Value, options);
                             continue;
                         }
                     }

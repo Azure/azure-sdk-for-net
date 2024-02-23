@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ReplicationUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<ReplicationUsage> array = new List<ReplicationUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item));
+                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item, options));
                     }
                     value = array;
                     continue;

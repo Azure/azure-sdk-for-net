@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParentContainerFabricId))
+            if (ParentContainerFabricId != null)
             {
                 writer.WritePropertyName("parentContainerFabricId"u8);
                 writer.WriteStringValue(ParentContainerFabricId);
             }
-            if (Optional.IsDefined(ParentContainerFriendlyName))
+            if (ParentContainerFriendlyName != null)
             {
                 writer.WritePropertyName("parentContainerFriendlyName"u8);
                 writer.WriteStringValue(ParentContainerFriendlyName);
             }
-            if (Optional.IsDefined(AzureFileShareType))
+            if (AzureFileShareType.HasValue)
             {
                 writer.WritePropertyName("azureFileShareType"u8);
                 writer.WriteStringValue(AzureFileShareType.Value.ToString());
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType != null)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (WorkloadType != null)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());

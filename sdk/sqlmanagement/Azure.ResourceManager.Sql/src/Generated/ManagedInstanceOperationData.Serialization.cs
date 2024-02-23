@@ -43,84 +43,84 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManagedInstanceName))
+            if (options.Format != "W" && ManagedInstanceName != null)
             {
                 writer.WritePropertyName("managedInstanceName"u8);
                 writer.WriteStringValue(ManagedInstanceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Operation))
+            if (options.Format != "W" && Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationFriendlyName))
+            if (options.Format != "W" && OperationFriendlyName != null)
             {
                 writer.WritePropertyName("operationFriendlyName"u8);
                 writer.WriteStringValue(OperationFriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDescription))
+            if (options.Format != "W" && ErrorDescription != null)
             {
                 writer.WritePropertyName("errorDescription"u8);
                 writer.WriteStringValue(ErrorDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorSeverity))
+            if (options.Format != "W" && ErrorSeverity.HasValue)
             {
                 writer.WritePropertyName("errorSeverity"u8);
                 writer.WriteNumberValue(ErrorSeverity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUserError))
+            if (options.Format != "W" && IsUserError.HasValue)
             {
                 writer.WritePropertyName("isUserError"u8);
                 writer.WriteBooleanValue(IsUserError.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EstimatedCompleteOn))
+            if (options.Format != "W" && EstimatedCompleteOn.HasValue)
             {
                 writer.WritePropertyName("estimatedCompletionTime"u8);
                 writer.WriteStringValue(EstimatedCompleteOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCancellable))
+            if (options.Format != "W" && IsCancellable.HasValue)
             {
                 writer.WritePropertyName("isCancellable"u8);
                 writer.WriteBooleanValue(IsCancellable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationParameters))
+            if (options.Format != "W" && OperationParameters != null)
             {
                 writer.WritePropertyName("operationParameters"u8);
                 writer.WriteObjectValue(OperationParameters);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationSteps))
+            if (options.Format != "W" && OperationSteps != null)
             {
                 writer.WritePropertyName("operationSteps"u8);
                 writer.WriteObjectValue(OperationSteps);
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            operationParameters = ManagedInstanceOperationParametersPair.DeserializeManagedInstanceOperationParametersPair(property0.Value);
+                            operationParameters = ManagedInstanceOperationParametersPair.DeserializeManagedInstanceOperationParametersPair(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("operationSteps"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            operationSteps = ManagedInstanceOperationSteps.DeserializeManagedInstanceOperationSteps(property0.Value);
+                            operationSteps = ManagedInstanceOperationSteps.DeserializeManagedInstanceOperationSteps(property0.Value, options);
                             continue;
                         }
                     }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tokens))
+            if (!(Tokens is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tokens"u8);
                 writer.WriteStartArray();

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ProvisioningIssues))
+            if (!(ProvisioningIssues is ChangeTrackingList<NetworkSecurityPerimeterConfigurationIssues> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NetworkSecurityPerimeter))
+            if (NetworkSecurityPerimeter != null)
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
                 writer.WriteObjectValue(NetworkSecurityPerimeter);
             }
-            if (Optional.IsDefined(ResourceAssociation))
+            if (ResourceAssociation != null)
             {
                 writer.WritePropertyName("resourceAssociation"u8);
                 writer.WriteObjectValue(ResourceAssociation);
             }
-            if (Optional.IsDefined(Profile))
+            if (Profile != null)
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<NetworkSecurityPerimeterConfigurationIssues> array = new List<NetworkSecurityPerimeterConfigurationIssues>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkSecurityPerimeterConfigurationIssues.DeserializeNetworkSecurityPerimeterConfigurationIssues(item));
+                                array.Add(NetworkSecurityPerimeterConfigurationIssues.DeserializeNetworkSecurityPerimeterConfigurationIssues(item, options));
                             }
                             provisioningIssues = array;
                             continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            networkSecurityPerimeter = NetworkSecurityPerimeterInfo.DeserializeNetworkSecurityPerimeterInfo(property0.Value);
+                            networkSecurityPerimeter = NetworkSecurityPerimeterInfo.DeserializeNetworkSecurityPerimeterInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            resourceAssociation = ResourceAssociation.DeserializeResourceAssociation(property0.Value);
+                            resourceAssociation = ResourceAssociation.DeserializeResourceAssociation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            profile = NetworkSecurityPerimeterConfigurationProfile.DeserializeNetworkSecurityPerimeterConfigurationProfile(property0.Value);
+                            profile = NetworkSecurityPerimeterConfigurationProfile.DeserializeNetworkSecurityPerimeterConfigurationProfile(property0.Value, options);
                             continue;
                         }
                     }

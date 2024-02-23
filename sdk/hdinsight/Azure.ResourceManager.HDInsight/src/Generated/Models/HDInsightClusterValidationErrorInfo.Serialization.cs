@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(ErrorResource))
+            if (ErrorResource != null)
             {
                 writer.WritePropertyName("errorResource"u8);
                 writer.WriteStringValue(ErrorResource);
             }
-            if (Optional.IsCollectionDefined(MessageArguments))
+            if (!(MessageArguments is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messageArguments"u8);
                 writer.WriteStartArray();

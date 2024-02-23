@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StorageSyncPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncPrivateLinkResource> array = new List<StorageSyncPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource(item));
+                        array.Add(StorageSyncPrivateLinkResource.DeserializeStorageSyncPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

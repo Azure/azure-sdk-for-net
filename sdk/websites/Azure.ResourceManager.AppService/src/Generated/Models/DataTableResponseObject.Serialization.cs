@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<DataTableResponseColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Rows))
+            if (!(Rows is ChangeTrackingList<IList<string>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataTableResponseColumn> array = new List<DataTableResponseColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item));
+                        array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item, options));
                     }
                     columns = array;
                     continue;

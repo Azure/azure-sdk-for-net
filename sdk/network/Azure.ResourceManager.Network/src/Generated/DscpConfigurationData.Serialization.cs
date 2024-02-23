@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Markings))
+            if (!(Markings is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIPRanges))
+            if (!(SourceIPRanges is ChangeTrackingList<QosIPRange> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIPRanges))
+            if (!(DestinationIPRanges is ChangeTrackingList<QosIPRange> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (!(SourcePortRanges is ChangeTrackingList<QosPortRange> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (!(DestinationPortRanges is ChangeTrackingList<QosPortRange> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(QosDefinitionCollection))
+            if (!(QosDefinitionCollection is ChangeTrackingList<DscpQosDefinition> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("qosDefinitionCollection"u8);
                 writer.WriteStartArray();
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(QosCollectionId))
+            if (options.Format != "W" && QosCollectionId != null)
             {
                 writer.WritePropertyName("qosCollectionId"u8);
                 writer.WriteStringValue(QosCollectionId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedNetworkInterfaces))
+            if (options.Format != "W" && !(AssociatedNetworkInterfaces is ChangeTrackingList<NetworkInterfaceData> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("associatedNetworkInterfaces"u8);
                 writer.WriteStartArray();
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Network
                             List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIPRange.DeserializeQosIPRange(item));
+                                array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                             }
                             sourceIPRanges = array;
                             continue;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Network
                             List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIPRange.DeserializeQosIPRange(item));
+                                array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                             }
                             destinationIPRanges = array;
                             continue;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Network
                             List<QosPortRange> array = new List<QosPortRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosPortRange.DeserializeQosPortRange(item));
+                                array.Add(QosPortRange.DeserializeQosPortRange(item, options));
                             }
                             sourcePortRanges = array;
                             continue;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
                             List<QosPortRange> array = new List<QosPortRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosPortRange.DeserializeQosPortRange(item));
+                                array.Add(QosPortRange.DeserializeQosPortRange(item, options));
                             }
                             destinationPortRanges = array;
                             continue;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
                             List<DscpQosDefinition> array = new List<DscpQosDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item));
+                                array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item, options));
                             }
                             qosDefinitionCollection = array;
                             continue;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
                             }
                             associatedNetworkInterfaces = array;
                             continue;

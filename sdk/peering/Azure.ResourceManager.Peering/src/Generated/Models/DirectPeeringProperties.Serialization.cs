@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Connections))
+            if (!(Connections is ChangeTrackingList<PeeringDirectConnection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(UseForPeeringService))
+            if (options.Format != "W" && UseForPeeringService.HasValue)
             {
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn != null)
             {
                 writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);
             }
-            if (Optional.IsDefined(DirectPeeringType))
+            if (DirectPeeringType.HasValue)
             {
                 writer.WritePropertyName("directPeeringType"u8);
                 writer.WriteStringValue(DirectPeeringType.Value.ToString());
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringDirectConnection> array = new List<PeeringDirectConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringDirectConnection.DeserializePeeringDirectConnection(item));
+                        array.Add(PeeringDirectConnection.DeserializePeeringDirectConnection(item, options));
                     }
                     connections = array;
                     continue;

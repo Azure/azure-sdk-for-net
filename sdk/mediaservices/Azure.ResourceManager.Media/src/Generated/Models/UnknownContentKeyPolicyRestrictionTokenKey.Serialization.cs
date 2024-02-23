@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownContentKeyPolicyRestrictionTokenKey(document.RootElement, options);
+            return DeserializeContentKeyPolicyRestrictionTokenKey(document.RootElement, options);
         }
 
         internal static UnknownContentKeyPolicyRestrictionTokenKey DeserializeUnknownContentKeyPolicyRestrictionTokenKey(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownContentKeyPolicyRestrictionTokenKey(document.RootElement, options);
+                        return DeserializeContentKeyPolicyRestrictionTokenKey(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyRestrictionTokenKey)} does not support '{options.Format}' format.");

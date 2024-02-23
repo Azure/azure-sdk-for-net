@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(PublicIPAddress))
+            if (PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPortRule> array = new List<JitNetworkAccessPortRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPortRule.DeserializeJitNetworkAccessPortRule(item));
+                        array.Add(JitNetworkAccessPortRule.DeserializeJitNetworkAccessPortRule(item, options));
                     }
                     ports = array;
                     continue;

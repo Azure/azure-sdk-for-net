@@ -44,54 +44,54 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastSeenOn))
+            if (LastSeenOn.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
             }
-            if (Optional.IsDefined(RegistrationOn))
+            if (RegistrationOn.HasValue)
             {
                 writer.WritePropertyName("registrationTime"u8);
                 writer.WriteStringValue(RegistrationOn.Value, "O");
             }
-            if (Optional.IsDefined(IP))
+            if (IP != null)
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (Optional.IsDefined(AccountId))
+            if (AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(NodeId))
+            if (NodeId != null)
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(TotalCount))
+            if (TotalCount.HasValue)
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
             }
-            if (Optional.IsCollectionDefined(ExtensionHandler))
+            if (!(ExtensionHandler is ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensionHandler"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation
             }
             writer.WritePropertyName("nodeConfiguration"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesNodeConfigurationName))
+            if (NamePropertiesNodeConfigurationName != null)
             {
                 if (NamePropertiesNodeConfigurationName != null)
                 {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Automation
                             List<DscNodeExtensionHandlerAssociationProperty> array = new List<DscNodeExtensionHandlerAssociationProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DscNodeExtensionHandlerAssociationProperty.DeserializeDscNodeExtensionHandlerAssociationProperty(item));
+                                array.Add(DscNodeExtensionHandlerAssociationProperty.DeserializeDscNodeExtensionHandlerAssociationProperty(item, options));
                             }
                             extensionHandler = array;
                             continue;

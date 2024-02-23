@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 switch (discriminator.GetString())
                 {
-                    case "FileEvent": return EdgeFileEventTrigger.DeserializeEdgeFileEventTrigger(element);
-                    case "PeriodicTimerEvent": return PeriodicTimerEventTrigger.DeserializePeriodicTimerEventTrigger(element);
+                    case "FileEvent": return EdgeFileEventTrigger.DeserializeEdgeFileEventTrigger(element, options);
+                    case "PeriodicTimerEvent": return PeriodicTimerEventTrigger.DeserializePeriodicTimerEventTrigger(element, options);
                 }
             }
-            return UnknownTrigger.DeserializeUnknownTrigger(element);
+            return UnknownTrigger.DeserializeUnknownTrigger(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeTriggerData>.Write(ModelReaderWriterOptions options)

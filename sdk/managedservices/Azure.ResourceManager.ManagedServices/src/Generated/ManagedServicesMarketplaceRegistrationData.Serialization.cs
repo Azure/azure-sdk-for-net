@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ManagedServices
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedServices
                     {
                         continue;
                     }
-                    properties = ManagedServicesMarketplaceRegistrationProperties.DeserializeManagedServicesMarketplaceRegistrationProperties(property.Value);
+                    properties = ManagedServicesMarketplaceRegistrationProperties.DeserializeManagedServicesMarketplaceRegistrationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedServices
                     {
                         continue;
                     }
-                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value);
+                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineRunCommandData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<MachineRunCommandData> array = new List<MachineRunCommandData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineRunCommandData.DeserializeMachineRunCommandData(item));
+                        array.Add(MachineRunCommandData.DeserializeMachineRunCommandData(item, options));
                     }
                     value = array;
                     continue;

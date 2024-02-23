@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CorsRulesValue))
+            if (!(CorsRulesValue is ChangeTrackingList<MapsCorsRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsCorsRule> array = new List<MapsCorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsCorsRule.DeserializeMapsCorsRule(item));
+                        array.Add(MapsCorsRule.DeserializeMapsCorsRule(item, options));
                     }
                     corsRules = array;
                     continue;

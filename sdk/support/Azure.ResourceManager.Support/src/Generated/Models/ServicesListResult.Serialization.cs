@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SupportAzureServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportAzureServiceData> array = new List<SupportAzureServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportAzureServiceData.DeserializeSupportAzureServiceData(item));
+                        array.Add(SupportAzureServiceData.DeserializeSupportAzureServiceData(item, options));
                     }
                     value = array;
                     continue;

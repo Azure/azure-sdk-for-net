@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.StorageCache
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -76,59 +76,59 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageCapacityTiB))
+            if (StorageCapacityTiB.HasValue)
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health != null)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteObjectValue(Health);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(FilesystemSubnet))
+            if (FilesystemSubnet != null)
             {
                 writer.WritePropertyName("filesystemSubnet"u8);
                 writer.WriteStringValue(FilesystemSubnet);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClientInfo))
+            if (options.Format != "W" && ClientInfo != null)
             {
                 writer.WritePropertyName("clientInfo"u8);
                 writer.WriteObjectValue(ClientInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(ThroughputProvisionedMBps))
+            if (options.Format != "W" && ThroughputProvisionedMBps.HasValue)
             {
                 writer.WritePropertyName("throughputProvisionedMBps"u8);
                 writer.WriteNumberValue(ThroughputProvisionedMBps.Value);
             }
-            if (Optional.IsDefined(EncryptionSettings))
+            if (EncryptionSettings != null)
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (Optional.IsDefined(MaintenanceWindow))
+            if (MaintenanceWindow != null)
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (Optional.IsDefined(Hsm))
+            if (Hsm != null)
             {
                 writer.WritePropertyName("hsm"u8);
                 writer.WriteObjectValue(Hsm);
             }
-            if (Optional.IsDefined(RootSquashSettings))
+            if (RootSquashSettings != null)
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
                 writer.WriteObjectValue(RootSquashSettings);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            health = AmlFileSystemHealth.DeserializeAmlFileSystemHealth(property0.Value);
+                            health = AmlFileSystemHealth.DeserializeAmlFileSystemHealth(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            clientInfo = AmlFileSystemClientInfo.DeserializeAmlFileSystemClientInfo(property0.Value);
+                            clientInfo = AmlFileSystemClientInfo.DeserializeAmlFileSystemClientInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("throughputProvisionedMBps"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value);
+                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            maintenanceWindow = AmlFileSystemPropertiesMaintenanceWindow.DeserializeAmlFileSystemPropertiesMaintenanceWindow(property0.Value);
+                            maintenanceWindow = AmlFileSystemPropertiesMaintenanceWindow.DeserializeAmlFileSystemPropertiesMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hsm"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            hsm = AmlFileSystemPropertiesHsm.DeserializeAmlFileSystemPropertiesHsm(property0.Value);
+                            hsm = AmlFileSystemPropertiesHsm.DeserializeAmlFileSystemPropertiesHsm(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rootSquashSettings"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value);
+                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value, options);
                             continue;
                         }
                     }

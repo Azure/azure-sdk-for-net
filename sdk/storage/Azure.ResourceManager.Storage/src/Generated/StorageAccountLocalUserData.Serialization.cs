@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PermissionScopes))
+            if (!(PermissionScopes is ChangeTrackingList<StoragePermissionScope> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissionScopes"u8);
                 writer.WriteStartArray();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HomeDirectory))
+            if (HomeDirectory != null)
             {
                 writer.WritePropertyName("homeDirectory"u8);
                 writer.WriteStringValue(HomeDirectory);
             }
-            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
+            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Sid))
+            if (options.Format != "W" && Sid != null)
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (Optional.IsDefined(HasSharedKey))
+            if (HasSharedKey.HasValue)
             {
                 writer.WritePropertyName("hasSharedKey"u8);
                 writer.WriteBooleanValue(HasSharedKey.Value);
             }
-            if (Optional.IsDefined(HasSshKey))
+            if (HasSshKey.HasValue)
             {
                 writer.WritePropertyName("hasSshKey"u8);
                 writer.WriteBooleanValue(HasSshKey.Value);
             }
-            if (Optional.IsDefined(HasSshPassword))
+            if (HasSshPassword.HasValue)
             {
                 writer.WritePropertyName("hasSshPassword"u8);
                 writer.WriteBooleanValue(HasSshPassword.Value);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Storage
                             List<StoragePermissionScope> array = new List<StoragePermissionScope>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StoragePermissionScope.DeserializeStoragePermissionScope(item));
+                                array.Add(StoragePermissionScope.DeserializeStoragePermissionScope(item, options));
                             }
                             permissionScopes = array;
                             continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage
                             List<StorageSshPublicKey> array = new List<StorageSshPublicKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item));
+                                array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item, options));
                             }
                             sshAuthorizedKeys = array;
                             continue;

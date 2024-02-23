@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<RateLimitRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RateLimitRule> array = new List<RateLimitRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RateLimitRule.DeserializeRateLimitRule(item));
+                        array.Add(RateLimitRule.DeserializeRateLimitRule(item, options));
                     }
                     rules = array;
                     continue;

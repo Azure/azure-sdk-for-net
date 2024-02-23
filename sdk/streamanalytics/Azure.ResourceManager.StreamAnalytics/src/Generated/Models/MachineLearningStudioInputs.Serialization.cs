@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(ColumnNames))
+            if (!(ColumnNames is ChangeTrackingList<MachineLearningStudioInputColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columnNames"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<MachineLearningStudioInputColumn> array = new List<MachineLearningStudioInputColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningStudioInputColumn.DeserializeMachineLearningStudioInputColumn(item));
+                        array.Add(MachineLearningStudioInputColumn.DeserializeMachineLearningStudioInputColumn(item, options));
                     }
                     columnNames = array;
                     continue;

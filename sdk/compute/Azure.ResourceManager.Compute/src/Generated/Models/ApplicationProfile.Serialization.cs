@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GalleryApplications))
+            if (!(GalleryApplications is ChangeTrackingList<VirtualMachineGalleryApplication> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineGalleryApplication> array = new List<VirtualMachineGalleryApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineGalleryApplication.DeserializeVirtualMachineGalleryApplication(item));
+                        array.Add(VirtualMachineGalleryApplication.DeserializeVirtualMachineGalleryApplication(item, options));
                     }
                     galleryApplications = array;
                     continue;

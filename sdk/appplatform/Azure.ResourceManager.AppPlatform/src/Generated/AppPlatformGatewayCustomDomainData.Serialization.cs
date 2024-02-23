@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = GatewayCustomDomainProperties.DeserializeGatewayCustomDomainProperties(property.Value);
+                    properties = GatewayCustomDomainProperties.DeserializeGatewayCustomDomainProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

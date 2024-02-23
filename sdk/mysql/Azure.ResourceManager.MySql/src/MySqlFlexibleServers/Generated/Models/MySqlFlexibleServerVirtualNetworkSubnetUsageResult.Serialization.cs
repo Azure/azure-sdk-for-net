@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DelegatedSubnetsUsage))
+            if (options.Format != "W" && !(DelegatedSubnetsUsage is ChangeTrackingList<MySqlFlexibleServerDelegatedSubnetUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delegatedSubnetsUsage"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerDelegatedSubnetUsage> array = new List<MySqlFlexibleServerDelegatedSubnetUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerDelegatedSubnetUsage.DeserializeMySqlFlexibleServerDelegatedSubnetUsage(item));
+                        array.Add(MySqlFlexibleServerDelegatedSubnetUsage.DeserializeMySqlFlexibleServerDelegatedSubnetUsage(item, options));
                     }
                     delegatedSubnetsUsage = array;
                     continue;

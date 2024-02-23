@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<AutomationActivityParameterDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationActivityParameterDefinition> array = new List<AutomationActivityParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item));
+                        array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item, options));
                     }
                     parameters = array;
                     continue;

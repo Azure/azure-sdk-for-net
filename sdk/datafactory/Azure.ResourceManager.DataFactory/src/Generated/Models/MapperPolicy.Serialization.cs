@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode != null)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode);
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Recurrence != null)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    recurrence = MapperPolicyRecurrence.DeserializeMapperPolicyRecurrence(property.Value);
+                    recurrence = MapperPolicyRecurrence.DeserializeMapperPolicyRecurrence(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

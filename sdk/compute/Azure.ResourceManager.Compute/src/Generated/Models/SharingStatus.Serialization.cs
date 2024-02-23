@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AggregatedState))
+            if (options.Format != "W" && AggregatedState.HasValue)
             {
                 writer.WritePropertyName("aggregatedState"u8);
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Summary))
+            if (!(Summary is ChangeTrackingList<RegionalSharingStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RegionalSharingStatus> array = new List<RegionalSharingStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalSharingStatus.DeserializeRegionalSharingStatus(item));
+                        array.Add(RegionalSharingStatus.DeserializeRegionalSharingStatus(item, options));
                     }
                     summary = array;
                     continue;

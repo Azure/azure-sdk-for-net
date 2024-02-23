@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ZoneRedundancy))
+            if (ZoneRedundancy.HasValue)
             {
                 writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(ApiKey))
+            if (ApiKey.HasValue)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey.Value.ToString());
             }
-            if (Optional.IsDefined(DeterministicOutboundIP))
+            if (DeterministicOutboundIP.HasValue)
             {
                 writer.WritePropertyName("deterministicOutboundIP"u8);
                 writer.WriteStringValue(DeterministicOutboundIP.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(GrafanaIntegrations))
+            if (GrafanaIntegrations != null)
             {
                 writer.WritePropertyName("grafanaIntegrations"u8);
                 writer.WriteObjectValue(GrafanaIntegrations);
             }
-            if (Optional.IsDefined(EnterpriseConfigurations))
+            if (EnterpriseConfigurations != null)
             {
                 writer.WritePropertyName("enterpriseConfigurations"u8);
                 writer.WriteObjectValue(EnterpriseConfigurations);
             }
-            if (Optional.IsDefined(GrafanaConfigurations))
+            if (GrafanaConfigurations != null)
             {
                 writer.WritePropertyName("grafanaConfigurations"u8);
                 writer.WriteObjectValue(GrafanaConfigurations);
             }
-            if (Optional.IsCollectionDefined(GrafanaPlugins))
+            if (!(GrafanaPlugins is ChangeTrackingDictionary<string, GrafanaPlugin> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("grafanaPlugins"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(GrafanaMajorVersion))
+            if (GrafanaMajorVersion != null)
             {
                 writer.WritePropertyName("grafanaMajorVersion"u8);
                 writer.WriteStringValue(GrafanaMajorVersion);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    grafanaIntegrations = GrafanaIntegrations.DeserializeGrafanaIntegrations(property.Value);
+                    grafanaIntegrations = GrafanaIntegrations.DeserializeGrafanaIntegrations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enterpriseConfigurations"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    enterpriseConfigurations = EnterpriseConfigurations.DeserializeEnterpriseConfigurations(property.Value);
+                    enterpriseConfigurations = EnterpriseConfigurations.DeserializeEnterpriseConfigurations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("grafanaConfigurations"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    grafanaConfigurations = GrafanaConfigurations.DeserializeGrafanaConfigurations(property.Value);
+                    grafanaConfigurations = GrafanaConfigurations.DeserializeGrafanaConfigurations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("grafanaPlugins"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     Dictionary<string, GrafanaPlugin> dictionary = new Dictionary<string, GrafanaPlugin>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(property0.Value));
+                        dictionary.Add(property0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(property0.Value, options));
                     }
                     grafanaPlugins = dictionary;
                     continue;

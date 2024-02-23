@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
@@ -52,22 +52,22 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("finish_reason");
             }
-            if (Optional.IsDefined(FinishDetails))
+            if (FinishDetails != null)
             {
                 writer.WritePropertyName("finish_details"u8);
                 writer.WriteObjectValue(FinishDetails);
             }
-            if (Optional.IsDefined(InternalStreamingDeltaMessage))
+            if (InternalStreamingDeltaMessage != null)
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteObjectValue(InternalStreamingDeltaMessage);
             }
-            if (Optional.IsDefined(ContentFilterResults))
+            if (ContentFilterResults != null)
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);
             }
-            if (Optional.IsDefined(Enhancements))
+            if (Enhancements != null)
             {
                 writer.WritePropertyName("enhancements"u8);
                 writer.WriteObjectValue(Enhancements);
@@ -128,7 +128,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
+                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logprobs"u8))
@@ -138,7 +138,7 @@ namespace Azure.AI.OpenAI
                         logprobs = null;
                         continue;
                     }
-                    logprobs = ChatChoiceLogProbabilityInfo.DeserializeChatChoiceLogProbabilityInfo(property.Value);
+                    logprobs = ChatChoiceLogProbabilityInfo.DeserializeChatChoiceLogProbabilityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -162,7 +162,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    finishDetails = ChatFinishDetails.DeserializeChatFinishDetails(property.Value);
+                    finishDetails = ChatFinishDetails.DeserializeChatFinishDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delta"u8))
@@ -171,7 +171,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
+                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("content_filter_results"u8))
@@ -180,7 +180,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value);
+                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enhancements"u8))
@@ -189,7 +189,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value);
+                    enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

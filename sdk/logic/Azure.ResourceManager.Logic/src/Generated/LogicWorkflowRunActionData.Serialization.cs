@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -82,27 +82,27 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(TrackingId))
+            if (options.Format != "W" && TrackingId.HasValue)
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId.Value);
             }
-            if (Optional.IsDefined(Correlation))
+            if (Correlation != null)
             {
                 writer.WritePropertyName("correlation"u8);
                 writer.WriteObjectValue(Correlation);
             }
-            if (options.Format != "W" && Optional.IsDefined(InputsLink))
+            if (options.Format != "W" && InputsLink != null)
             {
                 writer.WritePropertyName("inputsLink"u8);
                 writer.WriteObjectValue(InputsLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(OutputsLink))
+            if (options.Format != "W" && OutputsLink != null)
             {
                 writer.WritePropertyName("outputsLink"u8);
                 writer.WriteObjectValue(OutputsLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrackedProperties))
+            if (options.Format != "W" && TrackedProperties != null)
             {
                 writer.WritePropertyName("trackedProperties"u8);
 #if NET6_0_OR_GREATER
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(RetryHistory))
+            if (!(RetryHistory is ChangeTrackingList<LogicWorkRetryHistory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("retryHistory"u8);
                 writer.WriteStartArray();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value);
+                            correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("inputsLink"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputsLink"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trackedProperties"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Logic
                             List<LogicWorkRetryHistory> array = new List<LogicWorkRetryHistory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogicWorkRetryHistory.DeserializeLogicWorkRetryHistory(item));
+                                array.Add(LogicWorkRetryHistory.DeserializeLogicWorkRetryHistory(item, options));
                             }
                             retryHistory = array;
                             continue;

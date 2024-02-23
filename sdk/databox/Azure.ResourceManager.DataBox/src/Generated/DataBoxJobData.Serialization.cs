@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -73,72 +73,72 @@ namespace Azure.ResourceManager.DataBox
             writer.WriteStartObject();
             writer.WritePropertyName("transferType"u8);
             writer.WriteStringValue(TransferType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(IsCancellable))
+            if (options.Format != "W" && IsCancellable.HasValue)
             {
                 writer.WritePropertyName("isCancellable"u8);
                 writer.WriteBooleanValue(IsCancellable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDeletable))
+            if (options.Format != "W" && IsDeletable.HasValue)
             {
                 writer.WritePropertyName("isDeletable"u8);
                 writer.WriteBooleanValue(IsDeletable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsShippingAddressEditable))
+            if (options.Format != "W" && IsShippingAddressEditable.HasValue)
             {
                 writer.WritePropertyName("isShippingAddressEditable"u8);
                 writer.WriteBooleanValue(IsShippingAddressEditable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetailsUpdate))
+            if (options.Format != "W" && ReverseShippingDetailsUpdate.HasValue)
             {
                 writer.WritePropertyName("reverseShippingDetailsUpdate"u8);
                 writer.WriteStringValue(ReverseShippingDetailsUpdate.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReverseTransportPreferenceUpdate))
+            if (options.Format != "W" && ReverseTransportPreferenceUpdate.HasValue)
             {
                 writer.WritePropertyName("reverseTransportPreferenceUpdate"u8);
                 writer.WriteStringValue(ReverseTransportPreferenceUpdate.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPrepareToShipEnabled))
+            if (options.Format != "W" && IsPrepareToShipEnabled.HasValue)
             {
                 writer.WritePropertyName("isPrepareToShipEnabled"u8);
                 writer.WriteBooleanValue(IsPrepareToShipEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (options.Format != "W" && Optional.IsDefined(CancellationReason))
+            if (options.Format != "W" && CancellationReason != null)
             {
                 writer.WritePropertyName("cancellationReason"u8);
                 writer.WriteStringValue(CancellationReason);
             }
-            if (Optional.IsDefined(DeliveryType))
+            if (DeliveryType.HasValue)
             {
                 writer.WritePropertyName("deliveryType"u8);
                 writer.WriteStringValue(DeliveryType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DeliveryInfo))
+            if (DeliveryInfo != null)
             {
                 writer.WritePropertyName("deliveryInfo"u8);
                 writer.WriteObjectValue(DeliveryInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCancellableWithoutFee))
+            if (options.Format != "W" && IsCancellableWithoutFee.HasValue)
             {
                 writer.WritePropertyName("isCancellableWithoutFee"u8);
                 writer.WriteBooleanValue(IsCancellableWithoutFee.Value);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
+                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value);
+                            details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cancellationReason"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value);
+                            deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isCancellableWithoutFee"u8))

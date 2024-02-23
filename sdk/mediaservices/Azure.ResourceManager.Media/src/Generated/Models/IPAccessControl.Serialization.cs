@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedIPs))
+            if (!(AllowedIPs is ChangeTrackingList<IPRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<IPRange> array = new List<IPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRange.DeserializeIPRange(item));
+                        array.Add(IPRange.DeserializeIPRange(item, options));
                     }
                     allow = array;
                     continue;

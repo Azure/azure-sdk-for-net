@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -53,69 +53,69 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RuleId))
+            if (options.Format != "W" && RuleId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (Optional.IsDefined(AliasName))
+            if (AliasName != null)
             {
                 writer.WritePropertyName("aliasName"u8);
                 writer.WriteStringValue(AliasName);
             }
-            if (Optional.IsDefined(RuleState))
+            if (RuleState.HasValue)
             {
                 writer.WritePropertyName("ruleState"u8);
                 writer.WriteStringValue(RuleState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SchemaName))
+            if (SchemaName != null)
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Optional.IsDefined(TableName))
+            if (TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Optional.IsDefined(ColumnName))
+            if (ColumnName != null)
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (Optional.IsDefined(MaskingFunction))
+            if (MaskingFunction.HasValue)
             {
                 writer.WritePropertyName("maskingFunction"u8);
                 writer.WriteStringValue(MaskingFunction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NumberFrom))
+            if (NumberFrom != null)
             {
                 writer.WritePropertyName("numberFrom"u8);
                 writer.WriteStringValue(NumberFrom);
             }
-            if (Optional.IsDefined(NumberTo))
+            if (NumberTo != null)
             {
                 writer.WritePropertyName("numberTo"u8);
                 writer.WriteStringValue(NumberTo);
             }
-            if (Optional.IsDefined(PrefixSize))
+            if (PrefixSize != null)
             {
                 writer.WritePropertyName("prefixSize"u8);
                 writer.WriteStringValue(PrefixSize);
             }
-            if (Optional.IsDefined(SuffixSize))
+            if (SuffixSize != null)
             {
                 writer.WritePropertyName("suffixSize"u8);
                 writer.WriteStringValue(SuffixSize);
             }
-            if (Optional.IsDefined(ReplacementString))
+            if (ReplacementString != null)
             {
                 writer.WritePropertyName("replacementString"u8);
                 writer.WriteStringValue(ReplacementString);

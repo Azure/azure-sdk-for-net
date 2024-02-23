@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Purview
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConsumerGroup))
+            if (ConsumerGroup != null)
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Optional.IsDefined(EventHubPartitionId))
+            if (EventHubPartitionId != null)
             {
                 writer.WritePropertyName("eventHubPartitionId"u8);
                 writer.WriteStringValue(EventHubPartitionId);
             }
-            if (Optional.IsDefined(EventHubResourceId))
+            if (EventHubResourceId != null)
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (Optional.IsDefined(EventHubType))
+            if (EventHubType.HasValue)
             {
                 writer.WritePropertyName("eventHubType"u8);
                 writer.WriteStringValue(EventHubType.Value.ToString());
             }
-            if (Optional.IsDefined(EventStreamingState))
+            if (EventStreamingState.HasValue)
             {
                 writer.WritePropertyName("eventStreamingState"u8);
                 writer.WriteStringValue(EventStreamingState.Value.ToString());
             }
-            if (Optional.IsDefined(EventStreamingType))
+            if (EventStreamingType.HasValue)
             {
                 writer.WritePropertyName("eventStreamingType"u8);
                 writer.WriteStringValue(EventStreamingType.Value.ToString());
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            credentials = PurviewCredentials.DeserializePurviewCredentials(property0.Value);
+                            credentials = PurviewCredentials.DeserializePurviewCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventHubPartitionId"u8))

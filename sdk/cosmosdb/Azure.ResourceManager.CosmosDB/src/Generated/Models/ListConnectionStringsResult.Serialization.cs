@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectionStrings))
+            if (options.Format != "W" && !(ConnectionStrings is ChangeTrackingList<CosmosDBConnectionString> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionStrings"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBConnectionString> array = new List<CosmosDBConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item));
+                        array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item, options));
                     }
                     connectionStrings = array;
                     continue;

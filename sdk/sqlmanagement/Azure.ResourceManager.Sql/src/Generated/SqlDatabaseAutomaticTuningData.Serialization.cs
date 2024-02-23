@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DesiredState))
+            if (DesiredState.HasValue)
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ActualState))
+            if (options.Format != "W" && ActualState.HasValue)
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Options))
+            if (!(Options is ChangeTrackingDictionary<string, AutomaticTuningOptions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartObject();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
                             Dictionary<string, AutomaticTuningOptions> dictionary = new Dictionary<string, AutomaticTuningOptions>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AutomaticTuningOptions.DeserializeAutomaticTuningOptions(property1.Value));
+                                dictionary.Add(property1.Name, AutomaticTuningOptions.DeserializeAutomaticTuningOptions(property1.Value, options));
                             }
                             options0 = dictionary;
                             continue;

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DicomServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<DicomServiceData> array = new List<DicomServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DicomServiceData.DeserializeDicomServiceData(item));
+                        array.Add(DicomServiceData.DeserializeDicomServiceData(item, options));
                     }
                     value = array;
                     continue;

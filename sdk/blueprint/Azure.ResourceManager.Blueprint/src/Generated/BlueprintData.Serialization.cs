@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsDefined(TargetScope))
+            if (TargetScope.HasValue)
             {
                 writer.WritePropertyName("targetScope"u8);
                 writer.WriteStringValue(TargetScope.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Blueprint
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ResourceGroups))
+            if (!(ResourceGroups is ChangeTrackingDictionary<string, ResourceGroupDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Blueprint
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Versions))
+            if (Versions != null)
             {
                 writer.WritePropertyName("versions"u8);
 #if NET6_0_OR_GREATER
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Blueprint
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(Layout))
+            if (options.Format != "W" && Layout != null)
             {
                 writer.WritePropertyName("layout"u8);
 #if NET6_0_OR_GREATER
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value);
+                            status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetScope"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ParameterDefinition> dictionary = new Dictionary<string, ParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterDefinition.DeserializeParameterDefinition(property1.Value));
+                                dictionary.Add(property1.Name, ParameterDefinition.DeserializeParameterDefinition(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ResourceGroupDefinition> dictionary = new Dictionary<string, ResourceGroupDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ResourceGroupDefinition.DeserializeResourceGroupDefinition(property1.Value));
+                                dictionary.Add(property1.Name, ResourceGroupDefinition.DeserializeResourceGroupDefinition(property1.Value, options));
                             }
                             resourceGroups = dictionary;
                             continue;

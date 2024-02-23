@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceType))
+            if (options.Format != "W" && TargetResourceType.HasValue)
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            if (options.Format != "W" && TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetRegion))
+            if (options.Format != "W" && TargetRegion != null)
             {
                 writer.WritePropertyName("targetRegion"u8);
                 writer.WriteStringValue(TargetRegion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            if (options.Format != "W" && ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceStartTime))
+            if (options.Format != "W" && MaintenanceStartTime != null)
             {
                 writer.WritePropertyName("maintenanceStartTime"u8);
                 writer.WriteStringValue(MaintenanceStartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceEndTime))
+            if (options.Format != "W" && MaintenanceEndTime != null)
             {
                 writer.WritePropertyName("maintenanceEndTime"u8);
                 writer.WriteStringValue(MaintenanceEndTime);
             }
-            if (Optional.IsCollectionDefined(Info))
+            if (!(Info is ChangeTrackingList<ResourceHealthKeyValueItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteStartArray();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthKeyValueItem> array = new List<ResourceHealthKeyValueItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthKeyValueItem.DeserializeResourceHealthKeyValueItem(item));
+                                array.Add(ResourceHealthKeyValueItem.DeserializeResourceHealthKeyValueItem(item, options));
                             }
                             info = array;
                             continue;

@@ -15,17 +15,17 @@ namespace Azure.Communication.Rooms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidFrom))
+            if (ValidFrom.HasValue)
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
-            if (Optional.IsDefined(ValidUntil))
+            if (ValidUntil.HasValue)
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
-            if (Optional.IsDefined(PstnDialOutEnabled))
+            if (PstnDialOutEnabled.HasValue)
             {
                 writer.WritePropertyName("pstnDialOutEnabled"u8);
                 writer.WriteBooleanValue(PstnDialOutEnabled.Value);

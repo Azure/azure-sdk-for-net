@@ -77,12 +77,12 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("customDocumentModels"u8))
                 {
-                    customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value);
+                    customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customNeuralDocumentModelBuilds"u8))
                 {
-                    customNeuralDocumentModelBuilds = QuotaDetails.DeserializeQuotaDetails(property.Value);
+                    customNeuralDocumentModelBuilds = QuotaDetails.DeserializeQuotaDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

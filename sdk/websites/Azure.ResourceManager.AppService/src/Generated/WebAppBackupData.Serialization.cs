@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BackupId))
+            if (options.Format != "W" && BackupId.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(BackupId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountUri))
+            if (options.Format != "W" && StorageAccountUri != null)
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(BlobName))
+            if (options.Format != "W" && BlobName != null)
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupName))
+            if (options.Format != "W" && BackupName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(BackupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SizeInBytes))
+            if (options.Format != "W" && SizeInBytes.HasValue)
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Log))
+            if (options.Format != "W" && Log != null)
             {
                 writer.WritePropertyName("log"u8);
                 writer.WriteStringValue(Log);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
+            if (options.Format != "W" && !(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -105,27 +105,27 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsScheduled))
+            if (options.Format != "W" && IsScheduled.HasValue)
             {
                 writer.WritePropertyName("scheduled"u8);
                 writer.WriteBooleanValue(IsScheduled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRestoreOn))
+            if (options.Format != "W" && LastRestoreOn.HasValue)
             {
                 writer.WritePropertyName("lastRestoreTimeStamp"u8);
                 writer.WriteStringValue(LastRestoreOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
+            if (options.Format != "W" && FinishedOn.HasValue)
             {
                 writer.WritePropertyName("finishedTimeStamp"u8);
                 writer.WriteStringValue(FinishedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            if (options.Format != "W" && CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(WebsiteSizeInBytes))
+            if (options.Format != "W" && WebsiteSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("websiteSizeInBytes"u8);
                 writer.WriteNumberValue(WebsiteSizeInBytes.Value);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.AppService
                             List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
+                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item, options));
                             }
                             databases = array;
                             continue;

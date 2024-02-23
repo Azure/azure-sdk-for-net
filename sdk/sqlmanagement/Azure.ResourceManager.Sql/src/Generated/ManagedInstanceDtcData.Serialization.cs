@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DtcEnabled))
+            if (DtcEnabled.HasValue)
             {
                 writer.WritePropertyName("dtcEnabled"u8);
                 writer.WriteBooleanValue(DtcEnabled.Value);
             }
-            if (Optional.IsDefined(SecuritySettings))
+            if (SecuritySettings != null)
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (Optional.IsCollectionDefined(ExternalDnsSuffixSearchList))
+            if (!(ExternalDnsSuffixSearchList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("externalDnsSuffixSearchList"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DtcHostNameDnsSuffix))
+            if (options.Format != "W" && DtcHostNameDnsSuffix != null)
             {
                 writer.WritePropertyName("dtcHostNameDnsSuffix"u8);
                 writer.WriteStringValue(DtcHostNameDnsSuffix);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            securitySettings = ManagedInstanceDtcSecuritySettings.DeserializeManagedInstanceDtcSecuritySettings(property0.Value);
+                            securitySettings = ManagedInstanceDtcSecuritySettings.DeserializeManagedInstanceDtcSecuritySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("externalDnsSuffixSearchList"u8))

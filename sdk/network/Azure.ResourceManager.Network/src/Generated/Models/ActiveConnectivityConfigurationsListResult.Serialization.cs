@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ActiveConnectivityConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SkipToken))
+            if (SkipToken != null)
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ActiveConnectivityConfiguration> array = new List<ActiveConnectivityConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(item));
+                        array.Add(ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(item, options));
                     }
                     value = array;
                     continue;

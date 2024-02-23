@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Trend))
+            if (options.Format != "W" && Trend != null)
             {
                 writer.WritePropertyName("trend"u8);
                 writer.WriteStringValue(Trend);
             }
-            if (Optional.IsCollectionDefined(Aggregates))
+            if (!(Aggregates is ChangeTrackingList<ReservationUtilizationAggregates> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aggregates"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationUtilizationAggregates> array = new List<ReservationUtilizationAggregates>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationUtilizationAggregates.DeserializeReservationUtilizationAggregates(item));
+                        array.Add(ReservationUtilizationAggregates.DeserializeReservationUtilizationAggregates(item, options));
                     }
                     aggregates = array;
                     continue;

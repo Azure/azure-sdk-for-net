@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MipIntegrationStatus))
+            if (MipIntegrationStatus.HasValue)
             {
                 writer.WritePropertyName("mipIntegrationStatus"u8);
                 writer.WriteStringValue(MipIntegrationStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<MipSensitivityLabel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomInfoTypes))
+            if (!(CustomInfoTypes is ChangeTrackingList<UserDefinedInformationType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customInfoTypes"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BuiltInInfoTypes))
+            if (!(BuiltInInfoTypes is ChangeTrackingList<BuiltInInfoType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("builtInInfoTypes"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<MipSensitivityLabel> array = new List<MipSensitivityLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MipSensitivityLabel.DeserializeMipSensitivityLabel(item));
+                        array.Add(MipSensitivityLabel.DeserializeMipSensitivityLabel(item, options));
                     }
                     labels = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<UserDefinedInformationType> array = new List<UserDefinedInformationType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserDefinedInformationType.DeserializeUserDefinedInformationType(item));
+                        array.Add(UserDefinedInformationType.DeserializeUserDefinedInformationType(item, options));
                     }
                     customInfoTypes = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<BuiltInInfoType> array = new List<BuiltInInfoType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BuiltInInfoType.DeserializeBuiltInInfoType(item));
+                        array.Add(BuiltInInfoType.DeserializeBuiltInInfoType(item, options));
                     }
                     builtInInfoTypes = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ContainerInstanceUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerInstanceUsage> array = new List<ContainerInstanceUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerInstanceUsage.DeserializeContainerInstanceUsage(item));
+                        array.Add(ContainerInstanceUsage.DeserializeContainerInstanceUsage(item, options));
                     }
                     value = array;
                     continue;

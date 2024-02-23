@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,24 +67,24 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationKey))
+            if (AuthorizationKey != null)
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
             writer.WriteObjectValue(VirtualNetworkGateway1);
-            if (Optional.IsDefined(VirtualNetworkGateway2))
+            if (VirtualNetworkGateway2 != null)
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
                 writer.WriteObjectValue(VirtualNetworkGateway2);
             }
-            if (Optional.IsDefined(LocalNetworkGateway2))
+            if (LocalNetworkGateway2 != null)
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
                 writer.WriteObjectValue(LocalNetworkGateway2);
             }
-            if (Optional.IsCollectionDefined(IngressNatRules))
+            if (!(IngressNatRules is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ingressNatRules"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EgressNatRules))
+            if (!(EgressNatRules is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("egressNatRules"u8);
                 writer.WriteStartArray();
@@ -106,37 +106,37 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (Optional.IsDefined(ConnectionProtocol))
+            if (ConnectionProtocol.HasValue)
             {
                 writer.WritePropertyName("connectionProtocol"u8);
                 writer.WriteStringValue(ConnectionProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(RoutingWeight))
+            if (RoutingWeight.HasValue)
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (Optional.IsDefined(DpdTimeoutSeconds))
+            if (DpdTimeoutSeconds.HasValue)
             {
                 writer.WritePropertyName("dpdTimeoutSeconds"u8);
                 writer.WriteNumberValue(DpdTimeoutSeconds.Value);
             }
-            if (Optional.IsDefined(ConnectionMode))
+            if (ConnectionMode.HasValue)
             {
                 writer.WritePropertyName("connectionMode"u8);
                 writer.WriteStringValue(ConnectionMode.Value.ToString());
             }
-            if (Optional.IsDefined(SharedKey))
+            if (SharedKey != null)
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
+            if (options.Format != "W" && ConnectionStatus.HasValue)
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelConnectionStatus))
+            if (options.Format != "W" && !(TunnelConnectionStatus is ChangeTrackingList<TunnelConnectionHealth> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("tunnelConnectionStatus"u8);
                 writer.WriteStartArray();
@@ -146,27 +146,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
+            if (options.Format != "W" && EgressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
+            if (options.Format != "W" && IngressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (Optional.IsDefined(Peer))
+            if (Peer != null)
             {
                 writer.WritePropertyName("peer"u8);
                 JsonSerializer.Serialize(writer, Peer);
             }
-            if (Optional.IsDefined(EnableBgp))
+            if (EnableBgp.HasValue)
             {
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
+            if (!(GatewayCustomBgpIPAddresses is ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -176,17 +176,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UseLocalAzureIPAddress))
+            if (UseLocalAzureIPAddress.HasValue)
             {
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
                 writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
-            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
+            if (UsePolicyBasedTrafficSelectors.HasValue)
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IPsecPolicies))
+            if (!(IPsecPolicies is ChangeTrackingList<IPsecPolicy> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
+            if (!(TrafficSelectorPolicies is ChangeTrackingList<TrafficSelectorPolicy> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("trafficSelectorPolicies"u8);
                 writer.WriteStartArray();
@@ -206,22 +206,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpressRouteGatewayBypass))
+            if (ExpressRouteGatewayBypass.HasValue)
             {
                 writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
             }
-            if (Optional.IsDefined(EnablePrivateLinkFastPath))
+            if (EnablePrivateLinkFastPath.HasValue)
             {
                 writer.WritePropertyName("enablePrivateLinkFastPath"u8);
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("virtualNetworkGateway1"u8))
                         {
-                            virtualNetworkGateway1 = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(property0.Value);
+                            virtualNetworkGateway1 = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGateway2"u8))
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualNetworkGateway2 = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(property0.Value);
+                            virtualNetworkGateway2 = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("localNetworkGateway2"u8))
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localNetworkGateway2 = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(property0.Value);
+                            localNetworkGateway2 = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ingressNatRules"u8))
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Network
                             List<TunnelConnectionHealth> array = new List<TunnelConnectionHealth>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TunnelConnectionHealth.DeserializeTunnelConnectionHealth(item));
+                                array.Add(TunnelConnectionHealth.DeserializeTunnelConnectionHealth(item, options));
                             }
                             tunnelConnectionStatus = array;
                             continue;
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Network
                             List<GatewayCustomBgpIPAddressIPConfiguration> array = new List<GatewayCustomBgpIPAddressIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item));
+                                array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item, options));
                             }
                             gatewayCustomBgpIPAddresses = array;
                             continue;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Network
                             List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                             }
                             ipsecPolicies = array;
                             continue;
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Network
                             List<TrafficSelectorPolicy> array = new List<TrafficSelectorPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item));
+                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item, options));
                             }
                             trafficSelectorPolicies = array;
                             continue;

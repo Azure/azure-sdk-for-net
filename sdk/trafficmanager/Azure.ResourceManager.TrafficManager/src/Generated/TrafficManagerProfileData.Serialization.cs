@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,49 +38,49 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProfileStatus))
+            if (ProfileStatus.HasValue)
             {
                 writer.WritePropertyName("profileStatus"u8);
                 writer.WriteStringValue(ProfileStatus.Value.ToString());
             }
-            if (Optional.IsDefined(TrafficRoutingMethod))
+            if (TrafficRoutingMethod.HasValue)
             {
                 writer.WritePropertyName("trafficRoutingMethod"u8);
                 writer.WriteStringValue(TrafficRoutingMethod.Value.ToString());
             }
-            if (Optional.IsDefined(DnsConfig))
+            if (DnsConfig != null)
             {
                 writer.WritePropertyName("dnsConfig"u8);
                 writer.WriteObjectValue(DnsConfig);
             }
-            if (Optional.IsDefined(MonitorConfig))
+            if (MonitorConfig != null)
             {
                 writer.WritePropertyName("monitorConfig"u8);
                 writer.WriteObjectValue(MonitorConfig);
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<TrafficManagerEndpointData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrafficViewEnrollmentStatus))
+            if (TrafficViewEnrollmentStatus.HasValue)
             {
                 writer.WritePropertyName("trafficViewEnrollmentStatus"u8);
                 writer.WriteStringValue(TrafficViewEnrollmentStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AllowedEndpointRecordTypes))
+            if (!(AllowedEndpointRecordTypes is ChangeTrackingList<AllowedEndpointRecordType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowedEndpointRecordTypes"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxReturn))
+            if (MaxReturn.HasValue)
             {
                 if (MaxReturn != null)
                 {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(property0.Value);
+                            dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("monitorConfig"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(property0.Value);
+                            monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("endpoints"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerEndpointData> array = new List<TrafficManagerEndpointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerEndpointData.DeserializeTrafficManagerEndpointData(item));
+                                array.Add(TrafficManagerEndpointData.DeserializeTrafficManagerEndpointData(item, options));
                             }
                             endpoints = array;
                             continue;

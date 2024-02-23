@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Emails))
+            if (Emails != null)
             {
                 writer.WritePropertyName("emails"u8);
                 writer.WriteStringValue(Emails);
             }
-            if (Optional.IsDefined(Phone))
+            if (Phone != null)
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (Optional.IsDefined(AlertNotifications))
+            if (AlertNotifications != null)
             {
                 writer.WritePropertyName("alertNotifications"u8);
                 writer.WriteObjectValue(AlertNotifications);
             }
-            if (Optional.IsDefined(NotificationsByRole))
+            if (NotificationsByRole != null)
             {
                 writer.WritePropertyName("notificationsByRole"u8);
                 writer.WriteObjectValue(NotificationsByRole);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            alertNotifications = SecurityContactPropertiesAlertNotifications.DeserializeSecurityContactPropertiesAlertNotifications(property0.Value);
+                            alertNotifications = SecurityContactPropertiesAlertNotifications.DeserializeSecurityContactPropertiesAlertNotifications(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("notificationsByRole"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            notificationsByRole = SecurityContactPropertiesNotificationsByRole.DeserializeSecurityContactPropertiesNotificationsByRole(property0.Value);
+                            notificationsByRole = SecurityContactPropertiesNotificationsByRole.DeserializeSecurityContactPropertiesNotificationsByRole(property0.Value, options);
                             continue;
                         }
                     }

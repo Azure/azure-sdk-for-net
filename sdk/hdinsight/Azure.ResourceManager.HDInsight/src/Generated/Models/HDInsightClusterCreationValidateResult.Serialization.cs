@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ValidationErrors))
+            if (!(ValidationErrors is ChangeTrackingList<HDInsightClusterValidationErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidationWarnings))
+            if (!(ValidationWarnings is ChangeTrackingList<HDInsightClusterValidationErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validationWarnings"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EstimatedCreationDuration))
+            if (EstimatedCreationDuration.HasValue)
             {
                 writer.WritePropertyName("estimatedCreationDuration"u8);
                 writer.WriteStringValue(EstimatedCreationDuration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(AaddsResourcesDetails))
+            if (!(AaddsResourcesDetails is ChangeTrackingList<HDInsightClusterAaddsDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("aaddsResourcesDetails"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterValidationErrorInfo> array = new List<HDInsightClusterValidationErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterValidationErrorInfo.DeserializeHDInsightClusterValidationErrorInfo(item));
+                        array.Add(HDInsightClusterValidationErrorInfo.DeserializeHDInsightClusterValidationErrorInfo(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterValidationErrorInfo> array = new List<HDInsightClusterValidationErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterValidationErrorInfo.DeserializeHDInsightClusterValidationErrorInfo(item));
+                        array.Add(HDInsightClusterValidationErrorInfo.DeserializeHDInsightClusterValidationErrorInfo(item, options));
                     }
                     validationWarnings = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterAaddsDetail> array = new List<HDInsightClusterAaddsDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterAaddsDetail.DeserializeHDInsightClusterAaddsDetail(item));
+                        array.Add(HDInsightClusterAaddsDetail.DeserializeHDInsightClusterAaddsDetail(item, options));
                     }
                     aaddsResourcesDetails = array;
                     continue;

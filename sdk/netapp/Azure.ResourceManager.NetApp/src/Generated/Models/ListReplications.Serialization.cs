@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetAppVolumeReplication> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeReplication> array = new List<NetAppVolumeReplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeReplication.DeserializeNetAppVolumeReplication(item));
+                        array.Add(NetAppVolumeReplication.DeserializeNetAppVolumeReplication(item, options));
                     }
                     value = array;
                     continue;

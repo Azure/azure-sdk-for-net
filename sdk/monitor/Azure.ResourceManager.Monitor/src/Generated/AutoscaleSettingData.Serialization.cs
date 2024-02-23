@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Notifications))
+            if (!(Notifications is ChangeTrackingList<AutoscaleNotification> collection0 && collection0.IsUndefined))
             {
                 if (Notifications != null)
                 {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteNull("notifications");
                 }
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(PredictiveAutoscalePolicy))
+            if (PredictiveAutoscalePolicy != null)
             {
                 if (PredictiveAutoscalePolicy != null)
                 {
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteNull("predictiveAutoscalePolicy");
                 }
             }
-            if (Optional.IsDefined(AutoscaleSettingName))
+            if (AutoscaleSettingName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(AutoscaleSettingName);
             }
-            if (Optional.IsDefined(TargetResourceId))
+            if (TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceUri"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (Optional.IsDefined(TargetResourceLocation))
+            if (TargetResourceLocation.HasValue)
             {
                 writer.WritePropertyName("targetResourceLocation"u8);
                 writer.WriteStringValue(TargetResourceLocation.Value);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor
                             List<AutoscaleProfile> array = new List<AutoscaleProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item));
+                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item, options));
                             }
                             profiles = array;
                             continue;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
                             List<AutoscaleNotification> array = new List<AutoscaleNotification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item));
+                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item, options));
                             }
                             notifications = array;
                             continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Monitor
                                 predictiveAutoscalePolicy = null;
                                 continue;
                             }
-                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value);
+                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("name"u8))

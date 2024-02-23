@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NumberOfEvaluationPeriods))
+            if (NumberOfEvaluationPeriods.HasValue)
             {
                 writer.WritePropertyName("numberOfEvaluationPeriods"u8);
                 writer.WriteNumberValue(NumberOfEvaluationPeriods.Value);
             }
-            if (Optional.IsDefined(MinFailingPeriodsToAlert))
+            if (MinFailingPeriodsToAlert.HasValue)
             {
                 writer.WritePropertyName("minFailingPeriodsToAlert"u8);
                 writer.WriteNumberValue(MinFailingPeriodsToAlert.Value);

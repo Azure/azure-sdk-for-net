@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 if (Timeout != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobLimits(document.RootElement, options);
+            return DeserializeMachineLearningJobLimits(document.RootElement, options);
         }
 
         internal static UnknownJobLimits DeserializeUnknownJobLimits(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJobLimits(document.RootElement, options);
+                        return DeserializeMachineLearningJobLimits(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support '{options.Format}' format.");

@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAzureChatExtensionConfiguration(document.RootElement, options);
+            return DeserializeAzureChatExtensionConfiguration(document.RootElement, options);
         }
 
         internal static UnknownAzureChatExtensionConfiguration DeserializeUnknownAzureChatExtensionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAzureChatExtensionConfiguration(document.RootElement, options);
+                        return DeserializeAzureChatExtensionConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support '{options.Format}' format.");

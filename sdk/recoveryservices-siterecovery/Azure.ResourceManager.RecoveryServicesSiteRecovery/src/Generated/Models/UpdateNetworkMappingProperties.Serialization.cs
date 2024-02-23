@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryFabricName))
+            if (RecoveryFabricName != null)
             {
                 writer.WritePropertyName("recoveryFabricName"u8);
                 writer.WriteStringValue(RecoveryFabricName);
             }
-            if (Optional.IsDefined(RecoveryNetworkId))
+            if (RecoveryNetworkId != null)
             {
                 writer.WritePropertyName("recoveryNetworkId"u8);
                 writer.WriteStringValue(RecoveryNetworkId);
             }
-            if (Optional.IsDefined(FabricSpecificDetails))
+            if (FabricSpecificDetails != null)
             {
                 writer.WritePropertyName("fabricSpecificDetails"u8);
                 writer.WriteObjectValue(FabricSpecificDetails);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricSpecificDetails = FabricSpecificUpdateNetworkMappingContent.DeserializeFabricSpecificUpdateNetworkMappingContent(property.Value);
+                    fabricSpecificDetails = FabricSpecificUpdateNetworkMappingContent.DeserializeFabricSpecificUpdateNetworkMappingContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

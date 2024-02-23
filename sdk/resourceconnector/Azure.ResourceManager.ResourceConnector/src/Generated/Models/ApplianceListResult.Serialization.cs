@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ResourceConnectorApplianceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ResourceConnectorApplianceData> array = new List<ResourceConnectorApplianceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(item));
+                        array.Add(ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(item, options));
                     }
                     value = array;
                     continue;

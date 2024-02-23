@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NodePublicIPTags))
+            if (!(NodePublicIPTags is ChangeTrackingList<ContainerServiceIPTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodePublicIPTags"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedHostPorts))
+            if (!(AllowedHostPorts is ChangeTrackingList<AgentPoolNetworkPortRange> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedHostPorts"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            if (!(ApplicationSecurityGroups is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceIPTag> array = new List<ContainerServiceIPTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item));
+                        array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item, options));
                     }
                     nodePublicIPTags = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<AgentPoolNetworkPortRange> array = new List<AgentPoolNetworkPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolNetworkPortRange.DeserializeAgentPoolNetworkPortRange(item));
+                        array.Add(AgentPoolNetworkPortRange.DeserializeAgentPoolNetworkPortRange(item, options));
                     }
                     allowedHostPorts = array;
                     continue;

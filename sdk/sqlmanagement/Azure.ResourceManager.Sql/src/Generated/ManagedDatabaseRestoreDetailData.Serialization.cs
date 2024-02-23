@@ -43,104 +43,104 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RestoreType))
+            if (options.Format != "W" && RestoreType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestoreType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(BlockReason))
+            if (options.Format != "W" && BlockReason != null)
             {
                 writer.WritePropertyName("blockReason"u8);
                 writer.WriteStringValue(BlockReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileName))
+            if (options.Format != "W" && LastUploadedFileName != null)
             {
                 writer.WritePropertyName("lastUploadedFileName"u8);
                 writer.WriteStringValue(LastUploadedFileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileOn))
+            if (options.Format != "W" && LastUploadedFileOn.HasValue)
             {
                 writer.WritePropertyName("lastUploadedFileTime"u8);
                 writer.WriteStringValue(LastUploadedFileOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRestoredFileName))
+            if (options.Format != "W" && LastRestoredFileName != null)
             {
                 writer.WritePropertyName("lastRestoredFileName"u8);
                 writer.WriteStringValue(LastRestoredFileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRestoredFileOn))
+            if (options.Format != "W" && LastRestoredFileOn.HasValue)
             {
                 writer.WritePropertyName("lastRestoredFileTime"u8);
                 writer.WriteStringValue(LastRestoredFileOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletedPercent))
+            if (options.Format != "W" && CompletedPercent.HasValue)
             {
                 writer.WritePropertyName("percentCompleted"u8);
                 writer.WriteNumberValue(CompletedPercent.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentRestoredSizeInMB))
+            if (options.Format != "W" && CurrentRestoredSizeInMB.HasValue)
             {
                 writer.WritePropertyName("currentRestoredSizeMB"u8);
                 writer.WriteNumberValue(CurrentRestoredSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentRestorePlanSizeInMB))
+            if (options.Format != "W" && CurrentRestorePlanSizeInMB.HasValue)
             {
                 writer.WritePropertyName("currentRestorePlanSizeMB"u8);
                 writer.WriteNumberValue(CurrentRestorePlanSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentBackupType))
+            if (options.Format != "W" && CurrentBackupType != null)
             {
                 writer.WritePropertyName("currentBackupType"u8);
                 writer.WriteStringValue(CurrentBackupType);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentRestoringFileName))
+            if (options.Format != "W" && CurrentRestoringFileName != null)
             {
                 writer.WritePropertyName("currentRestoringFileName"u8);
                 writer.WriteStringValue(CurrentRestoringFileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesFound))
+            if (options.Format != "W" && NumberOfFilesFound.HasValue)
             {
                 writer.WritePropertyName("numberOfFilesDetected"u8);
                 writer.WriteNumberValue(NumberOfFilesFound.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesQueued))
+            if (options.Format != "W" && NumberOfFilesQueued.HasValue)
             {
                 writer.WritePropertyName("numberOfFilesQueued"u8);
                 writer.WriteNumberValue(NumberOfFilesQueued.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesSkipped))
+            if (options.Format != "W" && NumberOfFilesSkipped.HasValue)
             {
                 writer.WritePropertyName("numberOfFilesSkipped"u8);
                 writer.WriteNumberValue(NumberOfFilesSkipped.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesRestoring))
+            if (options.Format != "W" && NumberOfFilesRestoring.HasValue)
             {
                 writer.WritePropertyName("numberOfFilesRestoring"u8);
                 writer.WriteNumberValue(NumberOfFilesRestoring.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesRestored))
+            if (options.Format != "W" && NumberOfFilesRestored.HasValue)
             {
                 writer.WritePropertyName("numberOfFilesRestored"u8);
                 writer.WriteNumberValue(NumberOfFilesRestored.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesUnrestorable))
+            if (options.Format != "W" && NumberOfFilesUnrestorable.HasValue)
             {
                 writer.WritePropertyName("numberOfFilesUnrestorable"u8);
                 writer.WriteNumberValue(NumberOfFilesUnrestorable.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FullBackupSets))
+            if (options.Format != "W" && !(FullBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fullBackupSets"u8);
                 writer.WriteStartArray();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DiffBackupSets))
+            if (options.Format != "W" && !(DiffBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("diffBackupSets"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LogBackupSets))
+            if (options.Format != "W" && !(LogBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("logBackupSets"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UnrestorableFileList))
+            if (options.Format != "W" && !(UnrestorableFileList is ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("unrestorableFiles"u8);
                 writer.WriteStartArray();
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
                             }
                             fullBackupSets = array;
                             continue;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
                             }
                             diffBackupSets = array;
                             continue;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
                             }
                             logBackupSets = array;
                             continue;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailUnrestorableFileProperties> array = new List<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item, options));
                             }
                             unrestorableFiles = array;
                             continue;

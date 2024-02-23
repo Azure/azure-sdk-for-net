@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(FieldRestrictions))
+            if (options.Format != "W" && !(FieldRestrictions is ChangeTrackingList<FieldRestrictions> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldRestrictions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentEvaluationResult))
+            if (options.Format != "W" && ContentEvaluationResult != null)
             {
                 writer.WritePropertyName("contentEvaluationResult"u8);
                 writer.WriteObjectValue(ContentEvaluationResult);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<FieldRestrictions> array = new List<FieldRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.FieldRestrictions.DeserializeFieldRestrictions(item));
+                        array.Add(Models.FieldRestrictions.DeserializeFieldRestrictions(item, options));
                     }
                     fieldRestrictions = array;
                     continue;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    contentEvaluationResult = CheckRestrictionsResultContentEvaluationResult.DeserializeCheckRestrictionsResultContentEvaluationResult(property.Value);
+                    contentEvaluationResult = CheckRestrictionsResultContentEvaluationResult.DeserializeCheckRestrictionsResultContentEvaluationResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

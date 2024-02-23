@@ -33,7 +33,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteNumberValue(Severity);
             writer.WritePropertyName("score"u8);
             writer.WriteNumberValue(Score);
-            if (Optional.IsCollectionDefined(Interpretation))
+            if (!(Interpretation is ChangeTrackingList<AnomalyInterpretation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("interpretation"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.AI.AnomalyDetector
                     List<AnomalyInterpretation> array = new List<AnomalyInterpretation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item));
+                        array.Add(AnomalyInterpretation.DeserializeAnomalyInterpretation(item, options));
                     }
                     interpretation = array;
                     continue;

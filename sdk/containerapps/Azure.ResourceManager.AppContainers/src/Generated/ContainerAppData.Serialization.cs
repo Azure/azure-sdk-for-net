@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,64 +73,64 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedEnvironmentId))
+            if (ManagedEnvironmentId != null)
             {
                 writer.WritePropertyName("managedEnvironmentId"u8);
                 writer.WriteStringValue(ManagedEnvironmentId);
             }
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsDefined(WorkloadProfileName))
+            if (WorkloadProfileName != null)
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestRevisionName))
+            if (options.Format != "W" && LatestRevisionName != null)
             {
                 writer.WritePropertyName("latestRevisionName"u8);
                 writer.WriteStringValue(LatestRevisionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestReadyRevisionName))
+            if (options.Format != "W" && LatestReadyRevisionName != null)
             {
                 writer.WritePropertyName("latestReadyRevisionName"u8);
                 writer.WriteStringValue(LatestReadyRevisionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestRevisionFqdn))
+            if (options.Format != "W" && LatestRevisionFqdn != null)
             {
                 writer.WritePropertyName("latestRevisionFqdn"u8);
                 writer.WriteStringValue(LatestRevisionFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationId))
+            if (options.Format != "W" && CustomDomainVerificationId != null)
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddressList))
+            if (options.Format != "W" && !(OutboundIPAddressList is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
+            if (options.Format != "W" && EventStreamEndpoint != null)
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint.AbsoluteUri);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            configuration = ContainerAppConfiguration.DeserializeContainerAppConfiguration(property0.Value);
+                            configuration = ContainerAppConfiguration.DeserializeContainerAppConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("template"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
+                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outboundIpAddresses"u8))

@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,29 +72,29 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkerTierName))
+            if (WorkerTierName != null)
             {
                 writer.WritePropertyName("workerTierName"u8);
                 writer.WriteStringValue(WorkerTierName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Subscription))
+            if (options.Format != "W" && Subscription != null)
             {
                 writer.WritePropertyName("subscription"u8);
                 writer.WriteStringValue(Subscription);
             }
-            if (Optional.IsDefined(HostingEnvironmentProfile))
+            if (HostingEnvironmentProfile != null)
             {
                 if (HostingEnvironmentProfile != null)
                 {
@@ -106,42 +106,42 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("hostingEnvironmentProfile");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfWorkers))
+            if (options.Format != "W" && MaximumNumberOfWorkers.HasValue)
             {
                 writer.WritePropertyName("maximumNumberOfWorkers"u8);
                 writer.WriteNumberValue(MaximumNumberOfWorkers.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(GeoRegion))
+            if (options.Format != "W" && GeoRegion != null)
             {
                 writer.WritePropertyName("geoRegion"u8);
                 writer.WriteStringValue(GeoRegion);
             }
-            if (Optional.IsDefined(IsPerSiteScaling))
+            if (IsPerSiteScaling.HasValue)
             {
                 writer.WritePropertyName("perSiteScaling"u8);
                 writer.WriteBooleanValue(IsPerSiteScaling.Value);
             }
-            if (Optional.IsDefined(IsElasticScaleEnabled))
+            if (IsElasticScaleEnabled.HasValue)
             {
                 writer.WritePropertyName("elasticScaleEnabled"u8);
                 writer.WriteBooleanValue(IsElasticScaleEnabled.Value);
             }
-            if (Optional.IsDefined(MaximumElasticWorkerCount))
+            if (MaximumElasticWorkerCount.HasValue)
             {
                 writer.WritePropertyName("maximumElasticWorkerCount"u8);
                 writer.WriteNumberValue(MaximumElasticWorkerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfSites))
+            if (options.Format != "W" && NumberOfSites.HasValue)
             {
                 writer.WritePropertyName("numberOfSites"u8);
                 writer.WriteNumberValue(NumberOfSites.Value);
             }
-            if (Optional.IsDefined(IsSpot))
+            if (IsSpot.HasValue)
             {
                 writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Optional.IsDefined(SpotExpireOn))
+            if (SpotExpireOn.HasValue)
             {
                 if (SpotExpireOn != null)
                 {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("spotExpirationTime");
                 }
             }
-            if (Optional.IsDefined(FreeOfferExpireOn))
+            if (FreeOfferExpireOn.HasValue)
             {
                 if (FreeOfferExpireOn != null)
                 {
@@ -165,42 +165,42 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("freeOfferExpirationTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (Optional.IsDefined(IsReserved))
+            if (IsReserved.HasValue)
             {
                 writer.WritePropertyName("reserved"u8);
                 writer.WriteBooleanValue(IsReserved.Value);
             }
-            if (Optional.IsDefined(IsXenon))
+            if (IsXenon.HasValue)
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(IsHyperV))
+            if (IsHyperV.HasValue)
             {
                 writer.WritePropertyName("hyperV"u8);
                 writer.WriteBooleanValue(IsHyperV.Value);
             }
-            if (Optional.IsDefined(TargetWorkerCount))
+            if (TargetWorkerCount.HasValue)
             {
                 writer.WritePropertyName("targetWorkerCount"u8);
                 writer.WriteNumberValue(TargetWorkerCount.Value);
             }
-            if (Optional.IsDefined(TargetWorkerSizeId))
+            if (TargetWorkerSizeId.HasValue)
             {
                 writer.WritePropertyName("targetWorkerSizeId"u8);
                 writer.WriteNumberValue(TargetWorkerSizeId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(KubeEnvironmentProfile))
+            if (KubeEnvironmentProfile != null)
             {
                 if (KubeEnvironmentProfile != null)
                 {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("kubeEnvironmentProfile");
                 }
             }
-            if (Optional.IsDefined(IsZoneRedundant))
+            if (IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.AppService
                                 hostingEnvironmentProfile = null;
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
+                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maximumNumberOfWorkers"u8))
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AppService
                                 kubeEnvironmentProfile = null;
                                 continue;
                             }
-                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value);
+                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))

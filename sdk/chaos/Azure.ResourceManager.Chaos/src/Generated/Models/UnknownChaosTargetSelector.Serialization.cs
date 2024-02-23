@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChaosTargetSelector(document.RootElement, options);
+            return DeserializeChaosTargetSelector(document.RootElement, options);
         }
 
         internal static UnknownChaosTargetSelector DeserializeUnknownChaosTargetSelector(JsonElement element, ModelReaderWriterOptions options = null)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value);
+                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownChaosTargetSelector(document.RootElement, options);
+                        return DeserializeChaosTargetSelector(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support '{options.Format}' format.");

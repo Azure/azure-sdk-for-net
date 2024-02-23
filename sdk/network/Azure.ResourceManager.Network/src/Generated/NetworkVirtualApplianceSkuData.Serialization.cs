@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Vendor))
+            if (options.Format != "W" && Vendor != null)
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableVersions))
+            if (options.Format != "W" && !(AvailableVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availableVersions"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AvailableScaleUnits))
+            if (!(AvailableScaleUnits is ChangeTrackingList<NetworkVirtualApplianceSkuInstances> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("availableScaleUnits"u8);
                 writer.WriteStartArray();
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkVirtualApplianceSkuInstances> array = new List<NetworkVirtualApplianceSkuInstances>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkVirtualApplianceSkuInstances.DeserializeNetworkVirtualApplianceSkuInstances(item));
+                                array.Add(NetworkVirtualApplianceSkuInstances.DeserializeNetworkVirtualApplianceSkuInstances(item, options));
                             }
                             availableScaleUnits = array;
                             continue;

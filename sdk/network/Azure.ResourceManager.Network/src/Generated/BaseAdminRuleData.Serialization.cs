@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Network
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return NetworkAdminRule.DeserializeNetworkAdminRule(element);
-                    case "Default": return NetworkDefaultAdminRule.DeserializeNetworkDefaultAdminRule(element);
+                    case "Custom": return NetworkAdminRule.DeserializeNetworkAdminRule(element, options);
+                    case "Default": return NetworkDefaultAdminRule.DeserializeNetworkDefaultAdminRule(element, options);
                 }
             }
-            return UnknownBaseAdminRule.DeserializeUnknownBaseAdminRule(element);
+            return UnknownBaseAdminRule.DeserializeUnknownBaseAdminRule(element, options);
         }
 
         BinaryData IPersistableModel<BaseAdminRuleData>.Write(ModelReaderWriterOptions options)

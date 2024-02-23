@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupShortName))
+            if (GroupShortName != null)
             {
                 writer.WritePropertyName("groupShortName"u8);
                 writer.WriteStringValue(GroupShortName);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(EmailReceivers))
+            if (!(EmailReceivers is ChangeTrackingList<MonitorEmailReceiver> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SmsReceivers))
+            if (!(SmsReceivers is ChangeTrackingList<MonitorSmsReceiver> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WebhookReceivers))
+            if (!(WebhookReceivers is ChangeTrackingList<MonitorWebhookReceiver> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ItsmReceivers))
+            if (!(ItsmReceivers is ChangeTrackingList<MonitorItsmReceiver> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureAppPushReceivers))
+            if (!(AzureAppPushReceivers is ChangeTrackingList<MonitorAzureAppPushReceiver> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
+            if (!(AutomationRunbookReceivers is ChangeTrackingList<MonitorAutomationRunbookReceiver> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VoiceReceivers))
+            if (!(VoiceReceivers is ChangeTrackingList<MonitorVoiceReceiver> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogicAppReceivers))
+            if (!(LogicAppReceivers is ChangeTrackingList<MonitorLogicAppReceiver> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureFunctionReceivers))
+            if (!(AzureFunctionReceivers is ChangeTrackingList<MonitorAzureFunctionReceiver> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ArmRoleReceivers))
+            if (!(ArmRoleReceivers is ChangeTrackingList<MonitorArmRoleReceiver> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventHubReceivers))
+            if (!(EventHubReceivers is ChangeTrackingList<MonitorEventHubReceiver> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorEmailReceiver> array = new List<MonitorEmailReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorEmailReceiver.DeserializeMonitorEmailReceiver(item));
+                                array.Add(MonitorEmailReceiver.DeserializeMonitorEmailReceiver(item, options));
                             }
                             emailReceivers = array;
                             continue;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorSmsReceiver> array = new List<MonitorSmsReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorSmsReceiver.DeserializeMonitorSmsReceiver(item));
+                                array.Add(MonitorSmsReceiver.DeserializeMonitorSmsReceiver(item, options));
                             }
                             smsReceivers = array;
                             continue;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorWebhookReceiver> array = new List<MonitorWebhookReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorWebhookReceiver.DeserializeMonitorWebhookReceiver(item));
+                                array.Add(MonitorWebhookReceiver.DeserializeMonitorWebhookReceiver(item, options));
                             }
                             webhookReceivers = array;
                             continue;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorItsmReceiver> array = new List<MonitorItsmReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorItsmReceiver.DeserializeMonitorItsmReceiver(item));
+                                array.Add(MonitorItsmReceiver.DeserializeMonitorItsmReceiver(item, options));
                             }
                             itsmReceivers = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorAzureAppPushReceiver> array = new List<MonitorAzureAppPushReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorAzureAppPushReceiver.DeserializeMonitorAzureAppPushReceiver(item));
+                                array.Add(MonitorAzureAppPushReceiver.DeserializeMonitorAzureAppPushReceiver(item, options));
                             }
                             azureAppPushReceivers = array;
                             continue;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorAutomationRunbookReceiver> array = new List<MonitorAutomationRunbookReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorAutomationRunbookReceiver.DeserializeMonitorAutomationRunbookReceiver(item));
+                                array.Add(MonitorAutomationRunbookReceiver.DeserializeMonitorAutomationRunbookReceiver(item, options));
                             }
                             automationRunbookReceivers = array;
                             continue;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorVoiceReceiver> array = new List<MonitorVoiceReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorVoiceReceiver.DeserializeMonitorVoiceReceiver(item));
+                                array.Add(MonitorVoiceReceiver.DeserializeMonitorVoiceReceiver(item, options));
                             }
                             voiceReceivers = array;
                             continue;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorLogicAppReceiver> array = new List<MonitorLogicAppReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorLogicAppReceiver.DeserializeMonitorLogicAppReceiver(item));
+                                array.Add(MonitorLogicAppReceiver.DeserializeMonitorLogicAppReceiver(item, options));
                             }
                             logicAppReceivers = array;
                             continue;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorAzureFunctionReceiver> array = new List<MonitorAzureFunctionReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorAzureFunctionReceiver.DeserializeMonitorAzureFunctionReceiver(item));
+                                array.Add(MonitorAzureFunctionReceiver.DeserializeMonitorAzureFunctionReceiver(item, options));
                             }
                             azureFunctionReceivers = array;
                             continue;
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorArmRoleReceiver> array = new List<MonitorArmRoleReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorArmRoleReceiver.DeserializeMonitorArmRoleReceiver(item));
+                                array.Add(MonitorArmRoleReceiver.DeserializeMonitorArmRoleReceiver(item, options));
                             }
                             armRoleReceivers = array;
                             continue;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorEventHubReceiver> array = new List<MonitorEventHubReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorEventHubReceiver.DeserializeMonitorEventHubReceiver(item));
+                                array.Add(MonitorEventHubReceiver.DeserializeMonitorEventHubReceiver(item, options));
                             }
                             eventHubReceivers = array;
                             continue;

@@ -43,26 +43,26 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ContainerStatus))
+            if (options.Format != "W" && ContainerStatus.HasValue)
             {
                 writer.WritePropertyName("containerStatus"u8);
                 writer.WriteStringValue(ContainerStatus.Value.ToString());
             }
             writer.WritePropertyName("dataFormat"u8);
             writer.WriteStringValue(DataFormat.ToString());
-            if (options.Format != "W" && Optional.IsDefined(RefreshDetails))
+            if (options.Format != "W" && RefreshDetails != null)
             {
                 writer.WritePropertyName("refreshDetails"u8);
                 writer.WriteObjectValue(RefreshDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value);
+                            refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdDateTime"u8))

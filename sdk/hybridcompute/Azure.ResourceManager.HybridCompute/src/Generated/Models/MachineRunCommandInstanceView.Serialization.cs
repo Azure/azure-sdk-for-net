@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExecutionState))
+            if (ExecutionState.HasValue)
             {
                 writer.WritePropertyName("executionState"u8);
                 writer.WriteStringValue(ExecutionState.Value.ToString());
             }
-            if (Optional.IsDefined(ExecutionMessage))
+            if (ExecutionMessage != null)
             {
                 writer.WritePropertyName("executionMessage"u8);
                 writer.WriteStringValue(ExecutionMessage);
             }
-            if (Optional.IsDefined(ExitCode))
+            if (ExitCode.HasValue)
             {
                 writer.WritePropertyName("exitCode"u8);
                 writer.WriteNumberValue(ExitCode.Value);
             }
-            if (Optional.IsDefined(Output))
+            if (Output != null)
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<ExtensionsResourceStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<ExtensionsResourceStatus> array = new List<ExtensionsResourceStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item));
+                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item, options));
                     }
                     statuses = array;
                     continue;

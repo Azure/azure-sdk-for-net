@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DnsPtrDomainName))
+            if (DnsPtrDomainName != null)
             {
                 writer.WritePropertyName("ptrdname"u8);
                 writer.WriteStringValue(DnsPtrDomainName);

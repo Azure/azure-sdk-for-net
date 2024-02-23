@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Token);
             writer.WritePropertyName("logprob"u8);
             writer.WriteNumberValue(LogProbability);
-            if (Utf8ByteValues != null && Optional.IsCollectionDefined(Utf8ByteValues))
+            if (Utf8ByteValues != null && !(Utf8ByteValues is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bytes"u8);
                 writer.WriteStartArray();

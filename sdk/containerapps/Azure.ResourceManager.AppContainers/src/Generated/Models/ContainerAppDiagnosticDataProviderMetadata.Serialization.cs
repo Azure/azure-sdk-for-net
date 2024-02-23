@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderName))
+            if (ProviderName != null)
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (Optional.IsCollectionDefined(PropertyBag))
+            if (!(PropertyBag is ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> array = new List<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticDataProviderMetadataPropertyBagItem.DeserializeContainerAppDiagnosticDataProviderMetadataPropertyBagItem(item));
+                        array.Add(ContainerAppDiagnosticDataProviderMetadataPropertyBagItem.DeserializeContainerAppDiagnosticDataProviderMetadataPropertyBagItem(item, options));
                     }
                     propertyBag = array;
                     continue;

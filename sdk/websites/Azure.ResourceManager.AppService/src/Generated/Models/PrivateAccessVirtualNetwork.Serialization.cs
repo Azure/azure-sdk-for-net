@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Key))
+            if (Key.HasValue)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteNumberValue(Key.Value);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<PrivateAccessSubnet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PrivateAccessSubnet> array = new List<PrivateAccessSubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item));
+                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item, options));
                     }
                     subnets = array;
                     continue;

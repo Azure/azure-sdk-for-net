@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Date))
+            if (Date.HasValue)
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");
             }
-            if (Optional.IsDefined(DevicesMetrics))
+            if (DevicesMetrics != null)
             {
                 writer.WritePropertyName("devicesMetrics"u8);
                 writer.WriteObjectValue(DevicesMetrics);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value);
+                    devicesMetrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

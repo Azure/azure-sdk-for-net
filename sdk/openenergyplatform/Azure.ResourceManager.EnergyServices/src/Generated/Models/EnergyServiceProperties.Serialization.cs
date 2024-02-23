@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DnsName))
+            if (options.Format != "W" && DnsName != null)
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(AuthAppId))
+            if (AuthAppId != null)
             {
                 writer.WritePropertyName("authAppId"u8);
                 writer.WriteStringValue(AuthAppId);
             }
-            if (Optional.IsCollectionDefined(DataPartitionNames))
+            if (!(DataPartitionNames is ChangeTrackingList<DataPartitionName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataPartitionNames"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<DataPartitionName> array = new List<DataPartitionName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPartitionName.DeserializeDataPartitionName(item));
+                        array.Add(DataPartitionName.DeserializeDataPartitionName(item, options));
                     }
                     dataPartitionNames = array;
                     continue;

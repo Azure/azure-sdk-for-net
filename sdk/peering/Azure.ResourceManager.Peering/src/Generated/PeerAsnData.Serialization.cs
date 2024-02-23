@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn.HasValue)
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsCollectionDefined(PeerContactDetail))
+            if (!(PeerContactDetail is ChangeTrackingList<PeerAsnContactDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peerContactDetail"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Peering
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerName))
+            if (PeerName != null)
             {
                 writer.WritePropertyName("peerName"u8);
                 writer.WriteStringValue(PeerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidationState))
+            if (options.Format != "W" && ValidationState.HasValue)
             {
                 writer.WritePropertyName("validationState"u8);
                 writer.WriteStringValue(ValidationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Peering
                             List<PeerAsnContactDetail> array = new List<PeerAsnContactDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PeerAsnContactDetail.DeserializePeerAsnContactDetail(item));
+                                array.Add(PeerAsnContactDetail.DeserializePeerAsnContactDetail(item, options));
                             }
                             peerContactDetail = array;
                             continue;

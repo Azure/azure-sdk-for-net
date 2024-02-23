@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPFirewallRules))
+            if (!(IPFirewallRules is ChangeTrackingDictionary<string, SynapseIPFirewallRuleProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipFirewallRules"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     Dictionary<string, SynapseIPFirewallRuleProperties> dictionary = new Dictionary<string, SynapseIPFirewallRuleProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SynapseIPFirewallRuleProperties.DeserializeSynapseIPFirewallRuleProperties(property0.Value));
+                        dictionary.Add(property0.Name, SynapseIPFirewallRuleProperties.DeserializeSynapseIPFirewallRuleProperties(property0.Value, options));
                     }
                     ipFirewallRules = dictionary;
                     continue;

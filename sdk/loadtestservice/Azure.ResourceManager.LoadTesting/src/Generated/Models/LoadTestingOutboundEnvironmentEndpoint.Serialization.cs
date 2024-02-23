@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
+            if (options.Format != "W" && !(Endpoints is ChangeTrackingList<LoadTestingEndpointDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingEndpointDependency> array = new List<LoadTestingEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingEndpointDependency.DeserializeLoadTestingEndpointDependency(item));
+                        array.Add(LoadTestingEndpointDependency.DeserializeLoadTestingEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;

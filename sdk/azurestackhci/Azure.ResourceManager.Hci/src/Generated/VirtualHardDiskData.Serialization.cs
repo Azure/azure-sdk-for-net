@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,59 +61,59 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlockSizeBytes))
+            if (BlockSizeBytes.HasValue)
             {
                 writer.WritePropertyName("blockSizeBytes"u8);
                 writer.WriteNumberValue(BlockSizeBytes.Value);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(Dynamic))
+            if (Dynamic.HasValue)
             {
                 writer.WritePropertyName("dynamic"u8);
                 writer.WriteBooleanValue(Dynamic.Value);
             }
-            if (Optional.IsDefined(LogicalSectorBytes))
+            if (LogicalSectorBytes.HasValue)
             {
                 writer.WritePropertyName("logicalSectorBytes"u8);
                 writer.WriteNumberValue(LogicalSectorBytes.Value);
             }
-            if (Optional.IsDefined(PhysicalSectorBytes))
+            if (PhysicalSectorBytes.HasValue)
             {
                 writer.WritePropertyName("physicalSectorBytes"u8);
                 writer.WriteNumberValue(PhysicalSectorBytes.Value);
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (HyperVGeneration.HasValue)
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(DiskFileFormat))
+            if (DiskFileFormat.HasValue)
             {
                 writer.WritePropertyName("diskFileFormat"u8);
                 writer.WriteStringValue(DiskFileFormat.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ContainerId))
+            if (ContainerId != null)
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = VirtualHardDiskStatus.DeserializeVirtualHardDiskStatus(property0.Value);
+                            status = VirtualHardDiskStatus.DeserializeVirtualHardDiskStatus(property0.Value, options);
                             continue;
                         }
                     }

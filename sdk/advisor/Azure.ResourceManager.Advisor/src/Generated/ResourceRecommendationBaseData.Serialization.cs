@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Impact))
+            if (Impact.HasValue)
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStringValue(Impact.Value.ToString());
             }
-            if (Optional.IsDefined(ImpactedField))
+            if (ImpactedField != null)
             {
                 writer.WritePropertyName("impactedField"u8);
                 writer.WriteStringValue(ImpactedField);
             }
-            if (Optional.IsDefined(ImpactedValue))
+            if (ImpactedValue != null)
             {
                 writer.WritePropertyName("impactedValue"u8);
                 writer.WriteStringValue(ImpactedValue);
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (LastUpdated.HasValue)
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RecommendationTypeId))
+            if (RecommendationTypeId != null)
             {
                 writer.WritePropertyName("recommendationTypeId"u8);
                 writer.WriteStringValue(RecommendationTypeId);
             }
-            if (Optional.IsDefined(Risk))
+            if (Risk.HasValue)
             {
                 writer.WritePropertyName("risk"u8);
                 writer.WriteStringValue(Risk.Value.ToString());
             }
-            if (Optional.IsDefined(ShortDescription))
+            if (ShortDescription != null)
             {
                 writer.WritePropertyName("shortDescription"u8);
                 writer.WriteObjectValue(ShortDescription);
             }
-            if (Optional.IsCollectionDefined(SuppressionIds))
+            if (!(SuppressionIds is ChangeTrackingList<Guid> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("suppressionIds"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -134,32 +134,32 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ResourceMetadata))
+            if (ResourceMetadata != null)
             {
                 writer.WritePropertyName("resourceMetadata"u8);
                 writer.WriteObjectValue(ResourceMetadata);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(LearnMoreLink))
+            if (LearnMoreLink != null)
             {
                 writer.WritePropertyName("learnMoreLink"u8);
                 writer.WriteStringValue(LearnMoreLink);
             }
-            if (Optional.IsDefined(PotentialBenefits))
+            if (PotentialBenefits != null)
             {
                 writer.WritePropertyName("potentialBenefits"u8);
                 writer.WriteStringValue(PotentialBenefits);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<IDictionary<string, BinaryData>> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Remediation))
+            if (!(Remediation is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStartObject();
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ExposedMetadataProperties))
+            if (!(ExposedMetadataProperties is ChangeTrackingDictionary<string, BinaryData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("exposedMetadataProperties"u8);
                 writer.WriteStartObject();
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            shortDescription = ShortDescription.DeserializeShortDescription(property0.Value);
+                            shortDescription = ShortDescription.DeserializeShortDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("suppressionIds"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            resourceMetadata = ResourceMetadata.DeserializeResourceMetadata(property0.Value);
+                            resourceMetadata = ResourceMetadata.DeserializeResourceMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

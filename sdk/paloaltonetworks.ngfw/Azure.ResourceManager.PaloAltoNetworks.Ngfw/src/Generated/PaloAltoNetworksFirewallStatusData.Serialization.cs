@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsPanoramaManaged))
+            if (options.Format != "W" && IsPanoramaManaged.HasValue)
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
                 writer.WriteStringValue(IsPanoramaManaged.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthStatus))
+            if (options.Format != "W" && HealthStatus.HasValue)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthReason))
+            if (options.Format != "W" && HealthReason != null)
             {
                 writer.WritePropertyName("healthReason"u8);
                 writer.WriteStringValue(HealthReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(PanoramaStatus))
+            if (options.Format != "W" && PanoramaStatus != null)
             {
                 writer.WritePropertyName("panoramaStatus"u8);
                 writer.WriteObjectValue(PanoramaStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            panoramaStatus = FirewallPanoramaStatus.DeserializeFirewallPanoramaStatus(property0.Value);
+                            panoramaStatus = FirewallPanoramaStatus.DeserializeFirewallPanoramaStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.Kusto
             {
                 switch (discriminator.GetString())
                 {
-                    case "CosmosDb": return KustoCosmosDBDataConnection.DeserializeKustoCosmosDBDataConnection(element);
-                    case "EventGrid": return KustoEventGridDataConnection.DeserializeKustoEventGridDataConnection(element);
-                    case "EventHub": return KustoEventHubDataConnection.DeserializeKustoEventHubDataConnection(element);
-                    case "IotHub": return KustoIotHubDataConnection.DeserializeKustoIotHubDataConnection(element);
+                    case "CosmosDb": return KustoCosmosDBDataConnection.DeserializeKustoCosmosDBDataConnection(element, options);
+                    case "EventGrid": return KustoEventGridDataConnection.DeserializeKustoEventGridDataConnection(element, options);
+                    case "EventHub": return KustoEventHubDataConnection.DeserializeKustoEventHubDataConnection(element, options);
+                    case "IotHub": return KustoIotHubDataConnection.DeserializeKustoIotHubDataConnection(element, options);
                 }
             }
-            return UnknownDataConnection.DeserializeUnknownDataConnection(element);
+            return UnknownDataConnection.DeserializeUnknownDataConnection(element, options);
         }
 
         BinaryData IPersistableModel<KustoDataConnectionData>.Write(ModelReaderWriterOptions options)

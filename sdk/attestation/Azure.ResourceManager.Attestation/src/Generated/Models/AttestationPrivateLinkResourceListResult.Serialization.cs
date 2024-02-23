@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AttestationPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<AttestationPrivateLinkResource> array = new List<AttestationPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource(item));
+                        array.Add(AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

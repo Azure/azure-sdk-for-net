@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ranking))
+            if (Ranking != null)
             {
                 writer.WritePropertyName("ranking"u8);
                 writer.WriteStringValue(Ranking);
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RankingsResponseTablesPropertiesItemsItem> array = new List<RankingsResponseTablesPropertiesItemsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RankingsResponseTablesPropertiesItemsItem.DeserializeRankingsResponseTablesPropertiesItemsItem(item));
+                        array.Add(RankingsResponseTablesPropertiesItemsItem.DeserializeRankingsResponseTablesPropertiesItemsItem(item, options));
                     }
                     data = array;
                     continue;

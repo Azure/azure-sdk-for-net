@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,47 +67,47 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualWan))
+            if (VirtualWan != null)
             {
                 writer.WritePropertyName("virtualWan"u8);
                 JsonSerializer.Serialize(writer, VirtualWan);
             }
-            if (Optional.IsDefined(DeviceProperties))
+            if (DeviceProperties != null)
             {
                 writer.WritePropertyName("deviceProperties"u8);
                 writer.WriteObjectValue(DeviceProperties);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(SiteKey))
+            if (SiteKey != null)
             {
                 writer.WritePropertyName("siteKey"u8);
                 writer.WriteStringValue(SiteKey);
             }
-            if (Optional.IsDefined(AddressSpace))
+            if (AddressSpace != null)
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteObjectValue(AddressSpace);
             }
-            if (Optional.IsDefined(BgpProperties))
+            if (BgpProperties != null)
             {
                 writer.WritePropertyName("bgpProperties"u8);
                 writer.WriteObjectValue(BgpProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(IsSecuritySite))
+            if (IsSecuritySite.HasValue)
             {
                 writer.WritePropertyName("isSecuritySite"u8);
                 writer.WriteBooleanValue(IsSecuritySite.Value);
             }
-            if (Optional.IsCollectionDefined(VpnSiteLinks))
+            if (!(VpnSiteLinks is ChangeTrackingList<VpnSiteLinkData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vpnSiteLinks"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(O365Policy))
+            if (O365Policy != null)
             {
                 writer.WritePropertyName("o365Policy"u8);
                 writer.WriteObjectValue(O365Policy);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value);
+                            deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bgpProperties"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value);
+                            bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnSiteLinkData> array = new List<VpnSiteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
+                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item, options));
                             }
                             vpnSiteLinks = array;
                             continue;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            o365Policy = O365PolicyProperties.DeserializeO365PolicyProperties(property0.Value);
+                            o365Policy = O365PolicyProperties.DeserializeO365PolicyProperties(property0.Value, options);
                             continue;
                         }
                     }

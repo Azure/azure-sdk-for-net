@@ -26,31 +26,31 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("managedVirtualNetwork"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReferenceName))
+            if (ReferenceName != null)
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
             }
-            if (Optional.IsDefined(TypeManagedVirtualNetworkType))
+            if (TypeManagedVirtualNetworkType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeManagedVirtualNetworkType);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeProperties))
+            if (ComputeProperties != null)
             {
                 writer.WritePropertyName("computeProperties"u8);
                 writer.WriteObjectValue(ComputeProperties);
             }
-            if (Optional.IsDefined(SsisProperties))
+            if (SsisProperties != null)
             {
                 writer.WritePropertyName("ssisProperties"u8);
                 writer.WriteObjectValue(SsisProperties);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            computeProperties = SynapseIntegrationRuntimeComputeProperties.DeserializeSynapseIntegrationRuntimeComputeProperties(property0.Value);
+                            computeProperties = SynapseIntegrationRuntimeComputeProperties.DeserializeSynapseIntegrationRuntimeComputeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ssisProperties"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            ssisProperties = SynapseIntegrationRuntimeSsisProperties.DeserializeSynapseIntegrationRuntimeSsisProperties(property0.Value);
+                            ssisProperties = SynapseIntegrationRuntimeSsisProperties.DeserializeSynapseIntegrationRuntimeSsisProperties(property0.Value, options);
                             continue;
                         }
                     }

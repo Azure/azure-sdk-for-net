@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(ReaperStatus))
+            if (ReaperStatus != null)
             {
                 writer.WritePropertyName("reaperStatus"u8);
                 writer.WriteObjectValue(ReaperStatus);
             }
-            if (Optional.IsCollectionDefined(ConnectionErrors))
+            if (!(ConnectionErrors is ChangeTrackingList<CassandraConnectionError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionErrors"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<CassandraError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataCenters))
+            if (!(DataCenters is ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dataCenters"u8);
                 writer.WriteStartArray();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value);
+                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectionErrors"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraConnectionError> array = new List<CassandraConnectionError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item));
+                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item, options));
                     }
                     connectionErrors = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraError> array = new List<CassandraError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraError.DeserializeCassandraError(item));
+                        array.Add(CassandraError.DeserializeCassandraError(item, options));
                     }
                     errors = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterPublicStatusDataCentersItem> array = new List<CassandraClusterPublicStatusDataCentersItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterPublicStatusDataCentersItem.DeserializeCassandraClusterPublicStatusDataCentersItem(item));
+                        array.Add(CassandraClusterPublicStatusDataCentersItem.DeserializeCassandraClusterPublicStatusDataCentersItem(item, options));
                     }
                     dataCenters = array;
                     continue;

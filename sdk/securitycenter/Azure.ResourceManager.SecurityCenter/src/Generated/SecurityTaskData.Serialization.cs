@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(SecurityTaskParameters))
+            if (SecurityTaskParameters != null)
             {
                 writer.WritePropertyName("securityTaskParameters"u8);
                 writer.WriteObjectValue(SecurityTaskParameters);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStateChangedOn))
+            if (options.Format != "W" && LastStateChangedOn.HasValue)
             {
                 writer.WritePropertyName("lastStateChangeTimeUtc"u8);
                 writer.WriteStringValue(LastStateChangedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SubState))
+            if (options.Format != "W" && SubState != null)
             {
                 writer.WritePropertyName("subState"u8);
                 writer.WriteStringValue(SubState);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            securityTaskParameters = SecurityTaskProperties.DeserializeSecurityTaskProperties(property0.Value);
+                            securityTaskParameters = SecurityTaskProperties.DeserializeSecurityTaskProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastStateChangeTimeUtc"u8))

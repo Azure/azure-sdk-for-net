@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressSpace))
+            if (AddressSpace != null)
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteObjectValue(AddressSpace);
             }
-            if (Optional.IsDefined(DhcpOptions))
+            if (DhcpOptions != null)
             {
                 writer.WritePropertyName("dhcpOptions"u8);
                 writer.WriteObjectValue(DhcpOptions);
             }
-            if (Optional.IsDefined(FlowTimeoutInMinutes))
+            if (FlowTimeoutInMinutes.HasValue)
             {
                 writer.WritePropertyName("flowTimeoutInMinutes"u8);
                 writer.WriteNumberValue(FlowTimeoutInMinutes.Value);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<SubnetData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VirtualNetworkPeerings))
+            if (!(VirtualNetworkPeerings is ChangeTrackingList<VirtualNetworkPeeringData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkPeerings"u8);
                 writer.WriteStartArray();
@@ -107,42 +107,42 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(EnableDdosProtection))
+            if (EnableDdosProtection.HasValue)
             {
                 writer.WritePropertyName("enableDdosProtection"u8);
                 writer.WriteBooleanValue(EnableDdosProtection.Value);
             }
-            if (Optional.IsDefined(EnableVmProtection))
+            if (EnableVmProtection.HasValue)
             {
                 writer.WritePropertyName("enableVmProtection"u8);
                 writer.WriteBooleanValue(EnableVmProtection.Value);
             }
-            if (Optional.IsDefined(DdosProtectionPlan))
+            if (DdosProtectionPlan != null)
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
                 JsonSerializer.Serialize(writer, DdosProtectionPlan);
             }
-            if (Optional.IsDefined(BgpCommunities))
+            if (BgpCommunities != null)
             {
                 writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteObjectValue(BgpCommunities);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(IPAllocations))
+            if (!(IPAllocations is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FlowLogs))
+            if (options.Format != "W" && !(FlowLogs is ChangeTrackingList<FlowLogData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("flowLogs"u8);
                 writer.WriteStartArray();
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dhcpOptions"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value);
+                            dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("flowTimeoutInMinutes"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
                             List<SubnetData> array = new List<SubnetData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubnetData.DeserializeSubnetData(item));
+                                array.Add(SubnetData.DeserializeSubnetData(item, options));
                             }
                             subnets = array;
                             continue;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkPeeringData> array = new List<VirtualNetworkPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item));
+                                array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item, options));
                             }
                             virtualNetworkPeerings = array;
                             continue;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
+                            bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            encryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value);
+                            encryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAllocations"u8))
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Network
                             List<FlowLogData> array = new List<FlowLogData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FlowLogData.DeserializeFlowLogData(item));
+                                array.Add(FlowLogData.DeserializeFlowLogData(item, options));
                             }
                             flowLogs = array;
                             continue;

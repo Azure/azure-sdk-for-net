@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,44 +62,44 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourcePlatform))
+            if (SourcePlatform.HasValue)
             {
                 writer.WritePropertyName("sourcePlatform"u8);
                 writer.WriteStringValue(SourcePlatform.Value.ToString());
             }
-            if (Optional.IsDefined(AzureAuthenticationInfo))
+            if (AzureAuthenticationInfo != null)
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
                 writer.WriteObjectValue(AzureAuthenticationInfo);
             }
-            if (Optional.IsDefined(TargetPlatform))
+            if (TargetPlatform.HasValue)
             {
                 writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceConnectionInfo))
+            if (SourceConnectionInfo != null)
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
                 writer.WriteObjectValue(SourceConnectionInfo);
             }
-            if (Optional.IsDefined(TargetConnectionInfo))
+            if (TargetConnectionInfo != null)
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
                 writer.WriteObjectValue(TargetConnectionInfo);
             }
-            if (Optional.IsCollectionDefined(DatabasesInfo))
+            if (!(DatabasesInfo is ChangeTrackingList<DatabaseInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("databasesInfo"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            azureAuthenticationInfo = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property0.Value);
+                            azureAuthenticationInfo = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetPlatform"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            sourceConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value);
+                            sourceConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetConnectionInfo"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            targetConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value);
+                            targetConnectionInfo = ConnectionInfo.DeserializeConnectionInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databasesInfo"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataMigration
                             List<DatabaseInfo> array = new List<DatabaseInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseInfo.DeserializeDatabaseInfo(item));
+                                array.Add(DatabaseInfo.DeserializeDatabaseInfo(item, options));
                             }
                             databasesInfo = array;
                             continue;

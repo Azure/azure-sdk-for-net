@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Connections))
+            if (!(Connections is ChangeTrackingList<PeeringExchangeConnection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn != null)
             {
                 writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringExchangeConnection> array = new List<PeeringExchangeConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item));
+                        array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item, options));
                     }
                     connections = array;
                     continue;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultKey))
+            if (DefaultKey != null)
             {
                 writer.WritePropertyName("defaultKey"u8);
                 writer.WriteObjectValue(DefaultKey);
             }
-            if (Optional.IsCollectionDefined(KeyToTrackMappings))
+            if (!(KeyToTrackMappings is ChangeTrackingList<StreamingPolicyContentKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keyToTrackMappings"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value);
+                    defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyToTrackMappings"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPolicyContentKey> array = new List<StreamingPolicyContentKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPolicyContentKey.DeserializeStreamingPolicyContentKey(item));
+                        array.Add(StreamingPolicyContentKey.DeserializeStreamingPolicyContentKey(item, options));
                     }
                     keyToTrackMappings = array;
                     continue;

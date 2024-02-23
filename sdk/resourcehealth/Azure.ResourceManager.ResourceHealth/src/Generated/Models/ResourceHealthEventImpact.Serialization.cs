@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImpactedService))
+            if (ImpactedService != null)
             {
                 writer.WritePropertyName("impactedService"u8);
                 writer.WriteStringValue(ImpactedService);
             }
-            if (Optional.IsCollectionDefined(ImpactedRegions))
+            if (!(ImpactedRegions is ChangeTrackingList<ResourceHealthEventImpactedServiceRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("impactedRegions"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventImpactedServiceRegion> array = new List<ResourceHealthEventImpactedServiceRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item));
+                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item, options));
                     }
                     impactedRegions = array;
                     continue;

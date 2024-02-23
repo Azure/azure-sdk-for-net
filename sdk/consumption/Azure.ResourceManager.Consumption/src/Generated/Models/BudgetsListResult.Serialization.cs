@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ConsumptionBudgetData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionBudgetData> array = new List<ConsumptionBudgetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionBudgetData.DeserializeConsumptionBudgetData(item));
+                        array.Add(ConsumptionBudgetData.DeserializeConsumptionBudgetData(item, options));
                     }
                     value = array;
                     continue;

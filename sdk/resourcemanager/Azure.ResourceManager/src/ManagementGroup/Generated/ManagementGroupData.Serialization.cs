@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.ManagementGroups
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (!(Children is ChangeTrackingList<ManagementGroupChildInfo> collection && collection.IsUndefined))
             {
                 if (Children != null)
                 {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagementGroups
                             {
                                 continue;
                             }
-                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value);
+                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("children"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagementGroups
                             List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementGroupChildInfo.DeserializeManagementGroupChildInfo(item));
+                                array.Add(ManagementGroupChildInfo.DeserializeManagementGroupChildInfo(item, options));
                             }
                             children = array;
                             continue;

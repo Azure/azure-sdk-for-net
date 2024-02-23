@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 switch (discriminator.GetString())
                 {
-                    case "AlertSyncSettings": return SecurityAlertSyncSettings.DeserializeSecurityAlertSyncSettings(element);
-                    case "DataExportSettings": return DataExportSettings.DeserializeDataExportSettings(element);
+                    case "AlertSyncSettings": return SecurityAlertSyncSettings.DeserializeSecurityAlertSyncSettings(element, options);
+                    case "DataExportSettings": return DataExportSettings.DeserializeDataExportSettings(element, options);
                 }
             }
-            return UnknownSetting.DeserializeUnknownSetting(element);
+            return UnknownSetting.DeserializeUnknownSetting(element, options);
         }
 
         BinaryData IPersistableModel<SecuritySettingData>.Write(ModelReaderWriterOptions options)

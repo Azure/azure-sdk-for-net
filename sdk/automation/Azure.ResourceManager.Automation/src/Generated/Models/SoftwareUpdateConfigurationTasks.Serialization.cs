@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreTask))
+            if (PreTask != null)
             {
                 writer.WritePropertyName("preTask"u8);
                 writer.WriteObjectValue(PreTask);
             }
-            if (Optional.IsDefined(PostTask))
+            if (PostTask != null)
             {
                 writer.WritePropertyName("postTask"u8);
                 writer.WriteObjectValue(PostTask);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    preTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);
+                    preTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("postTask"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    postTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);
+                    postTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

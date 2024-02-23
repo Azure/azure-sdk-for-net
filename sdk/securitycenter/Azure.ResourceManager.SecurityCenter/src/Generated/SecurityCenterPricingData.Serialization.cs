@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PricingTier))
+            if (PricingTier.HasValue)
             {
                 writer.WritePropertyName("pricingTier"u8);
                 writer.WriteStringValue(PricingTier.Value.ToString());
             }
-            if (Optional.IsDefined(SubPlan))
+            if (SubPlan != null)
             {
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteStringValue(SubPlan);
             }
-            if (options.Format != "W" && Optional.IsDefined(FreeTrialRemainingTime))
+            if (options.Format != "W" && FreeTrialRemainingTime.HasValue)
             {
                 writer.WritePropertyName("freeTrialRemainingTime"u8);
                 writer.WriteStringValue(FreeTrialRemainingTime.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(EnabledOn))
+            if (options.Format != "W" && EnabledOn.HasValue)
             {
                 writer.WritePropertyName("enablementTime"u8);
                 writer.WriteStringValue(EnabledOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
+            if (options.Format != "W" && IsDeprecated.HasValue)
             {
                 writer.WritePropertyName("deprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReplacedBy))
+            if (options.Format != "W" && !(ReplacedBy is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("replacedBy"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<PlanExtension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<PlanExtension> array = new List<PlanExtension>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PlanExtension.DeserializePlanExtension(item));
+                                array.Add(PlanExtension.DeserializePlanExtension(item, options));
                             }
                             extensions = array;
                             continue;

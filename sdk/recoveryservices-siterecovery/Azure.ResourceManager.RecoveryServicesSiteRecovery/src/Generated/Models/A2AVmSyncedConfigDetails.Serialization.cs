@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(VmEndpoints))
+            if (!(VmEndpoints is ChangeTrackingList<SiteRecoveryVmEndpoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputEndpoints"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryVmEndpoint> array = new List<SiteRecoveryVmEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryVmEndpoint.DeserializeSiteRecoveryVmEndpoint(item));
+                        array.Add(SiteRecoveryVmEndpoint.DeserializeSiteRecoveryVmEndpoint(item, options));
                     }
                     contentEndpoints = array;
                     continue;

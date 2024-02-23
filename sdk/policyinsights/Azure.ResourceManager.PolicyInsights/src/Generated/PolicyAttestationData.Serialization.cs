@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,32 +52,32 @@ namespace Azure.ResourceManager.PolicyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("policyAssignmentId"u8);
             writer.WriteStringValue(PolicyAssignmentId);
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (PolicyDefinitionReferenceId != null)
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (Optional.IsDefined(ComplianceState))
+            if (ComplianceState.HasValue)
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Owner))
+            if (Owner != null)
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (Optional.IsDefined(Comments))
+            if (Comments != null)
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsCollectionDefined(Evidence))
+            if (!(Evidence is ChangeTrackingList<AttestationEvidence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
@@ -87,22 +87,22 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceStateChangeOn))
+            if (options.Format != "W" && LastComplianceStateChangeOn.HasValue)
             {
                 writer.WritePropertyName("lastComplianceStateChangeAt"u8);
                 writer.WriteStringValue(LastComplianceStateChangeOn.Value, "O");
             }
-            if (Optional.IsDefined(AssessOn))
+            if (AssessOn.HasValue)
             {
                 writer.WritePropertyName("assessmentDate"u8);
                 writer.WriteStringValue(AssessOn.Value, "O");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             List<AttestationEvidence> array = new List<AttestationEvidence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AttestationEvidence.DeserializeAttestationEvidence(item));
+                                array.Add(AttestationEvidence.DeserializeAttestationEvidence(item, options));
                             }
                             evidence = array;
                             continue;

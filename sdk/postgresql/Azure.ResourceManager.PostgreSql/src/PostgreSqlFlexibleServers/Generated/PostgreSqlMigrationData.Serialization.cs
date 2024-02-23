@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,64 +56,64 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationId))
+            if (options.Format != "W" && MigrationId != null)
             {
                 writer.WritePropertyName("migrationId"u8);
                 writer.WriteStringValue(MigrationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
+            if (options.Format != "W" && CurrentStatus != null)
             {
                 writer.WritePropertyName("currentStatus"u8);
                 writer.WriteObjectValue(CurrentStatus);
             }
-            if (Optional.IsDefined(MigrationMode))
+            if (MigrationMode.HasValue)
             {
                 writer.WritePropertyName("migrationMode"u8);
                 writer.WriteStringValue(MigrationMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceDbServerMetadata))
+            if (options.Format != "W" && SourceDbServerMetadata != null)
             {
                 writer.WritePropertyName("sourceDbServerMetadata"u8);
                 writer.WriteObjectValue(SourceDbServerMetadata);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetDbServerMetadata))
+            if (options.Format != "W" && TargetDbServerMetadata != null)
             {
                 writer.WritePropertyName("targetDbServerMetadata"u8);
                 writer.WriteObjectValue(TargetDbServerMetadata);
             }
-            if (Optional.IsDefined(SourceDbServerResourceId))
+            if (SourceDbServerResourceId != null)
             {
                 writer.WritePropertyName("sourceDbServerResourceId"u8);
                 writer.WriteStringValue(SourceDbServerResourceId);
             }
-            if (Optional.IsDefined(SourceDbServerFullyQualifiedDomainName))
+            if (SourceDbServerFullyQualifiedDomainName != null)
             {
                 writer.WritePropertyName("sourceDbServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(SourceDbServerFullyQualifiedDomainName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetDbServerResourceId))
+            if (options.Format != "W" && TargetDbServerResourceId != null)
             {
                 writer.WritePropertyName("targetDbServerResourceId"u8);
                 writer.WriteStringValue(TargetDbServerResourceId);
             }
-            if (Optional.IsDefined(TargetDbServerFullyQualifiedDomainName))
+            if (TargetDbServerFullyQualifiedDomainName != null)
             {
                 writer.WritePropertyName("targetDbServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(TargetDbServerFullyQualifiedDomainName);
             }
-            if (Optional.IsDefined(SecretParameters))
+            if (SecretParameters != null)
             {
                 writer.WritePropertyName("secretParameters"u8);
                 writer.WriteObjectValue(SecretParameters);
             }
-            if (Optional.IsCollectionDefined(DbsToMigrate))
+            if (!(DbsToMigrate is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dbsToMigrate"u8);
                 writer.WriteStartArray();
@@ -123,37 +123,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SetupLogicalReplicationOnSourceDbIfNeeded))
+            if (SetupLogicalReplicationOnSourceDbIfNeeded.HasValue)
             {
                 writer.WritePropertyName("setupLogicalReplicationOnSourceDbIfNeeded"u8);
                 writer.WriteStringValue(SetupLogicalReplicationOnSourceDbIfNeeded.Value.ToString());
             }
-            if (Optional.IsDefined(OverwriteDbsInTarget))
+            if (OverwriteDbsInTarget.HasValue)
             {
                 writer.WritePropertyName("overwriteDbsInTarget"u8);
                 writer.WriteStringValue(OverwriteDbsInTarget.Value.ToString());
             }
-            if (Optional.IsDefined(MigrationWindowStartTimeInUtc))
+            if (MigrationWindowStartTimeInUtc.HasValue)
             {
                 writer.WritePropertyName("migrationWindowStartTimeInUtc"u8);
                 writer.WriteStringValue(MigrationWindowStartTimeInUtc.Value, "O");
             }
-            if (Optional.IsDefined(MigrationWindowEndTimeInUtc))
+            if (MigrationWindowEndTimeInUtc.HasValue)
             {
                 writer.WritePropertyName("migrationWindowEndTimeInUtc"u8);
                 writer.WriteStringValue(MigrationWindowEndTimeInUtc.Value, "O");
             }
-            if (Optional.IsDefined(StartDataMigration))
+            if (StartDataMigration.HasValue)
             {
                 writer.WritePropertyName("startDataMigration"u8);
                 writer.WriteStringValue(StartDataMigration.Value.ToString());
             }
-            if (Optional.IsDefined(TriggerCutover))
+            if (TriggerCutover.HasValue)
             {
                 writer.WritePropertyName("triggerCutover"u8);
                 writer.WriteStringValue(TriggerCutover.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DbsToTriggerCutoverOn))
+            if (!(DbsToTriggerCutoverOn is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dbsToTriggerCutoverOn"u8);
                 writer.WriteStartArray();
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Cancel))
+            if (Cancel.HasValue)
             {
                 writer.WritePropertyName("cancel"u8);
                 writer.WriteStringValue(Cancel.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DbsToCancelMigrationOn))
+            if (!(DbsToCancelMigrationOn is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("dbsToCancelMigrationOn"u8);
                 writer.WriteStartArray();
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            currentStatus = PostgreSqlMigrationStatus.DeserializePostgreSqlMigrationStatus(property0.Value);
+                            currentStatus = PostgreSqlMigrationStatus.DeserializePostgreSqlMigrationStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("migrationMode"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            sourceDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value);
+                            sourceDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetDbServerMetadata"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            targetDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value);
+                            targetDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sourceDbServerResourceId"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value);
+                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dbsToMigrate"u8))

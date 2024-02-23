@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,29 +60,29 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Direct))
+            if (Direct != null)
             {
                 writer.WritePropertyName("direct"u8);
                 writer.WriteObjectValue(Direct);
             }
-            if (Optional.IsDefined(Exchange))
+            if (Exchange != null)
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (Optional.IsDefined(PeeringLocation))
+            if (PeeringLocation != null)
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Peering
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = PeeringSku.DeserializePeeringSku(property.Value);
+                    sku = PeeringSku.DeserializePeeringSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value);
+                            direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value);
+                            exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))

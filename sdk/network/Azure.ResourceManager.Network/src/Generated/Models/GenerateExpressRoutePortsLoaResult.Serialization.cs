@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncodedContent))
+            if (EncodedContent != null)
             {
                 writer.WritePropertyName("encodedContent"u8);
                 writer.WriteStringValue(EncodedContent);

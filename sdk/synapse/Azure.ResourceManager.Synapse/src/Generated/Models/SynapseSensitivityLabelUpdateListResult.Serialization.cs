@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<SynapseSensitivityLabelUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSensitivityLabelUpdate> array = new List<SynapseSensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSensitivityLabelUpdate.DeserializeSynapseSensitivityLabelUpdate(item));
+                        array.Add(SynapseSensitivityLabelUpdate.DeserializeSynapseSensitivityLabelUpdate(item, options));
                     }
                     operations = array;
                     continue;

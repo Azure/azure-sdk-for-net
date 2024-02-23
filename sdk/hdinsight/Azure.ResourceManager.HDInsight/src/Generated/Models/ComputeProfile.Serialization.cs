@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingList<HDInsightClusterRole> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterRole> array = new List<HDInsightClusterRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterRole.DeserializeHDInsightClusterRole(item));
+                        array.Add(HDInsightClusterRole.DeserializeHDInsightClusterRole(item, options));
                     }
                     roles = array;
                     continue;

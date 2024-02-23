@@ -44,49 +44,49 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UniqueOfferId))
+            if (options.Format != "W" && UniqueOfferId != null)
             {
                 writer.WritePropertyName("uniqueOfferId"u8);
                 writer.WriteStringValue(UniqueOfferId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OfferDisplayName))
+            if (options.Format != "W" && OfferDisplayName != null)
             {
                 writer.WritePropertyName("offerDisplayName"u8);
                 writer.WriteStringValue(OfferDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherDisplayName))
+            if (options.Format != "W" && PublisherDisplayName != null)
             {
                 writer.WritePropertyName("publisherDisplayName"u8);
                 writer.WriteStringValue(PublisherDisplayName);
             }
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateStoreId))
+            if (options.Format != "W" && PrivateStoreId.HasValue)
             {
                 writer.WritePropertyName("privateStoreId"u8);
                 writer.WriteStringValue(PrivateStoreId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (options.Format != "W" && ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modifiedAt"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(SpecificPlanIdsLimitation))
+            if (!(SpecificPlanIdsLimitation is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("specificPlanIdsLimitation"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
+            if (IsUpdateSuppressedDueToIdempotence.HasValue)
             {
                 writer.WritePropertyName("updateSuppressedDueIdempotence"u8);
                 writer.WriteBooleanValue(IsUpdateSuppressedDueToIdempotence.Value);
             }
-            if (Optional.IsCollectionDefined(IconFileUris))
+            if (!(IconFileUris is ChangeTrackingDictionary<string, Uri> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("iconFileUris"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Plans))
+            if (!(Plans is ChangeTrackingList<PrivateStorePlan> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Marketplace
                             List<PrivateStorePlan> array = new List<PrivateStorePlan>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item));
+                                array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item, options));
                             }
                             plans = array;
                             continue;

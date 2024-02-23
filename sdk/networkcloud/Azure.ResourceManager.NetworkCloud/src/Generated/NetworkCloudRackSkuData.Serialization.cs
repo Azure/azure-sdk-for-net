@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComputeMachines))
+            if (options.Format != "W" && !(ComputeMachines is ChangeTrackingList<MachineSkuSlot> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("computeMachines"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ControllerMachines))
+            if (options.Format != "W" && !(ControllerMachines is ChangeTrackingList<MachineSkuSlot> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("controllerMachines"u8);
                 writer.WriteStartArray();
@@ -70,27 +70,27 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxClusterSlots))
+            if (options.Format != "W" && MaxClusterSlots.HasValue)
             {
                 writer.WritePropertyName("maxClusterSlots"u8);
                 writer.WriteNumberValue(MaxClusterSlots.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RackType))
+            if (options.Format != "W" && RackType.HasValue)
             {
                 writer.WritePropertyName("rackType"u8);
                 writer.WriteStringValue(RackType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageAppliances))
+            if (options.Format != "W" && !(StorageAppliances is ChangeTrackingList<StorageApplianceSkuSlot> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("storageAppliances"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedRackSkuIds))
+            if (options.Format != "W" && !(SupportedRackSkuIds is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("supportedRackSkuIds"u8);
                 writer.WriteStartArray();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<MachineSkuSlot> array = new List<MachineSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item, options));
                             }
                             computeMachines = array;
                             continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<MachineSkuSlot> array = new List<MachineSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item, options));
                             }
                             controllerMachines = array;
                             continue;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<StorageApplianceSkuSlot> array = new List<StorageApplianceSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageApplianceSkuSlot.DeserializeStorageApplianceSkuSlot(item));
+                                array.Add(StorageApplianceSkuSlot.DeserializeStorageApplianceSkuSlot(item, options));
                             }
                             storageAppliances = array;
                             continue;

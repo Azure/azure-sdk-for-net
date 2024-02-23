@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<BotServicePrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotServicePrivateLinkResourceData> array = new List<BotServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(item));
+                        array.Add(BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

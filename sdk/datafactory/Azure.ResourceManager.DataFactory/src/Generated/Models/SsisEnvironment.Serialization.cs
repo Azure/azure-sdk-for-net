@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FolderId))
+            if (FolderId.HasValue)
             {
                 writer.WritePropertyName("folderId"u8);
                 writer.WriteNumberValue(FolderId.Value);
             }
-            if (Optional.IsCollectionDefined(Variables))
+            if (!(Variables is ChangeTrackingList<SsisVariable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartArray();
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisVariable> array = new List<SsisVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisVariable.DeserializeSsisVariable(item));
+                        array.Add(SsisVariable.DeserializeSsisVariable(item, options));
                     }
                     variables = array;
                     continue;

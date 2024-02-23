@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 if (ResourceId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 if (Status != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkerName))
+            if (LinkerName != null)
             {
                 if (LinkerName != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("linkerName");
                 }
             }
-            if (Optional.IsDefined(IsConnectionAvailable))
+            if (IsConnectionAvailable.HasValue)
             {
                 if (IsConnectionAvailable != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("isConnectionAvailable");
                 }
             }
-            if (Optional.IsDefined(ReportStartOn))
+            if (ReportStartOn.HasValue)
             {
                 if (ReportStartOn != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("reportStartTimeUtc");
                 }
             }
-            if (Optional.IsDefined(ReportEndOn))
+            if (ReportEndOn.HasValue)
             {
                 if (ReportEndOn != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("reportEndTimeUtc");
                 }
             }
-            if (Optional.IsDefined(SourceId))
+            if (SourceId != null)
             {
                 if (SourceId != null)
                 {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("sourceId");
                 }
             }
-            if (Optional.IsDefined(TargetId))
+            if (TargetId != null)
             {
                 if (TargetId != null)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("targetId");
                 }
             }
-            if (Optional.IsDefined(AuthType))
+            if (AuthType.HasValue)
             {
                 if (AuthType != null)
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("authType");
                 }
             }
-            if (Optional.IsCollectionDefined(ValidationDetail))
+            if (!(ValidationDetail is ChangeTrackingList<LinkerValidationResultItemInfo> collection && collection.IsUndefined))
             {
                 if (ValidationDetail != null)
                 {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             List<LinkerValidationResultItemInfo> array = new List<LinkerValidationResultItemInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item));
+                                array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item, options));
                             }
                             validationDetail = array;
                             continue;

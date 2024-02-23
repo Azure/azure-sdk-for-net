@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SearchServiceQueryKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchServiceQueryKey> array = new List<SearchServiceQueryKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchServiceQueryKey.DeserializeSearchServiceQueryKey(item));
+                        array.Add(SearchServiceQueryKey.DeserializeSearchServiceQueryKey(item, options));
                     }
                     value = array;
                     continue;

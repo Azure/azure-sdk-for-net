@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SqlVulnerabilityAssessmentScanResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SqlVulnerabilityAssessmentScanResult> array = new List<SqlVulnerabilityAssessmentScanResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlVulnerabilityAssessmentScanResult.DeserializeSqlVulnerabilityAssessmentScanResult(item));
+                        array.Add(SqlVulnerabilityAssessmentScanResult.DeserializeSqlVulnerabilityAssessmentScanResult(item, options));
                     }
                     value = array;
                     continue;

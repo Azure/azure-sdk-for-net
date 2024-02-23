@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupNickname))
+            if (GroupNickname != null)
             {
                 writer.WritePropertyName("groupNickname"u8);
                 writer.WriteStringValue(GroupNickname);
             }
-            if (Optional.IsCollectionDefined(LinkedDatabases))
+            if (!(LinkedDatabases is ChangeTrackingList<RedisEnterpriseLinkedDatabase> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkedDatabases"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterpriseLinkedDatabase> array = new List<RedisEnterpriseLinkedDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterpriseLinkedDatabase.DeserializeRedisEnterpriseLinkedDatabase(item));
+                        array.Add(RedisEnterpriseLinkedDatabase.DeserializeRedisEnterpriseLinkedDatabase(item, options));
                     }
                     linkedDatabases = array;
                     continue;

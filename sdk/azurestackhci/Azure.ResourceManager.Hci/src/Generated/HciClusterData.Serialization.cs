@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,99 +56,99 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CloudId))
+            if (options.Format != "W" && CloudId.HasValue)
             {
                 writer.WritePropertyName("cloudId"u8);
                 writer.WriteStringValue(CloudId.Value);
             }
-            if (Optional.IsDefined(CloudManagementEndpoint))
+            if (CloudManagementEndpoint != null)
             {
                 writer.WritePropertyName("cloudManagementEndpoint"u8);
                 writer.WriteStringValue(CloudManagementEndpoint);
             }
-            if (Optional.IsDefined(AadClientId))
+            if (AadClientId.HasValue)
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (Optional.IsDefined(AadTenantId))
+            if (AadTenantId.HasValue)
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (Optional.IsDefined(AadApplicationObjectId))
+            if (AadApplicationObjectId.HasValue)
             {
                 writer.WritePropertyName("aadApplicationObjectId"u8);
                 writer.WriteStringValue(AadApplicationObjectId.Value);
             }
-            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            if (AadServicePrincipalObjectId.HasValue)
             {
                 writer.WritePropertyName("aadServicePrincipalObjectId"u8);
                 writer.WriteStringValue(AadServicePrincipalObjectId.Value);
             }
-            if (Optional.IsDefined(SoftwareAssuranceProperties))
+            if (SoftwareAssuranceProperties != null)
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
                 writer.WriteObjectValue(SoftwareAssuranceProperties);
             }
-            if (Optional.IsDefined(DesiredProperties))
+            if (DesiredProperties != null)
             {
                 writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
+            if (options.Format != "W" && ReportedProperties != null)
             {
                 writer.WritePropertyName("reportedProperties"u8);
                 writer.WriteObjectValue(ReportedProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrialDaysRemaining))
+            if (options.Format != "W" && TrialDaysRemaining.HasValue)
             {
                 writer.WritePropertyName("trialDaysRemaining"u8);
                 writer.WriteNumberValue(TrialDaysRemaining.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingModel))
+            if (options.Format != "W" && BillingModel != null)
             {
                 writer.WritePropertyName("billingModel"u8);
                 writer.WriteStringValue(BillingModel);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegistrationTimestamp))
+            if (options.Format != "W" && RegistrationTimestamp.HasValue)
             {
                 writer.WritePropertyName("registrationTimestamp"u8);
                 writer.WriteStringValue(RegistrationTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncTimestamp))
+            if (options.Format != "W" && LastSyncTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastSyncTimestamp"u8);
                 writer.WriteStringValue(LastSyncTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastBillingTimestamp))
+            if (options.Format != "W" && LastBillingTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastBillingTimestamp"u8);
                 writer.WriteStringValue(LastBillingTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
+            if (options.Format != "W" && ServiceEndpoint != null)
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceProviderObjectId))
+            if (options.Format != "W" && ResourceProviderObjectId != null)
             {
                 writer.WritePropertyName("resourceProviderObjectId"u8);
                 writer.WriteStringValue(ResourceProviderObjectId);
@@ -156,22 +156,22 @@ namespace Azure.ResourceManager.Hci
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            if (options.Format != "W" && PrincipalId.HasValue)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(TypeIdentityType))
+            if (TypeIdentityType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeIdentityType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (!(UserAssignedIdentities is ChangeTrackingDictionary<string, UserAssignedIdentity> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value);
+                            softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("desiredProperties"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
+                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reportedProperties"u8))
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value);
+                            reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trialDaysRemaining"u8))

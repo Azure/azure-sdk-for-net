@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StorageSyncWorkflowData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncWorkflowData> array = new List<StorageSyncWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(item));
+                        array.Add(StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
+            if (!(AllowedCallerIPAddresses is ChangeTrackingList<FlowAccessControlIPAddressRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OpenAuthenticationPolicies))
+            if (OpenAuthenticationPolicies != null)
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
                 writer.WriteObjectValue(OpenAuthenticationPolicies);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowAccessControlIPAddressRange> array = new List<FlowAccessControlIPAddressRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowAccessControlIPAddressRange.DeserializeFlowAccessControlIPAddressRange(item));
+                        array.Add(FlowAccessControlIPAddressRange.DeserializeFlowAccessControlIPAddressRange(item, options));
                     }
                     allowedCallerIPAddresses = array;
                     continue;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    openAuthenticationPolicies = OpenAuthenticationAccessPolicies.DeserializeOpenAuthenticationAccessPolicies(property.Value);
+                    openAuthenticationPolicies = OpenAuthenticationAccessPolicies.DeserializeOpenAuthenticationAccessPolicies(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

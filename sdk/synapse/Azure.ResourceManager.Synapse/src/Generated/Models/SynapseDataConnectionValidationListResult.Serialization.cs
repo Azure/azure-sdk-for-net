@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseDataConnectionValidationResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDataConnectionValidationResult> array = new List<SynapseDataConnectionValidationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDataConnectionValidationResult.DeserializeSynapseDataConnectionValidationResult(item));
+                        array.Add(SynapseDataConnectionValidationResult.DeserializeSynapseDataConnectionValidationResult(item, options));
                     }
                     value = array;
                     continue;

@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DeliveryConfiguration))
+            if (DeliveryConfiguration != null)
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
                 writer.WriteObjectValue(DeliveryConfiguration);
             }
-            if (Optional.IsDefined(EventDeliverySchema))
+            if (EventDeliverySchema.HasValue)
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (Optional.IsDefined(FiltersConfiguration))
+            if (FiltersConfiguration != null)
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
                 writer.WriteObjectValue(FiltersConfiguration);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deliveryConfiguration = DeliveryConfiguration.DeserializeDeliveryConfiguration(property0.Value);
+                            deliveryConfiguration = DeliveryConfiguration.DeserializeDeliveryConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventDeliverySchema"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            filtersConfiguration = FiltersConfiguration.DeserializeFiltersConfiguration(property0.Value);
+                            filtersConfiguration = FiltersConfiguration.DeserializeFiltersConfiguration(property0.Value, options);
                             continue;
                         }
                     }

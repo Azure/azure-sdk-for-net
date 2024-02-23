@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RunningState))
+            if (options.Format != "W" && RunningState.HasValue)
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RunningStateDetails))
+            if (options.Format != "W" && RunningStateDetails != null)
             {
                 writer.WritePropertyName("runningStateDetails"u8);
                 writer.WriteStringValue(RunningStateDetails);
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingList<ContainerAppReplicaContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (!(InitContainers is ChangeTrackingList<ContainerAppReplicaContainer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item));
+                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item, options));
                             }
                             containers = array;
                             continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item));
+                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item, options));
                             }
                             initContainers = array;
                             continue;

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApprovalStageTimeOutInDays))
+            if (ApprovalStageTimeOutInDays.HasValue)
             {
                 writer.WritePropertyName("approvalStageTimeOutInDays"u8);
                 writer.WriteNumberValue(ApprovalStageTimeOutInDays.Value);
             }
-            if (Optional.IsDefined(IsApproverJustificationRequired))
+            if (IsApproverJustificationRequired.HasValue)
             {
                 writer.WritePropertyName("isApproverJustificationRequired"u8);
                 writer.WriteBooleanValue(IsApproverJustificationRequired.Value);
             }
-            if (Optional.IsDefined(EscalationTimeInMinutes))
+            if (EscalationTimeInMinutes.HasValue)
             {
                 writer.WritePropertyName("escalationTimeInMinutes"u8);
                 writer.WriteNumberValue(EscalationTimeInMinutes.Value);
             }
-            if (Optional.IsCollectionDefined(PrimaryApprovers))
+            if (!(PrimaryApprovers is ChangeTrackingList<RoleManagementUserInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("primaryApprovers"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsEscalationEnabled))
+            if (IsEscalationEnabled.HasValue)
             {
                 writer.WritePropertyName("isEscalationEnabled"u8);
                 writer.WriteBooleanValue(IsEscalationEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(EscalationApprovers))
+            if (!(EscalationApprovers is ChangeTrackingList<RoleManagementUserInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("escalationApprovers"u8);
                 writer.WriteStartArray();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item, options));
                     }
                     primaryApprovers = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item, options));
                     }
                     escalationApprovers = array;
                     continue;

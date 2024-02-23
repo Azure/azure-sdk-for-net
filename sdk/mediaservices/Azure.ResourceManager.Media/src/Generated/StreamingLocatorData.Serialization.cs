@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssetName))
+            if (AssetName != null)
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(StreamingLocatorId))
+            if (StreamingLocatorId.HasValue)
             {
                 writer.WritePropertyName("streamingLocatorId"u8);
                 writer.WriteStringValue(StreamingLocatorId.Value);
             }
-            if (Optional.IsDefined(StreamingPolicyName))
+            if (StreamingPolicyName != null)
             {
                 writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
-            if (Optional.IsDefined(DefaultContentKeyPolicyName))
+            if (DefaultContentKeyPolicyName != null)
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
             }
-            if (Optional.IsCollectionDefined(ContentKeys))
+            if (!(ContentKeys is ChangeTrackingList<StreamingLocatorContentKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteStartArray();
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AlternativeMediaId))
+            if (AlternativeMediaId != null)
             {
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Media
                             List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                                array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item, options));
                             }
                             contentKeys = array;
                             continue;

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(UpdateHistory))
+            if (options.Format != "W" && !(UpdateHistory is ChangeTrackingList<UpdateHistoryEntry> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("updateHistory"u8);
                 writer.WriteStartArray();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
+            if (ImmutabilityPeriodSinceCreationInDays.HasValue)
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(AllowProtectedAppendWrites))
+            if (AllowProtectedAppendWrites.HasValue)
             {
                 writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
             }
-            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            if (AllowProtectedAppendWritesAll.HasValue)
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<UpdateHistoryEntry> array = new List<UpdateHistoryEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateHistoryEntry.DeserializeUpdateHistoryEntry(item));
+                        array.Add(UpdateHistoryEntry.DeserializeUpdateHistoryEntry(item, options));
                     }
                     updateHistory = array;
                     continue;

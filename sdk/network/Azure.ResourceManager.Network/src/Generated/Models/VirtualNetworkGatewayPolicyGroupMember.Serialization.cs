@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AttributeType))
+            if (AttributeType.HasValue)
             {
                 writer.WritePropertyName("attributeType"u8);
                 writer.WriteStringValue(AttributeType.Value.ToString());
             }
-            if (Optional.IsDefined(AttributeValue))
+            if (AttributeValue != null)
             {
                 writer.WritePropertyName("attributeValue"u8);
                 writer.WriteStringValue(AttributeValue);

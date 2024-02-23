@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryIntegrationRuntimeProperties.DeserializeDataFactoryIntegrationRuntimeProperties(property.Value);
+                    properties = DataFactoryIntegrationRuntimeProperties.DeserializeDataFactoryIntegrationRuntimeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

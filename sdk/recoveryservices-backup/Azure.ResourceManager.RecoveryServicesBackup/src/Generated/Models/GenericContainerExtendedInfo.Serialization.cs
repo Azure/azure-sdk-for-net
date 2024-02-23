@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RawCertData))
+            if (RawCertData != null)
             {
                 writer.WritePropertyName("rawCertData"u8);
                 writer.WriteStringValue(RawCertData);
             }
-            if (Optional.IsDefined(ContainerIdentityInfo))
+            if (ContainerIdentityInfo != null)
             {
                 writer.WritePropertyName("containerIdentityInfo"u8);
                 writer.WriteObjectValue(ContainerIdentityInfo);
             }
-            if (Optional.IsCollectionDefined(ServiceEndpoints))
+            if (!(ServiceEndpoints is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value);
+                    containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceEndpoints"u8))

@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkName))
+            if (options.Format != "W" && LinkName != null)
             {
                 writer.WritePropertyName("linkName"u8);
                 writer.WriteStringValue(LinkName);
             }
-            if (Optional.IsDefined(SourceEntityType))
+            if (SourceEntityType.HasValue)
             {
                 writer.WritePropertyName("sourceEntityType"u8);
                 writer.WriteStringValue(SourceEntityType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TargetEntityType))
+            if (TargetEntityType.HasValue)
             {
                 writer.WritePropertyName("targetEntityType"u8);
                 writer.WriteStringValue(TargetEntityType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SourceEntityTypeName))
+            if (SourceEntityTypeName != null)
             {
                 writer.WritePropertyName("sourceEntityTypeName"u8);
                 writer.WriteStringValue(SourceEntityTypeName);
             }
-            if (Optional.IsDefined(TargetEntityTypeName))
+            if (TargetEntityTypeName != null)
             {
                 writer.WritePropertyName("targetEntityTypeName"u8);
                 writer.WriteStringValue(TargetEntityTypeName);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Mappings))
+            if (!(Mappings is ChangeTrackingList<TypePropertiesMapping> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ParticipantPropertyReferences))
+            if (!(ParticipantPropertyReferences is ChangeTrackingList<ParticipantPropertyReference> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("participantPropertyReferences"u8);
                 writer.WriteStartArray();
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ReferenceOnly))
+            if (ReferenceOnly.HasValue)
             {
                 writer.WritePropertyName("referenceOnly"u8);
                 writer.WriteBooleanValue(ReferenceOnly.Value);
             }
-            if (Optional.IsDefined(OperationType))
+            if (OperationType.HasValue)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToSerialString());
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<TypePropertiesMapping> array = new List<TypePropertiesMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TypePropertiesMapping.DeserializeTypePropertiesMapping(item));
+                                array.Add(TypePropertiesMapping.DeserializeTypePropertiesMapping(item, options));
                             }
                             mappings = array;
                             continue;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                                array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item, options));
                             }
                             participantPropertyReferences = array;
                             continue;

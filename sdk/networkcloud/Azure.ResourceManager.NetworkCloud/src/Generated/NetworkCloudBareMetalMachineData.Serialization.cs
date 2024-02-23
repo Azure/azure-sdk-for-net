@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
+            if (options.Format != "W" && !(AssociatedResourceIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("associatedResourceIds"u8);
                 writer.WriteStartArray();
@@ -89,37 +89,37 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
             writer.WriteStringValue(BootMacAddress);
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CordonStatus))
+            if (options.Format != "W" && CordonStatus.HasValue)
             {
                 writer.WritePropertyName("cordonStatus"u8);
                 writer.WriteStringValue(CordonStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(HardwareInventory))
+            if (options.Format != "W" && HardwareInventory != null)
             {
                 writer.WritePropertyName("hardwareInventory"u8);
                 writer.WriteObjectValue(HardwareInventory);
             }
-            if (options.Format != "W" && Optional.IsDefined(HardwareValidationStatus))
+            if (options.Format != "W" && HardwareValidationStatus != null)
             {
                 writer.WritePropertyName("hardwareValidationStatus"u8);
                 writer.WriteObjectValue(HardwareValidationStatus);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
+            if (options.Format != "W" && !(HybridAksClustersAssociatedIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hybridAksClustersAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(KubernetesNodeName))
+            if (options.Format != "W" && KubernetesNodeName != null)
             {
                 writer.WritePropertyName("kubernetesNodeName"u8);
                 writer.WriteStringValue(KubernetesNodeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
+            if (options.Format != "W" && KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
@@ -145,27 +145,27 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(MachineName);
             writer.WritePropertyName("machineSkuId"u8);
             writer.WriteStringValue(MachineSkuId);
-            if (options.Format != "W" && Optional.IsDefined(OamIPv4Address))
+            if (options.Format != "W" && OamIPv4Address != null)
             {
                 writer.WritePropertyName("oamIpv4Address"u8);
                 writer.WriteStringValue(OamIPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OamIPv6Address))
+            if (options.Format != "W" && OamIPv6Address != null)
             {
                 writer.WritePropertyName("oamIpv6Address"u8);
                 writer.WriteStringValue(OamIPv6Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSImage))
+            if (options.Format != "W" && OSImage != null)
             {
                 writer.WritePropertyName("osImage"u8);
                 writer.WriteStringValue(OSImage);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            if (options.Format != "W" && PowerState.HasValue)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -174,19 +174,19 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(RackId);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
-            if (options.Format != "W" && Optional.IsDefined(ReadyState))
+            if (options.Format != "W" && ReadyState.HasValue)
             {
                 writer.WritePropertyName("readyState"u8);
                 writer.WriteStringValue(ReadyState.Value.ToString());
             }
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
-            if (options.Format != "W" && Optional.IsDefined(ServiceTag))
+            if (options.Format != "W" && ServiceTag != null)
             {
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
+            if (options.Format != "W" && !(VirtualMachinesAssociatedIds is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("bmcCredentials"u8))
                         {
-                            bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value);
+                            bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bmcMacAddress"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hardwareInventory = HardwareInventory.DeserializeHardwareInventory(property0.Value);
+                            hardwareInventory = HardwareInventory.DeserializeHardwareInventory(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hardwareValidationStatus"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hardwareValidationStatus = HardwareValidationStatus.DeserializeHardwareValidationStatus(property0.Value);
+                            hardwareValidationStatus = HardwareValidationStatus.DeserializeHardwareValidationStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hybridAksClustersAssociatedIds"u8))

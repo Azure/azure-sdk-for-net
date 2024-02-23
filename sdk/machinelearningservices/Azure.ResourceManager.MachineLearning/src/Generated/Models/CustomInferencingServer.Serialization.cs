@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InferenceConfiguration))
+            if (InferenceConfiguration != null)
             {
                 if (InferenceConfiguration != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         inferenceConfiguration = null;
                         continue;
                     }
-                    inferenceConfiguration = OnlineInferenceConfiguration.DeserializeOnlineInferenceConfiguration(property.Value);
+                    inferenceConfiguration = OnlineInferenceConfiguration.DeserializeOnlineInferenceConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serverType"u8))

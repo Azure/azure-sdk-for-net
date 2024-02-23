@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<SearchPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchPrivateLinkResource> array = new List<SearchPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource(item));
+                        array.Add(SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,49 +59,49 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountId))
+            if (options.Format != "W" && AccountId.HasValue)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Endpoint))
+            if (options.Format != "W" && Endpoint != null)
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultDataLakeStoreAccount))
+            if (options.Format != "W" && DefaultDataLakeStoreAccount != null)
             {
                 writer.WritePropertyName("defaultDataLakeStoreAccount"u8);
                 writer.WriteStringValue(DefaultDataLakeStoreAccount);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DataLakeStoreAccounts))
+            if (options.Format != "W" && !(DataLakeStoreAccounts is ChangeTrackingList<DataLakeStoreAccountInformationData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataLakeStoreAccounts"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PublicDataLakeStoreAccounts))
+            if (!(PublicDataLakeStoreAccounts is ChangeTrackingList<DataLakeStoreAccountInformationData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("publicDataLakeStoreAccounts"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageAccounts))
+            if (options.Format != "W" && !(StorageAccounts is ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ComputePolicies))
+            if (options.Format != "W" && !(ComputePolicies is ChangeTrackingList<DataLakeAnalyticsComputePolicyData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("computePolicies"u8);
                 writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HiveMetastores))
+            if (options.Format != "W" && !(HiveMetastores is ChangeTrackingList<DataLakeAnalyticsHiveMetastore> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("hiveMetastores"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (options.Format != "W" && !(VirtualNetworkRules is ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FirewallRules))
+            if (options.Format != "W" && !(FirewallRules is ChangeTrackingList<DataLakeAnalyticsFirewallRuleData> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -171,77 +171,77 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirewallState))
+            if (FirewallState.HasValue)
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(FirewallAllowAzureIPs))
+            if (FirewallAllowAzureIPs.HasValue)
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NewTier))
+            if (NewTier.HasValue)
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentTier))
+            if (options.Format != "W" && CurrentTier.HasValue)
             {
                 writer.WritePropertyName("currentTier"u8);
                 writer.WriteStringValue(CurrentTier.Value.ToSerialString());
             }
-            if (Optional.IsDefined(MaxJobCount))
+            if (MaxJobCount.HasValue)
             {
                 writer.WritePropertyName("maxJobCount"u8);
                 writer.WriteNumberValue(MaxJobCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxActiveJobCountPerUser))
+            if (options.Format != "W" && MaxActiveJobCountPerUser.HasValue)
             {
                 writer.WritePropertyName("maxActiveJobCountPerUser"u8);
                 writer.WriteNumberValue(MaxActiveJobCountPerUser.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxQueuedJobCountPerUser))
+            if (options.Format != "W" && MaxQueuedJobCountPerUser.HasValue)
             {
                 writer.WritePropertyName("maxQueuedJobCountPerUser"u8);
                 writer.WriteNumberValue(MaxQueuedJobCountPerUser.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxJobRunningTimeInMin))
+            if (options.Format != "W" && MaxJobRunningTimeInMin.HasValue)
             {
                 writer.WritePropertyName("maxJobRunningTimeInMin"u8);
                 writer.WriteNumberValue(MaxJobRunningTimeInMin.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemMaxJobCount))
+            if (options.Format != "W" && SystemMaxJobCount.HasValue)
             {
                 writer.WritePropertyName("systemMaxJobCount"u8);
                 writer.WriteNumberValue(SystemMaxJobCount.Value);
             }
-            if (Optional.IsDefined(MaxDegreeOfParallelism))
+            if (MaxDegreeOfParallelism.HasValue)
             {
                 writer.WritePropertyName("maxDegreeOfParallelism"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelism.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemMaxDegreeOfParallelism))
+            if (options.Format != "W" && SystemMaxDegreeOfParallelism.HasValue)
             {
                 writer.WritePropertyName("systemMaxDegreeOfParallelism"u8);
                 writer.WriteNumberValue(SystemMaxDegreeOfParallelism.Value);
             }
-            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
+            if (MaxDegreeOfParallelismPerJob.HasValue)
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinPriorityPerJob))
+            if (options.Format != "W" && MinPriorityPerJob.HasValue)
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
             }
-            if (Optional.IsDefined(QueryStoreRetention))
+            if (QueryStoreRetention.HasValue)
             {
                 writer.WritePropertyName("queryStoreRetention"u8);
                 writer.WriteNumberValue(QueryStoreRetention.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DebugDataAccessLevel))
+            if (options.Format != "W" && DebugDataAccessLevel.HasValue)
             {
                 writer.WritePropertyName("debugDataAccessLevel"u8);
                 writer.WriteStringValue(DebugDataAccessLevel.Value.ToSerialString());
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeStoreAccountInformationData> array = new List<DataLakeStoreAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item));
+                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item, options));
                             }
                             dataLakeStoreAccounts = array;
                             continue;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeStoreAccountInformationData> array = new List<DataLakeStoreAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item));
+                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item, options));
                             }
                             publicDataLakeStoreAccounts = array;
                             continue;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsStorageAccountInformationData> array = new List<DataLakeAnalyticsStorageAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item));
+                                array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsComputePolicyData> array = new List<DataLakeAnalyticsComputePolicyData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(item));
+                                array.Add(DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(item, options));
                             }
                             computePolicies = array;
                             continue;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsHiveMetastore> array = new List<DataLakeAnalyticsHiveMetastore>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsHiveMetastore.DeserializeDataLakeAnalyticsHiveMetastore(item));
+                                array.Add(DataLakeAnalyticsHiveMetastore.DeserializeDataLakeAnalyticsHiveMetastore(item, options));
                             }
                             hiveMetastores = array;
                             continue;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsVirtualNetworkRule> array = new List<DataLakeAnalyticsVirtualNetworkRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsVirtualNetworkRule.DeserializeDataLakeAnalyticsVirtualNetworkRule(item));
+                                array.Add(DataLakeAnalyticsVirtualNetworkRule.DeserializeDataLakeAnalyticsVirtualNetworkRule(item, options));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsFirewallRuleData> array = new List<DataLakeAnalyticsFirewallRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(item));
+                                array.Add(DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(item, options));
                             }
                             firewallRules = array;
                             continue;

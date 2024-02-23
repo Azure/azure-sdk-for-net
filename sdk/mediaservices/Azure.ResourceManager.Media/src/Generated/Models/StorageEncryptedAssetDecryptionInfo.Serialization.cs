@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteBase64StringValue(Key, "D");
             }
-            if (Optional.IsCollectionDefined(AssetFileEncryptionMetadata))
+            if (!(AssetFileEncryptionMetadata is ChangeTrackingList<MediaAssetFileEncryptionMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assetFileEncryptionMetadata"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetFileEncryptionMetadata> array = new List<MediaAssetFileEncryptionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetFileEncryptionMetadata.DeserializeMediaAssetFileEncryptionMetadata(item));
+                        array.Add(MediaAssetFileEncryptionMetadata.DeserializeMediaAssetFileEncryptionMetadata(item, options));
                     }
                     assetFileEncryptionMetadata = array;
                     continue;

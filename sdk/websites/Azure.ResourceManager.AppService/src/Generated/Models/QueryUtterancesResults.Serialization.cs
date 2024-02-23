@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsCollectionDefined(Results))
+            if (!(Results is ChangeTrackingList<QueryUtterancesResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<QueryUtterancesResult> array = new List<QueryUtterancesResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryUtterancesResult.DeserializeQueryUtterancesResult(item));
+                        array.Add(QueryUtterancesResult.DeserializeQueryUtterancesResult(item, options));
                     }
                     results = array;
                     continue;

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ApiVersion))
+            if (options.Format != "W" && ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<StoragePoolSkuCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LocationInfo))
+            if (options.Format != "W" && LocationInfo != null)
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteObjectValue(LocationInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
+            if (options.Format != "W" && !(Restrictions is ChangeTrackingList<StoragePoolSkuRestrictions> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuCapability> array = new List<StoragePoolSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item));
+                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         continue;
                     }
-                    locationInfo = StoragePoolSkuLocationInfo.DeserializeStoragePoolSkuLocationInfo(property.Value);
+                    locationInfo = StoragePoolSkuLocationInfo.DeserializeStoragePoolSkuLocationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuRestrictions> array = new List<StoragePoolSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuRestrictions.DeserializeStoragePoolSkuRestrictions(item));
+                        array.Add(StoragePoolSkuRestrictions.DeserializeStoragePoolSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;

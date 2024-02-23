@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteNumberValue(Version.Value);
@@ -48,69 +48,69 @@ namespace Azure.ResourceManager.Reservations
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(RequestOn))
+            if (RequestOn.HasValue)
             {
                 writer.WritePropertyName("requestDateTime"u8);
                 writer.WriteStringValue(RequestOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "D");
             }
-            if (Optional.IsDefined(ReservationExpireOn))
+            if (ReservationExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryDateTime"u8);
                 writer.WriteStringValue(ReservationExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (BenefitStartOn.HasValue)
             {
                 writer.WritePropertyName("benefitStartTime"u8);
                 writer.WriteStringValue(BenefitStartOn.Value, "O");
             }
-            if (Optional.IsDefined(OriginalQuantity))
+            if (OriginalQuantity.HasValue)
             {
                 writer.WritePropertyName("originalQuantity"u8);
                 writer.WriteNumberValue(OriginalQuantity.Value);
             }
-            if (Optional.IsDefined(Term))
+            if (Term.HasValue)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(BillingPlan))
+            if (BillingPlan.HasValue)
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Optional.IsDefined(PlanInformation))
+            if (PlanInformation != null)
             {
                 writer.WritePropertyName("planInformation"u8);
                 writer.WriteObjectValue(PlanInformation);
             }
-            if (Optional.IsCollectionDefined(Reservations))
+            if (!(Reservations is ChangeTrackingList<ReservationDetailData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reservations"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Reservations
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReviewOn))
+            if (ReviewOn.HasValue)
             {
                 writer.WritePropertyName("reviewDateTime"u8);
                 writer.WriteStringValue(ReviewOn.Value, "O");
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Reservations
                             {
                                 continue;
                             }
-                            planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value);
+                            planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reservations"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Reservations
                             List<ReservationDetailData> array = new List<ReservationDetailData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                                array.Add(ReservationDetailData.DeserializeReservationDetailData(item, options));
                             }
                             reservations = array;
                             continue;

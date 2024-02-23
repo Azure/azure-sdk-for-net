@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedRedisCacheId))
+            if (LinkedRedisCacheId != null)
             {
                 writer.WritePropertyName("linkedRedisCacheId"u8);
                 writer.WriteStringValue(LinkedRedisCacheId);
             }
-            if (Optional.IsDefined(LinkedRedisCacheLocation))
+            if (LinkedRedisCacheLocation.HasValue)
             {
                 writer.WritePropertyName("linkedRedisCacheLocation"u8);
                 writer.WriteStringValue(LinkedRedisCacheLocation.Value);
             }
-            if (Optional.IsDefined(ServerRole))
+            if (ServerRole.HasValue)
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(GeoReplicatedPrimaryHostName))
+            if (options.Format != "W" && GeoReplicatedPrimaryHostName != null)
             {
                 writer.WritePropertyName("geoReplicatedPrimaryHostName"u8);
                 writer.WriteStringValue(GeoReplicatedPrimaryHostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryHostName))
+            if (options.Format != "W" && PrimaryHostName != null)
             {
                 writer.WritePropertyName("primaryHostName"u8);
                 writer.WriteStringValue(PrimaryHostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);

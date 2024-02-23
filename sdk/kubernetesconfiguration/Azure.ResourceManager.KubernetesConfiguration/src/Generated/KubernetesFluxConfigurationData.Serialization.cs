@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scope))
+            if (Scope.HasValue)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(SourceKind))
+            if (SourceKind.HasValue)
             {
                 writer.WritePropertyName("sourceKind"u8);
                 writer.WriteStringValue(SourceKind.Value.ToString());
             }
-            if (Optional.IsDefined(IsReconciliationSuspended))
+            if (IsReconciliationSuspended.HasValue)
             {
                 writer.WritePropertyName("suspend"u8);
                 writer.WriteBooleanValue(IsReconciliationSuspended.Value);
             }
-            if (Optional.IsDefined(GitRepository))
+            if (GitRepository != null)
             {
                 if (GitRepository != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("gitRepository");
                 }
             }
-            if (Optional.IsDefined(Bucket))
+            if (Bucket != null)
             {
                 if (Bucket != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("bucket");
                 }
             }
-            if (Optional.IsDefined(AzureBlob))
+            if (AzureBlob != null)
             {
                 if (AzureBlob != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("azureBlob");
                 }
             }
-            if (Optional.IsCollectionDefined(Kustomizations))
+            if (!(Kustomizations is ChangeTrackingDictionary<string, Kustomization> collection && collection.IsUndefined))
             {
                 if (Kustomizations != null)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("kustomizations");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationProtectedSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<KubernetesObjectStatus> collection1 && collection1.IsUndefined))
             {
                 if (Statuses != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("statuses");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(RepositoryPublicKey))
+            if (options.Format != "W" && RepositoryPublicKey != null)
             {
                 if (RepositoryPublicKey != null)
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("repositoryPublicKey");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceSyncedCommitId))
+            if (options.Format != "W" && SourceSyncedCommitId != null)
             {
                 if (SourceSyncedCommitId != null)
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("sourceSyncedCommitId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceUpdatedOn))
+            if (options.Format != "W" && SourceUpdatedOn.HasValue)
             {
                 if (SourceUpdatedOn != null)
                 {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("sourceUpdatedAt");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusUpdatedOn))
+            if (options.Format != "W" && StatusUpdatedOn.HasValue)
             {
                 if (StatusUpdatedOn != null)
                 {
@@ -207,17 +207,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("statusUpdatedAt");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
+            if (options.Format != "W" && ComplianceState.HasValue)
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 if (ErrorMessage != null)
                 {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 gitRepository = null;
                                 continue;
                             }
-                            gitRepository = KubernetesGitRepository.DeserializeKubernetesGitRepository(property0.Value);
+                            gitRepository = KubernetesGitRepository.DeserializeKubernetesGitRepository(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bucket"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 bucket = null;
                                 continue;
                             }
-                            bucket = KubernetesBucket.DeserializeKubernetesBucket(property0.Value);
+                            bucket = KubernetesBucket.DeserializeKubernetesBucket(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureBlob"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 azureBlob = null;
                                 continue;
                             }
-                            azureBlob = KubernetesAzureBlob.DeserializeKubernetesAzureBlob(property0.Value);
+                            azureBlob = KubernetesAzureBlob.DeserializeKubernetesAzureBlob(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kustomizations"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             Dictionary<string, Kustomization> dictionary = new Dictionary<string, Kustomization>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, Kustomization.DeserializeKustomization(property1.Value));
+                                dictionary.Add(property1.Name, Kustomization.DeserializeKustomization(property1.Value, options));
                             }
                             kustomizations = dictionary;
                             continue;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             List<KubernetesObjectStatus> array = new List<KubernetesObjectStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesObjectStatus.DeserializeKubernetesObjectStatus(item));
+                                array.Add(KubernetesObjectStatus.DeserializeKubernetesObjectStatus(item, options));
                             }
                             statuses = array;
                             continue;

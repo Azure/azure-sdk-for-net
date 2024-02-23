@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
+            if (LogAnalyticsWorkspaceResourceId != null)
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceResourceId"u8);
                 writer.WriteStringValue(LogAnalyticsWorkspaceResourceId);
             }
-            if (Optional.IsDefined(SecurityMonitoring))
+            if (SecurityMonitoring != null)
             {
                 writer.WritePropertyName("securityMonitoring"u8);
                 writer.WriteObjectValue(SecurityMonitoring);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    securityMonitoring = ManagedClusterSecurityProfileDefenderSecurityMonitoring.DeserializeManagedClusterSecurityProfileDefenderSecurityMonitoring(property.Value);
+                    securityMonitoring = ManagedClusterSecurityProfileDefenderSecurityMonitoring.DeserializeManagedClusterSecurityProfileDefenderSecurityMonitoring(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

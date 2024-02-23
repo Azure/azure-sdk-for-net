@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NumberOfQueries))
+            if (options.Format != "W" && NumberOfQueries.HasValue)
             {
                 writer.WritePropertyName("numberOfQueries"u8);
                 writer.WriteNumberValue(NumberOfQueries.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AggregationFunction))
+            if (options.Format != "W" && AggregationFunction != null)
             {
                 writer.WritePropertyName("aggregationFunction"u8);
                 writer.WriteStringValue(AggregationFunction);
             }
-            if (options.Format != "W" && Optional.IsDefined(ObservationMetric))
+            if (options.Format != "W" && ObservationMetric != null)
             {
                 writer.WritePropertyName("observationMetric"u8);
                 writer.WriteStringValue(ObservationMetric);
             }
-            if (options.Format != "W" && Optional.IsDefined(IntervalType))
+            if (options.Format != "W" && IntervalType.HasValue)
             {
                 writer.WritePropertyName("intervalType"u8);
                 writer.WriteStringValue(IntervalType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            if (options.Format != "W" && StartTime != null)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            if (options.Format != "W" && EndTime != null)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (Optional.IsCollectionDefined(Queries))
+            if (!(Queries is ChangeTrackingList<QueryStatisticsProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryStatisticsProperties> array = new List<QueryStatisticsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item));
+                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item, options));
                     }
                     queries = array;
                     continue;

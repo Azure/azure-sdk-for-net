@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalizationClusterData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<OperationalizationClusterData> array = new List<OperationalizationClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalizationClusterData.DeserializeOperationalizationClusterData(item));
+                        array.Add(OperationalizationClusterData.DeserializeOperationalizationClusterData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
+            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<FleetCredentialResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<FleetCredentialResult> array = new List<FleetCredentialResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FleetCredentialResult.DeserializeFleetCredentialResult(item));
+                        array.Add(FleetCredentialResult.DeserializeFleetCredentialResult(item, options));
                     }
                     kubeconfigs = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<KubernetesVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<KubernetesVersion> array = new List<KubernetesVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVersion.DeserializeKubernetesVersion(item));
+                        array.Add(KubernetesVersion.DeserializeKubernetesVersion(item, options));
                     }
                     values = array;
                     continue;

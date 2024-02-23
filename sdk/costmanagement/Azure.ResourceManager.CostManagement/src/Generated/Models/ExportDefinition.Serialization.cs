@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(ExportType.ToString());
             writer.WritePropertyName("timeframe"u8);
             writer.WriteStringValue(Timeframe.ToString());
-            if (Optional.IsDefined(TimePeriod))
+            if (TimePeriod != null)
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
-            if (Optional.IsDefined(DataSet))
+            if (DataSet != null)
             {
                 writer.WritePropertyName("dataSet"u8);
                 writer.WriteObjectValue(DataSet);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = ExportTimePeriod.DeserializeExportTimePeriod(property.Value);
+                    timePeriod = ExportTimePeriod.DeserializeExportTimePeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataSet"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dataSet = ExportDataset.DeserializeExportDataset(property.Value);
+                    dataSet = ExportDataset.DeserializeExportDataset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

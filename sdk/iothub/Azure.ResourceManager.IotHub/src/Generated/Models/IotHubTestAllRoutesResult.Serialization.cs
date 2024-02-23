@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Routes))
+            if (!(Routes is ChangeTrackingList<IotHubMatchedRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubMatchedRoute> array = new List<IotHubMatchedRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubMatchedRoute.DeserializeIotHubMatchedRoute(item));
+                        array.Add(IotHubMatchedRoute.DeserializeIotHubMatchedRoute(item, options));
                     }
                     routes = array;
                     continue;

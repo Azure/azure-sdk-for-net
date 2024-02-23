@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ThresholdRules))
+            if (!(ThresholdRules is ChangeTrackingList<ThresholdCustomAlertRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("thresholdRules"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TimeWindowRules))
+            if (!(TimeWindowRules is ChangeTrackingList<TimeWindowCustomAlertRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("timeWindowRules"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowlistRules))
+            if (!(AllowlistRules is ChangeTrackingList<AllowlistCustomAlertRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("allowlistRules"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DenylistRules))
+            if (!(DenylistRules is ChangeTrackingList<DenylistCustomAlertRule> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("denylistRules"u8);
                 writer.WriteStartArray();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<ThresholdCustomAlertRule> array = new List<ThresholdCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(item));
+                                array.Add(ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(item, options));
                             }
                             thresholdRules = array;
                             continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<TimeWindowCustomAlertRule> array = new List<TimeWindowCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(item));
+                                array.Add(TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(item, options));
                             }
                             timeWindowRules = array;
                             continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AllowlistCustomAlertRule> array = new List<AllowlistCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(item));
+                                array.Add(AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(item, options));
                             }
                             allowlistRules = array;
                             continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<DenylistCustomAlertRule> array = new List<DenylistCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(item));
+                                array.Add(DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(item, options));
                             }
                             denylistRules = array;
                             continue;

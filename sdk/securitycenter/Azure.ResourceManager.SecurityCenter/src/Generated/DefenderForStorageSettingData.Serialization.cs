@@ -43,31 +43,31 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(IsOverrideSubscriptionLevelSettingsEnabled))
+            if (IsOverrideSubscriptionLevelSettingsEnabled.HasValue)
             {
                 writer.WritePropertyName("overrideSubscriptionLevelSettings"u8);
                 writer.WriteBooleanValue(IsOverrideSubscriptionLevelSettingsEnabled.Value);
             }
             writer.WritePropertyName("sensitiveDataDiscovery"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSensitiveDataDiscoveryEnabled))
+            if (IsSensitiveDataDiscoveryEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsSensitiveDataDiscoveryEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SensitiveDataDiscoveryOperationStatus))
+            if (options.Format != "W" && SensitiveDataDiscoveryOperationStatus != null)
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteObjectValue(SensitiveDataDiscoveryOperationStatus);
@@ -75,24 +75,24 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteEndObject();
             writer.WritePropertyName("malwareScanning"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScanResultsEventGridTopicResourceId))
+            if (ScanResultsEventGridTopicResourceId != null)
             {
                 writer.WritePropertyName("scanResultsEventGridTopicResourceId"u8);
                 writer.WriteStringValue(ScanResultsEventGridTopicResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MalwareScanningOperationStatus))
+            if (options.Format != "W" && MalwareScanningOperationStatus != null)
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteObjectValue(MalwareScanningOperationStatus);
             }
             writer.WritePropertyName("onUpload"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsMalwareScanningOnUploadEnabled))
+            if (IsMalwareScanningOnUploadEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsMalwareScanningOnUploadEnabled.Value);
             }
-            if (Optional.IsDefined(CapGBPerMonth))
+            if (CapGBPerMonth.HasValue)
             {
                 writer.WritePropertyName("capGBPerMonth"u8);
                 writer.WriteNumberValue(CapGBPerMonth.Value);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                     {
                                         continue;
                                     }
-                                    operationStatus = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value);
+                                    operationStatus = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value, options);
                                     continue;
                                 }
                             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                     {
                                         continue;
                                     }
-                                    operationStatus0 = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value);
+                                    operationStatus0 = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value, options);
                                     continue;
                                 }
                                 if (property1.NameEquals("onUpload"u8))

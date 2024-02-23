@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("labelName"u8);
             writer.WriteStringValue(LabelName);
-            if (options.Format != "W" && Optional.IsDefined(LabelType))
+            if (options.Format != "W" && LabelType.HasValue)
             {
                 writer.WritePropertyName("labelType"u8);
                 writer.WriteStringValue(LabelType.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = UpdateMobilityServiceRequestProperties.DeserializeUpdateMobilityServiceRequestProperties(property.Value);
+                    properties = UpdateMobilityServiceRequestProperties.DeserializeUpdateMobilityServiceRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

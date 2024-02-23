@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PostgreSql
                     {
                         continue;
                     }
-                    properties = PostgreSqlPrivateLinkResourceProperties.DeserializePostgreSqlPrivateLinkResourceProperties(property.Value);
+                    properties = PostgreSqlPrivateLinkResourceProperties.DeserializePostgreSqlPrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AttributeMappings))
+            if (!(AttributeMappings is ChangeTrackingList<MapperAttributeMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attributeMappings"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperAttributeMapping> array = new List<MapperAttributeMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperAttributeMapping.DeserializeMapperAttributeMapping(item));
+                        array.Add(MapperAttributeMapping.DeserializeMapperAttributeMapping(item, options));
                     }
                     attributeMappings = array;
                     continue;

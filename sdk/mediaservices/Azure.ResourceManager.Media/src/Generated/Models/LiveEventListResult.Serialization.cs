@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MediaLiveEventData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OdataCount))
+            if (OdataCount.HasValue)
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(OdataCount.Value);
             }
-            if (Optional.IsDefined(OdataNextLink))
+            if (OdataNextLink != null)
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(OdataNextLink);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaLiveEventData> array = new List<MediaLiveEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaLiveEventData.DeserializeMediaLiveEventData(item));
+                        array.Add(MediaLiveEventData.DeserializeMediaLiveEventData(item, options));
                     }
                     value = array;
                     continue;

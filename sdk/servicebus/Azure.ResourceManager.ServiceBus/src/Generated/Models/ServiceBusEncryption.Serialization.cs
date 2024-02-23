@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(KeyVaultProperties))
+            if (!(KeyVaultProperties is ChangeTrackingList<ServiceBusKeyVaultProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(KeySource))
+            if (KeySource.HasValue)
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (Optional.IsDefined(RequireInfrastructureEncryption))
+            if (RequireInfrastructureEncryption.HasValue)
             {
                 writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusKeyVaultProperties> array = new List<ServiceBusKeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusKeyVaultProperties.DeserializeServiceBusKeyVaultProperties(item));
+                        array.Add(ServiceBusKeyVaultProperties.DeserializeServiceBusKeyVaultProperties(item, options));
                     }
                     keyVaultProperties = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<StreamAnalyticsSubscriptionQuota> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsSubscriptionQuota> array = new List<StreamAnalyticsSubscriptionQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota(item));
+                        array.Add(StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota(item, options));
                     }
                     value = array;
                     continue;

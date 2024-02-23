@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,109 +56,109 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AdministratorLogin))
+            if (options.Format != "W" && AdministratorLogin != null)
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (Optional.IsDefined(AdministratorLoginPassword))
+            if (AdministratorLoginPassword != null)
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(PostgresqlVersion))
+            if (PostgresqlVersion != null)
             {
                 writer.WritePropertyName("postgresqlVersion"u8);
                 writer.WriteStringValue(PostgresqlVersion);
             }
-            if (Optional.IsDefined(CitusVersion))
+            if (CitusVersion != null)
             {
                 writer.WritePropertyName("citusVersion"u8);
                 writer.WriteStringValue(CitusVersion);
             }
-            if (Optional.IsDefined(MaintenanceWindow))
+            if (MaintenanceWindow != null)
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (Optional.IsDefined(PreferredPrimaryZone))
+            if (PreferredPrimaryZone != null)
             {
                 writer.WritePropertyName("preferredPrimaryZone"u8);
                 writer.WriteStringValue(PreferredPrimaryZone);
             }
-            if (Optional.IsDefined(IsShardsOnCoordinatorEnabled))
+            if (IsShardsOnCoordinatorEnabled.HasValue)
             {
                 writer.WritePropertyName("enableShardsOnCoordinator"u8);
                 writer.WriteBooleanValue(IsShardsOnCoordinatorEnabled.Value);
             }
-            if (Optional.IsDefined(IsHAEnabled))
+            if (IsHAEnabled.HasValue)
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(IsHAEnabled.Value);
             }
-            if (Optional.IsDefined(CoordinatorServerEdition))
+            if (CoordinatorServerEdition != null)
             {
                 writer.WritePropertyName("coordinatorServerEdition"u8);
                 writer.WriteStringValue(CoordinatorServerEdition);
             }
-            if (Optional.IsDefined(CoordinatorStorageQuotaInMb))
+            if (CoordinatorStorageQuotaInMb.HasValue)
             {
                 writer.WritePropertyName("coordinatorStorageQuotaInMb"u8);
                 writer.WriteNumberValue(CoordinatorStorageQuotaInMb.Value);
             }
-            if (Optional.IsDefined(CoordinatorVCores))
+            if (CoordinatorVCores.HasValue)
             {
                 writer.WritePropertyName("coordinatorVCores"u8);
                 writer.WriteNumberValue(CoordinatorVCores.Value);
             }
-            if (Optional.IsDefined(IsCoordinatorPublicIPAccessEnabled))
+            if (IsCoordinatorPublicIPAccessEnabled.HasValue)
             {
                 writer.WritePropertyName("coordinatorEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsCoordinatorPublicIPAccessEnabled.Value);
             }
-            if (Optional.IsDefined(NodeServerEdition))
+            if (NodeServerEdition != null)
             {
                 writer.WritePropertyName("nodeServerEdition"u8);
                 writer.WriteStringValue(NodeServerEdition);
             }
-            if (Optional.IsDefined(NodeCount))
+            if (NodeCount.HasValue)
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Optional.IsDefined(NodeStorageQuotaInMb))
+            if (NodeStorageQuotaInMb.HasValue)
             {
                 writer.WritePropertyName("nodeStorageQuotaInMb"u8);
                 writer.WriteNumberValue(NodeStorageQuotaInMb.Value);
             }
-            if (Optional.IsDefined(NodeVCores))
+            if (NodeVCores.HasValue)
             {
                 writer.WritePropertyName("nodeVCores"u8);
                 writer.WriteNumberValue(NodeVCores.Value);
             }
-            if (Optional.IsDefined(IsNodePublicIPAccessEnabled))
+            if (IsNodePublicIPAccessEnabled.HasValue)
             {
                 writer.WritePropertyName("nodeEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsNodePublicIPAccessEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServerNames))
+            if (options.Format != "W" && !(ServerNames is ChangeTrackingList<CosmosDBForPostgreSqlServerNameItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serverNames"u8);
                 writer.WriteStartArray();
@@ -168,22 +168,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(SourceLocation))
+            if (SourceLocation.HasValue)
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation.Value);
             }
-            if (Optional.IsDefined(PointInTimeUTC))
+            if (PointInTimeUTC.HasValue)
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReadReplicas))
+            if (options.Format != "W" && !(ReadReplicas is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("readReplicas"u8);
                 writer.WriteStartArray();
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
+            if (options.Format != "W" && EarliestRestoreOn.HasValue)
             {
                 writer.WritePropertyName("earliestRestoreTime"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            maintenanceWindow = CosmosDBForPostgreSqlMaintenanceWindow.DeserializeCosmosDBForPostgreSqlMaintenanceWindow(property0.Value);
+                            maintenanceWindow = CosmosDBForPostgreSqlMaintenanceWindow.DeserializeCosmosDBForPostgreSqlMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("preferredPrimaryZone"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             List<CosmosDBForPostgreSqlServerNameItem> array = new List<CosmosDBForPostgreSqlServerNameItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBForPostgreSqlServerNameItem.DeserializeCosmosDBForPostgreSqlServerNameItem(item));
+                                array.Add(CosmosDBForPostgreSqlServerNameItem.DeserializeCosmosDBForPostgreSqlServerNameItem(item, options));
                             }
                             serverNames = array;
                             continue;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             List<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> array = new List<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBForPostgreSqlSimplePrivateEndpointConnection.DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(item));
+                                array.Add(CosmosDBForPostgreSqlSimplePrivateEndpointConnection.DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

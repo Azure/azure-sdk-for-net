@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SmartGroupData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<SmartGroupData> array = new List<SmartGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SmartGroupData.DeserializeSmartGroupData(item));
+                        array.Add(SmartGroupData.DeserializeSmartGroupData(item, options));
                     }
                     value = array;
                     continue;

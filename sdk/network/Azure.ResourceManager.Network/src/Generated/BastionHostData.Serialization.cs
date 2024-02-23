@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (!(IPConfigurations is ChangeTrackingList<BastionHostIPConfiguration> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -92,57 +92,57 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DnsName))
+            if (DnsName != null)
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (Optional.IsDefined(VirtualNetwork))
+            if (VirtualNetwork != null)
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (NetworkAcls != null)
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ScaleUnits))
+            if (ScaleUnits.HasValue)
             {
                 writer.WritePropertyName("scaleUnits"u8);
                 writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (Optional.IsDefined(DisableCopyPaste))
+            if (DisableCopyPaste.HasValue)
             {
                 writer.WritePropertyName("disableCopyPaste"u8);
                 writer.WriteBooleanValue(DisableCopyPaste.Value);
             }
-            if (Optional.IsDefined(EnableFileCopy))
+            if (EnableFileCopy.HasValue)
             {
                 writer.WritePropertyName("enableFileCopy"u8);
                 writer.WriteBooleanValue(EnableFileCopy.Value);
             }
-            if (Optional.IsDefined(EnableIPConnect))
+            if (EnableIPConnect.HasValue)
             {
                 writer.WritePropertyName("enableIpConnect"u8);
                 writer.WriteBooleanValue(EnableIPConnect.Value);
             }
-            if (Optional.IsDefined(EnableShareableLink))
+            if (EnableShareableLink.HasValue)
             {
                 writer.WritePropertyName("enableShareableLink"u8);
                 writer.WriteBooleanValue(EnableShareableLink.Value);
             }
-            if (Optional.IsDefined(EnableTunneling))
+            if (EnableTunneling.HasValue)
             {
                 writer.WritePropertyName("enableTunneling"u8);
                 writer.WriteBooleanValue(EnableTunneling.Value);
             }
-            if (Optional.IsDefined(EnableKerberos))
+            if (EnableKerberos.HasValue)
             {
                 writer.WritePropertyName("enableKerberos"u8);
                 writer.WriteBooleanValue(EnableKerberos.Value);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = NetworkSku.DeserializeNetworkSku(property.Value);
+                    sku = NetworkSku.DeserializeNetworkSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
                             List<BastionHostIPConfiguration> array = new List<BastionHostIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BastionHostIPConfiguration.DeserializeBastionHostIPConfiguration(item));
+                                array.Add(BastionHostIPConfiguration.DeserializeBastionHostIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkAcls = BastionHostPropertiesFormatNetworkAcls.DeserializeBastionHostPropertiesFormatNetworkAcls(property0.Value);
+                            networkAcls = BastionHostPropertiesFormatNetworkAcls.DeserializeBastionHostPropertiesFormatNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

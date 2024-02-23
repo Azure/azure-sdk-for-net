@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NumberOfDisksIncludedInBackup))
+            if (NumberOfDisksIncludedInBackup.HasValue)
             {
                 writer.WritePropertyName("numberOfDisksIncludedInBackup"u8);
                 writer.WriteNumberValue(NumberOfDisksIncludedInBackup.Value);
             }
-            if (Optional.IsDefined(NumberOfDisksAttachedToVm))
+            if (NumberOfDisksAttachedToVm.HasValue)
             {
                 writer.WritePropertyName("numberOfDisksAttachedToVm"u8);
                 writer.WriteNumberValue(NumberOfDisksAttachedToVm.Value);
             }
-            if (Optional.IsCollectionDefined(IncludedDiskList))
+            if (!(IncludedDiskList is ChangeTrackingList<DiskInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedDiskList"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedDiskList))
+            if (!(ExcludedDiskList is ChangeTrackingList<DiskInformation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("excludedDiskList"u8);
                 writer.WriteStartArray();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DiskInformation> array = new List<DiskInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInformation.DeserializeDiskInformation(item));
+                        array.Add(DiskInformation.DeserializeDiskInformation(item, options));
                     }
                     includedDiskList = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DiskInformation> array = new List<DiskInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInformation.DeserializeDiskInformation(item));
+                        array.Add(DiskInformation.DeserializeDiskInformation(item, options));
                     }
                     excludedDiskList = array;
                     continue;

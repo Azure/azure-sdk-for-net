@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(InvolvedInteractionTypes))
+            if (!(InvolvedInteractionTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("involvedInteractionTypes"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InvolvedKpiTypes))
+            if (!(InvolvedKpiTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("involvedKpiTypes"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InvolvedRelationships))
+            if (!(InvolvedRelationships is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("involvedRelationships"u8);
                 writer.WriteStartArray();
@@ -102,57 +102,57 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NegativeOutcomeExpression))
+            if (NegativeOutcomeExpression != null)
             {
                 writer.WritePropertyName("negativeOutcomeExpression"u8);
                 writer.WriteStringValue(NegativeOutcomeExpression);
             }
-            if (Optional.IsDefined(PositiveOutcomeExpression))
+            if (PositiveOutcomeExpression != null)
             {
                 writer.WritePropertyName("positiveOutcomeExpression"u8);
                 writer.WriteStringValue(PositiveOutcomeExpression);
             }
-            if (Optional.IsDefined(PrimaryProfileType))
+            if (PrimaryProfileType != null)
             {
                 writer.WritePropertyName("primaryProfileType"u8);
                 writer.WriteStringValue(PrimaryProfileType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PredictionName))
+            if (PredictionName != null)
             {
                 writer.WritePropertyName("predictionName"u8);
                 writer.WriteStringValue(PredictionName);
             }
-            if (Optional.IsDefined(ScopeExpression))
+            if (ScopeExpression != null)
             {
                 writer.WritePropertyName("scopeExpression"u8);
                 writer.WriteStringValue(ScopeExpression);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(AutoAnalyze))
+            if (AutoAnalyze.HasValue)
             {
                 writer.WritePropertyName("autoAnalyze"u8);
                 writer.WriteBooleanValue(AutoAnalyze.Value);
             }
-            if (Optional.IsDefined(Mappings))
+            if (Mappings != null)
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteObjectValue(Mappings);
             }
-            if (Optional.IsDefined(ScoreLabel))
+            if (ScoreLabel != null)
             {
                 writer.WritePropertyName("scoreLabel"u8);
                 writer.WriteStringValue(ScoreLabel);
             }
-            if (Optional.IsCollectionDefined(Grades))
+            if (!(Grades is ChangeTrackingList<PredictionGradesItem> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("grades"u8);
                 writer.WriteStartArray();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemGeneratedEntities))
+            if (options.Format != "W" && SystemGeneratedEntities != null)
             {
                 writer.WritePropertyName("systemGeneratedEntities"u8);
                 writer.WriteObjectValue(SystemGeneratedEntities);
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            mappings = PredictionMappings.DeserializePredictionMappings(property0.Value);
+                            mappings = PredictionMappings.DeserializePredictionMappings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scoreLabel"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PredictionGradesItem> array = new List<PredictionGradesItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PredictionGradesItem.DeserializePredictionGradesItem(item));
+                                array.Add(PredictionGradesItem.DeserializePredictionGradesItem(item, options));
                             }
                             grades = array;
                             continue;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            systemGeneratedEntities = PredictionSystemGeneratedEntities.DeserializePredictionSystemGeneratedEntities(property0.Value);
+                            systemGeneratedEntities = PredictionSystemGeneratedEntities.DeserializePredictionSystemGeneratedEntities(property0.Value, options);
                             continue;
                         }
                     }

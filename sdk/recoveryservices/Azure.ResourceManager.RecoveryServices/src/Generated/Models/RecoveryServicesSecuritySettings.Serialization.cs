@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImmutabilitySettings))
+            if (ImmutabilitySettings != null)
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings);
             }
-            if (Optional.IsDefined(SoftDeleteSettings))
+            if (SoftDeleteSettings != null)
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
                 writer.WriteObjectValue(SoftDeleteSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(MultiUserAuthorization))
+            if (options.Format != "W" && MultiUserAuthorization.HasValue)
             {
                 writer.WritePropertyName("multiUserAuthorization"u8);
                 writer.WriteStringValue(MultiUserAuthorization.Value.ToString());
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);
+                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softDeleteSettings"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value);
+                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("multiUserAuthorization"u8))

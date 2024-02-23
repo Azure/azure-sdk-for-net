@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             writer.WritePropertyName("level"u8);
             writer.WriteStringValue(Level.ToString());
-            if (Optional.IsDefined(Notes))
+            if (Notes != null)
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsCollectionDefined(Owners))
+            if (!(Owners is ChangeTrackingList<ManagementLockOwner> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Resources
                             List<ManagementLockOwner> array = new List<ManagementLockOwner>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item));
+                                array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item, options));
                             }
                             owners = array;
                             continue;

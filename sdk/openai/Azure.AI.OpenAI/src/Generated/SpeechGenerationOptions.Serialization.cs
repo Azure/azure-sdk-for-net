@@ -29,12 +29,12 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Input);
             writer.WritePropertyName("voice"u8);
             writer.WriteStringValue(Voice.ToString());
-            if (Optional.IsDefined(ResponseFormat))
+            if (ResponseFormat.HasValue)
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
-            if (Optional.IsDefined(Speed))
+            if (Speed.HasValue)
             {
                 writer.WritePropertyName("speed"u8);
                 writer.WriteNumberValue(Speed.Value);

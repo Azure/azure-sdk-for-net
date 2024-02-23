@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RunbookParameterType))
+            if (RunbookParameterType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RunbookParameterType);
             }
-            if (Optional.IsDefined(IsMandatory))
+            if (IsMandatory.HasValue)
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (Optional.IsDefined(Position))
+            if (Position.HasValue)
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);

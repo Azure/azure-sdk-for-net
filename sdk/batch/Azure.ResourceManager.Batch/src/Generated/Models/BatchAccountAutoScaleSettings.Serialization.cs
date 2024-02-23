@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("formula"u8);
             writer.WriteStringValue(Formula);
-            if (Optional.IsDefined(EvaluationInterval))
+            if (EvaluationInterval.HasValue)
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteStringValue(EvaluationInterval.Value, "P");

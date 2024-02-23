@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,39 +48,39 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StatusUri))
+            if (StatusUri != null)
             {
                 writer.WritePropertyName("statusUrl"u8);
                 writer.WriteStringValue(StatusUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DetectorUri))
+            if (DetectorUri != null)
             {
                 writer.WritePropertyName("detectorUrl"u8);
                 writer.WriteStringValue(DetectorUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ConsoleUri))
+            if (ConsoleUri != null)
             {
                 writer.WritePropertyName("consoleUrl"u8);
                 writer.WriteStringValue(ConsoleUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(HealthCheckUrlString))
+            if (HealthCheckUrlString != null)
             {
                 writer.WritePropertyName("healthCheckUrl"u8);
                 writer.WriteStringValue(HealthCheckUrlString);
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingDictionary<string, ContainerInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartObject();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppService
                             Dictionary<string, ContainerInfo> dictionary = new Dictionary<string, ContainerInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ContainerInfo.DeserializeContainerInfo(property1.Value));
+                                dictionary.Add(property1.Name, ContainerInfo.DeserializeContainerInfo(property1.Value, options));
                             }
                             containers = dictionary;
                             continue;

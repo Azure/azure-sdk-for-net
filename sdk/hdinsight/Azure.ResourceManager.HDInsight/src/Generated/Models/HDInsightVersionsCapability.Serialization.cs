@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Available))
+            if (!(Available is ChangeTrackingList<HDInsightVersionSpec> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVersionSpec> array = new List<HDInsightVersionSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item));
+                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item, options));
                     }
                     available = array;
                     continue;

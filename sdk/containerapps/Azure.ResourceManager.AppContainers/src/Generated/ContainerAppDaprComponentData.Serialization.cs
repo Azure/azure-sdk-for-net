@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComponentType))
+            if (ComponentType != null)
             {
                 writer.WritePropertyName("componentType"u8);
                 writer.WriteStringValue(ComponentType);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(IgnoreErrors))
+            if (IgnoreErrors.HasValue)
             {
                 writer.WritePropertyName("ignoreErrors"u8);
                 writer.WriteBooleanValue(IgnoreErrors.Value);
             }
-            if (Optional.IsDefined(InitTimeout))
+            if (InitTimeout != null)
             {
                 writer.WritePropertyName("initTimeout"u8);
                 writer.WriteStringValue(InitTimeout);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SecretStoreComponent))
+            if (SecretStoreComponent != null)
             {
                 writer.WritePropertyName("secretStoreComponent"u8);
                 writer.WriteStringValue(SecretStoreComponent);
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingList<ContainerAppDaprMetadata> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                                array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item, options));
                             }
                             secrets = array;
                             continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppDaprMetadata> array = new List<ContainerAppDaprMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppDaprMetadata.DeserializeContainerAppDaprMetadata(item));
+                                array.Add(ContainerAppDaprMetadata.DeserializeContainerAppDaprMetadata(item, options));
                             }
                             metadata = array;
                             continue;

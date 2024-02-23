@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Addresses))
+            if (!(Addresses is ChangeTrackingList<AzureFirewallPublicIPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureFirewallPublicIPAddress> array = new List<AzureFirewallPublicIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallPublicIPAddress.DeserializeAzureFirewallPublicIPAddress(item));
+                        array.Add(AzureFirewallPublicIPAddress.DeserializeAzureFirewallPublicIPAddress(item, options));
                     }
                     addresses = array;
                     continue;

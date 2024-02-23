@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ChangeDetectedOn))
+            if (ChangeDetectedOn.HasValue)
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(ChangeDetectedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(InitiatedByList))
+            if (!(InitiatedByList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("initiatedByList"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ChangeType))
+            if (ChangeType.HasValue)
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PropertyChanges))
+            if (!(PropertyChanges is ChangeTrackingList<PropertyChange> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("propertyChanges"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     List<PropertyChange> array = new List<PropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PropertyChange.DeserializePropertyChange(item));
+                        array.Add(PropertyChange.DeserializePropertyChange(item, options));
                     }
                     propertyChanges = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsSavedSearchData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsSavedSearchData> array = new List<OperationalInsightsSavedSearchData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(item));
+                        array.Add(OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(item, options));
                     }
                     value = array;
                     continue;

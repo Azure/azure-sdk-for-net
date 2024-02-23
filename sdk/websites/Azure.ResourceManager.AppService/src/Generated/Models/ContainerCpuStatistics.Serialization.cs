@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CpuUsage))
+            if (CpuUsage != null)
             {
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteObjectValue(CpuUsage);
             }
-            if (Optional.IsDefined(SystemCpuUsage))
+            if (SystemCpuUsage.HasValue)
             {
                 writer.WritePropertyName("systemCpuUsage"u8);
                 writer.WriteNumberValue(SystemCpuUsage.Value);
             }
-            if (Optional.IsDefined(OnlineCpuCount))
+            if (OnlineCpuCount.HasValue)
             {
                 writer.WritePropertyName("onlineCpuCount"u8);
                 writer.WriteNumberValue(OnlineCpuCount.Value);
             }
-            if (Optional.IsDefined(ThrottlingData))
+            if (ThrottlingData != null)
             {
                 writer.WritePropertyName("throttlingData"u8);
                 writer.WriteObjectValue(ThrottlingData);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    cpuUsage = ContainerCpuUsage.DeserializeContainerCpuUsage(property.Value);
+                    cpuUsage = ContainerCpuUsage.DeserializeContainerCpuUsage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("systemCpuUsage"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(property.Value);
+                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageContentLink))
+            if (PackageContentLink != null)
             {
                 writer.WritePropertyName("packageContentLink"u8);
                 writer.WriteObjectValue(PackageContentLink);
             }
-            if (Optional.IsDefined(RedisCacheConnectionString))
+            if (RedisCacheConnectionString != null)
             {
                 writer.WritePropertyName("redisCacheConnectionString"u8);
                 writer.WriteObjectValue(RedisCacheConnectionString);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    packageContentLink = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value);
+                    packageContentLink = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("redisCacheConnectionString"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    redisCacheConnectionString = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value);
+                    redisCacheConnectionString = LogicApiDeploymentParameterMetadata.DeserializeLogicApiDeploymentParameterMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Include))
+            if (!(Include is ChangeTrackingList<ConnectionMonitorEndpointScopeItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Exclude))
+            if (!(Exclude is ChangeTrackingList<ConnectionMonitorEndpointScopeItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionMonitorEndpointScopeItem> array = new List<ConnectionMonitorEndpointScopeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorEndpointScopeItem.DeserializeConnectionMonitorEndpointScopeItem(item));
+                        array.Add(ConnectionMonitorEndpointScopeItem.DeserializeConnectionMonitorEndpointScopeItem(item, options));
                     }
                     include = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionMonitorEndpointScopeItem> array = new List<ConnectionMonitorEndpointScopeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorEndpointScopeItem.DeserializeConnectionMonitorEndpointScopeItem(item));
+                        array.Add(ConnectionMonitorEndpointScopeItem.DeserializeConnectionMonitorEndpointScopeItem(item, options));
                     }
                     exclude = array;
                     continue;

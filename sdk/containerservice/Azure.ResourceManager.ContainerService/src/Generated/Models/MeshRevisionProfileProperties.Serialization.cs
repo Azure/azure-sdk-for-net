@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MeshRevisions))
+            if (!(MeshRevisions is ChangeTrackingList<MeshRevision> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("meshRevisions"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<MeshRevision> array = new List<MeshRevision>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MeshRevision.DeserializeMeshRevision(item));
+                        array.Add(MeshRevision.DeserializeMeshRevision(item, options));
                     }
                     meshRevisions = array;
                     continue;

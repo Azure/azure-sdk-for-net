@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            if (options.Format != "W" && !(Resources is ChangeTrackingList<HybridComputeMachineExtensionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,64 +77,64 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocationData))
+            if (LocationData != null)
             {
                 writer.WritePropertyName("locationData"u8);
                 writer.WriteObjectValue(LocationData);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentConfiguration))
+            if (options.Format != "W" && AgentConfiguration != null)
             {
                 writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
-            if (Optional.IsDefined(ServiceStatuses))
+            if (ServiceStatuses != null)
             {
                 writer.WritePropertyName("serviceStatuses"u8);
                 writer.WriteObjectValue(ServiceStatuses);
             }
-            if (Optional.IsDefined(CloudMetadata))
+            if (CloudMetadata != null)
             {
                 writer.WritePropertyName("cloudMetadata"u8);
                 writer.WriteObjectValue(CloudMetadata);
             }
-            if (Optional.IsDefined(AgentUpgrade))
+            if (AgentUpgrade != null)
             {
                 writer.WritePropertyName("agentUpgrade"u8);
                 writer.WriteObjectValue(AgentUpgrade);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (OSProfile != null)
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Optional.IsDefined(LicenseProfile))
+            if (LicenseProfile != null)
             {
                 writer.WritePropertyName("licenseProfile"u8);
                 writer.WriteObjectValue(LicenseProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusChange))
+            if (options.Format != "W" && LastStatusChange.HasValue)
             {
                 writer.WritePropertyName("lastStatusChange"u8);
                 writer.WriteStringValue(LastStatusChange.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
+            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<ResponseError> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -144,52 +144,52 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
+            if (options.Format != "W" && AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(VmId))
+            if (VmId.HasValue)
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MachineFqdn))
+            if (options.Format != "W" && MachineFqdn != null)
             {
                 writer.WritePropertyName("machineFqdn"u8);
                 writer.WriteStringValue(MachineFqdn);
             }
-            if (Optional.IsDefined(ClientPublicKey))
+            if (ClientPublicKey != null)
             {
                 writer.WritePropertyName("clientPublicKey"u8);
                 writer.WriteStringValue(ClientPublicKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSVersion))
+            if (options.Format != "W" && OSVersion != null)
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmUuid))
+            if (options.Format != "W" && VmUuid.HasValue)
             {
                 writer.WritePropertyName("vmUuid"u8);
                 writer.WriteStringValue(VmUuid.Value);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<MachineExtensionInstanceView> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -199,47 +199,47 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(OSSku))
+            if (options.Format != "W" && OSSku != null)
             {
                 writer.WritePropertyName("osSku"u8);
                 writer.WriteStringValue(OSSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSEdition))
+            if (options.Format != "W" && OSEdition != null)
             {
                 writer.WritePropertyName("osEdition"u8);
                 writer.WriteStringValue(OSEdition);
             }
-            if (options.Format != "W" && Optional.IsDefined(DomainName))
+            if (options.Format != "W" && DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ADFqdn))
+            if (options.Format != "W" && ADFqdn != null)
             {
                 writer.WritePropertyName("adFqdn"u8);
                 writer.WriteStringValue(ADFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(DnsFqdn))
+            if (options.Format != "W" && DnsFqdn != null)
             {
                 writer.WritePropertyName("dnsFqdn"u8);
                 writer.WriteStringValue(DnsFqdn);
             }
-            if (Optional.IsDefined(PrivateLinkScopeResourceId))
+            if (PrivateLinkScopeResourceId != null)
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
-            if (Optional.IsDefined(ParentClusterResourceId))
+            if (ParentClusterResourceId != null)
             {
                 writer.WritePropertyName("parentClusterResourceId"u8);
                 writer.WriteStringValue(ParentClusterResourceId);
             }
-            if (Optional.IsDefined(MSSqlDiscovered))
+            if (MSSqlDiscovered != null)
             {
                 writer.WritePropertyName("mssqlDiscovered"u8);
                 writer.WriteStringValue(MSSqlDiscovered);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DetectedProperties))
+            if (options.Format != "W" && !(DetectedProperties is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("detectedProperties"u8);
                 writer.WriteStartObject();
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
+            if (options.Format != "W" && NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.HybridCompute
                     List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
+                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item, options));
                     }
                     resources = array;
                     continue;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value);
+                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property0.Value);
+                            agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceStatuses"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value);
+                            serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value);
+                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentUpgrade"u8))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value);
+                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value);
+                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("licenseProfile"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            licenseProfile = LicenseProfileMachineInstanceView.DeserializeLicenseProfileMachineInstanceView(property0.Value);
+                            licenseProfile = LicenseProfileMachineInstanceView.DeserializeLicenseProfileMachineInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.HybridCompute
                             List<MachineExtensionInstanceView> array = new List<MachineExtensionInstanceView>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(item));
+                                array.Add(MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(item, options));
                             }
                             extensions = array;
                             continue;
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            networkProfile = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(property0.Value);
+                            networkProfile = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(property0.Value, options);
                             continue;
                         }
                     }

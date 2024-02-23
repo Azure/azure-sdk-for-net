@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetAppVolumeSnapshotData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeSnapshotData> array = new List<NetAppVolumeSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(item));
+                        array.Add(NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(item, options));
                     }
                     value = array;
                     continue;

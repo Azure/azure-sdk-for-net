@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BlockedTransformers))
+            if (!(BlockedTransformers is ChangeTrackingList<BlockedTransformer> collection && collection.IsUndefined))
             {
                 if (BlockedTransformers != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTransformers");
                 }
             }
-            if (Optional.IsCollectionDefined(ColumnNameAndTypes))
+            if (!(ColumnNameAndTypes is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ColumnNameAndTypes != null)
                 {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columnNameAndTypes");
                 }
             }
-            if (Optional.IsDefined(EnableDnnFeaturization))
+            if (EnableDnnFeaturization.HasValue)
             {
                 writer.WritePropertyName("enableDnnFeaturization"u8);
                 writer.WriteBooleanValue(EnableDnnFeaturization.Value);
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TransformerParams))
+            if (!(TransformerParams is ChangeTrackingDictionary<string, IList<ColumnTransformer>> collection1 && collection1.IsUndefined))
             {
                 if (TransformerParams != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("transformerParams");
                 }
             }
-            if (Optional.IsDefined(DatasetLanguage))
+            if (DatasetLanguage != null)
             {
                 if (DatasetLanguage != null)
                 {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             List<ColumnTransformer> array = new List<ColumnTransformer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ColumnTransformer.DeserializeColumnTransformer(item));
+                                array.Add(ColumnTransformer.DeserializeColumnTransformer(item, options));
                             }
                             dictionary.Add(property0.Name, array);
                         }

@@ -44,29 +44,29 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProfileName))
+            if (options.Format != "W" && ProfileName != null)
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(TlsSettings))
+            if (TlsSettings != null)
             {
                 writer.WritePropertyName("tlsSettings"u8);
                 writer.WriteObjectValue(TlsSettings);
             }
-            if (Optional.IsDefined(DnsZone))
+            if (DnsZone != null)
             {
                 writer.WritePropertyName("azureDnsZone"u8);
                 JsonSerializer.Serialize(writer, DnsZone);
             }
-            if (Optional.IsDefined(PreValidatedCustomDomainResource))
+            if (PreValidatedCustomDomainResource != null)
             {
                 if (PreValidatedCustomDomainResource != null)
                 {
@@ -78,27 +78,27 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("preValidatedCustomDomainResourceId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
+            if (options.Format != "W" && DeploymentStatus.HasValue)
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DomainValidationState))
+            if (options.Format != "W" && DomainValidationState.HasValue)
             {
                 writer.WritePropertyName("domainValidationState"u8);
                 writer.WriteStringValue(DomainValidationState.Value.ToString());
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidationProperties))
+            if (options.Format != "W" && ValidationProperties != null)
             {
                 writer.WritePropertyName("validationProperties"u8);
                 writer.WriteObjectValue(ValidationProperties);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value);
+                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureDnsZone"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Cdn
                                 preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value);
+                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            validationProperties = DomainValidationProperties.DeserializeDomainValidationProperties(property0.Value);
+                            validationProperties = DomainValidationProperties.DeserializeDomainValidationProperties(property0.Value, options);
                             continue;
                         }
                     }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VirtualNetworkName))
+            if (options.Format != "W" && VirtualNetworkName != null)
             {
                 writer.WritePropertyName("virtualNetworkName"u8);
                 writer.WriteStringValue(VirtualNetworkName);
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualNetworkConnection))
+            if (options.Format != "W" && VirtualNetworkConnection != null)
             {
                 writer.WritePropertyName("virtualNetworkConnection"u8);
                 writer.WriteObjectValue(VirtualNetworkConnection);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnections))
+            if (options.Format != "W" && !(HybridConnections is ChangeTrackingList<RelayServiceConnectionEntityData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hybridConnections"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HybridConnectionsV2))
+            if (options.Format != "W" && !(HybridConnectionsV2 is ChangeTrackingList<HybridConnectionData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hybridConnectionsV2"u8);
                 writer.WriteStartArray();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(property0.Value);
+                            virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hybridConnections"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
                             List<RelayServiceConnectionEntityData> array = new List<RelayServiceConnectionEntityData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayServiceConnectionEntityData.DeserializeRelayServiceConnectionEntityData(item));
+                                array.Add(RelayServiceConnectionEntityData.DeserializeRelayServiceConnectionEntityData(item, options));
                             }
                             hybridConnections = array;
                             continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
                             List<HybridConnectionData> array = new List<HybridConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridConnectionData.DeserializeHybridConnectionData(item));
+                                array.Add(HybridConnectionData.DeserializeHybridConnectionData(item, options));
                             }
                             hybridConnectionsV2 = array;
                             continue;

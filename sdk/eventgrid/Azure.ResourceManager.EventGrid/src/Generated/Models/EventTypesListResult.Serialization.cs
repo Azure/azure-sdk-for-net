@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EventTypeUnderTopic> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventTypeUnderTopic> array = new List<EventTypeUnderTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventTypeUnderTopic.DeserializeEventTypeUnderTopic(item));
+                        array.Add(EventTypeUnderTopic.DeserializeEventTypeUnderTopic(item, options));
                     }
                     value = array;
                     continue;

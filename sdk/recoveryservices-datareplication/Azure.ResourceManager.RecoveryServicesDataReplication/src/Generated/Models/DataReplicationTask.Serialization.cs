@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TaskName))
+            if (options.Format != "W" && TaskName != null)
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(CustomProperties))
+            if (CustomProperties != null)
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteObjectValue(CustomProperties);
             }
-            if (Optional.IsCollectionDefined(ChildrenWorkflows))
+            if (!(ChildrenWorkflows is ChangeTrackingList<DataReplicationWorkflowData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("childrenWorkflows"u8);
                 writer.WriteStartArray();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value);
+                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("childrenWorkflows"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationWorkflowData> array = new List<DataReplicationWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item));
+                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item, options));
                     }
                     childrenWorkflows = array;
                     continue;

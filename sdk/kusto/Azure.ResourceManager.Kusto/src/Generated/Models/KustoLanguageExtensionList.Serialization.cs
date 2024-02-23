@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoLanguageExtension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoLanguageExtension> array = new List<KustoLanguageExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item));
+                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item, options));
                     }
                     value = array;
                     continue;
