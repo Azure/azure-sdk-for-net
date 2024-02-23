@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,59 +49,59 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
+            if (options.Format != "W" && AdditionalInfo != null)
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalInfo);
             }
-            if (Optional.IsDefined(Classification))
+            if (Classification.HasValue)
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (Optional.IsDefined(ClassificationComment))
+            if (ClassificationComment != null)
             {
                 writer.WritePropertyName("classificationComment"u8);
                 writer.WriteStringValue(ClassificationComment);
             }
-            if (Optional.IsDefined(ClassificationReason))
+            if (ClassificationReason.HasValue)
             {
                 writer.WritePropertyName("classificationReason"u8);
                 writer.WriteStringValue(ClassificationReason.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FirstActivityOn))
+            if (FirstActivityOn.HasValue)
             {
                 writer.WritePropertyName("firstActivityTimeUtc"u8);
                 writer.WriteStringValue(FirstActivityOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IncidentUri))
+            if (options.Format != "W" && IncidentUri != null)
             {
                 writer.WritePropertyName("incidentUrl"u8);
                 writer.WriteStringValue(IncidentUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(IncidentNumber))
+            if (options.Format != "W" && IncidentNumber.HasValue)
             {
                 writer.WritePropertyName("incidentNumber"u8);
                 writer.WriteNumberValue(IncidentNumber.Value);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<SecurityInsightsIncidentLabel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -111,22 +111,22 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastActivityOn))
+            if (LastActivityOn.HasValue)
             {
                 writer.WritePropertyName("lastActivityTimeUtc"u8);
                 writer.WriteStringValue(LastActivityOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Owner))
+            if (Owner != null)
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
+            if (options.Format != "W" && !(RelatedAnalyticRuleIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("relatedAnalyticRuleIds"u8);
                 writer.WriteStartArray();
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);

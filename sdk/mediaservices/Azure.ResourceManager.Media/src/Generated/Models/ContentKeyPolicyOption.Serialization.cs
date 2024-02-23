@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyOptionId))
+            if (options.Format != "W" && PolicyOptionId.HasValue)
             {
                 writer.WritePropertyName("policyOptionId"u8);
                 writer.WriteStringValue(PolicyOptionId.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

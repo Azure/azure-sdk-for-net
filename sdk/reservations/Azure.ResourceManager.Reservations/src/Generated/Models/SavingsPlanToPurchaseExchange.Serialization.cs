@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SavingsPlanOrderId))
+            if (SavingsPlanOrderId != null)
             {
                 writer.WritePropertyName("savingsPlanOrderId"u8);
                 writer.WriteStringValue(SavingsPlanOrderId);
             }
-            if (Optional.IsDefined(SavingsPlanId))
+            if (SavingsPlanId != null)
             {
                 writer.WritePropertyName("savingsPlanId"u8);
                 writer.WriteStringValue(SavingsPlanId);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(BillingCurrencyTotal))
+            if (BillingCurrencyTotal != null)
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

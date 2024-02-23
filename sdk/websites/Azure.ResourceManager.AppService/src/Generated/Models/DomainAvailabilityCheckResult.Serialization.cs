@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsAvailable))
+            if (IsAvailable.HasValue)
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteBooleanValue(IsAvailable.Value);
             }
-            if (Optional.IsDefined(DomainType))
+            if (DomainType.HasValue)
             {
                 writer.WritePropertyName("domainType"u8);
                 writer.WriteStringValue(DomainType.Value.ToSerialString());

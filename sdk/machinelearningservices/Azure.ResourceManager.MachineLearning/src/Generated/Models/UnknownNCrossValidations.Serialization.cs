@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNCrossValidations(document.RootElement, options);
+            return DeserializeNCrossValidations(document.RootElement, options);
         }
 
         internal static UnknownNCrossValidations DeserializeUnknownNCrossValidations(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownNCrossValidations(document.RootElement, options);
+                        return DeserializeNCrossValidations(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(NCrossValidations)} does not support '{options.Format}' format.");

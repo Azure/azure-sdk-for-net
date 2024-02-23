@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AssetName))
+            if (AssetName != null)
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (Optional.IsDefined(ArchiveWindowLength))
+            if (ArchiveWindowLength.HasValue)
             {
                 writer.WritePropertyName("archiveWindowLength"u8);
                 writer.WriteStringValue(ArchiveWindowLength.Value, "P");
             }
-            if (Optional.IsDefined(RewindWindowLength))
+            if (RewindWindowLength.HasValue)
             {
                 if (RewindWindowLength != null)
                 {
@@ -77,37 +77,37 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("rewindWindowLength");
                 }
             }
-            if (Optional.IsDefined(ManifestName))
+            if (ManifestName != null)
             {
                 writer.WritePropertyName("manifestName"u8);
                 writer.WriteStringValue(ManifestName);
             }
-            if (Optional.IsDefined(Hls))
+            if (Hls != null)
             {
                 writer.WritePropertyName("hls"u8);
                 writer.WriteObjectValue(Hls);
             }
-            if (Optional.IsDefined(OutputSnapTime))
+            if (OutputSnapTime.HasValue)
             {
                 writer.WritePropertyName("outputSnapTime"u8);
                 writer.WriteNumberValue(OutputSnapTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactProfile))
+            if (ArtifactProfile != null)
             {
                 writer.WritePropertyName("artifactProfile"u8);
                 writer.WriteObjectValue(ArtifactProfile);
             }
-            if (Optional.IsDefined(DeployParametersMappingRuleProfile))
+            if (DeployParametersMappingRuleProfile != null)
             {
                 writer.WritePropertyName("deployParametersMappingRuleProfile"u8);
                 writer.WriteObjectValue(DeployParametersMappingRuleProfile);
             }
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);

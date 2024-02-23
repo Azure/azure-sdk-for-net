@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(High))
+            if (High.HasValue)
             {
                 writer.WritePropertyName("high"u8);
                 writer.WriteNumberValue(High.Value);
             }
-            if (Optional.IsDefined(Medium))
+            if (Medium.HasValue)
             {
                 writer.WritePropertyName("medium"u8);
                 writer.WriteNumberValue(Medium.Value);
             }
-            if (Optional.IsDefined(Low))
+            if (Low.HasValue)
             {
                 writer.WritePropertyName("low"u8);
                 writer.WriteNumberValue(Low.Value);

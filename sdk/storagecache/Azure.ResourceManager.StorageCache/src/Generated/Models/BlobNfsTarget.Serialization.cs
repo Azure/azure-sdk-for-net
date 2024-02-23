@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(UsageModel))
+            if (UsageModel != null)
             {
                 writer.WritePropertyName("usageModel"u8);
                 writer.WriteStringValue(UsageModel);
             }
-            if (Optional.IsDefined(VerificationDelayInSeconds))
+            if (VerificationDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("verificationTimer"u8);
                 writer.WriteNumberValue(VerificationDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(WriteBackDelayInSeconds))
+            if (WriteBackDelayInSeconds.HasValue)
             {
                 writer.WritePropertyName("writeBackTimer"u8);
                 writer.WriteNumberValue(WriteBackDelayInSeconds.Value);

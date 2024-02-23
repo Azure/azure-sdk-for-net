@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TransportFileShareConfiguration))
+            if (TransportFileShareConfiguration != null)
             {
                 writer.WritePropertyName("transportFileShareConfiguration"u8);
                 writer.WriteObjectValue(TransportFileShareConfiguration);

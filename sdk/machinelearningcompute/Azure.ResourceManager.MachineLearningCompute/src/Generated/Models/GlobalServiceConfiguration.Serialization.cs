@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Ssl))
+            if (Ssl != null)
             {
                 writer.WritePropertyName("ssl"u8);
                 writer.WriteObjectValue(Ssl);
             }
-            if (Optional.IsDefined(ServiceAuth))
+            if (ServiceAuth != null)
             {
                 writer.WritePropertyName("serviceAuth"u8);
                 writer.WriteObjectValue(ServiceAuth);
             }
-            if (Optional.IsDefined(AutoScale))
+            if (AutoScale != null)
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);

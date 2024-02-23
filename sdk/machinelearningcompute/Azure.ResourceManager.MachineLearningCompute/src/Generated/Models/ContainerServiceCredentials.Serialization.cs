@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AcsKubeConfig))
+            if (options.Format != "W" && AcsKubeConfig != null)
             {
                 writer.WritePropertyName("acsKubeConfig"u8);
                 writer.WriteStringValue(AcsKubeConfig);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePrincipalConfiguration))
+            if (options.Format != "W" && ServicePrincipalConfiguration != null)
             {
                 writer.WritePropertyName("servicePrincipalConfiguration"u8);
                 writer.WriteObjectValue(ServicePrincipalConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ImagePullSecretName))
+            if (options.Format != "W" && ImagePullSecretName != null)
             {
                 writer.WritePropertyName("imagePullSecretName"u8);
                 writer.WriteStringValue(ImagePullSecretName);

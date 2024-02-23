@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Origin))
+            if (options.Format != "W" && Origin.HasValue)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityIssueType))
+            if (options.Format != "W" && ConnectivityIssueType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectivityIssueType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Contexts))
+            if (options.Format != "W" && !(Contexts is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartArray();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
+            if (DefaultServiceTypeDeltaHealthPolicy != null)
             {
                 writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeDeltaHealthPolicy);
             }
-            if (Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
+            if (!(ServiceTypeDeltaHealthPolicies is ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("serviceTypeDeltaHealthPolicies"u8);
                 writer.WriteStartObject();

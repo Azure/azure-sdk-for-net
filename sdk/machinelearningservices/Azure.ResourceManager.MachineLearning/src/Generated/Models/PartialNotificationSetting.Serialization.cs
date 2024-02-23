@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Webhooks))
+            if (!(Webhooks is ChangeTrackingDictionary<string, MachineLearningWebhook> collection && collection.IsUndefined))
             {
                 if (Webhooks != null)
                 {

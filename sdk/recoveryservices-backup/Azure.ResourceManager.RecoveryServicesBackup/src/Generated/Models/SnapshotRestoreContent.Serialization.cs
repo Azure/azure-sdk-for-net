@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SkipAttachAndMount))
+            if (SkipAttachAndMount.HasValue)
             {
                 writer.WritePropertyName("skipAttachAndMount"u8);
                 writer.WriteBooleanValue(SkipAttachAndMount.Value);
             }
-            if (Optional.IsDefined(LogPointInTimeForDBRecovery))
+            if (LogPointInTimeForDBRecovery != null)
             {
                 writer.WritePropertyName("logPointInTimeForDBRecovery"u8);
                 writer.WriteStringValue(LogPointInTimeForDBRecovery);

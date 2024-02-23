@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSsisObjectMetadata(document.RootElement, options);
+            return DeserializeSynapseSsisObjectMetadata(document.RootElement, options);
         }
 
         internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element, ModelReaderWriterOptions options = null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSsisObjectMetadata(document.RootElement, options);
+                        return DeserializeSynapseSsisObjectMetadata(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SynapseSsisObjectMetadata)} does not support '{options.Format}' format.");

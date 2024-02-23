@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Versions))
+            if (!(Versions is ChangeTrackingDictionary<string, HDInsightVersionsCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingDictionary<string, RegionsCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (!(Features is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Quota))
+            if (options.Format != "W" && Quota != null)
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteObjectValue(Quota);

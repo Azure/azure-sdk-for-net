@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(And))
+            if (!(And is ChangeTrackingList<BudgetFilterProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Dimensions))
+            if (Dimensions != null)
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);

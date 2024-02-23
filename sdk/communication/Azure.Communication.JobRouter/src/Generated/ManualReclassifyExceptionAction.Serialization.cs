@@ -27,17 +27,17 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueueId))
+            if (QueueId != null)
             {
                 writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(WorkerSelectors))
+            if (!(WorkerSelectors is ChangeTrackingList<RouterWorkerSelector> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

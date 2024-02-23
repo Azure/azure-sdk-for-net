@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,47 +76,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
             JsonSerializer.Serialize(writer, Domain);
-            if (Optional.IsDefined(AccessToken))
+            if (AccessToken != null)
             {
                 writer.WritePropertyName("accessToken"u8);
                 JsonSerializer.Serialize(writer, AccessToken);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 JsonSerializer.Serialize(writer, Authentication);
             }
-            if (Optional.IsDefined(WorkspaceResourceId))
+            if (WorkspaceResourceId != null)
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 JsonSerializer.Serialize(writer, WorkspaceResourceId);
             }
-            if (Optional.IsDefined(ExistingClusterId))
+            if (ExistingClusterId != null)
             {
                 writer.WritePropertyName("existingClusterId"u8);
                 JsonSerializer.Serialize(writer, ExistingClusterId);
             }
-            if (Optional.IsDefined(InstancePoolId))
+            if (InstancePoolId != null)
             {
                 writer.WritePropertyName("instancePoolId"u8);
                 JsonSerializer.Serialize(writer, InstancePoolId);
             }
-            if (Optional.IsDefined(NewClusterVersion))
+            if (NewClusterVersion != null)
             {
                 writer.WritePropertyName("newClusterVersion"u8);
                 JsonSerializer.Serialize(writer, NewClusterVersion);
             }
-            if (Optional.IsDefined(NewClusterNumOfWorker))
+            if (NewClusterNumOfWorker != null)
             {
                 writer.WritePropertyName("newClusterNumOfWorker"u8);
                 JsonSerializer.Serialize(writer, NewClusterNumOfWorker);
             }
-            if (Optional.IsDefined(NewClusterNodeType))
+            if (NewClusterNodeType != null)
             {
                 writer.WritePropertyName("newClusterNodeType"u8);
                 JsonSerializer.Serialize(writer, NewClusterNodeType);
             }
-            if (Optional.IsCollectionDefined(NewClusterSparkConf))
+            if (!(NewClusterSparkConf is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("newClusterSparkConf"u8);
                 writer.WriteStartObject();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NewClusterSparkEnvVars))
+            if (!(NewClusterSparkEnvVars is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("newClusterSparkEnvVars"u8);
                 writer.WriteStartObject();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NewClusterCustomTags))
+            if (!(NewClusterCustomTags is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("newClusterCustomTags"u8);
                 writer.WriteStartObject();
@@ -185,37 +185,37 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(NewClusterLogDestination))
+            if (NewClusterLogDestination != null)
             {
                 writer.WritePropertyName("newClusterLogDestination"u8);
                 JsonSerializer.Serialize(writer, NewClusterLogDestination);
             }
-            if (Optional.IsDefined(NewClusterDriverNodeType))
+            if (NewClusterDriverNodeType != null)
             {
                 writer.WritePropertyName("newClusterDriverNodeType"u8);
                 JsonSerializer.Serialize(writer, NewClusterDriverNodeType);
             }
-            if (Optional.IsDefined(NewClusterInitScripts))
+            if (NewClusterInitScripts != null)
             {
                 writer.WritePropertyName("newClusterInitScripts"u8);
                 JsonSerializer.Serialize(writer, NewClusterInitScripts);
             }
-            if (Optional.IsDefined(NewClusterEnableElasticDisk))
+            if (NewClusterEnableElasticDisk != null)
             {
                 writer.WritePropertyName("newClusterEnableElasticDisk"u8);
                 JsonSerializer.Serialize(writer, NewClusterEnableElasticDisk);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 JsonSerializer.Serialize(writer, PolicyId);
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);

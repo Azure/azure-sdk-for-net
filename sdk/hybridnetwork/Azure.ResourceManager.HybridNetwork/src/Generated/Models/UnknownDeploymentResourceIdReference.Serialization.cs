@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeploymentResourceIdReference(document.RootElement, options);
+            return DeserializeDeploymentResourceIdReference(document.RootElement, options);
         }
 
         internal static UnknownDeploymentResourceIdReference DeserializeUnknownDeploymentResourceIdReference(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDeploymentResourceIdReference(document.RootElement, options);
+                        return DeserializeDeploymentResourceIdReference(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DeploymentResourceIdReference)} does not support '{options.Format}' format.");

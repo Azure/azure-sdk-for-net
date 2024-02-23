@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
+            if (options.Format != "W" && ComplianceStatus.HasValue)
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportId))
+            if (options.Format != "W" && ReportId.HasValue)
             {
                 writer.WritePropertyName("reportId"u8);
                 writer.WriteStringValue(ReportId.Value);
             }
-            if (Optional.IsDefined(Assignment))
+            if (Assignment != null)
             {
                 writer.WritePropertyName("assignment"u8);
                 writer.WriteObjectValue(Assignment);
             }
-            if (Optional.IsDefined(Vm))
+            if (Vm != null)
             {
                 writer.WritePropertyName("vm"u8);
                 writer.WriteObjectValue(Vm);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 if (Details != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("details");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(VmssResourceId))
+            if (options.Format != "W" && VmssResourceId != null)
             {
                 writer.WritePropertyName("vmssResourceId"u8);
                 writer.WriteStringValue(VmssResourceId);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsManagedAadEnabled))
+            if (IsManagedAadEnabled.HasValue)
             {
                 writer.WritePropertyName("managed"u8);
                 writer.WriteBooleanValue(IsManagedAadEnabled.Value);
             }
-            if (Optional.IsDefined(IsAzureRbacEnabled))
+            if (IsAzureRbacEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAzureRBAC"u8);
                 writer.WriteBooleanValue(IsAzureRbacEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
+            if (!(AdminGroupObjectIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClientAppId))
+            if (ClientAppId.HasValue)
             {
                 writer.WritePropertyName("clientAppID"u8);
                 writer.WriteStringValue(ClientAppId.Value);
             }
-            if (Optional.IsDefined(ServerAppId))
+            if (ServerAppId.HasValue)
             {
                 writer.WritePropertyName("serverAppID"u8);
                 writer.WriteStringValue(ServerAppId.Value);
             }
-            if (Optional.IsDefined(ServerAppSecret))
+            if (ServerAppSecret != null)
             {
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantID"u8);
                 writer.WriteStringValue(TenantId.Value);

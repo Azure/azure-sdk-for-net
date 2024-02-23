@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InboundConnectedResources))
+            if (options.Format != "W" && !(InboundConnectedResources is ChangeTrackingList<ConnectedResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inboundConnectedResources"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundConnectedResources))
+            if (options.Format != "W" && !(OutboundConnectedResources is ChangeTrackingList<ConnectedResourceInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outboundConnectedResources"u8);
                 writer.WriteStartArray();

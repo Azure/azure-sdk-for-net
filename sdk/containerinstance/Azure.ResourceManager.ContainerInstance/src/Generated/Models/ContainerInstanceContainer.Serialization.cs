@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
             writer.WriteStringValue(Image);
-            if (Optional.IsCollectionDefined(Command))
+            if (!(Command is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ports))
+            if (!(Ports is ChangeTrackingList<ContainerPort> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingList<ContainerEnvironmentVariable> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources);
-            if (Optional.IsCollectionDefined(VolumeMounts))
+            if (!(VolumeMounts is ChangeTrackingList<ContainerVolumeMount> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LivenessProbe))
+            if (LivenessProbe != null)
             {
                 writer.WritePropertyName("livenessProbe"u8);
                 writer.WriteObjectValue(LivenessProbe);
             }
-            if (Optional.IsDefined(ReadinessProbe))
+            if (ReadinessProbe != null)
             {
                 writer.WritePropertyName("readinessProbe"u8);
                 writer.WriteObjectValue(ReadinessProbe);
             }
-            if (Optional.IsDefined(SecurityContext))
+            if (SecurityContext != null)
             {
                 writer.WritePropertyName("securityContext"u8);
                 writer.WriteObjectValue(SecurityContext);

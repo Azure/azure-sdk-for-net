@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Encapsulation))
+            if (Encapsulation.HasValue)
             {
                 writer.WritePropertyName("encapsulation"u8);
                 writer.WriteStringValue(Encapsulation.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NeighborGroupIds))
+            if (!(NeighborGroupIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("neighborGroupIds"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            if (Optional.IsDefined(Threshold))
+            if (Threshold != null)
             {
                 if (Threshold != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataQualityMetricThresholdBase(document.RootElement, options);
+            return DeserializeDataQualityMetricThresholdBase(document.RootElement, options);
         }
 
         internal static UnknownDataQualityMetricThresholdBase DeserializeUnknownDataQualityMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataQualityMetricThresholdBase(document.RootElement, options);
+                        return DeserializeDataQualityMetricThresholdBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataQualityMetricThresholdBase)} does not support '{options.Format}' format.");

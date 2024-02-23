@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
-            if (options.Format != "W" && Optional.IsDefined(PolicyVersion))
+            if (options.Format != "W" && PolicyVersion != null)
             {
                 writer.WritePropertyName("policyVersion"u8);
                 writer.WriteStringValue(PolicyVersion);
             }
-            if (Optional.IsDefined(PolicyParameters))
+            if (PolicyParameters != null)
             {
                 writer.WritePropertyName("policyParameters"u8);
                 writer.WriteObjectValue(PolicyParameters);

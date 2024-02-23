@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -27,32 +26,32 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddressStringValue != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WriteStringValue(PrivateIPAddressStringValue);
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (PrivateIPAllocationMethod != null)
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Optional.IsDefined(IsPrimary))
+            if (IsPrimary.HasValue)
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            if (!(LoadBalancerBackendAddressPools is ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancerNatRules))
+            if (!(LoadBalancerNatRules is ChangeTrackingList<LoadBalancerNatRuleReferenceInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancerNatRules"u8);
                 writer.WriteStartArray();
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicIP))
+            if (PublicIP != null)
             {
                 writer.WritePropertyName("publicIp"u8);
                 writer.WriteObjectValue(PublicIP);
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IPAddress> privateIPAddress = default;
+            Optional<string> privateIPAddress = default;
             Optional<string> privateIPAllocationMethod = default;
             Optional<SubnetReferenceInfo> subnet = default;
             Optional<bool> primary = default;
@@ -134,11 +133,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"u8))

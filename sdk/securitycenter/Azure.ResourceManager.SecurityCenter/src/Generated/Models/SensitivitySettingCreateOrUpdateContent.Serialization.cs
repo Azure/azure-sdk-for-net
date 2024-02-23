@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(SensitivityThresholdLabelOrder))
+            if (SensitivityThresholdLabelOrder.HasValue)
             {
                 writer.WritePropertyName("sensitivityThresholdLabelOrder"u8);
                 writer.WriteNumberValue(SensitivityThresholdLabelOrder.Value);
             }
-            if (Optional.IsDefined(SensitivityThresholdLabelId))
+            if (SensitivityThresholdLabelId.HasValue)
             {
                 writer.WritePropertyName("sensitivityThresholdLabelId"u8);
                 writer.WriteStringValue(SensitivityThresholdLabelId.Value);

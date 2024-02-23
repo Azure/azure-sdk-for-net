@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
@@ -54,29 +54,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtensionType))
+            if (ExtensionType != null)
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (AutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(ReleaseTrain))
+            if (ReleaseTrain != null)
             {
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 if (Version != null)
                 {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("version");
                 }
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
             }
-            if (Optional.IsCollectionDefined(ConfigurationSettings))
+            if (!(ConfigurationSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationProtectedSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentVersion))
+            if (options.Format != "W" && CurrentVersion != null)
             {
                 if (CurrentVersion != null)
                 {
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("currentVersion");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<KubernetesClusterExtensionStatus> collection1 && collection1.IsUndefined))
             {
                 if (Statuses != null)
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("statuses");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorInfo))
+            if (options.Format != "W" && ErrorInfo != null)
             {
                 if (ErrorInfo != null)
                 {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("errorInfo");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CustomLocationSettings))
+            if (options.Format != "W" && !(CustomLocationSettings is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 if (CustomLocationSettings != null)
                 {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("customLocationSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(PackageUri))
+            if (options.Format != "W" && PackageUri != null)
             {
                 if (PackageUri != null)
                 {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("packageUri");
                 }
             }
-            if (Optional.IsDefined(AksAssignedIdentity))
+            if (AksAssignedIdentity != null)
             {
                 writer.WritePropertyName("aksAssignedIdentity"u8);
                 JsonSerializer.Serialize(writer, AksAssignedIdentity);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsSystemExtension))
+            if (options.Format != "W" && IsSystemExtension.HasValue)
             {
                 writer.WritePropertyName("isSystemExtension"u8);
                 writer.WriteBooleanValue(IsSystemExtension.Value);

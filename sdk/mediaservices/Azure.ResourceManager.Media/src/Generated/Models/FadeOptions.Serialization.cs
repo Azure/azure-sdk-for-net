@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("fadeColor"u8);
             writer.WriteStringValue(FadeColor);
-            if (Optional.IsDefined(Start))
+            if (Start != null)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start);

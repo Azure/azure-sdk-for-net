@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SortBy))
+            if (SortBy != null)
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStringValue(SortBy);
             }
-            if (Optional.IsDefined(SortOrder))
+            if (SortOrder.HasValue)
             {
                 writer.WritePropertyName("sortOrder"u8);
                 writer.WriteStringValue(SortOrder.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(Top))
+            if (Top.HasValue)
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);

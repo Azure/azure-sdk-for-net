@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteStringValue(SigningKey.ToString());
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();

@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(NumberOfPublicIPs))
+            if (NumberOfPublicIPs.HasValue)
             {
                 writer.WritePropertyName("numberOfPublicIPs"u8);
                 writer.WriteNumberValue(NumberOfPublicIPs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPBlock))
+            if (options.Format != "W" && PublicIPBlock != null)
             {
                 writer.WritePropertyName("publicIPBlock"u8);
                 writer.WriteStringValue(PublicIPBlock);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

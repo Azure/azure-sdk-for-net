@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PresentationTimeRange))
+            if (PresentationTimeRange != null)
             {
                 writer.WritePropertyName("presentationTimeRange"u8);
                 writer.WriteObjectValue(PresentationTimeRange);
             }
-            if (Optional.IsDefined(FirstQuality))
+            if (FirstQuality != null)
             {
                 writer.WritePropertyName("firstQuality"u8);
                 writer.WriteObjectValue(FirstQuality);
             }
-            if (Optional.IsCollectionDefined(Tracks))
+            if (!(Tracks is ChangeTrackingList<FilterTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();

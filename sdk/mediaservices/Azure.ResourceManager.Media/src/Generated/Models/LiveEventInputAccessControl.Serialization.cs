@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IP))
+            if (IP != null)
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteObjectValue(IP);

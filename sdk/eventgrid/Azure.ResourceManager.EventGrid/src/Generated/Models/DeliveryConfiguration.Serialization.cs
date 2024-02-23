@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeliveryMode))
+            if (DeliveryMode.HasValue)
             {
                 writer.WritePropertyName("deliveryMode"u8);
                 writer.WriteStringValue(DeliveryMode.Value.ToString());
             }
-            if (Optional.IsDefined(Queue))
+            if (Queue != null)
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
             }
-            if (Optional.IsDefined(Push))
+            if (Push != null)
             {
                 writer.WritePropertyName("push"u8);
                 writer.WriteObjectValue(Push);

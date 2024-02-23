@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalLoadBalancerId))
+            if (options.Format != "W" && InternalLoadBalancerId != null)
             {
                 writer.WritePropertyName("internalLoadBalancerId"u8);
                 writer.WriteStringValue(InternalLoadBalancerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StandardLoadBalancerId))
+            if (options.Format != "W" && StandardLoadBalancerId != null)
             {
                 writer.WritePropertyName("standardLoadBalancerId"u8);
                 writer.WriteStringValue(StandardLoadBalancerId);

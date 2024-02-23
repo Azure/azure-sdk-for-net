@@ -21,11 +21,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Expression");
             writer.WriteValue(Expression);
             writer.WriteEndElement();
-            if (Optional.IsDefined(InputSerialization))
+            if (InputSerialization != null)
             {
                 writer.WriteObjectValue(InputSerialization, "InputSerialization");
             }
-            if (Optional.IsDefined(OutputSerialization))
+            if (OutputSerialization != null)
             {
                 writer.WriteObjectValue(OutputSerialization, "OutputSerialization");
             }

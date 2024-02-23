@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,29 +72,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
             writer.WriteObjectValue(PackageLocation);
-            if (Optional.IsDefined(Runtime))
+            if (Runtime != null)
             {
                 writer.WritePropertyName("runtime"u8);
                 writer.WriteObjectValue(Runtime);
             }
-            if (Optional.IsDefined(LoggingLevel))
+            if (LoggingLevel != null)
             {
                 writer.WritePropertyName("loggingLevel"u8);
                 writer.WriteObjectValue(LoggingLevel);
             }
-            if (Optional.IsDefined(EnvironmentPath))
+            if (EnvironmentPath != null)
             {
                 writer.WritePropertyName("environmentPath"u8);
                 writer.WriteObjectValue(EnvironmentPath);
             }
-            if (Optional.IsDefined(ExecutionCredential))
+            if (ExecutionCredential != null)
             {
                 writer.WritePropertyName("executionCredential"u8);
                 writer.WriteObjectValue(ExecutionCredential);
             }
             writer.WritePropertyName("connectVia"u8);
             writer.WriteObjectValue(ConnectVia);
-            if (Optional.IsCollectionDefined(ProjectParameters))
+            if (!(ProjectParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("projectParameters"u8);
                 writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PackageParameters))
+            if (!(PackageParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("packageParameters"u8);
                 writer.WriteStartObject();
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProjectConnectionManagers))
+            if (!(ProjectConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("projectConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PackageConnectionManagers))
+            if (!(PackageConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("packageConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PropertyOverrides))
+            if (!(PropertyOverrides is ChangeTrackingDictionary<string, SsisPropertyOverride> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("propertyOverrides"u8);
                 writer.WriteStartObject();
@@ -171,7 +171,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(LogLocation))
+            if (LogLocation != null)
             {
                 writer.WritePropertyName("logLocation"u8);
                 writer.WriteObjectValue(LogLocation);

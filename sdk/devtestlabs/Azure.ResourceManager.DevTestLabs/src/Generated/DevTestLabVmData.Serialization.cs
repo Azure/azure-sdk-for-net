@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,104 +56,104 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Notes))
+            if (Notes != null)
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsDefined(OwnerObjectId))
+            if (OwnerObjectId != null)
             {
                 writer.WritePropertyName("ownerObjectId"u8);
                 writer.WriteStringValue(OwnerObjectId);
             }
-            if (Optional.IsDefined(OwnerUserPrincipalName))
+            if (OwnerUserPrincipalName != null)
             {
                 writer.WritePropertyName("ownerUserPrincipalName"u8);
                 writer.WriteStringValue(OwnerUserPrincipalName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedByUserId))
+            if (options.Format != "W" && CreatedByUserId != null)
             {
                 writer.WritePropertyName("createdByUserId"u8);
                 writer.WriteStringValue(CreatedByUserId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedByUser))
+            if (options.Format != "W" && CreatedByUser != null)
             {
                 writer.WritePropertyName("createdByUser"u8);
                 writer.WriteStringValue(CreatedByUser);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ComputeId))
+            if (options.Format != "W" && ComputeId != null)
             {
                 writer.WritePropertyName("computeId"u8);
                 writer.WriteStringValue(ComputeId);
             }
-            if (Optional.IsDefined(CustomImageId))
+            if (CustomImageId != null)
             {
                 writer.WritePropertyName("customImageId"u8);
                 writer.WriteStringValue(CustomImageId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(Size))
+            if (Size != null)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(SshKey))
+            if (SshKey != null)
             {
                 writer.WritePropertyName("sshKey"u8);
                 writer.WriteStringValue(SshKey);
             }
-            if (Optional.IsDefined(IsAuthenticationWithSshKey))
+            if (IsAuthenticationWithSshKey.HasValue)
             {
                 writer.WritePropertyName("isAuthenticationWithSshKey"u8);
                 writer.WriteBooleanValue(IsAuthenticationWithSshKey.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(LabSubnetName))
+            if (LabSubnetName != null)
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (Optional.IsDefined(LabVirtualNetworkId))
+            if (LabVirtualNetworkId != null)
             {
                 writer.WritePropertyName("labVirtualNetworkId"u8);
                 writer.WriteStringValue(LabVirtualNetworkId);
             }
-            if (Optional.IsDefined(DisallowPublicIPAddress))
+            if (DisallowPublicIPAddress.HasValue)
             {
                 writer.WritePropertyName("disallowPublicIpAddress"u8);
                 writer.WriteBooleanValue(DisallowPublicIPAddress.Value);
             }
-            if (Optional.IsCollectionDefined(Artifacts))
+            if (!(Artifacts is ChangeTrackingList<DevTestLabArtifactInstallInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -163,62 +163,62 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ArtifactDeploymentStatus))
+            if (options.Format != "W" && ArtifactDeploymentStatus != null)
             {
                 writer.WritePropertyName("artifactDeploymentStatus"u8);
                 writer.WriteObjectValue(ArtifactDeploymentStatus);
             }
-            if (Optional.IsDefined(GalleryImageReference))
+            if (GalleryImageReference != null)
             {
                 writer.WritePropertyName("galleryImageReference"u8);
                 writer.WriteObjectValue(GalleryImageReference);
             }
-            if (Optional.IsDefined(PlanId))
+            if (PlanId != null)
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ComputeVm))
+            if (options.Format != "W" && ComputeVm != null)
             {
                 writer.WritePropertyName("computeVm"u8);
                 writer.WriteObjectValue(ComputeVm);
             }
-            if (Optional.IsDefined(NetworkInterface))
+            if (NetworkInterface != null)
             {
                 writer.WritePropertyName("networkInterface"u8);
                 writer.WriteObjectValue(NetworkInterface);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplicableSchedule))
+            if (options.Format != "W" && ApplicableSchedule != null)
             {
                 writer.WritePropertyName("applicableSchedule"u8);
                 writer.WriteObjectValue(ApplicableSchedule);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(AllowClaim))
+            if (AllowClaim.HasValue)
             {
                 writer.WritePropertyName("allowClaim"u8);
                 writer.WriteBooleanValue(AllowClaim.Value);
             }
-            if (Optional.IsDefined(StorageType))
+            if (StorageType != null)
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmCreationSource))
+            if (options.Format != "W" && VmCreationSource.HasValue)
             {
                 writer.WritePropertyName("virtualMachineCreationSource"u8);
                 writer.WriteStringValue(VmCreationSource.Value.ToString());
             }
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsCollectionDefined(DataDiskParameters))
+            if (!(DataDiskParameters is ChangeTrackingList<DevTestLabDataDiskProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskParameters"u8);
                 writer.WriteStartArray();
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScheduleParameters))
+            if (!(ScheduleParameters is ChangeTrackingList<DevTestLabScheduleCreationParameter> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("scheduleParameters"u8);
                 writer.WriteStartArray();
@@ -238,17 +238,17 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastKnownPowerState))
+            if (options.Format != "W" && LastKnownPowerState != null)
             {
                 writer.WritePropertyName("lastKnownPowerState"u8);
                 writer.WriteStringValue(LastKnownPowerState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            if (options.Format != "W" && UniqueIdentifier.HasValue)
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);

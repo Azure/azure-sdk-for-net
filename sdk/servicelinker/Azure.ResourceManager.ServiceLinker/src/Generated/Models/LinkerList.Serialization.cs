@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 if (NextLink != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("nextLink");
                 }
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<LinkerResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

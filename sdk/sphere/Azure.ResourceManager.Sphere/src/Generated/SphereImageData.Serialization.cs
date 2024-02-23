@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Image))
+            if (Image != null)
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsDefined(ImageId))
+            if (ImageId != null)
             {
                 writer.WritePropertyName("imageId"u8);
                 writer.WriteStringValue(ImageId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ImageName))
+            if (options.Format != "W" && ImageName != null)
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (Optional.IsDefined(RegionalDataBoundary))
+            if (RegionalDataBoundary.HasValue)
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ComponentId))
+            if (options.Format != "W" && ComponentId != null)
             {
                 writer.WritePropertyName("componentId"u8);
                 writer.WriteStringValue(ComponentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ImageType))
+            if (options.Format != "W" && ImageType.HasValue)
             {
                 writer.WritePropertyName("imageType"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

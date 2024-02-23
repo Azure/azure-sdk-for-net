@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
+            if (RemotePrivateLinkServiceConnectionState != null)
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState);
             }
-            if (Optional.IsDefined(RemotePrivateEndpointConnection))
+            if (RemotePrivateEndpointConnection != null)
             {
                 writer.WritePropertyName("remotePrivateEndpointConnection"u8);
                 JsonSerializer.Serialize(writer, RemotePrivateEndpointConnection);
             }
-            if (Optional.IsCollectionDefined(GroupConnectivityInformation))
+            if (!(GroupConnectivityInformation is ChangeTrackingList<GroupConnectivityInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupConnectivityInformation"u8);
                 writer.WriteStartArray();

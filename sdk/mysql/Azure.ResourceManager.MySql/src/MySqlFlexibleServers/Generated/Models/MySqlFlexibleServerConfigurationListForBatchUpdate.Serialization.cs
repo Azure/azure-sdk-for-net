@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResetAllToDefault))
+            if (ResetAllToDefault.HasValue)
             {
                 writer.WritePropertyName("resetAllToDefault"u8);
                 writer.WriteStringValue(ResetAllToDefault.Value.ToString());

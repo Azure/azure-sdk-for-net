@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Direction.ToString());
             writer.WritePropertyName("polarization"u8);
             writer.WriteStringValue(Polarization.ToString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(Authorizations))
+            if (options.Format != "W" && !(Authorizations is ChangeTrackingList<AuthorizedGroundStation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();

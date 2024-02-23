@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetworkCommunity"u8);
             writer.WriteStringValue(VirtualNetworkCommunity);
-            if (options.Format != "W" && Optional.IsDefined(RegionalCommunity))
+            if (options.Format != "W" && RegionalCommunity != null)
             {
                 writer.WritePropertyName("regionalCommunity"u8);
                 writer.WriteStringValue(RegionalCommunity);

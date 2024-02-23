@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
-            if (Optional.IsDefined(MetricNamespace))
+            if (MetricNamespace != null)
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("timeAggregation"u8);
             writer.WriteStringValue(TimeAggregation.ToString());
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<MetricDimension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SkipMetricValidation))
+            if (SkipMetricValidation.HasValue)
             {
                 writer.WritePropertyName("skipMetricValidation"u8);
                 writer.WriteBooleanValue(SkipMetricValidation.Value);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMultiMetricCriteria(document.RootElement, options);
+            return DeserializeMultiMetricCriteria(document.RootElement, options);
         }
 
         internal static UnknownMultiMetricCriteria DeserializeUnknownMultiMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMultiMetricCriteria(document.RootElement, options);
+                        return DeserializeMultiMetricCriteria(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");

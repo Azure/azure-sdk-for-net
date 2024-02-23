@@ -41,32 +41,32 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("jobJarDirectory"u8);
                 writer.WriteStringValue(JobJarDirectory);
             }
-            if (Optional.IsDefined(JarName))
+            if (JarName != null)
             {
                 writer.WritePropertyName("jarName"u8);
                 writer.WriteStringValue(JarName);
             }
-            if (Optional.IsDefined(EntryClass))
+            if (EntryClass != null)
             {
                 writer.WritePropertyName("entryClass"u8);
                 writer.WriteStringValue(EntryClass);
             }
-            if (Optional.IsDefined(Args))
+            if (Args != null)
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStringValue(Args);
             }
-            if (Optional.IsDefined(SavePointName))
+            if (SavePointName != null)
             {
                 writer.WritePropertyName("savePointName"u8);
                 writer.WriteStringValue(SavePointName);
             }
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(FlinkConfiguration))
+            if (!(FlinkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("flinkConfiguration"u8);
                 writer.WriteStartObject();
@@ -77,27 +77,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(JobId))
+            if (options.Format != "W" && JobId != null)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobOutput))
+            if (options.Format != "W" && JobOutput != null)
             {
                 writer.WritePropertyName("jobOutput"u8);
                 writer.WriteStringValue(JobOutput);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionResult))
+            if (options.Format != "W" && ActionResult != null)
             {
                 writer.WritePropertyName("actionResult"u8);
                 writer.WriteStringValue(ActionResult);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSavePoint))
+            if (options.Format != "W" && LastSavePoint != null)
             {
                 writer.WritePropertyName("lastSavePoint"u8);
                 writer.WriteStringValue(LastSavePoint);

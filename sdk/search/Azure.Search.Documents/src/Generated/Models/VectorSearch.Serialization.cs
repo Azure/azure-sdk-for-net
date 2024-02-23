@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Profiles))
+            if (!(Profiles is ChangeTrackingList<VectorSearchProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Algorithms))
+            if (!(Algorithms is ChangeTrackingList<VectorSearchAlgorithmConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("algorithms"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Vectorizers))
+            if (!(Vectorizers is ChangeTrackingList<VectorSearchVectorizer> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vectorizers"u8);
                 writer.WriteStartArray();

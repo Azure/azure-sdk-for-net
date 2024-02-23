@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LanguageExtensionName))
+            if (LanguageExtensionName.HasValue)
             {
                 writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());
             }
-            if (Optional.IsDefined(LanguageExtensionImageName))
+            if (LanguageExtensionImageName.HasValue)
             {
                 writer.WritePropertyName("languageExtensionImageName"u8);
                 writer.WriteStringValue(LanguageExtensionImageName.Value.ToString());
             }
-            if (Optional.IsDefined(LanguageExtensionCustomImageName))
+            if (LanguageExtensionCustomImageName != null)
             {
                 writer.WritePropertyName("languageExtensionCustomImageName"u8);
                 writer.WriteStringValue(LanguageExtensionCustomImageName);

@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Language))
+            if (Language.HasValue)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language.Value.ToString());
             }
-            if (Optional.IsDefined(LanguageVersion))
+            if (LanguageVersion != null)
             {
                 writer.WritePropertyName("languageVersion"u8);
                 writer.WriteStringValue(LanguageVersion);
             }
-            if (Optional.IsDefined(RequirementsFileContent))
+            if (RequirementsFileContent != null)
             {
                 writer.WritePropertyName("requirementsFileContent"u8);
                 writer.WriteStringValue(RequirementsFileContent);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

@@ -483,11 +483,11 @@ namespace Azure.AI.DocumentIntelligence
             {
                 uri.AppendQuery("stringIndexType", stringIndexType, true);
             }
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && !(features is ChangeTrackingList<DocumentAnalysisFeature> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
-            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
+            if (queryFields != null && !(queryFields is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
             }

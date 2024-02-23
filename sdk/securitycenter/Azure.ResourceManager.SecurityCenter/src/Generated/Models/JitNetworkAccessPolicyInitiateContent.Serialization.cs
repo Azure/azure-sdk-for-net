@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Justification))
+            if (Justification != null)
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);

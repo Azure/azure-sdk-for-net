@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(document.RootElement, options);
+            return DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(document.RootElement, options);
+                        return DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutput(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support '{options.Format}' format.");

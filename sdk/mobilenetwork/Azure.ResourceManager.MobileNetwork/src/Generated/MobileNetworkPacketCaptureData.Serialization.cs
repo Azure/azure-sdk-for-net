@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && Optional.IsDefined(CaptureStartOn))
+            if (options.Format != "W" && CaptureStartOn.HasValue)
             {
                 writer.WritePropertyName("captureStartTime"u8);
                 writer.WriteStringValue(CaptureStartOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BytesToCapturePerPacket))
+            if (BytesToCapturePerPacket.HasValue)
             {
                 writer.WritePropertyName("bytesToCapturePerPacket"u8);
                 writer.WriteNumberValue(BytesToCapturePerPacket.Value);
             }
-            if (Optional.IsDefined(TotalBytesPerSession))
+            if (TotalBytesPerSession.HasValue)
             {
                 writer.WritePropertyName("totalBytesPerSession"u8);
                 writer.WriteNumberValue(TotalBytesPerSession.Value);
             }
-            if (Optional.IsDefined(TimeLimitInSeconds))
+            if (TimeLimitInSeconds.HasValue)
             {
                 writer.WritePropertyName("timeLimitInSeconds"u8);
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutputFiles))
+            if (options.Format != "W" && !(OutputFiles is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();

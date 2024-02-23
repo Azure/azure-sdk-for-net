@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogicAppResourceId))
+            if (LogicAppResourceId != null)
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);

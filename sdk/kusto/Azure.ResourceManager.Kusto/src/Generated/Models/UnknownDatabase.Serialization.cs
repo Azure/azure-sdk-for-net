@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatabase(document.RootElement, options);
+            return DeserializeKustoDatabaseData(document.RootElement, options);
         }
 
         internal static UnknownDatabase DeserializeUnknownDatabase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDatabase(document.RootElement, options);
+                        return DeserializeKustoDatabaseData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(KustoDatabaseData)} does not support '{options.Format}' format.");

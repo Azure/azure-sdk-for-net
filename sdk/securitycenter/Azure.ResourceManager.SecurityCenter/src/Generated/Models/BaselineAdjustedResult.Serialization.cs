@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Baseline))
+            if (Baseline != null)
             {
                 writer.WritePropertyName("baseline"u8);
                 writer.WriteObjectValue(Baseline);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ResultsNotInBaseline))
+            if (!(ResultsNotInBaseline is ChangeTrackingList<IList<string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resultsNotInBaseline"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResultsOnlyInBaseline))
+            if (!(ResultsOnlyInBaseline is ChangeTrackingList<IList<string>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resultsOnlyInBaseline"u8);
                 writer.WriteStartArray();

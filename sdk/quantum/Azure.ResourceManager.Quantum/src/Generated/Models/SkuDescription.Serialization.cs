@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RestrictedAccessUri))
+            if (RestrictedAccessUri != null)
             {
                 writer.WritePropertyName("restrictedAccessUri"u8);
                 writer.WriteStringValue(RestrictedAccessUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(AutoAdd))
+            if (AutoAdd.HasValue)
             {
                 writer.WritePropertyName("autoAdd"u8);
                 writer.WriteBooleanValue(AutoAdd.Value);
             }
-            if (Optional.IsCollectionDefined(Targets))
+            if (!(Targets is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(QuotaDimensions))
+            if (!(QuotaDimensions is ChangeTrackingList<QuotaDimension> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("quotaDimensions"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PricingDetails))
+            if (!(PricingDetails is ChangeTrackingList<PricingDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("pricingDetails"u8);
                 writer.WriteStartArray();

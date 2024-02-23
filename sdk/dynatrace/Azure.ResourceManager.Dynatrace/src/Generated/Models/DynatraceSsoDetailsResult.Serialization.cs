@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSsoEnabled))
+            if (IsSsoEnabled.HasValue)
             {
                 writer.WritePropertyName("isSsoEnabled"u8);
                 writer.WriteStringValue(IsSsoEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(MetadataUri))
+            if (MetadataUri != null)
             {
                 writer.WritePropertyName("metadataUrl"u8);
                 writer.WriteStringValue(MetadataUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SingleSignOnUri))
+            if (SingleSignOnUri != null)
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(AadDomains))
+            if (!(AadDomains is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminUsers))
+            if (!(AdminUsers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("adminUsers"u8);
                 writer.WriteStartArray();

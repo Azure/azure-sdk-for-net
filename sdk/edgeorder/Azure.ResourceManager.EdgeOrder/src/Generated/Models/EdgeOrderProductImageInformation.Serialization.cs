@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ImageType))
+            if (options.Format != "W" && ImageType.HasValue)
             {
                 writer.WritePropertyName("imageType"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ImageUri))
+            if (options.Format != "W" && ImageUri != null)
             {
                 writer.WritePropertyName("imageUrl"u8);
                 writer.WriteStringValue(ImageUri.AbsoluteUri);

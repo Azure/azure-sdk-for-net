@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkAddressSpace))
+            if (VirtualNetworkAddressSpace != null)
             {
                 writer.WritePropertyName("virtualNetworkAddressSpace"u8);
                 writer.WriteStringValue(VirtualNetworkAddressSpace);
             }
-            if (Optional.IsDefined(AccessEndpoint))
+            if (AccessEndpoint != null)
             {
                 writer.WritePropertyName("accessEndpoint"u8);
                 writer.WriteObjectValue(AccessEndpoint);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<LogicResourceReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();

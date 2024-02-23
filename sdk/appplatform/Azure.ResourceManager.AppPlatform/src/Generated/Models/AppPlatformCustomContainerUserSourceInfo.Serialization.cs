@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomContainer))
+            if (CustomContainer != null)
             {
                 writer.WritePropertyName("customContainer"u8);
                 writer.WriteObjectValue(CustomContainer);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

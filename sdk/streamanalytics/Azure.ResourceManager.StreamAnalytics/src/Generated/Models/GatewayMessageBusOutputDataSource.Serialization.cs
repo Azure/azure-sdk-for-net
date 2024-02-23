@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Topic))
+            if (Topic != null)
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);

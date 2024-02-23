@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedPorts))
+            if (!(AllowedPorts is ChangeTrackingList<DevTestLabPort> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedPorts"u8);
                 writer.WriteStartArray();

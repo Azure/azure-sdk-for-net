@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("taskFilePath"u8);
             writer.WriteStringValue(TaskFilePath);
-            if (Optional.IsDefined(ValuesFilePath))
+            if (ValuesFilePath != null)
             {
                 writer.WritePropertyName("valuesFilePath"u8);
                 writer.WriteStringValue(ValuesFilePath);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -43,41 +43,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (TimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
             writer.WriteObjectValue(Platform);
-            if (Optional.IsDefined(AgentConfiguration))
+            if (AgentConfiguration != null)
             {
                 writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
-            if (Optional.IsDefined(SourceLocation))
+            if (SourceLocation != null)
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (IsArchiveEnabled.HasValue)
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(AgentPoolName))
+            if (AgentPoolName != null)
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Optional.IsDefined(LogTemplate))
+            if (LogTemplate != null)
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);

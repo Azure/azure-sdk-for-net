@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Optional.IsDefined(BlobFilterDetails))
+            if (BlobFilterDetails != null)
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
                 writer.WriteObjectValue(BlobFilterDetails);
             }
-            if (Optional.IsDefined(AzureFileFilterDetails))
+            if (AzureFileFilterDetails != null)
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
                 writer.WriteObjectValue(AzureFileFilterDetails);
             }
-            if (Optional.IsCollectionDefined(FilterFileDetails))
+            if (!(FilterFileDetails is ChangeTrackingList<FilterFileDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filterFileDetails"u8);
                 writer.WriteStartArray();

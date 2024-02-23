@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (AppLocation.HasValue)
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (Optional.IsDefined(InfrastructureConfiguration))
+            if (InfrastructureConfiguration != null)
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureConfiguration);
             }
-            if (Optional.IsDefined(SoftwareConfiguration))
+            if (SoftwareConfiguration != null)
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
                 writer.WriteObjectValue(SoftwareConfiguration);

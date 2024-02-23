@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MergeDestination))
+            if (MergeDestination != null)
             {
                 writer.WritePropertyName("mergeDestination"u8);
                 writer.WriteStringValue(MergeDestination);
             }
-            if (Optional.IsCollectionDefined(MergeSources))
+            if (!(MergeSources is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("mergeSources"u8);
                 writer.WriteStartArray();

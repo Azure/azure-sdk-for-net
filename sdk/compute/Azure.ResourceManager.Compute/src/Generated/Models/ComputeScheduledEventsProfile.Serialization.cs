@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TerminateNotificationProfile))
+            if (TerminateNotificationProfile != null)
             {
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile);
             }
-            if (Optional.IsDefined(OSImageNotificationProfile))
+            if (OSImageNotificationProfile != null)
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
                 writer.WriteObjectValue(OSImageNotificationProfile);

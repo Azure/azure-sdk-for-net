@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,29 +49,29 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UpdatedAtUtc))
+            if (options.Format != "W" && UpdatedAtUtc.HasValue)
             {
                 writer.WritePropertyName("updatedAtUtc"u8);
                 writer.WriteStringValue(UpdatedAtUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedAtUtc))
+            if (options.Format != "W" && CreatedAtUtc.HasValue)
             {
                 writer.WritePropertyName("createdAtUtc"u8);
                 writer.WriteStringValue(CreatedAtUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(GroupProperties))
+            if (!(GroupProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupProperties"u8);
                 writer.WriteStartObject();
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SchemaCompatibility))
+            if (SchemaCompatibility.HasValue)
             {
                 writer.WritePropertyName("schemaCompatibility"u8);
                 writer.WriteStringValue(SchemaCompatibility.Value.ToString());
             }
-            if (Optional.IsDefined(SchemaType))
+            if (SchemaType.HasValue)
             {
                 writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(PairedKeyType))
+            if (PairedKeyType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PairedKeyType);
             }
-            if (Optional.IsDefined(AdditionalProperties))
+            if (AdditionalProperties != null)
             {
                 if (AdditionalProperties != null)
                 {

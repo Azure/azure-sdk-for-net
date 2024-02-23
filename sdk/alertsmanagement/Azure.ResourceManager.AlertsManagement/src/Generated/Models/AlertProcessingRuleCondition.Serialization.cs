@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Field))
+            if (Field.HasValue)
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field.Value.ToString());
             }
-            if (Optional.IsDefined(Operator))
+            if (Operator.HasValue)
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();

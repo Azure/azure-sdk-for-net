@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEndpointBaseProperties(document.RootElement, options);
+            return DeserializeEndpointBaseProperties(document.RootElement, options);
         }
 
         internal static UnknownEndpointBaseProperties DeserializeUnknownEndpointBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEndpointBaseProperties(document.RootElement, options);
+                        return DeserializeEndpointBaseProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EndpointBaseProperties)} does not support '{options.Format}' format.");

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Continents))
+            if (!(Continents is ChangeTrackingList<ContinentsResponseContinentsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("continents"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CountryOrRegions))
+            if (!(CountryOrRegions is ChangeTrackingList<ContinentsResponseCountryOrRegionsItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("countryOrRegions"u8);
                 writer.WriteStartArray();

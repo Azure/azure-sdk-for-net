@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointType))
+            if (RecoveryPointType != null)
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (Optional.IsDefined(RecoveryPointOn))
+            if (RecoveryPointOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (Optional.IsDefined(FileShareSnapshotUri))
+            if (FileShareSnapshotUri != null)
             {
                 writer.WritePropertyName("fileShareSnapshotUri"u8);
                 writer.WriteStringValue(FileShareSnapshotUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RecoveryPointSizeInGB))
+            if (RecoveryPointSizeInGB.HasValue)
             {
                 writer.WritePropertyName("recoveryPointSizeInGB"u8);
                 writer.WriteNumberValue(RecoveryPointSizeInGB.Value);
             }
-            if (Optional.IsDefined(RecoveryPointProperties))
+            if (RecoveryPointProperties != null)
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);

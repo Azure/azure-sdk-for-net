@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Result))
+            if (options.Format != "W" && !(Result is ChangeTrackingList<ApplicationInsightsComponentFeature> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Result"u8);
                 writer.WriteStartArray();

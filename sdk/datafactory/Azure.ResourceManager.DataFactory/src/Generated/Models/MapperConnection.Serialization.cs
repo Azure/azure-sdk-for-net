@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedService))
+            if (LinkedService != null)
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Optional.IsDefined(LinkedServiceType))
+            if (LinkedServiceType != null)
             {
                 writer.WritePropertyName("linkedServiceType"u8);
                 writer.WriteStringValue(LinkedServiceType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (Optional.IsDefined(IsInlineDataset))
+            if (IsInlineDataset.HasValue)
             {
                 writer.WritePropertyName("isInlineDataset"u8);
                 writer.WriteBooleanValue(IsInlineDataset.Value);
             }
-            if (Optional.IsCollectionDefined(CommonDslConnectorProperties))
+            if (!(CommonDslConnectorProperties is ChangeTrackingList<MapperDslConnectorProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("commonDslConnectorProperties"u8);
                 writer.WriteStartArray();

@@ -17,7 +17,7 @@ namespace Azure.Communication.Email
             writer.WriteStartObject();
             writer.WritePropertyName("address"u8);
             writer.WriteStringValue(Address);
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

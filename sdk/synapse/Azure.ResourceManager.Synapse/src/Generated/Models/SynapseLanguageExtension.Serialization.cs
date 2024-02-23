@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LanguageExtensionName))
+            if (LanguageExtensionName.HasValue)
             {
                 writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());

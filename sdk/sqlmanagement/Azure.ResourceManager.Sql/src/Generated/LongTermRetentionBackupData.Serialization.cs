@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerCreateOn))
+            if (options.Format != "W" && ServerCreateOn.HasValue)
             {
                 writer.WritePropertyName("serverCreateTime"u8);
                 writer.WriteStringValue(ServerCreateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseDeletedOn))
+            if (options.Format != "W" && DatabaseDeletedOn.HasValue)
             {
                 writer.WritePropertyName("databaseDeletionTime"u8);
                 writer.WriteStringValue(DatabaseDeletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupOn))
+            if (options.Format != "W" && BackupOn.HasValue)
             {
                 writer.WritePropertyName("backupTime"u8);
                 writer.WriteStringValue(BackupOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
+            if (options.Format != "W" && BackupExpireOn.HasValue)
             {
                 writer.WritePropertyName("backupExpirationTime"u8);
                 writer.WriteStringValue(BackupExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
+            if (options.Format != "W" && BackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
+            if (RequestedBackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(IsBackupImmutable))
+            if (IsBackupImmutable.HasValue)
             {
                 writer.WritePropertyName("isBackupImmutable"u8);
                 writer.WriteBooleanValue(IsBackupImmutable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupStorageAccessTier))
+            if (options.Format != "W" && BackupStorageAccessTier.HasValue)
             {
                 writer.WritePropertyName("backupStorageAccessTier"u8);
                 writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());

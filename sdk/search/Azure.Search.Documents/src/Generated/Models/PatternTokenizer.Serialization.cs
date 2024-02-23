@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pattern))
+            if (Pattern != null)
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(FlagsInternal))
+            if (FlagsInternal != null)
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (Optional.IsDefined(Group))
+            if (Group.HasValue)
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteNumberValue(Group.Value);

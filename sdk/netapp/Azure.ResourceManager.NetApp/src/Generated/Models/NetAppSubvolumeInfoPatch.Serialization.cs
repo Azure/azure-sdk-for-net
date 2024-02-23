@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Size))
+            if (Size.HasValue)
             {
                 if (Size != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("size");
                 }
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

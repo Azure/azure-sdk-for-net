@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(ClusterVersion);
             writer.WritePropertyName("ossVersion"u8);
             writer.WriteStringValue(OssVersion);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Components))
+            if (options.Format != "W" && !(Components is ChangeTrackingList<ClusterComponentItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             writer.WritePropertyName("authorizationProfile"u8);
             writer.WriteObjectValue(AuthorizationProfile);
-            if (Optional.IsDefined(SecretsProfile))
+            if (SecretsProfile != null)
             {
                 writer.WritePropertyName("secretsProfile"u8);
                 writer.WriteObjectValue(SecretsProfile);
             }
-            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
+            if (!(ServiceConfigsProfiles is ChangeTrackingList<ClusterServiceConfigsProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceConfigsProfiles"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityProfile))
+            if (options.Format != "W" && ConnectivityProfile != null)
             {
                 writer.WritePropertyName("connectivityProfile"u8);
                 writer.WriteObjectValue(ConnectivityProfile);
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("logAnalyticsProfile"u8);
                 writer.WriteObjectValue(LogAnalyticsProfile);
             }
-            if (Optional.IsDefined(PrometheusProfile))
+            if (PrometheusProfile != null)
             {
                 writer.WritePropertyName("prometheusProfile"u8);
                 writer.WriteObjectValue(PrometheusProfile);
             }
-            if (Optional.IsDefined(SshProfile))
+            if (SshProfile != null)
             {
                 writer.WritePropertyName("sshProfile"u8);
                 writer.WriteObjectValue(SshProfile);
             }
-            if (Optional.IsDefined(AutoscaleProfile))
+            if (AutoscaleProfile != null)
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
                 writer.WriteObjectValue(AutoscaleProfile);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("trinoProfile"u8);
                 writer.WriteObjectValue(TrinoProfile);
             }
-            if (Optional.IsCollectionDefined(LlapProfile))
+            if (!(LlapProfile is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("llapProfile"u8);
                 writer.WriteStartObject();
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(FlinkProfile))
+            if (FlinkProfile != null)
             {
                 writer.WritePropertyName("flinkProfile"u8);
                 writer.WriteObjectValue(FlinkProfile);
             }
-            if (Optional.IsDefined(SparkProfile))
+            if (SparkProfile != null)
             {
                 writer.WritePropertyName("sparkProfile"u8);
                 writer.WriteObjectValue(SparkProfile);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ScriptActionProfiles))
+            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();
