@@ -31,10 +31,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Optional<SparkScheduler> schedulerInfo = default;
             Optional<SparkServicePlugin> pluginInfo = default;
             IReadOnlyList<SparkServiceError> errorInfo = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             int id = default;
             Optional<string> appId = default;
-            Optional<IReadOnlyDictionary<string, string>> appInfo = default;
+            IReadOnlyDictionary<string, string> appInfo = default;
             Optional<LivyStates> state = default;
             IReadOnlyList<string> log = default;
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, errorInfo ?? new ChangeTrackingList<SparkServiceError>(), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), Optional.ToNullable(state), log ?? new ChangeTrackingList<string>());
+            return new SparkBatchJob(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, errorInfo ?? new ChangeTrackingList<SparkServiceError>(), tags ?? new ChangeTrackingDictionary<string, string>(), id, appId.Value, appInfo ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(state), log ?? new ChangeTrackingList<string>());
         }
     }
 }
