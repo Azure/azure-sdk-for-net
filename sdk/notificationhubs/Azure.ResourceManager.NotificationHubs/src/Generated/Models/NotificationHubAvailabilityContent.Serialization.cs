@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
             Optional<NotificationHubSku> sku = default;
             Optional<bool> isAvailiable = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubAvailabilityContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(isAvailiable), serializedAdditionalRawData);
+            return new NotificationHubAvailabilityContent(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, Optional.ToNullable(isAvailiable), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubAvailabilityContent>.Write(ModelReaderWriterOptions options)

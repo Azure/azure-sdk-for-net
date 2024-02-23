@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalRulestackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), associatedSubscriptions ?? new ChangeTrackingList<string>(), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, Optional.ToNullable(provisioningState), securityServices.Value, serializedAdditionalRawData);
+            return new LocalRulestackData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), associatedSubscriptions ?? new ChangeTrackingList<string>(), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, Optional.ToNullable(provisioningState), securityServices.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalRulestackData>.Write(ModelReaderWriterOptions options)

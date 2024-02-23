@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<VirtualNetworkGatewayAutoScaleConfiguration> autoScaleConfiguration = default;
             IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default;
             Optional<VirtualNetworkGatewayType> gatewayType = default;
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), autoScaleConfiguration.Value, ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>(), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIPAddress), Optional.ToNullable(activeActive), Optional.ToNullable(disableIPSecReplayProtection), gatewayDefaultSite, sku.Value, vpnClientConfiguration.Value, virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>(), bgpSettings.Value, customRoutes.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, natRules ?? new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>(), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(allowVirtualWanTraffic), Optional.ToNullable(allowRemoteVnetTraffic), Optional.ToNullable(adminState));
+            return new VirtualNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), autoScaleConfiguration.Value, ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>(), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIPAddress), Optional.ToNullable(activeActive), Optional.ToNullable(disableIPSecReplayProtection), gatewayDefaultSite, sku.Value, vpnClientConfiguration.Value, virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>(), bgpSettings.Value, customRoutes.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, natRules ?? new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>(), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(allowVirtualWanTraffic), Optional.ToNullable(allowRemoteVnetTraffic), Optional.ToNullable(adminState));
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options)

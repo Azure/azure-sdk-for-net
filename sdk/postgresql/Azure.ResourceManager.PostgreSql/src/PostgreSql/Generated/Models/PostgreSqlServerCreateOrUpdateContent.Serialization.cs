@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             Optional<PostgreSqlSku> sku = default;
             PostgreSqlServerPropertiesForCreate properties = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerCreateOrUpdateContent(identity, sku.Value, properties, location, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new PostgreSqlServerCreateOrUpdateContent(identity, sku.Value, properties, location, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

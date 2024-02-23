@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<SystemData> systemData = default;
             Optional<MobileNetworkProvisioningState> provisioningState = default;
             Optional<MobileNetworkSimState> simState = default;
-            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = default;
             string internationalMobileSubscriberIdentity = default;
             Optional<string> integratedCircuitCardIdentifier = default;
             Optional<string> deviceType = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSimData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value, serializedAdditionalRawData);
+            return new MobileNetworkSimData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSimData>.Write(ModelReaderWriterOptions options)
