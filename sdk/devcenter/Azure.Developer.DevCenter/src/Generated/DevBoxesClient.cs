@@ -309,7 +309,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Gets a Dev Box. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
@@ -328,7 +328,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Gets a Dev Box. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
@@ -361,7 +361,7 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
@@ -405,7 +405,7 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
@@ -561,7 +561,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Gets an action. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -582,7 +582,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Gets an action. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -617,7 +617,7 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -663,7 +663,7 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1383,7 +1383,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists actions on a Dev Box. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
@@ -1403,7 +1403,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists actions on a Dev Box. </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
@@ -1437,7 +1437,7 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
@@ -1472,7 +1472,7 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
-        /// <param name="userId"> The AAD object id of the user. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
