@@ -192,12 +192,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
                 const int maxLength = 128;
                 try
                 {
-                    string converted = Convert.ToString(value, InvariantCulture) ?? "";
+                    string converted = Convert.ToString(value, InvariantCulture) ?? string.Empty;
                     return converted.Length <= maxLength ? converted : converted.Substring(0, maxLength);
                 }
                 catch
                 {
-                    return "";
+                    return string.Empty;
                 }
             }
         }
