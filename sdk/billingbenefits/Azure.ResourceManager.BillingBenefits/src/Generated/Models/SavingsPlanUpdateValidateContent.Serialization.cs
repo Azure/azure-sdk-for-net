@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IList<BillingBenefitsSavingsPlanPatchProperties>> benefits = default;
+            IList<BillingBenefitsSavingsPlanPatchProperties> benefits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanUpdateValidateContent(Optional.ToList(benefits), serializedAdditionalRawData);
+            return new SavingsPlanUpdateValidateContent(benefits ?? new ChangeTrackingList<BillingBenefitsSavingsPlanPatchProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanUpdateValidateContent>.Write(ModelReaderWriterOptions options)

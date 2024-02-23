@@ -81,7 +81,7 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             Optional<ModelState> modelState = default;
-            Optional<IList<VariableState>> variableStates = default;
+            IList<VariableState> variableStates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticsInfo(modelState.Value, Optional.ToList(variableStates), serializedAdditionalRawData);
+            return new DiagnosticsInfo(modelState.Value, variableStates ?? new ChangeTrackingList<VariableState>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticsInfo>.Write(ModelReaderWriterOptions options)

@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             int statusCode = default;
             Optional<string> description = default;
-            Optional<IList<RepresentationContract>> representations = default;
-            Optional<IList<ParameterContract>> headers = default;
+            IList<RepresentationContract> representations = default;
+            IList<ParameterContract> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseContract(statusCode, description.Value, Optional.ToList(representations), Optional.ToList(headers), serializedAdditionalRawData);
+            return new ResponseContract(statusCode, description.Value, representations ?? new ChangeTrackingList<RepresentationContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseContract>.Write(ModelReaderWriterOptions options)

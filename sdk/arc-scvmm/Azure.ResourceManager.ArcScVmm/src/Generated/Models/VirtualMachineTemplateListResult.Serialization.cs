@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScVmmVirtualMachineTemplateData>> value = default;
+            IReadOnlyList<ScVmmVirtualMachineTemplateData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineTemplateListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualMachineTemplateListResult(value ?? new ChangeTrackingList<ScVmmVirtualMachineTemplateData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineTemplateListResult>.Write(ModelReaderWriterOptions options)

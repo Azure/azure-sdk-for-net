@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> displayName = default;
             Optional<string> serializedData = default;
             Optional<string> category = default;
-            Optional<IList<string>> tags0 = default;
+            IList<string> tags0 = default;
             Optional<string> description = default;
             Optional<string> revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookPatch(Optional.ToNullable(kind), Optional.ToDictionary(tags), displayName.Value, serializedData.Value, category.Value, Optional.ToList(tags0), description.Value, revision.Value, serializedAdditionalRawData);
+            return new WorkbookPatch(Optional.ToNullable(kind), Optional.ToDictionary(tags), displayName.Value, serializedData.Value, category.Value, tags0 ?? new ChangeTrackingList<string>(), description.Value, revision.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookPatch>.Write(ModelReaderWriterOptions options)

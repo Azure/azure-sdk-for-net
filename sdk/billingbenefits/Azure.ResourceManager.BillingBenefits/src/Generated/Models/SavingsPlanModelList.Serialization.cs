@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BillingBenefitsSavingsPlanData>> value = default;
+            IReadOnlyList<BillingBenefitsSavingsPlanData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanModelList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SavingsPlanModelList(value ?? new ChangeTrackingList<BillingBenefitsSavingsPlanData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanModelList>.Write(ModelReaderWriterOptions options)

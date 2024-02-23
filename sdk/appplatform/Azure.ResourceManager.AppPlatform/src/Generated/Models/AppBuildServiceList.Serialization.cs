@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformBuildServiceData>> value = default;
+            IReadOnlyList<AppPlatformBuildServiceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppBuildServiceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AppBuildServiceList(value ?? new ChangeTrackingList<AppPlatformBuildServiceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppBuildServiceList>.Write(ModelReaderWriterOptions options)

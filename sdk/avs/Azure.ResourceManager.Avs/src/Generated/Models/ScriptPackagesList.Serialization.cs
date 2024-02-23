@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScriptPackageData>> value = default;
+            IReadOnlyList<ScriptPackageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptPackagesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScriptPackagesList(value ?? new ChangeTrackingList<ScriptPackageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptPackagesList>.Write(ModelReaderWriterOptions options)

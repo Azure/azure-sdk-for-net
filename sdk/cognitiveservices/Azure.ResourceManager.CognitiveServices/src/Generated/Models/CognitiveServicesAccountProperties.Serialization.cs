@@ -233,15 +233,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             Optional<ServiceAccountProvisioningState> provisioningState = default;
             Optional<string> endpoint = default;
-            Optional<IReadOnlyList<CognitiveServicesSkuCapability>> capabilities = default;
+            IReadOnlyList<CognitiveServicesSkuCapability> capabilities = default;
             Optional<bool> isMigrated = default;
             Optional<string> migrationToken = default;
             Optional<CognitiveServicesSkuChangeInfo> skuChangeInfo = default;
             Optional<string> customSubDomainName = default;
             Optional<CognitiveServicesNetworkRuleSet> networkAcls = default;
             Optional<ServiceAccountEncryptionProperties> encryption = default;
-            Optional<IList<ServiceAccountUserOwnedStorage>> userOwnedStorage = default;
-            Optional<IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<ServiceAccountUserOwnedStorage> userOwnedStorage = default;
+            IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<ServiceAccountPublicNetworkAccess> publicNetworkAccess = default;
             Optional<ServiceAccountApiProperties> apiProperties = default;
             Optional<DateTimeOffset> dateCreated = default;
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<bool> dynamicThrottlingEnabled = default;
             Optional<ServiceAccountQuotaLimit> quotaLimit = default;
             Optional<bool> restrictOutboundNetworkAccess = default;
-            Optional<IList<string>> allowedFqdnList = default;
+            IList<string> allowedFqdnList = default;
             Optional<bool> disableLocalAuth = default;
             Optional<IReadOnlyDictionary<string, string>> endpoints = default;
             Optional<bool> restore = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<string> scheduledPurgeDate = default;
             Optional<CognitiveServicesMultiRegionSettings> locations = default;
-            Optional<IReadOnlyList<CommitmentPlanAssociation>> commitmentPlanAssociations = default;
+            IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
             Optional<AbusePenalty> abusePenalty = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, Optional.ToList(capabilities), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, Optional.ToList(userOwnedStorage), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, Optional.ToList(commitmentPlanAssociations), abusePenalty.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, capabilities ?? new ChangeTrackingList<CognitiveServicesSkuCapability>(), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, userOwnedStorage ?? new ChangeTrackingList<ServiceAccountUserOwnedStorage>(), privateEndpointConnections ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), allowedFqdnList ?? new ChangeTrackingList<string>(), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(), abusePenalty.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountProperties>.Write(ModelReaderWriterOptions options)

@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IList<string>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<AutomationAdvancedScheduleMonthlyOccurrence>> monthlyOccurrences = default;
+            IList<string> weekDays = default;
+            IList<int> monthDays = default;
+            IList<AutomationAdvancedScheduleMonthlyOccurrence> monthlyOccurrences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAdvancedSchedule(Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), serializedAdditionalRawData);
+            return new AutomationAdvancedSchedule(weekDays ?? new ChangeTrackingList<string>(), monthDays ?? new ChangeTrackingList<int>(), monthlyOccurrences ?? new ChangeTrackingList<AutomationAdvancedScheduleMonthlyOccurrence>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAdvancedSchedule>.Write(ModelReaderWriterOptions options)

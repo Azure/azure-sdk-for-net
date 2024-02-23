@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             Optional<string> name = default;
             Optional<string> addressPrefix = default;
-            Optional<IList<string>> addressPrefixes = default;
+            IList<string> addressPrefixes = default;
             Optional<IPAllocationMethodEnum> ipAllocationMethod = default;
-            Optional<IList<WritableSubResource>> ipConfigurationReferences = default;
+            IList<WritableSubResource> ipConfigurationReferences = default;
             Optional<RouteTable> routeTable = default;
-            Optional<IList<IPPool>> ipPools = default;
+            IList<IPPool> ipPools = default;
             Optional<int> vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Subnet(name.Value, addressPrefix.Value, Optional.ToList(addressPrefixes), Optional.ToNullable(ipAllocationMethod), Optional.ToList(ipConfigurationReferences), routeTable.Value, Optional.ToList(ipPools), Optional.ToNullable(vlan), serializedAdditionalRawData);
+            return new Subnet(name.Value, addressPrefix.Value, addressPrefixes ?? new ChangeTrackingList<string>(), Optional.ToNullable(ipAllocationMethod), ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(), routeTable.Value, ipPools ?? new ChangeTrackingList<IPPool>(), Optional.ToNullable(vlan), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Subnet>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SourceControlSyncJobStream>> value = default;
+            IReadOnlyList<SourceControlSyncJobStream> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobStreamListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SourceControlSyncJobStreamListResult(value ?? new ChangeTrackingList<SourceControlSyncJobStream>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobStreamListResult>.Write(ModelReaderWriterOptions options)

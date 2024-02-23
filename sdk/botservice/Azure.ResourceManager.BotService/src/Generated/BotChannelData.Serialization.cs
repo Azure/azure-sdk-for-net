@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.BotService
             Optional<BotServiceSku> sku = default;
             Optional<BotServiceKind?> kind = default;
             Optional<ETag> etag = default;
-            Optional<IReadOnlyList<string>> zones = default;
+            IReadOnlyList<string> zones = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.BotService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotChannelData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), Optional.ToList(zones), serializedAdditionalRawData);
+            return new BotChannelData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotChannelData>.Write(ModelReaderWriterOptions options)
