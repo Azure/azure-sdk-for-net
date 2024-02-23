@@ -35,13 +35,23 @@ namespace Azure.Provisioning.Tests
 
             SqlServer sqlServer = new SqlServer(this, "sqlserver");
             sqlServer.AssignParameter(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
-            SqlDatabase = new SqlDatabase(this);
+            Output sqlServerName = sqlServer.AddOutput(sql => sql.FullyQualifiedDomainName, "sqlServerName");
+
+            SqlDatabase = new SqlDatabase(this, sqlServer);
+            Output sqlServerDatabaseName = SqlDatabase.AddOutput(db => db.Name, "sqlServerDatabaseName");
 
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(this, "connectionString", SqlDatabase.GetConnectionString(appUserPasswordParam));
 
             SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(this, "firewallRule");
-
-            DeploymentScript deploymentScript = new DeploymentScript(this, "cliScript", SqlDatabase, appUserPasswordParam, sqlAdminPasswordParam);
+            Parameter databaseName = new Parameter("appUserPassword", "Application user password", isSecure: true);
+            DeploymentScript deploymentScript = new DeploymentScript(
+                this,
+                "cliScript",
+                SqlDatabase,
+                new Parameter(sqlServerName),
+                new Parameter(sqlServerDatabaseName),
+                appUserPasswordParam,
+                sqlAdminPasswordParam);
         }
     }
 }
