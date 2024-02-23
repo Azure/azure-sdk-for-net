@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(InstallMethod))
+            if (InstallMethod != null)
             {
                 writer.WritePropertyName("installMethod"u8);
                 writer.WriteObjectValue(InstallMethod);
             }
-            if (Optional.IsDefined(LogsAgent))
+            if (LogsAgent != null)
             {
                 writer.WritePropertyName("logsAgent"u8);
                 writer.WriteObjectValue(LogsAgent);

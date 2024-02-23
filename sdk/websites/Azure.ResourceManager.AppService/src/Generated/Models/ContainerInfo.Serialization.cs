@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentTimeStamp))
+            if (CurrentTimeStamp.HasValue)
             {
                 writer.WritePropertyName("currentTimeStamp"u8);
                 writer.WriteStringValue(CurrentTimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(PreviousTimeStamp))
+            if (PreviousTimeStamp.HasValue)
             {
                 writer.WritePropertyName("previousTimeStamp"u8);
                 writer.WriteStringValue(PreviousTimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(CurrentCpuStats))
+            if (CurrentCpuStats != null)
             {
                 writer.WritePropertyName("currentCpuStats"u8);
                 writer.WriteObjectValue(CurrentCpuStats);
             }
-            if (Optional.IsDefined(PreviousCpuStats))
+            if (PreviousCpuStats != null)
             {
                 writer.WritePropertyName("previousCpuStats"u8);
                 writer.WriteObjectValue(PreviousCpuStats);
             }
-            if (Optional.IsDefined(MemoryStats))
+            if (MemoryStats != null)
             {
                 writer.WritePropertyName("memoryStats"u8);
                 writer.WriteObjectValue(MemoryStats);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Eth0))
+            if (Eth0 != null)
             {
                 writer.WritePropertyName("eth0"u8);
                 writer.WriteObjectValue(Eth0);

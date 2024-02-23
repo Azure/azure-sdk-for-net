@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorAccount))
+            if (AdministratorAccount != null)
             {
                 writer.WritePropertyName("administratorAccount"u8);
                 writer.WriteObjectValue(AdministratorAccount);

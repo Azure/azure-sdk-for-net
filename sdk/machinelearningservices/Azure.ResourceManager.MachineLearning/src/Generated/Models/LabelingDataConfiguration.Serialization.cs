@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataId))
+            if (DataId != null)
             {
                 if (DataId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataId");
                 }
             }
-            if (Optional.IsDefined(IncrementalDataRefresh))
+            if (IncrementalDataRefresh.HasValue)
             {
                 writer.WritePropertyName("incrementalDataRefresh"u8);
                 writer.WriteStringValue(IncrementalDataRefresh.Value.ToString());

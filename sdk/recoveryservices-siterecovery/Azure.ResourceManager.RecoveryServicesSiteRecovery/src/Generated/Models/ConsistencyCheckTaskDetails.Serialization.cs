@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VmDetails))
+            if (!(VmDetails is ChangeTrackingList<InconsistentVmDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmDetails"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InnerHealthErrors))
+            if (!(InnerHealthErrors is ChangeTrackingList<SiteRecoveryInnerHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("innerHealthErrors"u8);
                 writer.WriteStartArray();
@@ -36,72 +36,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ErrorSource))
+            if (ErrorSource != null)
             {
                 writer.WritePropertyName("errorSource"u8);
                 writer.WriteStringValue(ErrorSource);
             }
-            if (Optional.IsDefined(ErrorType))
+            if (ErrorType != null)
             {
                 writer.WritePropertyName("errorType"u8);
                 writer.WriteStringValue(ErrorType);
             }
-            if (Optional.IsDefined(ErrorLevel))
+            if (ErrorLevel != null)
             {
                 writer.WritePropertyName("errorLevel"u8);
                 writer.WriteStringValue(ErrorLevel);
             }
-            if (Optional.IsDefined(ErrorCategory))
+            if (ErrorCategory != null)
             {
                 writer.WritePropertyName("errorCategory"u8);
                 writer.WriteStringValue(ErrorCategory);
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(SummaryMessage))
+            if (SummaryMessage != null)
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(PossibleCauses))
+            if (PossibleCauses != null)
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (Optional.IsDefined(RecommendedAction))
+            if (RecommendedAction != null)
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (Optional.IsDefined(CreationTimeUtc))
+            if (CreationTimeUtc.HasValue)
             {
                 writer.WritePropertyName("creationTimeUtc"u8);
                 writer.WriteStringValue(CreationTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryProviderErrorMessage))
+            if (RecoveryProviderErrorMessage != null)
             {
                 writer.WritePropertyName("recoveryProviderErrorMessage"u8);
                 writer.WriteStringValue(RecoveryProviderErrorMessage);
             }
-            if (Optional.IsDefined(EntityId))
+            if (EntityId != null)
             {
                 writer.WritePropertyName("entityId"u8);
                 writer.WriteStringValue(EntityId);
             }
-            if (Optional.IsDefined(ErrorId))
+            if (ErrorId != null)
             {
                 writer.WritePropertyName("errorId"u8);
                 writer.WriteStringValue(ErrorId);
             }
-            if (Optional.IsDefined(CustomerResolvability))
+            if (CustomerResolvability.HasValue)
             {
                 writer.WritePropertyName("customerResolvability"u8);
                 writer.WriteStringValue(CustomerResolvability.Value.ToString());

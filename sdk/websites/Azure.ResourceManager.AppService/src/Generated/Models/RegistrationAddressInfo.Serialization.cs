@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("address1"u8);
             writer.WriteStringValue(Address1);
-            if (Optional.IsDefined(Address2))
+            if (Address2 != null)
             {
                 writer.WritePropertyName("address2"u8);
                 writer.WriteStringValue(Address2);

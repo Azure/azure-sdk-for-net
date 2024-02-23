@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BaseResourceStatus))
+            if (!(BaseResourceStatus is ChangeTrackingList<ResourceAzStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("baseResourceStatus"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsClusterZoneResilient))
+            if (options.Format != "W" && IsClusterZoneResilient.HasValue)
             {
                 writer.WritePropertyName("isClusterZoneResilient"u8);
                 writer.WriteBooleanValue(IsClusterZoneResilient.Value);

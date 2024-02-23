@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionTrackingId))
+            if (ActionTrackingId.HasValue)
             {
                 writer.WritePropertyName("actionTrackingId"u8);
                 writer.WriteStringValue(ActionTrackingId.Value);
             }
-            if (Optional.IsDefined(ClientTrackingId))
+            if (ClientTrackingId != null)
             {
                 writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);
             }
-            if (Optional.IsCollectionDefined(ClientKeywords))
+            if (!(ClientKeywords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clientKeywords"u8);
                 writer.WriteStartArray();

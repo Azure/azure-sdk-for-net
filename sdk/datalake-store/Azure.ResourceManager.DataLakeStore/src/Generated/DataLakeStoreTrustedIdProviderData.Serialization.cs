@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IdProvider))
+            if (options.Format != "W" && IdProvider != null)
             {
                 writer.WritePropertyName("idProvider"u8);
                 writer.WriteStringValue(IdProvider.AbsoluteUri);

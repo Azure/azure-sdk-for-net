@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExternalTablesToExclude))
+            if (!(ExternalTablesToExclude is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalTablesToInclude))
+            if (!(ExternalTablesToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
+            if (!(MaterializedViewsToExclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
+            if (!(MaterializedViewsToInclude is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TablesToExclude))
+            if (!(TablesToExclude is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TablesToInclude))
+            if (!(TablesToInclude is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();

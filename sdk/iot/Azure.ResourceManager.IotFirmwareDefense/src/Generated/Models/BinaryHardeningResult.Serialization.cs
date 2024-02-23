@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BinaryHardeningId))
+            if (BinaryHardeningId != null)
             {
                 if (BinaryHardeningId != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("binaryHardeningId");
                 }
             }
-            if (Optional.IsDefined(Architecture))
+            if (Architecture != null)
             {
                 if (Architecture != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("architecture");
                 }
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 if (FilePath != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("filePath");
                 }
             }
-            if (Optional.IsDefined(Class))
+            if (Class != null)
             {
                 if (Class != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("class");
                 }
             }
-            if (Optional.IsDefined(Runpath))
+            if (Runpath != null)
             {
                 if (Runpath != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("runpath");
                 }
             }
-            if (Optional.IsDefined(Rpath))
+            if (Rpath != null)
             {
                 if (Rpath != null)
                 {
@@ -123,27 +123,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             writer.WritePropertyName("features"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Nx))
+            if (Nx.HasValue)
             {
                 writer.WritePropertyName("nx"u8);
                 writer.WriteBooleanValue(Nx.Value);
             }
-            if (Optional.IsDefined(Pie))
+            if (Pie.HasValue)
             {
                 writer.WritePropertyName("pie"u8);
                 writer.WriteBooleanValue(Pie.Value);
             }
-            if (Optional.IsDefined(Relro))
+            if (Relro.HasValue)
             {
                 writer.WritePropertyName("relro"u8);
                 writer.WriteBooleanValue(Relro.Value);
             }
-            if (Optional.IsDefined(Canary))
+            if (Canary.HasValue)
             {
                 writer.WritePropertyName("canary"u8);
                 writer.WriteBooleanValue(Canary.Value);
             }
-            if (Optional.IsDefined(Stripped))
+            if (Stripped.HasValue)
             {
                 writer.WritePropertyName("stripped"u8);
                 writer.WriteBooleanValue(Stripped.Value);

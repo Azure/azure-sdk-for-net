@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("vmProfile"u8);
             writer.WriteStringValue(VmProfile);
-            if (options.Format != "W" && Optional.IsDefined(MemoryInBytes))
+            if (options.Format != "W" && MemoryInBytes.HasValue)
             {
                 writer.WritePropertyName("memoryInBytes"u8);
                 writer.WriteNumberValue(MemoryInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessorCount))
+            if (options.Format != "W" && ProcessorCount.HasValue)
             {
                 writer.WritePropertyName("processorCount"u8);
                 writer.WriteNumberValue(ProcessorCount.Value);

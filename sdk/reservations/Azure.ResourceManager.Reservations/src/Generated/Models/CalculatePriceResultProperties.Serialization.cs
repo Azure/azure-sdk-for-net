@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BillingCurrencyTotal))
+            if (BillingCurrencyTotal != null)
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Optional.IsDefined(NetTotal))
+            if (NetTotal.HasValue)
             {
                 writer.WritePropertyName("netTotal"u8);
                 writer.WriteNumberValue(NetTotal.Value);
             }
-            if (Optional.IsDefined(TaxTotal))
+            if (TaxTotal.HasValue)
             {
                 writer.WritePropertyName("taxTotal"u8);
                 writer.WriteNumberValue(TaxTotal.Value);
             }
-            if (Optional.IsDefined(GrandTotal))
+            if (GrandTotal.HasValue)
             {
                 writer.WritePropertyName("grandTotal"u8);
                 writer.WriteNumberValue(GrandTotal.Value);
             }
-            if (Optional.IsDefined(IsTaxIncluded))
+            if (IsTaxIncluded.HasValue)
             {
                 writer.WritePropertyName("isTaxIncluded"u8);
                 writer.WriteBooleanValue(IsTaxIncluded.Value);
             }
-            if (Optional.IsDefined(IsBillingPartnerManaged))
+            if (IsBillingPartnerManaged.HasValue)
             {
                 writer.WritePropertyName("isBillingPartnerManaged"u8);
                 writer.WriteBooleanValue(IsBillingPartnerManaged.Value);
             }
-            if (Optional.IsDefined(ReservationOrderId))
+            if (ReservationOrderId.HasValue)
             {
                 writer.WritePropertyName("reservationOrderId"u8);
                 writer.WriteStringValue(ReservationOrderId.Value);
             }
-            if (Optional.IsDefined(SkuTitle))
+            if (SkuTitle != null)
             {
                 writer.WritePropertyName("skuTitle"u8);
                 writer.WriteStringValue(SkuTitle);
             }
-            if (Optional.IsDefined(SkuDescription))
+            if (SkuDescription != null)
             {
                 writer.WritePropertyName("skuDescription"u8);
                 writer.WriteStringValue(SkuDescription);
             }
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (PricingCurrencyTotal != null)
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsCollectionDefined(PaymentSchedule))
+            if (!(PaymentSchedule is ChangeTrackingList<PaymentDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("paymentSchedule"u8);
                 writer.WriteStartArray();

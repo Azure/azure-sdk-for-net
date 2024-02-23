@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogLink))
+            if (LogLink != null)
             {
                 writer.WritePropertyName("logLink"u8);
                 writer.WriteStringValue(LogLink);
             }
-            if (Optional.IsDefined(LogArtifactLink))
+            if (LogArtifactLink != null)
             {
                 writer.WritePropertyName("logArtifactLink"u8);
                 writer.WriteStringValue(LogArtifactLink);

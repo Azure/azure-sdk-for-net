@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SizeInMB))
+            if (options.Format != "W" && SizeInMB.HasValue)
             {
                 writer.WritePropertyName("sizeInMB"u8);
                 writer.WriteNumberValue(SizeInMB.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ElasticCloudUser))
+            if (ElasticCloudUser != null)
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
                 writer.WriteObjectValue(ElasticCloudUser);
             }
-            if (Optional.IsDefined(ElasticCloudDeployment))
+            if (ElasticCloudDeployment != null)
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
                 writer.WriteObjectValue(ElasticCloudDeployment);

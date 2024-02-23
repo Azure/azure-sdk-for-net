@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(NetPayable))
+            if (NetPayable != null)
             {
                 writer.WritePropertyName("netPayable"u8);
                 writer.WriteObjectValue(NetPayable);
             }
-            if (Optional.IsDefined(RefundsTotal))
+            if (RefundsTotal != null)
             {
                 writer.WritePropertyName("refundsTotal"u8);
                 writer.WriteObjectValue(RefundsTotal);
             }
-            if (Optional.IsDefined(PurchasesTotal))
+            if (PurchasesTotal != null)
             {
                 writer.WritePropertyName("purchasesTotal"u8);
                 writer.WriteObjectValue(PurchasesTotal);
             }
-            if (Optional.IsCollectionDefined(ReservationsToPurchase))
+            if (!(ReservationsToPurchase is ChangeTrackingList<ReservationToPurchaseCalculateExchange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
+            if (!(SavingsPlansToPurchase is ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlansToPurchase"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservationsToExchange))
+            if (!(ReservationsToExchange is ChangeTrackingList<ReservationToExchange> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyResult))
+            if (PolicyResult != null)
             {
                 writer.WritePropertyName("policyResult"u8);
                 writer.WriteObjectValue(PolicyResult);

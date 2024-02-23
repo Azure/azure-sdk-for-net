@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
+            if (options.Format != "W" && LinuxRuntimeSettings != null)
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
                 writer.WriteObjectValue(LinuxRuntimeSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
+            if (options.Format != "W" && WindowsRuntimeSettings != null)
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
                 writer.WriteObjectValue(WindowsRuntimeSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinuxContainerSettings))
+            if (options.Format != "W" && LinuxContainerSettings != null)
             {
                 writer.WritePropertyName("linuxContainerSettings"u8);
                 writer.WriteObjectValue(LinuxContainerSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(WindowsContainerSettings))
+            if (options.Format != "W" && WindowsContainerSettings != null)
             {
                 writer.WritePropertyName("windowsContainerSettings"u8);
                 writer.WriteObjectValue(WindowsContainerSettings);

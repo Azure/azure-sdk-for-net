@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimarybytesIn))
+            if (PrimarybytesIn.HasValue)
             {
                 writer.WritePropertyName("primarybytesIn"u8);
                 writer.WriteNumberValue(PrimarybytesIn.Value);
             }
-            if (Optional.IsDefined(PrimarybytesOut))
+            if (PrimarybytesOut.HasValue)
             {
                 writer.WritePropertyName("primarybytesOut"u8);
                 writer.WriteNumberValue(PrimarybytesOut.Value);
             }
-            if (Optional.IsDefined(SecondarybytesIn))
+            if (SecondarybytesIn.HasValue)
             {
                 writer.WritePropertyName("secondarybytesIn"u8);
                 writer.WriteNumberValue(SecondarybytesIn.Value);
             }
-            if (Optional.IsDefined(SecondarybytesOut))
+            if (SecondarybytesOut.HasValue)
             {
                 writer.WritePropertyName("secondarybytesOut"u8);
                 writer.WriteNumberValue(SecondarybytesOut.Value);

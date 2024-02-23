@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,39 +53,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AdvisorStatus))
+            if (options.Format != "W" && AdvisorStatus.HasValue)
             {
                 writer.WritePropertyName("advisorStatus"u8);
                 writer.WriteStringValue(AdvisorStatus.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AutoExecuteStatus))
+            if (AutoExecuteStatus.HasValue)
             {
                 writer.WritePropertyName("autoExecuteStatus"u8);
                 writer.WriteStringValue(AutoExecuteStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AutoExecuteStatusInheritedFrom))
+            if (options.Format != "W" && AutoExecuteStatusInheritedFrom.HasValue)
             {
                 writer.WritePropertyName("autoExecuteStatusInheritedFrom"u8);
                 writer.WriteStringValue(AutoExecuteStatusInheritedFrom.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendationsStatus))
+            if (options.Format != "W" && RecommendationsStatus != null)
             {
                 writer.WritePropertyName("recommendationsStatus"u8);
                 writer.WriteStringValue(RecommendationsStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastCheckedOn))
+            if (options.Format != "W" && LastCheckedOn.HasValue)
             {
                 writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastCheckedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecommendedActions))
+            if (options.Format != "W" && !(RecommendedActions is ChangeTrackingList<RecommendedActionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();

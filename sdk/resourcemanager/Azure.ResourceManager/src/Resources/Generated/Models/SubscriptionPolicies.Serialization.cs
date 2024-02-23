@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LocationPlacementId))
+            if (options.Format != "W" && LocationPlacementId != null)
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
             }
-            if (options.Format != "W" && Optional.IsDefined(QuotaId))
+            if (options.Format != "W" && QuotaId != null)
             {
                 writer.WritePropertyName("quotaId"u8);
                 writer.WriteStringValue(QuotaId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SpendingLimit))
+            if (options.Format != "W" && SpendingLimit.HasValue)
             {
                 writer.WritePropertyName("spendingLimit"u8);
                 writer.WriteStringValue(SpendingLimit.Value.ToSerialString());

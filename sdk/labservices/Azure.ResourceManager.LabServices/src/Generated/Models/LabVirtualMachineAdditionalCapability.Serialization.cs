@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstallGpuDrivers))
+            if (InstallGpuDrivers.HasValue)
             {
                 writer.WritePropertyName("installGpuDrivers"u8);
                 writer.WriteStringValue(InstallGpuDrivers.Value.ToSerialString());

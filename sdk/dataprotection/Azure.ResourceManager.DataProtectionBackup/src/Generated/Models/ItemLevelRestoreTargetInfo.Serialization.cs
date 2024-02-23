@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
             writer.WriteObjectValue(DatasourceInfo);
-            if (Optional.IsDefined(DatasourceSetInfo))
+            if (DatasourceSetInfo != null)
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
                 writer.WriteObjectValue(DatasourceSetInfo);
             }
-            if (Optional.IsDefined(DatasourceAuthCredentials))
+            if (DatasourceAuthCredentials != null)
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
                 writer.WriteObjectValue(DatasourceAuthCredentials);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
-            if (Optional.IsDefined(RestoreLocation))
+            if (RestoreLocation.HasValue)
             {
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subscription))
+            if (Subscription != null)
             {
                 writer.WritePropertyName("subscription"u8);
                 writer.WriteObjectValue(Subscription);

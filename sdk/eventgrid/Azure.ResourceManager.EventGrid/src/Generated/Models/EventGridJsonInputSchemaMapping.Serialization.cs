@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(InputSchemaMappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteObjectValue(Id);
             }
-            if (Optional.IsDefined(Topic))
+            if (Topic != null)
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteObjectValue(Topic);
             }
-            if (Optional.IsDefined(EventTime))
+            if (EventTime != null)
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteObjectValue(EventTime);
             }
-            if (Optional.IsDefined(EventType))
+            if (EventType != null)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteObjectValue(EventType);
             }
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteObjectValue(Subject);
             }
-            if (Optional.IsDefined(DataVersion))
+            if (DataVersion != null)
             {
                 writer.WritePropertyName("dataVersion"u8);
                 writer.WriteObjectValue(DataVersion);

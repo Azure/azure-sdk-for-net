@@ -23,22 +23,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MinWordSize))
+            if (MinWordSize.HasValue)
             {
                 writer.WritePropertyName("minWordSize"u8);
                 writer.WriteNumberValue(MinWordSize.Value);
             }
-            if (Optional.IsDefined(MinSubwordSize))
+            if (MinSubwordSize.HasValue)
             {
                 writer.WritePropertyName("minSubwordSize"u8);
                 writer.WriteNumberValue(MinSubwordSize.Value);
             }
-            if (Optional.IsDefined(MaxSubwordSize))
+            if (MaxSubwordSize.HasValue)
             {
                 writer.WritePropertyName("maxSubwordSize"u8);
                 writer.WriteNumberValue(MaxSubwordSize.Value);
             }
-            if (Optional.IsDefined(OnlyLongestMatch))
+            if (OnlyLongestMatch.HasValue)
             {
                 writer.WritePropertyName("onlyLongestMatch"u8);
                 writer.WriteBooleanValue(OnlyLongestMatch.Value);

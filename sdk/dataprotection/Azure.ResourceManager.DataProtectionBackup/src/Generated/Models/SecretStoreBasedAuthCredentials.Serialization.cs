@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretStoreResource))
+            if (SecretStoreResource != null)
             {
                 writer.WritePropertyName("secretStoreResource"u8);
                 writer.WriteObjectValue(SecretStoreResource);

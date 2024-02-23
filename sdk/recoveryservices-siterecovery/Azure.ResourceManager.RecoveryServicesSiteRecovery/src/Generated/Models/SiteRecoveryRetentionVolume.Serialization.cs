@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VolumeName))
+            if (VolumeName != null)
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
-            if (Optional.IsDefined(CapacityInBytes))
+            if (CapacityInBytes.HasValue)
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (Optional.IsDefined(FreeSpaceInBytes))
+            if (FreeSpaceInBytes.HasValue)
             {
                 writer.WritePropertyName("freeSpaceInBytes"u8);
                 writer.WriteNumberValue(FreeSpaceInBytes.Value);
             }
-            if (Optional.IsDefined(ThresholdPercentage))
+            if (ThresholdPercentage.HasValue)
             {
                 writer.WritePropertyName("thresholdPercentage"u8);
                 writer.WriteNumberValue(ThresholdPercentage.Value);

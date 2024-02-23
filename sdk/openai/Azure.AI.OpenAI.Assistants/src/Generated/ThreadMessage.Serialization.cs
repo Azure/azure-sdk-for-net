@@ -44,12 +44,12 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(AssistantId))
+            if (AssistantId != null)
             {
                 writer.WritePropertyName("assistant_id"u8);
                 writer.WriteStringValue(AssistantId);
             }
-            if (Optional.IsDefined(RunId))
+            if (RunId != null)
             {
                 writer.WritePropertyName("run_id"u8);
                 writer.WriteStringValue(RunId);
@@ -61,7 +61,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

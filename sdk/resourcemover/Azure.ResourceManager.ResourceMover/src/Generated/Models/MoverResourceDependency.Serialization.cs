@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ResolutionStatus))
+            if (ResolutionStatus != null)
             {
                 writer.WritePropertyName("resolutionStatus"u8);
                 writer.WriteStringValue(ResolutionStatus);
             }
-            if (Optional.IsDefined(ResolutionType))
+            if (ResolutionType.HasValue)
             {
                 writer.WritePropertyName("resolutionType"u8);
                 writer.WriteStringValue(ResolutionType.Value.ToString());
             }
-            if (Optional.IsDefined(DependencyType))
+            if (DependencyType.HasValue)
             {
                 writer.WritePropertyName("dependencyType"u8);
                 writer.WriteStringValue(DependencyType.Value.ToString());
             }
-            if (Optional.IsDefined(ManualResolution))
+            if (ManualResolution != null)
             {
                 writer.WritePropertyName("manualResolution"u8);
                 writer.WriteObjectValue(ManualResolution);
             }
-            if (Optional.IsDefined(AutomaticResolution))
+            if (AutomaticResolution != null)
             {
                 writer.WritePropertyName("automaticResolution"u8);
                 writer.WriteObjectValue(AutomaticResolution);
             }
-            if (Optional.IsDefined(IsDependencyOptional))
+            if (IsDependencyOptional != null)
             {
                 writer.WritePropertyName("isOptional"u8);
                 writer.WriteStringValue(IsDependencyOptional);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AadConfiguration))
+            if (AadConfiguration != null)
             {
                 writer.WritePropertyName("aadConfiguration"u8);
                 writer.WriteObjectValue(AadConfiguration);
             }
-            if (Optional.IsDefined(AdministratorConfiguration))
+            if (AdministratorConfiguration != null)
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedNetworkIds))
+            if (options.Format != "W" && !(AttachedNetworkIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("attachedNetworkIds"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableUpgrades))
+            if (options.Format != "W" && !(AvailableUpgrades is ChangeTrackingList<AvailableUpgrade> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("availableUpgrades"u8);
                 writer.WriteStartArray();
@@ -100,34 +100,34 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectedClusterId))
+            if (options.Format != "W" && ConnectedClusterId != null)
             {
                 writer.WritePropertyName("connectedClusterId"u8);
                 writer.WriteStringValue(ConnectedClusterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ControlPlaneKubernetesVersion))
+            if (options.Format != "W" && ControlPlaneKubernetesVersion != null)
             {
                 writer.WritePropertyName("controlPlaneKubernetesVersion"u8);
                 writer.WriteStringValue(ControlPlaneKubernetesVersion);
             }
             writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
             writer.WriteObjectValue(ControlPlaneNodeConfiguration);
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FeatureStatuses))
+            if (options.Format != "W" && !(FeatureStatuses is ChangeTrackingList<FeatureStatus> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("featureStatuses"u8);
                 writer.WriteStartArray();
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteEndArray();
             writer.WritePropertyName("kubernetesVersion"u8);
             writer.WriteStringValue(KubernetesVersion);
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (ManagedResourceGroupConfiguration != null)
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
             writer.WritePropertyName("networkConfiguration"u8);
             writer.WriteObjectValue(NetworkConfiguration);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && !(Nodes is ChangeTrackingList<KubernetesClusterNode> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

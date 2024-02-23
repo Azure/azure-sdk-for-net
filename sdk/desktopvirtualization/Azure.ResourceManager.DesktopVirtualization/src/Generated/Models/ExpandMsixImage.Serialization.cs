@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageAlias))
+            if (PackageAlias != null)
             {
                 writer.WritePropertyName("packageAlias"u8);
                 writer.WriteStringValue(PackageAlias);
             }
-            if (Optional.IsDefined(ImagePath))
+            if (ImagePath != null)
             {
                 writer.WritePropertyName("imagePath"u8);
                 writer.WriteStringValue(ImagePath);
             }
-            if (Optional.IsDefined(PackageName))
+            if (PackageName != null)
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
-            if (Optional.IsDefined(PackageFamilyName))
+            if (PackageFamilyName != null)
             {
                 writer.WritePropertyName("packageFamilyName"u8);
                 writer.WriteStringValue(PackageFamilyName);
             }
-            if (Optional.IsDefined(PackageFullName))
+            if (PackageFullName != null)
             {
                 writer.WritePropertyName("packageFullName"u8);
                 writer.WriteStringValue(PackageFullName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -86,22 +86,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(PackageRelativePath))
+            if (PackageRelativePath != null)
             {
                 writer.WritePropertyName("packageRelativePath"u8);
                 writer.WriteStringValue(PackageRelativePath);
             }
-            if (Optional.IsDefined(IsRegularRegistration))
+            if (IsRegularRegistration.HasValue)
             {
                 writer.WritePropertyName("isRegularRegistration"u8);
                 writer.WriteBooleanValue(IsRegularRegistration.Value);
             }
-            if (Optional.IsDefined(IsActive))
+            if (IsActive.HasValue)
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (Optional.IsCollectionDefined(PackageDependencies))
+            if (!(PackageDependencies is ChangeTrackingList<MsixPackageDependencies> collection && collection.IsUndefined))
             {
                 if (PackageDependencies != null)
                 {
@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteNull("packageDependencies");
                 }
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(PackageApplications))
+            if (!(PackageApplications is ChangeTrackingList<MsixPackageApplications> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("packageApplications"u8);
                 writer.WriteStartArray();

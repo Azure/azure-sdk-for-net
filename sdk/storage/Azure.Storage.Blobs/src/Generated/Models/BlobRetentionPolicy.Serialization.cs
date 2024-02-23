@@ -19,13 +19,13 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(Days))
+            if (Days.HasValue)
             {
                 writer.WriteStartElement("Days");
                 writer.WriteValue(Days.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(AllowPermanentDelete))
+            if (AllowPermanentDelete.HasValue)
             {
                 writer.WriteStartElement("AllowPermanentDelete");
                 writer.WriteValue(AllowPermanentDelete.Value);

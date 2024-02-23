@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(AzureFile))
+            if (AzureFile != null)
             {
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile);
             }
-            if (Optional.IsDefined(EmptyDir))
+            if (EmptyDir != null)
             {
                 writer.WritePropertyName("emptyDir"u8);
 #if NET6_0_OR_GREATER
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Secret))
+            if (!(Secret is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(GitRepo))
+            if (GitRepo != null)
             {
                 writer.WritePropertyName("gitRepo"u8);
                 writer.WriteObjectValue(GitRepo);

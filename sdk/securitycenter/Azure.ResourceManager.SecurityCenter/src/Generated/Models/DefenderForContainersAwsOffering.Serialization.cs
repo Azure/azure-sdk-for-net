@@ -26,69 +26,69 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KubernetesService))
+            if (KubernetesService != null)
             {
                 writer.WritePropertyName("kubernetesService"u8);
                 writer.WriteObjectValue(KubernetesService);
             }
-            if (Optional.IsDefined(KubernetesScubaReader))
+            if (KubernetesScubaReader != null)
             {
                 writer.WritePropertyName("kubernetesScubaReader"u8);
                 writer.WriteObjectValue(KubernetesScubaReader);
             }
-            if (Optional.IsDefined(CloudWatchToKinesis))
+            if (CloudWatchToKinesis != null)
             {
                 writer.WritePropertyName("cloudWatchToKinesis"u8);
                 writer.WriteObjectValue(CloudWatchToKinesis);
             }
-            if (Optional.IsDefined(KinesisToS3))
+            if (KinesisToS3 != null)
             {
                 writer.WritePropertyName("kinesisToS3"u8);
                 writer.WriteObjectValue(KinesisToS3);
             }
-            if (Optional.IsDefined(ContainerVulnerabilityAssessment))
+            if (ContainerVulnerabilityAssessment != null)
             {
                 writer.WritePropertyName("containerVulnerabilityAssessment"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessment);
             }
-            if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
+            if (ContainerVulnerabilityAssessmentTask != null)
             {
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask);
             }
-            if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
+            if (IsContainerVulnerabilityAssessmentEnabled.HasValue)
             {
                 writer.WritePropertyName("enableContainerVulnerabilityAssessment"u8);
                 writer.WriteBooleanValue(IsContainerVulnerabilityAssessmentEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutoProvisioningEnabled))
+            if (IsAutoProvisioningEnabled.HasValue)
             {
                 writer.WritePropertyName("autoProvisioning"u8);
                 writer.WriteBooleanValue(IsAutoProvisioningEnabled.Value);
             }
-            if (Optional.IsDefined(KubeAuditRetentionTime))
+            if (KubeAuditRetentionTime.HasValue)
             {
                 writer.WritePropertyName("kubeAuditRetentionTime"u8);
                 writer.WriteNumberValue(KubeAuditRetentionTime.Value);
             }
-            if (Optional.IsDefined(ScubaExternalId))
+            if (ScubaExternalId != null)
             {
                 writer.WritePropertyName("scubaExternalId"u8);
                 writer.WriteStringValue(ScubaExternalId);
             }
-            if (Optional.IsDefined(MdcContainersImageAssessment))
+            if (MdcContainersImageAssessment != null)
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
                 writer.WriteObjectValue(MdcContainersImageAssessment);
             }
-            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            if (MdcContainersAgentlessDiscoveryK8S != null)
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Orbital
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,94 +50,94 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ReservationStartOn))
+            if (ReservationStartOn.HasValue)
             {
                 writer.WritePropertyName("reservationStartTime"u8);
                 writer.WriteStringValue(ReservationStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ReservationEndOn))
+            if (ReservationEndOn.HasValue)
             {
                 writer.WritePropertyName("reservationEndTime"u8);
                 writer.WriteStringValue(ReservationEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RxStartOn))
+            if (options.Format != "W" && RxStartOn.HasValue)
             {
                 writer.WritePropertyName("rxStartTime"u8);
                 writer.WriteStringValue(RxStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RxEndOn))
+            if (options.Format != "W" && RxEndOn.HasValue)
             {
                 writer.WritePropertyName("rxEndTime"u8);
                 writer.WriteStringValue(RxEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TxStartOn))
+            if (options.Format != "W" && TxStartOn.HasValue)
             {
                 writer.WritePropertyName("txStartTime"u8);
                 writer.WriteStringValue(TxStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TxEndOn))
+            if (options.Format != "W" && TxEndOn.HasValue)
             {
                 writer.WritePropertyName("txEndTime"u8);
                 writer.WriteStringValue(TxEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaximumElevationDegrees))
+            if (options.Format != "W" && MaximumElevationDegrees.HasValue)
             {
                 writer.WritePropertyName("maximumElevationDegrees"u8);
                 writer.WriteNumberValue(MaximumElevationDegrees.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartAzimuthDegrees))
+            if (options.Format != "W" && StartAzimuthDegrees.HasValue)
             {
                 writer.WritePropertyName("startAzimuthDegrees"u8);
                 writer.WriteNumberValue(StartAzimuthDegrees.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndAzimuthDegrees))
+            if (options.Format != "W" && EndAzimuthDegrees.HasValue)
             {
                 writer.WritePropertyName("endAzimuthDegrees"u8);
                 writer.WriteNumberValue(EndAzimuthDegrees.Value);
             }
-            if (Optional.IsDefined(GroundStationName))
+            if (GroundStationName != null)
             {
                 writer.WritePropertyName("groundStationName"u8);
                 writer.WriteStringValue(GroundStationName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartElevationDegrees))
+            if (options.Format != "W" && StartElevationDegrees.HasValue)
             {
                 writer.WritePropertyName("startElevationDegrees"u8);
                 writer.WriteNumberValue(StartElevationDegrees.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndElevationDegrees))
+            if (options.Format != "W" && EndElevationDegrees.HasValue)
             {
                 writer.WritePropertyName("endElevationDegrees"u8);
                 writer.WriteNumberValue(EndElevationDegrees.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AntennaConfiguration))
+            if (options.Format != "W" && AntennaConfiguration != null)
             {
                 writer.WritePropertyName("antennaConfiguration"u8);
                 writer.WriteObjectValue(AntennaConfiguration);
             }
-            if (Optional.IsDefined(ContactProfile))
+            if (ContactProfile != null)
             {
                 writer.WritePropertyName("contactProfile"u8);
                 JsonSerializer.Serialize(writer, ContactProfile);

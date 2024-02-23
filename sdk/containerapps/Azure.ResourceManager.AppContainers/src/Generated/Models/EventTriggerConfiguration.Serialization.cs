@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicaCompletionCount))
+            if (ReplicaCompletionCount.HasValue)
             {
                 writer.WritePropertyName("replicaCompletionCount"u8);
                 writer.WriteNumberValue(ReplicaCompletionCount.Value);
             }
-            if (Optional.IsDefined(Parallelism))
+            if (Parallelism.HasValue)
             {
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
             }
-            if (Optional.IsDefined(Scale))
+            if (Scale != null)
             {
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);

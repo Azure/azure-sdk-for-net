@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportName))
+            if (options.Format != "W" && ReportName != null)
             {
                 writer.WritePropertyName("reportName"u8);
                 writer.WriteStringValue(ReportName);
             }
-            if (Optional.IsDefined(OfferGuid))
+            if (OfferGuid != null)
             {
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStringValue(TimeZone);
             writer.WritePropertyName("triggerTime"u8);
             writer.WriteStringValue(TriggerOn, "O");
-            if (options.Format != "W" && Optional.IsDefined(NextTriggerOn))
+            if (options.Format != "W" && NextTriggerOn.HasValue)
             {
                 writer.WritePropertyName("nextTriggerTime"u8);
                 writer.WriteStringValue(NextTriggerOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastTriggerOn))
+            if (options.Format != "W" && LastTriggerOn.HasValue)
             {
                 writer.WritePropertyName("lastTriggerTime"u8);
                 writer.WriteStringValue(LastTriggerOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Subscriptions))
+            if (options.Format != "W" && !(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
+            if (options.Format != "W" && ComplianceStatus != null)
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteObjectValue(ComplianceStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

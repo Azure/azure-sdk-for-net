@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(BrandColor))
+            if (BrandColor != null)
             {
                 writer.WritePropertyName("brandColor"u8);
                 writer.WriteStringValue(BrandColor);
             }
-            if (Optional.IsDefined(HideKey))
+            if (HideKey != null)
             {
                 writer.WritePropertyName("hideKey"u8);
                 writer.WriteStringValue(HideKey);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -52,32 +52,32 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ApiType))
+            if (ApiType.HasValue)
             {
                 writer.WritePropertyName("ApiType"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (Optional.IsDefined(WsdlService))
+            if (WsdlService != null)
             {
                 writer.WritePropertyName("wsdlService"u8);
                 writer.WriteObjectValue(WsdlService);
             }
-            if (Optional.IsDefined(WsdlImportMethod))
+            if (WsdlImportMethod.HasValue)
             {
                 writer.WritePropertyName("wsdlImportMethod"u8);
                 writer.WriteStringValue(WsdlImportMethod.Value.ToString());
             }
-            if (Optional.IsDefined(ConnectionType))
+            if (ConnectionType != null)
             {
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteStringValue(ConnectionType);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DeploymentParameters))
+            if (DeploymentParameters != null)
             {
                 writer.WritePropertyName("deploymentParameters"u8);
                 writer.WriteObjectValue(DeploymentParameters);

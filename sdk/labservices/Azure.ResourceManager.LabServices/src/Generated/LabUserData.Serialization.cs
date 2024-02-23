@@ -43,46 +43,46 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdditionalUsageQuota))
+            if (AdditionalUsageQuota.HasValue)
             {
                 writer.WritePropertyName("additionalUsageQuota"u8);
                 writer.WriteStringValue(AdditionalUsageQuota.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
-            if (options.Format != "W" && Optional.IsDefined(RegistrationState))
+            if (options.Format != "W" && RegistrationState.HasValue)
             {
                 writer.WritePropertyName("registrationState"u8);
                 writer.WriteStringValue(RegistrationState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InvitationState))
+            if (options.Format != "W" && InvitationState.HasValue)
             {
                 writer.WritePropertyName("invitationState"u8);
                 writer.WriteStringValue(InvitationState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InvitationSentOn))
+            if (options.Format != "W" && InvitationSentOn.HasValue)
             {
                 writer.WritePropertyName("invitationSent"u8);
                 writer.WriteStringValue(InvitationSentOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalUsage))
+            if (options.Format != "W" && TotalUsage.HasValue)
             {
                 writer.WritePropertyName("totalUsage"u8);
                 writer.WriteStringValue(TotalUsage.Value, "P");

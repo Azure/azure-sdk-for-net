@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RemoteSupportSettingsList))
+            if (!(RemoteSupportSettingsList is ChangeTrackingList<EdgeRemoteSupportSettings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("remoteSupportSettingsList"u8);
                 writer.WriteStartArray();

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("interval"u8);
             writer.WriteStringValue(Interval, "P");
-            if (Optional.IsDefined(StartTime))
+            if (StartTime.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");

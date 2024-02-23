@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EstimatedBalance))
+            if (options.Format != "W" && EstimatedBalance != null)
             {
                 writer.WritePropertyName("estimatedBalance"u8);
                 writer.WriteObjectValue(EstimatedBalance);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentBalance))
+            if (options.Format != "W" && CurrentBalance != null)
             {
                 writer.WritePropertyName("currentBalance"u8);
                 writer.WriteObjectValue(CurrentBalance);
             }
-            if (options.Format != "W" && Optional.IsDefined(EstimatedBalanceInBillingCurrency))
+            if (options.Format != "W" && EstimatedBalanceInBillingCurrency != null)
             {
                 writer.WritePropertyName("estimatedBalanceInBillingCurrency"u8);
                 writer.WriteObjectValue(EstimatedBalanceInBillingCurrency);

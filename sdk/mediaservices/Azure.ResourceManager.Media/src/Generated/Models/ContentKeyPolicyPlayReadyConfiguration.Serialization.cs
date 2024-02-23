@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ResponseCustomData))
+            if (ResponseCustomData != null)
             {
                 writer.WritePropertyName("responseCustomData"u8);
 #if NET6_0_OR_GREATER

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicableScenarios))
+            if (!(ApplicableScenarios is ChangeTrackingList<Scenario> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("applicableScenarios"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedValues))
+            if (!(SupportedValues is ChangeTrackingList<MetadataSupportedValueDetail> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedValues"u8);
                 writer.WriteStartArray();

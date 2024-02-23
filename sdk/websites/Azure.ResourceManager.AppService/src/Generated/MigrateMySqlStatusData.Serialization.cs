@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationOperationStatus))
+            if (options.Format != "W" && MigrationOperationStatus.HasValue)
             {
                 writer.WritePropertyName("migrationOperationStatus"u8);
                 writer.WriteStringValue(MigrationOperationStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationId))
+            if (options.Format != "W" && OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsLocalMySqlEnabled))
+            if (options.Format != "W" && IsLocalMySqlEnabled.HasValue)
             {
                 writer.WritePropertyName("localMySqlEnabled"u8);
                 writer.WriteBooleanValue(IsLocalMySqlEnabled.Value);

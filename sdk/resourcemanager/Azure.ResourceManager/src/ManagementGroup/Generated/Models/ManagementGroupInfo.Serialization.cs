@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedBy))
+            if (UpdatedBy != null)
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (Optional.IsDefined(Parent))
+            if (Parent != null)
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteObjectValue(Parent);
             }
-            if (Optional.IsCollectionDefined(Path))
+            if (!(Path is ChangeTrackingList<ManagementGroupPathElement> collection && collection.IsUndefined))
             {
                 if (Path != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("path");
                 }
             }
-            if (Optional.IsCollectionDefined(ManagementGroupAncestors))
+            if (!(ManagementGroupAncestors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (ManagementGroupAncestors != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("managementGroupAncestors");
                 }
             }
-            if (Optional.IsCollectionDefined(ManagementGroupAncestorChain))
+            if (!(ManagementGroupAncestorChain is ChangeTrackingList<ManagementGroupPathElement> collection1 && collection1.IsUndefined))
             {
                 if (ManagementGroupAncestorChain != null)
                 {
