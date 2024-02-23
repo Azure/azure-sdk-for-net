@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScopeProperties>> scopes = default;
+            IReadOnlyList<ScopeProperties> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionScopeProperties(Optional.ToList(scopes), serializedAdditionalRawData);
+            return new SubscriptionScopeProperties(scopes ?? new ChangeTrackingList<ScopeProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionScopeProperties>.Write(ModelReaderWriterOptions options)

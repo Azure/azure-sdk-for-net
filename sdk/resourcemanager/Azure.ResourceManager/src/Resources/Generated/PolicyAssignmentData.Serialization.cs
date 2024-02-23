@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.Resources
             Optional<string> displayName = default;
             Optional<string> policyDefinitionId = default;
             Optional<string> scope = default;
-            Optional<IList<string>> notScopes = default;
+            IList<string> notScopes = default;
             Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
             Optional<string> description = default;
             Optional<BinaryData> metadata = default;
             Optional<EnforcementMode> enforcementMode = default;
-            Optional<IList<NonComplianceMessage>> nonComplianceMessages = default;
-            Optional<IList<ResourceSelector>> resourceSelectors = default;
-            Optional<IList<PolicyOverride>> overrides = default;
+            IList<NonComplianceMessage> nonComplianceMessages = default;
+            IList<ResourceSelector> resourceSelectors = default;
+            IList<PolicyOverride> overrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages), Optional.ToList(resourceSelectors), Optional.ToList(overrides), serializedAdditionalRawData);
+            return new PolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, notScopes ?? new ChangeTrackingList<string>(), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(), resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(), overrides ?? new ChangeTrackingList<PolicyOverride>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options)

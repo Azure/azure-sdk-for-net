@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> agentVersion = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<SiteRecoveryRetentionVolume>> retentionVolumes = default;
-            Optional<IReadOnlyList<SiteRecoveryDataStore>> dataStores = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes = default;
+            IReadOnlyList<SiteRecoveryDataStore> dataStores = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             Optional<int> diskCount = default;
             Optional<string> osVersion = default;
             Optional<DateTimeOffset> agentExpireOn = default;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value, serializedAdditionalRawData);
+            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, retentionVolumes ?? new ChangeTrackingList<SiteRecoveryRetentionVolume>(), dataStores ?? new ChangeTrackingList<SiteRecoveryDataStore>(), validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options)

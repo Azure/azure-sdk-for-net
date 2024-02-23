@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Quantum.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<string>> acceptedDataFormats = default;
-            Optional<IReadOnlyList<string>> acceptedContentEncodings = default;
+            IReadOnlyList<string> acceptedDataFormats = default;
+            IReadOnlyList<string> acceptedContentEncodings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetDescription(id.Value, name.Value, description.Value, Optional.ToList(acceptedDataFormats), Optional.ToList(acceptedContentEncodings), serializedAdditionalRawData);
+            return new TargetDescription(id.Value, name.Value, description.Value, acceptedDataFormats ?? new ChangeTrackingList<string>(), acceptedContentEncodings ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetDescription>.Write(ModelReaderWriterOptions options)

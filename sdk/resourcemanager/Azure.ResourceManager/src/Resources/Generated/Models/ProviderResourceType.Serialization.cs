@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
-            Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<ProviderExtendedLocation> locationMappings = default;
+            IReadOnlyList<ResourceTypeAlias> aliases = default;
+            IReadOnlyList<string> apiVersions = default;
             Optional<string> defaultApiVersion = default;
-            Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
-            Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
+            IReadOnlyList<ZoneMapping> zoneMappings = default;
+            IReadOnlyList<ApiProfile> apiProfiles = default;
             Optional<string> capabilities = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new ProviderResourceType(resourceType.Value, locations ?? new ChangeTrackingList<string>(), locationMappings ?? new ChangeTrackingList<ProviderExtendedLocation>(), aliases ?? new ChangeTrackingList<ResourceTypeAlias>(), apiVersions ?? new ChangeTrackingList<string>(), defaultApiVersion.Value, zoneMappings ?? new ChangeTrackingList<ZoneMapping>(), apiProfiles ?? new ChangeTrackingList<ApiProfile>(), capabilities.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> vaultErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> vaultErrors = default;
             Optional<ResourceHealthSummary> protectedItemsHealth = default;
             Optional<ResourceHealthSummary> fabricsHealth = default;
             Optional<ResourceHealthSummary> containersHealth = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultHealthProperties(Optional.ToList(vaultErrors), protectedItemsHealth.Value, fabricsHealth.Value, containersHealth.Value, serializedAdditionalRawData);
+            return new VaultHealthProperties(vaultErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), protectedItemsHealth.Value, fabricsHealth.Value, containersHealth.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultHealthProperties>.Write(ModelReaderWriterOptions options)

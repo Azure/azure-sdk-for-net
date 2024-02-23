@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<ResourceIdentifier> sourceId = default;
             Optional<ResourceIdentifier> targetId = default;
             Optional<LinkerAuthType?> authType = default;
-            Optional<IReadOnlyList<LinkerValidationResultItemInfo>> validationDetail = default;
+            IReadOnlyList<LinkerValidationResultItemInfo> validationDetail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), Optional.ToList(validationDetail), serializedAdditionalRawData);
+            return new LinkerValidateOperationResult(resourceId.Value, status.Value, linkerName.Value, Optional.ToNullable(isConnectionAvailable), Optional.ToNullable(reportStartTimeUtc), Optional.ToNullable(reportEndTimeUtc), sourceId.Value, targetId.Value, Optional.ToNullable(authType), validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerValidateOperationResult>.Write(ModelReaderWriterOptions options)

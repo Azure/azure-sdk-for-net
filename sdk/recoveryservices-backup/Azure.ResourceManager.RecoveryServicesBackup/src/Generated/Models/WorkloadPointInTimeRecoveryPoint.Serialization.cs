@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint": return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element, options);
                 }
             }
-            Optional<IList<PointInTimeRange>> timeRanges = default;
+            IList<PointInTimeRange> timeRanges = default;
             Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
             Optional<RestorePointType> type = default;
-            Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
+            IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
             Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
             Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = "AzureWorkloadPointInTimeRecoveryPoint";
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadPointInTimeRecoveryPoint(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, Optional.ToList(timeRanges));
+            return new WorkloadPointInTimeRecoveryPoint(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, timeRanges ?? new ChangeTrackingList<PointInTimeRange>());
         }
 
         BinaryData IPersistableModel<WorkloadPointInTimeRecoveryPoint>.Write(ModelReaderWriterOptions options)

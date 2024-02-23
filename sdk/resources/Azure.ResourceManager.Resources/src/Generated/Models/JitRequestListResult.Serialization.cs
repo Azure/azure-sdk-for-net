@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<JitRequestData>> value = default;
+            IReadOnlyList<JitRequestData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitRequestListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new JitRequestListResult(value ?? new ChangeTrackingList<JitRequestData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitRequestListResult>.Write(ModelReaderWriterOptions options)

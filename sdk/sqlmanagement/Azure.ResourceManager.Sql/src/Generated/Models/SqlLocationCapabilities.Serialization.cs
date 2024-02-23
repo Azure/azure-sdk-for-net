@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<SqlServerVersionCapability>> supportedServerVersions = default;
-            Optional<IReadOnlyList<ManagedInstanceVersionCapability>> supportedManagedInstanceVersions = default;
+            IReadOnlyList<SqlServerVersionCapability> supportedServerVersions = default;
+            IReadOnlyList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlLocationCapabilities(name.Value, Optional.ToList(supportedServerVersions), Optional.ToList(supportedManagedInstanceVersions), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new SqlLocationCapabilities(name.Value, supportedServerVersions ?? new ChangeTrackingList<SqlServerVersionCapability>(), supportedManagedInstanceVersions ?? new ChangeTrackingList<ManagedInstanceVersionCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlLocationCapabilities>.Write(ModelReaderWriterOptions options)

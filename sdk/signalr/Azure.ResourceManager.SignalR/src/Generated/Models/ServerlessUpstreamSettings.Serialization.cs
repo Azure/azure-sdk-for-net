@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IList<SignalRUpstreamTemplate>> templates = default;
+            IList<SignalRUpstreamTemplate> templates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerlessUpstreamSettings(Optional.ToList(templates), serializedAdditionalRawData);
+            return new ServerlessUpstreamSettings(templates ?? new ChangeTrackingList<SignalRUpstreamTemplate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerlessUpstreamSettings>.Write(ModelReaderWriterOptions options)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VaultUsage>> value = default;
+            IReadOnlyList<VaultUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new VaultUsageListResult(value ?? new ChangeTrackingList<VaultUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultUsageListResult>.Write(ModelReaderWriterOptions options)

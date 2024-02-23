@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SecurityInsightsUserInfo> createdBy = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> eventTime = default;
-            Optional<IList<string>> labels = default;
+            IList<string> labels = default;
             Optional<string> notes = default;
             Optional<string> query = default;
             Optional<string> queryResult = default;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsHuntingBookmark(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToNullable(eventTime), Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, incidentInfo.Value);
+            return new SecurityInsightsHuntingBookmark(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToNullable(eventTime), labels ?? new ChangeTrackingList<string>(), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, incidentInfo.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsHuntingBookmark>.Write(ModelReaderWriterOptions options)
