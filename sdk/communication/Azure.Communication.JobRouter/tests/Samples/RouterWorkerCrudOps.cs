@@ -17,31 +17,28 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // create a client
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
             JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
+            // Create a distribution policy
+            string distributionPolicyId = "distribution-policy";
+            var createDistributionPolicyOptions = new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(5), new LongestIdleMode());
+            Response<DistributionPolicy> distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(createDistributionPolicyOptions);
+            Console.WriteLine($"Distribution policy created with id: {distributionPolicy.Value.Id}");
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
-            Response<DistributionPolicy> distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
-                new CreateDistributionPolicyOptions(
-                    distributionPolicyId: "distribution-policy-1",
-                    offerExpiresAfter: TimeSpan.FromDays(1),
-                    mode: new LongestIdleMode())
-            );
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
-
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
-            Response<RouterQueue> queue = routerAdministrationClient.CreateQueue(
-                new CreateQueueOptions(
-                    queueId: "queue-1",
-                    distributionPolicyId: distributionPolicy.Value.Id)
-            );
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
-
+            // Create queues
+            string[] queueIds = { "worker-q-1", "worker-q-2", "worker-q-3" };
+            foreach (string queueId in queueIds)
+            {
+                CreateQueueOptions createQueueOptions = new CreateQueueOptions(queueId, distributionPolicyId);
+                Response<RouterQueue> queue = routerAdministrationClient.CreateQueue(createQueueOptions);
+                Console.WriteLine($"Queue created with id: {queue.Value.Id}");
+            }
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateRouterWorker
+
             string routerWorkerId = "my-router-worker";
 
             Response<RouterWorker> worker = routerClient.CreateWorker(
                 new CreateWorkerOptions(workerId: routerWorkerId, capacity: 100)
                 {
-                    Queues = { "queue-1", "queue-1" },
+                    Queues = { "worker-q-1", "worker-q-2" },
                     Channels =
                     {
                         new RouterChannel("WebChat", 1),
@@ -88,7 +85,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> updateWorker = routerClient.UpdateWorker(
                 new RouterWorker(routerWorkerId)
                 {
-                    Queues = { "queue-1", },
+                    Queues = { "worker-q-3", },
                     Channels = { new RouterChannel("WebChatEscalated", 50), },
                     Labels =
                     {

@@ -19,20 +19,21 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
             JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
-            // create a distribution policy (this will be referenced by both primary queue and backup queue)
-            string distributionPolicyId = "distribution-policy-id";
+            // Create a distribution policy
+            string distributionPolicyId = "distribution-policy";
+            var distributionPolicyOptions = new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(5), new LongestIdleMode());
+            Response<DistributionPolicy> distributionPolicyResponse = await routerAdministrationClient.CreateDistributionPolicyAsync(distributionPolicyOptions);
+            Console.WriteLine($"Created distribution policy with id: {distributionPolicyResponse.Value.Id}");
 
-            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
-                distributionPolicyId: distributionPolicyId,
-                offerExpiresAfter: TimeSpan.FromMinutes(2),
-                mode: new LongestIdleMode()));
+            // Create queues
+            string[] queueIds = new[] { "worker-q-1", "worker-q-2", "worker-q-3" };
+            foreach (var queueId in queueIds)
+            {
+                var queueOptions = new CreateQueueOptions(queueId, distributionPolicyId);
+                Response<RouterQueue> queueResponse = await routerAdministrationClient.CreateQueueAsync(queueOptions);
+                Console.WriteLine($"Created queue with id: {queueResponse.Value.Id}");
+            }
 
-            // create backup queue
-            string backupJobQueueId = "job-queue-2";
-
-            Response<RouterQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
-                queueId: backupJobQueueId,
-                distributionPolicyId: distributionPolicyId));
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateRouterWorker_Async
 
             string routerWorkerId = "my-router-worker";
@@ -42,7 +43,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     workerId: routerWorkerId,
                     capacity: 100)
                 {
-                    Queues = { "job-queue-2", "job-queue-2" },
+                    Queues = { "worker-q-1", "worker-q-2" },
                     Channels =
                     {
                         new RouterChannel("WebChat", 1),
@@ -89,7 +90,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> updateWorker = await routerClient.UpdateWorkerAsync(
                 new RouterWorker(routerWorkerId)
                 {
-                    Queues = { "job-queue-2", },
+                    Queues = { "worker-q-3", },
                     Channels = { new RouterChannel("WebChatEscalated", 50), },
                     Labels =
                     {

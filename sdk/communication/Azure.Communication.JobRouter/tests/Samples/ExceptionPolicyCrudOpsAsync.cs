@@ -19,18 +19,16 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
             // create a client
             JobRouterAdministrationClient routerClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
-            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
-
             string ClassificationPolicyId1 = "escalation-on-q-over-flow";
             string ClassificationPolicyId2 = "escalation-on-wait-time-exceeded";
 
-            await routerAdministrationClient.CreateClassificationPolicyAsync(
+            await routerClient.CreateClassificationPolicyAsync(
                new CreateClassificationPolicyOptions(ClassificationPolicyId1)
                {
                    PrioritizationRule = new StaticRouterRule(new RouterValue(10))
                });
 
-            await routerAdministrationClient.CreateClassificationPolicyAsync(
+            await routerClient.CreateClassificationPolicyAsync(
                new CreateClassificationPolicyOptions(ClassificationPolicyId2)
                {
                    PrioritizationRule = new StaticRouterRule(new RouterValue(10))

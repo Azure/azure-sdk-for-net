@@ -143,6 +143,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_AcceptJobOffer
 
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
+
+            // A worker can also choose to decline an offer
+
+            Response declineOffer = routerClient.DeclineJobOffer(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
+
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CompleteRouterJob
 
             // Once a worker completes the job, it needs to mark the job as completed
