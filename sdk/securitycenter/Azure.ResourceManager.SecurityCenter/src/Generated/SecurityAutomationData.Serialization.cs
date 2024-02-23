@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             Optional<string> kind = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, Optional.ToNullable(isEnabled), scopes ?? new ChangeTrackingList<SecurityAutomationScope>(), sources ?? new ChangeTrackingList<SecurityAutomationSource>(), actions ?? new ChangeTrackingList<SecurityAutomationAction>(), kind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityAutomationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, Optional.ToNullable(isEnabled), scopes ?? new ChangeTrackingList<SecurityAutomationScope>(), sources ?? new ChangeTrackingList<SecurityAutomationSource>(), actions ?? new ChangeTrackingList<SecurityAutomationAction>(), kind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationData>.Write(ModelReaderWriterOptions options)
