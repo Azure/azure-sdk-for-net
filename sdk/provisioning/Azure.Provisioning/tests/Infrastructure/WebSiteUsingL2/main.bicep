@@ -2,11 +2,11 @@ targetScope = 'subscription'
 
 @secure()
 @description('SQL Server administrator password')
-param sqlAdminPassword string = 'password'
+param sqlAdminPassword string
 
 @secure()
 @description('Application user password')
-param appUserPassword string = 'password'
+param appUserPassword string
 
 
 resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01' = {

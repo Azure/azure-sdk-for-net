@@ -104,7 +104,12 @@ namespace Azure.Provisioning.Tests
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
             infra.Build(GetOutputPath());
 
-            await ValidateBicepAsync();
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    sqlAdminPassword = new { value = "password" },
+                    appUserPassword = new { value = "password" }
+                }));
         }
 
         [Test]
@@ -117,7 +122,12 @@ namespace Azure.Provisioning.Tests
             infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
             infra.Build(GetOutputPath());
 
-            await ValidateBicepAsync();
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    sqlAdminPassword = new { value = "password" },
+                    appUserPassword = new { value = "password" }
+                }));
         }
 
         [Test]

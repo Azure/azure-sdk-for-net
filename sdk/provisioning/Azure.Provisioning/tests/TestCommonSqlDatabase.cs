@@ -22,9 +22,8 @@ namespace Azure.Provisioning.Tests
 
             keyVault = UseExistingResource(keyVault, () => scope.AddKeyVault(ResourceGroup));
 
-            // specifying the default value for the parameters to allow the ARM validation to pass in our tests
-            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", "SQL Server administrator password", isSecure: true, defaultValue: "password");
-            Parameter appUserPasswordParam = new Parameter("appUserPassword", "Application user password", isSecure: true, defaultValue: "password");
+            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", "SQL Server administrator password", isSecure: true);
+            Parameter appUserPasswordParam = new Parameter("appUserPassword", "Application user password", isSecure: true);
             AddParameter(sqlAdminPasswordParam);
             AddParameter(appUserPasswordParam);
 
