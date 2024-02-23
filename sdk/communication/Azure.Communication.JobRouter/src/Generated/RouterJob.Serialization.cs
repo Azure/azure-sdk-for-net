@@ -224,9 +224,9 @@ namespace Azure.Communication.JobRouter
             Optional<string> dispositionCode = default;
             IList<RouterWorkerSelector> requestedWorkerSelectors = default;
             IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors = default;
-            Optional<IDictionary<string, BinaryData>> labels = default;
-            Optional<IReadOnlyDictionary<string, RouterJobAssignment>> assignments = default;
-            Optional<IDictionary<string, BinaryData>> tags = default;
+            IDictionary<string, BinaryData> labels = default;
+            IReadOnlyDictionary<string, RouterJobAssignment> assignments = default;
+            IDictionary<string, BinaryData> tags = default;
             IList<RouterJobNote> notes = default;
             Optional<DateTimeOffset> scheduledAt = default;
             Optional<JobMatchingMode> matchingMode = default;
@@ -418,7 +418,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJob(etag, id, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, requestedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(), attachedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), notes ?? new ChangeTrackingList<RouterJobNote>(), Optional.ToNullable(scheduledAt), matchingMode.Value, serializedAdditionalRawData);
+            return new RouterJob(etag, id, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, requestedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(), attachedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(), labels ?? new ChangeTrackingDictionary<string, BinaryData>(), assignments ?? new ChangeTrackingDictionary<string, RouterJobAssignment>(), tags ?? new ChangeTrackingDictionary<string, BinaryData>(), notes ?? new ChangeTrackingList<RouterJobNote>(), Optional.ToNullable(scheduledAt), matchingMode.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJob>.Write(ModelReaderWriterOptions options)

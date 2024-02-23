@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMigrationServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, integrationRuntimeState.Value, serializedAdditionalRawData);
+            return new SqlMigrationServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, integrationRuntimeState.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMigrationServiceData>.Write(ModelReaderWriterOptions options)
