@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.IotHub
                     {
                         continue;
                     }
-                    properties = IotHubProperties.DeserializeIotHubProperties(property.Value);
+                    properties = IotHubProperties.DeserializeIotHubProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = IotHubSkuInfo.DeserializeIotHubSkuInfo(property.Value);
+                    sku = IotHubSkuInfo.DeserializeIotHubSkuInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

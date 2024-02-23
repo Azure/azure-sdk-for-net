@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceOSFamilyData> array = new List<CloudServiceOSFamilyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(item));
+                        array.Add(CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(item, options));
                     }
                     value = array;
                     continue;

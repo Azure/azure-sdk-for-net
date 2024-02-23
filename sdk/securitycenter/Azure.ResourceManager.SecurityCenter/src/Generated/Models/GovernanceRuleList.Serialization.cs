@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<GovernanceRuleData> array = new List<GovernanceRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GovernanceRuleData.DeserializeGovernanceRuleData(item));
+                        array.Add(GovernanceRuleData.DeserializeGovernanceRuleData(item, options));
                     }
                     value = array;
                     continue;

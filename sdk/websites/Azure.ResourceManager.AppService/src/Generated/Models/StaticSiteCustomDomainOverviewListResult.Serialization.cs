@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StaticSiteCustomDomainOverviewData> array = new List<StaticSiteCustomDomainOverviewData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(item));
+                        array.Add(StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(item, options));
                     }
                     value = array;
                     continue;

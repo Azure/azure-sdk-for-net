@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value);
+                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("routeFilter"u8))

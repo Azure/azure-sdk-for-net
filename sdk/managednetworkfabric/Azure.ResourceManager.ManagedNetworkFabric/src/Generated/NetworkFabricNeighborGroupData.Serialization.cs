@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value);
+                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkTapIds"u8))

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.TrafficManager
                             {
                                 continue;
                             }
-                            geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(property0.Value);
+                            geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(property0.Value, options);
                             continue;
                         }
                     }

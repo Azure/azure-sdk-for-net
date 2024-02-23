@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArmDeploymentScript(document.RootElement, options);
+            return DeserializeArmDeploymentScriptData(document.RootElement, options);
         }
 
         internal static UnknownArmDeploymentScript DeserializeUnknownArmDeploymentScript(JsonElement element, ModelReaderWriterOptions options = null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownArmDeploymentScript(document.RootElement, options);
+                        return DeserializeArmDeploymentScriptData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentScriptData)} does not support '{options.Format}' format.");

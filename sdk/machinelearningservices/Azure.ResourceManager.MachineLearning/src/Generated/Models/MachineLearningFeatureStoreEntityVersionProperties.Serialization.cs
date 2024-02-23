@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<IndexColumn> array = new List<IndexColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IndexColumn.DeserializeIndexColumn(item));
+                        array.Add(IndexColumn.DeserializeIndexColumn(item, options));
                     }
                     indexColumns = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autoDeleteSetting = null;
                         continue;
                     }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))

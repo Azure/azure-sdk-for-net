@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Hci
                             List<UpdatePrerequisite> array = new List<UpdatePrerequisite>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UpdatePrerequisite.DeserializeUpdatePrerequisite(item));
+                                array.Add(UpdatePrerequisite.DeserializeUpdatePrerequisite(item, options));
                             }
                             prerequisites = array;
                             continue;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Hci
                             List<HciPackageVersionInfo> array = new List<HciPackageVersionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HciPackageVersionInfo.DeserializeHciPackageVersionInfo(item));
+                                array.Add(HciPackageVersionInfo.DeserializeHciPackageVersionInfo(item, options));
                             }
                             componentVersions = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Hci
                             List<HciPrecheckResult> array = new List<HciPrecheckResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HciPrecheckResult.DeserializeHciPrecheckResult(item));
+                                array.Add(HciPrecheckResult.DeserializeHciPrecheckResult(item, options));
                             }
                             healthCheckResult = array;
                             continue;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaServicesPrivateLinkResourceData> array = new List<MediaServicesPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(item));
+                        array.Add(MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

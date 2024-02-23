@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayPrivateEndpointConnectionData> array = new List<RelayPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item));
+                        array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         cacheConfiguration = null;
                         continue;
                     }
-                    cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value);
+                    cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backendPool"u8))

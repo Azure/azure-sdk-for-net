@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<MeshUpgradeProfileData> array = new List<MeshUpgradeProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MeshUpgradeProfileData.DeserializeMeshUpgradeProfileData(item));
+                        array.Add(MeshUpgradeProfileData.DeserializeMeshUpgradeProfileData(item, options));
                     }
                     value = array;
                     continue;

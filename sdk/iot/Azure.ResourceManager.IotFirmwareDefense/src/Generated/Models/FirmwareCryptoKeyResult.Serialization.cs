@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                                 pairedKey = null;
                                 continue;
                             }
-                            pairedKey = PairedKey.DeserializePairedKey(property0.Value);
+                            pairedKey = PairedKey.DeserializePairedKey(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isShortKeySize"u8))

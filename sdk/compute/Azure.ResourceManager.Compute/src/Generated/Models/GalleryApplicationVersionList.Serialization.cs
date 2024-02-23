@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryApplicationVersionData> array = new List<GalleryApplicationVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(item));
+                        array.Add(GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(item, options));
                     }
                     value = array;
                     continue;

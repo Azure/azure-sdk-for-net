@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(property.Value);
+                    model = CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

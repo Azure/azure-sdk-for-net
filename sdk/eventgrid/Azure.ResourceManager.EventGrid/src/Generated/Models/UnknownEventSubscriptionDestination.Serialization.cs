@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEventSubscriptionDestination(document.RootElement, options);
+            return DeserializeEventSubscriptionDestination(document.RootElement, options);
         }
 
         internal static UnknownEventSubscriptionDestination DeserializeUnknownEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEventSubscriptionDestination(document.RootElement, options);
+                        return DeserializeEventSubscriptionDestination(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EventSubscriptionDestination)} does not support '{options.Format}' format.");

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeResourceSku> array = new List<ComputeResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeResourceSku.DeserializeComputeResourceSku(item));
+                        array.Add(ComputeResourceSku.DeserializeComputeResourceSku(item, options));
                     }
                     value = array;
                     continue;

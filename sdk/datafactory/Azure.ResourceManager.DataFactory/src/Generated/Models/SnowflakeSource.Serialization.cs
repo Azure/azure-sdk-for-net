@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("exportSettings"u8))
                 {
-                    exportSettings = SnowflakeExportCopyCommand.DeserializeSnowflakeExportCopyCommand(property.Value);
+                    exportSettings = SnowflakeExportCopyCommand.DeserializeSnowflakeExportCopyCommand(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

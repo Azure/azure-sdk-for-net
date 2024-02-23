@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("bmcCredentials"u8))
                 {
-                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value);
+                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bmcMacAddress"u8))

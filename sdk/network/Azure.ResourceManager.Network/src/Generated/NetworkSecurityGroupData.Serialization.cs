@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                             List<SecurityRuleData> array = new List<SecurityRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                                array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                             }
                             securityRules = array;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
                             List<SecurityRuleData> array = new List<SecurityRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                                array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                             }
                             defaultSecurityRules = array;
                             continue;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
                             List<SubnetData> array = new List<SubnetData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubnetData.DeserializeSubnetData(item));
+                                array.Add(SubnetData.DeserializeSubnetData(item, options));
                             }
                             subnets = array;
                             continue;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
                             List<FlowLogData> array = new List<FlowLogData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FlowLogData.DeserializeFlowLogData(item));
+                                array.Add(FlowLogData.DeserializeFlowLogData(item, options));
                             }
                             flowLogs = array;
                             continue;

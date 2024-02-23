@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkVirtualApplianceSkuInstances> array = new List<NetworkVirtualApplianceSkuInstances>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkVirtualApplianceSkuInstances.DeserializeNetworkVirtualApplianceSkuInstances(item));
+                                array.Add(NetworkVirtualApplianceSkuInstances.DeserializeNetworkVirtualApplianceSkuInstances(item, options));
                             }
                             availableScaleUnits = array;
                             continue;

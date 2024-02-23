@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.StorageMover
                             {
                                 continue;
                             }
-                            errorDetails = StorageMoverAgentPropertiesErrorDetails.DeserializeStorageMoverAgentPropertiesErrorDetails(property0.Value);
+                            errorDetails = StorageMoverAgentPropertiesErrorDetails.DeserializeStorageMoverAgentPropertiesErrorDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

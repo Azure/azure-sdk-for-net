@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<FeatureData> array = new List<FeatureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FeatureData.DeserializeFeatureData(item));
+                        array.Add(FeatureData.DeserializeFeatureData(item, options));
                     }
                     value = array;
                     continue;

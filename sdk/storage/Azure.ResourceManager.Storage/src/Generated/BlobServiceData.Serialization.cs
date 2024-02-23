@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    sku = StorageSku.DeserializeStorageSku(property.Value);
+                    sku = StorageSku.DeserializeStorageSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
+                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultServiceVersion"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
+                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isVersioningEnabled"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            changeFeed = BlobServiceChangeFeed.DeserializeBlobServiceChangeFeed(property0.Value);
+                            changeFeed = BlobServiceChangeFeed.DeserializeBlobServiceChangeFeed(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restorePolicy"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value);
+                            restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("containerDeleteRetentionPolicy"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            containerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
+                            containerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastAccessTimeTrackingPolicy"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            lastAccessTimeTrackingPolicy = LastAccessTimeTrackingPolicy.DeserializeLastAccessTimeTrackingPolicy(property0.Value);
+                            lastAccessTimeTrackingPolicy = LastAccessTimeTrackingPolicy.DeserializeLastAccessTimeTrackingPolicy(property0.Value, options);
                             continue;
                         }
                     }

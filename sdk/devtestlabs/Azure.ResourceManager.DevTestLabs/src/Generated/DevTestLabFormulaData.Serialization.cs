@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            formulaContent = DevTestLabVmCreationContent.DeserializeDevTestLabVmCreationContent(property0.Value);
+                            formulaContent = DevTestLabVmCreationContent.DeserializeDevTestLabVmCreationContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vm"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vm = FormulaPropertiesFromVm.DeserializeFormulaPropertiesFromVm(property0.Value);
+                            vm = FormulaPropertiesFromVm.DeserializeFormulaPropertiesFromVm(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

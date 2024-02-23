@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ManagedRuleSetDefinition> array = new List<ManagedRuleSetDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition(item));
+                        array.Add(ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition(item, options));
                     }
                     value = array;
                     continue;

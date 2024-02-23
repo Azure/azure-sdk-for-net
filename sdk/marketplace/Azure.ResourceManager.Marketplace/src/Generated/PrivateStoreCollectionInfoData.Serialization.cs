@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Marketplace
                             List<MarketplaceRule> array = new List<MarketplaceRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MarketplaceRule.DeserializeMarketplaceRule(item));
+                                array.Add(MarketplaceRule.DeserializeMarketplaceRule(item, options));
                             }
                             appliedRules = array;
                             continue;

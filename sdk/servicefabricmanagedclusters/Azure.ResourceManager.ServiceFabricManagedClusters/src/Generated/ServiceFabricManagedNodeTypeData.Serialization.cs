@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         continue;
                     }
-                    sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value);
+                    sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            applicationPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value);
+                            applicationPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ephemeralPorts"u8))
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            ephemeralPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value);
+                            ephemeralPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmSize"u8))
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<NodeTypeVaultSecretGroup> array = new List<NodeTypeVaultSecretGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeTypeVaultSecretGroup.DeserializeNodeTypeVaultSecretGroup(item));
+                                array.Add(NodeTypeVaultSecretGroup.DeserializeNodeTypeVaultSecretGroup(item, options));
                             }
                             vmSecrets = array;
                             continue;
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<NodeTypeVmssExtension> array = new List<NodeTypeVmssExtension>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeTypeVmssExtension.DeserializeNodeTypeVmssExtension(item));
+                                array.Add(NodeTypeVmssExtension.DeserializeNodeTypeVmssExtension(item, options));
                             }
                             vmExtensions = array;
                             continue;
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            vmManagedIdentity = VmManagedIdentity.DeserializeVmManagedIdentity(property0.Value);
+                            vmManagedIdentity = VmManagedIdentity.DeserializeVmManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isStateless"u8))
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<NodeTypeFrontendConfiguration> array = new List<NodeTypeFrontendConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeTypeFrontendConfiguration.DeserializeNodeTypeFrontendConfiguration(item));
+                                array.Add(NodeTypeFrontendConfiguration.DeserializeNodeTypeFrontendConfiguration(item, options));
                             }
                             frontendConfigurations = array;
                             continue;
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item));
+                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item, options));
                             }
                             networkSecurityRules = array;
                             continue;
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<NodeTypeVmssDataDisk> array = new List<NodeTypeVmssDataDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeTypeVmssDataDisk.DeserializeNodeTypeVmssDataDisk(item));
+                                array.Add(NodeTypeVmssDataDisk.DeserializeNodeTypeVmssDataDisk(item, options));
                             }
                             additionalDataDisks = array;
                             continue;
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            vmImagePlan = VmImagePlan.DeserializeVmImagePlan(property0.Value);
+                            vmImagePlan = VmImagePlan.DeserializeVmImagePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceArtifactReferenceId"u8))
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<AdditionalNetworkInterfaceConfiguration> array = new List<AdditionalNetworkInterfaceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdditionalNetworkInterfaceConfiguration.DeserializeAdditionalNetworkInterfaceConfiguration(item));
+                                array.Add(AdditionalNetworkInterfaceConfiguration.DeserializeAdditionalNetworkInterfaceConfiguration(item, options));
                             }
                             additionalNetworkInterfaceConfigurations = array;
                             continue;

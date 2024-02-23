@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabCostThreshold> array = new List<DevTestLabCostThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item));
+                        array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item, options));
                     }
                     costThresholds = array;
                     continue;

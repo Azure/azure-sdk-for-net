@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IPAllocationData> array = new List<IPAllocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAllocationData.DeserializeIPAllocationData(item));
+                        array.Add(IPAllocationData.DeserializeIPAllocationData(item, options));
                     }
                     value = array;
                     continue;

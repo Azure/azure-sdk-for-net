@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, TemplateSpecVersionInfo> dictionary = new Dictionary<string, TemplateSpecVersionInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, TemplateSpecVersionInfo.DeserializeTemplateSpecVersionInfo(property1.Value));
+                                dictionary.Add(property1.Name, TemplateSpecVersionInfo.DeserializeTemplateSpecVersionInfo(property1.Value, options));
                             }
                             versions = dictionary;
                             continue;

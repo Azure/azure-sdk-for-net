@@ -137,7 +137,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<InferenceEvidence> array = new List<InferenceEvidence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InferenceEvidence.DeserializeInferenceEvidence(item));
+                        array.Add(InferenceEvidence.DeserializeInferenceEvidence(item, options));
                     }
                     evidence = array;
                     continue;

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = AzureCoreVhdImageArtifactProfile.DeserializeAzureCoreVhdImageArtifactProfile(property.Value);
+                    artifactProfile = AzureCoreVhdImageArtifactProfile.DeserializeAzureCoreVhdImageArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deployParametersMappingRuleProfile"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deployParametersMappingRuleProfile = AzureCoreVhdImageDeployMappingRuleProfile.DeserializeAzureCoreVhdImageDeployMappingRuleProfile(property.Value);
+                    deployParametersMappingRuleProfile = AzureCoreVhdImageDeployMappingRuleProfile.DeserializeAzureCoreVhdImageDeployMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactType"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

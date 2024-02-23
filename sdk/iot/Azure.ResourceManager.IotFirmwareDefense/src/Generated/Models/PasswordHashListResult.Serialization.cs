@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<PasswordHashResult> array = new List<PasswordHashResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PasswordHashResult.DeserializePasswordHashResult(item));
+                        array.Add(PasswordHashResult.DeserializePasswordHashResult(item, options));
                     }
                     value = array;
                     continue;

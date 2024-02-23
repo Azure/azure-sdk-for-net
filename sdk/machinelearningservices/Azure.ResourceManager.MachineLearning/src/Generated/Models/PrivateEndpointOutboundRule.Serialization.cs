@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    destination = PrivateEndpointDestination.DeserializePrivateEndpointDestination(property.Value);
+                    destination = PrivateEndpointDestination.DeserializePrivateEndpointDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("category"u8))

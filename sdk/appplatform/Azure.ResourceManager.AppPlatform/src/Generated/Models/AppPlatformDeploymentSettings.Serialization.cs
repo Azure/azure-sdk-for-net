@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformDeploymentResourceRequirements.DeserializeAppPlatformDeploymentResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformDeploymentResourceRequirements.DeserializeAppPlatformDeploymentResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    livenessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    livenessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readinessProbe"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    readinessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    readinessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startupProbe"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    startupProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    startupProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    containerProbeSettings = ContainerProbeSettings.DeserializeContainerProbeSettings(property.Value);
+                    containerProbeSettings = ContainerProbeSettings.DeserializeContainerProbeSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

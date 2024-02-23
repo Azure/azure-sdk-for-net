@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyAssignments"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyAssignmentSummary> array = new List<PolicyAssignmentSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyAssignmentSummary.DeserializePolicyAssignmentSummary(item));
+                        array.Add(PolicyAssignmentSummary.DeserializePolicyAssignmentSummary(item, options));
                     }
                     policyAssignments = array;
                     continue;

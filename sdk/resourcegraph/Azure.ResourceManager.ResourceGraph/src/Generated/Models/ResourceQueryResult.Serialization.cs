@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<Facet> array = new List<Facet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Facet.DeserializeFacet(item));
+                        array.Add(Facet.DeserializeFacet(item, options));
                     }
                     facets = array;
                     continue;

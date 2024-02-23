@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<BinaryHardeningResult> array = new List<BinaryHardeningResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryHardeningResult.DeserializeBinaryHardeningResult(item));
+                        array.Add(BinaryHardeningResult.DeserializeBinaryHardeningResult(item, options));
                     }
                     value = array;
                     continue;

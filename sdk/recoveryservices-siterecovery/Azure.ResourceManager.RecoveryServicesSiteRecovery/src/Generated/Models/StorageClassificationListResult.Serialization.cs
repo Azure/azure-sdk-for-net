@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<StorageClassificationData> array = new List<StorageClassificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageClassificationData.DeserializeStorageClassificationData(item));
+                        array.Add(StorageClassificationData.DeserializeStorageClassificationData(item, options));
                     }
                     value = array;
                     continue;

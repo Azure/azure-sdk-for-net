@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningServiceInputColumn> array = new List<MachineLearningServiceInputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningServiceInputColumn.DeserializeMachineLearningServiceInputColumn(item));
+                                array.Add(MachineLearningServiceInputColumn.DeserializeMachineLearningServiceInputColumn(item, options));
                             }
                             inputs = array;
                             continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningServiceOutputColumn> array = new List<MachineLearningServiceOutputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningServiceOutputColumn.DeserializeMachineLearningServiceOutputColumn(item));
+                                array.Add(MachineLearningServiceOutputColumn.DeserializeMachineLearningServiceOutputColumn(item, options));
                             }
                             outputs = array;
                             continue;

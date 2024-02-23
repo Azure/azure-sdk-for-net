@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         continue;
                     }
-                    properties = BackupGenericRecoveryPoint.DeserializeBackupGenericRecoveryPoint(property.Value);
+                    properties = BackupGenericRecoveryPoint.DeserializeBackupGenericRecoveryPoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

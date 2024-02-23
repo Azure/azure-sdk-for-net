@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item, options));
                     }
                     primaryApprovers = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item, options));
                     }
                     escalationApprovers = array;
                     continue;

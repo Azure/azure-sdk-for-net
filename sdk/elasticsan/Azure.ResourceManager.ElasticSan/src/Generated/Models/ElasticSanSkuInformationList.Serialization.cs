@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSkuInformation> array = new List<ElasticSanSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSkuInformation.DeserializeElasticSanSkuInformation(item));
+                        array.Add(ElasticSanSkuInformation.DeserializeElasticSanSkuInformation(item, options));
                     }
                     value = array;
                     continue;

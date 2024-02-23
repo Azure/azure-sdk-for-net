@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    display = QuotaOperationDisplay.DeserializeQuotaOperationDisplay(property.Value);
+                    display = QuotaOperationDisplay.DeserializeQuotaOperationDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

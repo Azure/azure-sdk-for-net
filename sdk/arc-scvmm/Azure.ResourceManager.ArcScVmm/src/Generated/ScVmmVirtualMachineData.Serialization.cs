@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<Checkpoint> array = new List<Checkpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Checkpoint.DeserializeCheckpoint(item));
+                                array.Add(Checkpoint.DeserializeCheckpoint(item, options));
                             }
                             checkpoints = array;
                             continue;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<AvailabilitySetListItem> array = new List<AvailabilitySetListItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AvailabilitySetListItem.DeserializeAvailabilitySetListItem(item));
+                                array.Add(AvailabilitySetListItem.DeserializeAvailabilitySetListItem(item, options));
                             }
                             availabilitySets = array;
                             continue;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            osProfile = OSProfile.DeserializeOSProfile(property0.Value);
+                            osProfile = OSProfile.DeserializeOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hardwareProfile"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value);
+                            hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value);
+                            storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmName"u8))

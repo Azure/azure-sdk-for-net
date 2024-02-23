@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsNspAccessRule> array = new List<EventHubsNspAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsNspAccessRule.DeserializeEventHubsNspAccessRule(item));
+                        array.Add(EventHubsNspAccessRule.DeserializeEventHubsNspAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;

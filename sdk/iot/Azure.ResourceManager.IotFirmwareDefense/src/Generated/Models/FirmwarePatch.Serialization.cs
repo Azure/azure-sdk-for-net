@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             List<StatusMessage> array = new List<StatusMessage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StatusMessage.DeserializeStatusMessage(item));
+                                array.Add(StatusMessage.DeserializeStatusMessage(item, options));
                             }
                             statusMessages = array;
                             continue;

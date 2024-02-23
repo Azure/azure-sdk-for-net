@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisPatchScheduleData> array = new List<RedisPatchScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisPatchScheduleData.DeserializeRedisPatchScheduleData(item));
+                        array.Add(RedisPatchScheduleData.DeserializeRedisPatchScheduleData(item, options));
                     }
                     value = array;
                     continue;

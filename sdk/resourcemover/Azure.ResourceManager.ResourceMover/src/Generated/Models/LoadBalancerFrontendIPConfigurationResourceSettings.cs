@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the frontend IP configuration name. </param>
-        /// <param name="privateIPAddress">
+        /// <param name="privateIPAddressStringValue">
         /// Gets or sets the IP address of the Load Balancer.This is only specified if a specific
         /// private IP address shall be allocated from the subnet specified in subnetRef.
         /// </param>
@@ -61,10 +60,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="subnet"> Defines reference to subnet. </param>
         /// <param name="zones"> Gets or sets the csv list of zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerFrontendIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, string zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerFrontendIPConfigurationResourceSettings(string name, string privateIPAddressStringValue, string privateIPAllocationMethod, SubnetReferenceInfo subnet, string zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            PrivateIPAddress = privateIPAddress;
+            PrivateIPAddressStringValue = privateIPAddressStringValue;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             Zones = zones;
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Gets or sets the IP address of the Load Balancer.This is only specified if a specific
         /// private IP address shall be allocated from the subnet specified in subnetRef.
         /// </summary>
-        public IPAddress PrivateIPAddress { get; set; }
+        public string PrivateIPAddressStringValue { get; set; }
         /// <summary> Gets or sets PrivateIP allocation method (Static/Dynamic). </summary>
         public string PrivateIPAllocationMethod { get; set; }
         /// <summary> Defines reference to subnet. </summary>

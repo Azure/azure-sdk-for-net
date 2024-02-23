@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<SummaryResourceData> array = new List<SummaryResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SummaryResourceData.DeserializeSummaryResourceData(item));
+                        array.Add(SummaryResourceData.DeserializeSummaryResourceData(item, options));
                     }
                     value = array;
                     continue;

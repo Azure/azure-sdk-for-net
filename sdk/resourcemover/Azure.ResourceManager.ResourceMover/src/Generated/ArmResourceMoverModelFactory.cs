@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="dependencyType"> Defines the dependency type. </param>
         /// <param name="manualResolutionTargetId"> Defines the properties for manual resolution. </param>
         /// <param name="automaticResolutionResourceId"> Defines the properties for automatic resolution. </param>
-        /// <param name="isOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
+        /// <param name="isDependencyOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
         /// <returns> A new <see cref="Models.MoverResourceDependency"/> instance for mocking. </returns>
-        public static MoverResourceDependency MoverResourceDependency(ResourceIdentifier id = null, string resolutionStatus = null, MoverResourceResolutionType? resolutionType = null, MoverDependencyType? dependencyType = null, ResourceIdentifier manualResolutionTargetId = null, ResourceIdentifier automaticResolutionResourceId = null, bool? isOptional = null)
+        public static MoverResourceDependency MoverResourceDependency(ResourceIdentifier id = null, string resolutionStatus = null, MoverResourceResolutionType? resolutionType = null, MoverDependencyType? dependencyType = null, ResourceIdentifier manualResolutionTargetId = null, ResourceIdentifier automaticResolutionResourceId = null, string isDependencyOptional = null)
         {
-            return new MoverResourceDependency(id, resolutionStatus, resolutionType, dependencyType, manualResolutionTargetId != null ? new ManualResolutionProperties(manualResolutionTargetId, serializedAdditionalRawData: null) : null, automaticResolutionResourceId != null ? new AutomaticResolutionProperties(automaticResolutionResourceId, serializedAdditionalRawData: null) : null, isOptional, serializedAdditionalRawData: null);
+            return new MoverResourceDependency(id, resolutionStatus, resolutionType, dependencyType, manualResolutionTargetId != null ? new ManualResolutionProperties(manualResolutionTargetId, serializedAdditionalRawData: null) : null, automaticResolutionResourceId != null ? new AutomaticResolutionProperties(automaticResolutionResourceId, serializedAdditionalRawData: null) : null, isDependencyOptional, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverUnresolvedDependency"/>. </summary>

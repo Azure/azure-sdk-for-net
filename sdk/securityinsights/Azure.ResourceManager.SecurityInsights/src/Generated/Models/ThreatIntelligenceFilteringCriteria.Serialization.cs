@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceSortingCriteria> array = new List<ThreatIntelligenceSortingCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceSortingCriteria.DeserializeThreatIntelligenceSortingCriteria(item));
+                        array.Add(ThreatIntelligenceSortingCriteria.DeserializeThreatIntelligenceSortingCriteria(item, options));
                     }
                     sortBy = array;
                     continue;

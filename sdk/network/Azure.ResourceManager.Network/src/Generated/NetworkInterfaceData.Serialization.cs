@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value);
+                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value);
+                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceTapConfigurationData> array = new List<NetworkInterfaceTapConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(item));
+                                array.Add(NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(item, options));
                             }
                             tapConfigurations = array;
                             continue;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dnsSettings = NetworkInterfaceDnsSettings.DeserializeNetworkInterfaceDnsSettings(property0.Value);
+                            dnsSettings = NetworkInterfaceDnsSettings.DeserializeNetworkInterfaceDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("macAddress"u8))
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateLinkService = PrivateLinkServiceData.DeserializePrivateLinkServiceData(property0.Value);
+                            privateLinkService = PrivateLinkServiceData.DeserializePrivateLinkServiceData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("migrationPhase"u8))

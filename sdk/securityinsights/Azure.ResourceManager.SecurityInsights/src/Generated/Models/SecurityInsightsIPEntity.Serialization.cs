@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            location = SecurityInsightsIPEntityGeoLocation.DeserializeSecurityInsightsIPEntityGeoLocation(property0.Value);
+                            location = SecurityInsightsIPEntityGeoLocation.DeserializeSecurityInsightsIPEntityGeoLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("threatIntelligence"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsThreatIntelligence> array = new List<SecurityInsightsThreatIntelligence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item));
+                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item, options));
                             }
                             threatIntelligence = array;
                             continue;

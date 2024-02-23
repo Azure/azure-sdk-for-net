@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ActivityLogAlertData> array = new List<ActivityLogAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertData.DeserializeActivityLogAlertData(item));
+                        array.Add(ActivityLogAlertData.DeserializeActivityLogAlertData(item, options));
                     }
                     value = array;
                     continue;

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ApplicationDeltaHealthPolicy> dictionary = new Dictionary<string, ApplicationDeltaHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplicationDeltaHealthPolicy.DeserializeApplicationDeltaHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ApplicationDeltaHealthPolicy.DeserializeApplicationDeltaHealthPolicy(property0.Value, options));
                     }
                     applicationDeltaHealthPolicies = dictionary;
                     continue;

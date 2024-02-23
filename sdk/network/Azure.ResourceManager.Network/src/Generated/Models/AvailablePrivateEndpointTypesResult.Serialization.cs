@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailablePrivateEndpointType> array = new List<AvailablePrivateEndpointType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(item));
+                        array.Add(AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(item, options));
                     }
                     value = array;
                     continue;

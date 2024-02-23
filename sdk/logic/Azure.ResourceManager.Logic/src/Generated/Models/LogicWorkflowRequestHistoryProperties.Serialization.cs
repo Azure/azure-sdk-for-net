@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    request = LogicWorkflowRequest.DeserializeLogicWorkflowRequest(property.Value);
+                    request = LogicWorkflowRequest.DeserializeLogicWorkflowRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    response = LogicWorkflowResponse.DeserializeLogicWorkflowResponse(property.Value);
+                    response = LogicWorkflowResponse.DeserializeLogicWorkflowResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

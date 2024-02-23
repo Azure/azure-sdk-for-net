@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementPrivateLinkResourceData> array = new List<ApiManagementPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(item));
+                        array.Add(ApiManagementPrivateLinkResourceData.DeserializeApiManagementPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

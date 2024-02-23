@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSummaryResourceProperties(document.RootElement, options);
+            return DeserializeSummaryResourceProperties(document.RootElement, options);
         }
 
         internal static UnknownSummaryResourceProperties DeserializeUnknownSummaryResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSummaryResourceProperties(document.RootElement, options);
+                        return DeserializeSummaryResourceProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SummaryResourceProperties)} does not support '{options.Format}' format.");

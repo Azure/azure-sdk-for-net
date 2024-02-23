@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value);
+                    percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayOnChart"u8))

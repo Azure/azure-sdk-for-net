@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<TargetComputeSize> array = new List<TargetComputeSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetComputeSize.DeserializeTargetComputeSize(item));
+                        array.Add(TargetComputeSize.DeserializeTargetComputeSize(item, options));
                     }
                     value = array;
                     continue;

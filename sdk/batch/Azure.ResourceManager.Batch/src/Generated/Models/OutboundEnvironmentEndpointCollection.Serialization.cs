@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchAccountOutboundEnvironmentEndpoint> array = new List<BatchAccountOutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint(item));
+                        array.Add(BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint(item, options));
                     }
                     value = array;
                     continue;

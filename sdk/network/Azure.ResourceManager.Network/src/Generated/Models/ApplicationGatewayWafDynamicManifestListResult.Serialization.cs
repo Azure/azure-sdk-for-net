@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayWafDynamicManifestData> array = new List<ApplicationGatewayWafDynamicManifestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(item));
+                        array.Add(ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(item, options));
                     }
                     value = array;
                     continue;

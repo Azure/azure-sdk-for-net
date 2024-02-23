@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.Automation
                     {
                         if (property0.NameEquals("updateConfiguration"u8))
                         {
-                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value);
+                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"u8))
                         {
-                            scheduleInfo = SoftwareUpdateConfigurationScheduleProperties.DeserializeSoftwareUpdateConfigurationScheduleProperties(property0.Value);
+                            scheduleInfo = SoftwareUpdateConfigurationScheduleProperties.DeserializeSoftwareUpdateConfigurationScheduleProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value);
+                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value, options);
                             continue;
                         }
                     }

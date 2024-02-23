@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSku> array = new List<ResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSku.DeserializeResourceSku(item));
+                        array.Add(ResourceSku.DeserializeResourceSku(item, options));
                     }
                     value = array;
                     continue;

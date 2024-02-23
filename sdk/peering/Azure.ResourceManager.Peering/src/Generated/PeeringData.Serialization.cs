@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Peering
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = PeeringSku.DeserializePeeringSku(property.Value);
+                    sku = PeeringSku.DeserializePeeringSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value);
+                            direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value);
+                            exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))

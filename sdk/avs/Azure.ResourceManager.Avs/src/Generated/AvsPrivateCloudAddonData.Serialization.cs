@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    properties = AvsPrivateCloudAddonProperties.DeserializeAvsPrivateCloudAddonProperties(property.Value);
+                    properties = AvsPrivateCloudAddonProperties.DeserializeAvsPrivateCloudAddonProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, WaitStatistics> dictionary = new Dictionary<string, WaitStatistics>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value));
+                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value, options));
                     }
                     waitStats = dictionary;
                     continue;

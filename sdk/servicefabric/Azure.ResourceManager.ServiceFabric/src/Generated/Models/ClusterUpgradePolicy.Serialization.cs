@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("healthPolicy"u8))
                 {
-                    healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value);
+                    healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deltaHealthPolicy"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value);
+                    deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

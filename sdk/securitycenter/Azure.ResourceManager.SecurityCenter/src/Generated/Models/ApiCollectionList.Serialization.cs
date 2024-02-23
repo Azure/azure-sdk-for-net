@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityCenterApiCollectionData> array = new List<SecurityCenterApiCollectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(item));
+                        array.Add(SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(item, options));
                     }
                     value = array;
                     continue;

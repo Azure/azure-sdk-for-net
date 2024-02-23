@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceRoleProfileProperties> array = new List<CloudServiceRoleProfileProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceRoleProfileProperties.DeserializeCloudServiceRoleProfileProperties(item));
+                        array.Add(CloudServiceRoleProfileProperties.DeserializeCloudServiceRoleProfileProperties(item, options));
                     }
                     roles = array;
                     continue;

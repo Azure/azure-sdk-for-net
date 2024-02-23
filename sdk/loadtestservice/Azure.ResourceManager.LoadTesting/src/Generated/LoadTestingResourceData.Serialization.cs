@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.LoadTesting
                                 encryption = null;
                                 continue;
                             }
-                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value);
+                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value, options);
                             continue;
                         }
                     }

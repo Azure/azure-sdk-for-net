@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("configuration"u8))
                 {
-                    configuration = ContentKeyPolicyConfiguration.DeserializeContentKeyPolicyConfiguration(property.Value);
+                    configuration = ContentKeyPolicyConfiguration.DeserializeContentKeyPolicyConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restriction"u8))
                 {
-                    restriction = ContentKeyPolicyRestriction.DeserializeContentKeyPolicyRestriction(property.Value);
+                    restriction = ContentKeyPolicyRestriction.DeserializeContentKeyPolicyRestriction(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

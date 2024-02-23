@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         continue;
                     }
-                    properties = NginxCertificateProperties.DeserializeNginxCertificateProperties(property.Value);
+                    properties = NginxCertificateProperties.DeserializeNginxCertificateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

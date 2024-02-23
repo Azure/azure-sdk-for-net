@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionEventSummary> array = new List<ConsumptionEventSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionEventSummary.DeserializeConsumptionEventSummary(item));
+                        array.Add(ConsumptionEventSummary.DeserializeConsumptionEventSummary(item, options));
                     }
                     value = array;
                     continue;

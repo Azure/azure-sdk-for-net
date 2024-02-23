@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingEndpointData> array = new List<StreamingEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingEndpointData.DeserializeStreamingEndpointData(item));
+                        array.Add(StreamingEndpointData.DeserializeStreamingEndpointData(item, options));
                     }
                     value = array;
                     continue;

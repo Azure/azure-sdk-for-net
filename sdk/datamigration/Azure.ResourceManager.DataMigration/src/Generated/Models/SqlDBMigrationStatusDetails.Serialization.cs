@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CopyProgressDetails> array = new List<CopyProgressDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CopyProgressDetails.DeserializeCopyProgressDetails(item));
+                        array.Add(CopyProgressDetails.DeserializeCopyProgressDetails(item, options));
                     }
                     listOfCopyProgressDetails = array;
                     continue;

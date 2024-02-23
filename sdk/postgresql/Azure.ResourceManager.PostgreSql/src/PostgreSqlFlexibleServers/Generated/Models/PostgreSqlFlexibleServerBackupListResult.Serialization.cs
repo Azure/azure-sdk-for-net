@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerBackupData> array = new List<PostgreSqlFlexibleServerBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(item));
+                        array.Add(PostgreSqlFlexibleServerBackupData.DeserializePostgreSqlFlexibleServerBackupData(item, options));
                     }
                     value = array;
                     continue;

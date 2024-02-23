@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionModernReservationTransaction> array = new List<ConsumptionModernReservationTransaction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction(item));
+                        array.Add(ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction(item, options));
                     }
                     value = array;
                     continue;

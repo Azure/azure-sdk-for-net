@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             List<WebTestGeolocation> array = new List<WebTestGeolocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebTestGeolocation.DeserializeWebTestGeolocation(item));
+                                array.Add(WebTestGeolocation.DeserializeWebTestGeolocation(item, options));
                             }
                             locations = array;
                             continue;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            configuration = WebTestPropertiesConfiguration.DeserializeWebTestPropertiesConfiguration(property0.Value);
+                            configuration = WebTestPropertiesConfiguration.DeserializeWebTestPropertiesConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            request = WebTestPropertiesRequest.DeserializeWebTestPropertiesRequest(property0.Value);
+                            request = WebTestPropertiesRequest.DeserializeWebTestPropertiesRequest(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ValidationRules"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            validationRules = WebTestPropertiesValidationRules.DeserializeWebTestPropertiesValidationRules(property0.Value);
+                            validationRules = WebTestPropertiesValidationRules.DeserializeWebTestPropertiesValidationRules(property0.Value, options);
                             continue;
                         }
                     }

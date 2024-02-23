@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisCacheAccessPolicyData> array = new List<RedisCacheAccessPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(item));
+                        array.Add(RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(item, options));
                     }
                     value = array;
                     continue;

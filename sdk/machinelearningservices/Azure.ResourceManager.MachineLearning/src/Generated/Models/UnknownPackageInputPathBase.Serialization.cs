@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPackageInputPathBase(document.RootElement, options);
+            return DeserializePackageInputPathBase(document.RootElement, options);
         }
 
         internal static UnknownPackageInputPathBase DeserializeUnknownPackageInputPathBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPackageInputPathBase(document.RootElement, options);
+                        return DeserializePackageInputPathBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PackageInputPathBase)} does not support '{options.Format}' format.");

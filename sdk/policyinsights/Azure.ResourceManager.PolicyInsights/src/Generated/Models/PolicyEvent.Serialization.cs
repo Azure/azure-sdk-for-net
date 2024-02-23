@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComponentEventDetails> array = new List<ComponentEventDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentEventDetails.DeserializeComponentEventDetails(item));
+                        array.Add(ComponentEventDetails.DeserializeComponentEventDetails(item, options));
                     }
                     components = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubDescriptionData> array = new List<IotHubDescriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubDescriptionData.DeserializeIotHubDescriptionData(item));
+                        array.Add(IotHubDescriptionData.DeserializeIotHubDescriptionData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogSingleSignOnResourceData> array = new List<DatadogSingleSignOnResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(item));
+                        array.Add(DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(item, options));
                     }
                     value = array;
                     continue;

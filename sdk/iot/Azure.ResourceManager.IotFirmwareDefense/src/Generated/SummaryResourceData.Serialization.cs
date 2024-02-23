@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     {
                         continue;
                     }
-                    properties = SummaryResourceProperties.DeserializeSummaryResourceProperties(property.Value);
+                    properties = SummaryResourceProperties.DeserializeSummaryResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

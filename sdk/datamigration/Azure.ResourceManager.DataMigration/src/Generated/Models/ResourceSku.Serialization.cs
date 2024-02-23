@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value);
+                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuCosts> array = new List<ResourceSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item));
+                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item, options));
                     }
                     costs = array;
                     continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
+                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
+                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;

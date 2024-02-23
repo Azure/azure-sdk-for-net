@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationWebhookData> array = new List<AutomationWebhookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationWebhookData.DeserializeAutomationWebhookData(item));
+                        array.Add(AutomationWebhookData.DeserializeAutomationWebhookData(item, options));
                     }
                     value = array;
                     continue;

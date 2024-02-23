@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BinaryHardening": return BinaryHardeningSummary.DeserializeBinaryHardeningSummary(element);
-                    case "CVE": return CveSummary.DeserializeCveSummary(element);
-                    case "CryptoCertificate": return FirmwareCryptoCertificateSummary.DeserializeFirmwareCryptoCertificateSummary(element);
-                    case "CryptoKey": return FirmwareCryptoKeySummary.DeserializeFirmwareCryptoKeySummary(element);
-                    case "Firmware": return FirmwareSummary.DeserializeFirmwareSummary(element);
+                    case "BinaryHardening": return BinaryHardeningSummary.DeserializeBinaryHardeningSummary(element, options);
+                    case "CVE": return CveSummary.DeserializeCveSummary(element, options);
+                    case "CryptoCertificate": return FirmwareCryptoCertificateSummary.DeserializeFirmwareCryptoCertificateSummary(element, options);
+                    case "CryptoKey": return FirmwareCryptoKeySummary.DeserializeFirmwareCryptoKeySummary(element, options);
+                    case "Firmware": return FirmwareSummary.DeserializeFirmwareSummary(element, options);
                 }
             }
-            return UnknownSummaryResourceProperties.DeserializeUnknownSummaryResourceProperties(element);
+            return UnknownSummaryResourceProperties.DeserializeUnknownSummaryResourceProperties(element, options);
         }
 
         BinaryData IPersistableModel<SummaryResourceProperties>.Write(ModelReaderWriterOptions options)

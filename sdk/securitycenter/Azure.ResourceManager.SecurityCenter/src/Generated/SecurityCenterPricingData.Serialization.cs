@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<PlanExtension> array = new List<PlanExtension>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PlanExtension.DeserializePlanExtension(item));
+                                array.Add(PlanExtension.DeserializePlanExtension(item, options));
                             }
                             extensions = array;
                             continue;

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightBillingMeters> array = new List<HDInsightBillingMeters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightBillingMeters.DeserializeHDInsightBillingMeters(item));
+                        array.Add(HDInsightBillingMeters.DeserializeHDInsightBillingMeters(item, options));
                     }
                     billingMeters = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightDiskBillingMeters> array = new List<HDInsightDiskBillingMeters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightDiskBillingMeters.DeserializeHDInsightDiskBillingMeters(item));
+                        array.Add(HDInsightDiskBillingMeters.DeserializeHDInsightDiskBillingMeters(item, options));
                     }
                     diskBillingMeters = array;
                     continue;

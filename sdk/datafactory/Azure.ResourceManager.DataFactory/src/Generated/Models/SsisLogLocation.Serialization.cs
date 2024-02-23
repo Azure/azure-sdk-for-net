@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logRefreshInterval"u8))

@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeStoreAccountInformationData> array = new List<DataLakeStoreAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item));
+                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item, options));
                             }
                             dataLakeStoreAccounts = array;
                             continue;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeStoreAccountInformationData> array = new List<DataLakeStoreAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item));
+                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item, options));
                             }
                             publicDataLakeStoreAccounts = array;
                             continue;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsStorageAccountInformationData> array = new List<DataLakeAnalyticsStorageAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item));
+                                array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsComputePolicyData> array = new List<DataLakeAnalyticsComputePolicyData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(item));
+                                array.Add(DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(item, options));
                             }
                             computePolicies = array;
                             continue;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsHiveMetastore> array = new List<DataLakeAnalyticsHiveMetastore>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsHiveMetastore.DeserializeDataLakeAnalyticsHiveMetastore(item));
+                                array.Add(DataLakeAnalyticsHiveMetastore.DeserializeDataLakeAnalyticsHiveMetastore(item, options));
                             }
                             hiveMetastores = array;
                             continue;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsVirtualNetworkRule> array = new List<DataLakeAnalyticsVirtualNetworkRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsVirtualNetworkRule.DeserializeDataLakeAnalyticsVirtualNetworkRule(item));
+                                array.Add(DataLakeAnalyticsVirtualNetworkRule.DeserializeDataLakeAnalyticsVirtualNetworkRule(item, options));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsFirewallRuleData> array = new List<DataLakeAnalyticsFirewallRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(item));
+                                array.Add(DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(item, options));
                             }
                             firewallRules = array;
                             continue;

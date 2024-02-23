@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudBareMetalMachineData> array = new List<NetworkCloudBareMetalMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(item));
+                        array.Add(NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(item, options));
                     }
                     value = array;
                     continue;

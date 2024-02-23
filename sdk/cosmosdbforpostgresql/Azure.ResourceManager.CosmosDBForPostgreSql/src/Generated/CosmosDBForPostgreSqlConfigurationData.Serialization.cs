@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             List<CosmosDBForPostgreSqlServerRoleGroupConfiguration> array = new List<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBForPostgreSqlServerRoleGroupConfiguration.DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(item));
+                                array.Add(CosmosDBForPostgreSqlServerRoleGroupConfiguration.DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(item, options));
                             }
                             serverRoleGroupConfigurations = array;
                             continue;

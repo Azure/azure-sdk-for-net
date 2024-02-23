@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountBatchConfigurationData> array = new List<IntegrationAccountBatchConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(item));
+                        array.Add(IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(item, options));
                     }
                     value = array;
                     continue;

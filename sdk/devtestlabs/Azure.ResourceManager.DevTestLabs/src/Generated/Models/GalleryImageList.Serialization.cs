@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabGalleryImage> array = new List<DevTestLabGalleryImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(item));
+                        array.Add(DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(item, options));
                     }
                     value = array;
                     continue;

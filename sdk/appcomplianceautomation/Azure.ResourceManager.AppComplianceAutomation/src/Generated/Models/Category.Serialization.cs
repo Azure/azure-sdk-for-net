@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ControlFamily> array = new List<ControlFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControlFamily.DeserializeControlFamily(item));
+                        array.Add(ControlFamily.DeserializeControlFamily(item, options));
                     }
                     controlFamilies = array;
                     continue;

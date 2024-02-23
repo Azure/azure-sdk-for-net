@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value);
+                    sku = OperationalInsightsClusterSku.DeserializeOperationalInsightsClusterSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value);
+                            keyVaultProperties = OperationalInsightsKeyVaultProperties.DeserializeOperationalInsightsKeyVaultProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("billingType"u8))

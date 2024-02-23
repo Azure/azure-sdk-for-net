@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    value = MachineLearningWorkspaceDiagnoseProperties.DeserializeMachineLearningWorkspaceDiagnoseProperties(property.Value);
+                    value = MachineLearningWorkspaceDiagnoseProperties.DeserializeMachineLearningWorkspaceDiagnoseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<CveResult> array = new List<CveResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CveResult.DeserializeCveResult(item));
+                        array.Add(CveResult.DeserializeCveResult(item, options));
                     }
                     value = array;
                     continue;

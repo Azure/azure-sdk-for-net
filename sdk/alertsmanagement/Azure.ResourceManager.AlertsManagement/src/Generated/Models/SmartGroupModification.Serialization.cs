@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    properties = SmartGroupModificationProperties.DeserializeSmartGroupModificationProperties(property.Value);
+                    properties = SmartGroupModificationProperties.DeserializeSmartGroupModificationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

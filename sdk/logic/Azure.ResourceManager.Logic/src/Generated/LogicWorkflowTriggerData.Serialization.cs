@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property0.Value);
+                            recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workflow"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                     }

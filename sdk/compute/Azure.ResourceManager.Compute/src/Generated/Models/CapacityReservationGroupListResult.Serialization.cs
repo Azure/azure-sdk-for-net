@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CapacityReservationGroupData> array = new List<CapacityReservationGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacityReservationGroupData.DeserializeCapacityReservationGroupData(item));
+                        array.Add(CapacityReservationGroupData.DeserializeCapacityReservationGroupData(item, options));
                     }
                     value = array;
                     continue;

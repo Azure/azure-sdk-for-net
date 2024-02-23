@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    linuxUserConfiguration = BatchLinuxUserConfiguration.DeserializeBatchLinuxUserConfiguration(property.Value);
+                    linuxUserConfiguration = BatchLinuxUserConfiguration.DeserializeBatchLinuxUserConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsUserConfiguration"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    windowsUserConfiguration = BatchWindowsUserConfiguration.DeserializeBatchWindowsUserConfiguration(property.Value);
+                    windowsUserConfiguration = BatchWindowsUserConfiguration.DeserializeBatchWindowsUserConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

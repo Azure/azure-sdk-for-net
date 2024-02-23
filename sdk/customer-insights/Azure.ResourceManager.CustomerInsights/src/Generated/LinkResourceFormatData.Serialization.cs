@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<TypePropertiesMapping> array = new List<TypePropertiesMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TypePropertiesMapping.DeserializeTypePropertiesMapping(item));
+                                array.Add(TypePropertiesMapping.DeserializeTypePropertiesMapping(item, options));
                             }
                             mappings = array;
                             continue;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                                array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item, options));
                             }
                             participantPropertyReferences = array;
                             continue;

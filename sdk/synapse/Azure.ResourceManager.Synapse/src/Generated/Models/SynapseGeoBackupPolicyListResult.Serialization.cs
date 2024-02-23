@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseGeoBackupPolicyData> array = new List<SynapseGeoBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(item));
+                        array.Add(SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(item, options));
                     }
                     value = array;
                     continue;

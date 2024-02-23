@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Chaos
                             List<ChaosExperimentStep> array = new List<ChaosExperimentStep>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ChaosExperimentStep.DeserializeChaosExperimentStep(item));
+                                array.Add(ChaosExperimentStep.DeserializeChaosExperimentStep(item, options));
                             }
                             steps = array;
                             continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Chaos
                             List<ChaosTargetSelector> array = new List<ChaosTargetSelector>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ChaosTargetSelector.DeserializeChaosTargetSelector(item));
+                                array.Add(ChaosTargetSelector.DeserializeChaosTargetSelector(item, options));
                             }
                             selectors = array;
                             continue;

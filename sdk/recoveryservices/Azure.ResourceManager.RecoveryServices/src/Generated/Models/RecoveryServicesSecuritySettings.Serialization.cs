@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);
+                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softDeleteSettings"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value);
+                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("multiUserAuthorization"u8))

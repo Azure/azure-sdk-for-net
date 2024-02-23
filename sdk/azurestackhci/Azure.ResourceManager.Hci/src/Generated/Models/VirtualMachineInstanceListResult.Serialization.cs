@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<VirtualMachineInstanceData> array = new List<VirtualMachineInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineInstanceData.DeserializeVirtualMachineInstanceData(item));
+                        array.Add(VirtualMachineInstanceData.DeserializeVirtualMachineInstanceData(item, options));
                     }
                     value = array;
                     continue;

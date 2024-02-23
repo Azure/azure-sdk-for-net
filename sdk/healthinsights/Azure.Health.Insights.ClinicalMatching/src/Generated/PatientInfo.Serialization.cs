@@ -119,7 +119,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalCodedElement> array = new List<ClinicalCodedElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item));
+                        array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item, options));
                     }
                     clinicalInfo = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkManagerDeploymentStatus> array = new List<NetworkManagerDeploymentStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(item));
+                        array.Add(NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(item, options));
                     }
                     value = array;
                     continue;

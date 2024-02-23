@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveRoute> array = new List<EffectiveRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveRoute.DeserializeEffectiveRoute(item));
+                        array.Add(EffectiveRoute.DeserializeEffectiveRoute(item, options));
                     }
                     value = array;
                     continue;

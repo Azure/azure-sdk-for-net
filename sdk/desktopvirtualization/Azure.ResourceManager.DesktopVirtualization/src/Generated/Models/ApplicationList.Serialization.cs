@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<VirtualApplicationData> array = new List<VirtualApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualApplicationData.DeserializeVirtualApplicationData(item));
+                        array.Add(VirtualApplicationData.DeserializeVirtualApplicationData(item, options));
                     }
                     value = array;
                     continue;

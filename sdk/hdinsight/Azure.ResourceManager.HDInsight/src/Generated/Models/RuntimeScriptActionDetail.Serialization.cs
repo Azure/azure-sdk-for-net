@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ScriptActionExecutionSummary> array = new List<ScriptActionExecutionSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActionExecutionSummary.DeserializeScriptActionExecutionSummary(item));
+                        array.Add(ScriptActionExecutionSummary.DeserializeScriptActionExecutionSummary(item, options));
                     }
                     executionSummary = array;
                     continue;

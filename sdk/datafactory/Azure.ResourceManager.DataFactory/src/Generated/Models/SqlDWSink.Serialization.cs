@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    polyBaseSettings = PolybaseSettings.DeserializePolybaseSettings(property.Value);
+                    polyBaseSettings = PolybaseSettings.DeserializePolybaseSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowCopyCommand"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(property.Value);
+                    copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tableOption"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    upsertSettings = SqlDWUpsertSettings.DeserializeSqlDWUpsertSettings(property.Value);
+                    upsertSettings = SqlDWUpsertSettings.DeserializeSqlDWUpsertSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

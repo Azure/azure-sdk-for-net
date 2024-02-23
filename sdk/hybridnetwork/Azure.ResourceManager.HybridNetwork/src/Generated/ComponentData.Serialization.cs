@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    properties = ComponentProperties.DeserializeComponentProperties(property.Value);
+                    properties = ComponentProperties.DeserializeComponentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

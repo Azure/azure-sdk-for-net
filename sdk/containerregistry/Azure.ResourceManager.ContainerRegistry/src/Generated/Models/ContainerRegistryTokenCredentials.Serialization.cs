@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTokenCertificate> array = new List<ContainerRegistryTokenCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTokenCertificate.DeserializeContainerRegistryTokenCertificate(item));
+                        array.Add(ContainerRegistryTokenCertificate.DeserializeContainerRegistryTokenCertificate(item, options));
                     }
                     certificates = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTokenPassword> array = new List<ContainerRegistryTokenPassword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item));
+                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item, options));
                     }
                     passwords = array;
                     continue;

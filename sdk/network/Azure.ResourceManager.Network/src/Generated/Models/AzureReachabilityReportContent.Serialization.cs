@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("providerLocation"u8))
                 {
-                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value);
+                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providers"u8))

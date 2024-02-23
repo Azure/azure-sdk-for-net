@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsEntity> array = new List<SecurityInsightsEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsEntity.DeserializeSecurityInsightsEntity(item));
+                        array.Add(SecurityInsightsEntity.DeserializeSecurityInsightsEntity(item, options));
                     }
                     entities = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsIncidentEntitiesMetadata> array = new List<SecurityInsightsIncidentEntitiesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsIncidentEntitiesMetadata.DeserializeSecurityInsightsIncidentEntitiesMetadata(item));
+                        array.Add(SecurityInsightsIncidentEntitiesMetadata.DeserializeSecurityInsightsIncidentEntitiesMetadata(item, options));
                     }
                     metaData = array;
                     continue;

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomAlertRule(document.RootElement, options);
+            return DeserializeCustomAlertRule(document.RootElement, options);
         }
 
         internal static UnknownCustomAlertRule DeserializeUnknownCustomAlertRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCustomAlertRule(document.RootElement, options);
+                        return DeserializeCustomAlertRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CustomAlertRule)} does not support '{options.Format}' format.");

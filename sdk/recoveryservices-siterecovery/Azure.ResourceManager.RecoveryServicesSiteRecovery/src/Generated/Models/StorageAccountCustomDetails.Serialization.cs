@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Existing": return ExistingStorageAccount.DeserializeExistingStorageAccount(element);
+                    case "Existing": return ExistingStorageAccount.DeserializeExistingStorageAccount(element, options);
                 }
             }
-            return UnknownStorageAccountCustomDetails.DeserializeUnknownStorageAccountCustomDetails(element);
+            return UnknownStorageAccountCustomDetails.DeserializeUnknownStorageAccountCustomDetails(element, options);
         }
 
         BinaryData IPersistableModel<StorageAccountCustomDetails>.Write(ModelReaderWriterOptions options)

@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value);
+                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value);
+                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property.Value);
+                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxOSConfig"u8))
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property.Value);
+                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableEncryptionAtHost"u8))
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value);
+                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacityReservationGroupID"u8))
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property.Value);
+                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

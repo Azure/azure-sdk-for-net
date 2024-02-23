@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBPathIndexes> array = new List<CosmosDBPathIndexes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBPathIndexes.DeserializeCosmosDBPathIndexes(item));
+                        array.Add(CosmosDBPathIndexes.DeserializeCosmosDBPathIndexes(item, options));
                     }
                     indexes = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<FirmwareCryptoKeyResult> array = new List<FirmwareCryptoKeyResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareCryptoKeyResult.DeserializeFirmwareCryptoKeyResult(item));
+                        array.Add(FirmwareCryptoKeyResult.DeserializeFirmwareCryptoKeyResult(item, options));
                     }
                     value = array;
                     continue;

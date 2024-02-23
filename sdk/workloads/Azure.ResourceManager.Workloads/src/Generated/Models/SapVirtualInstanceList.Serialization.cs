@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapVirtualInstanceData> array = new List<SapVirtualInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapVirtualInstanceData.DeserializeSapVirtualInstanceData(item));
+                        array.Add(SapVirtualInstanceData.DeserializeSapVirtualInstanceData(item, options));
                     }
                     value = array;
                     continue;

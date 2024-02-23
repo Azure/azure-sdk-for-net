@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<ExchangePeeringFacility> array = new List<ExchangePeeringFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExchangePeeringFacility.DeserializeExchangePeeringFacility(item));
+                        array.Add(ExchangePeeringFacility.DeserializeExchangePeeringFacility(item, options));
                     }
                     peeringFacilities = array;
                     continue;

@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                             List<ClusterComponentItem> array = new List<ClusterComponentItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterComponentItem.DeserializeClusterComponentItem(item));
+                                array.Add(ClusterComponentItem.DeserializeClusterComponentItem(item, options));
                             }
                             components = array;
                             continue;

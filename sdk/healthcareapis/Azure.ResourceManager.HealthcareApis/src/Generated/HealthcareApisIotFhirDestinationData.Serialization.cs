@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         }
                         if (property0.NameEquals("fhirMapping"u8))
                         {
-                            fhirMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value);
+                            fhirMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value, options);
                             continue;
                         }
                     }

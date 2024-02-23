@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         resourceProperties = null;
                         continue;
                     }
-                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value);
+                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCertificateProperties(document.RootElement, options);
+            return DeserializeAppPlatformCertificateProperties(document.RootElement, options);
         }
 
         internal static UnknownCertificateProperties DeserializeUnknownCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCertificateProperties(document.RootElement, options);
+                        return DeserializeAppPlatformCertificateProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support '{options.Format}' format.");

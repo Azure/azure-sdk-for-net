@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<MarketplaceAdminApprovalRequestData> array = new List<MarketplaceAdminApprovalRequestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(item));
+                        array.Add(MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(item, options));
                     }
                     value = array;
                     continue;

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    properties = ProxyArtifactOverviewPropertiesValue.DeserializeProxyArtifactOverviewPropertiesValue(property.Value);
+                    properties = ProxyArtifactOverviewPropertiesValue.DeserializeProxyArtifactOverviewPropertiesValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

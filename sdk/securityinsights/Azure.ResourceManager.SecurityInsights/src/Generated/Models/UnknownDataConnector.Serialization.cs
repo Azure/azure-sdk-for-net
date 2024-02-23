@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataConnector(document.RootElement, options);
+            return DeserializeSecurityInsightsDataConnectorData(document.RootElement, options);
         }
 
         internal static UnknownDataConnector DeserializeUnknownDataConnector(JsonElement element, ModelReaderWriterOptions options = null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataConnector(document.RootElement, options);
+                        return DeserializeSecurityInsightsDataConnectorData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsDataConnectorData)} does not support '{options.Format}' format.");

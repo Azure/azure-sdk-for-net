@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                                 component = null;
                                 continue;
                             }
-                            component = CveComponent.DeserializeCveComponent(property0.Value);
+                            component = CveComponent.DeserializeCveComponent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("severity"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                             List<CveLink> array = new List<CveLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CveLink.DeserializeCveLink(item));
+                                array.Add(CveLink.DeserializeCveLink(item, options));
                             }
                             links = array;
                             continue;

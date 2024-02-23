@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncWorkflowData> array = new List<StorageSyncWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(item));
+                        array.Add(StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(item, options));
                     }
                     value = array;
                     continue;

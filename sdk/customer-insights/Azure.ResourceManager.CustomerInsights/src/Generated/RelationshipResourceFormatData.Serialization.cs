@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PropertyDefinition> array = new List<PropertyDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item));
+                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item, options));
                             }
                             fields = array;
                             continue;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<RelationshipTypeMapping> array = new List<RelationshipTypeMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelationshipTypeMapping.DeserializeRelationshipTypeMapping(item));
+                                array.Add(RelationshipTypeMapping.DeserializeRelationshipTypeMapping(item, options));
                             }
                             lookupMappings = array;
                             continue;
