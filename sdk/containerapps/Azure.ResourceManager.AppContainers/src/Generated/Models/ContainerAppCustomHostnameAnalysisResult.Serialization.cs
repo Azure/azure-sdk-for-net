@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<bool> hasConflictOnManagedEnvironment = default;
             Optional<bool> conflictWithEnvironmentCustomDomain = default;
             Optional<string> conflictingContainerAppResourceId = default;
-            Optional<IReadOnlyList<string>> cNameRecords = default;
-            Optional<IReadOnlyList<string>> txtRecords = default;
-            Optional<IReadOnlyList<string>> aRecords = default;
-            Optional<IReadOnlyList<string>> alternateCNameRecords = default;
-            Optional<IReadOnlyList<string>> alternateTxtRecords = default;
+            IReadOnlyList<string> cNameRecords = default;
+            IReadOnlyList<string> txtRecords = default;
+            IReadOnlyList<string> aRecords = default;
+            IReadOnlyList<string> alternateCNameRecords = default;
+            IReadOnlyList<string> alternateTxtRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomHostnameAnalysisResult(hostName.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnManagedEnvironment), Optional.ToNullable(conflictWithEnvironmentCustomDomain), conflictingContainerAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords), serializedAdditionalRawData);
+            return new ContainerAppCustomHostnameAnalysisResult(hostName.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnManagedEnvironment), Optional.ToNullable(conflictWithEnvironmentCustomDomain), conflictingContainerAppResourceId.Value, cNameRecords ?? new ChangeTrackingList<string>(), txtRecords ?? new ChangeTrackingList<string>(), aRecords ?? new ChangeTrackingList<string>(), alternateCNameRecords ?? new ChangeTrackingList<string>(), alternateTxtRecords ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomHostnameAnalysisResult>.Write(ModelReaderWriterOptions options)

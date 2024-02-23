@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<long> totalMemoryInMb = default;
             Optional<int> logicalCoreCountPerCore = default;
             Optional<long> effectiveAvailableMemoryInMb = default;
-            Optional<IList<int>> freeVCpuIndexesForHpn = default;
-            Optional<IList<int>> vCpuIndexesForHpn = default;
-            Optional<IList<int>> vCpuIndexesForRoot = default;
+            IList<int> freeVCpuIndexesForHpn = default;
+            IList<int> vCpuIndexesForHpn = default;
+            IList<int> vCpuIndexesForRoot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NumaNodeInfo(Optional.ToNullable(numaNodeIndex), Optional.ToNullable(totalMemoryInMb), Optional.ToNullable(logicalCoreCountPerCore), Optional.ToNullable(effectiveAvailableMemoryInMb), Optional.ToList(freeVCpuIndexesForHpn), Optional.ToList(vCpuIndexesForHpn), Optional.ToList(vCpuIndexesForRoot), serializedAdditionalRawData);
+            return new NumaNodeInfo(Optional.ToNullable(numaNodeIndex), Optional.ToNullable(totalMemoryInMb), Optional.ToNullable(logicalCoreCountPerCore), Optional.ToNullable(effectiveAvailableMemoryInMb), freeVCpuIndexesForHpn ?? new ChangeTrackingList<int>(), vCpuIndexesForHpn ?? new ChangeTrackingList<int>(), vCpuIndexesForRoot ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NumaNodeInfo>.Write(ModelReaderWriterOptions options)

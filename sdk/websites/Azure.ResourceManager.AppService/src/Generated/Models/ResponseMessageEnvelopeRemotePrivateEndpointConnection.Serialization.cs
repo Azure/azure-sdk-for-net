@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> status = default;
             Optional<ResponseError> error = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IReadOnlyList<string>> zones = default;
+            IReadOnlyList<string> zones = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), plan.Value, properties.Value, sku.Value, status.Value, error.Value, identity, Optional.ToList(zones), serializedAdditionalRawData);
+            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), plan.Value, properties.Value, sku.Value, status.Value, error.Value, identity, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

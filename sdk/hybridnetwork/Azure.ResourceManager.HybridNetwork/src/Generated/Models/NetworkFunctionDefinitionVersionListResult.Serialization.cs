@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFunctionDefinitionVersionData>> value = default;
+            IReadOnlyList<NetworkFunctionDefinitionVersionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionDefinitionVersionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkFunctionDefinitionVersionListResult(value ?? new ChangeTrackingList<NetworkFunctionDefinitionVersionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionVersionListResult>.Write(ModelReaderWriterOptions options)

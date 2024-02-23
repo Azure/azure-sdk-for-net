@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedInstanceDtcData>> value = default;
+            IReadOnlyList<ManagedInstanceDtcData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceDtcListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedInstanceDtcListResult(value ?? new ChangeTrackingList<ManagedInstanceDtcData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcListResult>.Write(ModelReaderWriterOptions options)

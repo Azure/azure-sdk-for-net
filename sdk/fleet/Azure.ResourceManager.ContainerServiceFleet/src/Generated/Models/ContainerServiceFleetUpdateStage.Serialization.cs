@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             string name = default;
-            Optional<IList<ContainerServiceFleetUpdateGroup>> groups = default;
+            IList<ContainerServiceFleetUpdateGroup> groups = default;
             Optional<int> afterStageWaitInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateStage(name, Optional.ToList(groups), Optional.ToNullable(afterStageWaitInSeconds), serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateStage(name, groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroup>(), Optional.ToNullable(afterStageWaitInSeconds), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateStage>.Write(ModelReaderWriterOptions options)

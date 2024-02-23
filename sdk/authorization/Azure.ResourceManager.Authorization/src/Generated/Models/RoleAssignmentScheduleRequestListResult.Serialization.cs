@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleAssignmentScheduleRequestData>> value = default;
+            IReadOnlyList<RoleAssignmentScheduleRequestData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentScheduleRequestListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleAssignmentScheduleRequestListResult(value ?? new ChangeTrackingList<RoleAssignmentScheduleRequestData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentScheduleRequestListResult>.Write(ModelReaderWriterOptions options)

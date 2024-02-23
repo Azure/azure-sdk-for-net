@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataProtectionBackupJobData>> value = default;
+            IReadOnlyList<DataProtectionBackupJobData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureBackupJobResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureBackupJobResourceList(value ?? new ChangeTrackingList<DataProtectionBackupJobData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureBackupJobResourceList>.Write(ModelReaderWriterOptions options)

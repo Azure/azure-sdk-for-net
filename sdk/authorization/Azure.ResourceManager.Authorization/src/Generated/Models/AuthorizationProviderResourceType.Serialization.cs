@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             Optional<string> name = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
+            IReadOnlyList<AuthorizationProviderOperationInfo> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderResourceType(name.Value, displayName.Value, Optional.ToList(operations), serializedAdditionalRawData);
+            return new AuthorizationProviderResourceType(name.Value, displayName.Value, operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderResourceType>.Write(ModelReaderWriterOptions options)

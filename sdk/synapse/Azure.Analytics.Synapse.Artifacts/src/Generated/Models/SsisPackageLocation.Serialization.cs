@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> packageName = default;
             Optional<object> packageContent = default;
             Optional<string> packageLastModifiedDate = default;
-            Optional<IList<SsisChildPackage>> childPackages = default;
+            IList<SsisChildPackage> childPackages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))
@@ -198,7 +198,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword.Value, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Optional.ToList(childPackages));
+            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword.Value, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, childPackages ?? new ChangeTrackingList<SsisChildPackage>());
         }
 
         internal partial class SsisPackageLocationConverter : JsonConverter<SsisPackageLocation>

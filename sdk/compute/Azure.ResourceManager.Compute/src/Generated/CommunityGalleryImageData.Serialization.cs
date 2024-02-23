@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute
             Optional<RecommendedMachineConfiguration> recommended = default;
             Optional<Disallowed> disallowed = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<IReadOnlyList<GalleryImageFeature>> features = default;
+            IReadOnlyList<GalleryImageFeature> features = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
             Optional<ArchitectureType> architecture = default;
             Optional<Uri> privacyStatementUri = default;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, disclaimer.Value, Optional.ToDictionary(artifactTags));
+            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), features ?? new ChangeTrackingList<GalleryImageFeature>(), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, disclaimer.Value, Optional.ToDictionary(artifactTags));
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageData>.Write(ModelReaderWriterOptions options)

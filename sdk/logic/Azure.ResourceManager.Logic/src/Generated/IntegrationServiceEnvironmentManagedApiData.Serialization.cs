@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.Logic
             Optional<string> name0 = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> connectionParameters = default;
             Optional<LogicApiResourceMetadata> metadata = default;
-            Optional<IReadOnlyList<Uri>> runtimeUrls = default;
+            IReadOnlyList<Uri> runtimeUrls = default;
             Optional<LogicApiResourceGeneralInformation> generalInformation = default;
-            Optional<IReadOnlyList<string>> capabilities = default;
+            IReadOnlyList<string> capabilities = default;
             Optional<LogicApiResourceBackendService> backendService = default;
             Optional<LogicApiResourcePolicies> policies = default;
             Optional<Uri> apiDefinitionUrl = default;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, Optional.ToList(runtimeUrls), generalInformation.Value, Optional.ToList(capabilities), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, runtimeUrls ?? new ChangeTrackingList<Uri>(), generalInformation.Value, capabilities ?? new ChangeTrackingList<string>(), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Write(ModelReaderWriterOptions options)

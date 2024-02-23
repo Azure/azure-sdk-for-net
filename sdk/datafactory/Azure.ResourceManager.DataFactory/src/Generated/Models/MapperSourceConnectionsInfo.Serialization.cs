@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<MapperTable>> sourceEntities = default;
+            IList<MapperTable> sourceEntities = default;
             Optional<MapperConnection> connection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperSourceConnectionsInfo(Optional.ToList(sourceEntities), connection.Value, serializedAdditionalRawData);
+            return new MapperSourceConnectionsInfo(sourceEntities ?? new ChangeTrackingList<MapperTable>(), connection.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperSourceConnectionsInfo>.Write(ModelReaderWriterOptions options)

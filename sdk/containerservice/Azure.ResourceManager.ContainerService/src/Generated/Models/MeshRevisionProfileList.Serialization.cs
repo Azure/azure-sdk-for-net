@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MeshRevisionProfileData>> value = default;
+            IReadOnlyList<MeshRevisionProfileData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MeshRevisionProfileList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MeshRevisionProfileList(value ?? new ChangeTrackingList<MeshRevisionProfileData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MeshRevisionProfileList>.Write(ModelReaderWriterOptions options)

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), serializedAdditionalRawData);
+            return new ContainerGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupPatch>.Write(ModelReaderWriterOptions options)

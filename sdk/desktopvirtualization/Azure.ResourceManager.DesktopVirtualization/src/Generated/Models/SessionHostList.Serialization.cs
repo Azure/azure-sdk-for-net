@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SessionHostData>> value = default;
+            IReadOnlyList<SessionHostData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SessionHostList(value ?? new ChangeTrackingList<SessionHostData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostList>.Write(ModelReaderWriterOptions options)

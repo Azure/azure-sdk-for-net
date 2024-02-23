@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             Optional<StoragePoolSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
+            IReadOnlyList<string> values = default;
             Optional<StoragePoolSkuRestrictionInfo> restrictionInfo = default;
             Optional<StoragePoolSkuRestrictionsReasonCode> reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new StoragePoolSkuRestrictions(Optional.ToNullable(type), values ?? new ChangeTrackingList<string>(), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuRestrictions>.Write(ModelReaderWriterOptions options)

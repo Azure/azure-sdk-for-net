@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> timeZoneId = default;
-            Optional<IList<SqlScheduleItem>> scheduleList = default;
+            IList<SqlScheduleItem> scheduleList = default;
             Optional<string> nextRunAction = default;
             Optional<string> nextExecutionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceStartStopScheduleData(id, name, type, systemData.Value, description.Value, timeZoneId.Value, Optional.ToList(scheduleList), nextRunAction.Value, nextExecutionTime.Value, serializedAdditionalRawData);
+            return new ManagedInstanceStartStopScheduleData(id, name, type, systemData.Value, description.Value, timeZoneId.Value, scheduleList ?? new ChangeTrackingList<SqlScheduleItem>(), nextRunAction.Value, nextExecutionTime.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceStartStopScheduleData>.Write(ModelReaderWriterOptions options)

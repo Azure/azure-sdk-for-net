@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MarketplaceGalleryImageData>> value = default;
+            IReadOnlyList<MarketplaceGalleryImageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceGalleryImagesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MarketplaceGalleryImagesListResult(value ?? new ChangeTrackingList<MarketplaceGalleryImageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceGalleryImagesListResult>.Write(ModelReaderWriterOptions options)

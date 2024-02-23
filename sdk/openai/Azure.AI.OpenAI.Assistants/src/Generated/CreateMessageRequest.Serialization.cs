@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
             MessageRole role = default;
             string content = default;
-            Optional<IList<string>> fileIds = default;
+            IList<string> fileIds = default;
             Optional<IDictionary<string, string>> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateMessageRequest(role, content, Optional.ToList(fileIds), Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new CreateMessageRequest(role, content, fileIds ?? new ChangeTrackingList<string>(), Optional.ToDictionary(metadata), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateMessageRequest>.Write(ModelReaderWriterOptions options)

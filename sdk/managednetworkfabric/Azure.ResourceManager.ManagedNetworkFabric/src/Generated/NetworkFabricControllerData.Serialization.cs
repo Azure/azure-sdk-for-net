@@ -209,15 +209,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            Optional<IList<ExpressRouteConnectionInformation>> infrastructureExpressRouteConnections = default;
-            Optional<IList<ExpressRouteConnectionInformation>> workloadExpressRouteConnections = default;
+            IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default;
+            IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default;
             Optional<NetworkFabricControllerServices> infrastructureServices = default;
             Optional<NetworkFabricControllerServices> workloadServices = default;
             Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> networkFabricIds = default;
+            IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
             Optional<bool> workloadManagementNetwork = default;
             Optional<IsWorkloadManagementNetworkEnabled> isWorkloadManagementNetworkEnabled = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> tenantInternetGatewayIds = default;
+            IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds = default;
             Optional<string> ipv4AddressSpace = default;
             Optional<string> ipv6AddressSpace = default;
             Optional<NetworkFabricControllerSKU> nfcSku = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(infrastructureExpressRouteConnections), Optional.ToList(workloadExpressRouteConnections), infrastructureServices.Value, workloadServices.Value, managedResourceGroupConfiguration.Value, Optional.ToList(networkFabricIds), Optional.ToNullable(workloadManagementNetwork), Optional.ToNullable(isWorkloadManagementNetworkEnabled), Optional.ToList(tenantInternetGatewayIds), ipv4AddressSpace.Value, ipv6AddressSpace.Value, Optional.ToNullable(nfcSku), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), infrastructureServices.Value, workloadServices.Value, managedResourceGroupConfiguration.Value, networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(workloadManagementNetwork), Optional.ToNullable(isWorkloadManagementNetworkEnabled), tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipv4AddressSpace.Value, ipv6AddressSpace.Value, Optional.ToNullable(nfcSku), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricControllerData>.Write(ModelReaderWriterOptions options)

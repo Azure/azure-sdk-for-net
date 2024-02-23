@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             Optional<RedisEnterpriseClusteringPolicy> clusteringPolicy = default;
             Optional<RedisEnterpriseEvictionPolicy> evictionPolicy = default;
             Optional<RedisPersistenceSettings> persistence = default;
-            Optional<IList<RedisEnterpriseModule>> modules = default;
+            IList<RedisEnterpriseModule> modules = default;
             Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, Optional.ToList(modules), geoReplication.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, modules ?? new ChangeTrackingList<RedisEnterpriseModule>(), geoReplication.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options)

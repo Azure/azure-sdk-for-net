@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KubernetesClusterExtensionData>> value = default;
+            IReadOnlyList<KubernetesClusterExtensionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExtensionsList(value ?? new ChangeTrackingList<KubernetesClusterExtensionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionsList>.Write(ModelReaderWriterOptions options)

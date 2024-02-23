@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitoringMetricConfigurationData>> value = default;
+            IReadOnlyList<MonitoringMetricConfigurationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringMetricConfigurationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MonitoringMetricConfigurationList(value ?? new ChangeTrackingList<MonitoringMetricConfigurationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringMetricConfigurationList>.Write(ModelReaderWriterOptions options)

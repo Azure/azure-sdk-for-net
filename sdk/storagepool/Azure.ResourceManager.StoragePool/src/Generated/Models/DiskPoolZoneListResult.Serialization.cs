@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiskPoolZoneInfo>> value = default;
+            IReadOnlyList<DiskPoolZoneInfo> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolZoneListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DiskPoolZoneListResult(value ?? new ChangeTrackingList<DiskPoolZoneInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolZoneListResult>.Write(ModelReaderWriterOptions options)

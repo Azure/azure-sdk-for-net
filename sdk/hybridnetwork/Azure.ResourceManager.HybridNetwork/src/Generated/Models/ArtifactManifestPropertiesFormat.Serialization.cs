@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             Optional<ProvisioningState> provisioningState = default;
             Optional<ArtifactManifestState> artifactManifestState = default;
-            Optional<IList<ManifestArtifactFormat>> artifacts = default;
+            IList<ManifestArtifactFormat> artifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactManifestPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(artifactManifestState), Optional.ToList(artifacts), serializedAdditionalRawData);
+            return new ArtifactManifestPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(artifactManifestState), artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactManifestPropertiesFormat>.Write(ModelReaderWriterOptions options)

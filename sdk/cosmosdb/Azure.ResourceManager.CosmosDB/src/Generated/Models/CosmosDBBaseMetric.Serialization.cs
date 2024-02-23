@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> timeGrain = default;
             Optional<CosmosDBMetricUnitType> unit = default;
             Optional<CosmosDBMetricName> name = default;
-            Optional<IReadOnlyList<CosmosDBMetricValue>> metricValues = default;
+            IReadOnlyList<CosmosDBMetricValue> metricValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBBaseMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), serializedAdditionalRawData);
+            return new CosmosDBBaseMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBBaseMetric>.Write(ModelReaderWriterOptions options)

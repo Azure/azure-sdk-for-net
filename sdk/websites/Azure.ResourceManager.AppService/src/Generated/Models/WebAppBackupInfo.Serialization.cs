@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> enabled = default;
             Optional<Uri> storageAccountUrl = default;
             Optional<WebAppBackupSchedule> backupSchedule = default;
-            Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
+            IList<AppServiceDatabaseBackupSetting> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppBackupInfo(id, name, type, systemData.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, Optional.ToList(databases), kind.Value, serializedAdditionalRawData);
+            return new WebAppBackupInfo(id, name, type, systemData.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(), kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppBackupInfo>.Write(ModelReaderWriterOptions options)

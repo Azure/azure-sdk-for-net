@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorIncident>> value = default;
+            IReadOnlyList<MonitorIncident> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IncidentListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new IncidentListResult(value ?? new ChangeTrackingList<MonitorIncident>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IncidentListResult>.Write(ModelReaderWriterOptions options)

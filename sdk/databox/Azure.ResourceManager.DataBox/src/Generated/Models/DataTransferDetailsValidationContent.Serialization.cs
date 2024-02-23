@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IList<DataExportDetails>> dataExportDetails = default;
-            Optional<IList<DataImportDetails>> dataImportDetails = default;
+            IList<DataExportDetails> dataExportDetails = default;
+            IList<DataImportDetails> dataImportDetails = default;
             DataBoxSkuName deviceType = default;
             DataBoxJobTransferType transferType = default;
             DataBoxValidationInputDiscriminator validationType = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferDetailsValidationContent(validationType, serializedAdditionalRawData, Optional.ToList(dataExportDetails), Optional.ToList(dataImportDetails), deviceType, transferType);
+            return new DataTransferDetailsValidationContent(validationType, serializedAdditionalRawData, dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(), dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(), deviceType, transferType);
         }
 
         BinaryData IPersistableModel<DataTransferDetailsValidationContent>.Write(ModelReaderWriterOptions options)

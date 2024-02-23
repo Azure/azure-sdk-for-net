@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> endpoint = default;
             Optional<string> apiKey = default;
             Optional<MachineLearningStudioInputs> inputs = default;
-            Optional<IList<MachineLearningStudioOutputColumn>> outputs = default;
+            IList<MachineLearningStudioOutputColumn> outputs = default;
             Optional<int> batchSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EMachineLearningStudioFunctionBinding(type, serializedAdditionalRawData, endpoint.Value, apiKey.Value, inputs.Value, Optional.ToList(outputs), Optional.ToNullable(batchSize));
+            return new EMachineLearningStudioFunctionBinding(type, serializedAdditionalRawData, endpoint.Value, apiKey.Value, inputs.Value, outputs ?? new ChangeTrackingList<MachineLearningStudioOutputColumn>(), Optional.ToNullable(batchSize));
         }
 
         BinaryData IPersistableModel<EMachineLearningStudioFunctionBinding>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProductFamiliesMetadata>> value = default;
+            IReadOnlyList<ProductFamiliesMetadata> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductFamiliesMetadataListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProductFamiliesMetadataListResult(value ?? new ChangeTrackingList<ProductFamiliesMetadata>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamiliesMetadataListResult>.Write(ModelReaderWriterOptions options)

@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> targetEntityTypeName = default;
             Optional<IDictionary<string, string>> displayName = default;
             Optional<IDictionary<string, string>> description = default;
-            Optional<IList<TypePropertiesMapping>> mappings = default;
-            Optional<IList<ParticipantPropertyReference>> participantPropertyReferences = default;
+            IList<TypePropertiesMapping> mappings = default;
+            IList<ParticipantPropertyReference> participantPropertyReferences = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<bool> referenceOnly = default;
             Optional<InstanceOperationType> operationType = default;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), linkName.Value, Optional.ToNullable(sourceEntityType), Optional.ToNullable(targetEntityType), sourceEntityTypeName.Value, targetEntityTypeName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToList(mappings), Optional.ToList(participantPropertyReferences), Optional.ToNullable(provisioningState), Optional.ToNullable(referenceOnly), Optional.ToNullable(operationType), serializedAdditionalRawData);
+            return new LinkResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), linkName.Value, Optional.ToNullable(sourceEntityType), Optional.ToNullable(targetEntityType), sourceEntityTypeName.Value, targetEntityTypeName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), mappings ?? new ChangeTrackingList<TypePropertiesMapping>(), participantPropertyReferences ?? new ChangeTrackingList<ParticipantPropertyReference>(), Optional.ToNullable(provisioningState), Optional.ToNullable(referenceOnly), Optional.ToNullable(operationType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkResourceFormatData>.Write(ModelReaderWriterOptions options)

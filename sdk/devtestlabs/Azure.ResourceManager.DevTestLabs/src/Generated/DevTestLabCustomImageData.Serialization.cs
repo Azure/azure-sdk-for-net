@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> managedImageId = default;
             Optional<string> managedSnapshotId = default;
-            Optional<IList<DevTestLabDataDiskStorageTypeInfo>> dataDiskStorageInfo = default;
+            IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = default;
             Optional<DevTestLabCustomImagePlan> customImagePlan = default;
             Optional<bool> isPlanAuthorized = default;
             Optional<string> provisioningState = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCustomImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, vm.Value, vhd.Value, description.Value, author.Value, Optional.ToNullable(creationDate), managedImageId.Value, managedSnapshotId.Value, Optional.ToList(dataDiskStorageInfo), customImagePlan.Value, Optional.ToNullable(isPlanAuthorized), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabCustomImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, vm.Value, vhd.Value, description.Value, author.Value, Optional.ToNullable(creationDate), managedImageId.Value, managedSnapshotId.Value, dataDiskStorageInfo ?? new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>(), customImagePlan.Value, Optional.ToNullable(isPlanAuthorized), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCustomImageData>.Write(ModelReaderWriterOptions options)

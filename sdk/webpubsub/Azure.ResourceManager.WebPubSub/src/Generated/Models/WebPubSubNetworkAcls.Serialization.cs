@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             Optional<AclAction> defaultAction = default;
             Optional<PublicNetworkAcls> publicNetwork = default;
-            Optional<IList<PrivateEndpointAcl>> privateEndpoints = default;
+            IList<PrivateEndpointAcl> privateEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints), serializedAdditionalRawData);
+            return new WebPubSubNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, privateEndpoints ?? new ChangeTrackingList<PrivateEndpointAcl>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubNetworkAcls>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
-            Optional<IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings>> backendHttpSettingsCollection = default;
+            IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings> backendHttpSettingsCollection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthPool(backendAddressPool.Value, Optional.ToList(backendHttpSettingsCollection), serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthPool(backendAddressPool.Value, backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHealthHttpSettings>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthPool>.Write(ModelReaderWriterOptions options)

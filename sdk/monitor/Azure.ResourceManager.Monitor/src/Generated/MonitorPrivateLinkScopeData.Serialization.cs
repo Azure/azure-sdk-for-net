@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<MonitorPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default;
             MonitorPrivateLinkAccessModeSettings accessModeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkScopeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToList(privateEndpointConnections), accessModeSettings, serializedAdditionalRawData);
+            return new MonitorPrivateLinkScopeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>(), accessModeSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkScopeData>.Write(ModelReaderWriterOptions options)

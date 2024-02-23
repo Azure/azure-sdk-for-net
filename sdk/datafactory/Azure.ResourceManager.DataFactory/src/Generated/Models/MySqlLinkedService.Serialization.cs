@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> driverVersion = default;
             Optional<DataFactoryElement<string>> connectionString = default;
             Optional<DataFactoryElement<string>> server = default;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MySqlLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, driverVersion.Value, connectionString.Value, server.Value, port.Value, username.Value, database.Value, sslMode.Value, useSystemTrustStore.Value, password, encryptedCredential.Value);
+            return new MySqlLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, driverVersion.Value, connectionString.Value, server.Value, port.Value, username.Value, database.Value, sslMode.Value, useSystemTrustStore.Value, password, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<MySqlLinkedService>.Write(ModelReaderWriterOptions options)

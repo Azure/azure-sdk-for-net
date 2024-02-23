@@ -20,7 +20,7 @@ namespace Azure.Communication.Chat
                 return null;
             }
             Optional<ChatThreadPropertiesInternal> chatThread = default;
-            Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
+            IReadOnlyList<ChatError> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("chatThread"u8))
@@ -47,7 +47,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new CreateChatThreadResultInternal(chatThread.Value, Optional.ToList(invalidParticipants));
+            return new CreateChatThreadResultInternal(chatThread.Value, invalidParticipants ?? new ChangeTrackingList<ChatError>());
         }
     }
 }

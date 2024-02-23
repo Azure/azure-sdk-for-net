@@ -105,10 +105,10 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<IList<int>> epochIds = default;
-            Optional<IList<float>> trainLosses = default;
-            Optional<IList<float>> validationLosses = default;
-            Optional<IList<float>> latenciesInSeconds = default;
+            IList<int> epochIds = default;
+            IList<float> trainLosses = default;
+            IList<float> validationLosses = default;
+            IList<float> latenciesInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelState(Optional.ToList(epochIds), Optional.ToList(trainLosses), Optional.ToList(validationLosses), Optional.ToList(latenciesInSeconds), serializedAdditionalRawData);
+            return new ModelState(epochIds ?? new ChangeTrackingList<int>(), trainLosses ?? new ChangeTrackingList<float>(), validationLosses ?? new ChangeTrackingList<float>(), latenciesInSeconds ?? new ChangeTrackingList<float>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelState>.Write(ModelReaderWriterOptions options)

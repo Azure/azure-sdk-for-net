@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<DeviceUpdateProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<DeviceUpdatePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<DeviceUpdateSku> sku = default;
             Optional<DeviceUpdateEncryption> encryption = default;
-            Optional<IReadOnlyList<DeviceUpdateAccountLocationDetail>> locations = default;
+            IReadOnlyList<DeviceUpdateAccountLocationDetail> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(sku), encryption.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new DeviceUpdateAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>(), Optional.ToNullable(sku), encryption.Value, locations ?? new ChangeTrackingList<DeviceUpdateAccountLocationDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options)

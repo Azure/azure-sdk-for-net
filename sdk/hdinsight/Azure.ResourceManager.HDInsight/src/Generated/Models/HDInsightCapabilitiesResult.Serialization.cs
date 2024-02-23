@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
             Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
-            Optional<IReadOnlyList<string>> features = default;
+            IReadOnlyList<string> features = default;
             Optional<QuotaCapability> quota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value, serializedAdditionalRawData);
+            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), features ?? new ChangeTrackingList<string>(), quota.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightCapabilitiesResult>.Write(ModelReaderWriterOptions options)

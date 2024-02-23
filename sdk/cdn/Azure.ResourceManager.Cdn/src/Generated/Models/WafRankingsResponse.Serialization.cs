@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             Optional<DateTimeOffset> dateTimeBegin = default;
             Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<IReadOnlyList<string>> groups = default;
-            Optional<IReadOnlyList<WafRankingsResponseDataItem>> data = default;
+            IReadOnlyList<string> groups = default;
+            IReadOnlyList<WafRankingsResponseDataItem> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafRankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToList(groups), Optional.ToList(data), serializedAdditionalRawData);
+            return new WafRankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), groups ?? new ChangeTrackingList<string>(), data ?? new ChangeTrackingList<WafRankingsResponseDataItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafRankingsResponse>.Write(ModelReaderWriterOptions options)

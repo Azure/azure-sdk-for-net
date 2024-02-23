@@ -290,14 +290,14 @@ namespace Azure.ResourceManager.Advisor
             Optional<string> recommendationTypeId = default;
             Optional<Risk> risk = default;
             Optional<ShortDescription> shortDescription = default;
-            Optional<IList<Guid>> suppressionIds = default;
+            IList<Guid> suppressionIds = default;
             Optional<IDictionary<string, string>> extendedProperties = default;
             Optional<ResourceMetadata> resourceMetadata = default;
             Optional<string> description = default;
             Optional<string> label = default;
             Optional<string> learnMoreLink = default;
             Optional<string> potentialBenefits = default;
-            Optional<IList<IDictionary<string, BinaryData>>> actions = default;
+            IList<IDictionary<string, BinaryData>> actions = default;
             Optional<IDictionary<string, BinaryData>> remediation = default;
             Optional<IDictionary<string, BinaryData>> exposedMetadataProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Advisor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, Optional.ToList(suppressionIds), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, Optional.ToList(actions), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties), serializedAdditionalRawData);
+            return new ResourceRecommendationBaseData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(impact), impactedField.Value, impactedValue.Value, Optional.ToNullable(lastUpdated), Optional.ToDictionary(metadata), recommendationTypeId.Value, Optional.ToNullable(risk), shortDescription.Value, suppressionIds ?? new ChangeTrackingList<Guid>(), Optional.ToDictionary(extendedProperties), resourceMetadata.Value, description.Value, label.Value, learnMoreLink.Value, potentialBenefits.Value, actions ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(), Optional.ToDictionary(remediation), Optional.ToDictionary(exposedMetadataProperties), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceRecommendationBaseData>.Write(ModelReaderWriterOptions options)

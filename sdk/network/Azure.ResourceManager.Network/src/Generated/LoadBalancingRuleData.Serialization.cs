@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<WritableSubResource> frontendIPConfiguration = default;
             Optional<WritableSubResource> backendAddressPool = default;
-            Optional<IList<WritableSubResource>> backendAddressPools = default;
+            IList<WritableSubResource> backendAddressPools = default;
             Optional<WritableSubResource> probe = default;
             Optional<LoadBalancingTransportProtocol> protocol = default;
             Optional<LoadDistribution> loadDistribution = default;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, Optional.ToList(backendAddressPools), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
+            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, backendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<LoadBalancingRuleData>.Write(ModelReaderWriterOptions options)

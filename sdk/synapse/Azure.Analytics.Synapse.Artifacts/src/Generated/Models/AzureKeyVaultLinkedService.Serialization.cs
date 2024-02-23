@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             object baseUrl = default;
             Optional<CredentialReference> credential = default;
             IDictionary<string, object> additionalProperties = default;
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureKeyVaultLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, baseUrl, credential.Value);
+            return new AzureKeyVaultLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, baseUrl, credential.Value);
         }
 
         internal partial class AzureKeyVaultLinkedServiceConverter : JsonConverter<AzureKeyVaultLinkedService>

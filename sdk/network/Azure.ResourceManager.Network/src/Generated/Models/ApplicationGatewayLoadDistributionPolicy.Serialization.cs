@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<ApplicationGatewayLoadDistributionTarget>> loadDistributionTargets = default;
+            IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets = default;
             Optional<ApplicationGatewayLoadDistributionAlgorithm> loadDistributionAlgorithm = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayLoadDistributionPolicy(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(loadDistributionTargets), Optional.ToNullable(loadDistributionAlgorithm), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayLoadDistributionPolicy(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), loadDistributionTargets ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>(), Optional.ToNullable(loadDistributionAlgorithm), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayLoadDistributionPolicy>.Write(ModelReaderWriterOptions options)

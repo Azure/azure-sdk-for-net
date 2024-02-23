@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<EmergingIssueImpactedRegion>> regions = default;
+            IReadOnlyList<EmergingIssueImpactedRegion> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueImpact(id.Value, name.Value, Optional.ToList(regions), serializedAdditionalRawData);
+            return new EmergingIssueImpact(id.Value, name.Value, regions ?? new ChangeTrackingList<EmergingIssueImpactedRegion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueImpact>.Write(ModelReaderWriterOptions options)

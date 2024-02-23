@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<DateTimeOffset> lastSuccessfulUnplannedFailoverTime = default;
             Optional<DateTimeOffset> lastSuccessfulTestFailoverTime = default;
             Optional<ProtectedItemJobProperties> currentJob = default;
-            Optional<IReadOnlyList<string>> allowedJobs = default;
+            IReadOnlyList<string> allowedJobs = default;
             Optional<ProtectedItemJobProperties> lastFailedEnableProtectionJob = default;
             Optional<ProtectedItemJobProperties> lastFailedPlannedFailoverJob = default;
             Optional<ProtectedItemJobProperties> lastTestFailoverJob = default;
             Optional<DataReplicationHealthStatus> replicationHealth = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             ProtectedItemModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationProtectedItemProperties(policyName, replicationExtensionName, correlationId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(protectionState), protectionStateDescription.Value, Optional.ToNullable(testFailoverState), testFailoverStateDescription.Value, Optional.ToNullable(resynchronizationState), fabricObjectId.Value, fabricObjectName.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, fabricId.Value, targetFabricId.Value, draId.Value, targetDraId.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(lastSuccessfulPlannedFailoverTime), Optional.ToNullable(lastSuccessfulUnplannedFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentJob.Value, Optional.ToList(allowedJobs), lastFailedEnableProtectionJob.Value, lastFailedPlannedFailoverJob.Value, lastTestFailoverJob.Value, Optional.ToNullable(replicationHealth), Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationProtectedItemProperties(policyName, replicationExtensionName, correlationId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(protectionState), protectionStateDescription.Value, Optional.ToNullable(testFailoverState), testFailoverStateDescription.Value, Optional.ToNullable(resynchronizationState), fabricObjectId.Value, fabricObjectName.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, fabricId.Value, targetFabricId.Value, draId.Value, targetDraId.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(lastSuccessfulPlannedFailoverTime), Optional.ToNullable(lastSuccessfulUnplannedFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentJob.Value, allowedJobs ?? new ChangeTrackingList<string>(), lastFailedEnableProtectionJob.Value, lastFailedPlannedFailoverJob.Value, lastTestFailoverJob.Value, Optional.ToNullable(replicationHealth), healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(), customProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)

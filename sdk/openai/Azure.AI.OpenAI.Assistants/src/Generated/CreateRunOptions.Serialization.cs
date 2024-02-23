@@ -142,7 +142,7 @@ namespace Azure.AI.OpenAI.Assistants
             Optional<string> model = default;
             Optional<string> instructions = default;
             Optional<string> additionalInstructions = default;
-            Optional<IList<ToolDefinition>> tools = default;
+            IList<ToolDefinition> tools = default;
             Optional<IDictionary<string, string>> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -217,7 +217,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateRunOptions(assistantId, model.Value, instructions.Value, additionalInstructions.Value, Optional.ToList(tools), Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new CreateRunOptions(assistantId, model.Value, instructions.Value, additionalInstructions.Value, tools ?? new ChangeTrackingList<ToolDefinition>(), Optional.ToDictionary(metadata), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateRunOptions>.Write(ModelReaderWriterOptions options)

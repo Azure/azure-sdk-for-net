@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 return null;
             }
             Optional<EmissionType> emissionType = default;
-            Optional<IList<EmissionPolicyDestination>> emissionDestinations = default;
+            IList<EmissionPolicyDestination> emissionDestinations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmissionPoliciesPropertiesFormat(Optional.ToNullable(emissionType), Optional.ToList(emissionDestinations), serializedAdditionalRawData);
+            return new EmissionPoliciesPropertiesFormat(Optional.ToNullable(emissionType), emissionDestinations ?? new ChangeTrackingList<EmissionPolicyDestination>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmissionPoliciesPropertiesFormat>.Write(ModelReaderWriterOptions options)

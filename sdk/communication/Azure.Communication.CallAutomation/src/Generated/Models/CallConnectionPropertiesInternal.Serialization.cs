@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
+            IReadOnlyList<CommunicationIdentifierModel> targets = default;
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> callbackUri = default;
             Optional<string> mediaSubscriptionId = default;
@@ -130,7 +130,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, dataSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, source.Value, correlationId.Value, answeredBy.Value, originalPstnTarget.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, dataSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, source.Value, correlationId.Value, answeredBy.Value, originalPstnTarget.Value);
         }
     }
 }

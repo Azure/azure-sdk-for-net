@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<IList<HealthcareApisServiceAccessPolicyEntry>> accessPolicies = default;
+            IList<HealthcareApisServiceAccessPolicyEntry> accessPolicies = default;
             Optional<HealthcareApisServiceCosmosDbConfiguration> cosmosDbConfiguration = default;
             Optional<HealthcareApisServiceAuthenticationConfiguration> authenticationConfiguration = default;
             Optional<HealthcareApisServiceCorsConfiguration> corsConfiguration = default;
             Optional<ServiceExportConfigurationInfo> exportConfiguration = default;
-            Optional<IList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             Optional<HealthcareApisServiceAcrConfiguration> acrConfiguration = default;
             Optional<HealthcareApisServiceImportConfiguration> importConfiguration = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServiceProperties(Optional.ToNullable(provisioningState), Optional.ToList(accessPolicies), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value, serializedAdditionalRawData);
+            return new HealthcareApisServiceProperties(Optional.ToNullable(provisioningState), accessPolicies ?? new ChangeTrackingList<HealthcareApisServiceAccessPolicyEntry>(), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServiceProperties>.Write(ModelReaderWriterOptions options)

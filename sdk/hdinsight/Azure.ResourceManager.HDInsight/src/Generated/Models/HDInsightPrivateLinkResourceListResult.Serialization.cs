@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightPrivateLinkResourceData>> value = default;
+            IReadOnlyList<HDInsightPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new HDInsightPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HDInsightPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

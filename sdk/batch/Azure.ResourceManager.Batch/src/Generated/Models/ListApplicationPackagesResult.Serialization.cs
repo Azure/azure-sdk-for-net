@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BatchApplicationPackageData>> value = default;
+            IReadOnlyList<BatchApplicationPackageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListApplicationPackagesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListApplicationPackagesResult(value ?? new ChangeTrackingList<BatchApplicationPackageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListApplicationPackagesResult>.Write(ModelReaderWriterOptions options)

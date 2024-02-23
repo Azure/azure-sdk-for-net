@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<string> integratedCircuitCardIdentifier = default;
             Optional<string> deviceType = default;
             Optional<WritableSubResource> simPolicy = default;
-            Optional<IList<SimStaticIPProperties>> staticIPConfiguration = default;
+            IList<SimStaticIPProperties> staticIPConfiguration = default;
             Optional<string> vendorName = default;
             Optional<string> vendorKeyFingerprint = default;
             Optional<string> authenticationKey = default;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimNameAndProperties(name, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, Optional.ToList(staticIPConfiguration), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value, serializedAdditionalRawData);
+            return new SimNameAndProperties(name, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimNameAndProperties>.Write(ModelReaderWriterOptions options)

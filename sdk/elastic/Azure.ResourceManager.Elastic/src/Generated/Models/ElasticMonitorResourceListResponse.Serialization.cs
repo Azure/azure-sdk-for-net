@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ElasticMonitorResourceData>> value = default;
+            IReadOnlyList<ElasticMonitorResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticMonitorResourceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ElasticMonitorResourceListResponse(value ?? new ChangeTrackingList<ElasticMonitorResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticMonitorResourceListResponse>.Write(ModelReaderWriterOptions options)

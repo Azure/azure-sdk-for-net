@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClusterServiceConfigResult>> value = default;
+            IReadOnlyList<ClusterServiceConfigResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServiceConfigListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ClusterServiceConfigListResult(value ?? new ChangeTrackingList<ClusterServiceConfigResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServiceConfigListResult>.Write(ModelReaderWriterOptions options)

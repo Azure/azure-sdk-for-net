@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerAzureADAdministratorData>> value = default;
+            IReadOnlyList<SqlServerAzureADAdministratorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdministratorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AdministratorListResult(value ?? new ChangeTrackingList<SqlServerAzureADAdministratorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdministratorListResult>.Write(ModelReaderWriterOptions options)

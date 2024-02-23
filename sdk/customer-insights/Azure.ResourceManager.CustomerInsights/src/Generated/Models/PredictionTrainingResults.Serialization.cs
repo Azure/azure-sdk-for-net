@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<Guid> tenantId = default;
             Optional<string> scoreName = default;
             Optional<PredictionDistributionDefinition> predictionDistribution = default;
-            Optional<IReadOnlyList<CanonicalProfileDefinition>> canonicalProfiles = default;
+            IReadOnlyList<CanonicalProfileDefinition> canonicalProfiles = default;
             Optional<long> primaryProfileInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Optional.ToList(canonicalProfiles), Optional.ToNullable(primaryProfileInstanceCount), serializedAdditionalRawData);
+            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, canonicalProfiles ?? new ChangeTrackingList<CanonicalProfileDefinition>(), Optional.ToNullable(primaryProfileInstanceCount), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionTrainingResults>.Write(ModelReaderWriterOptions options)

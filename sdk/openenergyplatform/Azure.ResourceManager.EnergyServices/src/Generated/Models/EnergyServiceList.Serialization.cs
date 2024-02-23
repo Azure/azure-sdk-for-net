@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<EnergyServiceData>> value = default;
+            IReadOnlyList<EnergyServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnergyServiceList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new EnergyServiceList(nextLink.Value, value ?? new ChangeTrackingList<EnergyServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnergyServiceList>.Write(ModelReaderWriterOptions options)

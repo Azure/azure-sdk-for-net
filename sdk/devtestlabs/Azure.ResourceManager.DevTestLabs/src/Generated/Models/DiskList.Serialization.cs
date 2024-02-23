@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabDiskData>> value = default;
+            IReadOnlyList<DevTestLabDiskData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DiskList(value ?? new ChangeTrackingList<DevTestLabDiskData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskList>.Write(ModelReaderWriterOptions options)

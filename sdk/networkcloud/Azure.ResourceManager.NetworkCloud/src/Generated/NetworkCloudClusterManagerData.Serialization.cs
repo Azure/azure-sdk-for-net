@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> analyticsWorkspaceId = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<IReadOnlyList<ClusterAvailableVersion>> clusterVersions = default;
+            IList<string> availabilityZones = default;
+            IReadOnlyList<ClusterAvailableVersion> clusterVersions = default;
             Optional<ClusterManagerDetailedStatus> detailedStatus = default;
             Optional<string> detailedStatusMessage = default;
             ResourceIdentifier fabricControllerId = default;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, analyticsWorkspaceId.Value, Optional.ToList(availabilityZones), Optional.ToList(clusterVersions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, fabricControllerId, managedResourceGroupConfiguration.Value, managerExtendedLocation.Value, Optional.ToNullable(provisioningState), vmSize.Value, serializedAdditionalRawData);
+            return new NetworkCloudClusterManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, analyticsWorkspaceId.Value, availabilityZones ?? new ChangeTrackingList<string>(), clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>(), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, fabricControllerId, managedResourceGroupConfiguration.Value, managerExtendedLocation.Value, Optional.ToNullable(provisioningState), vmSize.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterManagerData>.Write(ModelReaderWriterOptions options)

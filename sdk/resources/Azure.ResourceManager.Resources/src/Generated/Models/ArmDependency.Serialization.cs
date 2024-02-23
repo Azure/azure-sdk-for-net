@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BasicArmDependency>> dependsOn = default;
+            IReadOnlyList<BasicArmDependency> dependsOn = default;
             Optional<string> id = default;
             Optional<ResourceType> resourceType = default;
             Optional<string> resourceName = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDependency(Optional.ToList(dependsOn), id.Value, Optional.ToNullable(resourceType), resourceName.Value, serializedAdditionalRawData);
+            return new ArmDependency(dependsOn ?? new ChangeTrackingList<BasicArmDependency>(), id.Value, Optional.ToNullable(resourceType), resourceName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDependency>.Write(ModelReaderWriterOptions options)

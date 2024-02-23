@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MsixPackageData>> value = default;
+            IReadOnlyList<MsixPackageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MsixPackageList(value ?? new ChangeTrackingList<MsixPackageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackageList>.Write(ModelReaderWriterOptions options)

@@ -187,16 +187,16 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> defaultHostname = default;
             Optional<Uri> repositoryUrl = default;
             Optional<string> branch = default;
-            Optional<IReadOnlyList<string>> customDomains = default;
+            IReadOnlyList<string> customDomains = default;
             Optional<string> repositoryToken = default;
             Optional<StaticSiteBuildProperties> buildProperties = default;
-            Optional<IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>> privateEndpointConnections = default;
+            IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default;
             Optional<StagingEnvironmentPolicy> stagingEnvironmentPolicy = default;
             Optional<bool> allowConfigFileUpdates = default;
             Optional<StaticSiteTemplate> templateProperties = default;
             Optional<string> contentDistributionEndpoint = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
+            IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
             Optional<string> provider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSitePatch(id, name, type, systemData.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSitePatch(id, name, type, systemData.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, customDomains ?? new ChangeTrackingList<string>(), repositoryToken.Value, buildProperties.Value, privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(), provider.Value, kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSitePatch>.Write(ModelReaderWriterOptions options)

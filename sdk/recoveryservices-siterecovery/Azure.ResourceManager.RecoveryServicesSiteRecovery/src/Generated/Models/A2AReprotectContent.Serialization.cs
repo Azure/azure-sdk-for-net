@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<ResourceIdentifier> recoveryContainerId = default;
-            Optional<IList<A2AVmDiskDetails>> vmDisks = default;
+            IList<A2AVmDiskDetails> vmDisks = default;
             Optional<ResourceIdentifier> recoveryResourceGroupId = default;
             Optional<string> recoveryCloudServiceId = default;
             Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AReprotectContent(instanceType, serializedAdditionalRawData, recoveryContainerId.Value, Optional.ToList(vmDisks), recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, policyId.Value);
+            return new A2AReprotectContent(instanceType, serializedAdditionalRawData, recoveryContainerId.Value, vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(), recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, policyId.Value);
         }
 
         BinaryData IPersistableModel<A2AReprotectContent>.Write(ModelReaderWriterOptions options)

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<string> type0 = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<IList<string>> actions = default;
+            IList<string> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopeMapData(id, name, type, systemData.Value, description.Value, type0.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), Optional.ToList(actions), serializedAdditionalRawData);
+            return new ScopeMapData(id, name, type, systemData.Value, description.Value, type0.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), actions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopeMapData>.Write(ModelReaderWriterOptions options)

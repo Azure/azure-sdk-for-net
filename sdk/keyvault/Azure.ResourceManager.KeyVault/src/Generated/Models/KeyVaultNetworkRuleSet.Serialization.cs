@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             Optional<KeyVaultNetworkRuleBypassOption> bypass = default;
             Optional<KeyVaultNetworkRuleAction> defaultAction = default;
-            Optional<IList<KeyVaultIPRule>> ipRules = default;
-            Optional<IList<KeyVaultVirtualNetworkRule>> virtualNetworkRules = default;
+            IList<KeyVaultIPRule> ipRules = default;
+            IList<KeyVaultVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            return new KeyVaultNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), ipRules ?? new ChangeTrackingList<KeyVaultIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<KeyVaultVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultNetworkRuleSet>.Write(ModelReaderWriterOptions options)

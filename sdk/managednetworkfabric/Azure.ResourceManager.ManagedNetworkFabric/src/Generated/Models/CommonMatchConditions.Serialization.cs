@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> protocolTypes = default;
+            IList<string> protocolTypes = default;
             Optional<VlanMatchCondition> vlanMatchCondition = default;
             Optional<IPMatchCondition> ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonMatchConditions(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData);
+            return new CommonMatchConditions(protocolTypes ?? new ChangeTrackingList<string>(), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonMatchConditions>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkloadNetworkPortMirroringProfileData>> value = default;
+            IReadOnlyList<WorkloadNetworkPortMirroringProfileData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkPortMirroringList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkPortMirroringList(value ?? new ChangeTrackingList<WorkloadNetworkPortMirroringProfileData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkPortMirroringList>.Write(ModelReaderWriterOptions options)

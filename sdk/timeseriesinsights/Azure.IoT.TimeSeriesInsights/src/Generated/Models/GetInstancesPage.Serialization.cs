@@ -19,7 +19,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IReadOnlyList<TimeSeriesInstance>> instances = default;
+            IReadOnlyList<TimeSeriesInstance> instances = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new GetInstancesPage(continuationToken.Value, Optional.ToList(instances));
+            return new GetInstancesPage(continuationToken.Value, instances ?? new ChangeTrackingList<TimeSeriesInstance>());
         }
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableServiceAlias>> value = default;
+            IReadOnlyList<AvailableServiceAlias> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableServiceAliasesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableServiceAliasesResult(value ?? new ChangeTrackingList<AvailableServiceAlias>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableServiceAliasesResult>.Write(ModelReaderWriterOptions options)

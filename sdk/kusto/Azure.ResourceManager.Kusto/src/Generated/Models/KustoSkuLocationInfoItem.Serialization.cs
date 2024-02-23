@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<KustoResourceSkuZoneDetails>> zoneDetails = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<KustoResourceSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoSkuLocationInfoItem(location, Optional.ToList(zones), Optional.ToList(zoneDetails), serializedAdditionalRawData);
+            return new KustoSkuLocationInfoItem(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<KustoResourceSkuZoneDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoSkuLocationInfoItem>.Write(ModelReaderWriterOptions options)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSyncPrivateLinkResource>> value = default;
+            IReadOnlyList<StorageSyncPrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new StorageSyncPrivateLinkResourceListResult(value ?? new ChangeTrackingList<StorageSyncPrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

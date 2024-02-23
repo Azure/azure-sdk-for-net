@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<string> version = default;
             Optional<IDictionary<string, string>> parameters = default;
             Optional<ApplicationUpgradePolicy> upgradePolicy = default;
-            Optional<IList<ApplicationUserAssignedIdentityInfo>> managedIdentities = default;
+            IList<ApplicationUserAssignedIdentityInfo> managedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, version.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToList(managedIdentities), serializedAdditionalRawData);
+            return new ServiceFabricManagedApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, version.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedApplicationData>.Write(ModelReaderWriterOptions options)

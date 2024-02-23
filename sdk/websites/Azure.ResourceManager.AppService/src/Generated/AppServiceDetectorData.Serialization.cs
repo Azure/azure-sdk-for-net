@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DetectorInfo> metadata = default;
-            Optional<IList<DiagnosticDataset>> dataset = default;
+            IList<DiagnosticDataset> dataset = default;
             Optional<AppServiceStatusInfo> status = default;
-            Optional<IList<DataProviderMetadata>> dataProvidersMetadata = default;
+            IList<DataProviderMetadata> dataProvidersMetadata = default;
             Optional<QueryUtterancesResults> suggestedUtterances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDetectorData(id, name, type, systemData.Value, metadata.Value, Optional.ToList(dataset), status.Value, Optional.ToList(dataProvidersMetadata), suggestedUtterances.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceDetectorData(id, name, type, systemData.Value, metadata.Value, dataset ?? new ChangeTrackingList<DiagnosticDataset>(), status.Value, dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>(), suggestedUtterances.Value, kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDetectorData>.Write(ModelReaderWriterOptions options)

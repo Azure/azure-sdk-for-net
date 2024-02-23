@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
+            IList<MediaTrackSelection> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
             Optional<CencDrmConfiguration> drm = default;
             Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonEncryptionCenc(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value, serializedAdditionalRawData);
+            return new CommonEncryptionCenc(enabledProtocols.Value, clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonEncryptionCenc>.Write(ModelReaderWriterOptions options)

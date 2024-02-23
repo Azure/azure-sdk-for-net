@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> connectionString = default;
             Optional<DataFactoryElement<string>> accountEndpoint = default;
             Optional<DataFactoryElement<string>> database = default;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CosmosDBLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountEndpoint.Value, database.Value, accountKey, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential, tenant.Value, azureCloudType.Value, Optional.ToNullable(connectionMode), encryptedCredential.Value, credential.Value);
+            return new CosmosDBLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString.Value, accountEndpoint.Value, database.Value, accountKey, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential, tenant.Value, azureCloudType.Value, Optional.ToNullable(connectionMode), encryptedCredential.Value, credential.Value);
         }
 
         BinaryData IPersistableModel<CosmosDBLinkedService>.Write(ModelReaderWriterOptions options)

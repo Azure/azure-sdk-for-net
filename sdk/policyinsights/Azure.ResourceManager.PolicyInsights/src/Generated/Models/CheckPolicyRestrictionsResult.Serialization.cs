@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FieldRestrictions>> fieldRestrictions = default;
+            IReadOnlyList<FieldRestrictions> fieldRestrictions = default;
             Optional<CheckRestrictionsResultContentEvaluationResult> contentEvaluationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckPolicyRestrictionsResult(Optional.ToList(fieldRestrictions), contentEvaluationResult.Value, serializedAdditionalRawData);
+            return new CheckPolicyRestrictionsResult(fieldRestrictions ?? new ChangeTrackingList<FieldRestrictions>(), contentEvaluationResult.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckPolicyRestrictionsResult>.Write(ModelReaderWriterOptions options)

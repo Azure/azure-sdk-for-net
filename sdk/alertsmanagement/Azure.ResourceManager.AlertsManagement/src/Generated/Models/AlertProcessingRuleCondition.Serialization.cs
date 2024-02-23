@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             Optional<AlertProcessingRuleField> field = default;
             Optional<AlertProcessingRuleOperator> @operator = default;
-            Optional<IList<string>> values = default;
+            IList<string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleCondition(Optional.ToNullable(field), Optional.ToNullable(@operator), Optional.ToList(values), serializedAdditionalRawData);
+            return new AlertProcessingRuleCondition(Optional.ToNullable(field), Optional.ToNullable(@operator), values ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleCondition>.Write(ModelReaderWriterOptions options)

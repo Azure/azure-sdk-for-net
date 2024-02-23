@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Models
             }
             Optional<ErrorDetail> error = default;
             Optional<SearchSummary> summary = default;
-            Optional<IReadOnlyList<ReverseSearchAddressItem>> addresses = default;
+            IReadOnlyList<ReverseSearchAddressItem> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -57,7 +57,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressBatchItemResponse(summary.Value, Optional.ToList(addresses), error.Value);
+            return new ReverseSearchAddressBatchItemResponse(summary.Value, addresses ?? new ChangeTrackingList<ReverseSearchAddressItem>(), error.Value);
         }
     }
 }

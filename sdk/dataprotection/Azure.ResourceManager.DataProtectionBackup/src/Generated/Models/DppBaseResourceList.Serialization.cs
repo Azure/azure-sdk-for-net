@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceGuardProtectedObjectData>> value = default;
+            IReadOnlyList<ResourceGuardProtectedObjectData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DppBaseResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DppBaseResourceList(value ?? new ChangeTrackingList<ResourceGuardProtectedObjectData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DppBaseResourceList>.Write(ModelReaderWriterOptions options)

@@ -237,13 +237,13 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> expression = default;
             Optional<string> unit = default;
             Optional<string> filter = default;
-            Optional<IList<string>> groupBy = default;
-            Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
-            Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
+            IList<string> groupBy = default;
+            IReadOnlyList<KpiGroupByMetadata> groupByMetadata = default;
+            IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<KpiThresholds> thresHolds = default;
-            Optional<IList<KpiAlias>> aliases = default;
-            Optional<IList<KpiExtract>> extracts = default;
+            IList<KpiAlias> aliases = default;
+            IList<KpiExtract> extracts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(entityType), entityTypeName.Value, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(calculationWindow), calculationWindowFieldName.Value, Optional.ToNullable(function), expression.Value, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts), serializedAdditionalRawData);
+            return new KpiResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(entityType), entityTypeName.Value, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(calculationWindow), calculationWindowFieldName.Value, Optional.ToNullable(function), expression.Value, unit.Value, filter.Value, groupBy ?? new ChangeTrackingList<string>(), groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(), participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(), Optional.ToNullable(provisioningState), thresHolds.Value, aliases ?? new ChangeTrackingList<KpiAlias>(), extracts ?? new ChangeTrackingList<KpiExtract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiResourceFormatData>.Write(ModelReaderWriterOptions options)

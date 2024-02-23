@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvsCloudLinkData>> value = default;
+            IReadOnlyList<AvsCloudLinkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudLinkList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CloudLinkList(value ?? new ChangeTrackingList<AvsCloudLinkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudLinkList>.Write(ModelReaderWriterOptions options)

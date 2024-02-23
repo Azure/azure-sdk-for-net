@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<SystemData> systemData = default;
             Optional<bool> trustedServiceAccessEnabled = default;
             Optional<ServiceBusNetworkRuleSetDefaultAction> defaultAction = default;
-            Optional<IList<ServiceBusNetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Optional<IList<ServiceBusNetworkRuleSetIPRules>> ipRules = default;
+            IList<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = default;
+            IList<ServiceBusNetworkRuleSetIPRules> ipRules = default;
             Optional<ServiceBusPublicNetworkAccessFlag> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), virtualNetworkRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>(), ipRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNetworkRuleSetData>.Write(ModelReaderWriterOptions options)

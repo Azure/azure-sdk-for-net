@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> publisherId = default;
             Optional<long> messageCode = default;
             Optional<Uri> icon = default;
-            Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            IReadOnlyList<PlanNotificationDetails> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestApprovalsDetails(offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), serializedAdditionalRawData);
+            return new RequestApprovalsDetails(offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(messageCode), icon.Value, plans ?? new ChangeTrackingList<PlanNotificationDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestApprovalsDetails>.Write(ModelReaderWriterOptions options)

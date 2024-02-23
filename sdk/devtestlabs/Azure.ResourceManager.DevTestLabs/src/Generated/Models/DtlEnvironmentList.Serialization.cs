@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabEnvironmentData>> value = default;
+            IReadOnlyList<DevTestLabEnvironmentData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DtlEnvironmentList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DtlEnvironmentList(value ?? new ChangeTrackingList<DevTestLabEnvironmentData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DtlEnvironmentList>.Write(ModelReaderWriterOptions options)

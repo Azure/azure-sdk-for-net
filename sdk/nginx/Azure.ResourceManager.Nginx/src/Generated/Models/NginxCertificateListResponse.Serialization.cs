@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NginxCertificateData>> value = default;
+            IReadOnlyList<NginxCertificateData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxCertificateListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NginxCertificateListResponse(value ?? new ChangeTrackingList<NginxCertificateData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxCertificateListResponse>.Write(ModelReaderWriterOptions options)

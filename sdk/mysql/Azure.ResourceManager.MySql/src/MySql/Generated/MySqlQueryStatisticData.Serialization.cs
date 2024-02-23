@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MySql
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> aggregationFunction = default;
-            Optional<IList<string>> databaseNames = default;
+            IList<string> databaseNames = default;
             Optional<long> queryExecutionCount = default;
             Optional<string> metricName = default;
             Optional<string> metricDisplayName = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlQueryStatisticData(id, name, type, systemData.Value, queryId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), aggregationFunction.Value, Optional.ToList(databaseNames), Optional.ToNullable(queryExecutionCount), metricName.Value, metricDisplayName.Value, Optional.ToNullable(metricValue), metricValueUnit.Value, serializedAdditionalRawData);
+            return new MySqlQueryStatisticData(id, name, type, systemData.Value, queryId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), aggregationFunction.Value, databaseNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(queryExecutionCount), metricName.Value, metricDisplayName.Value, Optional.ToNullable(metricValue), metricValueUnit.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlQueryStatisticData>.Write(ModelReaderWriterOptions options)

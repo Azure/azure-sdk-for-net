@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ResourceIdentifier> id = default;
             Optional<PurchasePlan> plan = default;
             Optional<OSDiskImage> osDiskImage = default;
-            Optional<IList<DataDiskImage>> dataDiskImages = default;
+            IList<DataDiskImage> dataDiskImages = default;
             Optional<AutomaticOSUpgradeProperties> automaticOSUpgradeProperties = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DisallowedConfiguration> disallowed = default;
-            Optional<IList<VirtualMachineImageFeature>> features = default;
+            IList<VirtualMachineImageFeature> features = default;
             Optional<ArchitectureType> architecture = default;
             Optional<ImageDeprecationStatus> imageDeprecationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineImage(id.Value, serializedAdditionalRawData, name, location, Optional.ToDictionary(tags), extendedLocation, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features), Optional.ToNullable(architecture), imageDeprecationStatus.Value);
+            return new VirtualMachineImage(id.Value, serializedAdditionalRawData, name, location, Optional.ToDictionary(tags), extendedLocation, plan.Value, osDiskImage.Value, dataDiskImages ?? new ChangeTrackingList<DataDiskImage>(), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, features ?? new ChangeTrackingList<VirtualMachineImageFeature>(), Optional.ToNullable(architecture), imageDeprecationStatus.Value);
         }
 
         BinaryData IPersistableModel<VirtualMachineImage>.Write(ModelReaderWriterOptions options)

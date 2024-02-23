@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesPrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CognitiveServicesPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             Optional<long> totalRecallErrorsCount = default;
-            Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;
+            IReadOnlyList<ServerEndpointRecallError> recallErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointRecallStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalRecallErrorsCount), Optional.ToList(recallErrors), serializedAdditionalRawData);
+            return new ServerEndpointRecallStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalRecallErrorsCount), recallErrors ?? new ChangeTrackingList<ServerEndpointRecallError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointRecallStatus>.Write(ModelReaderWriterOptions options)

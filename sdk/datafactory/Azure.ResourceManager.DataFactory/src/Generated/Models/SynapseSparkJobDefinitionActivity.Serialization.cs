@@ -291,16 +291,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             SynapseSparkJobReference sparkJob = default;
-            Optional<IList<BinaryData>> args = default;
+            IList<BinaryData> args = default;
             Optional<DataFactoryElement<string>> file = default;
             Optional<DataFactoryElement<bool>> scanFolder = default;
             Optional<DataFactoryElement<string>> className = default;
-            Optional<IList<BinaryData>> files = default;
-            Optional<IList<BinaryData>> pythonCodeReference = default;
-            Optional<IList<BinaryData>> filesV2 = default;
+            IList<BinaryData> files = default;
+            IList<BinaryData> pythonCodeReference = default;
+            IList<BinaryData> filesV2 = default;
             Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
             Optional<DataFactoryElement<string>> executorSize = default;
             Optional<BinaryData> conf = default;
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, sparkJob, Optional.ToList(args), file.Value, scanFolder.Value, className.Value, Optional.ToList(files), Optional.ToList(pythonCodeReference), Optional.ToList(filesV2), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, sparkJob, args ?? new ChangeTrackingList<BinaryData>(), file.Value, scanFolder.Value, className.Value, files ?? new ChangeTrackingList<BinaryData>(), pythonCodeReference ?? new ChangeTrackingList<BinaryData>(), filesV2 ?? new ChangeTrackingList<BinaryData>(), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
         }
 
         BinaryData IPersistableModel<SynapseSparkJobDefinitionActivity>.Write(ModelReaderWriterOptions options)

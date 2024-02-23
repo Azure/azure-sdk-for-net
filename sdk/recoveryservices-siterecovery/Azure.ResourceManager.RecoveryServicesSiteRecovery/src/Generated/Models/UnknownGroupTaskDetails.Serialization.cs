@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string instanceType = "Unknown";
-            Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownGroupTaskDetails(instanceType, Optional.ToList(childTasks), serializedAdditionalRawData);
+            return new UnknownGroupTaskDetails(instanceType, childTasks ?? new ChangeTrackingList<AsrTask>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryGroupTaskDetails>.Write(ModelReaderWriterOptions options)

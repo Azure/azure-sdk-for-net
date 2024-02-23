@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> largeImage = default;
             Optional<string> apiEntitySetName = default;
             Optional<EntityType> entityType = default;
-            Optional<IList<PropertyDefinition>> fields = default;
+            IList<PropertyDefinition> fields = default;
             Optional<int> instancesCount = default;
             Optional<DateTimeOffset> lastChangedUtc = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<Guid> tenantId = default;
             Optional<string> timestampFieldName = default;
             Optional<string> typeName = default;
-            Optional<IList<string>> idPropertyNames = default;
-            Optional<IList<Participant>> participantProfiles = default;
+            IList<string> idPropertyNames = default;
+            IList<Participant> participantProfiles = default;
             Optional<string> primaryParticipantProfilePropertyName = default;
-            Optional<IReadOnlyList<DataSourcePrecedence>> dataSourcePrecedenceRules = default;
+            IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
             Optional<bool> isActivity = default;
             Optional<string> name0 = default;
             Optional<DataSourceType> dataSourceType = default;
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InteractionResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), Optional.ToList(fields), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, Optional.ToList(idPropertyNames), Optional.ToList(participantProfiles), primaryParticipantProfilePropertyName.Value, Optional.ToList(dataSourcePrecedenceRules), Optional.ToNullable(isActivity), name0.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id0), dataSourceReferenceId.Value, serializedAdditionalRawData);
+            return new InteractionResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), fields ?? new ChangeTrackingList<PropertyDefinition>(), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, idPropertyNames ?? new ChangeTrackingList<string>(), participantProfiles ?? new ChangeTrackingList<Participant>(), primaryParticipantProfilePropertyName.Value, dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(), Optional.ToNullable(isActivity), name0.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id0), dataSourceReferenceId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InteractionResourceFormatData>.Write(ModelReaderWriterOptions options)

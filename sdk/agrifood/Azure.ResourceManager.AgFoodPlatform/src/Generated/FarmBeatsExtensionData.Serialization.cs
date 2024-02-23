@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             Optional<string> extensionCategory = default;
             Optional<string> extensionAuthLink = default;
             Optional<string> extensionApiDocsLink = default;
-            Optional<IReadOnlyList<DetailedInformation>> detailedInformation = default;
+            IReadOnlyList<DetailedInformation> detailedInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatsExtensionData(id, name, type, systemData.Value, targetResourceType.Value, farmBeatsExtensionId.Value, farmBeatsExtensionName.Value, farmBeatsExtensionVersion.Value, publisherId.Value, description.Value, extensionCategory.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, Optional.ToList(detailedInformation), serializedAdditionalRawData);
+            return new FarmBeatsExtensionData(id, name, type, systemData.Value, targetResourceType.Value, farmBeatsExtensionId.Value, farmBeatsExtensionName.Value, farmBeatsExtensionVersion.Value, publisherId.Value, description.Value, extensionCategory.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, detailedInformation ?? new ChangeTrackingList<DetailedInformation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatsExtensionData>.Write(ModelReaderWriterOptions options)

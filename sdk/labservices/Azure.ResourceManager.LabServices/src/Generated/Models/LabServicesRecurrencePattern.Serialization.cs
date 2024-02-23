@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             LabServicesRecurrenceFrequency frequency = default;
-            Optional<IList<LabServicesDayOfWeek>> weekDays = default;
+            IList<LabServicesDayOfWeek> weekDays = default;
             Optional<int> interval = default;
             DateTimeOffset expirationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesRecurrencePattern(frequency, Optional.ToList(weekDays), Optional.ToNullable(interval), expirationDate, serializedAdditionalRawData);
+            return new LabServicesRecurrencePattern(frequency, weekDays ?? new ChangeTrackingList<LabServicesDayOfWeek>(), Optional.ToNullable(interval), expirationDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesRecurrencePattern>.Write(ModelReaderWriterOptions options)

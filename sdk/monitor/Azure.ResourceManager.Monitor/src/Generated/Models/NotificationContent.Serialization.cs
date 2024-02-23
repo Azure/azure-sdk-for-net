@@ -177,17 +177,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string alertType = default;
-            Optional<IList<MonitorEmailReceiver>> emailReceivers = default;
-            Optional<IList<MonitorSmsReceiver>> smsReceivers = default;
-            Optional<IList<MonitorWebhookReceiver>> webhookReceivers = default;
-            Optional<IList<MonitorItsmReceiver>> itsmReceivers = default;
-            Optional<IList<MonitorAzureAppPushReceiver>> azureAppPushReceivers = default;
-            Optional<IList<MonitorAutomationRunbookReceiver>> automationRunbookReceivers = default;
-            Optional<IList<MonitorVoiceReceiver>> voiceReceivers = default;
-            Optional<IList<MonitorLogicAppReceiver>> logicAppReceivers = default;
-            Optional<IList<MonitorAzureFunctionReceiver>> azureFunctionReceivers = default;
-            Optional<IList<MonitorArmRoleReceiver>> armRoleReceivers = default;
-            Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
+            IList<MonitorEmailReceiver> emailReceivers = default;
+            IList<MonitorSmsReceiver> smsReceivers = default;
+            IList<MonitorWebhookReceiver> webhookReceivers = default;
+            IList<MonitorItsmReceiver> itsmReceivers = default;
+            IList<MonitorAzureAppPushReceiver> azureAppPushReceivers = default;
+            IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default;
+            IList<MonitorVoiceReceiver> voiceReceivers = default;
+            IList<MonitorLogicAppReceiver> logicAppReceivers = default;
+            IList<MonitorAzureFunctionReceiver> azureFunctionReceivers = default;
+            IList<MonitorArmRoleReceiver> armRoleReceivers = default;
+            IList<MonitorEventHubReceiver> eventHubReceivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationContent(alertType, Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers), serializedAdditionalRawData);
+            return new NotificationContent(alertType, emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(), smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(), webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>(), itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>(), azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>(), automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>(), voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>(), logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>(), azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(), armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(), eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options)

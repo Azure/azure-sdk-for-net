@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaJobOutput>> outputs = default;
+            IReadOnlyList<MediaJobOutput> outputs = default;
             Optional<MediaJobState> previousState = default;
             Optional<MediaJobState> state = default;
             Optional<IReadOnlyDictionary<string, string>> correlationData = default;
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobFinishedEventData(Optional.ToNullable(previousState), Optional.ToNullable(state), Optional.ToDictionary(correlationData), Optional.ToList(outputs));
+            return new MediaJobFinishedEventData(Optional.ToNullable(previousState), Optional.ToNullable(state), Optional.ToDictionary(correlationData), outputs ?? new ChangeTrackingList<MediaJobOutput>());
         }
 
         internal partial class MediaJobFinishedEventDataConverter : JsonConverter<MediaJobFinishedEventData>

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkItemConfiguration>> value = default;
+            IReadOnlyList<WorkItemConfiguration> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkItemConfigurationsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new WorkItemConfigurationsListResult(value ?? new ChangeTrackingList<WorkItemConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkItemConfigurationsListResult>.Write(ModelReaderWriterOptions options)

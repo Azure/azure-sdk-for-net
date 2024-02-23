@@ -252,9 +252,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<long> cpuOverallUsageMHz = default;
             Optional<long> cpuCapacityMHz = default;
             Optional<string> customResourceName = default;
-            Optional<IReadOnlyList<string>> datastoreIds = default;
-            Optional<IReadOnlyList<string>> networkIds = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
+            IReadOnlyList<string> datastoreIds = default;
+            IReadOnlyList<string> networkIds = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
             Optional<VMwareResourceProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareResourcePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, cpuSharesLevel.Value, Optional.ToNullable(cpuReservationMHz), Optional.ToNullable(cpuLimitMHz), memSharesLevel.Value, Optional.ToNullable(memReservationMB), Optional.ToNullable(memLimitMB), Optional.ToNullable(memOverallUsageGB), Optional.ToNullable(memCapacityGB), Optional.ToNullable(cpuOverallUsageMHz), Optional.ToNullable(cpuCapacityMHz), customResourceName.Value, Optional.ToList(datastoreIds), Optional.ToList(networkIds), Optional.ToList(statuses), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareResourcePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, cpuSharesLevel.Value, Optional.ToNullable(cpuReservationMHz), Optional.ToNullable(cpuLimitMHz), memSharesLevel.Value, Optional.ToNullable(memReservationMB), Optional.ToNullable(memLimitMB), Optional.ToNullable(memOverallUsageGB), Optional.ToNullable(memCapacityGB), Optional.ToNullable(cpuOverallUsageMHz), Optional.ToNullable(cpuCapacityMHz), customResourceName.Value, datastoreIds ?? new ChangeTrackingList<string>(), networkIds ?? new ChangeTrackingList<string>(), statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareResourcePoolData>.Write(ModelReaderWriterOptions options)

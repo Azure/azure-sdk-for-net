@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LinkResourceFormatData>> value = default;
+            IReadOnlyList<LinkResourceFormatData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LinkListResult(value ?? new ChangeTrackingList<LinkResourceFormatData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkListResult>.Write(ModelReaderWriterOptions options)

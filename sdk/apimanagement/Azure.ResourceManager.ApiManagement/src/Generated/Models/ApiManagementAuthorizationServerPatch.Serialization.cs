@@ -198,19 +198,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<IList<AuthorizationMethod>> authorizationMethods = default;
-            Optional<IList<ClientAuthenticationMethod>> clientAuthenticationMethod = default;
-            Optional<IList<TokenBodyParameterContract>> tokenBodyParameters = default;
+            IList<AuthorizationMethod> authorizationMethods = default;
+            IList<ClientAuthenticationMethod> clientAuthenticationMethod = default;
+            IList<TokenBodyParameterContract> tokenBodyParameters = default;
             Optional<string> tokenEndpoint = default;
             Optional<bool> supportState = default;
             Optional<string> defaultScope = default;
-            Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
+            IList<BearerTokenSendingMethod> bearerTokenSendingMethods = default;
             Optional<string> resourceOwnerUsername = default;
             Optional<string> resourceOwnerPassword = default;
             Optional<string> displayName = default;
             Optional<string> clientRegistrationEndpoint = default;
             Optional<string> authorizationEndpoint = default;
-            Optional<IList<GrantType>> grantTypes = default;
+            IList<GrantType> grantTypes = default;
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementAuthorizationServerPatch(id, name, type, systemData.Value, description.Value, Optional.ToList(authorizationMethods), Optional.ToList(clientAuthenticationMethod), Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Optional.ToList(grantTypes), clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementAuthorizationServerPatch(id, name, type, systemData.Value, description.Value, authorizationMethods ?? new ChangeTrackingList<AuthorizationMethod>(), clientAuthenticationMethod ?? new ChangeTrackingList<ClientAuthenticationMethod>(), tokenBodyParameters ?? new ChangeTrackingList<TokenBodyParameterContract>(), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, grantTypes ?? new ChangeTrackingList<GrantType>(), clientId.Value, clientSecret.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementAuthorizationServerPatch>.Write(ModelReaderWriterOptions options)

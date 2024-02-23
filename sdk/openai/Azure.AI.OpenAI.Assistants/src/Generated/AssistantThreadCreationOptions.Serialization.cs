@@ -93,7 +93,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            Optional<IList<ThreadInitializationMessage>> messages = default;
+            IList<ThreadInitializationMessage> messages = default;
             Optional<IDictionary<string, string>> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssistantThreadCreationOptions(Optional.ToList(messages), Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new AssistantThreadCreationOptions(messages ?? new ChangeTrackingList<ThreadInitializationMessage>(), Optional.ToDictionary(metadata), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssistantThreadCreationOptions>.Write(ModelReaderWriterOptions options)

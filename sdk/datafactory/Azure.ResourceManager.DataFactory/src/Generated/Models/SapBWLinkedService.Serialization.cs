@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> server = default;
             DataFactoryElement<string> systemNumber = default;
             DataFactoryElement<string> clientId = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapBWLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server, systemNumber, clientId, userName.Value, password, encryptedCredential.Value);
+            return new SapBWLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, server, systemNumber, clientId, userName.Value, password, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SapBWLinkedService>.Write(ModelReaderWriterOptions options)

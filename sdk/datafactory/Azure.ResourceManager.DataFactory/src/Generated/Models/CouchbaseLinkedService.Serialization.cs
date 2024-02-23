@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> connectionString = default;
             Optional<DataFactoryKeyVaultSecretReference> credString = default;
             Optional<string> encryptedCredential = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CouchbaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, credString, encryptedCredential.Value);
+            return new CouchbaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString.Value, credString, encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<CouchbaseLinkedService>.Write(ModelReaderWriterOptions options)

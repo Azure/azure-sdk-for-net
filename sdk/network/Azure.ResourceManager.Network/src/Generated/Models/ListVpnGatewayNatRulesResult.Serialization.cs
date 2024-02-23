@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VpnGatewayNatRuleData>> value = default;
+            IReadOnlyList<VpnGatewayNatRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListVpnGatewayNatRulesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListVpnGatewayNatRulesResult(value ?? new ChangeTrackingList<VpnGatewayNatRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListVpnGatewayNatRulesResult>.Write(ModelReaderWriterOptions options)

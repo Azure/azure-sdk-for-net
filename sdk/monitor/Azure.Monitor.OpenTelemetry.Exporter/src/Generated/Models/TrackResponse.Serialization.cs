@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             Optional<int> itemsReceived = default;
             Optional<int> itemsAccepted = default;
-            Optional<IReadOnlyList<TelemetryErrorDetails>> errors = default;
+            IReadOnlyList<TelemetryErrorDetails> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("itemsReceived"u8))
@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     continue;
                 }
             }
-            return new TrackResponse(Optional.ToNullable(itemsReceived), Optional.ToNullable(itemsAccepted), Optional.ToList(errors));
+            return new TrackResponse(Optional.ToNullable(itemsReceived), Optional.ToNullable(itemsAccepted), errors ?? new ChangeTrackingList<TelemetryErrorDetails>());
         }
     }
 }

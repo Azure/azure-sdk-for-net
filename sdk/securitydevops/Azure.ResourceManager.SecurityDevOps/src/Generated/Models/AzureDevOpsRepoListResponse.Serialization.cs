@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureDevOpsRepoData>> value = default;
+            IReadOnlyList<AzureDevOpsRepoData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsRepoListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureDevOpsRepoListResponse(value ?? new ChangeTrackingList<AzureDevOpsRepoData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsRepoListResponse>.Write(ModelReaderWriterOptions options)

@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IList<string>> imageNames = default;
+            IList<string> imageNames = default;
             Optional<bool> isPushEnabled = default;
             Optional<bool> noCache = default;
             string dockerFilePath = default;
             Optional<string> target = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            IList<ContainerRegistryRunArgument> arguments = default;
             ContainerRegistryTaskStepType type = default;
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
+            IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
             Optional<string> contextPath = default;
             Optional<string> contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryDockerBuildStep(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath, target.Value, Optional.ToList(arguments));
+            return new ContainerRegistryDockerBuildStep(type, baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, imageNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath, target.Value, arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>());
         }
 
         BinaryData IPersistableModel<ContainerRegistryDockerBuildStep>.Write(ModelReaderWriterOptions options)

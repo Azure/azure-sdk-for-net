@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlOutboundEnvironmentEndpoint>> value = default;
+            IReadOnlyList<SqlOutboundEnvironmentEndpoint> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlOutboundEnvironmentEndpointCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SqlOutboundEnvironmentEndpointCollection(value ?? new ChangeTrackingList<SqlOutboundEnvironmentEndpoint>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlOutboundEnvironmentEndpointCollection>.Write(ModelReaderWriterOptions options)

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> annotation = default;
             Optional<NetworkRackType> networkRackType = default;
             ResourceIdentifier networkFabricId = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> networkDevices = default;
+            IReadOnlyList<ResourceIdentifier> networkDevices = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(networkRackType), networkFabricId, Optional.ToList(networkDevices), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(networkRackType), networkFabricId, networkDevices ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkRackData>.Write(ModelReaderWriterOptions options)

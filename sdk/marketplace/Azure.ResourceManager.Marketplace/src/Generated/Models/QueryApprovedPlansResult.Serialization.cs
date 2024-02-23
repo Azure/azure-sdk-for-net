@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QueryApprovedPlansDetails>> details = default;
+            IReadOnlyList<QueryApprovedPlansDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovedPlansResult(Optional.ToList(details), serializedAdditionalRawData);
+            return new QueryApprovedPlansResult(details ?? new ChangeTrackingList<QueryApprovedPlansDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovedPlansResult>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            Optional<IList<IPPrefixRule>> ipPrefixRules = default;
+            IList<IPPrefixRule> ipPrefixRules = default;
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             Optional<NetworkFabricAdministrativeState> administrativeState = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricIPPrefixData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(ipPrefixRules), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricIPPrefixData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>(), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricIPPrefixData>.Write(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> schema = default;
             LinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<DatasetFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapBwCubeDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties);
+            return new SapBwCubeDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties);
         }
 
         internal partial class SapBwCubeDatasetConverter : JsonConverter<SapBwCubeDataset>
