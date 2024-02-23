@@ -66,10 +66,10 @@
 /sdk/extensions/                                                   @jsquire
 
 # PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @weshaggard @benbp @heaths @chunyu3 @lirenhe
+/sdk/template/                                                     @hallipr @weshaggard @benbp @chunyu3 @lirenhe
 
 # Smoke tests
-/common/SmokeTests/                                                @schaabs @heaths @tg-msft @jsquire @pallavit
+/common/SmokeTests/                                                @schaabs @tg-msft @jsquire @pallavit
 
 # ######## Services ########
 
@@ -173,7 +173,7 @@
 
 # PRLabel: %Cognitive - Language
 # ServiceLabel: %Cognitive - Language %Service Attention
-/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao @heaths
+/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao
 
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/cognitiveservices/AnomalyDetector/                            @yingqunpku @bowgong
@@ -728,7 +728,7 @@
 #/<NotInRepo>/          @amirkeren
 
 # PRLabel: %Search
-/sdk/search/                                                       @ShivangiReja @kinelski @tg-msft @heaths @Azure/azsdk-search
+/sdk/search/                                                       @ShivangiReja @kinelski @tg-msft @Azure/azsdk-search
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                                           @arv100kri @bleroy @tjacobhi
@@ -820,7 +820,7 @@
 #/<NotInRepo>/                                                     @giakas
 
 # PRLabel: %VideoAnalyzer
-/sdk/videoanalyzer/                                                @giakas @heaths
+/sdk/videoanalyzer/                                                @giakas
 
 # ServiceLabel: %Web Apps %Service Attention
 #/<NotInRepo>/                                                     @AzureAppServiceCLI @antcp
