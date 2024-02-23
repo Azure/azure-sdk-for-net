@@ -9,9 +9,9 @@ resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01'
   }
 }
 
-module rg_TEST './resources/rg_TEST/rg_TEST.bicep' = {
-  name: 'rg_TEST'
+module rg_TEST_module './resources/rg_TEST_module/rg_TEST_module.bicep' = {
+  name: 'rg_TEST_module'
   scope: resourceGroup_I6QNkoPsb
 }
 
-output appConfigurationStore_sgecYnln3_endpoint string = rg_TEST.outputs.appConfigurationStore_sgecYnln3_endpoint
+output appConfigurationStore_sgecYnln3_endpoint string = rg_TEST_module.outputs.appConfigurationStore_sgecYnln3_endpoint

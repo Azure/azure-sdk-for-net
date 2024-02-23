@@ -2,8 +2,6 @@
 resource webSite_Y34mQ7HgU 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
-  identity: {
-  }
   kind: 'app,linux'
   properties: {
     serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
@@ -11,8 +9,6 @@ resource webSite_Y34mQ7HgU 'Microsoft.Web/sites@2021-02-01' = {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
       appCommandLine: './entrypoint.sh -o ./env-config.js && pm2 serve /home/site/wwwroot --no-daemon --spa'
-      experiments: {
-      }
       cors: {
         allowedOrigins: [
           'https://portal.azure.com'

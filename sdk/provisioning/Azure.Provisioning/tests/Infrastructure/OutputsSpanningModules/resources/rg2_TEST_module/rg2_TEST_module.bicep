@@ -6,6 +6,7 @@ resource webSite_80I4ejz5T 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-TEST'
   location: 'westus'
   identity: {
+    principalId: STORAGE_PRINCIPAL_ID
   }
   kind: 'app,linux'
   properties: {
@@ -14,8 +15,6 @@ resource webSite_80I4ejz5T 'Microsoft.Web/sites@2021-02-01' = {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
       appCommandLine: './entrypoint.sh -o ./env-config.js && pm2 serve /home/site/wwwroot --no-daemon --spa'
-      experiments: {
-      }
       cors: {
         allowedOrigins: [
           'https://portal.azure.com'

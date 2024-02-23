@@ -216,7 +216,7 @@ namespace Azure.Provisioning
 
             stream.WriteLine($"resource {Name} '{ResourceType}@{Version}' = {{");
 
-            if (this.IsChildResource() && this is not DeploymentScript)
+            if (this.IsChildResource() && this is not DeploymentScript && this is not Subscription)
             {
                 stream.WriteLine($"  parent: {Parent!.Name}");
             }
