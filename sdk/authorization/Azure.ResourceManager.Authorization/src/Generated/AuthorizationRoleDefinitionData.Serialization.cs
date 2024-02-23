@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> roleName = default;
             Optional<string> description = default;
             Optional<AuthorizationRoleType> type0 = default;
-            Optional<IList<RoleDefinitionPermission>> permissions = default;
-            Optional<IList<string>> assignableScopes = default;
+            IList<RoleDefinitionPermission> permissions = default;
+            IList<string> assignableScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, description.Value, Optional.ToNullable(type0), Optional.ToList(permissions), Optional.ToList(assignableScopes), serializedAdditionalRawData);
+            return new AuthorizationRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, description.Value, Optional.ToNullable(type0), permissions ?? new ChangeTrackingList<RoleDefinitionPermission>(), assignableScopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationRoleDefinitionData>.Write(ModelReaderWriterOptions options)

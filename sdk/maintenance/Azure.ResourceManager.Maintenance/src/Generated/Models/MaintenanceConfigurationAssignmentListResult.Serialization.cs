@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MaintenanceConfigurationAssignmentData>> value = default;
+            IReadOnlyList<MaintenanceConfigurationAssignmentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationAssignmentListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MaintenanceConfigurationAssignmentListResult(value ?? new ChangeTrackingList<MaintenanceConfigurationAssignmentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationAssignmentListResult>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<PackageBuildState> buildState = default;
             Optional<IReadOnlyDictionary<string, string>> environmentVariables = default;
             Optional<InferencingServer> inferencingServer = default;
-            Optional<IReadOnlyList<ModelPackageInput>> inputs = default;
+            IReadOnlyList<ModelPackageInput> inputs = default;
             Optional<Uri> logUrl = default;
             Optional<ModelConfiguration> modelConfiguration = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageResult(baseEnvironmentSource.Value, buildId.Value, Optional.ToNullable(buildState), Optional.ToDictionary(environmentVariables), inferencingServer.Value, Optional.ToList(inputs), logUrl.Value, modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId.Value, serializedAdditionalRawData);
+            return new ModelPackageResult(baseEnvironmentSource.Value, buildId.Value, Optional.ToNullable(buildState), Optional.ToDictionary(environmentVariables), inferencingServer.Value, inputs ?? new ChangeTrackingList<ModelPackageInput>(), logUrl.Value, modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageResult>.Write(ModelReaderWriterOptions options)

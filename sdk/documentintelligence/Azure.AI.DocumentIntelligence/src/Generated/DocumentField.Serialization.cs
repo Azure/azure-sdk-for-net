@@ -188,14 +188,14 @@ namespace Azure.AI.DocumentIntelligence
             Optional<DocumentSelectionMarkState> valueSelectionMark = default;
             Optional<DocumentSignatureType> valueSignature = default;
             Optional<string> valueCountryRegion = default;
-            Optional<IReadOnlyList<DocumentField>> valueArray = default;
+            IReadOnlyList<DocumentField> valueArray = default;
             Optional<IReadOnlyDictionary<string, DocumentField>> valueObject = default;
             Optional<CurrencyValue> valueCurrency = default;
             Optional<AddressValue> valueAddress = default;
             Optional<bool> valueBoolean = default;
             Optional<string> content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
-            Optional<IReadOnlyList<DocumentSpan>> spans = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
+            IReadOnlyList<DocumentSpan> spans = default;
             Optional<float> confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -378,7 +378,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, Optional.ToList(valueArray), Optional.ToDictionary(valueObject), valueCurrency.Value, valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, Optional.ToList(boundingRegions), Optional.ToList(spans), Optional.ToNullable(confidence), serializedAdditionalRawData);
+            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, valueArray ?? new ChangeTrackingList<DocumentField>(), Optional.ToDictionary(valueObject), valueCurrency.Value, valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans ?? new ChangeTrackingList<DocumentSpan>(), Optional.ToNullable(confidence), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentField>.Write(ModelReaderWriterOptions options)

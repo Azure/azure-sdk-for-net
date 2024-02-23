@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sphere
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> deploymentId = default;
-            Optional<IList<SphereImageData>> deployedImages = default;
+            IList<SphereImageData> deployedImages = default;
             Optional<DateTimeOffset> deploymentDateUtc = default;
             Optional<SphereProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeploymentData(id, name, type, systemData.Value, deploymentId.Value, Optional.ToList(deployedImages), Optional.ToNullable(deploymentDateUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereDeploymentData(id, name, type, systemData.Value, deploymentId.Value, deployedImages ?? new ChangeTrackingList<SphereImageData>(), Optional.ToNullable(deploymentDateUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeploymentData>.Write(ModelReaderWriterOptions options)

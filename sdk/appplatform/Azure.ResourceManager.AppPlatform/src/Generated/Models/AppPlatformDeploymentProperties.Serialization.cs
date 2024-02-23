@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;
             Optional<AppPlatformDeploymentStatus> status = default;
             Optional<bool> active = default;
-            Optional<IReadOnlyList<AppPlatformDeploymentInstance>> instances = default;
+            IReadOnlyList<AppPlatformDeploymentInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(active), Optional.ToList(instances), serializedAdditionalRawData);
+            return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(active), instances ?? new ChangeTrackingList<AppPlatformDeploymentInstance>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentProperties>.Write(ModelReaderWriterOptions options)

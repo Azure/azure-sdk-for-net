@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
             Optional<ProvisioningState> provisioningState = default;
             Optional<AuthorizationInfo> authorization = default;
-            Optional<IList<AzureDevOpsOrgMetadata>> orgs = default;
+            IList<AzureDevOpsOrgMetadata> orgs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorProperties(Optional.ToNullable(provisioningState), authorization.Value, Optional.ToList(orgs), serializedAdditionalRawData);
+            return new AzureDevOpsConnectorProperties(Optional.ToNullable(provisioningState), authorization.Value, orgs ?? new ChangeTrackingList<AzureDevOpsOrgMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorProperties>.Write(ModelReaderWriterOptions options)

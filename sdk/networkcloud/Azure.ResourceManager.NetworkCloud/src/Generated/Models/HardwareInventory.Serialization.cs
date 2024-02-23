@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> additionalHostInformation = default;
-            Optional<IReadOnlyList<HardwareInventoryNetworkInterface>> interfaces = default;
-            Optional<IReadOnlyList<NetworkCloudNic>> nics = default;
+            IReadOnlyList<HardwareInventoryNetworkInterface> interfaces = default;
+            IReadOnlyList<NetworkCloudNic> nics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareInventory(additionalHostInformation.Value, Optional.ToList(interfaces), Optional.ToList(nics), serializedAdditionalRawData);
+            return new HardwareInventory(additionalHostInformation.Value, interfaces ?? new ChangeTrackingList<HardwareInventoryNetworkInterface>(), nics ?? new ChangeTrackingList<NetworkCloudNic>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareInventory>.Write(ModelReaderWriterOptions options)

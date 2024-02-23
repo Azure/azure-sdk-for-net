@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Support
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> resourceTypes = default;
+            IReadOnlyList<string> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportAzureServiceData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(resourceTypes), serializedAdditionalRawData);
+            return new SupportAzureServiceData(id, name, type, systemData.Value, displayName.Value, resourceTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportAzureServiceData>.Write(ModelReaderWriterOptions options)

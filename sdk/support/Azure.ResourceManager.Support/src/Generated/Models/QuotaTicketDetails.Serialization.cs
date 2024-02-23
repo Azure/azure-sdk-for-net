@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Support.Models
             }
             Optional<string> quotaChangeRequestSubType = default;
             Optional<string> quotaChangeRequestVersion = default;
-            Optional<IList<SupportQuotaChangeContent>> quotaChangeRequests = default;
+            IList<SupportQuotaChangeContent> quotaChangeRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaTicketDetails(quotaChangeRequestSubType.Value, quotaChangeRequestVersion.Value, Optional.ToList(quotaChangeRequests), serializedAdditionalRawData);
+            return new QuotaTicketDetails(quotaChangeRequestSubType.Value, quotaChangeRequestVersion.Value, quotaChangeRequests ?? new ChangeTrackingList<SupportQuotaChangeContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaTicketDetails>.Write(ModelReaderWriterOptions options)

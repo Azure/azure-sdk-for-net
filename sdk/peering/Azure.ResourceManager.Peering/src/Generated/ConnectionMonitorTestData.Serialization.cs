@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Peering
             Optional<int> destinationPort = default;
             Optional<int> testFrequencyInSec = default;
             Optional<bool> isTestSuccessful = default;
-            Optional<IReadOnlyList<string>> path = default;
+            IReadOnlyList<string> path = default;
             Optional<PeeringProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestData(id, name, type, systemData.Value, sourceAgent.Value, destination.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(testFrequencyInSec), Optional.ToNullable(isTestSuccessful), Optional.ToList(path), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ConnectionMonitorTestData(id, name, type, systemData.Value, sourceAgent.Value, destination.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(testFrequencyInSec), Optional.ToNullable(isTestSuccessful), path ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestData>.Write(ModelReaderWriterOptions options)

@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             Optional<string> image = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
+            IList<string> command = default;
+            IList<ContainerEnvironmentVariable> environmentVariables = default;
             Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
-            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
+            IList<ContainerVolumeMount> volumeMounts = default;
             Optional<ContainerSecurityContextDefinition> securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitContainerDefinitionContent(name, image.Value, Optional.ToList(command), Optional.ToList(environmentVariables), instanceView.Value, Optional.ToList(volumeMounts), securityContext.Value, serializedAdditionalRawData);
+            return new InitContainerDefinitionContent(name, image.Value, command ?? new ChangeTrackingList<string>(), environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(), instanceView.Value, volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(), securityContext.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitContainerDefinitionContent>.Write(ModelReaderWriterOptions options)

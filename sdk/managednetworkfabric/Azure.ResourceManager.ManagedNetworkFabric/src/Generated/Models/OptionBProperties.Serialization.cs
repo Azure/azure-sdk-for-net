@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> importRouteTargets = default;
-            Optional<IList<string>> exportRouteTargets = default;
+            IList<string> importRouteTargets = default;
+            IList<string> exportRouteTargets = default;
             Optional<RouteTargetInformation> routeTargets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets), routeTargets.Value, serializedAdditionalRawData);
+            return new OptionBProperties(importRouteTargets ?? new ChangeTrackingList<string>(), exportRouteTargets ?? new ChangeTrackingList<string>(), routeTargets.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OptionBProperties>.Write(ModelReaderWriterOptions options)

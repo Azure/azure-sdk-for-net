@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SqlPool>> value = default;
+            IReadOnlyList<SqlPool> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlPoolInfoListResult(nextLink.Value, Optional.ToList(value));
+            return new SqlPoolInfoListResult(nextLink.Value, value ?? new ChangeTrackingList<SqlPool>());
         }
 
         internal partial class SqlPoolInfoListResultConverter : JsonConverter<SqlPoolInfoListResult>

@@ -119,7 +119,7 @@ namespace Azure.AI.AnomalyDetector
             Optional<int> slidingWindow = default;
             Optional<AlignPolicy> alignPolicy = default;
             Optional<ModelStatus> status = default;
-            Optional<IReadOnlyList<ErrorResponse>> errors = default;
+            IReadOnlyList<ErrorResponse> errors = default;
             Optional<DiagnosticsInfo> diagnosticsInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -210,7 +210,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName.Value, Optional.ToNullable(slidingWindow), alignPolicy.Value, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo.Value, serializedAdditionalRawData);
+            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName.Value, Optional.ToNullable(slidingWindow), alignPolicy.Value, Optional.ToNullable(status), errors ?? new ChangeTrackingList<ErrorResponse>(), diagnosticsInfo.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelInfo>.Write(ModelReaderWriterOptions options)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IList<SecurityAutomationTriggeringRule>> rules = default;
+            IList<SecurityAutomationTriggeringRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationRuleSet(Optional.ToList(rules), serializedAdditionalRawData);
+            return new SecurityAutomationRuleSet(rules ?? new ChangeTrackingList<SecurityAutomationTriggeringRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationRuleSet>.Write(ModelReaderWriterOptions options)

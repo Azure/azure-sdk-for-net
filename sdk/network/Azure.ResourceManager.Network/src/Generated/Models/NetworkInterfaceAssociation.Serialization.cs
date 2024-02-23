@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<ResourceIdentifier> id = default;
-            Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
+            IReadOnlyList<SecurityRuleData> securityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceAssociation(id.Value, Optional.ToList(securityRules), serializedAdditionalRawData);
+            return new NetworkInterfaceAssociation(id.Value, securityRules ?? new ChangeTrackingList<SecurityRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceAssociation>.Write(ModelReaderWriterOptions options)

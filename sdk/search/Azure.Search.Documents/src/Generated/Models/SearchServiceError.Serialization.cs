@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             Optional<string> code = default;
             string message = default;
-            Optional<IReadOnlyList<SearchServiceError>> details = default;
+            IReadOnlyList<SearchServiceError> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchServiceError(code.Value, message, Optional.ToList(details));
+            return new SearchServiceError(code.Value, message, details ?? new ChangeTrackingList<SearchServiceError>());
         }
     }
 }

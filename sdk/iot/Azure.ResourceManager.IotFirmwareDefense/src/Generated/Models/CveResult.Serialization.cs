@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> cvssVersion = default;
             Optional<string> cvssV2Score = default;
             Optional<string> cvssV3Score = default;
-            Optional<IReadOnlyList<CveLink>> links = default;
+            IReadOnlyList<CveLink> links = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveResult(id, name, type, systemData.Value, cveId.Value, component.Value, severity.Value, name0.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, Optional.ToList(links), description.Value, serializedAdditionalRawData);
+            return new CveResult(id, name, type, systemData.Value, cveId.Value, component.Value, severity.Value, name0.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, links ?? new ChangeTrackingList<CveLink>(), description.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveResult>.Write(ModelReaderWriterOptions options)

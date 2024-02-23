@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> moRefId = default;
             Optional<string> inventoryItemId = default;
             Optional<string> moName = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
             Optional<string> customResourceName = default;
             Optional<long> capacityGB = default;
             Optional<long> freeSpaceGB = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareDatastoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(capacityGB), Optional.ToNullable(freeSpaceGB), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareDatastoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), customResourceName.Value, Optional.ToNullable(capacityGB), Optional.ToNullable(freeSpaceGB), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareDatastoreData>.Write(ModelReaderWriterOptions options)

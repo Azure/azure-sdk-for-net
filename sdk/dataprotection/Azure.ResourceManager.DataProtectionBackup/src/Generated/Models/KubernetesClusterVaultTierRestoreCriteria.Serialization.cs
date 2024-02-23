@@ -160,15 +160,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             bool includeClusterScopeResources = default;
-            Optional<IList<string>> includedNamespaces = default;
-            Optional<IList<string>> excludedNamespaces = default;
-            Optional<IList<string>> includedResourceTypes = default;
-            Optional<IList<string>> excludedResourceTypes = default;
-            Optional<IList<string>> labelSelectors = default;
+            IList<string> includedNamespaces = default;
+            IList<string> excludedNamespaces = default;
+            IList<string> includedResourceTypes = default;
+            IList<string> excludedResourceTypes = default;
+            IList<string> labelSelectors = default;
             Optional<PersistentVolumeRestoreMode> persistentVolumeRestoreMode = default;
             Optional<KubernetesClusterRestoreExistingResourcePolicy> conflictPolicy = default;
             Optional<IDictionary<string, string>> namespaceMappings = default;
-            Optional<IList<NamespacedName>> restoreHookReferences = default;
+            IList<NamespacedName> restoreHookReferences = default;
             Optional<ResourceIdentifier> stagingResourceGroupId = default;
             Optional<ResourceIdentifier> stagingStorageAccountId = default;
             string objectType = default;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterVaultTierRestoreCriteria(objectType, serializedAdditionalRawData, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors), Optional.ToNullable(persistentVolumeRestoreMode), Optional.ToNullable(conflictPolicy), Optional.ToDictionary(namespaceMappings), Optional.ToList(restoreHookReferences), stagingResourceGroupId.Value, stagingStorageAccountId.Value);
+            return new KubernetesClusterVaultTierRestoreCriteria(objectType, serializedAdditionalRawData, includeClusterScopeResources, includedNamespaces ?? new ChangeTrackingList<string>(), excludedNamespaces ?? new ChangeTrackingList<string>(), includedResourceTypes ?? new ChangeTrackingList<string>(), excludedResourceTypes ?? new ChangeTrackingList<string>(), labelSelectors ?? new ChangeTrackingList<string>(), Optional.ToNullable(persistentVolumeRestoreMode), Optional.ToNullable(conflictPolicy), Optional.ToDictionary(namespaceMappings), restoreHookReferences ?? new ChangeTrackingList<NamespacedName>(), stagingResourceGroupId.Value, stagingStorageAccountId.Value);
         }
 
         BinaryData IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Write(ModelReaderWriterOptions options)

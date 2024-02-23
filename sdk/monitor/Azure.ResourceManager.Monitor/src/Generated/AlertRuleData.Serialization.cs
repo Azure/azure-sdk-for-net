@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor
             bool isEnabled = default;
             AlertRuleCondition condition = default;
             Optional<AlertRuleAction> action = default;
-            Optional<IList<AlertRuleAction>> actions = default;
+            IList<AlertRuleAction> actions = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
+            return new AlertRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, actions ?? new ChangeTrackingList<AlertRuleAction>(), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleData>.Write(ModelReaderWriterOptions options)

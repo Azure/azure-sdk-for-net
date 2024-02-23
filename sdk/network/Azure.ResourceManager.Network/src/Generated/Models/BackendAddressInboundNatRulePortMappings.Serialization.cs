@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InboundNatRulePortMapping>> inboundNatRulePortMappings = default;
+            IReadOnlyList<InboundNatRulePortMapping> inboundNatRulePortMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendAddressInboundNatRulePortMappings(Optional.ToList(inboundNatRulePortMappings), serializedAdditionalRawData);
+            return new BackendAddressInboundNatRulePortMappings(inboundNatRulePortMappings ?? new ChangeTrackingList<InboundNatRulePortMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendAddressInboundNatRulePortMappings>.Write(ModelReaderWriterOptions options)

@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> disableBgpRoutePropagation = default;
             Optional<EffectiveRouteSource> source = default;
             Optional<EffectiveRouteState> state = default;
-            Optional<IReadOnlyList<string>> addressPrefix = default;
-            Optional<IReadOnlyList<string>> nextHopIPAddress = default;
+            IReadOnlyList<string> addressPrefix = default;
+            IReadOnlyList<string> nextHopIPAddress = default;
             Optional<RouteNextHopType> nextHopType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToList(addressPrefix), Optional.ToList(nextHopIPAddress), Optional.ToNullable(nextHopType), serializedAdditionalRawData);
+            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), addressPrefix ?? new ChangeTrackingList<string>(), nextHopIPAddress ?? new ChangeTrackingList<string>(), Optional.ToNullable(nextHopType), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRoute>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlAdvisorData>> value = default;
+            IReadOnlyList<MySqlAdvisorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlAdvisorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlAdvisorListResult(value ?? new ChangeTrackingList<MySqlAdvisorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlAdvisorListResult>.Write(ModelReaderWriterOptions options)

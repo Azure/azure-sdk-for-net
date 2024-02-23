@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AvsManagementCluster> managementCluster = default;
             Optional<InternetConnectivityState> internet = default;
-            Optional<IList<SingleSignOnIdentitySource>> identitySources = default;
+            IList<SingleSignOnIdentitySource> identitySources = default;
             Optional<PrivateCloudAvailabilityProperties> availability = default;
             Optional<CustomerManagedEncryption> encryption = default;
-            Optional<IList<string>> extendedNetworkBlocks = default;
+            IList<string> extendedNetworkBlocks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudPatch(Optional.ToDictionary(tags), identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToList(extendedNetworkBlocks), serializedAdditionalRawData);
+            return new AvsPrivateCloudPatch(Optional.ToDictionary(tags), identity, managementCluster.Value, Optional.ToNullable(internet), identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(), availability.Value, encryption.Value, extendedNetworkBlocks ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudPatch>.Write(ModelReaderWriterOptions options)

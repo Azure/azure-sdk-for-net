@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string name = default;
             string restoreDatabaseName = default;
             Optional<FileShare> backupFileShare = default;
-            Optional<IList<string>> backupFilePaths = default;
+            IList<string> backupFilePaths = default;
             Optional<string> id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMIDatabaseInput(name, restoreDatabaseName, backupFileShare.Value, Optional.ToList(backupFilePaths), id.Value, serializedAdditionalRawData);
+            return new MigrateSqlServerSqlMIDatabaseInput(name, restoreDatabaseName, backupFileShare.Value, backupFilePaths ?? new ChangeTrackingList<string>(), id.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMIDatabaseInput>.Write(ModelReaderWriterOptions options)

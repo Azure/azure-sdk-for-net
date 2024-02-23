@@ -86,7 +86,7 @@ namespace Azure.Communication.Messages
             }
             string name = default;
             string language = default;
-            Optional<IList<MessageTemplateValue>> values = default;
+            IList<MessageTemplateValue> values = default;
             Optional<MessageTemplateBindings> bindings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplate(name, language, Optional.ToList(values), bindings.Value, serializedAdditionalRawData);
+            return new MessageTemplate(name, language, values ?? new ChangeTrackingList<MessageTemplateValue>(), bindings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageTemplate>.Write(ModelReaderWriterOptions options)

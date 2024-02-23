@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> dnsServers = default;
-            Optional<IReadOnlyList<string>> appliedDnsServers = default;
+            IList<string> dnsServers = default;
+            IReadOnlyList<string> appliedDnsServers = default;
             Optional<string> internalDnsNameLabel = default;
             Optional<string> internalFqdn = default;
             Optional<string> internalDomainNameSuffix = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceDnsSettings(Optional.ToList(dnsServers), Optional.ToList(appliedDnsServers), internalDnsNameLabel.Value, internalFqdn.Value, internalDomainNameSuffix.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceDnsSettings(dnsServers ?? new ChangeTrackingList<string>(), appliedDnsServers ?? new ChangeTrackingList<string>(), internalDnsNameLabel.Value, internalFqdn.Value, internalDomainNameSuffix.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceDnsSettings>.Write(ModelReaderWriterOptions options)

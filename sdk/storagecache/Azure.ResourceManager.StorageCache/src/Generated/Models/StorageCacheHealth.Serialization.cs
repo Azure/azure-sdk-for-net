@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             Optional<StorageCacheHealthStateType> state = default;
             Optional<string> statusDescription = default;
-            Optional<IReadOnlyList<OutstandingCondition>> conditions = default;
+            IReadOnlyList<OutstandingCondition> conditions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheHealth(Optional.ToNullable(state), statusDescription.Value, Optional.ToList(conditions), serializedAdditionalRawData);
+            return new StorageCacheHealth(Optional.ToNullable(state), statusDescription.Value, conditions ?? new ChangeTrackingList<OutstandingCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheHealth>.Write(ModelReaderWriterOptions options)

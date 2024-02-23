@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> keyType = default;
             Optional<long?> keySize = default;
             Optional<string> keyAlgorithm = default;
-            Optional<IList<string>> usage = default;
-            Optional<IReadOnlyList<string>> filePaths = default;
+            IList<string> usage = default;
+            IReadOnlyList<string> filePaths = default;
             Optional<PairedKey> pairedKey = default;
             Optional<bool?> isShortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoKeyResult(id, name, type, systemData.Value, firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoKeyResult(id, name, type, systemData.Value, firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, usage ?? new ChangeTrackingList<string>(), filePaths ?? new ChangeTrackingList<string>(), pairedKey.Value, Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoKeyResult>.Write(ModelReaderWriterOptions options)

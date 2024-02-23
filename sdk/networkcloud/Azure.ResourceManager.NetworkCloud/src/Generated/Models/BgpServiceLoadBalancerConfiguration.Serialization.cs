@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IList<BgpAdvertisement>> bgpAdvertisements = default;
-            Optional<IList<ServiceLoadBalancerBgpPeer>> bgpPeers = default;
+            IList<BgpAdvertisement> bgpAdvertisements = default;
+            IList<ServiceLoadBalancerBgpPeer> bgpPeers = default;
             Optional<FabricPeeringEnabled> fabricPeeringEnabled = default;
-            Optional<IList<IPAddressPool>> ipAddressPools = default;
+            IList<IPAddressPool> ipAddressPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpServiceLoadBalancerConfiguration(Optional.ToList(bgpAdvertisements), Optional.ToList(bgpPeers), Optional.ToNullable(fabricPeeringEnabled), Optional.ToList(ipAddressPools), serializedAdditionalRawData);
+            return new BgpServiceLoadBalancerConfiguration(bgpAdvertisements ?? new ChangeTrackingList<BgpAdvertisement>(), bgpPeers ?? new ChangeTrackingList<ServiceLoadBalancerBgpPeer>(), Optional.ToNullable(fabricPeeringEnabled), ipAddressPools ?? new ChangeTrackingList<IPAddressPool>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpServiceLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)

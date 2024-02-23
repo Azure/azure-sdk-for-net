@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExportRun>> value = default;
+            IReadOnlyList<ExportRun> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportExecutionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ExportExecutionListResult(value ?? new ChangeTrackingList<ExportRun>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportExecutionListResult>.Write(ModelReaderWriterOptions options)

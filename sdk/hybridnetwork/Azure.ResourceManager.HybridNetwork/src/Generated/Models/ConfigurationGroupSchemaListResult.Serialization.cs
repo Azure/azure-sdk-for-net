@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConfigurationGroupSchemaData>> value = default;
+            IReadOnlyList<ConfigurationGroupSchemaData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationGroupSchemaListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConfigurationGroupSchemaListResult(value ?? new ChangeTrackingList<ConfigurationGroupSchemaData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupSchemaListResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             Optional<string> openidProviderId = default;
-            Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
+            IList<BearerTokenSendingMethod> bearerTokenSendingMethods = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdAuthenticationSettingsContract(openidProviderId.Value, Optional.ToList(bearerTokenSendingMethods), serializedAdditionalRawData);
+            return new OpenIdAuthenticationSettingsContract(openidProviderId.Value, bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenIdAuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)

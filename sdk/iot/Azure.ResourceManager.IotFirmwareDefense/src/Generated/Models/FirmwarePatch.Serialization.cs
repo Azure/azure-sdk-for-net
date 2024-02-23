@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> description = default;
             Optional<long?> fileSize = default;
             Optional<Status> status = default;
-            Optional<IList<StatusMessage>> statusMessages = default;
+            IList<StatusMessage> statusMessages = default;
             Optional<ProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwarePatch(fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), Optional.ToList(statusMessages), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FirmwarePatch(fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), statusMessages ?? new ChangeTrackingList<StatusMessage>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwarePatch>.Write(ModelReaderWriterOptions options)

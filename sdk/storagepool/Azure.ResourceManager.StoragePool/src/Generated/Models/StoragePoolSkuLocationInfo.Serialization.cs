@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<StoragePoolSkuZoneDetails>> zoneDetails = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<StoragePoolSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), serializedAdditionalRawData);
+            return new StoragePoolSkuLocationInfo(Optional.ToNullable(location), zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<StoragePoolSkuZoneDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuLocationInfo>.Write(ModelReaderWriterOptions options)

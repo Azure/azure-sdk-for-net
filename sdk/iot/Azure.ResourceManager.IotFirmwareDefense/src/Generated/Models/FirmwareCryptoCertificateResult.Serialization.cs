@@ -355,8 +355,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> encoding = default;
             Optional<string> serialNumber = default;
             Optional<string> fingerprint = default;
-            Optional<IList<string>> usage = default;
-            Optional<IReadOnlyList<string>> filePaths = default;
+            IList<string> usage = default;
+            IReadOnlyList<string> filePaths = default;
             Optional<PairedKey> pairedKey = default;
             Optional<bool?> isExpired = default;
             Optional<bool?> isSelfSigned = default;
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoCertificateResult(id, name, type, systemData.Value, cryptoCertId.Value, name0.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoCertificateResult(id, name, type, systemData.Value, cryptoCertId.Value, name0.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, usage ?? new ChangeTrackingList<string>(), filePaths ?? new ChangeTrackingList<string>(), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoCertificateResult>.Write(ModelReaderWriterOptions options)

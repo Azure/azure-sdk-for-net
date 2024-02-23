@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<string> unit = default;
             Optional<string> primaryAggregationType = default;
-            Optional<IReadOnlyList<ResourceMetricAvailability>> metricAvailabilities = default;
+            IReadOnlyList<ResourceMetricAvailability> metricAvailabilities = default;
             Optional<Uri> resourceUri = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, Optional.ToList(metricAvailabilities), resourceUri.Value, Optional.ToDictionary(properties), kind.Value, serializedAdditionalRawData);
+            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, metricAvailabilities ?? new ChangeTrackingList<ResourceMetricAvailability>(), resourceUri.Value, Optional.ToDictionary(properties), kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetricDefinition>.Write(ModelReaderWriterOptions options)

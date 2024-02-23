@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> schema = default;
             LinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<DatasetFolder> folder = default;
             object path = default;
             IDictionary<string, object> additionalProperties = default;
@@ -198,7 +198,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsAXResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, path);
+            return new DynamicsAXResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, path);
         }
 
         internal partial class DynamicsAXResourceDatasetConverter : JsonConverter<DynamicsAXResourceDataset>

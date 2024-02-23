@@ -289,12 +289,12 @@ namespace Azure.ResourceManager.BotService.Models
             string msaAppId = default;
             Optional<string> msaAppTenantId = default;
             Optional<ResourceIdentifier> msaAppMSIResourceId = default;
-            Optional<IReadOnlyList<string>> configuredChannels = default;
-            Optional<IReadOnlyList<string>> enabledChannels = default;
+            IReadOnlyList<string> configuredChannels = default;
+            IReadOnlyList<string> enabledChannels = default;
             Optional<string> developerAppInsightKey = default;
             Optional<string> developerAppInsightsApiKey = default;
             Optional<string> developerAppInsightsApplicationId = default;
-            Optional<IList<string>> luisAppIds = default;
+            IList<string> luisAppIds = default;
             Optional<string> luisKey = default;
             Optional<bool> isCmekEnabled = default;
             Optional<Uri> cmekKeyVaultUrl = default;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> disableLocalAuth = default;
             Optional<string> schemaTransformationVersion = default;
             Optional<ResourceIdentifier> storageResourceId = default;
-            Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<string> openWithHint = default;
             Optional<string> appPasswordHint = default;
             Optional<string> provisioningState = default;
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotProperties(displayName, description.Value, iconUrl.Value, endpoint, endpointVersion.Value, Optional.ToDictionary(allSettings), Optional.ToDictionary(parameters), manifestUrl.Value, Optional.ToNullable(msaAppType), msaAppId, msaAppTenantId.Value, msaAppMSIResourceId.Value, Optional.ToList(configuredChannels), Optional.ToList(enabledChannels), developerAppInsightKey.Value, developerAppInsightsApiKey.Value, developerAppInsightsApplicationId.Value, Optional.ToList(luisAppIds), luisKey.Value, Optional.ToNullable(isCmekEnabled), cmekKeyVaultUrl.Value, cmekEncryptionStatus.Value, Optional.ToNullable(tenantId), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(isStreamingSupported), Optional.ToNullable(isDeveloperAppInsightsApiKeySet), migrationToken.Value, Optional.ToNullable(disableLocalAuth), schemaTransformationVersion.Value, storageResourceId.Value, Optional.ToList(privateEndpointConnections), openWithHint.Value, appPasswordHint.Value, provisioningState.Value, publishingCredentials.Value, serializedAdditionalRawData);
+            return new BotProperties(displayName, description.Value, iconUrl.Value, endpoint, endpointVersion.Value, Optional.ToDictionary(allSettings), Optional.ToDictionary(parameters), manifestUrl.Value, Optional.ToNullable(msaAppType), msaAppId, msaAppTenantId.Value, msaAppMSIResourceId.Value, configuredChannels ?? new ChangeTrackingList<string>(), enabledChannels ?? new ChangeTrackingList<string>(), developerAppInsightKey.Value, developerAppInsightsApiKey.Value, developerAppInsightsApplicationId.Value, luisAppIds ?? new ChangeTrackingList<string>(), luisKey.Value, Optional.ToNullable(isCmekEnabled), cmekKeyVaultUrl.Value, cmekEncryptionStatus.Value, Optional.ToNullable(tenantId), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(isStreamingSupported), Optional.ToNullable(isDeveloperAppInsightsApiKeySet), migrationToken.Value, Optional.ToNullable(disableLocalAuth), schemaTransformationVersion.Value, storageResourceId.Value, privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(), openWithHint.Value, appPasswordHint.Value, provisioningState.Value, publishingCredentials.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotProperties>.Write(ModelReaderWriterOptions options)

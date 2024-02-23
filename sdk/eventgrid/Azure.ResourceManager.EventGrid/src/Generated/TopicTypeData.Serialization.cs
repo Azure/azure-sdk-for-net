@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.EventGrid
             Optional<string> description = default;
             Optional<EventGridResourceRegionType> resourceRegionType = default;
             Optional<TopicTypeProvisioningState> provisioningState = default;
-            Optional<IList<string>> supportedLocations = default;
+            IList<string> supportedLocations = default;
             Optional<string> sourceResourceFormat = default;
-            Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
+            IList<TopicTypeSourceScope> supportedScopesForSource = default;
             Optional<bool> areRegionalAndGlobalSourcesSupported = default;
-            Optional<IList<TopicTypeAdditionalEnforcedPermission>> additionalEnforcedPermissions = default;
+            IList<TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported), Optional.ToList(additionalEnforcedPermissions), serializedAdditionalRawData);
+            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), supportedLocations ?? new ChangeTrackingList<string>(), sourceResourceFormat.Value, supportedScopesForSource ?? new ChangeTrackingList<TopicTypeSourceScope>(), Optional.ToNullable(areRegionalAndGlobalSourcesSupported), additionalEnforcedPermissions ?? new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicTypeData>.Write(ModelReaderWriterOptions options)

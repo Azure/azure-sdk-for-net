@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<SystemData> systemData = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
             Optional<string> friendlyName = default;
-            Optional<IReadOnlyList<string>> networkMessageIds = default;
+            IReadOnlyList<string> networkMessageIds = default;
             Optional<BinaryData> countByDeliveryStatus = default;
             Optional<BinaryData> countByThreatType = default;
             Optional<BinaryData> countByProtectionStatus = default;
-            Optional<IReadOnlyList<string>> threats = default;
+            IReadOnlyList<string> threats = default;
             Optional<string> query = default;
             Optional<DateTimeOffset> queryTime = default;
             Optional<int> mailCount = default;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsMailClusterEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(networkMessageIds), countByDeliveryStatus.Value, countByThreatType.Value, countByProtectionStatus.Value, Optional.ToList(threats), query.Value, Optional.ToNullable(queryTime), Optional.ToNullable(mailCount), Optional.ToNullable(isVolumeAnomaly), source.Value, clusterSourceIdentifier.Value, clusterSourceType.Value, Optional.ToNullable(clusterQueryStartTime), Optional.ToNullable(clusterQueryEndTime), clusterGroup.Value);
+            return new SecurityInsightsMailClusterEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, networkMessageIds ?? new ChangeTrackingList<string>(), countByDeliveryStatus.Value, countByThreatType.Value, countByProtectionStatus.Value, threats ?? new ChangeTrackingList<string>(), query.Value, Optional.ToNullable(queryTime), Optional.ToNullable(mailCount), Optional.ToNullable(isVolumeAnomaly), source.Value, clusterSourceIdentifier.Value, clusterSourceType.Value, Optional.ToNullable(clusterQueryStartTime), Optional.ToNullable(clusterQueryEndTime), clusterGroup.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailClusterEntity>.Write(ModelReaderWriterOptions options)

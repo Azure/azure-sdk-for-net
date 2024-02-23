@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceTypeSkuData>> value = default;
+            IReadOnlyList<ResourceTypeSkuData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ResourceTypeSkuListResult(value ?? new ChangeTrackingList<ResourceTypeSkuData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuListResult>.Write(ModelReaderWriterOptions options)

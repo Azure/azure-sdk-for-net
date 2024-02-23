@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FirmwareCryptoKeyResult>> value = default;
+            IReadOnlyList<FirmwareCryptoKeyResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoKeyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FirmwareCryptoKeyListResult(value ?? new ChangeTrackingList<FirmwareCryptoKeyResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoKeyListResult>.Write(ModelReaderWriterOptions options)

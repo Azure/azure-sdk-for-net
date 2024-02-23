@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoutingPreferenceUnbilledPrefix>> value = default;
+            IReadOnlyList<RoutingPreferenceUnbilledPrefix> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RpUnbilledPrefixListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RpUnbilledPrefixListResult(value ?? new ChangeTrackingList<RoutingPreferenceUnbilledPrefix>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RpUnbilledPrefixListResult>.Write(ModelReaderWriterOptions options)

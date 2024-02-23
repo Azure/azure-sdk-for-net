@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            IList<string> dependsOn = default;
             BinaryData template = default;
             Optional<string> resourceGroup = default;
             IDictionary<string, ParameterValue> parameters = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, Optional.ToList(dependsOn), template, resourceGroup.Value, parameters);
+            return new TemplateArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, dependsOn ?? new ChangeTrackingList<string>(), template, resourceGroup.Value, parameters);
         }
 
         BinaryData IPersistableModel<TemplateArtifact>.Write(ModelReaderWriterOptions options)

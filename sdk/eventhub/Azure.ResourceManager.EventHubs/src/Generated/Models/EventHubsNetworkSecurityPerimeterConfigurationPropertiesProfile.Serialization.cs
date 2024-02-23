@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             Optional<string> name = default;
             Optional<string> accessRulesVersion = default;
-            Optional<IReadOnlyList<EventHubsNspAccessRule>> accessRules = default;
+            IReadOnlyList<EventHubsNspAccessRule> accessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules), serializedAdditionalRawData);
+            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, accessRules ?? new ChangeTrackingList<EventHubsNspAccessRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(ModelReaderWriterOptions options)

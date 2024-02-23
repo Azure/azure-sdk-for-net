@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkloadGroupData>> value = default;
+            IReadOnlyList<WorkloadGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadGroupListResult(value ?? new ChangeTrackingList<WorkloadGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadGroupListResult>.Write(ModelReaderWriterOptions options)

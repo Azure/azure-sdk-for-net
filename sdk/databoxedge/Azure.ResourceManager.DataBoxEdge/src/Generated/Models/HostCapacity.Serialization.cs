@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> availableGpuCount = default;
             Optional<IDictionary<string, DataBoxEdgeVmMemory>> vmUsedMemory = default;
             Optional<string> gpuType = default;
-            Optional<IList<NumaNodeInfo>> numaNodesData = default;
+            IList<NumaNodeInfo> numaNodesData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostCapacity(hostName.Value, Optional.ToNullable(effectiveAvailableMemoryMbOnHost), Optional.ToNullable(availableGpuCount), Optional.ToDictionary(vmUsedMemory), gpuType.Value, Optional.ToList(numaNodesData), serializedAdditionalRawData);
+            return new HostCapacity(hostName.Value, Optional.ToNullable(effectiveAvailableMemoryMbOnHost), Optional.ToNullable(availableGpuCount), Optional.ToDictionary(vmUsedMemory), gpuType.Value, numaNodesData ?? new ChangeTrackingList<NumaNodeInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostCapacity>.Write(ModelReaderWriterOptions options)

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<BlockedTransformer>> blockedTransformers = default;
+            IList<BlockedTransformer> blockedTransformers = default;
             Optional<IDictionary<string, string>> columnNameAndTypes = default;
             Optional<bool> enableDnnFeaturization = default;
             Optional<MachineLearningFeaturizationMode> mode = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, serializedAdditionalRawData, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
+            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, serializedAdditionalRawData, blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
         }
 
         BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options)

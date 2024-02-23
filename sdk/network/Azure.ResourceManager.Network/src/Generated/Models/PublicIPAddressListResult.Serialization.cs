@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PublicIPAddressData>> value = default;
+            IReadOnlyList<PublicIPAddressData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPAddressListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PublicIPAddressListResult(value ?? new ChangeTrackingList<PublicIPAddressData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublicIPAddressListResult>.Write(ModelReaderWriterOptions options)

@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<long> minimumNodes = default;
             Optional<long> maximumNodes = default;
             Optional<bool> removeApplicationCapacity = default;
-            Optional<IList<ApplicationMetricDescription>> metrics = default;
-            Optional<IList<ApplicationUserAssignedIdentity>> managedIdentities = default;
+            IList<ApplicationMetricDescription> metrics = default;
+            IList<ApplicationUserAssignedIdentity> managedIdentities = default;
             Optional<string> provisioningState = default;
             Optional<string> typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), provisioningState.Value, typeName.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), metrics ?? new ChangeTrackingList<ApplicationMetricDescription>(), managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>(), provisioningState.Value, typeName.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricApplicationData>.Write(ModelReaderWriterOptions options)

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlDatabaseData>> value = default;
+            IReadOnlyList<PostgreSqlDatabaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PostgreSqlDatabaseListResult(value ?? new ChangeTrackingList<PostgreSqlDatabaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlDatabaseListResult>.Write(ModelReaderWriterOptions options)

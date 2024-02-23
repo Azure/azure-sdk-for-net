@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<IList<HybridContainerServiceVmSkuProperties>> values = default;
+            IList<HybridContainerServiceVmSkuProperties> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceVmSkuData(id, name, type, systemData.Value, extendedLocation.Value, Optional.ToNullable(provisioningState), Optional.ToList(values), serializedAdditionalRawData);
+            return new HybridContainerServiceVmSkuData(id, name, type, systemData.Value, extendedLocation.Value, Optional.ToNullable(provisioningState), values ?? new ChangeTrackingList<HybridContainerServiceVmSkuProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceVmSkuData>.Write(ModelReaderWriterOptions options)

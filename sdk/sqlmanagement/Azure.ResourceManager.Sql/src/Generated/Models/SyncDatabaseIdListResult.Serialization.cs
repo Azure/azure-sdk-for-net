@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubResource>> value = default;
+            IReadOnlyList<SubResource> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncDatabaseIdListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SyncDatabaseIdListResult(value ?? new ChangeTrackingList<SubResource>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncDatabaseIdListResult>.Write(ModelReaderWriterOptions options)

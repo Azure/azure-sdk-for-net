@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             Optional<string> classificationPolicyId = default;
-            Optional<IReadOnlyList<AcsRouterCommunicationError>> errors = default;
+            IReadOnlyList<AcsRouterCommunicationError> errors = default;
             Optional<string> queueId = default;
             Optional<IReadOnlyDictionary<string, string>> labels = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobClassificationFailedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), classificationPolicyId.Value, Optional.ToList(errors));
+            return new AcsRouterJobClassificationFailedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), classificationPolicyId.Value, errors ?? new ChangeTrackingList<AcsRouterCommunicationError>());
         }
 
         internal partial class AcsRouterJobClassificationFailedEventDataConverter : JsonConverter<AcsRouterJobClassificationFailedEventData>

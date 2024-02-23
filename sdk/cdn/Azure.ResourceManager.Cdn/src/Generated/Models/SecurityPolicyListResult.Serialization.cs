@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontDoorSecurityPolicyData>> value = default;
+            IReadOnlyList<FrontDoorSecurityPolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecurityPolicyListResult(value ?? new ChangeTrackingList<FrontDoorSecurityPolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityPolicyListResult>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SignalRServiceUsage>> value = default;
+            IReadOnlyList<SignalRServiceUsage> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRServiceUsageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRServiceUsageList(value ?? new ChangeTrackingList<SignalRServiceUsage>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRServiceUsageList>.Write(ModelReaderWriterOptions options)

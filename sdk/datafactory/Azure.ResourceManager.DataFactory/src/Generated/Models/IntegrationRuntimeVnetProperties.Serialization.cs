@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<Guid> vnetId = default;
             Optional<string> subnet = default;
-            Optional<IList<string>> publicIPs = default;
+            IList<string> publicIPs = default;
             Optional<ResourceIdentifier> subnetId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeVnetProperties(Optional.ToNullable(vnetId), subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
+            return new IntegrationRuntimeVnetProperties(Optional.ToNullable(vnetId), subnet.Value, publicIPs ?? new ChangeTrackingList<string>(), subnetId.Value, additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeVnetProperties>.Write(ModelReaderWriterOptions options)

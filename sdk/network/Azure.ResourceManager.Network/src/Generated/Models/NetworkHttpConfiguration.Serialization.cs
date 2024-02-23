@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<NetworkWatcherHttpMethod> method = default;
-            Optional<IList<NetworkWatcherHttpHeader>> headers = default;
-            Optional<IList<int>> validStatusCodes = default;
+            IList<NetworkWatcherHttpHeader> headers = default;
+            IList<int> validStatusCodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkHttpConfiguration(Optional.ToNullable(method), Optional.ToList(headers), Optional.ToList(validStatusCodes), serializedAdditionalRawData);
+            return new NetworkHttpConfiguration(Optional.ToNullable(method), headers ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(), validStatusCodes ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkHttpConfiguration>.Write(ModelReaderWriterOptions options)

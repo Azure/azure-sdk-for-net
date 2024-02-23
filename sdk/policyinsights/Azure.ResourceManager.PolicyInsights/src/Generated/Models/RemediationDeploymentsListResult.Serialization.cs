@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RemediationDeployment>> value = default;
+            IReadOnlyList<RemediationDeployment> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationDeploymentsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RemediationDeploymentsListResult(value ?? new ChangeTrackingList<RemediationDeployment>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationDeploymentsListResult>.Write(ModelReaderWriterOptions options)

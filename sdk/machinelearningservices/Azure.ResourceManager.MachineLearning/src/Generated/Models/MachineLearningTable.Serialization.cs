@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<Uri>> referencedUris = default;
+            IList<Uri> referencedUris = default;
             MachineLearningDataType dataType = default;
             Uri dataUri = default;
             Optional<IntellectualProperty> intellectualProperty = default;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTable(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), dataType, dataUri, intellectualProperty.Value, stage.Value, Optional.ToList(referencedUris));
+            return new MachineLearningTable(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), dataType, dataUri, intellectualProperty.Value, stage.Value, referencedUris ?? new ChangeTrackingList<Uri>());
         }
 
         BinaryData IPersistableModel<MachineLearningTable>.Write(ModelReaderWriterOptions options)

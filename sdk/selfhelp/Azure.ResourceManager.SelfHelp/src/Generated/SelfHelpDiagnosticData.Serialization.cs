@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.SelfHelp
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IDictionary<string, string>> globalParameters = default;
-            Optional<IList<SelfHelpDiagnosticInvocation>> insights = default;
+            IList<SelfHelpDiagnosticInvocation> insights = default;
             Optional<DateTimeOffset> acceptedAt = default;
             Optional<SelfHelpProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<SelfHelpDiagnosticInfo>> diagnostics = default;
+            IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SelfHelp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiagnosticData(id, name, type, systemData.Value, Optional.ToDictionary(globalParameters), Optional.ToList(insights), Optional.ToNullable(acceptedAt), Optional.ToNullable(provisioningState), Optional.ToList(diagnostics), serializedAdditionalRawData);
+            return new SelfHelpDiagnosticData(id, name, type, systemData.Value, Optional.ToDictionary(globalParameters), insights ?? new ChangeTrackingList<SelfHelpDiagnosticInvocation>(), Optional.ToNullable(acceptedAt), Optional.ToNullable(provisioningState), diagnostics ?? new ChangeTrackingList<SelfHelpDiagnosticInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiagnosticData>.Write(ModelReaderWriterOptions options)

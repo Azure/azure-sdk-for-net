@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<string> componentName = default;
             Optional<string> version = default;
             Optional<string> license = default;
-            Optional<IList<string>> filePaths = default;
+            IList<string> filePaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SbomComponentResult(id, name, type, systemData.Value, componentId.Value, componentName.Value, version.Value, license.Value, Optional.ToList(filePaths), serializedAdditionalRawData);
+            return new SbomComponentResult(id, name, type, systemData.Value, componentId.Value, componentName.Value, version.Value, license.Value, filePaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SbomComponentResult>.Write(ModelReaderWriterOptions options)

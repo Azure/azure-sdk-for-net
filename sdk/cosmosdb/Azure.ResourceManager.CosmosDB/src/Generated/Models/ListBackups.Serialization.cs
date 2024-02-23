@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CassandraClusterBackupResourceInfo>> value = default;
+            IReadOnlyList<CassandraClusterBackupResourceInfo> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListBackups(Optional.ToList(value), serializedAdditionalRawData);
+            return new ListBackups(value ?? new ChangeTrackingList<CassandraClusterBackupResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListBackups>.Write(ModelReaderWriterOptions options)

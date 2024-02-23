@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> configurationEndpoints = default;
-            Optional<IReadOnlyList<SubResource>> frontends = default;
-            Optional<IReadOnlyList<SubResource>> associations = default;
+            IReadOnlyList<string> configurationEndpoints = default;
+            IReadOnlyList<SubResource> frontends = default;
+            IReadOnlyList<SubResource> associations = default;
             Optional<ProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(configurationEndpoints), Optional.ToList(frontends), Optional.ToList(associations), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new TrafficControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, configurationEndpoints ?? new ChangeTrackingList<string>(), frontends ?? new ChangeTrackingList<SubResource>(), associations ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficControllerData>.Write(ModelReaderWriterOptions options)

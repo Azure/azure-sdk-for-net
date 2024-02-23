@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources
             Optional<SubscriptionState> state = default;
             Optional<SubscriptionPolicies> subscriptionPolicies = default;
             Optional<string> authorizationSource = default;
-            Optional<IReadOnlyList<ManagedByTenant>> managedByTenants = default;
+            IReadOnlyList<ManagedByTenant> managedByTenants = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, managedByTenants ?? new ChangeTrackingList<ManagedByTenant>(), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionData>.Write(ModelReaderWriterOptions options)

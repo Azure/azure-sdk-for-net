@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<bool> available = default;
-            Optional<IReadOnlyList<string>> availableIPAddresses = default;
+            IReadOnlyList<string> availableIPAddresses = default;
             Optional<bool> isPlatformReserved = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressAvailabilityResult(Optional.ToNullable(available), Optional.ToList(availableIPAddresses), Optional.ToNullable(isPlatformReserved), serializedAdditionalRawData);
+            return new IPAddressAvailabilityResult(Optional.ToNullable(available), availableIPAddresses ?? new ChangeTrackingList<string>(), Optional.ToNullable(isPlatformReserved), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressAvailabilityResult>.Write(ModelReaderWriterOptions options)

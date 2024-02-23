@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<IList<string>> subscriptions = default;
+            IList<string> subscriptions = default;
             Optional<string> query = default;
             Optional<ResourcesHistoryRequestOptions> options0 = default;
-            Optional<IList<string>> managementGroups = default;
+            IList<string> managementGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesHistoryContent(Optional.ToList(subscriptions), query.Value, options0.Value, Optional.ToList(managementGroups), serializedAdditionalRawData);
+            return new ResourcesHistoryContent(subscriptions ?? new ChangeTrackingList<string>(), query.Value, options0.Value, managementGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesHistoryContent>.Write(ModelReaderWriterOptions options)

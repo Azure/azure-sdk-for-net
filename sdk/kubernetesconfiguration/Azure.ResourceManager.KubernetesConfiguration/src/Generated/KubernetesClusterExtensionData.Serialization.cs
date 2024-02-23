@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Optional<IDictionary<string, string>> configurationProtectedSettings = default;
             Optional<string> currentVersion = default;
             Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
-            Optional<IList<KubernetesClusterExtensionStatus>> statuses = default;
+            IList<KubernetesClusterExtensionStatus> statuses = default;
             Optional<ResponseError> errorInfo = default;
             Optional<IReadOnlyDictionary<string, string>> customLocationSettings = default;
             Optional<Uri> packageUri = default;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionData(id, name, type, systemData.Value, identity, plan, extensionType.Value, Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, scope.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), currentVersion.Value, Optional.ToNullable(provisioningState), Optional.ToList(statuses), errorInfo.Value, Optional.ToDictionary(customLocationSettings), packageUri.Value, aksAssignedIdentity, Optional.ToNullable(isSystemExtension), serializedAdditionalRawData);
+            return new KubernetesClusterExtensionData(id, name, type, systemData.Value, identity, plan, extensionType.Value, Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, scope.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), currentVersion.Value, Optional.ToNullable(provisioningState), statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>(), errorInfo.Value, Optional.ToDictionary(customLocationSettings), packageUri.Value, aksAssignedIdentity, Optional.ToNullable(isSystemExtension), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionData>.Write(ModelReaderWriterOptions options)

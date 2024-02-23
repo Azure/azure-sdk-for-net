@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> properties = default;
+            IList<string> properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteStringList(id, name, type, systemData.Value, Optional.ToList(properties), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteStringList(id, name, type, systemData.Value, properties ?? new ChangeTrackingList<string>(), kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteStringList>.Write(ModelReaderWriterOptions options)

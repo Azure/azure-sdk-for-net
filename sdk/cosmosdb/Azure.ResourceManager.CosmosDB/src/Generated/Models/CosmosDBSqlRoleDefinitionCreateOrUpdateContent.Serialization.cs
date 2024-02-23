@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             Optional<string> roleName = default;
             Optional<CosmosDBSqlRoleDefinitionType> type = default;
-            Optional<IList<string>> assignableScopes = default;
-            Optional<IList<CosmosDBSqlRolePermission>> permissions = default;
+            IList<string> assignableScopes = default;
+            IList<CosmosDBSqlRolePermission> permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlRoleDefinitionCreateOrUpdateContent(roleName.Value, Optional.ToNullable(type), Optional.ToList(assignableScopes), Optional.ToList(permissions), serializedAdditionalRawData);
+            return new CosmosDBSqlRoleDefinitionCreateOrUpdateContent(roleName.Value, Optional.ToNullable(type), assignableScopes ?? new ChangeTrackingList<string>(), permissions ?? new ChangeTrackingList<CosmosDBSqlRolePermission>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlRoleDefinitionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

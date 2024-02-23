@@ -71,7 +71,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<IList<Uri>> urls = default;
+            IList<Uri> urls = default;
             Optional<OciAnnotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, urls ?? new ChangeTrackingList<Uri>(), annotations.Value);
         }
     }
 }

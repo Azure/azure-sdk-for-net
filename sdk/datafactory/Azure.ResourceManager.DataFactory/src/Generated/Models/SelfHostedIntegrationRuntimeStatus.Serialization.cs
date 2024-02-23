@@ -189,15 +189,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<Guid> taskQueueId = default;
             Optional<IntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
             Optional<string> version = default;
-            Optional<IReadOnlyList<SelfHostedIntegrationRuntimeNode>> nodes = default;
+            IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes = default;
             Optional<DateTimeOffset> scheduledUpdateDate = default;
             Optional<TimeSpan> updateDelayOffset = default;
             Optional<TimeSpan> localTimeZoneOffset = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<IReadOnlyList<string>> serviceUrls = default;
+            IReadOnlyList<string> serviceUrls = default;
             Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
             Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
+            IReadOnlyList<LinkedIntegrationRuntime> links = default;
             Optional<string> pushedVersion = default;
             Optional<string> latestVersion = default;
             Optional<DateTimeOffset> autoUpdateEta = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
+            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, nodes ?? new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>(), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), serviceUrls ?? new ChangeTrackingList<string>(), Optional.ToNullable(autoUpdate), versionStatus.Value, links ?? new ChangeTrackingList<LinkedIntegrationRuntime>(), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
         }
 
         BinaryData IPersistableModel<SelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

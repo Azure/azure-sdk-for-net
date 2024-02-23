@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> refreshTimestamp = default;
-            Optional<IReadOnlyList<EmergingIssueBannerType>> statusBanners = default;
-            Optional<IReadOnlyList<EmergingIssueActiveEventType>> statusActiveEvents = default;
+            IReadOnlyList<EmergingIssueBannerType> statusBanners = default;
+            IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEmergingIssueData(id, name, type, systemData.Value, Optional.ToNullable(refreshTimestamp), Optional.ToList(statusBanners), Optional.ToList(statusActiveEvents), serializedAdditionalRawData);
+            return new ServiceEmergingIssueData(id, name, type, systemData.Value, Optional.ToNullable(refreshTimestamp), statusBanners ?? new ChangeTrackingList<EmergingIssueBannerType>(), statusActiveEvents ?? new ChangeTrackingList<EmergingIssueActiveEventType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceEmergingIssueData>.Write(ModelReaderWriterOptions options)

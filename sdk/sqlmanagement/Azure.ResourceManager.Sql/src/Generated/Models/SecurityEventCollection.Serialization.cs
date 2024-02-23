@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityEvent>> value = default;
+            IReadOnlyList<SecurityEvent> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityEventCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecurityEventCollection(value ?? new ChangeTrackingList<SecurityEvent>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityEventCollection>.Write(ModelReaderWriterOptions options)

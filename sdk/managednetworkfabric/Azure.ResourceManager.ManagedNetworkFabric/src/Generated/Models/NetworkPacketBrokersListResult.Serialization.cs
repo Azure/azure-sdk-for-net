@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkPacketBrokerData>> value = default;
+            IReadOnlyList<NetworkPacketBrokerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkPacketBrokersListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkPacketBrokersListResult(value ?? new ChangeTrackingList<NetworkPacketBrokerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkPacketBrokersListResult>.Write(ModelReaderWriterOptions options)

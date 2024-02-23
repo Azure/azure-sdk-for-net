@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ForecastColumn>> columns = default;
-            Optional<IReadOnlyList<IList<BinaryData>>> rows = default;
+            IReadOnlyList<ForecastColumn> columns = default;
+            IReadOnlyList<IList<BinaryData>> rows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastResult(id, name, type, systemData.Value, nextLink.Value, Optional.ToList(columns), Optional.ToList(rows), Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ForecastResult(id, name, type, systemData.Value, nextLink.Value, columns ?? new ChangeTrackingList<ForecastColumn>(), rows ?? new ChangeTrackingList<IList<BinaryData>>(), Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastResult>.Write(ModelReaderWriterOptions options)

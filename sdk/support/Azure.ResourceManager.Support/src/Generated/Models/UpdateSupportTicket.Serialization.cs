@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Support.Models
             Optional<SupportTicketStatus> status = default;
             Optional<SupportContactProfileContent> contactDetails = default;
             Optional<AdvancedDiagnosticConsent> advancedDiagnosticConsent = default;
-            Optional<IList<SecondaryConsent>> secondaryConsent = default;
+            IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSupportTicket(Optional.ToNullable(severity), Optional.ToNullable(status), contactDetails.Value, Optional.ToNullable(advancedDiagnosticConsent), Optional.ToList(secondaryConsent), serializedAdditionalRawData);
+            return new UpdateSupportTicket(Optional.ToNullable(severity), Optional.ToNullable(status), contactDetails.Value, Optional.ToNullable(advancedDiagnosticConsent), secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSupportTicket>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TargetComputeSize>> value = default;
+            IReadOnlyList<TargetComputeSize> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetComputeSizeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TargetComputeSizeListResult(value ?? new ChangeTrackingList<TargetComputeSize>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetComputeSizeListResult>.Write(ModelReaderWriterOptions options)

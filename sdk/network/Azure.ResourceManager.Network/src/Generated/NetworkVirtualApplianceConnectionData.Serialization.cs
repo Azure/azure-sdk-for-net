@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<long> asn = default;
             Optional<long> tunnelIdentifier = default;
-            Optional<IList<string>> bgpPeerAddress = default;
+            IList<string> bgpPeerAddress = default;
             Optional<bool> enableInternetSecurity = default;
             Optional<RoutingConfiguration> routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, name0.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(asn), Optional.ToNullable(tunnelIdentifier), Optional.ToList(bgpPeerAddress), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value);
+            return new NetworkVirtualApplianceConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, name0.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(asn), Optional.ToNullable(tunnelIdentifier), bgpPeerAddress ?? new ChangeTrackingList<string>(), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceConnectionData>.Write(ModelReaderWriterOptions options)

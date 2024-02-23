@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<ApplicationGatewaySslProtocol>> disabledSslProtocols = default;
+            IList<ApplicationGatewaySslProtocol> disabledSslProtocols = default;
             Optional<ApplicationGatewaySslPolicyType> policyType = default;
             Optional<ApplicationGatewaySslPolicyName> policyName = default;
-            Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
+            IList<ApplicationGatewaySslCipherSuite> cipherSuites = default;
             Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslPolicy(Optional.ToList(disabledSslProtocols), Optional.ToNullable(policyType), Optional.ToNullable(policyName), Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion), serializedAdditionalRawData);
+            return new ApplicationGatewaySslPolicy(disabledSslProtocols ?? new ChangeTrackingList<ApplicationGatewaySslProtocol>(), Optional.ToNullable(policyType), Optional.ToNullable(policyName), cipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(), Optional.ToNullable(minProtocolVersion), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslPolicy>.Write(ModelReaderWriterOptions options)

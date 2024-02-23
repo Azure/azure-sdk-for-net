@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicContentLink> inputsLink = default;
             Optional<LogicContentLink> outputsLink = default;
             Optional<BinaryData> trackedProperties = default;
-            Optional<IReadOnlyList<LogicWorkRetryHistory>> retryHistory = default;
+            IReadOnlyList<LogicWorkRetryHistory> retryHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunActionData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), serializedAdditionalRawData);
+            return new LogicWorkflowRunActionData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, trackedProperties.Value, retryHistory ?? new ChangeTrackingList<LogicWorkRetryHistory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunActionData>.Write(ModelReaderWriterOptions options)

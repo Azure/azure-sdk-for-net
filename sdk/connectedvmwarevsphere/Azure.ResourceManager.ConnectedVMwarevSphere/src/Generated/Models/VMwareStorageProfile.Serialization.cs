@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<IList<VMwareVirtualDisk>> disks = default;
-            Optional<IReadOnlyList<VirtualScsiController>> scsiControllers = default;
+            IList<VMwareVirtualDisk> disks = default;
+            IReadOnlyList<VirtualScsiController> scsiControllers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareStorageProfile(Optional.ToList(disks), Optional.ToList(scsiControllers), serializedAdditionalRawData);
+            return new VMwareStorageProfile(disks ?? new ChangeTrackingList<VMwareVirtualDisk>(), scsiControllers ?? new ChangeTrackingList<VirtualScsiController>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareStorageProfile>.Write(ModelReaderWriterOptions options)

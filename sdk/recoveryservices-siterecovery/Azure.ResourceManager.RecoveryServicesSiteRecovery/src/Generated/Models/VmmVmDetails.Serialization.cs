@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> sourceItemId = default;
             Optional<string> generation = default;
             Optional<SiteRecoveryOSDetails> osDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryDiskDetails>> diskDetails = default;
+            IReadOnlyList<SiteRecoveryDiskDetails> diskDetails = default;
             Optional<HyperVVmDiskPresenceStatus> hasPhysicalDisk = default;
             Optional<HyperVVmDiskPresenceStatus> hasFibreChannelAdapter = default;
             Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmmVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            return new VmmVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, diskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>(), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
         }
 
         BinaryData IPersistableModel<VmmVmDetails>.Write(ModelReaderWriterOptions options)

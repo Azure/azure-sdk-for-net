@@ -141,13 +141,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<FirewallPolicyRuleNetworkProtocol>> ipProtocols = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<string>> destinationAddresses = default;
-            Optional<IList<string>> destinationPorts = default;
+            IList<FirewallPolicyRuleNetworkProtocol> ipProtocols = default;
+            IList<string> sourceAddresses = default;
+            IList<string> destinationAddresses = default;
+            IList<string> destinationPorts = default;
             Optional<string> translatedAddress = default;
             Optional<string> translatedPort = default;
-            Optional<IList<string>> sourceIPGroups = default;
+            IList<string> sourceIPGroups = default;
             Optional<string> translatedFqdn = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NatRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), translatedAddress.Value, translatedPort.Value, Optional.ToList(sourceIPGroups), translatedFqdn.Value);
+            return new NatRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>(), sourceAddresses ?? new ChangeTrackingList<string>(), destinationAddresses ?? new ChangeTrackingList<string>(), destinationPorts ?? new ChangeTrackingList<string>(), translatedAddress.Value, translatedPort.Value, sourceIPGroups ?? new ChangeTrackingList<string>(), translatedFqdn.Value);
         }
 
         BinaryData IPersistableModel<NatRule>.Write(ModelReaderWriterOptions options)

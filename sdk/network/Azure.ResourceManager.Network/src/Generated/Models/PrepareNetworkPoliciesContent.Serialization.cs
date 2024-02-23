@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> serviceName = default;
-            Optional<IList<NetworkIntentPolicyConfiguration>> networkIntentPolicyConfigurations = default;
+            IList<NetworkIntentPolicyConfiguration> networkIntentPolicyConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrepareNetworkPoliciesContent(serviceName.Value, Optional.ToList(networkIntentPolicyConfigurations), serializedAdditionalRawData);
+            return new PrepareNetworkPoliciesContent(serviceName.Value, networkIntentPolicyConfigurations ?? new ChangeTrackingList<NetworkIntentPolicyConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrepareNetworkPoliciesContent>.Write(ModelReaderWriterOptions options)

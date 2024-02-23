@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PurviewUsage>> value = default;
+            IReadOnlyList<PurviewUsage> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UsageList(value ?? new ChangeTrackingList<PurviewUsage>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsageList>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BgpServiceCommunity>> value = default;
+            IReadOnlyList<BgpServiceCommunity> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpServiceCommunityListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BgpServiceCommunityListResult(value ?? new ChangeTrackingList<BgpServiceCommunity>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpServiceCommunityListResult>.Write(ModelReaderWriterOptions options)

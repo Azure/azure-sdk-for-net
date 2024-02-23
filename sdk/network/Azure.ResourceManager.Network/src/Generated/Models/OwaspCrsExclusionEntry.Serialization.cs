@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             OwaspCrsExclusionEntryMatchVariable matchVariable = default;
             OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator = default;
             string selector = default;
-            Optional<IList<ExclusionManagedRuleSet>> exclusionManagedRuleSets = default;
+            IList<ExclusionManagedRuleSet> exclusionManagedRuleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OwaspCrsExclusionEntry(matchVariable, selectorMatchOperator, selector, Optional.ToList(exclusionManagedRuleSets), serializedAdditionalRawData);
+            return new OwaspCrsExclusionEntry(matchVariable, selectorMatchOperator, selector, exclusionManagedRuleSets ?? new ChangeTrackingList<ExclusionManagedRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OwaspCrsExclusionEntry>.Write(ModelReaderWriterOptions options)

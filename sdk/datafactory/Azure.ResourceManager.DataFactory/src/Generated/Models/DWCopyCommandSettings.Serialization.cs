@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DWCopyCommandDefaultValue>> defaultValues = default;
+            IList<DWCopyCommandDefaultValue> defaultValues = default;
             Optional<IDictionary<string, string>> additionalOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DWCopyCommandSettings(Optional.ToList(defaultValues), Optional.ToDictionary(additionalOptions), serializedAdditionalRawData);
+            return new DWCopyCommandSettings(defaultValues ?? new ChangeTrackingList<DWCopyCommandDefaultValue>(), Optional.ToDictionary(additionalOptions), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DWCopyCommandSettings>.Write(ModelReaderWriterOptions options)

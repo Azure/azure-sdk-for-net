@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceTagInformation>> value = default;
+            IReadOnlyList<ServiceTagInformation> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagInformationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceTagInformationListResult(value ?? new ChangeTrackingList<ServiceTagInformation>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagInformationListResult>.Write(ModelReaderWriterOptions options)

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<string> appName = default;
             Optional<Uri> appUri = default;
             Optional<Uri> identityServiceUri = default;
-            Optional<IList<ConfidentialLedgerMemberIdentityCertificate>> memberIdentityCertificates = default;
+            IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = default;
             Optional<ConfidentialLedgerDeploymentType> deploymentType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<int> nodeCount = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount), serializedAdditionalRawData);
+            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, memberIdentityCertificates ?? new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>(), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedCcfProperties>.Write(ModelReaderWriterOptions options)

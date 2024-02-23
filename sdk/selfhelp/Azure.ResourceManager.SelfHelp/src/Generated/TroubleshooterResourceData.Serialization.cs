@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SelfHelp
             Optional<string> solutionId = default;
             Optional<IDictionary<string, string>> parameters = default;
             Optional<TroubleshooterProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<SelfHelpStep>> steps = default;
+            IReadOnlyList<SelfHelpStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SelfHelp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshooterResourceData(id, name, type, systemData.Value, solutionId.Value, Optional.ToDictionary(parameters), Optional.ToNullable(provisioningState), Optional.ToList(steps), serializedAdditionalRawData);
+            return new TroubleshooterResourceData(id, name, type, systemData.Value, solutionId.Value, Optional.ToDictionary(parameters), Optional.ToNullable(provisioningState), steps ?? new ChangeTrackingList<SelfHelpStep>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshooterResourceData>.Write(ModelReaderWriterOptions options)

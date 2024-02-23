@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> sharedAccessPolicyKey = default;
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             Optional<string> queueName = default;
-            Optional<IList<string>> propertyColumns = default;
+            IList<string> propertyColumns = default;
             Optional<IDictionary<string, string>> systemPropertyColumns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusQueueOutputDataSource(type, serializedAdditionalRawData, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), queueName.Value, Optional.ToList(propertyColumns), Optional.ToDictionary(systemPropertyColumns));
+            return new ServiceBusQueueOutputDataSource(type, serializedAdditionalRawData, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), queueName.Value, propertyColumns ?? new ChangeTrackingList<string>(), Optional.ToDictionary(systemPropertyColumns));
         }
 
         BinaryData IPersistableModel<ServiceBusQueueOutputDataSource>.Write(ModelReaderWriterOptions options)
