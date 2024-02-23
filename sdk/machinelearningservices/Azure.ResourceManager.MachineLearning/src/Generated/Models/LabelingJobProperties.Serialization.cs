@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ProgressMetrics> progressMetrics = default;
             Optional<Guid> projectId = default;
             Optional<JobProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<JobStatusMessage>> statusMessages = default;
+            IReadOnlyList<JobStatusMessage> statusMessages = default;
             Optional<ResourceIdentifier> componentId = default;
             Optional<ResourceIdentifier> computeId = default;
             Optional<string> displayName = default;
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelingJobProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToNullable(createdDateTime), dataConfiguration.Value, jobInstructions.Value, Optional.ToDictionary(labelCategories), labelingJobMediaProperties.Value, mlAssistConfiguration.Value, progressMetrics.Value, Optional.ToNullable(projectId), Optional.ToNullable(provisioningState), Optional.ToList(statusMessages));
+            return new LabelingJobProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToNullable(createdDateTime), dataConfiguration.Value, jobInstructions.Value, Optional.ToDictionary(labelCategories), labelingJobMediaProperties.Value, mlAssistConfiguration.Value, progressMetrics.Value, Optional.ToNullable(projectId), Optional.ToNullable(provisioningState), statusMessages ?? new ChangeTrackingList<JobStatusMessage>());
         }
 
         BinaryData IPersistableModel<LabelingJobProperties>.Write(ModelReaderWriterOptions options)

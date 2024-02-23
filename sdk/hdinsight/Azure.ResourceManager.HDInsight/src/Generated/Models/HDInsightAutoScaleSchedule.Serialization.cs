@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightDayOfWeek>> days = default;
+            IList<HDInsightDayOfWeek> days = default;
             Optional<HDInsightAutoScaleTimeAndCapacity> timeAndCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleSchedule(Optional.ToList(days), timeAndCapacity.Value, serializedAdditionalRawData);
+            return new HDInsightAutoScaleSchedule(days ?? new ChangeTrackingList<HDInsightDayOfWeek>(), timeAndCapacity.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleSchedule>.Write(ModelReaderWriterOptions options)

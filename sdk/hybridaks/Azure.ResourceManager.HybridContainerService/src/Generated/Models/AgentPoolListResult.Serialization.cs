@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridContainerServiceAgentPoolData>> value = default;
+            IReadOnlyList<HybridContainerServiceAgentPoolData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AgentPoolListResult(value ?? new ChangeTrackingList<HybridContainerServiceAgentPoolData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolListResult>.Write(ModelReaderWriterOptions options)

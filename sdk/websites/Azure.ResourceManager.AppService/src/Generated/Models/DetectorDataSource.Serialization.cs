@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> instructions = default;
-            Optional<IList<AppServiceNameValuePair>> dataSourceUri = default;
+            IList<string> instructions = default;
+            IList<AppServiceNameValuePair> dataSourceUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorDataSource(Optional.ToList(instructions), Optional.ToList(dataSourceUri), serializedAdditionalRawData);
+            return new DetectorDataSource(instructions ?? new ChangeTrackingList<string>(), dataSourceUri ?? new ChangeTrackingList<AppServiceNameValuePair>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorDataSource>.Write(ModelReaderWriterOptions options)

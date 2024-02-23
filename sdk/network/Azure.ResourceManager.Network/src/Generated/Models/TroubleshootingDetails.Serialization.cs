@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> reasonType = default;
             Optional<string> summary = default;
             Optional<string> detail = default;
-            Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
+            IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions), serializedAdditionalRawData);
+            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, recommendedActions ?? new ChangeTrackingList<TroubleshootingRecommendedActions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshootingDetails>.Write(ModelReaderWriterOptions options)

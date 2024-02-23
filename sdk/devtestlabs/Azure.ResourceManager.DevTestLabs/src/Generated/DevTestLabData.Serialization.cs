@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> premiumDataDiskStorageAccount = default;
             Optional<string> vaultName = default;
             Optional<DevTestLabStorageType> labStorageType = default;
-            Optional<IList<string>> mandatoryArtifactsResourceIdsLinux = default;
-            Optional<IList<string>> mandatoryArtifactsResourceIdsWindows = default;
+            IList<string> mandatoryArtifactsResourceIdsLinux = default;
+            IList<string> mandatoryArtifactsResourceIdsWindows = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<DevTestLabPremiumDataDisk> premiumDataDisks = default;
             Optional<DevTestLabEnvironmentPermission> environmentPermission = default;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), Optional.ToList(mandatoryArtifactsResourceIdsLinux), Optional.ToList(mandatoryArtifactsResourceIdsWindows), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Optional.ToDictionary(extendedProperties), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, defaultStorageAccount.Value, defaultPremiumStorageAccount.Value, artifactsStorageAccount.Value, premiumDataDiskStorageAccount.Value, vaultName.Value, Optional.ToNullable(labStorageType), mandatoryArtifactsResourceIdsLinux ?? new ChangeTrackingList<string>(), mandatoryArtifactsResourceIdsWindows ?? new ChangeTrackingList<string>(), Optional.ToNullable(createdDate), Optional.ToNullable(premiumDataDisks), Optional.ToNullable(environmentPermission), announcement.Value, support.Value, vmCreationResourceGroup.Value, publicIPId.Value, loadBalancerId.Value, networkSecurityGroupId.Value, Optional.ToDictionary(extendedProperties), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabData>.Write(ModelReaderWriterOptions options)

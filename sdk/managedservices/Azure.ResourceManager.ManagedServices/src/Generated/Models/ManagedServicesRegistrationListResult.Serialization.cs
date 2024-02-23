@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedServicesRegistrationData>> value = default;
+            IReadOnlyList<ManagedServicesRegistrationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesRegistrationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedServicesRegistrationListResult(value ?? new ChangeTrackingList<ManagedServicesRegistrationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesRegistrationListResult>.Write(ModelReaderWriterOptions options)

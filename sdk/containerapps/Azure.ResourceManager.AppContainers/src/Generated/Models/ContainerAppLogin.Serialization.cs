@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             Optional<LoginRoutes> routes = default;
             Optional<bool> preserveUrlFragmentsForLogins = default;
-            Optional<IList<string>> allowedExternalRedirectUrls = default;
+            IList<string> allowedExternalRedirectUrls = default;
             Optional<ContainerAppCookieExpiration> cookieExpiration = default;
             Optional<ContainerAppLoginNonce> nonce = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppLogin(routes.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value, serializedAdditionalRawData);
+            return new ContainerAppLogin(routes.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(), cookieExpiration.Value, nonce.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppLogin>.Write(ModelReaderWriterOptions options)

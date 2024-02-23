@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseEncryptionProtectorData>> value = default;
+            IReadOnlyList<SynapseEncryptionProtectorData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEncryptionProtectorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapseEncryptionProtectorListResult(value ?? new ChangeTrackingList<SynapseEncryptionProtectorData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseEncryptionProtectorListResult>.Write(ModelReaderWriterOptions options)

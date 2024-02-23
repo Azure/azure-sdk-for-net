@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<SystemData> systemData = default;
             Optional<IdentityProviderType> type0 = default;
             Optional<string> signinTenant = default;
-            Optional<IList<string>> allowedTenants = default;
+            IList<string> allowedTenants = default;
             Optional<string> authority = default;
             Optional<string> signupPolicyName = default;
             Optional<string> signinPolicyName = default;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementIdentityProviderData(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementIdentityProviderData(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, allowedTenants ?? new ChangeTrackingList<string>(), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementIdentityProviderData>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SyncFullSchemaTable>> tables = default;
+            IReadOnlyList<SyncFullSchemaTable> tables = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncFullSchemaProperties(Optional.ToList(tables), Optional.ToNullable(lastUpdateTime), serializedAdditionalRawData);
+            return new SyncFullSchemaProperties(tables ?? new ChangeTrackingList<SyncFullSchemaTable>(), Optional.ToNullable(lastUpdateTime), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncFullSchemaProperties>.Write(ModelReaderWriterOptions options)

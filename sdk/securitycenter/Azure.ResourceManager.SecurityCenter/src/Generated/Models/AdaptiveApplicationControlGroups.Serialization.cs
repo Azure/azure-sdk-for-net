@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AdaptiveApplicationControlGroupData>> value = default;
+            IReadOnlyList<AdaptiveApplicationControlGroupData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdaptiveApplicationControlGroups(Optional.ToList(value), serializedAdditionalRawData);
+            return new AdaptiveApplicationControlGroups(value ?? new ChangeTrackingList<AdaptiveApplicationControlGroupData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdaptiveApplicationControlGroups>.Write(ModelReaderWriterOptions options)

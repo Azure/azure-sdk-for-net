@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Marketplace
             Optional<string> displayName = default;
             Optional<string> publisherId = default;
             Optional<MarketplaceAdminAction> adminAction = default;
-            Optional<IList<string>> approvedPlans = default;
+            IList<string> approvedPlans = default;
             Optional<string> comment = default;
             Optional<string> administrator = default;
-            Optional<IReadOnlyList<PlanRequesterDetails>> plans = default;
-            Optional<IList<Guid>> collectionIds = default;
+            IReadOnlyList<PlanRequesterDetails> plans = default;
+            IList<Guid> collectionIds = default;
             Optional<Uri> icon = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value, serializedAdditionalRawData);
+            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), approvedPlans ?? new ChangeTrackingList<string>(), comment.Value, administrator.Value, plans ?? new ChangeTrackingList<PlanRequesterDetails>(), collectionIds ?? new ChangeTrackingList<Guid>(), icon.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options)

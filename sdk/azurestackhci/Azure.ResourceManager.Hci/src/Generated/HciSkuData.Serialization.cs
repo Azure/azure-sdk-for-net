@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Hci
             Optional<string> offerId = default;
             Optional<string> content = default;
             Optional<string> contentVersion = default;
-            Optional<IList<HciSkuMappings>> skuMappings = default;
+            IList<HciSkuMappings> skuMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciSkuData(id, name, type, systemData.Value, provisioningState.Value, publisherId.Value, offerId.Value, content.Value, contentVersion.Value, Optional.ToList(skuMappings), serializedAdditionalRawData);
+            return new HciSkuData(id, name, type, systemData.Value, provisioningState.Value, publisherId.Value, offerId.Value, content.Value, contentVersion.Value, skuMappings ?? new ChangeTrackingList<HciSkuMappings>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciSkuData>.Write(ModelReaderWriterOptions options)

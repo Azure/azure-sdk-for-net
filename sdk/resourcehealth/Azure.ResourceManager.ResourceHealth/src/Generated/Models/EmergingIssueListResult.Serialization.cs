@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceEmergingIssueData>> value = default;
+            IReadOnlyList<ServiceEmergingIssueData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EmergingIssueListResult(value ?? new ChangeTrackingList<ServiceEmergingIssueData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueListResult>.Write(ModelReaderWriterOptions options)

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet>> availableRuleSets = default;
+            IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default;
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayWafDynamicManifestData(id, name, type, systemData.Value, Optional.ToList(availableRuleSets), ruleSetType.Value, ruleSetVersion.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayWafDynamicManifestData(id, name, type, systemData.Value, availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>(), ruleSetType.Value, ruleSetVersion.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Write(ModelReaderWriterOptions options)

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<SessionHostComponentUpdateType> type = default;
             Optional<bool> useSessionHostLocalTime = default;
             Optional<string> maintenanceWindowTimeZone = default;
-            Optional<IList<SessionHostMaintenanceWindowProperties>> maintenanceWindows = default;
+            IList<SessionHostMaintenanceWindowProperties> maintenanceWindows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostAgentUpdateProperties(Optional.ToNullable(type), Optional.ToNullable(useSessionHostLocalTime), maintenanceWindowTimeZone.Value, Optional.ToList(maintenanceWindows), serializedAdditionalRawData);
+            return new SessionHostAgentUpdateProperties(Optional.ToNullable(type), Optional.ToNullable(useSessionHostLocalTime), maintenanceWindowTimeZone.Value, maintenanceWindows ?? new ChangeTrackingList<SessionHostMaintenanceWindowProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostAgentUpdateProperties>.Write(ModelReaderWriterOptions options)

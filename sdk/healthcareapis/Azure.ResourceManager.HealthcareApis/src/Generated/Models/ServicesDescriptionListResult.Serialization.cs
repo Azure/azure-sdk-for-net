@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<HealthcareApisServiceData>> value = default;
+            IReadOnlyList<HealthcareApisServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServicesDescriptionListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ServicesDescriptionListResult(nextLink.Value, value ?? new ChangeTrackingList<HealthcareApisServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServicesDescriptionListResult>.Write(ModelReaderWriterOptions options)

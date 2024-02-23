@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SupportTicketCommunicationData>> value = default;
+            IReadOnlyList<SupportTicketCommunicationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunicationsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CommunicationsListResult(value ?? new ChangeTrackingList<SupportTicketCommunicationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunicationsListResult>.Write(ModelReaderWriterOptions options)

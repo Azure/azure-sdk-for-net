@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.Cdn
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> endpointName = default;
-            Optional<IList<FrontDoorActivatedResourceInfo>> customDomains = default;
+            IList<FrontDoorActivatedResourceInfo> customDomains = default;
             Optional<WritableSubResource> originGroup = default;
             Optional<string> originPath = default;
-            Optional<IList<WritableSubResource>> ruleSets = default;
-            Optional<IList<FrontDoorEndpointProtocol>> supportedProtocols = default;
-            Optional<IList<string>> patternsToMatch = default;
+            IList<WritableSubResource> ruleSets = default;
+            IList<FrontDoorEndpointProtocol> supportedProtocols = default;
+            IList<string> patternsToMatch = default;
             Optional<FrontDoorRouteCacheConfiguration> cacheConfiguration = default;
             Optional<ForwardingProtocol> forwardingProtocol = default;
             Optional<LinkToDefaultDomain> linkToDefaultDomain = default;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRouteData(id, name, type, systemData.Value, endpointName.Value, Optional.ToList(customDomains), originGroup, originPath.Value, Optional.ToList(ruleSets), Optional.ToList(supportedProtocols), Optional.ToList(patternsToMatch), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorRouteData(id, name, type, systemData.Value, endpointName.Value, customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), originGroup, originPath.Value, ruleSets ?? new ChangeTrackingList<WritableSubResource>(), supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>(), patternsToMatch ?? new ChangeTrackingList<string>(), cacheConfiguration.Value, Optional.ToNullable(forwardingProtocol), Optional.ToNullable(linkToDefaultDomain), Optional.ToNullable(httpsRedirect), Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRouteData>.Write(ModelReaderWriterOptions options)

@@ -235,16 +235,16 @@ namespace Azure.ResourceManager.AppService
             Optional<RegistrationContactInfo> contactTech = default;
             Optional<AppServiceDomainStatus> registrationStatus = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<string>> nameServers = default;
+            IReadOnlyList<string> nameServers = default;
             Optional<bool> privacy = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> expirationTime = default;
             Optional<DateTimeOffset> lastRenewedTime = default;
             Optional<bool> autoRenew = default;
             Optional<bool> readyForDnsRecordManagement = default;
-            Optional<IReadOnlyList<AppServiceHostName>> managedHostNames = default;
+            IReadOnlyList<AppServiceHostName> managedHostNames = default;
             Optional<DomainPurchaseConsent> consent = default;
-            Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
+            IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
             Optional<AppServiceDnsType> dnsType = default;
             Optional<string> dnsZoneId = default;
             Optional<AppServiceDnsType> targetDnsType = default;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), nameServers ?? new ChangeTrackingList<string>(), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(), consent.Value, domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDomainData>.Write(ModelReaderWriterOptions options)

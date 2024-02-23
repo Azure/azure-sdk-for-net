@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataFlowDebugSessionInfo>> value = default;
+            IReadOnlyList<DataFlowDebugSessionInfo> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfoListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataFlowDebugSessionInfoListResult(value ?? new ChangeTrackingList<DataFlowDebugSessionInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowDebugSessionInfoListResult>.Write(ModelReaderWriterOptions options)

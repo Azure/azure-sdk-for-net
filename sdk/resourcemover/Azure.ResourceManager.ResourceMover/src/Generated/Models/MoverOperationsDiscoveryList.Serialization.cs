@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverOperationsDiscovery>> value = default;
+            IReadOnlyList<MoverOperationsDiscovery> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationsDiscoveryList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MoverOperationsDiscoveryList(value ?? new ChangeTrackingList<MoverOperationsDiscovery>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationsDiscoveryList>.Write(ModelReaderWriterOptions options)

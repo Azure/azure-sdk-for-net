@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetworkFunction
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IngestionPolicyPropertiesFormat> ingestionPolicy = default;
-            Optional<IList<EmissionPoliciesPropertiesFormat>> emissionPolicies = default;
+            IList<EmissionPoliciesPropertiesFormat> emissionPolicies = default;
             Optional<CollectorProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), ingestionPolicy.Value, emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options)

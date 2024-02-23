@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IList<string>> addressPrefixes = default;
+            IList<string> addressPrefixes = default;
             Optional<string> nextHopIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticRoute(name.Value, Optional.ToList(addressPrefixes), nextHopIPAddress.Value, serializedAdditionalRawData);
+            return new StaticRoute(name.Value, addressPrefixes ?? new ChangeTrackingList<string>(), nextHopIPAddress.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticRoute>.Write(ModelReaderWriterOptions options)

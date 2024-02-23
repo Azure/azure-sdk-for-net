@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationUsage>> value = default;
+            IReadOnlyList<AutomationUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AutomationUsageListResult(value ?? new ChangeTrackingList<AutomationUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationUsageListResult>.Write(ModelReaderWriterOptions options)

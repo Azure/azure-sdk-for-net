@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> actions = default;
-            Optional<IReadOnlyList<string>> notActions = default;
-            Optional<IReadOnlyList<string>> dataActions = default;
-            Optional<IReadOnlyList<string>> notDataActions = default;
+            IReadOnlyList<string> actions = default;
+            IReadOnlyList<string> notActions = default;
+            IReadOnlyList<string> dataActions = default;
+            IReadOnlyList<string> notDataActions = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DenyAssignmentPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions), condition.Value, conditionVersion.Value, serializedAdditionalRawData);
+            return new DenyAssignmentPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<string>(), notDataActions ?? new ChangeTrackingList<string>(), condition.Value, conditionVersion.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DenyAssignmentPermission>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricIPExtendedCommunityData>> value = default;
+            IReadOnlyList<NetworkFabricIPExtendedCommunityData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPExtendedCommunityListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IPExtendedCommunityListResult(value ?? new ChangeTrackingList<NetworkFabricIPExtendedCommunityData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPExtendedCommunityListResult>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IList<ResourceIdentifier>> vnetSubnetIds = default;
+            IList<ResourceIdentifier> vnetSubnetIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterInfraNetworkProfile(Optional.ToList(vnetSubnetIds), serializedAdditionalRawData);
+            return new ProvisionedClusterInfraNetworkProfile(vnetSubnetIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterInfraNetworkProfile>.Write(ModelReaderWriterOptions options)

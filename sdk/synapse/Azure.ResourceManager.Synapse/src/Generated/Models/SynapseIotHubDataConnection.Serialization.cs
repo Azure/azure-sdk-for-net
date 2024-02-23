@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> tableName = default;
             Optional<string> mappingRuleName = default;
             Optional<SynapseIotHubDataFormat> dataFormat = default;
-            Optional<IList<string>> eventSystemProperties = default;
+            IList<string> eventSystemProperties = default;
             Optional<string> sharedAccessPolicyName = default;
             Optional<ResourceProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), sharedAccessPolicyName.Value, Optional.ToNullable(provisioningState));
+            return new SynapseIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), eventSystemProperties ?? new ChangeTrackingList<string>(), sharedAccessPolicyName.Value, Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<SynapseIotHubDataConnection>.Write(ModelReaderWriterOptions options)

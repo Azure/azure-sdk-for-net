@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<MachineLearningQuotaProperties>> value = default;
+            IList<MachineLearningQuotaProperties> value = default;
             Optional<AzureLocation> location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningQuotaUpdateContent(Optional.ToList(value), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new MachineLearningQuotaUpdateContent(value ?? new ChangeTrackingList<MachineLearningQuotaProperties>(), Optional.ToNullable(location), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningQuotaUpdateContent>.Write(ModelReaderWriterOptions options)

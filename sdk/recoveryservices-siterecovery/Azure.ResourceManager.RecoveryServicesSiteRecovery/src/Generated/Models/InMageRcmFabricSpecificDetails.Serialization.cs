@@ -194,14 +194,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<Uri> dataPlaneUri = default;
             Optional<Uri> controlPlaneUri = default;
             Optional<IdentityProviderDetails> sourceAgentIdentityDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
-            Optional<IReadOnlyList<RcmProxyDetails>> rcmProxies = default;
-            Optional<IReadOnlyList<PushInstallerDetails>> pushInstallers = default;
-            Optional<IReadOnlyList<ReplicationAgentDetails>> replicationAgents = default;
-            Optional<IReadOnlyList<ReprotectAgentDetails>> reprotectAgents = default;
-            Optional<IReadOnlyList<MarsAgentDetails>> marsAgents = default;
-            Optional<IReadOnlyList<SiteRecoveryDraDetails>> dras = default;
-            Optional<IReadOnlyList<SiteRecoveryAgentDetails>> agentDetails = default;
+            IReadOnlyList<SiteRecoveryProcessServerDetails> processServers = default;
+            IReadOnlyList<RcmProxyDetails> rcmProxies = default;
+            IReadOnlyList<PushInstallerDetails> pushInstallers = default;
+            IReadOnlyList<ReplicationAgentDetails> replicationAgents = default;
+            IReadOnlyList<ReprotectAgentDetails> reprotectAgents = default;
+            IReadOnlyList<MarsAgentDetails> marsAgents = default;
+            IReadOnlyList<SiteRecoveryDraDetails> dras = default;
+            IReadOnlyList<SiteRecoveryAgentDetails> agentDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, Optional.ToList(processServers), Optional.ToList(rcmProxies), Optional.ToList(pushInstallers), Optional.ToList(replicationAgents), Optional.ToList(reprotectAgents), Optional.ToList(marsAgents), Optional.ToList(dras), Optional.ToList(agentDetails));
+            return new InMageRcmFabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>(), rcmProxies ?? new ChangeTrackingList<RcmProxyDetails>(), pushInstallers ?? new ChangeTrackingList<PushInstallerDetails>(), replicationAgents ?? new ChangeTrackingList<ReplicationAgentDetails>(), reprotectAgents ?? new ChangeTrackingList<ReprotectAgentDetails>(), marsAgents ?? new ChangeTrackingList<MarsAgentDetails>(), dras ?? new ChangeTrackingList<SiteRecoveryDraDetails>(), agentDetails ?? new ChangeTrackingList<SiteRecoveryAgentDetails>());
         }
 
         BinaryData IPersistableModel<InMageRcmFabricSpecificDetails>.Write(ModelReaderWriterOptions options)

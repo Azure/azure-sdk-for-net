@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecuritySolutionsReferenceData>> value = default;
+            IReadOnlyList<SecuritySolutionsReferenceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySolutionsReferenceDataList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SecuritySolutionsReferenceDataList(value ?? new ChangeTrackingList<SecuritySolutionsReferenceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySolutionsReferenceDataList>.Write(ModelReaderWriterOptions options)

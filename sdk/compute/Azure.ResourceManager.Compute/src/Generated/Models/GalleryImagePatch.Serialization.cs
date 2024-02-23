@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<Disallowed> disallowed = default;
             Optional<ImagePurchasePlan> purchasePlan = default;
             Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<IList<GalleryImageFeature>> features = default;
+            IList<GalleryImageFeature> features = default;
             Optional<ArchitectureType> architecture = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImagePatch(id, name, type, systemData.Value, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features), Optional.ToNullable(architecture), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryImagePatch(id, name, type, systemData.Value, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), features ?? new ChangeTrackingList<GalleryImageFeature>(), Optional.ToNullable(architecture), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImagePatch>.Write(ModelReaderWriterOptions options)

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             Optional<string> arrayValueSeparator = default;
-            Optional<IList<ProfileEnumValidValuesFormat>> enumValidValues = default;
+            IList<ProfileEnumValidValuesFormat> enumValidValues = default;
             string fieldName = default;
             string fieldType = default;
             Optional<bool> isArray = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> schemaItemPropLink = default;
             Optional<int> maxLength = default;
             Optional<bool> isAvailableInGraph = default;
-            Optional<IReadOnlyList<DataSourcePrecedence>> dataSourcePrecedenceRules = default;
+            IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyDefinition(arrayValueSeparator.Value, Optional.ToList(enumValidValues), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), Optional.ToList(dataSourcePrecedenceRules), serializedAdditionalRawData);
+            return new PropertyDefinition(arrayValueSeparator.Value, enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyDefinition>.Write(ModelReaderWriterOptions options)

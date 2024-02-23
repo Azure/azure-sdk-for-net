@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NotificationHubNamespaceData>> value = default;
+            IReadOnlyList<NotificationHubNamespaceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubNamespaceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NotificationHubNamespaceListResult(value ?? new ChangeTrackingList<NotificationHubNamespaceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubNamespaceListResult>.Write(ModelReaderWriterOptions options)

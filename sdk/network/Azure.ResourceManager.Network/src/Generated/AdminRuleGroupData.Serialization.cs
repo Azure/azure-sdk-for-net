@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<IList<NetworkManagerSecurityGroupItem>> appliesToGroups = default;
+            IList<NetworkManagerSecurityGroupItem> appliesToGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<Guid> resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdminRuleGroupData(id, name, type, systemData.Value, description.Value, Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new AdminRuleGroupData(id, name, type, systemData.Value, description.Value, appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdminRuleGroupData>.Write(ModelReaderWriterOptions options)

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<SapVirtualInstanceStatus> status = default;
-            Optional<IReadOnlyList<SubResource>> storageDetails = default;
+            IReadOnlyList<SubResource> storageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseVmDetails(virtualMachineId.Value, Optional.ToNullable(status), Optional.ToList(storageDetails), serializedAdditionalRawData);
+            return new DatabaseVmDetails(virtualMachineId.Value, Optional.ToNullable(status), storageDetails ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseVmDetails>.Write(ModelReaderWriterOptions options)

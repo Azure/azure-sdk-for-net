@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.Network
             Optional<VirtualHubRouteTable> routeTable = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> securityProviderName = default;
-            Optional<IList<VirtualHubRouteTableV2Data>> virtualHubRouteTableV2s = default;
+            IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2s = default;
             Optional<string> sku = default;
             Optional<RoutingState> routingState = default;
-            Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
-            Optional<IReadOnlyList<WritableSubResource>> ipConfigurations = default;
-            Optional<IReadOnlyList<WritableSubResource>> routeMaps = default;
+            IReadOnlyList<WritableSubResource> bgpConnections = default;
+            IReadOnlyList<WritableSubResource> ipConfigurations = default;
+            IReadOnlyList<WritableSubResource> routeMaps = default;
             Optional<long> virtualRouterAsn = default;
-            Optional<IList<string>> virtualRouterIPs = default;
+            IList<string> virtualRouterIPs = default;
             Optional<bool> allowBranchToBranchTraffic = default;
             Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
             Optional<HubRoutingPreference> hubRoutingPreference = default;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, virtualHubRouteTableV2s ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(), sku.Value, Optional.ToNullable(routingState), bgpConnections ?? new ChangeTrackingList<WritableSubResource>(), ipConfigurations ?? new ChangeTrackingList<WritableSubResource>(), routeMaps ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(virtualRouterAsn), virtualRouterIPs ?? new ChangeTrackingList<string>(), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
         }
 
         BinaryData IPersistableModel<VirtualHubData>.Write(ModelReaderWriterOptions options)

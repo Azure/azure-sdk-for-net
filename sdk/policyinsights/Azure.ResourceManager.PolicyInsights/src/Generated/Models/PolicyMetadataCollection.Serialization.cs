@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SlimPolicyMetadata>> value = default;
+            IReadOnlyList<SlimPolicyMetadata> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyMetadataCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PolicyMetadataCollection(value ?? new ChangeTrackingList<SlimPolicyMetadata>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyMetadataCollection>.Write(ModelReaderWriterOptions options)

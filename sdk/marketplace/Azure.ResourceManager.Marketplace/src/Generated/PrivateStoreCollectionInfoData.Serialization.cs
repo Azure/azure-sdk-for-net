@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.Marketplace
             Optional<bool> allSubscriptions = default;
             Optional<bool> approveAllItems = default;
             Optional<DateTimeOffset> approveAllItemsModifiedAt = default;
-            Optional<IList<string>> subscriptionsList = default;
+            IList<string> subscriptionsList = default;
             Optional<bool> enabled = default;
             Optional<long> numberOfOffers = default;
-            Optional<IReadOnlyList<MarketplaceRule>> appliedRules = default;
+            IReadOnlyList<MarketplaceRule> appliedRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers), Optional.ToList(appliedRules), serializedAdditionalRawData);
+            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), subscriptionsList ?? new ChangeTrackingList<string>(), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers), appliedRules ?? new ChangeTrackingList<MarketplaceRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreCollectionInfoData>.Write(ModelReaderWriterOptions options)

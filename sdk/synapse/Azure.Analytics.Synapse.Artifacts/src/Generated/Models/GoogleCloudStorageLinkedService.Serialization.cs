@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<object> accessKeyId = default;
             Optional<SecretBase> secretAccessKey = default;
             Optional<object> serviceUrl = default;
@@ -212,7 +212,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GoogleCloudStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accessKeyId.Value, secretAccessKey.Value, serviceUrl.Value, encryptedCredential.Value);
+            return new GoogleCloudStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, accessKeyId.Value, secretAccessKey.Value, serviceUrl.Value, encryptedCredential.Value);
         }
 
         internal partial class GoogleCloudStorageLinkedServiceConverter : JsonConverter<GoogleCloudStorageLinkedService>

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionData>> value = default;
+            IReadOnlyList<VirtualMachineScaleSetVmExtensionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetVmExtensionsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetVmExtensionsListResult(value ?? new ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmExtensionsListResult>.Write(ModelReaderWriterOptions options)

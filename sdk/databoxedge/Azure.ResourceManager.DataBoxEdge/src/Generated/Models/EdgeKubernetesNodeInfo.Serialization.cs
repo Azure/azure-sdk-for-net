@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             Optional<string> name = default;
             Optional<EdgeKubernetesNodeType> type = default;
-            Optional<IReadOnlyList<EdgeKubernetesIPConfiguration>> ipConfiguration = default;
+            IReadOnlyList<EdgeKubernetesIPConfiguration> ipConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesNodeInfo(name.Value, Optional.ToNullable(type), Optional.ToList(ipConfiguration), serializedAdditionalRawData);
+            return new EdgeKubernetesNodeInfo(name.Value, Optional.ToNullable(type), ipConfiguration ?? new ChangeTrackingList<EdgeKubernetesIPConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesNodeInfo>.Write(ModelReaderWriterOptions options)

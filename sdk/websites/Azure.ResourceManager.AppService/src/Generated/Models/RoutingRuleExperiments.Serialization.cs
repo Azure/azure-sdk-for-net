@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<RampUpRule>> rampUpRules = default;
+            IList<RampUpRule> rampUpRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingRuleExperiments(Optional.ToList(rampUpRules), serializedAdditionalRawData);
+            return new RoutingRuleExperiments(rampUpRules ?? new ChangeTrackingList<RampUpRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingRuleExperiments>.Write(ModelReaderWriterOptions options)

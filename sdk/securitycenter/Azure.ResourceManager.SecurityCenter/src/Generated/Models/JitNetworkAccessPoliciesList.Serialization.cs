@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<JitNetworkAccessPolicyData>> value = default;
+            IReadOnlyList<JitNetworkAccessPolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPoliciesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new JitNetworkAccessPoliciesList(value ?? new ChangeTrackingList<JitNetworkAccessPolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPoliciesList>.Write(ModelReaderWriterOptions options)

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> recoveryCloudServiceId = default;
             Optional<ResourceIdentifier> recoveryResourceGroupId = default;
-            Optional<IList<A2AVmManagedDiskUpdateDetails>> managedDiskUpdateDetails = default;
+            IList<A2AVmManagedDiskUpdateDetails> managedDiskUpdateDetails = default;
             Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
             Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
             Optional<string> tfoAzureVmName = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, recoveryCloudServiceId.Value, recoveryResourceGroupId.Value, Optional.ToList(managedDiskUpdateDetails), recoveryBootDiagStorageAccountId.Value, diskEncryptionInfo.Value, tfoAzureVmName.Value, recoveryProximityPlacementGroupId.Value, recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value);
+            return new A2AUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, recoveryCloudServiceId.Value, recoveryResourceGroupId.Value, managedDiskUpdateDetails ?? new ChangeTrackingList<A2AVmManagedDiskUpdateDetails>(), recoveryBootDiagStorageAccountId.Value, diskEncryptionInfo.Value, tfoAzureVmName.Value, recoveryProximityPlacementGroupId.Value, recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value);
         }
 
         BinaryData IPersistableModel<A2AUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

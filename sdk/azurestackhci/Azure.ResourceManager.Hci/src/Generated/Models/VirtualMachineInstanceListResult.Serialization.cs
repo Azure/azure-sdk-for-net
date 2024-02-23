@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualMachineInstanceData>> value = default;
+            IReadOnlyList<VirtualMachineInstanceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstanceListResult(value ?? new ChangeTrackingList<VirtualMachineInstanceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceListResult>.Write(ModelReaderWriterOptions options)

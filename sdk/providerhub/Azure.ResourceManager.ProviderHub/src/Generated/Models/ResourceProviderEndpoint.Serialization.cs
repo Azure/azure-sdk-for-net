@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             Optional<bool> enabled = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
+            IReadOnlyList<string> apiVersions = default;
             Optional<Uri> endpointUri = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<string>> requiredFeatures = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<string> requiredFeatures = default;
             Optional<FeaturesRule> featuresRule = default;
             Optional<TimeSpan> timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), endpointUri.Value, Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new ResourceProviderEndpoint(Optional.ToNullable(enabled), apiVersions ?? new ChangeTrackingList<string>(), endpointUri.Value, locations ?? new ChangeTrackingList<AzureLocation>(), requiredFeatures ?? new ChangeTrackingList<string>(), featuresRule.Value, Optional.ToNullable(timeout), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderEndpoint>.Write(ModelReaderWriterOptions options)

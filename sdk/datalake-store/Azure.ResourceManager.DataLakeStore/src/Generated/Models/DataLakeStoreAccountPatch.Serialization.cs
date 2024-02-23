@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> defaultGroup = default;
             Optional<UpdateEncryptionConfig> encryptionConfig = default;
-            Optional<IList<FirewallRuleForDataLakeStoreAccountUpdateContent>> firewallRules = default;
-            Optional<IList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>> virtualNetworkRules = default;
+            IList<FirewallRuleForDataLakeStoreAccountUpdateContent> firewallRules = default;
+            IList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent> virtualNetworkRules = default;
             Optional<DataLakeStoreFirewallState> firewallState = default;
             Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<IList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>> trustedIdProviders = default;
+            IList<TrustedIdProviderForDataLakeStoreAccountUpdateContent> trustedIdProviders = default;
             Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
             Optional<DataLakeStoreCommitmentTierType> newTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountPatch(Optional.ToDictionary(tags), defaultGroup.Value, encryptionConfig.Value, Optional.ToList(firewallRules), Optional.ToList(virtualNetworkRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToList(trustedIdProviders), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), serializedAdditionalRawData);
+            return new DataLakeStoreAccountPatch(Optional.ToDictionary(tags), defaultGroup.Value, encryptionConfig.Value, firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountUpdateContent>(), virtualNetworkRules ?? new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>(), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), trustedIdProviders ?? new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>(), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountPatch>.Write(ModelReaderWriterOptions options)

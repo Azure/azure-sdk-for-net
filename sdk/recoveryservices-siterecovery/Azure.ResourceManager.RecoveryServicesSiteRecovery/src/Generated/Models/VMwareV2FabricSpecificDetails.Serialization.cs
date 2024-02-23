@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> serviceEndpoint = default;
             Optional<ResourceIdentifier> serviceResourceId = default;
             Optional<string> serviceContainerId = default;
-            Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
+            IReadOnlyList<SiteRecoveryProcessServerDetails> processServers = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareV2FabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, Optional.ToList(processServers));
+            return new VMwareV2FabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>());
         }
 
         BinaryData IPersistableModel<VMwareV2FabricSpecificDetails>.Write(ModelReaderWriterOptions options)

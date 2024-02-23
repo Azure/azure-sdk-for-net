@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             Optional<MongoDBFinishCommandInput> input = default;
             CommandType commandType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
+            IReadOnlyList<ODataError> errors = default;
             Optional<CommandState> state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBFinishCommand(commandType, Optional.ToList(errors), Optional.ToNullable(state), serializedAdditionalRawData, input.Value);
+            return new MongoDBFinishCommand(commandType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), serializedAdditionalRawData, input.Value);
         }
 
         BinaryData IPersistableModel<MongoDBFinishCommand>.Write(ModelReaderWriterOptions options)

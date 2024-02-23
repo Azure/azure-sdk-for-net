@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBSqlRoleDefinitionData>> value = default;
+            IReadOnlyList<CosmosDBSqlRoleDefinitionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlRoleDefinitionList(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBSqlRoleDefinitionList(value ?? new ChangeTrackingList<CosmosDBSqlRoleDefinitionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlRoleDefinitionList>.Write(ModelReaderWriterOptions options)

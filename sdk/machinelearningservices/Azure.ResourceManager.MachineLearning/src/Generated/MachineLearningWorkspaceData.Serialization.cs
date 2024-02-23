@@ -349,35 +349,35 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<SystemData> systemData = default;
             Optional<bool> allowPublicAccessWhenBehindVnet = default;
             Optional<string> applicationInsights = default;
-            Optional<IList<string>> associatedWorkspaces = default;
-            Optional<IList<string>> containerRegistries = default;
+            IList<string> associatedWorkspaces = default;
+            IList<string> containerRegistries = default;
             Optional<string> containerRegistry = default;
             Optional<string> description = default;
             Optional<Uri> discoveryUrl = default;
             Optional<bool> enableDataIsolation = default;
             Optional<MachineLearningEncryptionSetting> encryption = default;
-            Optional<IList<string>> existingWorkspaces = default;
+            IList<string> existingWorkspaces = default;
             Optional<FeatureStoreSettings> featureStoreSettings = default;
             Optional<string> friendlyName = default;
             Optional<bool> hbiWorkspace = default;
             Optional<ResourceIdentifier> hubResourceId = default;
             Optional<string> imageBuildCompute = default;
             Optional<string> keyVault = default;
-            Optional<IList<string>> keyVaults = default;
+            IList<string> keyVaults = default;
             Optional<ManagedNetworkSettings> managedNetwork = default;
             Optional<Uri> mlFlowTrackingUri = default;
             Optional<MachineLearningNotebookResourceInfo> notebookInfo = default;
             Optional<string> primaryUserAssignedIdentity = default;
-            Optional<IReadOnlyList<MachineLearningPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<int> privateLinkCount = default;
             Optional<MachineLearningProvisioningState> provisioningState = default;
             Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
             Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
             Optional<string> serviceProvisionedResourceGroup = default;
-            Optional<IList<MachineLearningSharedPrivateLinkResource>> sharedPrivateLinkResources = default;
+            IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default;
             Optional<int> softDeleteRetentionInDays = default;
             Optional<string> storageAccount = default;
-            Optional<IList<string>> storageAccounts = default;
+            IList<string> storageAccounts = default;
             Optional<bool> storageHnsEnabled = default;
             Optional<string> systemDatastoresAuthMode = default;
             Optional<Guid> tenantId = default;
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), applicationInsights.Value, Optional.ToList(associatedWorkspaces), Optional.ToList(containerRegistries), containerRegistry.Value, description.Value, discoveryUrl.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, Optional.ToList(existingWorkspaces), featureStoreSettings.Value, friendlyName.Value, Optional.ToNullable(hbiWorkspace), hubResourceId.Value, imageBuildCompute.Value, keyVault.Value, Optional.ToList(keyVaults), managedNetwork.Value, mlFlowTrackingUri.Value, notebookInfo.Value, primaryUserAssignedIdentity.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateLinkCount), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, serviceProvisionedResourceGroup.Value, Optional.ToList(sharedPrivateLinkResources), Optional.ToNullable(softDeleteRetentionInDays), storageAccount.Value, Optional.ToList(storageAccounts), Optional.ToNullable(storageHnsEnabled), systemDatastoresAuthMode.Value, Optional.ToNullable(tenantId), Optional.ToNullable(v1LegacyMode), workspaceHubConfig.Value, workspaceId.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), applicationInsights.Value, associatedWorkspaces ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<string>(), containerRegistry.Value, description.Value, discoveryUrl.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, existingWorkspaces ?? new ChangeTrackingList<string>(), featureStoreSettings.Value, friendlyName.Value, Optional.ToNullable(hbiWorkspace), hubResourceId.Value, imageBuildCompute.Value, keyVault.Value, keyVaults ?? new ChangeTrackingList<string>(), managedNetwork.Value, mlFlowTrackingUri.Value, notebookInfo.Value, primaryUserAssignedIdentity.Value, privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>(), Optional.ToNullable(privateLinkCount), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, serviceProvisionedResourceGroup.Value, sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>(), Optional.ToNullable(softDeleteRetentionInDays), storageAccount.Value, storageAccounts ?? new ChangeTrackingList<string>(), Optional.ToNullable(storageHnsEnabled), systemDatastoresAuthMode.Value, Optional.ToNullable(tenantId), Optional.ToNullable(v1LegacyMode), workspaceHubConfig.Value, workspaceId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceData>.Write(ModelReaderWriterOptions options)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpandMsixImage>> value = default;
+            IReadOnlyList<ExpandMsixImage> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpandMsixImageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExpandMsixImageList(value ?? new ChangeTrackingList<ExpandMsixImage>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpandMsixImageList>.Write(ModelReaderWriterOptions options)

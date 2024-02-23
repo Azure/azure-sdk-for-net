@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DicomServiceData>> value = default;
+            IReadOnlyList<DicomServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DicomServiceCollection(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new DicomServiceCollection(nextLink.Value, value ?? new ChangeTrackingList<DicomServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DicomServiceCollection>.Write(ModelReaderWriterOptions options)

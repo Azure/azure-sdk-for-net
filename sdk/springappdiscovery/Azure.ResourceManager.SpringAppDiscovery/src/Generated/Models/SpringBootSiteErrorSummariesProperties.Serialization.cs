@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<IList<SpringBootSiteErrorSummaryModel>> discoveryScopeErrorSummaries = default;
-            Optional<IList<SpringBootSiteError>> errors = default;
+            IList<SpringBootSiteErrorSummaryModel> discoveryScopeErrorSummaries = default;
+            IList<SpringBootSiteError> errors = default;
             Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteErrorSummariesProperties(Optional.ToList(discoveryScopeErrorSummaries), Optional.ToList(errors), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootSiteErrorSummariesProperties(discoveryScopeErrorSummaries ?? new ChangeTrackingList<SpringBootSiteErrorSummaryModel>(), errors ?? new ChangeTrackingList<SpringBootSiteError>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteErrorSummariesProperties>.Write(ModelReaderWriterOptions options)

@@ -187,13 +187,13 @@ namespace Azure.ResourceManager.Media
             Optional<LiveEventInput> input = default;
             Optional<LiveEventPreview> preview = default;
             Optional<LiveEventEncoding> encoding = default;
-            Optional<IList<LiveEventTranscription>> transcriptions = default;
+            IList<LiveEventTranscription> transcriptions = default;
             Optional<string> provisioningState = default;
             Optional<LiveEventResourceState> resourceState = default;
             Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
             Optional<bool> useStaticHostname = default;
             Optional<string> hostnamePrefix = default;
-            Optional<IList<StreamOptionsFlag>> streamOptions = default;
+            IList<StreamOptionsFlag> streamOptions = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaLiveEventData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, input.Value, preview.Value, encoding.Value, Optional.ToList(transcriptions), provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(useStaticHostname), hostnamePrefix.Value, Optional.ToList(streamOptions), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new MediaLiveEventData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, input.Value, preview.Value, encoding.Value, transcriptions ?? new ChangeTrackingList<LiveEventTranscription>(), provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(useStaticHostname), hostnamePrefix.Value, streamOptions ?? new ChangeTrackingList<StreamOptionsFlag>(), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaLiveEventData>.Write(ModelReaderWriterOptions options)

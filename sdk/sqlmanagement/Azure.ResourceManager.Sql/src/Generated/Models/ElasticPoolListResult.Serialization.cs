@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ElasticPoolData>> value = default;
+            IReadOnlyList<ElasticPoolData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ElasticPoolListResult(value ?? new ChangeTrackingList<ElasticPoolData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolListResult>.Write(ModelReaderWriterOptions options)

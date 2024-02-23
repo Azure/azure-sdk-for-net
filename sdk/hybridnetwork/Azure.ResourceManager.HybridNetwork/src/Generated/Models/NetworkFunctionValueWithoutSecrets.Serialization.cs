@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<ResourceIdentifier> nfviId = default;
             Optional<bool> allowSoftwareUpdate = default;
             NetworkFunctionConfigurationType configurationType = default;
-            Optional<IList<string>> roleOverrideValues = default;
+            IList<string> roleOverrideValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionValueWithoutSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), configurationType, Optional.ToList(roleOverrideValues), serializedAdditionalRawData, deploymentValues.Value);
+            return new NetworkFunctionValueWithoutSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), networkFunctionDefinitionGroupName.Value, networkFunctionDefinitionVersion.Value, networkFunctionDefinitionOfferingLocation.Value, networkFunctionDefinitionVersionResourceReference.Value, Optional.ToNullable(nfviType), nfviId.Value, Optional.ToNullable(allowSoftwareUpdate), configurationType, roleOverrideValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, deploymentValues.Value);
         }
 
         BinaryData IPersistableModel<NetworkFunctionValueWithoutSecrets>.Write(ModelReaderWriterOptions options)

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<IndexColumn>> indexColumns = default;
+            IList<IndexColumn> indexColumns = default;
             Optional<RegistryAssetProvisioningState> provisioningState = default;
             Optional<string> stage = default;
             Optional<AutoDeleteSetting> autoDeleteSetting = default;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureStoreEntityVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToList(indexColumns), Optional.ToNullable(provisioningState), stage.Value);
+            return new MachineLearningFeatureStoreEntityVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), indexColumns ?? new ChangeTrackingList<IndexColumn>(), Optional.ToNullable(provisioningState), stage.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureStoreEntityVersionProperties>.Write(ModelReaderWriterOptions options)

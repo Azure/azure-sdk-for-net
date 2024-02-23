@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SkuDetails>> value = default;
+            IReadOnlyList<SkuDetails> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuEnumerationForExistingResourceResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SkuEnumerationForExistingResourceResult(value ?? new ChangeTrackingList<SkuDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuEnumerationForExistingResourceResult>.Write(ModelReaderWriterOptions options)

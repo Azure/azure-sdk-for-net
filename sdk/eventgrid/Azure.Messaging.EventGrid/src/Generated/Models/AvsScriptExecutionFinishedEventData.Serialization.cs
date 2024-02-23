@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<IReadOnlyDictionary<string, string>> namedOutputs = default;
             Optional<string> operationId = default;
             Optional<string> cmdletId = default;
-            Optional<IReadOnlyList<string>> output = default;
+            IReadOnlyList<string> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namedOutputs"u8))
@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AvsScriptExecutionFinishedEventData(operationId.Value, cmdletId.Value, Optional.ToList(output), Optional.ToDictionary(namedOutputs));
+            return new AvsScriptExecutionFinishedEventData(operationId.Value, cmdletId.Value, output ?? new ChangeTrackingList<string>(), Optional.ToDictionary(namedOutputs));
         }
 
         internal partial class AvsScriptExecutionFinishedEventDataConverter : JsonConverter<AvsScriptExecutionFinishedEventData>

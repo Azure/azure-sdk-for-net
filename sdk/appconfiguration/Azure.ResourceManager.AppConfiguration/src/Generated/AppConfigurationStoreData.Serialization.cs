@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppConfiguration
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> endpoint = default;
             Optional<AppConfigurationStoreEncryptionProperties> encryption = default;
-            Optional<IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference>> privateEndpointConnections = default;
+            IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default;
             Optional<AppConfigurationPublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<int> softDeleteRetentionInDays = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), serializedAdditionalRawData);
+            return new AppConfigurationStoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreData>.Write(ModelReaderWriterOptions options)

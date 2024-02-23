@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<FirewallPolicyFilterRuleCollectionAction> action = default;
-            Optional<IList<FirewallPolicyRule>> rules = default;
+            IList<FirewallPolicyRule> rules = default;
             FirewallPolicyRuleCollectionType ruleCollectionType = default;
             Optional<string> name = default;
             Optional<int> priority = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyFilterRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority), serializedAdditionalRawData, action.Value, Optional.ToList(rules));
+            return new FirewallPolicyFilterRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority), serializedAdditionalRawData, action.Value, rules ?? new ChangeTrackingList<FirewallPolicyRule>());
         }
 
         BinaryData IPersistableModel<FirewallPolicyFilterRuleCollectionInfo>.Write(ModelReaderWriterOptions options)

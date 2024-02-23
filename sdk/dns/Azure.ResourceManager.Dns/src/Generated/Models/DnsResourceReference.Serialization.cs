@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> dnsResources = default;
+            IReadOnlyList<WritableSubResource> dnsResources = default;
             Optional<WritableSubResource> targetResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsResourceReference(Optional.ToList(dnsResources), targetResource, serializedAdditionalRawData);
+            return new DnsResourceReference(dnsResources ?? new ChangeTrackingList<WritableSubResource>(), targetResource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResourceReference>.Write(ModelReaderWriterOptions options)

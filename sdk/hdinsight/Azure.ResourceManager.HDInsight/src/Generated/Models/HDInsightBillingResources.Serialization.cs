@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             Optional<AzureLocation> region = default;
-            Optional<IReadOnlyList<HDInsightBillingMeters>> billingMeters = default;
-            Optional<IReadOnlyList<HDInsightDiskBillingMeters>> diskBillingMeters = default;
+            IReadOnlyList<HDInsightBillingMeters> billingMeters = default;
+            IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightBillingResources(Optional.ToNullable(region), Optional.ToList(billingMeters), Optional.ToList(diskBillingMeters), serializedAdditionalRawData);
+            return new HDInsightBillingResources(Optional.ToNullable(region), billingMeters ?? new ChangeTrackingList<HDInsightBillingMeters>(), diskBillingMeters ?? new ChangeTrackingList<HDInsightDiskBillingMeters>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightBillingResources>.Write(ModelReaderWriterOptions options)

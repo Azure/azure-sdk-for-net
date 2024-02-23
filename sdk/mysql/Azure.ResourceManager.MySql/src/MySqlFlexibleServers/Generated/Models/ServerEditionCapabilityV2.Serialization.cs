@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<string> name = default;
             Optional<string> defaultSku = default;
             Optional<int> defaultStorageSize = default;
-            Optional<IReadOnlyList<MySqlFlexibleServerStorageEditionCapability>> supportedStorageEditions = default;
-            Optional<IReadOnlyList<SkuCapabilityV2>> supportedSkus = default;
+            IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> supportedStorageEditions = default;
+            IReadOnlyList<SkuCapabilityV2> supportedSkus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEditionCapabilityV2(name.Value, defaultSku.Value, Optional.ToNullable(defaultStorageSize), Optional.ToList(supportedStorageEditions), Optional.ToList(supportedSkus), serializedAdditionalRawData);
+            return new ServerEditionCapabilityV2(name.Value, defaultSku.Value, Optional.ToNullable(defaultStorageSize), supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>(), supportedSkus ?? new ChangeTrackingList<SkuCapabilityV2>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEditionCapabilityV2>.Write(ModelReaderWriterOptions options)

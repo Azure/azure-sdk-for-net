@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IList<LinuxSshPublicKey>> publicKeys = default;
+            IList<LinuxSshPublicKey> publicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxSshConfiguration(Optional.ToList(publicKeys), serializedAdditionalRawData);
+            return new LinuxSshConfiguration(publicKeys ?? new ChangeTrackingList<LinuxSshPublicKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxSshConfiguration>.Write(ModelReaderWriterOptions options)

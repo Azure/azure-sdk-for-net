@@ -276,10 +276,10 @@ namespace Azure.ResourceManager.Sql
             Optional<int> score = default;
             Optional<RecommendedActionImplementationInfo> implementationDetails = default;
             Optional<RecommendedActionErrorInfo> errorDetails = default;
-            Optional<IReadOnlyList<RecommendedActionImpactRecord>> estimatedImpact = default;
-            Optional<IReadOnlyList<RecommendedActionImpactRecord>> observedImpact = default;
-            Optional<IReadOnlyList<RecommendedActionMetricInfo>> timeSeries = default;
-            Optional<IReadOnlyList<string>> linkedObjects = default;
+            IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact = default;
+            IReadOnlyList<RecommendedActionImpactRecord> observedImpact = default;
+            IReadOnlyList<RecommendedActionMetricInfo> timeSeries = default;
+            IReadOnlyList<string> linkedObjects = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details), serializedAdditionalRawData);
+            return new RecommendedActionData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, estimatedImpact ?? new ChangeTrackingList<RecommendedActionImpactRecord>(), observedImpact ?? new ChangeTrackingList<RecommendedActionImpactRecord>(), timeSeries ?? new ChangeTrackingList<RecommendedActionMetricInfo>(), linkedObjects ?? new ChangeTrackingList<string>(), Optional.ToDictionary(details), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionData>.Write(ModelReaderWriterOptions options)

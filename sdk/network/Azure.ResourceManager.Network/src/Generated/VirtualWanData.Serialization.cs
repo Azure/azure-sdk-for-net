@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.Network
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<bool> disableVpnEncryption = default;
-            Optional<IReadOnlyList<WritableSubResource>> virtualHubs = default;
-            Optional<IReadOnlyList<WritableSubResource>> vpnSites = default;
+            IReadOnlyList<WritableSubResource> virtualHubs = default;
+            IReadOnlyList<WritableSubResource> vpnSites = default;
             Optional<bool> allowBranchToBranchTraffic = default;
             Optional<bool> allowVnetToVnetTraffic = default;
             Optional<OfficeTrafficCategory> office365LocalBreakoutCategory = default;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWanData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(disableVpnEncryption), Optional.ToList(virtualHubs), Optional.ToList(vpnSites), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
+            return new VirtualWanData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(disableVpnEncryption), virtualHubs ?? new ChangeTrackingList<WritableSubResource>(), vpnSites ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(allowVnetToVnetTraffic), Optional.ToNullable(office365LocalBreakoutCategory), Optional.ToNullable(provisioningState), type0.Value);
         }
 
         BinaryData IPersistableModel<VirtualWanData>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<CustomLocationEnabledResourceType>> value = default;
+            IReadOnlyList<CustomLocationEnabledResourceType> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationEnabledResourceTypesResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new CustomLocationEnabledResourceTypesResult(nextLink.Value, value ?? new ChangeTrackingList<CustomLocationEnabledResourceType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationEnabledResourceTypesResult>.Write(ModelReaderWriterOptions options)

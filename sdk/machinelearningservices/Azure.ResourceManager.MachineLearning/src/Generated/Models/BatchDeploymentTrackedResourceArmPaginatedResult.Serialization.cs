@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningBatchDeploymentData>> value = default;
+            IReadOnlyList<MachineLearningBatchDeploymentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchDeploymentTrackedResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new BatchDeploymentTrackedResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningBatchDeploymentData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchDeploymentTrackedResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

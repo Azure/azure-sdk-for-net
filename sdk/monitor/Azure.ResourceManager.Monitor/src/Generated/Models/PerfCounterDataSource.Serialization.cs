@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<PerfCounterDataSourceStream>> streams = default;
+            IList<PerfCounterDataSourceStream> streams = default;
             Optional<int> samplingFrequencyInSeconds = default;
-            Optional<IList<string>> counterSpecifiers = default;
+            IList<string> counterSpecifiers = default;
             Optional<string> name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerfCounterDataSource(Optional.ToList(streams), Optional.ToNullable(samplingFrequencyInSeconds), Optional.ToList(counterSpecifiers), name.Value, serializedAdditionalRawData);
+            return new PerfCounterDataSource(streams ?? new ChangeTrackingList<PerfCounterDataSourceStream>(), Optional.ToNullable(samplingFrequencyInSeconds), counterSpecifiers ?? new ChangeTrackingList<string>(), name.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerfCounterDataSource>.Write(ModelReaderWriterOptions options)

@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<ParameterContract>> templateParameters = default;
+            IList<ParameterContract> templateParameters = default;
             Optional<string> description = default;
             Optional<RequestContract> request = default;
-            Optional<IList<ResponseContract>> responses = default;
+            IList<ResponseContract> responses = default;
             Optional<string> policies = default;
             Optional<string> displayName = default;
             Optional<string> method = default;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiOperationData(id, name, type, systemData.Value, Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
+            return new ApiOperationData(id, name, type, systemData.Value, templateParameters ?? new ChangeTrackingList<ParameterContract>(), description.Value, request.Value, responses ?? new ChangeTrackingList<ResponseContract>(), policies.Value, displayName.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiOperationData>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             Optional<HybridContainerServiceResourceProvisioningState> currentState = default;
             Optional<string> errorMessage = default;
-            Optional<IList<AgentPoolUpdateProfile>> readyReplicas = default;
+            IList<AgentPoolUpdateProfile> readyReplicas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolProvisioningStatus(Optional.ToNullable(currentState), errorMessage.Value, Optional.ToList(readyReplicas), serializedAdditionalRawData);
+            return new AgentPoolProvisioningStatus(Optional.ToNullable(currentState), errorMessage.Value, readyReplicas ?? new ChangeTrackingList<AgentPoolUpdateProfile>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolProvisioningStatus>.Write(ModelReaderWriterOptions options)

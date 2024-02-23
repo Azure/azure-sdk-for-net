@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IList<SignalRResourceLogCategory>> categories = default;
+            IList<SignalRResourceLogCategory> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRResourceLogCategoryListResult(Optional.ToList(categories), serializedAdditionalRawData);
+            return new SignalRResourceLogCategoryListResult(categories ?? new ChangeTrackingList<SignalRResourceLogCategory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRResourceLogCategoryListResult>.Write(ModelReaderWriterOptions options)

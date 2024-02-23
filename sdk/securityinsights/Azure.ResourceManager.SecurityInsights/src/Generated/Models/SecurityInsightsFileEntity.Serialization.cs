@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> directory = default;
-            Optional<IReadOnlyList<string>> fileHashEntityIds = default;
+            IReadOnlyList<string> fileHashEntityIds = default;
             Optional<string> fileName = default;
             Optional<string> hostEntityId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsFileEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, directory.Value, Optional.ToList(fileHashEntityIds), fileName.Value, hostEntityId.Value);
+            return new SecurityInsightsFileEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, directory.Value, fileHashEntityIds ?? new ChangeTrackingList<string>(), fileName.Value, hostEntityId.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsFileEntity>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceFabricManagedApplicationTypeData>> value = default;
+            IReadOnlyList<ServiceFabricManagedApplicationTypeData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationTypeResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationTypeResourceList(value ?? new ChangeTrackingList<ServiceFabricManagedApplicationTypeData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationTypeResourceList>.Write(ModelReaderWriterOptions options)

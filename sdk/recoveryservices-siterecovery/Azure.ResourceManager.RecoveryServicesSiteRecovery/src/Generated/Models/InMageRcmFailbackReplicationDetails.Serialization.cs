@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
             Optional<string> resyncRequired = default;
             Optional<SiteRecoveryResyncState> resyncState = default;
-            Optional<IReadOnlyList<InMageRcmFailbackProtectedDiskDetails>> protectedDisks = default;
+            IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks = default;
             Optional<InMageRcmFailbackMobilityAgentDetails> mobilityAgentDetails = default;
-            Optional<IReadOnlyList<InMageRcmFailbackNicDetails>> vmNics = default;
+            IReadOnlyList<InMageRcmFailbackNicDetails> vmNics = default;
             Optional<DateTimeOffset> lastPlannedFailoverStartTime = default;
             Optional<PlannedFailoverStatus> lastPlannedFailoverStatus = default;
             Optional<InMageRcmFailbackDiscoveredProtectedVmDetails> discoveredVmDetails = default;
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToList(protectedDisks), mobilityAgentDetails.Value, Optional.ToList(vmNics), Optional.ToNullable(lastPlannedFailoverStartTime), Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover));
+            return new InMageRcmFailbackReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), protectedDisks ?? new ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>(), mobilityAgentDetails.Value, vmNics ?? new ChangeTrackingList<InMageRcmFailbackNicDetails>(), Optional.ToNullable(lastPlannedFailoverStartTime), Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover));
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackReplicationDetails>.Write(ModelReaderWriterOptions options)

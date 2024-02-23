@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<SystemData> systemData = default;
             Optional<DeviceUpdateProvisioningState> provisioningState = default;
             Optional<string> accountName = default;
-            Optional<IList<DeviceUpdateIotHubSettings>> iotHubs = default;
+            IList<DeviceUpdateIotHubSettings> iotHubs = default;
             Optional<bool> enableDiagnostics = default;
             Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value, serializedAdditionalRawData);
+            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, iotHubs ?? new ChangeTrackingList<DeviceUpdateIotHubSettings>(), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateInstanceData>.Write(ModelReaderWriterOptions options)

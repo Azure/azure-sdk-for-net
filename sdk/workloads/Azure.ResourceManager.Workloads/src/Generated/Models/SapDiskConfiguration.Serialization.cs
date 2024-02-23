@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 return null;
             }
             Optional<DiskVolumeConfiguration> recommendedConfiguration = default;
-            Optional<IReadOnlyList<SupportedConfigurationsDiskDetails>> supportedConfigurations = default;
+            IReadOnlyList<SupportedConfigurationsDiskDetails> supportedConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDiskConfiguration(recommendedConfiguration.Value, Optional.ToList(supportedConfigurations), serializedAdditionalRawData);
+            return new SapDiskConfiguration(recommendedConfiguration.Value, supportedConfigurations ?? new ChangeTrackingList<SupportedConfigurationsDiskDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDiskConfiguration>.Write(ModelReaderWriterOptions options)

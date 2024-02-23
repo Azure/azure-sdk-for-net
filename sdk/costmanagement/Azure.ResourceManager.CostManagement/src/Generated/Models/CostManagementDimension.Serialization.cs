@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Optional<string> description = default;
             Optional<bool> filterEnabled = default;
             Optional<bool> groupingEnabled = default;
-            Optional<IReadOnlyList<string>> data = default;
+            IReadOnlyList<string> data = default;
             Optional<int> total = default;
             Optional<string> category = default;
             Optional<DateTimeOffset> usageStart = default;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(filterEnabled), Optional.ToNullable(groupingEnabled), Optional.ToList(data), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(filterEnabled), Optional.ToNullable(groupingEnabled), data ?? new ChangeTrackingList<string>(), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementDimension>.Write(ModelReaderWriterOptions options)

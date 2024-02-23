@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> runtimeVersion = default;
             Optional<UnauthenticatedClientAction> unauthenticatedClientAction = default;
             Optional<bool> tokenStoreEnabled = default;
-            Optional<IList<string>> allowedExternalRedirectUrls = default;
+            IList<string> allowedExternalRedirectUrls = default;
             Optional<BuiltInAuthenticationProvider> defaultProvider = default;
             Optional<double> tokenRefreshExtensionHours = default;
             Optional<string> clientId = default;
@@ -336,28 +336,28 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientSecretCertificateThumbprint = default;
             Optional<string> issuer = default;
             Optional<bool> validateIssuer = default;
-            Optional<IList<string>> allowedAudiences = default;
-            Optional<IList<string>> additionalLoginParams = default;
+            IList<string> allowedAudiences = default;
+            IList<string> additionalLoginParams = default;
             Optional<string> aadClaimsAuthorization = default;
             Optional<string> googleClientId = default;
             Optional<string> googleClientSecret = default;
             Optional<string> googleClientSecretSettingName = default;
-            Optional<IList<string>> googleOAuthScopes = default;
+            IList<string> googleOAuthScopes = default;
             Optional<string> facebookAppId = default;
             Optional<string> facebookAppSecret = default;
             Optional<string> facebookAppSecretSettingName = default;
-            Optional<IList<string>> facebookOAuthScopes = default;
+            IList<string> facebookOAuthScopes = default;
             Optional<string> gitHubClientId = default;
             Optional<string> gitHubClientSecret = default;
             Optional<string> gitHubClientSecretSettingName = default;
-            Optional<IList<string>> gitHubOAuthScopes = default;
+            IList<string> gitHubOAuthScopes = default;
             Optional<string> twitterConsumerKey = default;
             Optional<string> twitterConsumerSecret = default;
             Optional<string> twitterConsumerSecretSettingName = default;
             Optional<string> microsoftAccountClientId = default;
             Optional<string> microsoftAccountClientSecret = default;
             Optional<string> microsoftAccountClientSecretSettingName = default;
-            Optional<IList<string>> microsoftAccountOAuthScopes = default;
+            IList<string> microsoftAccountOAuthScopes = default;
             Optional<string> isAuthFromFile = default;
             Optional<string> authFilePath = default;
             Optional<string> configVersion = default;
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), allowedAudiences ?? new ChangeTrackingList<string>(), additionalLoginParams ?? new ChangeTrackingList<string>(), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, googleOAuthScopes ?? new ChangeTrackingList<string>(), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, facebookOAuthScopes ?? new ChangeTrackingList<string>(), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, gitHubOAuthScopes ?? new ChangeTrackingList<string>(), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, microsoftAccountOAuthScopes ?? new ChangeTrackingList<string>(), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteAuthSettings>.Write(ModelReaderWriterOptions options)
