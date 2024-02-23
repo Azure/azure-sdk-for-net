@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationDeliveryType))
+            if (NotificationDeliveryType.HasValue)
             {
                 writer.WritePropertyName("notificationType"u8);
                 writer.WriteStringValue(NotificationDeliveryType.Value.ToString());
             }
-            if (Optional.IsDefined(NotificationLevel))
+            if (NotificationLevel.HasValue)
             {
                 writer.WritePropertyName("notificationLevel"u8);
                 writer.WriteStringValue(NotificationLevel.Value.ToString());
             }
-            if (Optional.IsDefined(RecipientType))
+            if (RecipientType.HasValue)
             {
                 writer.WritePropertyName("recipientType"u8);
                 writer.WriteStringValue(RecipientType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NotificationRecipients))
+            if (!(NotificationRecipients is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notificationRecipients"u8);
                 writer.WriteStartArray();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AreDefaultRecipientsEnabled))
+            if (AreDefaultRecipientsEnabled.HasValue)
             {
                 writer.WritePropertyName("isDefaultRecipientsEnabled"u8);
                 writer.WriteBooleanValue(AreDefaultRecipientsEnabled.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Cpu))
+            if (options.Format != "W" && Cpu != null)
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteStringValue(Cpu);
             }
-            if (options.Format != "W" && Optional.IsDefined(Memory))
+            if (options.Format != "W" && Memory != null)
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);

@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningState))
+            if (options.Format != "W" && CustomHttpsProvisioningState.HasValue)
             {
                 writer.WritePropertyName("customHttpsProvisioningState"u8);
                 writer.WriteStringValue(CustomHttpsProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsAvailabilityState))
+            if (options.Format != "W" && CustomHttpsAvailabilityState.HasValue)
             {
                 writer.WritePropertyName("customHttpsProvisioningSubstate"u8);
                 writer.WriteStringValue(CustomHttpsAvailabilityState.Value.ToString());
             }
-            if (Optional.IsDefined(CustomDomainHttpsContent))
+            if (CustomDomainHttpsContent != null)
             {
                 if (CustomDomainHttpsContent != null)
                 {
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("customHttpsParameters");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (ValidationData != null)
             {
                 writer.WritePropertyName("validationData"u8);
                 writer.WriteStringValue(ValidationData);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

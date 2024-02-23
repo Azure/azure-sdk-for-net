@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Automation
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,49 +62,49 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RunbookType))
+            if (RunbookType.HasValue)
             {
                 writer.WritePropertyName("runbookType"u8);
                 writer.WriteStringValue(RunbookType.Value.ToString());
             }
-            if (Optional.IsDefined(PublishContentLink))
+            if (PublishContentLink != null)
             {
                 writer.WritePropertyName("publishContentLink"u8);
                 writer.WriteObjectValue(PublishContentLink);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(IsLogVerboseEnabled))
+            if (IsLogVerboseEnabled.HasValue)
             {
                 writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (Optional.IsDefined(IsLogProgressEnabled))
+            if (IsLogProgressEnabled.HasValue)
             {
                 writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
-            if (Optional.IsDefined(LogActivityTrace))
+            if (LogActivityTrace.HasValue)
             {
                 writer.WritePropertyName("logActivityTrace"u8);
                 writer.WriteNumberValue(LogActivityTrace.Value);
             }
-            if (Optional.IsDefined(JobCount))
+            if (JobCount.HasValue)
             {
                 writer.WritePropertyName("jobCount"u8);
                 writer.WriteNumberValue(JobCount.Value);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, RunbookParameterDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(OutputTypes))
+            if (!(OutputTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
@@ -125,32 +125,32 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Draft))
+            if (Draft != null)
             {
                 writer.WritePropertyName("draft"u8);
                 writer.WriteObjectValue(Draft);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(LastModifiedBy))
+            if (LastModifiedBy != null)
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

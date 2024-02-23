@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPublic))
+            if (IsPublic.HasValue)
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UriString))
+            if (options.Format != "W" && UriString != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(UriString);
             }
-            if (Optional.IsCollectionDefined(AddonConfigs))
+            if (!(AddonConfigs is ChangeTrackingDictionary<string, IDictionary<string, BinaryData>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
@@ -70,32 +70,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(IsHttpsOnly))
+            if (IsHttpsOnly.HasValue)
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (Optional.IsDefined(TemporaryDisk))
+            if (TemporaryDisk != null)
             {
                 writer.WritePropertyName("temporaryDisk"u8);
                 writer.WriteObjectValue(TemporaryDisk);
             }
-            if (Optional.IsDefined(PersistentDisk))
+            if (PersistentDisk != null)
             {
                 writer.WritePropertyName("persistentDisk"u8);
                 writer.WriteObjectValue(PersistentDisk);
             }
-            if (Optional.IsCollectionDefined(CustomPersistentDisks))
+            if (!(CustomPersistentDisks is ChangeTrackingList<AppCustomPersistentDisk> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customPersistentDisks"u8);
                 writer.WriteStartArray();
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsEndToEndTlsEnabled))
+            if (IsEndToEndTlsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableEndToEndTLS"u8);
                 writer.WriteBooleanValue(IsEndToEndTlsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(LoadedCertificates))
+            if (!(LoadedCertificates is ChangeTrackingList<AppLoadedCertificate> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("loadedCertificates"u8);
                 writer.WriteStartArray();
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VnetAddons))
+            if (VnetAddons != null)
             {
                 writer.WritePropertyName("vnetAddons"u8);
                 writer.WriteObjectValue(VnetAddons);
             }
-            if (Optional.IsDefined(IngressSettings))
+            if (IngressSettings != null)
             {
                 writer.WritePropertyName("ingressSettings"u8);
                 writer.WriteObjectValue(IngressSettings);

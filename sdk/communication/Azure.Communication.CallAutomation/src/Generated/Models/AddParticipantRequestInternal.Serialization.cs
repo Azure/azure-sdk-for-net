@@ -15,34 +15,34 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceCallerIdNumber))
+            if (SourceCallerIdNumber != null)
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
                 writer.WriteObjectValue(SourceCallerIdNumber);
             }
-            if (Optional.IsDefined(SourceDisplayName))
+            if (SourceDisplayName != null)
             {
                 writer.WritePropertyName("sourceDisplayName"u8);
                 writer.WriteStringValue(SourceDisplayName);
             }
             writer.WritePropertyName("participantToAdd"u8);
             writer.WriteObjectValue(ParticipantToAdd);
-            if (Optional.IsDefined(InvitationTimeoutInSeconds))
+            if (InvitationTimeoutInSeconds.HasValue)
             {
                 writer.WritePropertyName("invitationTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InvitationTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(OperationContext))
+            if (OperationContext != null)
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(CustomCallingContext))
+            if (CustomCallingContext != null)
             {
                 writer.WritePropertyName("customCallingContext"u8);
                 writer.WriteObjectValue(CustomCallingContext);
             }
-            if (Optional.IsDefined(OperationCallbackUri))
+            if (OperationCallbackUri != null)
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
