@@ -29,13 +29,13 @@ namespace Azure.Provisioning.Tests
         private static readonly string _infrastructureRoot = Path.Combine(GetGitRoot(), "sdk", "provisioning", "Azure.Provisioning", "tests", "Infrastructure");
 
         [Test]
-        public void WebSiteUsingL1()
+        public async Task WebSiteUsingL1()
         {
             var infra = new TestInfrastructure();
 
-            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", "SQL Server administrator password", isSecure: true, defaultValue: "password");
+            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", "SQL Server administrator password", isSecure: true);
             infra.AddParameter(sqlAdminPasswordParam);
-            Parameter appUserPasswordParam = new Parameter("appUserPassword", "Application user password", isSecure: true, defaultValue: "password");
+            Parameter appUserPasswordParam = new Parameter("appUserPassword", "Application user password", isSecure: true);
             infra.AddParameter(appUserPasswordParam);
 
             infra.AddResourceGroup();
@@ -74,10 +74,137 @@ namespace Azure.Provisioning.Tests
             WebSiteConfigLogs logs = new WebSiteConfigLogs(infra, "logs", frontEnd);
 
             infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    sqlAdminPassword = new { value = "password" },
+                    appUserPassword = new { value = "password" }
+                }));
         }
 
-        [TearDown]
-        public async Task ValidateBicep()
+        [Test]
+        public async Task ResourceGroupOnly()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure();
+            var resourceGroup = infrastructure.AddResourceGroup();
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task WebSiteUsingL2()
+        {
+            var infra = new TestInfrastructure();
+            infra.AddFrontEndWebSite();
+            infra.AddCommonSqlDatabase();
+            infra.AddBackEndWebSite();
+
+            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task WebSiteUsingL3()
+        {
+            var infra = new TestInfrastructure();
+            infra.AddWebSiteWithSqlBackEnd();
+
+            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
+            infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task StorageBlobDefaults()
+        {
+            var infra = new TestInfrastructure();
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            infra.AddBlobService();
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task StorageBlobDropDown()
+        {
+            var infra = new TestInfrastructure();
+            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            var blob = infra.AddBlobService();
+            blob.Properties.DeleteRetentionPolicy = new DeleteRetentionPolicy()
+            {
+                IsEnabled = true
+            };
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task AppConfiguration()
+        {
+            var infra = new TestInfrastructure();
+            infra.AddAppConfigurationStore();
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [Test]
+        public void MultipleSubscriptions()
+        {
+            // ensure deterministic subscription names and directories
+            var random = new TestRandom(RecordedTestMode.Playback, 1);
+            var infra = new TestSubscriptionInfrastructure();
+            var sub1 = new Subscription(infra, random.NewGuid());
+            var sub2 = new Subscription(infra, random.NewGuid());
+            _ = new ResourceGroup(infra, parent: sub1);
+            _ = new ResourceGroup(infra, parent: sub2);
+            infra.Build(GetOutputPath());
+
+            // Multiple subscriptions are not fully supported yet. https://github.com/Azure/azure-sdk-for-net/issues/42146
+            // await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task OutputsSpanningModules()
+        {
+            var infra = new TestInfrastructure();
+            var rg1 = new ResourceGroup(infra, "rg1");
+            var rg2 = new ResourceGroup(infra, "rg2");
+            var rg3 = new ResourceGroup(infra, "rg3");
+            var appServicePlan = infra.AddAppServicePlan(parent: rg1);
+            WebSite frontEnd1 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg1);
+
+            var output1 = frontEnd1.AddOutput(data => data.Identity.PrincipalId, "STORAGE_PRINCIPAL_ID");
+            var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
+
+            KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
+            keyVault.AssignParameter(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", defaultValue: true, isSecure: false));
+
+            WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
+
+            frontEnd2.AssignParameter(data => data.Identity.PrincipalId, new Parameter(output1));
+
+            var testFrontEndWebSite = new TestFrontEndWebSite(infra, parent: rg3);
+            infra.Build(GetOutputPath());
+
+            Assert.AreEqual(3, infra.GetParameters().Count());
+            Assert.AreEqual(4, infra.GetOutputs().Count());
+
+            Assert.AreEqual(0, testFrontEndWebSite.GetParameters().Count());
+            Assert.AreEqual(1, testFrontEndWebSite.GetOutputs().Count());
+
+            await ValidateBicepAsync();
+        }
+
+        public async Task ValidateBicepAsync(BinaryData? parameters = null)
         {
             if (TestEnvironment.GlobalIsRunningInCI)
             {
@@ -119,6 +246,7 @@ namespace Azure.Provisioning.Tests
                         new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
                         {
                             Template = new BinaryData(File.ReadAllText(Path.Combine(testPath, "main.json"))),
+                            Parameters = parameters
                         })
                     {
                         Location = "westus"
@@ -128,111 +256,6 @@ namespace Azure.Provisioning.Tests
             {
                 File.Delete(Path.Combine(testPath, "main.json"));
             }
-        }
-
-        [Test]
-        public void ResourceGroupOnly()
-        {
-            TestInfrastructure infrastructure = new TestInfrastructure();
-            var resourceGroup = infrastructure.AddResourceGroup();
-            infrastructure.Build(GetOutputPath());
-        }
-
-        [Test]
-        public void WebSiteUsingL2()
-        {
-            var infra = new TestInfrastructure();
-            infra.AddFrontEndWebSite();
-            infra.AddCommonSqlDatabase();
-            infra.AddBackEndWebSite();
-
-            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
-            infra.Build(GetOutputPath());
-        }
-
-        [Test]
-        public void WebSiteUsingL3()
-        {
-            var infra = new TestInfrastructure();
-            infra.AddWebSiteWithSqlBackEnd();
-
-            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
-            infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
-            infra.Build(GetOutputPath());
-        }
-
-        [Test]
-        public void StorageBlobDefaults()
-        {
-            var infra = new TestInfrastructure();
-            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            infra.AddBlobService();
-            infra.Build(GetOutputPath());
-        }
-
-        [Test]
-        public void StorageBlobDropDown()
-        {
-            var infra = new TestInfrastructure();
-            infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            var blob = infra.AddBlobService();
-            blob.Properties.DeleteRetentionPolicy = new DeleteRetentionPolicy()
-            {
-                IsEnabled = true
-            };
-            infra.Build(GetOutputPath());
-        }
-
-        [Test]
-        public void AppConfiguration()
-        {
-            var infra = new TestInfrastructure();
-            infra.AddAppConfigurationStore();
-            infra.Build(GetOutputPath());
-        }
-
-        [Test]
-        [Ignore("Multiple subscriptions are not fully supported yet. https://github.com/Azure/azure-sdk-for-net/issues/42146")]
-        public void MultipleSubscriptions()
-        {
-            // ensure deterministic subscription names and directories
-            var random = new TestRandom(RecordedTestMode.Playback, 1);
-            var infra = new TestSubscriptionInfrastructure();
-            var sub1 = new Subscription(infra, random.NewGuid());
-            var sub2 = new Subscription(infra, random.NewGuid());
-            _ = new ResourceGroup(infra, parent: sub1);
-            _ = new ResourceGroup(infra, parent: sub2);
-            infra.Build(GetOutputPath());
-        }
-
-        [Test]
-        public void OutputsSpanningModules()
-        {
-            var infra = new TestInfrastructure();
-            var rg1 = new ResourceGroup(infra, "rg1");
-            var rg2 = new ResourceGroup(infra, "rg2");
-            var rg3 = new ResourceGroup(infra, "rg3");
-            var appServicePlan = infra.AddAppServicePlan(parent: rg1);
-            WebSite frontEnd1 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg1);
-
-            var output1 = frontEnd1.AddOutput(data => data.Identity.PrincipalId, "STORAGE_PRINCIPAL_ID");
-            var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
-
-            KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
-            keyVault.AssignParameter(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", defaultValue: true, isSecure: false));
-
-            WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
-
-            frontEnd2.AssignParameter(data => data.Identity.PrincipalId, new Parameter(output1));
-
-            var testFrontEndWebSite = new TestFrontEndWebSite(infra, parent: rg3);
-            infra.Build(GetOutputPath());
-
-            Assert.AreEqual(3, infra.GetParameters().Count());
-            Assert.AreEqual(4, infra.GetOutputs().Count());
-
-            Assert.AreEqual(0, testFrontEndWebSite.GetParameters().Count());
-            Assert.AreEqual(1, testFrontEndWebSite.GetOutputs().Count());
         }
 
         private static string GetGitRoot()
@@ -264,9 +287,7 @@ namespace Azure.Provisioning.Tests
 
         private string GetOutputPath()
         {
-            StackTrace stackTrace = new StackTrace();
-            StackFrame stackFrame = stackTrace.GetFrame(1)!;
-            string output = Path.Combine(_infrastructureRoot, stackFrame.GetMethod()!.Name);
+            string output = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name);
             if (!Directory.Exists(output))
             {
                 Directory.CreateDirectory(output);
