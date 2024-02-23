@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
             }
             Optional<ResourceGroupProperties> properties = default;
             Optional<string> managedBy = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, managedBy.Value, serializedAdditionalRawData);
+            return new ResourceGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, managedBy.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options)

@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> protectedItemDataSourceId = default;
             Optional<VmWorkloadProtectedItemHealthStatus> protectedItemHealthStatus = default;
             Optional<VmWorkloadProtectedItemExtendedInfo> extendedInfo = default;
-            Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
+            IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
             IList<DistributedNodesInfo> nodesList = default;
             string protectedItemType = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadSapHanaDBInstanceProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, serverName.Value, parentName.Value, parentType.Value, protectionStatus.Value, Optional.ToNullable(protectionState), Optional.ToNullable(lastBackupStatus), Optional.ToNullable(lastBackupTime), lastBackupErrorDetail.Value, protectedItemDataSourceId.Value, Optional.ToNullable(protectedItemHealthStatus), extendedInfo.Value, Optional.ToDictionary(kpisHealths), nodesList ?? new ChangeTrackingList<DistributedNodesInfo>());
+            return new VmWorkloadSapHanaDBInstanceProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, serverName.Value, parentName.Value, parentType.Value, protectionStatus.Value, Optional.ToNullable(protectionState), Optional.ToNullable(lastBackupStatus), Optional.ToNullable(lastBackupTime), lastBackupErrorDetail.Value, protectedItemDataSourceId.Value, Optional.ToNullable(protectedItemHealthStatus), extendedInfo.Value, kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(), nodesList ?? new ChangeTrackingList<DistributedNodesInfo>());
         }
 
         BinaryData IPersistableModel<VmWorkloadSapHanaDBInstanceProtectedItem>.Write(ModelReaderWriterOptions options)
