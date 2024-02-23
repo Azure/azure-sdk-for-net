@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Smtp))
+            if (Smtp != null)
             {
                 writer.WritePropertyName("smtp"u8);
                 writer.WriteObjectValue(Smtp);

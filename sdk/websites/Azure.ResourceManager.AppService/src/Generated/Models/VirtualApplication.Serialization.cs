@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualPath))
+            if (VirtualPath != null)
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
-            if (Optional.IsDefined(PhysicalPath))
+            if (PhysicalPath != null)
             {
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
             }
-            if (Optional.IsDefined(IsPreloadEnabled))
+            if (IsPreloadEnabled.HasValue)
             {
                 writer.WritePropertyName("preloadEnabled"u8);
                 writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualDirectories))
+            if (!(VirtualDirectories is ChangeTrackingList<VirtualDirectory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualDirectories"u8);
                 writer.WriteStartArray();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedSkus))
+            if (options.Format != "W" && !(SupportedSkus is ChangeTrackingList<MySqlFlexibleServerSkuCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedSkus"u8);
                 writer.WriteStartArray();

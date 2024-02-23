@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (options.Format != "W" && Optional.IsDefined(UpdateOn))
+            if (options.Format != "W" && UpdateOn.HasValue)
             {
                 writer.WritePropertyName("updateDateTime"u8);
                 writer.WriteStringValue(UpdateOn.Value, "O");
             }
-            if (Optional.IsDefined(Comments))
+            if (Comments != null)
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrackingInformation))
+            if (options.Format != "W" && TrackingInformation != null)
             {
                 writer.WritePropertyName("trackingInformation"u8);
                 writer.WriteObjectValue(TrackingInformation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalOrderDetails))
+            if (options.Format != "W" && !(AdditionalOrderDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalOrderDetails"u8);
                 writer.WriteStartObject();

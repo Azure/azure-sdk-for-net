@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogOptions))
+            if (CatalogOptions != null)
             {
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
-            if (Optional.IsDefined(Coordinator))
+            if (Coordinator != null)
             {
                 writer.WritePropertyName("coordinator"u8);
                 writer.WriteObjectValue(Coordinator);
             }
-            if (Optional.IsDefined(UserPluginsSpec))
+            if (UserPluginsSpec != null)
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);
             }
-            if (Optional.IsDefined(UserTelemetrySpec))
+            if (UserTelemetrySpec != null)
             {
                 writer.WritePropertyName("userTelemetrySpec"u8);
                 writer.WriteObjectValue(UserTelemetrySpec);
             }
-            if (Optional.IsDefined(Worker))
+            if (Worker != null)
             {
                 writer.WritePropertyName("worker"u8);
                 writer.WriteObjectValue(Worker);

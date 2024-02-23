@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ToList))
+            if (!(ToList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("toList"u8);
                 writer.WriteStartArray();

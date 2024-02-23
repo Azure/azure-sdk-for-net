@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LatestScan))
+            if (LatestScan.HasValue)
             {
                 writer.WritePropertyName("latestScan"u8);
                 writer.WriteBooleanValue(LatestScan.Value);
             }
-            if (Optional.IsCollectionDefined(Results))
+            if (!(Results is ChangeTrackingDictionary<string, IList<IList<string>>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartObject();

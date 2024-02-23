@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceCount))
+            if (ResourceCount.HasValue)
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (Optional.IsCollectionDefined(Issues))
+            if (!(Issues is ChangeTrackingList<HealthErrorSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CategorizedResourceCounts))
+            if (!(CategorizedResourceCounts is ChangeTrackingDictionary<string, int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("categorizedResourceCounts"u8);
                 writer.WriteStartObject();

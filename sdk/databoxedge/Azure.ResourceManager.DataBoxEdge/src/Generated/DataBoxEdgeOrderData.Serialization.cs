@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Kind))
+            if (options.Format != "W" && Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OrderId))
+            if (options.Format != "W" && OrderId != null)
             {
                 writer.WritePropertyName("orderId"u8);
                 writer.WriteStringValue(OrderId);
             }
-            if (Optional.IsDefined(ContactInformation))
+            if (ContactInformation != null)
             {
                 writer.WritePropertyName("contactInformation"u8);
                 writer.WriteObjectValue(ContactInformation);
             }
-            if (Optional.IsDefined(ShippingAddress))
+            if (ShippingAddress != null)
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
+            if (options.Format != "W" && CurrentStatus != null)
             {
                 writer.WritePropertyName("currentStatus"u8);
                 writer.WriteObjectValue(CurrentStatus);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrderHistory))
+            if (options.Format != "W" && !(OrderHistory is ChangeTrackingList<DataBoxEdgeOrderStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("orderHistory"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            if (options.Format != "W" && SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DeliveryTrackingInfo))
+            if (options.Format != "W" && !(DeliveryTrackingInfo is ChangeTrackingList<DataBoxEdgeTrackingInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("deliveryTrackingInfo"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReturnTrackingInfo))
+            if (options.Format != "W" && !(ReturnTrackingInfo is ChangeTrackingList<DataBoxEdgeTrackingInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("returnTrackingInfo"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ShipmentType))
+            if (ShipmentType.HasValue)
             {
                 writer.WritePropertyName("shipmentType"u8);
                 writer.WriteStringValue(ShipmentType.Value.ToString());

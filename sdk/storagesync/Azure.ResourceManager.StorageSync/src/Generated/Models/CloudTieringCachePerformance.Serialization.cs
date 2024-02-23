@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CacheHitBytes))
+            if (options.Format != "W" && CacheHitBytes.HasValue)
             {
                 writer.WritePropertyName("cacheHitBytes"u8);
                 writer.WriteNumberValue(CacheHitBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CacheMissBytes))
+            if (options.Format != "W" && CacheMissBytes.HasValue)
             {
                 writer.WritePropertyName("cacheMissBytes"u8);
                 writer.WriteNumberValue(CacheMissBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CacheHitBytesPercent))
+            if (options.Format != "W" && CacheHitBytesPercent.HasValue)
             {
                 writer.WritePropertyName("cacheHitBytesPercent"u8);
                 writer.WriteNumberValue(CacheHitBytesPercent.Value);

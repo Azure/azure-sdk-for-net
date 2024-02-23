@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
+            if (options.Format != "W" && GeneratedOn.HasValue)
             {
                 writer.WritePropertyName("generationTime"u8);
                 writer.WriteStringValue(GeneratedOn.Value, "O");

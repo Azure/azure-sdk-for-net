@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CustomerInsights
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ApiEndpoint))
+            if (options.Format != "W" && ApiEndpoint != null)
             {
                 writer.WritePropertyName("apiEndpoint"u8);
                 writer.WriteStringValue(ApiEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(WebEndpoint))
+            if (options.Format != "W" && WebEndpoint != null)
             {
                 writer.WritePropertyName("webEndpoint"u8);
                 writer.WriteStringValue(WebEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(TenantFeatures))
+            if (TenantFeatures.HasValue)
             {
                 writer.WritePropertyName("tenantFeatures"u8);
                 writer.WriteNumberValue(TenantFeatures.Value);
             }
-            if (Optional.IsDefined(HubBillingInfo))
+            if (HubBillingInfo != null)
             {
                 writer.WritePropertyName("hubBillingInfo"u8);
                 writer.WriteObjectValue(HubBillingInfo);

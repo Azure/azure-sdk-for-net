@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -49,27 +49,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -82,32 +82,32 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Asn))
+            if (Asn != null)
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteStringValue(Asn);
             }
-            if (Optional.IsDefined(Cidr))
+            if (Cidr != null)
             {
                 writer.WritePropertyName("cidr"u8);
                 writer.WriteStringValue(Cidr);
             }
-            if (Optional.IsDefined(SignedMessage))
+            if (SignedMessage != null)
             {
                 writer.WritePropertyName("signedMessage"u8);
                 writer.WriteStringValue(SignedMessage);
             }
-            if (Optional.IsDefined(AuthorizationMessage))
+            if (AuthorizationMessage != null)
             {
                 writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
-            if (Optional.IsDefined(ParentCustomIPPrefix))
+            if (ParentCustomIPPrefix != null)
             {
                 writer.WritePropertyName("customIpPrefixParent"u8);
                 JsonSerializer.Serialize(writer, ParentCustomIPPrefix);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ChildCustomIPPrefixList))
+            if (options.Format != "W" && !(ChildCustomIPPrefixList is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("childCustomIpPrefixes"u8);
                 writer.WriteStartArray();
@@ -117,32 +117,32 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CommissionedState))
+            if (CommissionedState.HasValue)
             {
                 writer.WritePropertyName("commissionedState"u8);
                 writer.WriteStringValue(CommissionedState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpressRouteAdvertise))
+            if (ExpressRouteAdvertise.HasValue)
             {
                 writer.WritePropertyName("expressRouteAdvertise"u8);
                 writer.WriteBooleanValue(ExpressRouteAdvertise.Value);
             }
-            if (Optional.IsDefined(Geo))
+            if (Geo.HasValue)
             {
                 writer.WritePropertyName("geo"u8);
                 writer.WriteStringValue(Geo.Value.ToString());
             }
-            if (Optional.IsDefined(NoInternetAdvertise))
+            if (NoInternetAdvertise.HasValue)
             {
                 writer.WritePropertyName("noInternetAdvertise"u8);
                 writer.WriteBooleanValue(NoInternetAdvertise.Value);
             }
-            if (Optional.IsDefined(PrefixType))
+            if (PrefixType.HasValue)
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPPrefixes))
+            if (options.Format != "W" && !(PublicIPPrefixes is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("publicIpPrefixes"u8);
                 writer.WriteStartArray();
@@ -152,17 +152,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedReason))
+            if (options.Format != "W" && FailedReason != null)
             {
                 writer.WritePropertyName("failedReason"u8);
                 writer.WriteStringValue(FailedReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

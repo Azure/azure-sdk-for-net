@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ProvisioningIssues))
+            if (!(ProvisioningIssues is ChangeTrackingList<NetworkSecurityPerimeterConfigurationIssues> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NetworkSecurityPerimeter))
+            if (NetworkSecurityPerimeter != null)
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
                 writer.WriteObjectValue(NetworkSecurityPerimeter);
             }
-            if (Optional.IsDefined(ResourceAssociation))
+            if (ResourceAssociation != null)
             {
                 writer.WritePropertyName("resourceAssociation"u8);
                 writer.WriteObjectValue(ResourceAssociation);
             }
-            if (Optional.IsDefined(Profile))
+            if (Profile != null)
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile);

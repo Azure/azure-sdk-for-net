@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceResourceId))
+            if (ServiceResourceId != null)
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (Optional.IsDefined(SparkEnabled))
+            if (SparkEnabled.HasValue)
             {
                 writer.WritePropertyName("sparkEnabled"u8);
                 writer.WriteBooleanValue(SparkEnabled.Value);
             }
-            if (Optional.IsDefined(SparkStatus))
+            if (SparkStatus.HasValue)
             {
                 writer.WritePropertyName("sparkStatus"u8);
                 writer.WriteStringValue(SparkStatus.Value.ToString());
             }
-            if (Optional.IsDefined(SubresourceTarget))
+            if (SubresourceTarget != null)
             {
                 writer.WritePropertyName("subresourceTarget"u8);
                 writer.WriteStringValue(SubresourceTarget);

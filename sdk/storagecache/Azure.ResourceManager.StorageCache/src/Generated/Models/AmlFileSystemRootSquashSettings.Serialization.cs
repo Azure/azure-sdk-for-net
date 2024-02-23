@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(NoSquashNidLists))
+            if (NoSquashNidLists != null)
             {
                 writer.WritePropertyName("noSquashNidLists"u8);
                 writer.WriteStringValue(NoSquashNidLists);
             }
-            if (Optional.IsDefined(SquashUID))
+            if (SquashUID.HasValue)
             {
                 writer.WritePropertyName("squashUID"u8);
                 writer.WriteNumberValue(SquashUID.Value);
             }
-            if (Optional.IsDefined(SquashGID))
+            if (SquashGID.HasValue)
             {
                 writer.WritePropertyName("squashGID"u8);
                 writer.WriteNumberValue(SquashGID.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

@@ -43,84 +43,84 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConnectorName))
+            if (options.Format != "W" && ConnectorName != null)
             {
                 writer.WritePropertyName("connectorName"u8);
                 writer.WriteStringValue(ConnectorName);
             }
-            if (Optional.IsDefined(ConnectorType))
+            if (ConnectorType.HasValue)
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Created.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            if (options.Format != "W" && LastModified.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (Optional.IsDefined(EntityType))
+            if (EntityType.HasValue)
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EntityTypeName))
+            if (EntityTypeName != null)
             {
                 writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectorMappingName))
+            if (options.Format != "W" && ConnectorMappingName != null)
             {
                 writer.WritePropertyName("connectorMappingName"u8);
                 writer.WriteStringValue(ConnectorMappingName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataFormatId))
+            if (options.Format != "W" && DataFormatId != null)
             {
                 writer.WritePropertyName("dataFormatId"u8);
                 writer.WriteStringValue(DataFormatId);
             }
-            if (Optional.IsDefined(MappingProperties))
+            if (MappingProperties != null)
             {
                 writer.WritePropertyName("mappingProperties"u8);
                 writer.WriteObjectValue(MappingProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextRunOn))
+            if (options.Format != "W" && NextRunOn.HasValue)
             {
                 writer.WritePropertyName("nextRunTime"u8);
                 writer.WriteStringValue(NextRunOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RunId))
+            if (options.Format != "W" && RunId != null)
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

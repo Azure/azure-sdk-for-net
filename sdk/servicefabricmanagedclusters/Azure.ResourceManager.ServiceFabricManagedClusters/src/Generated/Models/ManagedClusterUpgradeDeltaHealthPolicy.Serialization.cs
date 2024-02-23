@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxPercentDeltaUnhealthyNodes"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyNodes);
-            if (Optional.IsDefined(MaxPercentUpgradeDomainDeltaUnhealthyNodes))
+            if (MaxPercentUpgradeDomainDeltaUnhealthyNodes.HasValue)
             {
                 writer.WritePropertyName("maxPercentUpgradeDomainDeltaUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes.Value);
             }
-            if (Optional.IsDefined(MaxPercentDeltaUnhealthyApplications))
+            if (MaxPercentDeltaUnhealthyApplications.HasValue)
             {
                 writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications.Value);

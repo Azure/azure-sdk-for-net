@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(P1Y))
+            if (P1Y != null)
             {
                 writer.WritePropertyName("p1Y"u8);
                 writer.WriteObjectValue(P1Y);
             }
-            if (Optional.IsDefined(P3Y))
+            if (P3Y != null)
             {
                 writer.WritePropertyName("p3Y"u8);
                 writer.WriteObjectValue(P3Y);
             }
-            if (Optional.IsDefined(P5Y))
+            if (P5Y != null)
             {
                 writer.WritePropertyName("p5Y"u8);
                 writer.WriteObjectValue(P5Y);

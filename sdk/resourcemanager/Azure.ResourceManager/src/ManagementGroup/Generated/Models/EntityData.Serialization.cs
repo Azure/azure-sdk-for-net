@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 if (TenantId != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("tenantId");
                 }
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(Parent))
+            if (Parent != null)
             {
                 writer.WritePropertyName("parent"u8);
                 JsonSerializer.Serialize(writer, Parent);
             }
-            if (Optional.IsDefined(Permissions))
+            if (Permissions.HasValue)
             {
                 if (Permissions != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("permissions");
                 }
             }
-            if (Optional.IsDefined(InheritedPermissions))
+            if (InheritedPermissions.HasValue)
             {
                 if (InheritedPermissions != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("inheritedPermissions");
                 }
             }
-            if (Optional.IsDefined(NumberOfDescendants))
+            if (NumberOfDescendants.HasValue)
             {
                 if (NumberOfDescendants != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("numberOfDescendants");
                 }
             }
-            if (Optional.IsDefined(NumberOfChildren))
+            if (NumberOfChildren.HasValue)
             {
                 if (NumberOfChildren != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("numberOfChildren");
                 }
             }
-            if (Optional.IsDefined(NumberOfChildGroups))
+            if (NumberOfChildGroups.HasValue)
             {
                 if (NumberOfChildGroups != null)
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("numberOfChildGroups");
                 }
             }
-            if (Optional.IsCollectionDefined(ParentDisplayNameChain))
+            if (!(ParentDisplayNameChain is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (ParentDisplayNameChain != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("parentDisplayNameChain");
                 }
             }
-            if (Optional.IsCollectionDefined(ParentNameChain))
+            if (!(ParentNameChain is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 if (ParentNameChain != null)
                 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Policy))
+            if (Policy.HasValue)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteStringValue(Policy.Value.ToSerialString());

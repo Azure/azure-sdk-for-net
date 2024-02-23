@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(KubeStateMetrics))
+            if (KubeStateMetrics != null)
             {
                 writer.WritePropertyName("kubeStateMetrics"u8);
                 writer.WriteObjectValue(KubeStateMetrics);

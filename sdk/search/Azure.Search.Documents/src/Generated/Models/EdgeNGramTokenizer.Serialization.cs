@@ -16,17 +16,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinGram))
+            if (MinGram.HasValue)
             {
                 writer.WritePropertyName("minGram"u8);
                 writer.WriteNumberValue(MinGram.Value);
             }
-            if (Optional.IsDefined(MaxGram))
+            if (MaxGram.HasValue)
             {
                 writer.WritePropertyName("maxGram"u8);
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (Optional.IsCollectionDefined(TokenChars))
+            if (!(TokenChars is ChangeTrackingList<TokenCharacterKind> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tokenChars"u8);
                 writer.WriteStartArray();

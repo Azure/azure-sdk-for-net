@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PassedControls))
+            if (options.Format != "W" && PassedControls.HasValue)
             {
                 writer.WritePropertyName("passedControls"u8);
                 writer.WriteNumberValue(PassedControls.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedControls))
+            if (options.Format != "W" && FailedControls.HasValue)
             {
                 writer.WritePropertyName("failedControls"u8);
                 writer.WriteNumberValue(FailedControls.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SkippedControls))
+            if (options.Format != "W" && SkippedControls.HasValue)
             {
                 writer.WritePropertyName("skippedControls"u8);
                 writer.WriteNumberValue(SkippedControls.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnsupportedControls))
+            if (options.Format != "W" && UnsupportedControls.HasValue)
             {
                 writer.WritePropertyName("unsupportedControls"u8);
                 writer.WriteNumberValue(UnsupportedControls.Value);

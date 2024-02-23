@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetConfiguration))
+            if (VnetConfiguration != null)
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
                 writer.WriteObjectValue(VnetConfiguration);
             }
-            if (Optional.IsDefined(VwanConfiguration))
+            if (VwanConfiguration != null)
             {
                 writer.WritePropertyName("vwanConfiguration"u8);
                 writer.WriteObjectValue(VwanConfiguration);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
             writer.WriteStringValue(EnableEgressNat.ToString());
-            if (Optional.IsCollectionDefined(EgressNatIP))
+            if (!(EgressNatIP is ChangeTrackingList<IPAddressInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("egressNatIp"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedRanges))
+            if (!(TrustedRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trustedRanges"u8);
                 writer.WriteStartArray();

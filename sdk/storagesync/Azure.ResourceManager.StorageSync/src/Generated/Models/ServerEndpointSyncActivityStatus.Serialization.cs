@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PerItemErrorCount))
+            if (options.Format != "W" && PerItemErrorCount.HasValue)
             {
                 writer.WritePropertyName("perItemErrorCount"u8);
                 writer.WriteNumberValue(PerItemErrorCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AppliedItemCount))
+            if (options.Format != "W" && AppliedItemCount.HasValue)
             {
                 writer.WritePropertyName("appliedItemCount"u8);
                 writer.WriteNumberValue(AppliedItemCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalItemCount))
+            if (options.Format != "W" && TotalItemCount.HasValue)
             {
                 writer.WritePropertyName("totalItemCount"u8);
                 writer.WriteNumberValue(TotalItemCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AppliedBytes))
+            if (options.Format != "W" && AppliedBytes.HasValue)
             {
                 writer.WritePropertyName("appliedBytes"u8);
                 writer.WriteNumberValue(AppliedBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalBytes))
+            if (options.Format != "W" && TotalBytes.HasValue)
             {
                 writer.WritePropertyName("totalBytes"u8);
                 writer.WriteNumberValue(TotalBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SyncMode))
+            if (options.Format != "W" && SyncMode.HasValue)
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SessionMinutesRemaining))
+            if (options.Format != "W" && SessionMinutesRemaining.HasValue)
             {
                 writer.WritePropertyName("sessionMinutesRemaining"u8);
                 writer.WriteNumberValue(SessionMinutesRemaining.Value);

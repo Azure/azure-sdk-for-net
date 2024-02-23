@@ -28,54 +28,54 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Datasource))
+            if (Datasource != null)
             {
                 writer.WritePropertyName("datasource"u8);
                 writer.WriteObjectValue(Datasource);
             }
-            if (Optional.IsDefined(TimeFrame))
+            if (TimeFrame.HasValue)
             {
                 writer.WritePropertyName("timeWindow"u8);
                 writer.WriteStringValue(TimeFrame.Value, "T");
             }
-            if (Optional.IsDefined(SizeWindow))
+            if (SizeWindow.HasValue)
             {
                 writer.WritePropertyName("sizeWindow"u8);
                 writer.WriteNumberValue(SizeWindow.Value);
             }
-            if (Optional.IsDefined(Serialization))
+            if (Serialization != null)
             {
                 writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
-            if (options.Format != "W" && Optional.IsDefined(Diagnostics))
+            if (options.Format != "W" && Diagnostics != null)
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteObjectValue(Diagnostics);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LastOutputEventTimestamps))
+            if (options.Format != "W" && !(LastOutputEventTimestamps is ChangeTrackingList<LastOutputEventTimestamp> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("lastOutputEventTimestamps"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(WatermarkSettings))
+            if (WatermarkSettings != null)
             {
                 writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);

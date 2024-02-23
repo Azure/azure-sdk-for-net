@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryManagedInstanceId))
+            if (PrimaryManagedInstanceId != null)
             {
                 writer.WritePropertyName("primaryManagedInstanceId"u8);
                 writer.WriteStringValue(PrimaryManagedInstanceId);
             }
-            if (Optional.IsDefined(PartnerManagedInstanceId))
+            if (PartnerManagedInstanceId != null)
             {
                 writer.WritePropertyName("partnerManagedInstanceId"u8);
                 writer.WriteStringValue(PartnerManagedInstanceId);

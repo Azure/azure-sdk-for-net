@@ -27,37 +27,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("_ts"u8);
                 writer.WriteNumberValue(Timestamp.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(EncryptionAlgorithm))
+            if (EncryptionAlgorithm != null)
             {
                 writer.WritePropertyName("encryptionAlgorithm"u8);
                 writer.WriteStringValue(EncryptionAlgorithm);
             }
-            if (Optional.IsDefined(WrappedDataEncryptionKey))
+            if (WrappedDataEncryptionKey != null)
             {
                 writer.WritePropertyName("wrappedDataEncryptionKey"u8);
                 writer.WriteBase64StringValue(WrappedDataEncryptionKey, "D");
             }
-            if (Optional.IsDefined(KeyWrapMetadata))
+            if (KeyWrapMetadata != null)
             {
                 writer.WritePropertyName("keyWrapMetadata"u8);
                 writer.WriteObjectValue(KeyWrapMetadata);

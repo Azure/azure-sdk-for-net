@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(RequestBodyCheck))
+            if (RequestBodyCheck.HasValue)
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (Optional.IsDefined(RequestBodyInspectLimitInKB))
+            if (RequestBodyInspectLimitInKB.HasValue)
             {
                 writer.WritePropertyName("requestBodyInspectLimitInKB"u8);
                 writer.WriteNumberValue(RequestBodyInspectLimitInKB.Value);
             }
-            if (Optional.IsDefined(RequestBodyEnforcement))
+            if (RequestBodyEnforcement.HasValue)
             {
                 writer.WritePropertyName("requestBodyEnforcement"u8);
                 writer.WriteBooleanValue(RequestBodyEnforcement.Value);
             }
-            if (Optional.IsDefined(MaxRequestBodySizeInKb))
+            if (MaxRequestBodySizeInKb.HasValue)
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (Optional.IsDefined(FileUploadEnforcement))
+            if (FileUploadEnforcement.HasValue)
             {
                 writer.WritePropertyName("fileUploadEnforcement"u8);
                 writer.WriteBooleanValue(FileUploadEnforcement.Value);
             }
-            if (Optional.IsDefined(FileUploadLimitInMb))
+            if (FileUploadLimitInMb.HasValue)
             {
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (Optional.IsDefined(CustomBlockResponseStatusCode))
+            if (CustomBlockResponseStatusCode.HasValue)
             {
                 writer.WritePropertyName("customBlockResponseStatusCode"u8);
                 writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
             }
-            if (Optional.IsDefined(CustomBlockResponseBody))
+            if (CustomBlockResponseBody != null)
             {
                 writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
-            if (Optional.IsDefined(LogScrubbing))
+            if (LogScrubbing != null)
             {
                 writer.WritePropertyName("logScrubbing"u8);
                 writer.WriteObjectValue(LogScrubbing);

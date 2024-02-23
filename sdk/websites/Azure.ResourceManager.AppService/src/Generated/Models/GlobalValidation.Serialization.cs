@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAuthenticationRequired))
+            if (IsAuthenticationRequired.HasValue)
             {
                 writer.WritePropertyName("requireAuthentication"u8);
                 writer.WriteBooleanValue(IsAuthenticationRequired.Value);
             }
-            if (Optional.IsDefined(UnauthenticatedClientAction))
+            if (UnauthenticatedClientAction.HasValue)
             {
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(RedirectToProvider))
+            if (RedirectToProvider != null)
             {
                 writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
-            if (Optional.IsCollectionDefined(ExcludedPaths))
+            if (!(ExcludedPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();

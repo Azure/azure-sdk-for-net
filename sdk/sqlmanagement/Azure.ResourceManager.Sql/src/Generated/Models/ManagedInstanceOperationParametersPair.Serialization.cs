@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CurrentParameters))
+            if (options.Format != "W" && CurrentParameters != null)
             {
                 writer.WritePropertyName("currentParameters"u8);
                 writer.WriteObjectValue(CurrentParameters);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestedParameters))
+            if (options.Format != "W" && RequestedParameters != null)
             {
                 writer.WritePropertyName("requestedParameters"u8);
                 writer.WriteObjectValue(RequestedParameters);

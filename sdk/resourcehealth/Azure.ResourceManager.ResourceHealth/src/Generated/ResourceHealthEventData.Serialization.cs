@@ -43,74 +43,74 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventType))
+            if (EventType.HasValue)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (Optional.IsDefined(EventSubType))
+            if (EventSubType.HasValue)
             {
                 writer.WritePropertyName("eventSubType"u8);
                 writer.WriteStringValue(EventSubType.Value.ToString());
             }
-            if (Optional.IsDefined(EventSource))
+            if (EventSource.HasValue)
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(Header))
+            if (Header != null)
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStringValue(Header);
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Optional.IsDefined(EventLevel))
+            if (EventLevel.HasValue)
             {
                 writer.WritePropertyName("eventLevel"u8);
                 writer.WriteStringValue(EventLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ExternalIncidentId))
+            if (ExternalIncidentId != null)
             {
                 writer.WritePropertyName("externalIncidentId"u8);
                 writer.WriteStringValue(ExternalIncidentId);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(Article))
+            if (Article != null)
             {
                 writer.WritePropertyName("article"u8);
                 writer.WriteObjectValue(Article);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<ResourceHealthEventLink> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ImpactStartOn))
+            if (ImpactStartOn.HasValue)
             {
                 writer.WritePropertyName("impactStartTime"u8);
                 writer.WriteStringValue(ImpactStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ImpactMitigationOn))
+            if (ImpactMitigationOn.HasValue)
             {
                 writer.WritePropertyName("impactMitigationTime"u8);
                 writer.WriteStringValue(ImpactMitigationOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Impact))
+            if (!(Impact is ChangeTrackingList<ResourceHealthEventImpact> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStartArray();
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RecommendedActions))
+            if (RecommendedActions != null)
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteObjectValue(RecommendedActions);
             }
-            if (Optional.IsCollectionDefined(Faqs))
+            if (!(Faqs is ChangeTrackingList<ResourceHealthEventFaq> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("faqs"u8);
                 writer.WriteStartArray();
@@ -155,72 +155,72 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsHirEvent))
+            if (IsHirEvent.HasValue)
             {
                 writer.WritePropertyName("isHIR"u8);
                 writer.WriteBooleanValue(IsHirEvent.Value);
             }
-            if (Optional.IsDefined(IsMicrosoftSupportEnabled))
+            if (IsMicrosoftSupportEnabled.HasValue)
             {
                 writer.WritePropertyName("enableMicrosoftSupport"u8);
                 writer.WriteBooleanValue(IsMicrosoftSupportEnabled.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsPlatformInitiated))
+            if (IsPlatformInitiated.HasValue)
             {
                 writer.WritePropertyName("platformInitiated"u8);
                 writer.WriteBooleanValue(IsPlatformInitiated.Value);
             }
-            if (Optional.IsDefined(IsChatWithUsEnabled))
+            if (IsChatWithUsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableChatWithUs"u8);
                 writer.WriteBooleanValue(IsChatWithUsEnabled.Value);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(LastUpdateOn))
+            if (LastUpdateOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdateOn.Value, "O");
             }
-            if (Optional.IsDefined(HirStage))
+            if (HirStage != null)
             {
                 writer.WritePropertyName("hirStage"u8);
                 writer.WriteStringValue(HirStage);
             }
-            if (Optional.IsDefined(AdditionalInformation))
+            if (AdditionalInformation != null)
             {
                 writer.WritePropertyName("additionalInformation"u8);
                 writer.WriteObjectValue(AdditionalInformation);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(Duration.Value);
             }
-            if (Optional.IsDefined(ImpactType))
+            if (ImpactType != null)
             {
                 writer.WritePropertyName("impactType"u8);
                 writer.WriteStringValue(ImpactType);
             }
-            if (Optional.IsDefined(MaintenanceId))
+            if (MaintenanceId != null)
             {
                 writer.WritePropertyName("maintenanceId"u8);
                 writer.WriteStringValue(MaintenanceId);
             }
-            if (Optional.IsDefined(MaintenanceType))
+            if (MaintenanceType != null)
             {
                 writer.WritePropertyName("maintenanceType"u8);
                 writer.WriteStringValue(MaintenanceType);
             }
-            if (Optional.IsDefined(ArgQuery))
+            if (ArgQuery != null)
             {
                 writer.WritePropertyName("argQuery"u8);
                 writer.WriteStringValue(ArgQuery);

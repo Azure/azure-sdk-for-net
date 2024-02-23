@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnType))
+            if (ColumnType.HasValue)
             {
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsComputed))
+            if (options.Format != "W" && IsComputed.HasValue)
             {
                 writer.WritePropertyName("isComputed"u8);
                 writer.WriteBooleanValue(IsComputed.Value);

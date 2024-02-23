@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RackLocation))
+            if (RackLocation != null)
             {
                 writer.WritePropertyName("rackLocation"u8);
                 writer.WriteStringValue(RackLocation);
             }
-            if (Optional.IsDefined(RackSerialNumber))
+            if (RackSerialNumber != null)
             {
                 writer.WritePropertyName("rackSerialNumber"u8);
                 writer.WriteStringValue(RackSerialNumber);

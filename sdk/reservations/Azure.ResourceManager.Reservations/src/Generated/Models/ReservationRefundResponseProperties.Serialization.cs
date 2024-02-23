@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Optional.IsDefined(BillingRefundAmount))
+            if (BillingRefundAmount != null)
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
                 writer.WriteObjectValue(BillingRefundAmount);
             }
-            if (Optional.IsDefined(PricingRefundAmount))
+            if (PricingRefundAmount != null)
             {
                 writer.WritePropertyName("pricingRefundAmount"u8);
                 writer.WriteObjectValue(PricingRefundAmount);
             }
-            if (Optional.IsDefined(PolicyResult))
+            if (PolicyResult != null)
             {
                 writer.WritePropertyName("policyResult"u8);
                 writer.WriteObjectValue(PolicyResult);
             }
-            if (Optional.IsDefined(BillingInformation))
+            if (BillingInformation != null)
             {
                 writer.WritePropertyName("billingInformation"u8);
                 writer.WriteObjectValue(BillingInformation);

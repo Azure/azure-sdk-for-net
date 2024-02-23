@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(IPAddressVersion))
+            if (IPAddressVersion != null)
             {
                 writer.WritePropertyName("ipAddressVersion"u8);
                 writer.WriteStringValue(IPAddressVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Subnet))
+            if (options.Format != "W" && Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);

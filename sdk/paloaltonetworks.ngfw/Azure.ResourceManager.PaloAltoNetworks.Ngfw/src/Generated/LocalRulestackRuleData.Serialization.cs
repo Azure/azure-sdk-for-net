@@ -44,56 +44,56 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
-            if (options.Format != "W" && Optional.IsDefined(Priority))
+            if (options.Format != "W" && Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RuleState))
+            if (RuleState.HasValue)
             {
                 writer.WritePropertyName("ruleState"u8);
                 writer.WriteStringValue(RuleState.Value.ToString());
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsDefined(NegateSource))
+            if (NegateSource.HasValue)
             {
                 writer.WritePropertyName("negateSource"u8);
                 writer.WriteStringValue(NegateSource.Value.ToString());
             }
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Optional.IsDefined(NegateDestination))
+            if (NegateDestination.HasValue)
             {
                 writer.WritePropertyName("negateDestination"u8);
                 writer.WriteStringValue(NegateDestination.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Applications))
+            if (!(Applications is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applications"u8);
                 writer.WriteStartArray();
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteObjectValue(Category);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol != null)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (Optional.IsCollectionDefined(ProtocolPortList))
+            if (!(ProtocolPortList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protocolPortList"u8);
                 writer.WriteStartArray();
@@ -123,32 +123,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InboundInspectionCertificate))
+            if (InboundInspectionCertificate != null)
             {
                 writer.WritePropertyName("inboundInspectionCertificate"u8);
                 writer.WriteStringValue(InboundInspectionCertificate);
             }
-            if (Optional.IsDefined(AuditComment))
+            if (AuditComment != null)
             {
                 writer.WritePropertyName("auditComment"u8);
                 writer.WriteStringValue(AuditComment);
             }
-            if (Optional.IsDefined(ActionType))
+            if (ActionType.HasValue)
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableLogging))
+            if (EnableLogging.HasValue)
             {
                 writer.WritePropertyName("enableLogging"u8);
                 writer.WriteStringValue(EnableLogging.Value.ToString());
             }
-            if (Optional.IsDefined(DecryptionRuleType))
+            if (DecryptionRuleType.HasValue)
             {
                 writer.WritePropertyName("decryptionRuleType"u8);
                 writer.WriteStringValue(DecryptionRuleType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<RulestackTagInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

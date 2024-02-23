@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("alertType"u8);
             writer.WriteStringValue(AlertType);
-            if (Optional.IsCollectionDefined(EmailReceivers))
+            if (!(EmailReceivers is ChangeTrackingList<MonitorEmailReceiver> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SmsReceivers))
+            if (!(SmsReceivers is ChangeTrackingList<MonitorSmsReceiver> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WebhookReceivers))
+            if (!(WebhookReceivers is ChangeTrackingList<MonitorWebhookReceiver> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ItsmReceivers))
+            if (!(ItsmReceivers is ChangeTrackingList<MonitorItsmReceiver> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureAppPushReceivers))
+            if (!(AzureAppPushReceivers is ChangeTrackingList<MonitorAzureAppPushReceiver> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
+            if (!(AutomationRunbookReceivers is ChangeTrackingList<MonitorAutomationRunbookReceiver> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VoiceReceivers))
+            if (!(VoiceReceivers is ChangeTrackingList<MonitorVoiceReceiver> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogicAppReceivers))
+            if (!(LogicAppReceivers is ChangeTrackingList<MonitorLogicAppReceiver> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureFunctionReceivers))
+            if (!(AzureFunctionReceivers is ChangeTrackingList<MonitorAzureFunctionReceiver> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ArmRoleReceivers))
+            if (!(ArmRoleReceivers is ChangeTrackingList<MonitorArmRoleReceiver> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventHubReceivers))
+            if (!(EventHubReceivers is ChangeTrackingList<MonitorEventHubReceiver> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();

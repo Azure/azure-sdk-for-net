@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStringValue(HttpMethod.ToString());
             writer.WritePropertyName("serializedBody"u8);
             writer.WriteStringValue(SerializedBody);
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);

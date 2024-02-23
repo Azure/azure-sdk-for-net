@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteObjectValue(DeleteAfter);
             writer.WritePropertyName("sourceDataStore"u8);
             writer.WriteObjectValue(SourceDataStore);
-            if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
+            if (!(TargetDataStoreCopySettings is ChangeTrackingList<TargetCopySetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();

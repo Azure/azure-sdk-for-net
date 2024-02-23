@@ -16,12 +16,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentCategory))
+            if (ContentCategory.HasValue)
             {
                 writer.WritePropertyName("contentCategory"u8);
                 writer.WriteStringValue(ContentCategory.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Examples))
+            if (!(Examples is ChangeTrackingList<MessageExampleSequence> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartArray();

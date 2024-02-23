@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccount))
+            if (StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
-            if (Optional.IsDefined(ContainerRegistry))
+            if (ContainerRegistry != null)
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteObjectValue(ContainerRegistry);
             }
-            if (Optional.IsDefined(ContainerService))
+            if (ContainerService != null)
             {
                 writer.WritePropertyName("containerService"u8);
                 writer.WriteObjectValue(ContainerService);
             }
-            if (Optional.IsDefined(AppInsights))
+            if (AppInsights != null)
             {
                 writer.WritePropertyName("appInsights"u8);
                 writer.WriteObjectValue(AppInsights);
             }
-            if (Optional.IsDefined(ServiceAuthConfiguration))
+            if (ServiceAuthConfiguration != null)
             {
                 writer.WritePropertyName("serviceAuthConfiguration"u8);
                 writer.WriteObjectValue(ServiceAuthConfiguration);
             }
-            if (Optional.IsDefined(SslConfiguration))
+            if (SslConfiguration != null)
             {
                 writer.WritePropertyName("sslConfiguration"u8);
                 writer.WriteObjectValue(SslConfiguration);

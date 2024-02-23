@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdvertiseToFabric))
+            if (AdvertiseToFabric.HasValue)
             {
                 writer.WritePropertyName("advertiseToFabric"u8);
                 writer.WriteStringValue(AdvertiseToFabric.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Communities))
+            if (!(Communities is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("communities"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Peers))
+            if (!(Peers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("peers"u8);
                 writer.WriteStartArray();

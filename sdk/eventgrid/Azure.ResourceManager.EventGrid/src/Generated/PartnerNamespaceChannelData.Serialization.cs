@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChannelType))
+            if (ChannelType.HasValue)
             {
                 writer.WritePropertyName("channelType"u8);
                 writer.WriteStringValue(ChannelType.Value.ToString());
             }
-            if (Optional.IsDefined(PartnerTopicInfo))
+            if (PartnerTopicInfo != null)
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
                 writer.WriteObjectValue(PartnerTopicInfo);
             }
-            if (Optional.IsDefined(PartnerDestinationInfo))
+            if (PartnerDestinationInfo != null)
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
                 writer.WriteObjectValue(PartnerDestinationInfo);
             }
-            if (Optional.IsDefined(MessageForActivation))
+            if (MessageForActivation != null)
             {
                 writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ReadinessState))
+            if (ReadinessState.HasValue)
             {
                 writer.WritePropertyName("readinessState"u8);
                 writer.WriteStringValue(ReadinessState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOnIfNotActivated))
+            if (ExpireOnIfNotActivated.HasValue)
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");

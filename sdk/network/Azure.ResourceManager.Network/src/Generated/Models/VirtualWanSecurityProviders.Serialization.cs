@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportedProviders))
+            if (!(SupportedProviders is ChangeTrackingList<VirtualWanSecurityProvider> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedProviders"u8);
                 writer.WriteStartArray();

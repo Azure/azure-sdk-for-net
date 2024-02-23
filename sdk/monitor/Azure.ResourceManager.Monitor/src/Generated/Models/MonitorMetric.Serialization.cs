@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(MetricType);
             writer.WritePropertyName("name"u8);
             writer.WriteObjectValue(Name);
-            if (Optional.IsDefined(DisplayDescription))
+            if (DisplayDescription != null)
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

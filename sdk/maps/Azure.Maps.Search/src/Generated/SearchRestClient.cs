@@ -53,7 +53,7 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/polygon/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (geometryIds != null && Optional.IsCollectionDefined(geometryIds))
+            if (geometryIds != null && !(geometryIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("geometries", geometryIds, ",", true);
             }
@@ -163,11 +163,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && !(categoryFilter is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && !(countryFilter is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -195,7 +195,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && !(extendedPostalCodesFor is ChangeTrackingList<SearchIndex> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -207,15 +207,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("maxFuzzyLevel", maxFuzzyLevel.Value, true);
             }
-            if (indexFilter != null && Optional.IsCollectionDefined(indexFilter))
+            if (indexFilter != null && !(indexFilter is ChangeTrackingList<SearchIndex> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 uri.AppendQueryDelimited("idxSet", indexFilter, ",", true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && !(brandFilter is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && !(electricVehicleConnectorFilter is ChangeTrackingList<ElectricVehicleConnector> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -599,11 +599,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && !(categoryFilter is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && !(countryFilter is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -631,15 +631,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && !(extendedPostalCodesFor is ChangeTrackingList<PointOfInterestExtendedPostalCodes> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && !(brandFilter is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && !(electricVehicleConnectorFilter is ChangeTrackingList<ElectricVehicleConnector> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -910,11 +910,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && !(categoryFilter is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && !(countryFilter is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -926,15 +926,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && !(extendedPostalCodesFor is ChangeTrackingList<SearchIndex> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && !(brandFilter is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && !(electricVehicleConnectorFilter is ChangeTrackingList<ElectricVehicleConnector> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -1200,11 +1200,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && !(categoryFilter is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && !(countryFilter is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -1232,15 +1232,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && !(extendedPostalCodesFor is ChangeTrackingList<SearchIndex> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && !(brandFilter is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && !(electricVehicleConnectorFilter is ChangeTrackingList<ElectricVehicleConnector> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -1625,7 +1625,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && !(countryFilter is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -1653,7 +1653,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && !(extendedPostalCodesFor is ChangeTrackingList<SearchIndex> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -1872,7 +1872,7 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/address/reverse/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (query != null && Optional.IsCollectionDefined(query))
+            if (query != null && !(query is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("query", query, ",", true);
             }
@@ -1900,7 +1900,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("returnRoadUse", includeRoadUse.Value, true);
             }
-            if (roadUse != null && Optional.IsCollectionDefined(roadUse))
+            if (roadUse != null && !(roadUse is ChangeTrackingList<RoadKind> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("roadUse", roadUse, ",", true);
             }
@@ -2073,7 +2073,7 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/address/reverse/crossStreet/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (query != null && Optional.IsCollectionDefined(query))
+            if (query != null && !(query is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("query", query, ",", true);
             }
@@ -2261,7 +2261,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("postalCode", postalCode, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && !(extendedPostalCodesFor is ChangeTrackingList<SearchIndex> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -2493,15 +2493,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && !(categoryFilter is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && !(extendedPostalCodesFor is ChangeTrackingList<SearchIndex> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (indexFilter != null && Optional.IsCollectionDefined(indexFilter))
+            if (indexFilter != null && !(indexFilter is ChangeTrackingList<SearchIndex> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("idxSet", indexFilter, ",", true);
             }
@@ -2724,15 +2724,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("limit", top.Value, true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && !(brandFilter is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && !(categoryFilter is ChangeTrackingList<int> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && !(electricVehicleConnectorFilter is ChangeTrackingList<ElectricVehicleConnector> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }

@@ -26,97 +26,97 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AvailabilityState))
+            if (AvailabilityState.HasValue)
             {
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToString());
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(DetailedStatus))
+            if (DetailedStatus != null)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus);
             }
-            if (Optional.IsDefined(ReasonType))
+            if (ReasonType != null)
             {
                 writer.WritePropertyName("reasonType"u8);
                 writer.WriteStringValue(ReasonType);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(ArticleId))
+            if (ArticleId != null)
             {
                 writer.WritePropertyName("articleId"u8);
                 writer.WriteStringValue(ArticleId);
             }
-            if (Optional.IsDefined(RootCauseAttributionOn))
+            if (RootCauseAttributionOn.HasValue)
             {
                 writer.WritePropertyName("rootCauseAttributionTime"u8);
                 writer.WriteStringValue(RootCauseAttributionOn.Value, "O");
             }
-            if (Optional.IsDefined(HealthEventType))
+            if (HealthEventType != null)
             {
                 writer.WritePropertyName("healthEventType"u8);
                 writer.WriteStringValue(HealthEventType);
             }
-            if (Optional.IsDefined(HealthEventCause))
+            if (HealthEventCause != null)
             {
                 writer.WritePropertyName("healthEventCause"u8);
                 writer.WriteStringValue(HealthEventCause);
             }
-            if (Optional.IsDefined(HealthEventCategory))
+            if (HealthEventCategory != null)
             {
                 writer.WritePropertyName("healthEventCategory"u8);
                 writer.WriteStringValue(HealthEventCategory);
             }
-            if (Optional.IsDefined(HealthEventId))
+            if (HealthEventId != null)
             {
                 writer.WritePropertyName("healthEventId"u8);
                 writer.WriteStringValue(HealthEventId);
             }
-            if (Optional.IsDefined(ResolutionEta))
+            if (ResolutionEta.HasValue)
             {
                 writer.WritePropertyName("resolutionETA"u8);
                 writer.WriteStringValue(ResolutionEta.Value, "O");
             }
-            if (Optional.IsDefined(OccuredOn))
+            if (OccuredOn.HasValue)
             {
                 writer.WritePropertyName("occuredTime"u8);
                 writer.WriteStringValue(OccuredOn.Value, "O");
             }
-            if (Optional.IsDefined(ReasonChronicity))
+            if (ReasonChronicity.HasValue)
             {
                 writer.WritePropertyName("reasonChronicity"u8);
                 writer.WriteStringValue(ReasonChronicity.Value.ToString());
             }
-            if (Optional.IsDefined(ReportedOn))
+            if (ReportedOn.HasValue)
             {
                 writer.WritePropertyName("reportedTime"u8);
                 writer.WriteStringValue(ReportedOn.Value, "O");
             }
-            if (Optional.IsDefined(RecentlyResolved))
+            if (RecentlyResolved != null)
             {
                 writer.WritePropertyName("recentlyResolved"u8);
                 writer.WriteObjectValue(RecentlyResolved);
             }
-            if (Optional.IsCollectionDefined(RecommendedActions))
+            if (!(RecommendedActions is ChangeTrackingList<ResourceHealthRecommendedAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceImpactingEvents))
+            if (!(ServiceImpactingEvents is ChangeTrackingList<ServiceImpactingEvent> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceImpactingEvents"u8);
                 writer.WriteStartArray();

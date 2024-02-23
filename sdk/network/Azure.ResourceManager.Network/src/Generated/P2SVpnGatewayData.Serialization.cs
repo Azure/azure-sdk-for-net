@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualHub))
+            if (VirtualHub != null)
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (Optional.IsCollectionDefined(P2SConnectionConfigurations))
+            if (!(P2SConnectionConfigurations is ChangeTrackingList<P2SConnectionConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("p2SConnectionConfigurations"u8);
                 writer.WriteStartArray();
@@ -82,27 +82,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(VpnGatewayScaleUnit))
+            if (VpnGatewayScaleUnit.HasValue)
             {
                 writer.WritePropertyName("vpnGatewayScaleUnit"u8);
                 writer.WriteNumberValue(VpnGatewayScaleUnit.Value);
             }
-            if (Optional.IsDefined(VpnServerConfiguration))
+            if (VpnServerConfiguration != null)
             {
                 writer.WritePropertyName("vpnServerConfiguration"u8);
                 JsonSerializer.Serialize(writer, VpnServerConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
+            if (options.Format != "W" && VpnClientConnectionHealth != null)
             {
                 writer.WritePropertyName("vpnClientConnectionHealth"u8);
                 writer.WriteObjectValue(VpnClientConnectionHealth);
             }
-            if (Optional.IsCollectionDefined(CustomDnsServers))
+            if (!(CustomDnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("customDnsServers"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsRoutingPreferenceInternet))
+            if (IsRoutingPreferenceInternet.HasValue)
             {
                 writer.WritePropertyName("isRoutingPreferenceInternet"u8);
                 writer.WriteBooleanValue(IsRoutingPreferenceInternet.Value);

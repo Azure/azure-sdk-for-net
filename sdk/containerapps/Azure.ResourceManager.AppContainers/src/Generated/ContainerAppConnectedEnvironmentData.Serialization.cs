@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,39 +62,39 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            if (options.Format != "W" && DeploymentErrors != null)
             {
                 writer.WritePropertyName("deploymentErrors"u8);
                 writer.WriteStringValue(DeploymentErrors);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
+            if (options.Format != "W" && DefaultDomain != null)
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (Optional.IsDefined(StaticIP))
+            if (StaticIP != null)
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
-            if (Optional.IsDefined(DaprAIConnectionString))
+            if (DaprAIConnectionString != null)
             {
                 writer.WritePropertyName("daprAIConnectionString"u8);
                 writer.WriteStringValue(DaprAIConnectionString);
             }
-            if (Optional.IsDefined(CustomDomainConfiguration))
+            if (CustomDomainConfiguration != null)
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
                 writer.WriteObjectValue(CustomDomainConfiguration);

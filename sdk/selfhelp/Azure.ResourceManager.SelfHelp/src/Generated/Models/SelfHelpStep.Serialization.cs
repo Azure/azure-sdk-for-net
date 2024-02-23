@@ -27,47 +27,47 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Guidance))
+            if (Guidance != null)
             {
                 writer.WritePropertyName("guidance"u8);
                 writer.WriteStringValue(Guidance);
             }
-            if (Optional.IsDefined(ExecutionStatus))
+            if (ExecutionStatus.HasValue)
             {
                 writer.WritePropertyName("executionStatus"u8);
                 writer.WriteStringValue(ExecutionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(ExecutionStatusDescription))
+            if (ExecutionStatusDescription != null)
             {
                 writer.WritePropertyName("executionStatusDescription"u8);
                 writer.WriteStringValue(ExecutionStatusDescription);
             }
-            if (Optional.IsDefined(StepType))
+            if (StepType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StepType.Value.ToString());
             }
-            if (Optional.IsDefined(IsLastStep))
+            if (IsLastStep.HasValue)
             {
                 writer.WritePropertyName("isLastStep"u8);
                 writer.WriteBooleanValue(IsLastStep.Value);
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<StepInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AutomatedCheckResults))
+            if (AutomatedCheckResults != null)
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
                 writer.WriteObjectValue(AutomatedCheckResults);
             }
-            if (Optional.IsCollectionDefined(Insights))
+            if (!(Insights is ChangeTrackingList<SelfHelpDiagnosticInsight> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);

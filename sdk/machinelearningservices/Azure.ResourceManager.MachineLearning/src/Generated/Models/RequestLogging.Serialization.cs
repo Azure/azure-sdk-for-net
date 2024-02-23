@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CaptureHeaders))
+            if (!(CaptureHeaders is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (CaptureHeaders != null)
                 {

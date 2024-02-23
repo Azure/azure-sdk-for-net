@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            if (options.Format != "W" && TargetResourceId != null)
             {
                 if (TargetResourceId != null)
                 {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("targetResourceId");
                 }
             }
-            if (Optional.IsDefined(GuestConfiguration))
+            if (GuestConfiguration != null)
             {
                 writer.WritePropertyName("guestConfiguration"u8);
                 writer.WriteObjectValue(GuestConfiguration);
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
+            if (options.Format != "W" && ComplianceStatus.HasValue)
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceStatusCheckedOn))
+            if (options.Format != "W" && LastComplianceStatusCheckedOn.HasValue)
             {
                 if (LastComplianceStatusCheckedOn != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("lastComplianceStatusChecked");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestReportId))
+            if (options.Format != "W" && LatestReportId != null)
             {
                 if (LatestReportId != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("latestReportId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ParameterHash))
+            if (options.Format != "W" && ParameterHash != null)
             {
                 if (ParameterHash != null)
                 {
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("parameterHash");
                 }
             }
-            if (Optional.IsDefined(LatestAssignmentReport))
+            if (LatestAssignmentReport != null)
             {
                 writer.WritePropertyName("latestAssignmentReport"u8);
                 writer.WriteObjectValue(LatestAssignmentReport);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssignmentHash))
+            if (options.Format != "W" && AssignmentHash != null)
             {
                 if (AssignmentHash != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentHash");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 if (ProvisioningState != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("provisioningState");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 if (ResourceType != null)
                 {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("resourceType");
                 }
             }
-            if (Optional.IsCollectionDefined(VmssVmList))
+            if (!(VmssVmList is ChangeTrackingList<GuestConfigurationVmssVmInfo> collection && collection.IsUndefined))
             {
                 if (VmssVmList != null)
                 {

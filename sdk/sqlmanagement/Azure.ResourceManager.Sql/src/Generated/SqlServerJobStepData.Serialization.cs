@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StepId))
+            if (StepId.HasValue)
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteNumberValue(StepId.Value);
             }
-            if (Optional.IsDefined(TargetGroup))
+            if (TargetGroup != null)
             {
                 writer.WritePropertyName("targetGroup"u8);
                 writer.WriteStringValue(TargetGroup);
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteStringValue(Credential);
             }
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsDefined(Output))
+            if (Output != null)
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
-            if (Optional.IsDefined(ExecutionOptions))
+            if (ExecutionOptions != null)
             {
                 writer.WritePropertyName("executionOptions"u8);
                 writer.WriteObjectValue(ExecutionOptions);

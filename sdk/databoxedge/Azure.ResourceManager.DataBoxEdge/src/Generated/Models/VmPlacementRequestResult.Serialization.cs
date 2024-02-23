@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VmSize))
+            if (!(VmSize is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsFeasible))
+            if (IsFeasible.HasValue)
             {
                 writer.WritePropertyName("isFeasible"u8);
                 writer.WriteBooleanValue(IsFeasible.Value);
             }
-            if (Optional.IsDefined(MessageCode))
+            if (MessageCode != null)
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteStringValue(MessageCode);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

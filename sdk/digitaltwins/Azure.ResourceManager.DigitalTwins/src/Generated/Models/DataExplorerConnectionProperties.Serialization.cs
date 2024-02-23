@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStringValue(AdxEndpointUri.AbsoluteUri);
             writer.WritePropertyName("adxDatabaseName"u8);
             writer.WriteStringValue(AdxDatabaseName);
-            if (Optional.IsDefined(AdxTableName))
+            if (AdxTableName != null)
             {
                 if (AdxTableName != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("adxTableName");
                 }
             }
-            if (Optional.IsDefined(AdxTwinLifecycleEventsTableName))
+            if (AdxTwinLifecycleEventsTableName != null)
             {
                 if (AdxTwinLifecycleEventsTableName != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("adxTwinLifecycleEventsTableName");
                 }
             }
-            if (Optional.IsDefined(AdxRelationshipLifecycleEventsTableName))
+            if (AdxRelationshipLifecycleEventsTableName != null)
             {
                 if (AdxRelationshipLifecycleEventsTableName != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStringValue(EventHubEntityPath);
             writer.WritePropertyName("eventHubNamespaceResourceId"u8);
             writer.WriteStringValue(EventHubNamespaceResourceId);
-            if (Optional.IsDefined(EventHubConsumerGroup))
+            if (EventHubConsumerGroup != null)
             {
                 if (EventHubConsumerGroup != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("eventHubConsumerGroup");
                 }
             }
-            if (Optional.IsDefined(RecordPropertyAndItemRemovals))
+            if (RecordPropertyAndItemRemovals.HasValue)
             {
                 if (RecordPropertyAndItemRemovals != null)
                 {
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {

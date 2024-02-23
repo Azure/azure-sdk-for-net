@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastStepName))
+            if (LastStepName != null)
             {
                 writer.WritePropertyName("lastStepName"u8);
                 writer.WriteStringValue(LastStepName);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Operation))
+            if (Operation.HasValue)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation.Value.ToString());
             }
-            if (Optional.IsDefined(Steps))
+            if (Steps != null)
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStringValue(Steps);
             }
-            if (Optional.IsDefined(LastOperationId))
+            if (LastOperationId.HasValue)
             {
                 writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CommandName))
+            if (options.Format != "W" && CommandName != null)
             {
                 writer.WritePropertyName("commandName"u8);
                 writer.WriteStringValue(CommandName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdatedOn))
+            if (options.Format != "W" && LastStatusUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastStatusTimestamp"u8);
                 writer.WriteStringValue(LastStatusUpdatedOn.Value, "O");

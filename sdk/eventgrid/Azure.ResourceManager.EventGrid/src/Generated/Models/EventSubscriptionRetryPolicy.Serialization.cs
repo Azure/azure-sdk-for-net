@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxDeliveryAttempts))
+            if (MaxDeliveryAttempts.HasValue)
             {
                 writer.WritePropertyName("maxDeliveryAttempts"u8);
                 writer.WriteNumberValue(MaxDeliveryAttempts.Value);
             }
-            if (Optional.IsDefined(EventTimeToLiveInMinutes))
+            if (EventTimeToLiveInMinutes.HasValue)
             {
                 writer.WritePropertyName("eventTimeToLiveInMinutes"u8);
                 writer.WriteNumberValue(EventTimeToLiveInMinutes.Value);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SearchSchemaValueType))
+            if (SearchSchemaValueType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SearchSchemaValueType);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteBooleanValue(Stored);
             writer.WritePropertyName("facet"u8);
             writer.WriteBooleanValue(Facet);
-            if (Optional.IsCollectionDefined(OwnerType))
+            if (!(OwnerType is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ownerType"u8);
                 writer.WriteStartArray();

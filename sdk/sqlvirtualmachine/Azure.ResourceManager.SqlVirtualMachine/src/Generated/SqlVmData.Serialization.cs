@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,84 +62,84 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualMachineResourceId))
+            if (VirtualMachineResourceId != null)
             {
                 writer.WritePropertyName("virtualMachineResourceId"u8);
                 writer.WriteStringValue(VirtualMachineResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(SqlImageOffer))
+            if (SqlImageOffer != null)
             {
                 writer.WritePropertyName("sqlImageOffer"u8);
                 writer.WriteStringValue(SqlImageOffer);
             }
-            if (Optional.IsDefined(SqlServerLicenseType))
+            if (SqlServerLicenseType.HasValue)
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(SqlManagement))
+            if (SqlManagement.HasValue)
             {
                 writer.WritePropertyName("sqlManagement"u8);
                 writer.WriteStringValue(SqlManagement.Value.ToString());
             }
-            if (Optional.IsDefined(SqlImageSku))
+            if (SqlImageSku.HasValue)
             {
                 writer.WritePropertyName("sqlImageSku"u8);
                 writer.WriteStringValue(SqlImageSku.Value.ToString());
             }
-            if (Optional.IsDefined(SqlVmGroupResourceId))
+            if (SqlVmGroupResourceId != null)
             {
                 writer.WritePropertyName("sqlVirtualMachineGroupResourceId"u8);
                 writer.WriteStringValue(SqlVmGroupResourceId);
             }
-            if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
+            if (WindowsServerFailoverClusterDomainCredentials != null)
             {
                 writer.WritePropertyName("wsfcDomainCredentials"u8);
                 writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials);
             }
-            if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
+            if (WindowsServerFailoverClusterStaticIP != null)
             {
                 writer.WritePropertyName("wsfcStaticIp"u8);
                 writer.WriteStringValue(WindowsServerFailoverClusterStaticIP.ToString());
             }
-            if (Optional.IsDefined(AutoPatchingSettings))
+            if (AutoPatchingSettings != null)
             {
                 writer.WritePropertyName("autoPatchingSettings"u8);
                 writer.WriteObjectValue(AutoPatchingSettings);
             }
-            if (Optional.IsDefined(AutoBackupSettings))
+            if (AutoBackupSettings != null)
             {
                 writer.WritePropertyName("autoBackupSettings"u8);
                 writer.WriteObjectValue(AutoBackupSettings);
             }
-            if (Optional.IsDefined(KeyVaultCredentialSettings))
+            if (KeyVaultCredentialSettings != null)
             {
                 writer.WritePropertyName("keyVaultCredentialSettings"u8);
                 writer.WriteObjectValue(KeyVaultCredentialSettings);
             }
-            if (Optional.IsDefined(ServerConfigurationsManagementSettings))
+            if (ServerConfigurationsManagementSettings != null)
             {
                 writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
                 writer.WriteObjectValue(ServerConfigurationsManagementSettings);
             }
-            if (Optional.IsDefined(StorageConfigurationSettings))
+            if (StorageConfigurationSettings != null)
             {
                 writer.WritePropertyName("storageConfigurationSettings"u8);
                 writer.WriteObjectValue(StorageConfigurationSettings);
             }
-            if (Optional.IsDefined(AssessmentSettings))
+            if (AssessmentSettings != null)
             {
                 writer.WritePropertyName("assessmentSettings"u8);
                 writer.WriteObjectValue(AssessmentSettings);

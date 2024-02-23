@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepositoryUri))
+            if (RepositoryUri != null)
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OperatorNamespace))
+            if (OperatorNamespace != null)
             {
                 writer.WritePropertyName("operatorNamespace"u8);
                 writer.WriteStringValue(OperatorNamespace);
             }
-            if (Optional.IsDefined(OperatorInstanceName))
+            if (OperatorInstanceName != null)
             {
                 writer.WritePropertyName("operatorInstanceName"u8);
                 writer.WriteStringValue(OperatorInstanceName);
             }
-            if (Optional.IsDefined(OperatorType))
+            if (OperatorType.HasValue)
             {
                 writer.WritePropertyName("operatorType"u8);
                 writer.WriteStringValue(OperatorType.Value.ToString());
             }
-            if (Optional.IsDefined(OperatorParams))
+            if (OperatorParams != null)
             {
                 writer.WritePropertyName("operatorParams"u8);
                 writer.WriteStringValue(OperatorParams);
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationProtectedSettings"u8);
                 writer.WriteStartObject();
@@ -86,37 +86,37 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(OperatorScope))
+            if (OperatorScope.HasValue)
             {
                 writer.WritePropertyName("operatorScope"u8);
                 writer.WriteStringValue(OperatorScope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RepositoryPublicKey))
+            if (options.Format != "W" && RepositoryPublicKey != null)
             {
                 writer.WritePropertyName("repositoryPublicKey"u8);
                 writer.WriteStringValue(RepositoryPublicKey);
             }
-            if (Optional.IsDefined(SshKnownHostsContents))
+            if (SshKnownHostsContents != null)
             {
                 writer.WritePropertyName("sshKnownHostsContents"u8);
                 writer.WriteStringValue(SshKnownHostsContents);
             }
-            if (Optional.IsDefined(IsHelmOperatorEnabled))
+            if (IsHelmOperatorEnabled.HasValue)
             {
                 writer.WritePropertyName("enableHelmOperator"u8);
                 writer.WriteBooleanValue(IsHelmOperatorEnabled.Value);
             }
-            if (Optional.IsDefined(HelmOperatorProperties))
+            if (HelmOperatorProperties != null)
             {
                 writer.WritePropertyName("helmOperatorProperties"u8);
                 writer.WriteObjectValue(HelmOperatorProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
+            if (options.Format != "W" && ComplianceStatus != null)
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteObjectValue(ComplianceStatus);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kubernetes
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
             JsonSerializer.Serialize(writer, Identity);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Kubernetes
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,67 +67,67 @@ namespace Azure.ResourceManager.Kubernetes
             writer.WriteStartObject();
             writer.WritePropertyName("agentPublicKeyCertificate"u8);
             writer.WriteStringValue(AgentPublicKeyCertificate);
-            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
+            if (options.Format != "W" && KubernetesVersion != null)
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalNodeCount))
+            if (options.Format != "W" && TotalNodeCount.HasValue)
             {
                 writer.WritePropertyName("totalNodeCount"u8);
                 writer.WriteNumberValue(TotalNodeCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalCoreCount))
+            if (options.Format != "W" && TotalCoreCount.HasValue)
             {
                 writer.WritePropertyName("totalCoreCount"u8);
                 writer.WriteNumberValue(TotalCoreCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
+            if (options.Format != "W" && AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Distribution))
+            if (Distribution != null)
             {
                 writer.WritePropertyName("distribution"u8);
                 writer.WriteStringValue(Distribution);
             }
-            if (Optional.IsDefined(Infrastructure))
+            if (Infrastructure != null)
             {
                 writer.WritePropertyName("infrastructure"u8);
                 writer.WriteStringValue(Infrastructure);
             }
-            if (options.Format != "W" && Optional.IsDefined(Offering))
+            if (options.Format != "W" && Offering != null)
             {
                 writer.WritePropertyName("offering"u8);
                 writer.WriteStringValue(Offering);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
+            if (options.Format != "W" && ManagedIdentityCertificateExpirationOn.HasValue)
             {
                 writer.WritePropertyName("managedIdentityCertificateExpirationTime"u8);
                 writer.WriteStringValue(ManagedIdentityCertificateExpirationOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectivityOn))
+            if (options.Format != "W" && LastConnectivityOn.HasValue)
             {
                 writer.WritePropertyName("lastConnectivityTime"u8);
                 writer.WriteStringValue(LastConnectivityOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityStatus))
+            if (options.Format != "W" && ConnectivityStatus.HasValue)
             {
                 writer.WritePropertyName("connectivityStatus"u8);
                 writer.WriteStringValue(ConnectivityStatus.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLinkState))
+            if (PrivateLinkState.HasValue)
             {
                 writer.WritePropertyName("privateLinkState"u8);
                 writer.WriteStringValue(PrivateLinkState.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLinkScopeResourceId))
+            if (PrivateLinkScopeResourceId != null)
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);

@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (Optional.IsDefined(_value))
+            if (_value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER

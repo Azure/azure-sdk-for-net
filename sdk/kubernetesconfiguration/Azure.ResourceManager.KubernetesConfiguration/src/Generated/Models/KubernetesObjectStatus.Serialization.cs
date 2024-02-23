@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(ComplianceState))
+            if (ComplianceState.HasValue)
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (Optional.IsDefined(AppliedBy))
+            if (AppliedBy != null)
             {
                 if (AppliedBy != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("appliedBy");
                 }
             }
-            if (Optional.IsCollectionDefined(StatusConditions))
+            if (!(StatusConditions is ChangeTrackingList<KubernetesObjectStatusCondition> collection && collection.IsUndefined))
             {
                 if (StatusConditions != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("statusConditions");
                 }
             }
-            if (Optional.IsDefined(HelmReleaseProperties))
+            if (HelmReleaseProperties != null)
             {
                 if (HelmReleaseProperties != null)
                 {

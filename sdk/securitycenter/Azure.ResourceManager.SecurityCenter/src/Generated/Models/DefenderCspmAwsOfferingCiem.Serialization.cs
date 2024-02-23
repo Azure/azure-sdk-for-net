@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CiemDiscovery))
+            if (CiemDiscovery != null)
             {
                 writer.WritePropertyName("ciemDiscovery"u8);
                 writer.WriteObjectValue(CiemDiscovery);
             }
-            if (Optional.IsDefined(CiemOidc))
+            if (CiemOidc != null)
             {
                 writer.WritePropertyName("ciemOidc"u8);
                 writer.WriteObjectValue(CiemOidc);

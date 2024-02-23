@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NotificationPreferences))
+            if (!(NotificationPreferences is ChangeTrackingList<NotificationPreference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notificationPreferences"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TransportPreferences))
+            if (TransportPreferences != null)
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
-            if (Optional.IsDefined(EncryptionPreferences))
+            if (EncryptionPreferences != null)
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
-            if (Optional.IsDefined(ManagementResourcePreferences))
+            if (ManagementResourcePreferences != null)
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
                 writer.WriteObjectValue(ManagementResourcePreferences);

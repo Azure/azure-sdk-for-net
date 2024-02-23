@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
+            if (IsAzureMonitorTargetEnabled.HasValue)
             {
                 writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
             }
-            if (Optional.IsDefined(IsManagedIdentityInUse))
+            if (IsManagedIdentityInUse.HasValue)
             {
                 writer.WritePropertyName("isManagedIdentityInUse"u8);
                 writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StorageEndpoint))
+            if (StorageEndpoint != null)
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (Optional.IsDefined(StorageAccountAccessKey))
+            if (StorageAccountAccessKey != null)
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (Optional.IsDefined(StorageAccountSubscriptionId))
+            if (StorageAccountSubscriptionId.HasValue)
             {
                 writer.WritePropertyName("storageAccountSubscriptionId"u8);
                 writer.WriteStringValue(StorageAccountSubscriptionId.Value);

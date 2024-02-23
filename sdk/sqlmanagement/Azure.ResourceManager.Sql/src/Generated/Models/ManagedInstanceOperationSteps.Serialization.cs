@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TotalSteps))
+            if (options.Format != "W" && TotalSteps != null)
             {
                 writer.WritePropertyName("totalSteps"u8);
                 writer.WriteStringValue(TotalSteps);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentStep))
+            if (options.Format != "W" && CurrentStep.HasValue)
             {
                 writer.WritePropertyName("currentStep"u8);
                 writer.WriteNumberValue(CurrentStep.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StepsList))
+            if (options.Format != "W" && !(StepsList is ChangeTrackingList<UpsertManagedServerOperationStep> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stepsList"u8);
                 writer.WriteStartArray();

@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -65,39 +65,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DnsName))
+            if (DnsName != null)
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
+            if (options.Format != "W" && IPv4Address != null)
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId.HasValue)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterState))
+            if (options.Format != "W" && ClusterState.HasValue)
             {
                 writer.WritePropertyName("clusterState"u8);
                 writer.WriteStringValue(ClusterState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ClusterCertificateThumbprints))
+            if (options.Format != "W" && !(ClusterCertificateThumbprints is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clusterCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -119,27 +119,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClientConnectionPort))
+            if (ClientConnectionPort.HasValue)
             {
                 writer.WritePropertyName("clientConnectionPort"u8);
                 writer.WriteNumberValue(ClientConnectionPort.Value);
             }
-            if (Optional.IsDefined(HttpGatewayConnectionPort))
+            if (HttpGatewayConnectionPort.HasValue)
             {
                 writer.WritePropertyName("httpGatewayConnectionPort"u8);
                 writer.WriteNumberValue(HttpGatewayConnectionPort.Value);
             }
-            if (Optional.IsDefined(AdminUserName))
+            if (AdminUserName != null)
             {
                 writer.WritePropertyName("adminUserName"u8);
                 writer.WriteStringValue(AdminUserName);
             }
-            if (Optional.IsDefined(AdminPassword))
+            if (AdminPassword != null)
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsCollectionDefined(LoadBalancingRules))
+            if (!(LoadBalancingRules is ChangeTrackingList<ManagedClusterLoadBalancingRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsRdpAccessAllowed))
+            if (IsRdpAccessAllowed.HasValue)
             {
                 writer.WritePropertyName("allowRdpAccess"u8);
                 writer.WriteBooleanValue(IsRdpAccessAllowed.Value);
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityRules))
+            if (!(NetworkSecurityRules is ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityRules"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Clients))
+            if (!(Clients is ChangeTrackingList<ManagedClusterClientCertificate> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("clients"u8);
                 writer.WriteStartArray();
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AzureActiveDirectory))
+            if (AzureActiveDirectory != null)
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
-            if (Optional.IsCollectionDefined(FabricSettings))
+            if (!(FabricSettings is ChangeTrackingList<ClusterFabricSettingsSection> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
@@ -189,27 +189,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ClusterCodeVersion))
+            if (ClusterCodeVersion != null)
             {
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
-            if (Optional.IsDefined(ClusterUpgradeMode))
+            if (ClusterUpgradeMode.HasValue)
             {
                 writer.WritePropertyName("clusterUpgradeMode"u8);
                 writer.WriteStringValue(ClusterUpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(ClusterUpgradeCadence))
+            if (ClusterUpgradeCadence.HasValue)
             {
                 writer.WritePropertyName("clusterUpgradeCadence"u8);
                 writer.WriteStringValue(ClusterUpgradeCadence.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AddOnFeatures))
+            if (!(AddOnFeatures is ChangeTrackingList<ManagedClusterAddOnFeature> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("addonFeatures"u8);
                 writer.WriteStartArray();
@@ -219,32 +219,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsAutoOSUpgradeEnabled))
+            if (IsAutoOSUpgradeEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAutoOSUpgrade"u8);
                 writer.WriteBooleanValue(IsAutoOSUpgradeEnabled.Value);
             }
-            if (Optional.IsDefined(HasZoneResiliency))
+            if (HasZoneResiliency.HasValue)
             {
                 writer.WritePropertyName("zonalResiliency"u8);
                 writer.WriteBooleanValue(HasZoneResiliency.Value);
             }
-            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
+            if (ApplicationTypeVersionsCleanupPolicy != null)
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
                 writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
             }
-            if (Optional.IsDefined(IsIPv6Enabled))
+            if (IsIPv6Enabled.HasValue)
             {
                 writer.WritePropertyName("enableIpv6"u8);
                 writer.WriteBooleanValue(IsIPv6Enabled.Value);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsCollectionDefined(IPTags))
+            if (!(IPTags is ChangeTrackingList<ManagedClusterIPTag> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
@@ -254,17 +254,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
+            if (options.Format != "W" && IPv6Address != null)
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address.ToString());
             }
-            if (Optional.IsDefined(IsServicePublicIPEnabled))
+            if (IsServicePublicIPEnabled.HasValue)
             {
                 writer.WritePropertyName("enableServicePublicIP"u8);
                 writer.WriteBooleanValue(IsServicePublicIPEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AuxiliarySubnets))
+            if (!(AuxiliarySubnets is ChangeTrackingList<ManagedClusterSubnet> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("auxiliarySubnets"u8);
                 writer.WriteStartArray();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceEndpoints))
+            if (!(ServiceEndpoints is ChangeTrackingList<ManagedClusterServiceEndpoint> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();
@@ -284,42 +284,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ZonalUpdateMode))
+            if (ZonalUpdateMode.HasValue)
             {
                 writer.WritePropertyName("zonalUpdateMode"u8);
                 writer.WriteStringValue(ZonalUpdateMode.Value.ToString());
             }
-            if (Optional.IsDefined(UseCustomVnet))
+            if (UseCustomVnet.HasValue)
             {
                 writer.WritePropertyName("useCustomVnet"u8);
                 writer.WriteBooleanValue(UseCustomVnet.Value);
             }
-            if (Optional.IsDefined(PublicIPPrefixId))
+            if (PublicIPPrefixId != null)
             {
                 writer.WritePropertyName("publicIPPrefixId"u8);
                 writer.WriteStringValue(PublicIPPrefixId);
             }
-            if (Optional.IsDefined(PublicIPv6PrefixId))
+            if (PublicIPv6PrefixId != null)
             {
                 writer.WritePropertyName("publicIPv6PrefixId"u8);
                 writer.WriteStringValue(PublicIPv6PrefixId);
             }
-            if (Optional.IsDefined(DdosProtectionPlanId))
+            if (DdosProtectionPlanId != null)
             {
                 writer.WritePropertyName("ddosProtectionPlanId"u8);
                 writer.WriteStringValue(DdosProtectionPlanId);
             }
-            if (Optional.IsDefined(UpgradeDescription))
+            if (UpgradeDescription != null)
             {
                 writer.WritePropertyName("upgradeDescription"u8);
                 writer.WriteObjectValue(UpgradeDescription);
             }
-            if (Optional.IsDefined(HttpGatewayTokenAuthConnectionPort))
+            if (HttpGatewayTokenAuthConnectionPort.HasValue)
             {
                 writer.WritePropertyName("httpGatewayTokenAuthConnectionPort"u8);
                 writer.WriteNumberValue(HttpGatewayTokenAuthConnectionPort.Value);
             }
-            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
+            if (IsHttpGatewayExclusiveAuthModeEnabled.HasValue)
             {
                 writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
                 writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);

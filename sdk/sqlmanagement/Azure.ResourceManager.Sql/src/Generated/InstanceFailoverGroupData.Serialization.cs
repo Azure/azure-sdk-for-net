@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecondaryType))
+            if (SecondaryType.HasValue)
             {
                 writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
-            if (Optional.IsDefined(ReadWriteEndpoint))
+            if (ReadWriteEndpoint != null)
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
-            if (Optional.IsDefined(ReadOnlyEndpoint))
+            if (ReadOnlyEndpoint != null)
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
+            if (options.Format != "W" && ReplicationRole.HasValue)
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
+            if (options.Format != "W" && ReplicationState != null)
             {
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState);
             }
-            if (Optional.IsCollectionDefined(PartnerRegions))
+            if (!(PartnerRegions is ChangeTrackingList<PartnerRegionInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("partnerRegions"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManagedInstancePairs))
+            if (!(ManagedInstancePairs is ChangeTrackingList<ManagedInstancePairInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("managedInstancePairs"u8);
                 writer.WriteStartArray();
