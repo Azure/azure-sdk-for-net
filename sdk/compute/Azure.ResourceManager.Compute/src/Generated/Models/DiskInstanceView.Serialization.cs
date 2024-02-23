@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(EncryptionSettings))
+            if (!(EncryptionSettings is ChangeTrackingList<DiskEncryptionSettings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskEncryptionSettings> array = new List<DiskEncryptionSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskEncryptionSettings.DeserializeDiskEncryptionSettings(item));
+                        array.Add(DiskEncryptionSettings.DeserializeDiskEncryptionSettings(item, options));
                     }
                     encryptionSettings = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;

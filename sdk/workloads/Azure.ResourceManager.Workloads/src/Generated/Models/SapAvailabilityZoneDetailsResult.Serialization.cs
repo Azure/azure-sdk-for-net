@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AvailabilityZonePairs))
+            if (!(AvailabilityZonePairs is ChangeTrackingList<SapAvailabilityZonePair> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZonePairs"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapAvailabilityZonePair> array = new List<SapAvailabilityZonePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapAvailabilityZonePair.DeserializeSapAvailabilityZonePair(item));
+                        array.Add(SapAvailabilityZonePair.DeserializeSapAvailabilityZonePair(item, options));
                     }
                     availabilityZonePairs = array;
                     continue;

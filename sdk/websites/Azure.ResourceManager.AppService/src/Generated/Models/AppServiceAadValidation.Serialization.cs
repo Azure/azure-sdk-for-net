@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JwtClaimChecks))
+            if (JwtClaimChecks != null)
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
                 writer.WriteObjectValue(JwtClaimChecks);
             }
-            if (Optional.IsCollectionDefined(AllowedAudiences))
+            if (!(AllowedAudiences is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultAuthorizationPolicy))
+            if (DefaultAuthorizationPolicy != null)
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
                 writer.WriteObjectValue(DefaultAuthorizationPolicy);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value);
+                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value);
+                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

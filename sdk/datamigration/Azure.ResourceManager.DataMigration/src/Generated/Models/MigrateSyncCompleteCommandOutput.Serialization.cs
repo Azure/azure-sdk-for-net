@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     errors = array;
                     continue;

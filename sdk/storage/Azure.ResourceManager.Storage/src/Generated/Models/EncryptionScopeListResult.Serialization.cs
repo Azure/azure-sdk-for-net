@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<EncryptionScopeData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<EncryptionScopeData> array = new List<EncryptionScopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionScopeData.DeserializeEncryptionScopeData(item));
+                        array.Add(EncryptionScopeData.DeserializeEncryptionScopeData(item, options));
                     }
                     value = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CosmosDBSqlRoleDefinitionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlRoleDefinitionData> array = new List<CosmosDBSqlRoleDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(item));
+                        array.Add(CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(item, options));
                     }
                     value = array;
                     continue;

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStringValue(SourceControlType.ToString());
             writer.WritePropertyName("repositoryUrl"u8);
             writer.WriteStringValue(RepositoryUri.AbsoluteUri);
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(SourceControlAuthProperties))
+            if (SourceControlAuthProperties != null)
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceControlAuthProperties = SourceCodeRepoAuthInfo.DeserializeSourceCodeRepoAuthInfo(property.Value);
+                    sourceControlAuthProperties = SourceCodeRepoAuthInfo.DeserializeSourceCodeRepoAuthInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

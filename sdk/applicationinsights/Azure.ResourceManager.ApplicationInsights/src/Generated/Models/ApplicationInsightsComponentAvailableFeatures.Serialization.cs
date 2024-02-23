@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Result))
+            if (options.Format != "W" && !(Result is ChangeTrackingList<ApplicationInsightsComponentFeature> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Result"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentFeature> array = new List<ApplicationInsightsComponentFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentFeature.DeserializeApplicationInsightsComponentFeature(item));
+                        array.Add(ApplicationInsightsComponentFeature.DeserializeApplicationInsightsComponentFeature(item, options));
                     }
                     result = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Hosts))
+            if (!(Hosts is ChangeTrackingList<DedicatedHostInstanceViewWithName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DedicatedHostInstanceViewWithName> array = new List<DedicatedHostInstanceViewWithName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHostInstanceViewWithName.DeserializeDedicatedHostInstanceViewWithName(item));
+                        array.Add(DedicatedHostInstanceViewWithName.DeserializeDedicatedHostInstanceViewWithName(item, options));
                     }
                     hosts = array;
                     continue;

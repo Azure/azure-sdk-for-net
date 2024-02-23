@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsCollectionDefined(Skus))
+            if (!(Skus is ChangeTrackingList<GlobalCsmSkuDescription> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<GlobalCsmSkuDescription> array = new List<GlobalCsmSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item));
+                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item, options));
                     }
                     skus = array;
                     continue;

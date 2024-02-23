@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudTrunkedNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (trunkedNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(trunkedNetworkName));
+            }
+            if (trunkedNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trunkedNetworkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudTrunkedNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (trunkedNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(trunkedNetworkName));
+            }
+            if (trunkedNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trunkedNetworkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudTrunkedNetworkResource>> GetAsync(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+            if (trunkedNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(trunkedNetworkName));
+            }
+            if (trunkedNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trunkedNetworkName));
+            }
 
             using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         public virtual Response<NetworkCloudTrunkedNetworkResource> Get(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+            if (trunkedNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(trunkedNetworkName));
+            }
+            if (trunkedNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trunkedNetworkName));
+            }
 
             using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+            if (trunkedNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(trunkedNetworkName));
+            }
+            if (trunkedNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trunkedNetworkName));
+            }
 
             using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+            if (trunkedNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(trunkedNetworkName));
+            }
+            if (trunkedNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trunkedNetworkName));
+            }
 
             using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudTrunkedNetworkResource>> GetIfExistsAsync(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+            if (trunkedNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(trunkedNetworkName));
+            }
+            if (trunkedNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trunkedNetworkName));
+            }
 
             using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudTrunkedNetworkResource> GetIfExists(string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trunkedNetworkName, nameof(trunkedNetworkName));
+            if (trunkedNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(trunkedNetworkName));
+            }
+            if (trunkedNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trunkedNetworkName));
+            }
 
             using var scope = _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics.CreateScope("NetworkCloudTrunkedNetworkCollection.GetIfExists");
             scope.Start();

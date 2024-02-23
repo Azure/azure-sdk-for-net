@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventSource))
+            if (EventSource.HasValue)
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RuleSets))
+            if (!(RuleSets is ChangeTrackingList<SecurityAutomationRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationRuleSet> array = new List<SecurityAutomationRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item));
+                        array.Add(SecurityAutomationRuleSet.DeserializeSecurityAutomationRuleSet(item, options));
                     }
                     ruleSets = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CosmosDBForPostgreSqlFirewallRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     List<CosmosDBForPostgreSqlFirewallRuleData> array = new List<CosmosDBForPostgreSqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(item));
+                        array.Add(CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

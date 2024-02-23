@@ -69,10 +69,38 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EasmTask>> GetByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (taskId == null)
+            {
+                throw new ArgumentNullException(nameof(taskId));
+            }
+            if (taskId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
+            }
 
             using var message = CreateGetByWorkspaceRequest(subscriptionId, resourceGroupName, workspaceName, taskId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -100,10 +128,38 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EasmTask> GetByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, string taskId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (workspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(workspaceName));
+            }
+            if (workspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
+            }
+            if (taskId == null)
+            {
+                throw new ArgumentNullException(nameof(taskId));
+            }
+            if (taskId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
+            }
 
             using var message = CreateGetByWorkspaceRequest(subscriptionId, resourceGroupName, workspaceName, taskId);
             _pipeline.Send(message, cancellationToken);

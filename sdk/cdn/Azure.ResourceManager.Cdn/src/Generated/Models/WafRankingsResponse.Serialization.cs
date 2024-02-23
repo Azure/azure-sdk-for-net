@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateTimeBegin))
+            if (DateTimeBegin.HasValue)
             {
                 writer.WritePropertyName("dateTimeBegin"u8);
                 writer.WriteStringValue(DateTimeBegin.Value, "O");
             }
-            if (Optional.IsDefined(DateTimeEnd))
+            if (DateTimeEnd.HasValue)
             {
                 writer.WritePropertyName("dateTimeEnd"u8);
                 writer.WriteStringValue(DateTimeEnd.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Groups))
+            if (!(Groups is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<WafRankingsResponseDataItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafRankingsResponseDataItem> array = new List<WafRankingsResponseDataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafRankingsResponseDataItem.DeserializeWafRankingsResponseDataItem(item));
+                        array.Add(WafRankingsResponseDataItem.DeserializeWafRankingsResponseDataItem(item, options));
                     }
                     data = array;
                     continue;

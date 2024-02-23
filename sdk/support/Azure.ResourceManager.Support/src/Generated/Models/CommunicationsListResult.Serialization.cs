@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SupportTicketCommunicationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportTicketCommunicationData> array = new List<SupportTicketCommunicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(item));
+                        array.Add(SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(item, options));
                     }
                     value = array;
                     continue;

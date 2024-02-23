@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public JitAuthorizationPolicies(Guid principalId, string roleDefinitionId)
         {
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
 
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsCollectionDefined(Config))
+            if (!(Config is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("config"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(Identity))
+            if (options.Format != "W" && Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    identity = ManagedClusterAddonProfileIdentity.DeserializeManagedClusterAddonProfileIdentity(property.Value);
+                    identity = ManagedClusterAddonProfileIdentity.DeserializeManagedClusterAddonProfileIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

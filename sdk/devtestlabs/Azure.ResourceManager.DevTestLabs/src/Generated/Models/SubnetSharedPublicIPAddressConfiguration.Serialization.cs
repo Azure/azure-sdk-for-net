@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedPorts))
+            if (!(AllowedPorts is ChangeTrackingList<DevTestLabPort> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedPorts"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabPort> array = new List<DevTestLabPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabPort.DeserializeDevTestLabPort(item));
+                        array.Add(DevTestLabPort.DeserializeDevTestLabPort(item, options));
                     }
                     allowedPorts = array;
                     continue;

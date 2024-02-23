@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(KeyName))
+            if (options.Format != "W" && KeyName.HasValue)
             {
                 writer.WritePropertyName("KeyName"u8);
                 writer.WriteStringValue(KeyName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Permissions))
+            if (options.Format != "W" && Permissions.HasValue)
             {
                 writer.WritePropertyName("Permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("Value"u8);
                 writer.WriteStringValue(Value);

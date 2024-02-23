@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SecurityAlertData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAlertData> array = new List<SecurityAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAlertData.DeserializeSecurityAlertData(item));
+                        array.Add(SecurityAlertData.DeserializeSecurityAlertData(item, options));
                     }
                     value = array;
                     continue;

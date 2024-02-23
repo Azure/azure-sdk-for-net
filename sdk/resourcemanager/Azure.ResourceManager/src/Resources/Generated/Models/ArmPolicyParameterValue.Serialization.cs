@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER

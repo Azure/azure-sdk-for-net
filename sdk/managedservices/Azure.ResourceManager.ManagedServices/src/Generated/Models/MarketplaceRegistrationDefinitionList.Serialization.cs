@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ManagedServicesMarketplaceRegistrationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesMarketplaceRegistrationData> array = new List<ManagedServicesMarketplaceRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(item));
+                        array.Add(ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(item, options));
                     }
                     value = array;
                     continue;

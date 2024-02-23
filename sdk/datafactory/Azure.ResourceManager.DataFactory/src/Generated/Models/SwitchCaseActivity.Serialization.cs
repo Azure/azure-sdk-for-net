@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsCollectionDefined(Activities))
+            if (!(Activities is ChangeTrackingList<PipelineActivity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivity> array = new List<PipelineActivity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivity.DeserializePipelineActivity(item));
+                        array.Add(PipelineActivity.DeserializePipelineActivity(item, options));
                     }
                     activities = array;
                     continue;

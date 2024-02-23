@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsCollectionDefined(ApplicationGroupReferences))
+            if (!(ApplicationGroupReferences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("applicationGroupReferences"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

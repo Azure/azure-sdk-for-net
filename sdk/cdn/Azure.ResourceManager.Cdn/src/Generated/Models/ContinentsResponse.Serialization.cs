@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Continents))
+            if (!(Continents is ChangeTrackingList<ContinentsResponseContinentsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("continents"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CountryOrRegions))
+            if (!(CountryOrRegions is ChangeTrackingList<ContinentsResponseCountryOrRegionsItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("countryOrRegions"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ContinentsResponseContinentsItem> array = new List<ContinentsResponseContinentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContinentsResponseContinentsItem.DeserializeContinentsResponseContinentsItem(item));
+                        array.Add(ContinentsResponseContinentsItem.DeserializeContinentsResponseContinentsItem(item, options));
                     }
                     continents = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ContinentsResponseCountryOrRegionsItem> array = new List<ContinentsResponseCountryOrRegionsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContinentsResponseCountryOrRegionsItem.DeserializeContinentsResponseCountryOrRegionsItem(item));
+                        array.Add(ContinentsResponseCountryOrRegionsItem.DeserializeContinentsResponseCountryOrRegionsItem(item, options));
                     }
                     countryOrRegions = array;
                     continue;

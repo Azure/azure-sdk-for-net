@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MediaServicesPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
+                        array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

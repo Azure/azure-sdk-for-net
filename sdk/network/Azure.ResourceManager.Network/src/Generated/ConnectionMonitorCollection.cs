@@ -84,8 +84,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ConnectionMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+            if (connectionMonitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.CreateOrUpdate");
             scope.Start();
@@ -134,8 +144,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ConnectionMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorName, ConnectionMonitorCreateOrUpdateContent content, string migrate = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+            if (connectionMonitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.CreateOrUpdate");
             scope.Start();
@@ -181,7 +201,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual async Task<Response<ConnectionMonitorResource>> GetAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+            if (connectionMonitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorName));
+            }
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.Get");
             scope.Start();
@@ -226,7 +253,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual Response<ConnectionMonitorResource> Get(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+            if (connectionMonitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorName));
+            }
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+            if (connectionMonitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorName));
+            }
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+            if (connectionMonitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorName));
+            }
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConnectionMonitorResource>> GetIfExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+            if (connectionMonitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorName));
+            }
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
         public virtual NullableResponse<ConnectionMonitorResource> GetIfExists(string connectionMonitorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
+            if (connectionMonitorName == null)
+            {
+                throw new ArgumentNullException(nameof(connectionMonitorName));
+            }
+            if (connectionMonitorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorName));
+            }
 
             using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.GetIfExists");
             scope.Start();

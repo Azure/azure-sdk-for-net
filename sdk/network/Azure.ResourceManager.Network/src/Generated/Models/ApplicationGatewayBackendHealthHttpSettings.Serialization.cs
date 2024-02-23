@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackendHttpSettings))
+            if (BackendHttpSettings != null)
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
                 writer.WriteObjectValue(BackendHttpSettings);
             }
-            if (Optional.IsCollectionDefined(Servers))
+            if (!(Servers is ChangeTrackingList<ApplicationGatewayBackendHealthServer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value);
+                    backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("servers"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayBackendHealthServer> array = new List<ApplicationGatewayBackendHealthServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayBackendHealthServer.DeserializeApplicationGatewayBackendHealthServer(item));
+                        array.Add(ApplicationGatewayBackendHealthServer.DeserializeApplicationGatewayBackendHealthServer(item, options));
                     }
                     servers = array;
                     continue;

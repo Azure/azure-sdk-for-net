@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskLunId))
+            if (DiskLunId.HasValue)
             {
                 writer.WritePropertyName("diskLunId"u8);
                 writer.WriteNumberValue(DiskLunId.Value);
             }
-            if (Optional.IsDefined(DiskAutoProtectionStatus))
+            if (DiskAutoProtectionStatus.HasValue)
             {
                 writer.WritePropertyName("diskAutoProtectionStatus"u8);
                 writer.WriteStringValue(DiskAutoProtectionStatus.Value.ToString());

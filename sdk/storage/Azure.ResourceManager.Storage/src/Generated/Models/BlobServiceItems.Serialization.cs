@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BlobServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobServiceData> array = new List<BlobServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobServiceData.DeserializeBlobServiceData(item));
+                        array.Add(BlobServiceData.DeserializeBlobServiceData(item, options));
                     }
                     value = array;
                     continue;

@@ -18,17 +18,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CrossMetricsOperator))
+            if (CrossMetricsOperator.HasValue)
             {
                 writer.WritePropertyName("crossMetricsOperator"u8);
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
+            if (!(DimensionsToSplitAlert is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("splitAlertByDimensions"u8);
                 writer.WriteStartArray();

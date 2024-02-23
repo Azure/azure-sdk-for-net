@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PeeringFacilities))
+            if (!(PeeringFacilities is ChangeTrackingList<DirectPeeringFacility> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BandwidthOffers))
+            if (!(BandwidthOffers is ChangeTrackingList<PeeringBandwidthOffer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bandwidthOffers"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<DirectPeeringFacility> array = new List<DirectPeeringFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DirectPeeringFacility.DeserializeDirectPeeringFacility(item));
+                        array.Add(DirectPeeringFacility.DeserializeDirectPeeringFacility(item, options));
                     }
                     peeringFacilities = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringBandwidthOffer> array = new List<PeeringBandwidthOffer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringBandwidthOffer.DeserializePeeringBandwidthOffer(item));
+                        array.Add(PeeringBandwidthOffer.DeserializePeeringBandwidthOffer(item, options));
                     }
                     bandwidthOffers = array;
                     continue;

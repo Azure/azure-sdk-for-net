@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualApplianceSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteName, VirtualApplianceSiteData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualApplianceSiteResource> CreateOrUpdate(WaitUntil waitUntil, string siteName, VirtualApplianceSiteData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual async Task<Response<VirtualApplianceSiteResource>> GetAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<VirtualApplianceSiteResource> Get(string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<bool> Exists(string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualApplianceSiteResource>> GetIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual NullableResponse<VirtualApplianceSiteResource> GetIfExists(string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var scope = _virtualApplianceSiteClientDiagnostics.CreateScope("VirtualApplianceSiteCollection.GetIfExists");
             scope.Start();

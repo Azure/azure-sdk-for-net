@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deviceAdminPassword"/> is null. </exception>
         public DataBoxEdgeSecuritySettings(AsymmetricEncryptedSecret deviceAdminPassword)
         {
-            Argument.AssertNotNull(deviceAdminPassword, nameof(deviceAdminPassword));
+            if (deviceAdminPassword == null)
+            {
+                throw new ArgumentNullException(nameof(deviceAdminPassword));
+            }
 
             DeviceAdminPassword = deviceAdminPassword;
         }

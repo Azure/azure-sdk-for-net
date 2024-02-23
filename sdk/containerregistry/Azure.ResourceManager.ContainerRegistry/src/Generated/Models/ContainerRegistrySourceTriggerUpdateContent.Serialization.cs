@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceRepository))
+            if (SourceRepository != null)
             {
                 writer.WritePropertyName("sourceRepository"u8);
                 writer.WriteObjectValue(SourceRepository);
             }
-            if (Optional.IsCollectionDefined(SourceTriggerEvents))
+            if (!(SourceTriggerEvents is ChangeTrackingList<ContainerRegistrySourceTriggerEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourceTriggerEvents"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceRepository = SourceCodeRepoUpdateContent.DeserializeSourceCodeRepoUpdateContent(property.Value);
+                    sourceRepository = SourceCodeRepoUpdateContent.DeserializeSourceCodeRepoUpdateContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceTriggerEvents"u8))

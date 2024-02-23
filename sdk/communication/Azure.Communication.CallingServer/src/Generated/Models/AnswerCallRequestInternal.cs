@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -19,8 +18,14 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
         public AnswerCallRequestInternal(string incomingCallContext, string callbackUri)
         {
-            Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
+            if (incomingCallContext == null)
+            {
+                throw new ArgumentNullException(nameof(incomingCallContext));
+            }
+            if (callbackUri == null)
+            {
+                throw new ArgumentNullException(nameof(callbackUri));
+            }
 
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;

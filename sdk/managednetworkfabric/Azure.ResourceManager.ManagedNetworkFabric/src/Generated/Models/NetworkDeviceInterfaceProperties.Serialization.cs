@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identifier))
+            if (Identifier != null)
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (Optional.IsDefined(InterfaceType))
+            if (InterfaceType != null)
             {
                 writer.WritePropertyName("interfaceType"u8);
                 writer.WriteStringValue(InterfaceType);
             }
-            if (Optional.IsCollectionDefined(SupportedConnectorTypes))
+            if (!(SupportedConnectorTypes is ChangeTrackingList<SupportedConnectorProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedConnectorTypes"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<SupportedConnectorProperties> array = new List<SupportedConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item));
+                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item, options));
                     }
                     supportedConnectorTypes = array;
                     continue;

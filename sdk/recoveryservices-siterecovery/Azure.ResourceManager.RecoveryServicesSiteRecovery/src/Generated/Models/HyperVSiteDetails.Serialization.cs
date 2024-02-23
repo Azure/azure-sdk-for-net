@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(HyperVHosts))
+            if (!(HyperVHosts is ChangeTrackingList<HyperVHostDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hyperVHosts"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVHostDetails> array = new List<HyperVHostDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item));
+                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item, options));
                     }
                     hyperVHosts = array;
                     continue;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppConfigurationNameAvailabilityContent(string name, AppConfigurationResourceType resourceType)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             ResourceType = resourceType;

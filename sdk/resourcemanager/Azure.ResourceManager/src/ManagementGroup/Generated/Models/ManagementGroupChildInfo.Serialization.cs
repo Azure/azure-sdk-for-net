@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChildType))
+            if (ChildType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ChildType.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (!(Children is ChangeTrackingList<ManagementGroupChildInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeManagementGroupChildInfo(item));
+                        array.Add(DeserializeManagementGroupChildInfo(item, options));
                     }
                     children = array;
                     continue;

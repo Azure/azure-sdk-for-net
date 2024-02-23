@@ -42,59 +42,59 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RequestId))
+            if (options.Format != "W" && RequestId.HasValue)
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestType))
+            if (options.Format != "W" && RequestType != null)
             {
                 writer.WritePropertyName("requestType"u8);
                 writer.WriteStringValue(RequestType);
             }
-            if (options.Format != "W" && Optional.IsDefined(QueuedTime))
+            if (options.Format != "W" && QueuedTime != null)
             {
                 writer.WritePropertyName("queuedTime"u8);
                 writer.WriteStringValue(QueuedTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedTime))
+            if (options.Format != "W" && LastModifiedTime != null)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(BlobUri))
+            if (options.Format != "W" && BlobUri != null)
             {
                 writer.WritePropertyName("blobUri"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<PrivateEndpointConnectionRequestStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<PrivateEndpointConnectionRequestStatus> array = new List<PrivateEndpointConnectionRequestStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionRequestStatus.DeserializePrivateEndpointConnectionRequestStatus(item));
+                                array.Add(PrivateEndpointConnectionRequestStatus.DeserializePrivateEndpointConnectionRequestStatus(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

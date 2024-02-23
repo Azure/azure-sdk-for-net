@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Flags))
+            if (!(Flags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStartArray();
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PortType))
+            if (PortType.HasValue)
             {
                 writer.WritePropertyName("portType"u8);
                 writer.WriteStringValue(PortType.Value.ToString());
             }
             writer.WritePropertyName("layer4Protocol"u8);
             writer.WriteStringValue(Layer4Protocol.ToString());
-            if (Optional.IsCollectionDefined(Ports))
+            if (!(Ports is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PortGroupNames))
+            if (!(PortGroupNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("portGroupNames"u8);
                 writer.WriteStartArray();

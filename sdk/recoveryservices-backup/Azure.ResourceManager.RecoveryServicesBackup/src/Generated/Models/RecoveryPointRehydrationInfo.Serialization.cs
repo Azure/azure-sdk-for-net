@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RehydrationRetentionDuration))
+            if (RehydrationRetentionDuration.HasValue)
             {
                 writer.WritePropertyName("rehydrationRetentionDuration"u8);
                 writer.WriteStringValue(RehydrationRetentionDuration.Value, "P");
             }
-            if (Optional.IsDefined(RehydrationPriority))
+            if (RehydrationPriority.HasValue)
             {
                 writer.WritePropertyName("rehydrationPriority"u8);
                 writer.WriteStringValue(RehydrationPriority.Value.ToString());

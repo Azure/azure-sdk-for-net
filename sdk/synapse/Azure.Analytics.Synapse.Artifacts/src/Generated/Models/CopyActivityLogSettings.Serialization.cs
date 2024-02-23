@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogLevel))
+            if (LogLevel != null)
             {
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteObjectValue(LogLevel);
             }
-            if (Optional.IsDefined(EnableReliableLogging))
+            if (EnableReliableLogging != null)
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 writer.WriteObjectValue(EnableReliableLogging);

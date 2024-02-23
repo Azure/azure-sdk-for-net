@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<VpnGatewayData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnGatewayData> array = new List<VpnGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnGatewayData.DeserializeVpnGatewayData(item));
+                        array.Add(VpnGatewayData.DeserializeVpnGatewayData(item, options));
                     }
                     value = array;
                     continue;

@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
         public VpnClientRootCertificate(BinaryData publicCertData)
         {
-            Argument.AssertNotNull(publicCertData, nameof(publicCertData));
+            if (publicCertData == null)
+            {
+                throw new ArgumentNullException(nameof(publicCertData));
+            }
 
             PublicCertData = publicCertData;
         }

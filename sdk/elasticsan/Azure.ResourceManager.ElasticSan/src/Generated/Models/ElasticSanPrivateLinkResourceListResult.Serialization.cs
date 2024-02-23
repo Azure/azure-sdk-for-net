@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ElasticSanPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanPrivateLinkResource> array = new List<ElasticSanPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource(item));
+                        array.Add(ElasticSanPrivateLinkResource.DeserializeElasticSanPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

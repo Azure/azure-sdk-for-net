@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(CloudServiceExtensionPropertiesType))
+            if (CloudServiceExtensionPropertiesType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CloudServiceExtensionPropertiesType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (TypeHandlerVersion != null)
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (AutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ProtectedSettings))
+            if (ProtectedSettings != null)
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (ProtectedSettingsFromKeyVault != null)
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
                 writer.WriteObjectValue(ProtectedSettingsFromKeyVault);
             }
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(RolesAppliedTo))
+            if (!(RolesAppliedTo is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rolesAppliedTo"u8);
                 writer.WriteStartArray();
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = CloudServiceVaultAndSecretReference.DeserializeCloudServiceVaultAndSecretReference(property0.Value);
+                            protectedSettingsFromKeyVault = CloudServiceVaultAndSecretReference.DeserializeCloudServiceVaultAndSecretReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))

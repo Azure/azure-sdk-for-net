@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ConfluentOrganizationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     List<ConfluentOrganizationData> array = new List<ConfluentOrganizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentOrganizationData.DeserializeConfluentOrganizationData(item));
+                        array.Add(ConfluentOrganizationData.DeserializeConfluentOrganizationData(item, options));
                     }
                     value = array;
                     continue;

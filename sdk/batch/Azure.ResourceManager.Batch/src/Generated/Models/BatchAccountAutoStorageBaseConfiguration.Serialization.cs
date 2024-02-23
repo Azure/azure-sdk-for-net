@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NodeIdentity))
+            if (NodeIdentity != null)
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
                 writer.WriteObjectValue(NodeIdentity);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
+                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

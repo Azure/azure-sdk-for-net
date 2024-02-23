@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BenefitRecommendationModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<BenefitRecommendationModel> array = new List<BenefitRecommendationModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BenefitRecommendationModel.DeserializeBenefitRecommendationModel(item));
+                        array.Add(BenefitRecommendationModel.DeserializeBenefitRecommendationModel(item, options));
                     }
                     value = array;
                     continue;

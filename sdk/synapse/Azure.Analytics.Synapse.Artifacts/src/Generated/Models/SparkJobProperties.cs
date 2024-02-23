@@ -24,9 +24,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="file"/>, <paramref name="driverMemory"/> or <paramref name="executorMemory"/> is null. </exception>
         public SparkJobProperties(string file, string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors)
         {
-            Argument.AssertNotNull(file, nameof(file));
-            Argument.AssertNotNull(driverMemory, nameof(driverMemory));
-            Argument.AssertNotNull(executorMemory, nameof(executorMemory));
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+            if (driverMemory == null)
+            {
+                throw new ArgumentNullException(nameof(driverMemory));
+            }
+            if (executorMemory == null)
+            {
+                throw new ArgumentNullException(nameof(executorMemory));
+            }
 
             File = file;
             Args = new ChangeTrackingList<string>();

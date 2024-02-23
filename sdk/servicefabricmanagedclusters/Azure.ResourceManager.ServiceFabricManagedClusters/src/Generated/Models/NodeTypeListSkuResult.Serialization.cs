@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NodeTypeAvailableSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeAvailableSku> array = new List<NodeTypeAvailableSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item));
+                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item, options));
                     }
                     value = array;
                     continue;

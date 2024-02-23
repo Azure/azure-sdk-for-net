@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Flowlet": return DataFactoryFlowletProperties.DeserializeDataFactoryFlowletProperties(element);
-                    case "MappingDataFlow": return DataFactoryMappingDataFlowProperties.DeserializeDataFactoryMappingDataFlowProperties(element);
-                    case "WranglingDataFlow": return DataFactoryWranglingDataFlowProperties.DeserializeDataFactoryWranglingDataFlowProperties(element);
+                    case "Flowlet": return DataFactoryFlowletProperties.DeserializeDataFactoryFlowletProperties(element, options);
+                    case "MappingDataFlow": return DataFactoryMappingDataFlowProperties.DeserializeDataFactoryMappingDataFlowProperties(element, options);
+                    case "WranglingDataFlow": return DataFactoryWranglingDataFlowProperties.DeserializeDataFactoryWranglingDataFlowProperties(element, options);
                 }
             }
-            return UnknownDataFlow.DeserializeUnknownDataFlow(element);
+            return UnknownDataFlow.DeserializeUnknownDataFlow(element, options);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowProperties>.Write(ModelReaderWriterOptions options)

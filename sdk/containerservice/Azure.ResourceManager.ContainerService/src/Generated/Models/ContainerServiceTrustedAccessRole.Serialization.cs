@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SourceResourceType))
+            if (options.Format != "W" && SourceResourceType != null)
             {
                 writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Rules))
+            if (options.Format != "W" && !(Rules is ChangeTrackingList<ContainerServiceTrustedAccessRoleRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceTrustedAccessRoleRule> array = new List<ContainerServiceTrustedAccessRoleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceTrustedAccessRoleRule.DeserializeContainerServiceTrustedAccessRoleRule(item));
+                        array.Add(ContainerServiceTrustedAccessRoleRule.DeserializeContainerServiceTrustedAccessRoleRule(item, options));
                     }
                     rules = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(And))
+            if (!(And is ChangeTrackingList<BudgetFilterProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Dimensions))
+            if (Dimensions != null)
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<BudgetFilterProperties> array = new List<BudgetFilterProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BudgetFilterProperties.DeserializeBudgetFilterProperties(item));
+                        array.Add(BudgetFilterProperties.DeserializeBudgetFilterProperties(item, options));
                     }
                     and = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
+                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
+                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

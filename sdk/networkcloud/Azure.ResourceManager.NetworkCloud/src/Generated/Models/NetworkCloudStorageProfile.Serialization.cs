@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
             writer.WriteObjectValue(OSDisk);
-            if (Optional.IsCollectionDefined(VolumeAttachments))
+            if (!(VolumeAttachments is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("osDisk"u8))
                 {
-                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value);
+                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeAttachments"u8))

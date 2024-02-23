@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IncludedEventTypes))
+            if (!(IncludedEventTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedEventTypes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<EventGridFilter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridFilter> array = new List<EventGridFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridFilter.DeserializeEventGridFilter(item));
+                        array.Add(EventGridFilter.DeserializeEventGridFilter(item, options));
                     }
                     filters = array;
                     continue;

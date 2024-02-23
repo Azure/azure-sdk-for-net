@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SubProtectionPolicy))
+            if (!(SubProtectionPolicy is ChangeTrackingList<SubProtectionPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(FabricName))
+            if (FabricName != null)
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (Optional.IsDefined(ProtectedItemsCount))
+            if (ProtectedItemsCount.HasValue)
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SubProtectionPolicy> array = new List<SubProtectionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item));
+                        array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item, options));
                     }
                     subProtectionPolicy = array;
                     continue;

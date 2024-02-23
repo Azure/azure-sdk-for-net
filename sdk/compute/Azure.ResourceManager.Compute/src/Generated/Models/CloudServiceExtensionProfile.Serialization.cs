@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<CloudServiceExtension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceExtension> array = new List<CloudServiceExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceExtension.DeserializeCloudServiceExtension(item));
+                        array.Add(CloudServiceExtension.DeserializeCloudServiceExtension(item, options));
                     }
                     extensions = array;
                     continue;

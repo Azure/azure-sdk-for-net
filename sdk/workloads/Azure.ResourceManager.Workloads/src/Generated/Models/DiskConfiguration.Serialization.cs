@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DiskVolumeConfigurations))
+            if (!(DiskVolumeConfigurations is ChangeTrackingDictionary<string, DiskVolumeConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskVolumeConfigurations"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     Dictionary<string, DiskVolumeConfiguration> dictionary = new Dictionary<string, DiskVolumeConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property0.Value, options));
                     }
                     diskVolumeConfigurations = dictionary;
                     continue;

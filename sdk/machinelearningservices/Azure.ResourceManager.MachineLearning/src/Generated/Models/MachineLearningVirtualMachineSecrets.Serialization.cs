@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorAccount))
+            if (AdministratorAccount != null)
             {
                 writer.WritePropertyName("administratorAccount"u8);
                 writer.WriteObjectValue(AdministratorAccount);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
+                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeType"u8))

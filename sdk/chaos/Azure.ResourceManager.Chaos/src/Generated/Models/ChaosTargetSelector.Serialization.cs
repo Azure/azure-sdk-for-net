@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "List": return ChaosTargetListSelector.DeserializeChaosTargetListSelector(element);
-                    case "Query": return ChaosTargetQuerySelector.DeserializeChaosTargetQuerySelector(element);
+                    case "List": return ChaosTargetListSelector.DeserializeChaosTargetListSelector(element, options);
+                    case "Query": return ChaosTargetQuerySelector.DeserializeChaosTargetQuerySelector(element, options);
                 }
             }
-            return UnknownChaosTargetSelector.DeserializeUnknownChaosTargetSelector(element);
+            return UnknownChaosTargetSelector.DeserializeUnknownChaosTargetSelector(element, options);
         }
 
         BinaryData IPersistableModel<ChaosTargetSelector>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CategoryName))
+            if (options.Format != "W" && CategoryName != null)
             {
                 writer.WritePropertyName("categoryName"u8);
                 writer.WriteStringValue(CategoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CategoryType))
+            if (options.Format != "W" && CategoryType.HasValue)
             {
                 writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CategoryStatus))
+            if (options.Format != "W" && CategoryStatus.HasValue)
             {
                 writer.WritePropertyName("categoryStatus"u8);
                 writer.WriteStringValue(CategoryStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ControlFamilies))
+            if (options.Format != "W" && !(ControlFamilies is ChangeTrackingList<ControlFamily> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("controlFamilies"u8);
                 writer.WriteStartArray();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ControlFamily> array = new List<ControlFamily>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControlFamily.DeserializeControlFamily(item));
+                        array.Add(ControlFamily.DeserializeControlFamily(item, options));
                     }
                     controlFamilies = array;
                     continue;

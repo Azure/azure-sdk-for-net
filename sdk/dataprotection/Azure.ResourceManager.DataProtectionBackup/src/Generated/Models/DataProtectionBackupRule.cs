@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -25,9 +24,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="dataStore"/> or <paramref name="trigger"/> is null. </exception>
         public DataProtectionBackupRule(string name, DataStoreInfoBase dataStore, DataProtectionBackupTriggerContext trigger) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(dataStore, nameof(dataStore));
-            Argument.AssertNotNull(trigger, nameof(trigger));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (dataStore == null)
+            {
+                throw new ArgumentNullException(nameof(dataStore));
+            }
+            if (trigger == null)
+            {
+                throw new ArgumentNullException(nameof(trigger));
+            }
 
             DataStore = dataStore;
             Trigger = trigger;

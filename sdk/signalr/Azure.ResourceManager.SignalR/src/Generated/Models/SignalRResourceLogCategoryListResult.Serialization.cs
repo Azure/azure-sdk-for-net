@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<SignalRResourceLogCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRResourceLogCategory> array = new List<SignalRResourceLogCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRResourceLogCategory.DeserializeSignalRResourceLogCategory(item));
+                        array.Add(SignalRResourceLogCategory.DeserializeSignalRResourceLogCategory(item, options));
                     }
                     categories = array;
                     continue;

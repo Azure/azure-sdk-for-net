@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContextPath))
+            if (ContextPath != null)
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(File))
+            if (File != null)
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(File);
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<ContainerRegistryRunArgument> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpdateTriggerToken))
+            if (UpdateTriggerToken != null)
             {
                 writer.WritePropertyName("updateTriggerToken"u8);
                 writer.WriteStringValue(UpdateTriggerToken);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item, options));
                     }
                     arguments = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item, options));
                     }
                     values = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VariableStates))
+            if (!(VariableStates is ChangeTrackingList<VariableState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Results))
+            if (!(Results is ChangeTrackingList<AnomalyState> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.AI.AnomalyDetector
                     List<VariableState> array = new List<VariableState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableState.DeserializeVariableState(item));
+                        array.Add(VariableState.DeserializeVariableState(item, options));
                     }
                     variableStates = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.AI.AnomalyDetector
                     List<AnomalyState> array = new List<AnomalyState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyState.DeserializeAnomalyState(item));
+                        array.Add(AnomalyState.DeserializeAnomalyState(item, options));
                     }
                     results = array;
                     continue;

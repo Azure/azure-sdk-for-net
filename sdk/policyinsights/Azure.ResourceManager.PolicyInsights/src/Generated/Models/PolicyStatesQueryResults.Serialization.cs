@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ODataContext))
+            if (ODataContext != null)
             {
                 writer.WritePropertyName("@odata.context"u8);
                 writer.WriteStringValue(ODataContext);
             }
-            if (Optional.IsDefined(ODataCount))
+            if (ODataCount.HasValue)
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(ODataCount.Value);
             }
-            if (Optional.IsDefined(ODataNextLink))
+            if (ODataNextLink != null)
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(ODataNextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PolicyState> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyState> array = new List<PolicyState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyState.DeserializePolicyState(item));
+                        array.Add(PolicyState.DeserializePolicyState(item, options));
                     }
                     value = array;
                     continue;

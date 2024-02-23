@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerServicePrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
+                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

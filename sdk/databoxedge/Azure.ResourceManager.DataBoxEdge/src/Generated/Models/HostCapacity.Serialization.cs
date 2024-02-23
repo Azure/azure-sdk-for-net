@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
+            if (EffectiveAvailableMemoryInMBOnHost.HasValue)
             {
                 writer.WritePropertyName("effectiveAvailableMemoryMbOnHost"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMBOnHost.Value);
             }
-            if (Optional.IsDefined(AvailableGpuCount))
+            if (AvailableGpuCount.HasValue)
             {
                 writer.WritePropertyName("availableGpuCount"u8);
                 writer.WriteNumberValue(AvailableGpuCount.Value);
             }
-            if (Optional.IsCollectionDefined(VmUsedMemory))
+            if (!(VmUsedMemory is ChangeTrackingDictionary<string, DataBoxEdgeVmMemory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmUsedMemory"u8);
                 writer.WriteStartObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(GpuType))
+            if (GpuType != null)
             {
                 writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
-            if (Optional.IsCollectionDefined(NumaNodesData))
+            if (!(NumaNodesData is ChangeTrackingList<NumaNodeInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("numaNodesData"u8);
                 writer.WriteStartArray();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     Dictionary<string, DataBoxEdgeVmMemory> dictionary = new Dictionary<string, DataBoxEdgeVmMemory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value));
+                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value, options));
                     }
                     vmUsedMemory = dictionary;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<NumaNodeInfo> array = new List<NumaNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item));
+                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item, options));
                     }
                     numaNodesData = array;
                     continue;

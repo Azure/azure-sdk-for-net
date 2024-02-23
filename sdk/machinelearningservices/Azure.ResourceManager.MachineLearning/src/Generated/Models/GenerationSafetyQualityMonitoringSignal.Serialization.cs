@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ProductionData))
+            if (!(ProductionData is ChangeTrackingList<MonitoringInputDataBase> collection && collection.IsUndefined))
             {
                 if (ProductionData != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("samplingRate"u8);
             writer.WriteNumberValue(SamplingRate);
-            if (Optional.IsDefined(WorkspaceConnectionId))
+            if (WorkspaceConnectionId != null)
             {
                 if (WorkspaceConnectionId != null)
                 {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("workspaceConnectionId");
                 }
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationSafetyQualityMetricThreshold> array = new List<GenerationSafetyQualityMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationSafetyQualityMetricThreshold.DeserializeGenerationSafetyQualityMetricThreshold(item));
+                        array.Add(GenerationSafetyQualityMetricThreshold.DeserializeGenerationSafetyQualityMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item, options));
                     }
                     productionData = array;
                     continue;

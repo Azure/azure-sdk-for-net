@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareHostData> array = new List<VMwareHostData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareHostData.DeserializeVMwareHostData(item));
+                        array.Add(VMwareHostData.DeserializeVMwareHostData(item, options));
                     }
                     value = array;
                     continue;

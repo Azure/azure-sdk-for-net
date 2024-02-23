@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomationAccountStatistics> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationAccountStatistics> array = new List<AutomationAccountStatistics>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationAccountStatistics.DeserializeAutomationAccountStatistics(item));
+                        array.Add(AutomationAccountStatistics.DeserializeAutomationAccountStatistics(item, options));
                     }
                     value = array;
                     continue;

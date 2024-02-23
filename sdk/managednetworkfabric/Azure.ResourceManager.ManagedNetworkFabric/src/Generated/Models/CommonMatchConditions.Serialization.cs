@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ProtocolTypes))
+            if (!(ProtocolTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VlanMatchCondition))
+            if (VlanMatchCondition != null)
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
                 writer.WriteObjectValue(VlanMatchCondition);
             }
-            if (Optional.IsDefined(IPCondition))
+            if (IPCondition != null)
             {
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value);
+                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipCondition"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value);
+                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

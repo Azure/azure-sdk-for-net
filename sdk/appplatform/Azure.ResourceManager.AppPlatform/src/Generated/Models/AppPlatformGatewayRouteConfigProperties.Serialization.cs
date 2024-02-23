@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(AppResourceId))
+            if (AppResourceId != null)
             {
                 writer.WritePropertyName("appResourceId"u8);
                 writer.WriteStringValue(AppResourceId);
             }
-            if (Optional.IsDefined(OpenApi))
+            if (OpenApi != null)
             {
                 writer.WritePropertyName("openApi"u8);
                 writer.WriteObjectValue(OpenApi);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Routes))
+            if (!(Routes is ChangeTrackingList<AppPlatformGatewayApiRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value);
+                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayApiRoute> array = new List<AppPlatformGatewayApiRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item));
+                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item, options));
                     }
                     routes = array;
                     continue;

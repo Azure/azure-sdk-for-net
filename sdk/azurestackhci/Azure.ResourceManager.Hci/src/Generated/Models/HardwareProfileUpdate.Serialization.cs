@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmSize))
+            if (VmSize.HasValue)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize.Value.ToString());
             }
-            if (Optional.IsDefined(Processors))
+            if (Processors.HasValue)
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteNumberValue(Processors.Value);
             }
-            if (Optional.IsDefined(MemoryMB))
+            if (MemoryMB.HasValue)
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);

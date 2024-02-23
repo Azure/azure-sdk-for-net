@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<ChatResponseMessage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.AI.OpenAI
                     List<ChatResponseMessage> array = new List<ChatResponseMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatResponseMessage.DeserializeChatResponseMessage(item));
+                        array.Add(ChatResponseMessage.DeserializeChatResponseMessage(item, options));
                     }
                     messages = array;
                     continue;

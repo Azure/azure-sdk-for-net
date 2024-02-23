@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseSsisObjectMetadata> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisObjectMetadata> array = new List<SynapseSsisObjectMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisObjectMetadata.DeserializeSynapseSsisObjectMetadata(item));
+                        array.Add(SynapseSsisObjectMetadata.DeserializeSynapseSsisObjectMetadata(item, options));
                     }
                     value = array;
                     continue;

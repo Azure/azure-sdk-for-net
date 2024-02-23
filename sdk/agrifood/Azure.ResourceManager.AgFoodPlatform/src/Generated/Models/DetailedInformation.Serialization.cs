@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiName))
+            if (ApiName != null)
             {
                 writer.WritePropertyName("apiName"u8);
                 writer.WriteStringValue(ApiName);
             }
-            if (Optional.IsCollectionDefined(CustomParameters))
+            if (!(CustomParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customParameters"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PlatformParameters))
+            if (!(PlatformParameters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("platformParameters"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UnitsSupported))
+            if (UnitsSupported != null)
             {
                 writer.WritePropertyName("unitsSupported"u8);
                 writer.WriteObjectValue(UnitsSupported);
             }
-            if (Optional.IsCollectionDefined(ApiInputParameters))
+            if (!(ApiInputParameters is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("apiInputParameters"u8);
                 writer.WriteStartArray();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value);
+                    unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apiInputParameters"u8))

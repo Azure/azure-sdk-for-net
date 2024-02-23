@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -88,7 +88,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<PatientRecord> array = new List<PatientRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientRecord.DeserializePatientRecord(item));
+                        array.Add(PatientRecord.DeserializePatientRecord(item, options));
                     }
                     patients = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    configuration = TrialMatcherModelConfiguration.DeserializeTrialMatcherModelConfiguration(property.Value);
+                    configuration = TrialMatcherModelConfiguration.DeserializeTrialMatcherModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

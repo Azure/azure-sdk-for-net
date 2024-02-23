@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Image))
+            if (Image != null)
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Command))
+            if (!(Command is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Args))
+            if (!(Args is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Env))
+            if (!(Env is ChangeTrackingList<ContainerAppEnvironmentVariable> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("env"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Resources))
+            if (Resources != null)
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppEnvironmentVariable> array = new List<ContainerAppEnvironmentVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item));
+                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item, options));
                     }
                     env = array;
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value);
+                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

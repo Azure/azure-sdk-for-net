@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkWatcherData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkWatcherData> array = new List<NetworkWatcherData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkWatcherData.DeserializeNetworkWatcherData(item));
+                        array.Add(NetworkWatcherData.DeserializeNetworkWatcherData(item, options));
                     }
                     value = array;
                     continue;

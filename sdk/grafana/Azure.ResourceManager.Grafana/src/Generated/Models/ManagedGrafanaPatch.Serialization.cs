@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value);
+                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    properties = ManagedGrafanaPatchProperties.DeserializeManagedGrafanaPatchProperties(property.Value);
+                    properties = ManagedGrafanaPatchProperties.DeserializeManagedGrafanaPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

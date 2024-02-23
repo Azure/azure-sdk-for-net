@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DnsForwardingRulesetVirtualNetworkLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<DnsForwardingRulesetVirtualNetworkLinkData> array = new List<DnsForwardingRulesetVirtualNetworkLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(item));
+                        array.Add(DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(item, options));
                     }
                     value = array;
                     continue;

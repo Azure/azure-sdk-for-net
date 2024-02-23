@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PeeringData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringData> array = new List<PeeringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringData.DeserializePeeringData(item));
+                        array.Add(PeeringData.DeserializePeeringData(item, options));
                     }
                     value = array;
                     continue;

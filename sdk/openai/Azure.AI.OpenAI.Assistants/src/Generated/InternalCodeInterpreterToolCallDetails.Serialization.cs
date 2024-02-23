@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<RunStepCodeInterpreterToolCallOutput> array = new List<RunStepCodeInterpreterToolCallOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunStepCodeInterpreterToolCallOutput.DeserializeRunStepCodeInterpreterToolCallOutput(item));
+                        array.Add(RunStepCodeInterpreterToolCallOutput.DeserializeRunStepCodeInterpreterToolCallOutput(item, options));
                     }
                     outputs = array;
                     continue;

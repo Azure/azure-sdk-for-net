@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StorageUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageUsage> array = new List<StorageUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageUsage.DeserializeStorageUsage(item));
+                        array.Add(StorageUsage.DeserializeStorageUsage(item, options));
                     }
                     value = array;
                     continue;

@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VCenter))
+            if (VCenter != null)
             {
                 writer.WritePropertyName("vCenter"u8);
                 writer.WriteStringValue(VCenter);
             }
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

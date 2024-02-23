@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SkuDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     List<SkuDetails> array = new List<SkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDetails.DeserializeSkuDetails(item));
+                        array.Add(SkuDetails.DeserializeSkuDetails(item, options));
                     }
                     value = array;
                     continue;

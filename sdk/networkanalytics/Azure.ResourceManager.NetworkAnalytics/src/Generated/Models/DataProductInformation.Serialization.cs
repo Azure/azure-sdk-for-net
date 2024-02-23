@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductVersion> array = new List<DataProductVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductVersion.DeserializeDataProductVersion(item));
+                        array.Add(DataProductVersion.DeserializeDataProductVersion(item, options));
                     }
                     dataProductVersions = array;
                     continue;

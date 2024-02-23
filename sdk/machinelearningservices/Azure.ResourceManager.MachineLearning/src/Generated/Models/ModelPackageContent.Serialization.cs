@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseEnvironmentSource))
+            if (BaseEnvironmentSource != null)
             {
                 if (BaseEnvironmentSource != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("baseEnvironmentSource");
                 }
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("inferencingServer"u8);
             writer.WriteObjectValue(InferencingServer);
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<ModelPackageInput> collection0 && collection0.IsUndefined))
             {
                 if (Inputs != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (Optional.IsDefined(ModelConfiguration))
+            if (ModelConfiguration != null)
             {
                 if (ModelConfiguration != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelConfiguration");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         baseEnvironmentSource = null;
                         continue;
                     }
-                    baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value);
+                    baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("inferencingServer"u8))
                 {
-                    inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value);
+                    inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inputs"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ModelPackageInput> array = new List<ModelPackageInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item));
+                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelConfiguration = null;
                         continue;
                     }
-                    modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value);
+                    modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);

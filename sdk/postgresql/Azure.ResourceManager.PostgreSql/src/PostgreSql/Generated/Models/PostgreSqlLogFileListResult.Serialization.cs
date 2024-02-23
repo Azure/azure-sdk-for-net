@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PostgreSqlLogFile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlLogFile> array = new List<PostgreSqlLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlLogFile.DeserializePostgreSqlLogFile(item));
+                        array.Add(PostgreSqlLogFile.DeserializePostgreSqlLogFile(item, options));
                     }
                     value = array;
                     continue;

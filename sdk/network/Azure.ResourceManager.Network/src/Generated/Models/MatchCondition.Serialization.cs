@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndArray();
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            if (Optional.IsDefined(NegationConditon))
+            if (NegationConditon.HasValue)
             {
                 writer.WritePropertyName("negationConditon"u8);
                 writer.WriteBooleanValue(NegationConditon.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (!(Transforms is ChangeTrackingList<WebApplicationFirewallTransform> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchVariable> array = new List<MatchVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchVariable.DeserializeMatchVariable(item));
+                        array.Add(MatchVariable.DeserializeMatchVariable(item, options));
                     }
                     matchVariables = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ManagedHsmPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmPrivateEndpointConnectionData> array = new List<ManagedHsmPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(item));
+                        array.Add(ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

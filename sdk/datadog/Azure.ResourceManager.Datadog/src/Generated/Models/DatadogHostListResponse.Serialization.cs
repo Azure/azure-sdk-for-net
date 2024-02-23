@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DatadogHost> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogHost> array = new List<DatadogHost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogHost.DeserializeDatadogHost(item));
+                        array.Add(DatadogHost.DeserializeDatadogHost(item, options));
                     }
                     value = array;
                     continue;

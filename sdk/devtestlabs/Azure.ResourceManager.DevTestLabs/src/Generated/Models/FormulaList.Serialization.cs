@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DevTestLabFormulaData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabFormulaData> array = new List<DevTestLabFormulaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabFormulaData.DeserializeDevTestLabFormulaData(item));
+                        array.Add(DevTestLabFormulaData.DeserializeDevTestLabFormulaData(item, options));
                     }
                     value = array;
                     continue;

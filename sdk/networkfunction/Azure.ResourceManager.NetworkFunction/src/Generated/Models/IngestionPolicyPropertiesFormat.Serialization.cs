@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IngestionType))
+            if (IngestionType.HasValue)
             {
                 writer.WritePropertyName("ingestionType"u8);
                 writer.WriteStringValue(IngestionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IngestionSources))
+            if (!(IngestionSources is ChangeTrackingList<IngestionSourcesPropertiesFormat> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ingestionSources"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<IngestionSourcesPropertiesFormat> array = new List<IngestionSourcesPropertiesFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IngestionSourcesPropertiesFormat.DeserializeIngestionSourcesPropertiesFormat(item));
+                        array.Add(IngestionSourcesPropertiesFormat.DeserializeIngestionSourcesPropertiesFormat(item, options));
                     }
                     ingestionSources = array;
                     continue;

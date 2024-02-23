@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CosmosDBForPostgreSqlPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     List<CosmosDBForPostgreSqlPrivateLinkResourceData> array = new List<CosmosDBForPostgreSqlPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(item));
+                        array.Add(CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

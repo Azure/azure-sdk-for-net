@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CassandraClusterData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterData> array = new List<CassandraClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterData.DeserializeCassandraClusterData(item));
+                        array.Add(CassandraClusterData.DeserializeCassandraClusterData(item, options));
                     }
                     value = array;
                     continue;

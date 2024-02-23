@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<SynapseIntegrationRuntimeNodeMonitoringResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeNodeMonitoringResult> array = new List<SynapseIntegrationRuntimeNodeMonitoringResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item));
+                        array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item, options));
                     }
                     nodes = array;
                     continue;

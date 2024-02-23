@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ObjectReplicationPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ObjectReplicationPolicyData> array = new List<ObjectReplicationPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(item));
+                        array.Add(ObjectReplicationPolicyData.DeserializeObjectReplicationPolicyData(item, options));
                     }
                     value = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DscNodeConfigurationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsDefined(TotalCount))
+            if (TotalCount.HasValue)
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscNodeConfigurationData> array = new List<DscNodeConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscNodeConfigurationData.DeserializeDscNodeConfigurationData(item));
+                        array.Add(DscNodeConfigurationData.DeserializeDscNodeConfigurationData(item, options));
                     }
                     value = array;
                     continue;

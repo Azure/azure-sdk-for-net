@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(StatusesSummary))
+            if (options.Format != "W" && !(StatusesSummary is ChangeTrackingList<VirtualMachineStatusCodeCount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusesSummary"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineStatusCodeCount> array = new List<VirtualMachineStatusCodeCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineStatusCodeCount.DeserializeVirtualMachineStatusCodeCount(item));
+                        array.Add(VirtualMachineStatusCodeCount.DeserializeVirtualMachineStatusCodeCount(item, options));
                     }
                     statusesSummary = array;
                     continue;

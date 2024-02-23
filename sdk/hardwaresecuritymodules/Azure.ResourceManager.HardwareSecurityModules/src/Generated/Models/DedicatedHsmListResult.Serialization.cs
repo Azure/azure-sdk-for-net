@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DedicatedHsmData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<DedicatedHsmData> array = new List<DedicatedHsmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHsmData.DeserializeDedicatedHsmData(item));
+                        array.Add(DedicatedHsmData.DeserializeDedicatedHsmData(item, options));
                     }
                     value = array;
                     continue;

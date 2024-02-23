@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeType))
+            if (options.Format != "W" && NodeType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(NodeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPConfiguration))
+            if (!(IPConfiguration is ChangeTrackingList<EdgeKubernetesIPConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesIPConfiguration> array = new List<EdgeKubernetesIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesIPConfiguration.DeserializeEdgeKubernetesIPConfiguration(item));
+                        array.Add(EdgeKubernetesIPConfiguration.DeserializeEdgeKubernetesIPConfiguration(item, options));
                     }
                     ipConfiguration = array;
                     continue;

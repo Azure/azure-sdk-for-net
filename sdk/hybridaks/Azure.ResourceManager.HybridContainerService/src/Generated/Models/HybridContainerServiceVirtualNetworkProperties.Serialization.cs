@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InfraVnetProfile))
+            if (InfraVnetProfile != null)
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
                 writer.WriteObjectValue(InfraVnetProfile);
             }
-            if (Optional.IsCollectionDefined(VipPool))
+            if (!(VipPool is ChangeTrackingList<KubernetesVirtualIPItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vipPool"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmipPool))
+            if (!(VmipPool is ChangeTrackingList<VirtualMachineIPItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vmipPool"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -61,27 +61,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Gateway))
+            if (Gateway != null)
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStringValue(Gateway);
             }
-            if (Optional.IsDefined(IPAddressPrefix))
+            if (IPAddressPrefix != null)
             {
                 writer.WritePropertyName("ipAddressPrefix"u8);
                 writer.WriteStringValue(IPAddressPrefix);
             }
-            if (Optional.IsDefined(VlanId))
+            if (VlanId.HasValue)
             {
                 writer.WritePropertyName("vlanID"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value);
+                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vipPool"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVirtualIPItem> array = new List<KubernetesVirtualIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item));
+                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item, options));
                     }
                     vipPool = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<VirtualMachineIPItem> array = new List<VirtualMachineIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item));
+                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item, options));
                     }
                     vmipPool = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value);
+                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

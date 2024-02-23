@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsDefined(DeploymentSettings))
+            if (DeploymentSettings != null)
             {
                 writer.WritePropertyName("deploymentSettings"u8);
                 writer.WriteObjectValue(DeploymentSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(IsActive))
+            if (IsActive.HasValue)
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
+            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformDeploymentInstance> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value);
+                    source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentSettings"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value);
+                    deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformDeploymentInstance> array = new List<AppPlatformDeploymentInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformDeploymentInstance.DeserializeAppPlatformDeploymentInstance(item));
+                        array.Add(AppPlatformDeploymentInstance.DeserializeAppPlatformDeploymentInstance(item, options));
                     }
                     instances = array;
                     continue;

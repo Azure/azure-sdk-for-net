@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 if (NextLink != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("nextLink");
                 }
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DigitalTwinsEndpointResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     List<DigitalTwinsEndpointResourceData> array = new List<DigitalTwinsEndpointResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(item));
+                        array.Add(DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<FilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<FilteringTag> array = new List<FilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilteringTag.DeserializeFilteringTag(item));
+                        array.Add(FilteringTag.DeserializeFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;

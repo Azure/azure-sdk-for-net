@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationMode))
+            if (NotificationMode.HasValue)
             {
                 writer.WritePropertyName("notificationMode"u8);
                 writer.WriteStringValue(NotificationMode.Value.ToString());
             }
-            if (Optional.IsDefined(MessageScope))
+            if (MessageScope.HasValue)
             {
                 writer.WritePropertyName("messageScope"u8);
                 writer.WriteStringValue(MessageScope.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IncludedEvents))
+            if (!(IncludedEvents is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedEvents"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotificationEndpoints))
+            if (!(NotificationEndpoints is ChangeTrackingList<NotificationEndpoint> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("notificationEndpoints"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<NotificationEndpoint> array = new List<NotificationEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationEndpoint.DeserializeNotificationEndpoint(item));
+                        array.Add(NotificationEndpoint.DeserializeNotificationEndpoint(item, options));
                     }
                     notificationEndpoints = array;
                     continue;

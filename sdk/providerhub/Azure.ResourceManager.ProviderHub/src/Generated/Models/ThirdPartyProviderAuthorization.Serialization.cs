@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Authorizations))
+            if (!(Authorizations is ChangeTrackingList<LightHouseAuthorization> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagedByTenantId))
+            if (ManagedByTenantId != null)
             {
                 writer.WritePropertyName("managedByTenantId"u8);
                 writer.WriteStringValue(ManagedByTenantId);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<LightHouseAuthorization> array = new List<LightHouseAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item));
+                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;

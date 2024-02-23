@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecurrenceInterval))
+            if (RecurrenceInterval.HasValue)
             {
                 writer.WritePropertyName("recurrenceInterval"u8);
                 writer.WriteStringValue(RecurrenceInterval.Value.ToString());
             }
-            if (Optional.IsDefined(SynchronizeOn))
+            if (SynchronizeOn.HasValue)
             {
                 writer.WritePropertyName("synchronizationTime"u8);
                 writer.WriteStringValue(SynchronizeOn.Value, "O");

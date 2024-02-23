@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var scope = _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public virtual Response<TenantPolicySetDefinitionResource> Get(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var scope = _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Get");
             scope.Start();
@@ -234,7 +248,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var scope = _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Exists");
             scope.Start();
@@ -277,7 +298,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var scope = _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.Exists");
             scope.Start();
@@ -320,7 +348,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public virtual async Task<NullableResponse<TenantPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var scope = _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.GetIfExists");
             scope.Start();
@@ -365,7 +400,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
         public virtual NullableResponse<TenantPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            if (policySetDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(policySetDefinitionName));
+            }
+            if (policySetDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
+            }
 
             using var scope = _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("TenantPolicySetDefinitionCollection.GetIfExists");
             scope.Start();

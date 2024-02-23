@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownLimitJsonObject(document.RootElement, options);
+            return DeserializeQuotaLimitJsonObject(document.RootElement, options);
         }
 
         internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Quota.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownLimitJsonObject(document.RootElement, options);
+                        return DeserializeQuotaLimitJsonObject(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support '{options.Format}' format.");

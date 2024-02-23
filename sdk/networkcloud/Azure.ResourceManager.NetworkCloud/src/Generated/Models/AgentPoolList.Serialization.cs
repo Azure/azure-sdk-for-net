@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkCloudAgentPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudAgentPoolData> array = new List<NetworkCloudAgentPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(item));
+                        array.Add(NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(item, options));
                     }
                     value = array;
                     continue;

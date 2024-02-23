@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<P2SVpnGatewayData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<P2SVpnGatewayData> array = new List<P2SVpnGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item));
+                        array.Add(P2SVpnGatewayData.DeserializeP2SVpnGatewayData(item, options));
                     }
                     value = array;
                     continue;

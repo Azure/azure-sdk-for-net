@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(MdmAccount))
+            if (MdmAccount != null)
             {
                 writer.WritePropertyName("mdmAccount"u8);
                 writer.WriteStringValue(MdmAccount);
             }
-            if (Optional.IsDefined(MetricNameSpace))
+            if (MetricNameSpace != null)
             {
                 writer.WritePropertyName("metricNameSpace"u8);
                 writer.WriteStringValue(MetricNameSpace);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricCounterSet> array = new List<DataBoxEdgeMetricCounterSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricCounterSet.DeserializeDataBoxEdgeMetricCounterSet(item));
+                        array.Add(DataBoxEdgeMetricCounterSet.DeserializeDataBoxEdgeMetricCounterSet(item, options));
                     }
                     counterSets = array;
                     continue;

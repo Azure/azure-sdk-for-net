@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RampUpRules))
+            if (!(RampUpRules is ChangeTrackingList<RampUpRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rampUpRules"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<RampUpRule> array = new List<RampUpRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RampUpRule.DeserializeRampUpRule(item));
+                        array.Add(RampUpRule.DeserializeRampUpRule(item, options));
                     }
                     rampUpRules = array;
                     continue;

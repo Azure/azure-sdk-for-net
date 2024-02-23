@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkFunctionApplications))
+            if (!(NetworkFunctionApplications is ChangeTrackingList<AzureOperatorNexusNetworkFunctionApplication> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkFunctionApplications"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureOperatorNexusNetworkFunctionApplication> array = new List<AzureOperatorNexusNetworkFunctionApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureOperatorNexusNetworkFunctionApplication.DeserializeAzureOperatorNexusNetworkFunctionApplication(item));
+                        array.Add(AzureOperatorNexusNetworkFunctionApplication.DeserializeAzureOperatorNexusNetworkFunctionApplication(item, options));
                     }
                     networkFunctionApplications = array;
                     continue;

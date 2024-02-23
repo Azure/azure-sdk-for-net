@@ -20,17 +20,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("alwaysEncryptedAkvAuthType"u8);
             writer.WriteStringValue(AlwaysEncryptedAkvAuthType.ToString());
-            if (Optional.IsDefined(ServicePrincipalId))
+            if (ServicePrincipalId != null)
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue(ServicePrincipalId);
             }
-            if (Optional.IsDefined(ServicePrincipalKey))
+            if (ServicePrincipalKey != null)
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 writer.WriteObjectValue(ServicePrincipalKey);
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);

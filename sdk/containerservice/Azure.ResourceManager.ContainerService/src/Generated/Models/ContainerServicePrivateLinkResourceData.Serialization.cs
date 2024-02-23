@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsCollectionDefined(RequiredMembers))
+            if (!(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceId))
+            if (options.Format != "W" && PrivateLinkServiceId != null)
             {
                 writer.WritePropertyName("privateLinkServiceID"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);

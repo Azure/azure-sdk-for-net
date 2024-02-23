@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,42 +49,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(TaskType))
+            if (TaskType != null)
             {
                 writer.WritePropertyName("taskType"u8);
                 writer.WriteStringValue(TaskType);
             }
-            if (Optional.IsDefined(WeeklyRecurrence))
+            if (WeeklyRecurrence != null)
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
                 writer.WriteObjectValue(WeeklyRecurrence);
             }
-            if (Optional.IsDefined(DailyRecurrence))
+            if (DailyRecurrence != null)
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
                 writer.WriteObjectValue(DailyRecurrence);
             }
-            if (Optional.IsDefined(HourlyRecurrence))
+            if (HourlyRecurrence != null)
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
                 writer.WriteObjectValue(HourlyRecurrence);
             }
-            if (Optional.IsDefined(TimeZoneId))
+            if (TimeZoneId != null)
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Optional.IsDefined(NotificationSettings))
+            if (NotificationSettings != null)
             {
                 writer.WritePropertyName("notificationSettings"u8);
                 writer.WriteObjectValue(NotificationSettings);
             }
-            if (Optional.IsDefined(TargetResourceId))
+            if (TargetResourceId != null)
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value);
+                            weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dailyRecurrence"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value);
+                            dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hourlyRecurrence"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value);
+                            hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeZoneId"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value);
+                            notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetResourceId"u8))

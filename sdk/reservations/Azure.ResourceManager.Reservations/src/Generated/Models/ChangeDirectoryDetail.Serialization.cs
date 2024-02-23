@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReservationOrder))
+            if (ReservationOrder != null)
             {
                 writer.WritePropertyName("reservationOrder"u8);
                 writer.WriteObjectValue(ReservationOrder);
             }
-            if (Optional.IsCollectionDefined(Reservations))
+            if (!(Reservations is ChangeTrackingList<ChangeDirectoryResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reservations"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value);
+                    reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reservations"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ChangeDirectoryResult> array = new List<ChangeDirectoryResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChangeDirectoryResult.DeserializeChangeDirectoryResult(item));
+                        array.Add(ChangeDirectoryResult.DeserializeChangeDirectoryResult(item, options));
                     }
                     reservations = array;
                     continue;

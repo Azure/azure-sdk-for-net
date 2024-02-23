@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IotCentralPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralPrivateLinkResourceData> array = new List<IotCentralPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(item));
+                        array.Add(IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

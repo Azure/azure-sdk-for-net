@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Pipelines))
+            if (!(Pipelines is ChangeTrackingList<TriggerPipelineReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
+            if (options.Format != "W" && RuntimeState.HasValue)
             {
                 writer.WritePropertyName("runtimeState"u8);
                 writer.WriteStringValue(RuntimeState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobPathBeginsWith))
+            if (BlobPathBeginsWith != null)
             {
                 writer.WritePropertyName("blobPathBeginsWith"u8);
                 writer.WriteStringValue(BlobPathBeginsWith);
             }
-            if (Optional.IsDefined(BlobPathEndsWith))
+            if (BlobPathEndsWith != null)
             {
                 writer.WritePropertyName("blobPathEndsWith"u8);
                 writer.WriteStringValue(BlobPathEndsWith);
             }
-            if (Optional.IsDefined(IgnoreEmptyBlobs))
+            if (IgnoreEmptyBlobs.HasValue)
             {
                 writer.WritePropertyName("ignoreEmptyBlobs"u8);
                 writer.WriteBooleanValue(IgnoreEmptyBlobs.Value);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item));
+                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
                     }
                     pipelines = array;
                     continue;

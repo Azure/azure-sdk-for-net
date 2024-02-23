@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartObject();
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 if (Name != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("name");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Instructions))
+            if (Instructions != null)
             {
                 if (Instructions != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("instructions");
                 }
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (!(Tools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FileIds))
+            if (!(FileIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Metadata != null)
                 {
@@ -196,7 +196,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolDefinition> array = new List<ToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        array.Add(ToolDefinition.DeserializeToolDefinition(item, options));
                     }
                     tools = array;
                     continue;

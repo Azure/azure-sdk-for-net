@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MobileNetworkServiceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkServiceData> array = new List<MobileNetworkServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkServiceData.DeserializeMobileNetworkServiceData(item));
+                        array.Add(MobileNetworkServiceData.DeserializeMobileNetworkServiceData(item, options));
                     }
                     value = array;
                     continue;

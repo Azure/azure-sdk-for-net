@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MgsAddress))
+            if (options.Format != "W" && MgsAddress != null)
             {
                 writer.WritePropertyName("mgsAddress"u8);
                 writer.WriteStringValue(MgsAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(MountCommand))
+            if (options.Format != "W" && MountCommand != null)
             {
                 writer.WritePropertyName("mountCommand"u8);
                 writer.WriteStringValue(MountCommand);
             }
-            if (options.Format != "W" && Optional.IsDefined(LustreVersion))
+            if (options.Format != "W" && LustreVersion != null)
             {
                 writer.WritePropertyName("lustreVersion"u8);
                 writer.WriteStringValue(LustreVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ContainerStorageInterface))
+            if (options.Format != "W" && ContainerStorageInterface != null)
             {
                 writer.WritePropertyName("containerStorageInterface"u8);
                 writer.WriteObjectValue(ContainerStorageInterface);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value);
+                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

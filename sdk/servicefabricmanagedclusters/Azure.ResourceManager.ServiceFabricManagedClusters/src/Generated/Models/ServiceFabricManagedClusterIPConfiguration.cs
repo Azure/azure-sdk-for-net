@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ServiceFabricManagedClusterIPConfiguration(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();

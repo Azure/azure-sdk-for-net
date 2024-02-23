@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ScVmmCloudData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<ScVmmCloudData> array = new List<ScVmmCloudData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScVmmCloudData.DeserializeScVmmCloudData(item));
+                        array.Add(ScVmmCloudData.DeserializeScVmmCloudData(item, options));
                     }
                     value = array;
                     continue;

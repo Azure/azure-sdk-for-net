@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeProfile))
+            if (ComputeProfile != null)
             {
                 writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
-            if (Optional.IsCollectionDefined(InstallScriptActions))
+            if (!(InstallScriptActions is ChangeTrackingList<RuntimeScriptAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("installScriptActions"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UninstallScriptActions))
+            if (!(UninstallScriptActions is ChangeTrackingList<RuntimeScriptAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("uninstallScriptActions"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HttpsEndpoints))
+            if (!(HttpsEndpoints is ChangeTrackingList<HDInsightApplicationHttpsEndpoint> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("httpsEndpoints"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SshEndpoints))
+            if (!(SshEndpoints is ChangeTrackingList<HDInsightApplicationEndpoint> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sshEndpoints"u8);
                 writer.WriteStartArray();
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (ApplicationType != null)
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplicationState))
+            if (options.Format != "W" && ApplicationState != null)
             {
                 writer.WritePropertyName("applicationState"u8);
                 writer.WriteStringValue(ApplicationState);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<ResponseError> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketplaceIdentifier))
+            if (options.Format != "W" && MarketplaceIdentifier != null)
             {
                 writer.WritePropertyName("marketplaceIdentifier"u8);
                 writer.WriteStringValue(MarketplaceIdentifier);
             }
-            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            if (!(PrivateLinkConfigurations is ChangeTrackingList<HDInsightPrivateLinkConfiguration> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    computeProfile = ComputeProfile.DeserializeComputeProfile(property.Value);
+                    computeProfile = ComputeProfile.DeserializeComputeProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("installScriptActions"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RuntimeScriptAction> array = new List<RuntimeScriptAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item));
+                        array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item, options));
                     }
                     installScriptActions = array;
                     continue;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RuntimeScriptAction> array = new List<RuntimeScriptAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item));
+                        array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item, options));
                     }
                     uninstallScriptActions = array;
                     continue;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightApplicationHttpsEndpoint> array = new List<HDInsightApplicationHttpsEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightApplicationHttpsEndpoint.DeserializeHDInsightApplicationHttpsEndpoint(item));
+                        array.Add(HDInsightApplicationHttpsEndpoint.DeserializeHDInsightApplicationHttpsEndpoint(item, options));
                     }
                     httpsEndpoints = array;
                     continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightApplicationEndpoint> array = new List<HDInsightApplicationEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightApplicationEndpoint.DeserializeHDInsightApplicationEndpoint(item));
+                        array.Add(HDInsightApplicationEndpoint.DeserializeHDInsightApplicationEndpoint(item, options));
                     }
                     sshEndpoints = array;
                     continue;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightPrivateLinkConfiguration> array = new List<HDInsightPrivateLinkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
+                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item, options));
                     }
                     privateLinkConfigurations = array;
                     continue;

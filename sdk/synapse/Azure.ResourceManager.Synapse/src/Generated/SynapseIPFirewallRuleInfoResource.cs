@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseIPFirewallRuleInfoResource>> UpdateAsync(WaitUntil waitUntil, SynapseIPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<SynapseIPFirewallRuleInfoResource> Update(WaitUntil waitUntil, SynapseIPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            if (info == null)
+            {
+                throw new ArgumentNullException(nameof(info));
+            }
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoResource.Update");
             scope.Start();

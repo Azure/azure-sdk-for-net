@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
+            if (options.Format != "W" && HybridConnectionConfig != null)
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
                 writer.WriteObjectValue(HybridConnectionConfig);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
+            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<ApplianceCredentialKubeconfig> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value);
+                    hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubeconfigs"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceCredentialKubeconfig> array = new List<ApplianceCredentialKubeconfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item));
+                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item, options));
                     }
                     kubeconfigs = array;
                     continue;

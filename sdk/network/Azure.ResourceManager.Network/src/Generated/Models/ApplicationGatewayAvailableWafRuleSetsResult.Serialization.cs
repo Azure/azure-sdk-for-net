@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ApplicationGatewayFirewallRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallRuleSet> array = new List<ApplicationGatewayFirewallRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(item));
+                        array.Add(ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(item, options));
                     }
                     value = array;
                     continue;

@@ -27,17 +27,17 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Url))
+            if (Url != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Optional.IsDefined(Base64Data))
+            if (Base64Data != null)
             {
                 writer.WritePropertyName("b64_json"u8);
                 writer.WriteStringValue(Base64Data);
             }
-            if (Optional.IsDefined(RevisedPrompt))
+            if (RevisedPrompt != null)
             {
                 writer.WritePropertyName("revised_prompt"u8);
                 writer.WriteStringValue(RevisedPrompt);

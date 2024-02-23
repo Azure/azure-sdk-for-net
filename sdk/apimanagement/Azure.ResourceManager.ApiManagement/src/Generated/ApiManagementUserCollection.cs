@@ -85,8 +85,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementUserResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string userId, ApiManagementUserCreateOrUpdateContent content, bool? notify = null, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.CreateOrUpdate");
             scope.Start();
@@ -136,8 +146,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiManagementUserResource> CreateOrUpdate(WaitUntil waitUntil, string userId, ApiManagementUserCreateOrUpdateContent content, bool? notify = null, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.CreateOrUpdate");
             scope.Start();
@@ -183,7 +203,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementUserResource>> GetAsync(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.Get");
             scope.Start();
@@ -228,7 +255,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<ApiManagementUserResource> Get(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.Get");
             scope.Start();
@@ -341,7 +375,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.Exists");
             scope.Start();
@@ -384,7 +425,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual Response<bool> Exists(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.Exists");
             scope.Start();
@@ -427,7 +475,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementUserResource>> GetIfExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.GetIfExists");
             scope.Start();
@@ -472,7 +527,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementUserResource> GetIfExists(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.GetIfExists");
             scope.Start();

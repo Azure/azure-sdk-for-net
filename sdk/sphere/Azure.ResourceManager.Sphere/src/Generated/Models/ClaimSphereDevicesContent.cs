@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deviceIdentifiers"/> is null. </exception>
         public ClaimSphereDevicesContent(IEnumerable<string> deviceIdentifiers)
         {
-            Argument.AssertNotNull(deviceIdentifiers, nameof(deviceIdentifiers));
+            if (deviceIdentifiers == null)
+            {
+                throw new ArgumentNullException(nameof(deviceIdentifiers));
+            }
 
             DeviceIdentifiers = deviceIdentifiers.ToList();
         }

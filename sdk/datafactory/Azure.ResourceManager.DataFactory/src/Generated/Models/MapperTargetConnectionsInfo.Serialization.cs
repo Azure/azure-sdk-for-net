@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TargetEntities))
+            if (!(TargetEntities is ChangeTrackingList<MapperTable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetEntities"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Connection))
+            if (Connection != null)
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection);
             }
-            if (Optional.IsCollectionDefined(DataMapperMappings))
+            if (!(DataMapperMappings is ChangeTrackingList<DataMapperMapping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataMapperMappings"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Relationships))
+            if (!(Relationships is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("relationships"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperTable> array = new List<MapperTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperTable.DeserializeMapperTable(item));
+                        array.Add(MapperTable.DeserializeMapperTable(item, options));
                     }
                     targetEntities = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connection = MapperConnection.DeserializeMapperConnection(property.Value);
+                    connection = MapperConnection.DeserializeMapperConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataMapperMappings"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataMapperMapping> array = new List<DataMapperMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMapperMapping.DeserializeDataMapperMapping(item));
+                        array.Add(DataMapperMapping.DeserializeDataMapperMapping(item, options));
                     }
                     dataMapperMappings = array;
                     continue;

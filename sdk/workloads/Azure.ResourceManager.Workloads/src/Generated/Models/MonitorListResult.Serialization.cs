@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SapMonitorData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapMonitorData> array = new List<SapMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapMonitorData.DeserializeSapMonitorData(item));
+                        array.Add(SapMonitorData.DeserializeSapMonitorData(item, options));
                     }
                     value = array;
                     continue;

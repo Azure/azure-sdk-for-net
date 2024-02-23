@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageClasses))
+            if (options.Format != "W" && !(StorageClasses is ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageClasses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<DataBoxEdgeMountPointMap> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesRoleStorageClassInfo> array = new List<EdgeKubernetesRoleStorageClassInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesRoleStorageClassInfo.DeserializeEdgeKubernetesRoleStorageClassInfo(item));
+                        array.Add(EdgeKubernetesRoleStorageClassInfo.DeserializeEdgeKubernetesRoleStorageClassInfo(item, options));
                     }
                     storageClasses = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                        array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item, options));
                     }
                     endpoints = array;
                     continue;

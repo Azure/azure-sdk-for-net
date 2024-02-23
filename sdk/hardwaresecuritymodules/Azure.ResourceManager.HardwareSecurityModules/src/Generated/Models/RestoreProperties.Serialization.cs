@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Foldername))
+            if (Foldername != null)
             {
                 writer.WritePropertyName("foldername"u8);
                 writer.WriteStringValue(Foldername);
             }
-            if (Optional.IsDefined(AzureStorageResourceUri))
+            if (AzureStorageResourceUri != null)
             {
                 writer.WritePropertyName("azureStorageResourceUri"u8);
                 writer.WriteStringValue(AzureStorageResourceUri.AbsoluteUri);

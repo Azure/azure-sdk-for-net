@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(StatusId))
+            if (StatusId.HasValue)
             {
                 writer.WritePropertyName("statusId"u8);
                 writer.WriteStringValue(StatusId.Value.ToSerialString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IncludePrefix))
+            if (!(IncludePrefix is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludePrefix))
+            if (!(ExcludePrefix is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("excludePrefix"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BlobTypes))
+            if (!(BlobTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("blobTypes"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IncludeBlobVersions))
+            if (IncludeBlobVersions.HasValue)
             {
                 writer.WritePropertyName("includeBlobVersions"u8);
                 writer.WriteBooleanValue(IncludeBlobVersions.Value);
             }
-            if (Optional.IsDefined(IncludeSnapshots))
+            if (IncludeSnapshots.HasValue)
             {
                 writer.WritePropertyName("includeSnapshots"u8);
                 writer.WriteBooleanValue(IncludeSnapshots.Value);
             }
-            if (Optional.IsDefined(IncludeDeleted))
+            if (IncludeDeleted.HasValue)
             {
                 writer.WritePropertyName("includeDeleted"u8);
                 writer.WriteBooleanValue(IncludeDeleted.Value);

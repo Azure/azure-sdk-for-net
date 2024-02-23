@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ElasticSanSnapshotData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSnapshotData> array = new List<ElasticSanSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(item));
+                        array.Add(ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(item, options));
                     }
                     value = array;
                     continue;

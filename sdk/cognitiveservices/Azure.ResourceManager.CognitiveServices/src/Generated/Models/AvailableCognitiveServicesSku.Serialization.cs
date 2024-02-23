@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Restrictions))
+            if (!(Restrictions is ChangeTrackingList<CognitiveServicesSkuRestrictions> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesSkuRestrictions> array = new List<CognitiveServicesSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesSkuRestrictions.DeserializeCognitiveServicesSkuRestrictions(item));
+                        array.Add(CognitiveServicesSkuRestrictions.DeserializeCognitiveServicesSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;

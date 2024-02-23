@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
-            if (Optional.IsDefined(ManageActions))
+            if (ManageActions != null)
             {
                 writer.WritePropertyName("manageActions"u8);
                 writer.WriteObjectValue(ManageActions);
             }
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Optional.IsCollectionDefined(AdvancedSettings))
+            if (!(AdvancedSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("advancedSettings"u8);
                 writer.WriteStartObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(EnableHealthCheck))
+            if (EnableHealthCheck.HasValue)
             {
                 writer.WritePropertyName("enableHealthCheck"u8);
                 writer.WriteBooleanValue(EnableHealthCheck.Value);
             }
-            if (Optional.IsCollectionDefined(CustomActions))
+            if (!(CustomActions is ChangeTrackingList<GalleryApplicationCustomAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TargetRegions))
+            if (!(TargetRegions is ChangeTrackingList<TargetRegion> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
@@ -74,37 +74,37 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReplicaCount))
+            if (ReplicaCount.HasValue)
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (Optional.IsDefined(IsExcludedFromLatest))
+            if (IsExcludedFromLatest.HasValue)
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublishedOn))
+            if (options.Format != "W" && PublishedOn.HasValue)
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOfLifeOn))
+            if (EndOfLifeOn.HasValue)
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (StorageAccountType.HasValue)
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationMode))
+            if (ReplicationMode.HasValue)
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TargetExtendedLocations))
+            if (!(TargetExtendedLocations is ChangeTrackingList<GalleryTargetExtendedLocation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value);
+                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("manageActions"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value);
+                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("settings"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value);
+                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("advancedSettings"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item));
+                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item, options));
                     }
                     customActions = array;
                     continue;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetRegion.DeserializeTargetRegion(item));
+                        array.Add(TargetRegion.DeserializeTargetRegion(item, options));
                     }
                     targetRegions = array;
                     continue;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item));
+                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item, options));
                     }
                     targetExtendedLocations = array;
                     continue;

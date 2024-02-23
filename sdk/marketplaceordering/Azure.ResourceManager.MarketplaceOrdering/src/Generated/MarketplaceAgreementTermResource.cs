@@ -200,7 +200,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceAgreementTermResource>> UpdateAsync(WaitUntil waitUntil, MarketplaceAgreementTermData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _marketplaceAgreementTermMarketplaceAgreementsClientDiagnostics.CreateScope("MarketplaceAgreementTermResource.Update");
             scope.Start();
@@ -246,7 +249,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceAgreementTermResource> Update(WaitUntil waitUntil, MarketplaceAgreementTermData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _marketplaceAgreementTermMarketplaceAgreementsClientDiagnostics.CreateScope("MarketplaceAgreementTermResource.Update");
             scope.Start();

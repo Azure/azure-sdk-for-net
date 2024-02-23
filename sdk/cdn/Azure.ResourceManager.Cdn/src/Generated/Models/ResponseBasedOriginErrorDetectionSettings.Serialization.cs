@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResponseBasedDetectedErrorType))
+            if (ResponseBasedDetectedErrorType.HasValue)
             {
                 writer.WritePropertyName("responseBasedDetectedErrorTypes"u8);
                 writer.WriteStringValue(ResponseBasedDetectedErrorType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
+            if (ResponseBasedFailoverThresholdPercentage.HasValue)
             {
                 writer.WritePropertyName("responseBasedFailoverThresholdPercentage"u8);
                 writer.WriteNumberValue(ResponseBasedFailoverThresholdPercentage.Value);
             }
-            if (Optional.IsCollectionDefined(HttpErrorRanges))
+            if (!(HttpErrorRanges is ChangeTrackingList<HttpErrorRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("httpErrorRanges"u8);
                 writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<HttpErrorRange> array = new List<HttpErrorRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpErrorRange.DeserializeHttpErrorRange(item));
+                        array.Add(HttpErrorRange.DeserializeHttpErrorRange(item, options));
                     }
                     httpErrorRanges = array;
                     continue;

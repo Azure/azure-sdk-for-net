@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("commandId"u8);
             writer.WriteStringValue(CommandId);
-            if (Optional.IsCollectionDefined(Script))
+            if (!(Script is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<RunCommandInputParameter> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                     }
                     parameters = array;
                     continue;

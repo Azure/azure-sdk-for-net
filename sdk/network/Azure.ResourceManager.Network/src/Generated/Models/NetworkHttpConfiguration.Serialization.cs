@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Method))
+            if (Method.HasValue)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<NetworkWatcherHttpHeader> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidStatusCodes))
+            if (!(ValidStatusCodes is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validStatusCodes"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item, options));
                     }
                     headers = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DataMaskingRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DataMaskingRule> array = new List<DataMaskingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingRule.DeserializeDataMaskingRule(item));
+                        array.Add(DataMaskingRule.DeserializeDataMaskingRule(item, options));
                     }
                     value = array;
                     continue;

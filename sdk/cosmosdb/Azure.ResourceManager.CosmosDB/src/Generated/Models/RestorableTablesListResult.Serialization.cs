@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<RestorableTable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableTable> array = new List<RestorableTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableTable.DeserializeRestorableTable(item));
+                        array.Add(RestorableTable.DeserializeRestorableTable(item, options));
                     }
                     value = array;
                     continue;

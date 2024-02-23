@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SpatialAnchorsAccountData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     List<SpatialAnchorsAccountData> array = new List<SpatialAnchorsAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(item));
+                        array.Add(SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(item, options));
                     }
                     value = array;
                     continue;

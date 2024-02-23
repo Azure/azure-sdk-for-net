@@ -26,64 +26,64 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(RegistrationStatus))
+            if (RegistrationStatus != null)
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Optional.IsDefined(BackupEngineState))
+            if (BackupEngineState != null)
             {
                 writer.WritePropertyName("backupEngineState"u8);
                 writer.WriteStringValue(BackupEngineState);
             }
-            if (Optional.IsDefined(HealthStatus))
+            if (HealthStatus != null)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("backupEngineType"u8);
             writer.WriteStringValue(BackupEngineType.ToString());
-            if (Optional.IsDefined(CanReRegister))
+            if (CanReRegister.HasValue)
             {
                 writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
-            if (Optional.IsDefined(BackupEngineId))
+            if (BackupEngineId != null)
             {
                 writer.WritePropertyName("backupEngineId"u8);
                 writer.WriteStringValue(BackupEngineId);
             }
-            if (Optional.IsDefined(DpmVersion))
+            if (DpmVersion != null)
             {
                 writer.WritePropertyName("dpmVersion"u8);
                 writer.WriteStringValue(DpmVersion);
             }
-            if (Optional.IsDefined(AzureBackupAgentVersion))
+            if (AzureBackupAgentVersion != null)
             {
                 writer.WritePropertyName("azureBackupAgentVersion"u8);
                 writer.WriteStringValue(AzureBackupAgentVersion);
             }
-            if (Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
+            if (IsAzureBackupAgentUpgradeAvailable.HasValue)
             {
                 writer.WritePropertyName("isAzureBackupAgentUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsAzureBackupAgentUpgradeAvailable.Value);
             }
-            if (Optional.IsDefined(IsDpmUpgradeAvailable))
+            if (IsDpmUpgradeAvailable.HasValue)
             {
                 writer.WritePropertyName("isDpmUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsDpmUpgradeAvailable.Value);
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupServerEngine": return BackupServerEngine.DeserializeBackupServerEngine(element);
-                    case "DpmBackupEngine": return DpmBackupEngine.DeserializeDpmBackupEngine(element);
+                    case "AzureBackupServerEngine": return BackupServerEngine.DeserializeBackupServerEngine(element, options);
+                    case "DpmBackupEngine": return DpmBackupEngine.DeserializeDpmBackupEngine(element, options);
                 }
             }
-            return UnknownBackupEngineBase.DeserializeUnknownBackupEngineBase(element);
+            return UnknownBackupEngineBase.DeserializeUnknownBackupEngineBase(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericEngine>.Write(ModelReaderWriterOptions options)

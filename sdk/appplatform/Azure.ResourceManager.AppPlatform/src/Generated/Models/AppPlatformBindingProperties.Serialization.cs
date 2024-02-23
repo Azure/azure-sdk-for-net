@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            if (options.Format != "W" && ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsCollectionDefined(BindingParameters))
+            if (!(BindingParameters is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bindingParameters"u8);
                 writer.WriteStartObject();
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(GeneratedProperties))
+            if (options.Format != "W" && GeneratedProperties != null)
             {
                 writer.WritePropertyName("generatedProperties"u8);
                 writer.WriteStringValue(GeneratedProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");

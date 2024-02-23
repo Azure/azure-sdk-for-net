@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ContentKeys))
+            if (!(ContentKeys is ChangeTrackingList<StreamingLocatorContentKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                        array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item, options));
                     }
                     contentKeys = array;
                     continue;

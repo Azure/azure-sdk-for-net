@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MatchConfigurationName))
+            if (MatchConfigurationName != null)
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
             }
-            if (Optional.IsDefined(SequenceNumber))
+            if (SequenceNumber.HasValue)
             {
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            if (Optional.IsDefined(IPAddressType))
+            if (IPAddressType.HasValue)
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(MatchConditions))
+            if (!(MatchConditions is ChangeTrackingList<AccessControlListMatchCondition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("matchConditions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (!(Actions is ChangeTrackingList<AccessControlListAction> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListMatchCondition> array = new List<AccessControlListMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item));
+                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListAction> array = new List<AccessControlListAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item));
+                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item, options));
                     }
                     actions = array;
                     continue;

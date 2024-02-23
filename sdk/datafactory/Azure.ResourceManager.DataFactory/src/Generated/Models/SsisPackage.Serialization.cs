@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FolderId))
+            if (FolderId.HasValue)
             {
                 writer.WritePropertyName("folderId"u8);
                 writer.WriteNumberValue(FolderId.Value);
             }
-            if (Optional.IsDefined(ProjectVersion))
+            if (ProjectVersion.HasValue)
             {
                 writer.WritePropertyName("projectVersion"u8);
                 writer.WriteNumberValue(ProjectVersion.Value);
             }
-            if (Optional.IsDefined(ProjectId))
+            if (ProjectId.HasValue)
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteNumberValue(ProjectId.Value);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<SsisParameterInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisParameterInfo> array = new List<SsisParameterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item));
+                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item, options));
                     }
                     parameters = array;
                     continue;

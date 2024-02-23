@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColocationStatus))
+            if (ColocationStatus != null)
             {
                 writer.WritePropertyName("colocationStatus"u8);
                 writer.WriteObjectValue(ColocationStatus);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
+                    colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

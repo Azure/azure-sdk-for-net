@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisEnterpriseDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, RedisEnterpriseDatabaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -115,7 +125,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RedisEnterpriseDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, RedisEnterpriseDatabaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -164,7 +184,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<Response<RedisEnterpriseDatabaseResource>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseCollection.Get");
             scope.Start();
@@ -209,7 +236,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<RedisEnterpriseDatabaseResource> Get(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseCollection.Get");
             scope.Start();
@@ -254,7 +288,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,7 +318,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +348,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseCollection.Exists");
             scope.Start();
@@ -357,7 +398,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseCollection.Exists");
             scope.Start();
@@ -400,7 +448,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<NullableResponse<RedisEnterpriseDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseCollection.GetIfExists");
             scope.Start();
@@ -445,7 +500,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual NullableResponse<RedisEnterpriseDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseCollection.GetIfExists");
             scope.Start();

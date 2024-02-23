@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComponentId))
+            if (ComponentId != null)
             {
                 if (ComponentId != null)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (Optional.IsDefined(ComputeId))
+            if (ComputeId != null)
             {
                 if (ComputeId != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeId");
                 }
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(ExperimentName))
+            if (ExperimentName != null)
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (Optional.IsDefined(IsArchived))
+            if (IsArchived.HasValue)
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsDefined(NotificationSetting))
+            if (NotificationSetting != null)
             {
                 if (NotificationSetting != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (Optional.IsCollectionDefined(SecretsConfiguration))
+            if (!(SecretsConfiguration is ChangeTrackingDictionary<string, SecretConfiguration> collection && collection.IsUndefined))
             {
                 if (SecretsConfiguration != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("secretsConfiguration");
                 }
             }
-            if (Optional.IsCollectionDefined(Services))
+            if (!(Services is ChangeTrackingDictionary<string, MachineLearningJobService> collection0 && collection0.IsUndefined))
             {
                 if (Services != null)
                 {
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("services");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -228,15 +228,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element);
-                    case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element);
-                    case "Labeling": return LabelingJobProperties.DeserializeLabelingJobProperties(element);
-                    case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element);
-                    case "Spark": return SparkJob.DeserializeSparkJob(element);
-                    case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element);
+                    case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element, options);
+                    case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
+                    case "Labeling": return LabelingJobProperties.DeserializeLabelingJobProperties(element, options);
+                    case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
+                    case "Spark": return SparkJob.DeserializeSparkJob(element, options);
+                    case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);
                 }
             }
-            return UnknownJobBase.DeserializeUnknownJobBase(element);
+            return UnknownJobBase.DeserializeUnknownJobBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningJobProperties>.Write(ModelReaderWriterOptions options)

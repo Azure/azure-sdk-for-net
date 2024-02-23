@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileNameTemplate"/> is null. </exception>
         public AS2EnvelopeSettings(ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autoGenerateFileName)
         {
-            Argument.AssertNotNull(fileNameTemplate, nameof(fileNameTemplate));
+            if (fileNameTemplate == null)
+            {
+                throw new ArgumentNullException(nameof(fileNameTemplate));
+            }
 
             MessageContentType = messageContentType;
             TransmitFileNameInMimeHeader = transmitFileNameInMimeHeader;

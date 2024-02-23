@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StaticRoutesConfig))
+            if (StaticRoutesConfig != null)
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
                 writer.WriteObjectValue(StaticRoutesConfig);
             }
-            if (Optional.IsCollectionDefined(StaticRoutes))
+            if (!(StaticRoutes is ChangeTrackingList<StaticRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("staticRoutes"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BgpConnections))
+            if (options.Format != "W" && !(BgpConnections is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bgpConnections"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value);
+                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("staticRoutes"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<StaticRoute> array = new List<StaticRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRoute.DeserializeStaticRoute(item));
+                        array.Add(StaticRoute.DeserializeStaticRoute(item, options));
                     }
                     staticRoutes = array;
                     continue;

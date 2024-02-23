@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPGroups))
+            if (!(IPGroups is ChangeTrackingList<MatchConfigurationIPGroupProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VlanGroups))
+            if (!(VlanGroups is ChangeTrackingList<VlanGroupProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vlanGroups"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PortGroups))
+            if (!(PortGroups is ChangeTrackingList<PortGroupProperties> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("portGroups"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<MatchConfigurationIPGroupProperties> array = new List<MatchConfigurationIPGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item));
+                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item, options));
                     }
                     ipGroups = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<VlanGroupProperties> array = new List<VlanGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item));
+                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item, options));
                     }
                     vlanGroups = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<PortGroupProperties> array = new List<PortGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item));
+                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item, options));
                     }
                     portGroups = array;
                     continue;

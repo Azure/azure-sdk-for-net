@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetAppVolumeQuotaRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeQuotaRuleData> array = new List<NetAppVolumeQuotaRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(item));
+                        array.Add(NetAppVolumeQuotaRuleData.DeserializeNetAppVolumeQuotaRuleData(item, options));
                     }
                     value = array;
                     continue;

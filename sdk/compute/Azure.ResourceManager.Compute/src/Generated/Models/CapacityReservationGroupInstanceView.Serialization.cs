@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
+            if (options.Format != "W" && !(CapacityReservations is ChangeTrackingList<CapacityReservationInstanceViewWithName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("capacityReservations"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SharedSubscriptionIds))
+            if (options.Format != "W" && !(SharedSubscriptionIds is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sharedSubscriptionIds"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CapacityReservationInstanceViewWithName> array = new List<CapacityReservationInstanceViewWithName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacityReservationInstanceViewWithName.DeserializeCapacityReservationInstanceViewWithName(item));
+                        array.Add(CapacityReservationInstanceViewWithName.DeserializeCapacityReservationInstanceViewWithName(item, options));
                     }
                     capacityReservations = array;
                     continue;

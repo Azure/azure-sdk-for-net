@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<AvailableDataBoxEdgeSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<AvailableDataBoxEdgeSku> array = new List<AvailableDataBoxEdgeSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(item));
+                        array.Add(AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(item, options));
                     }
                     value = array;
                     continue;

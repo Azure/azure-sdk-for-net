@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsServiceRole))
+            if (IsServiceRole.HasValue)
             {
                 writer.WritePropertyName("isServiceRole"u8);
                 writer.WriteBooleanValue(IsServiceRole.Value);
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (!(Permissions is ChangeTrackingList<Permission> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<Permission> array = new List<Permission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Permission.DeserializePermission(item));
+                        array.Add(Permission.DeserializePermission(item, options));
                     }
                     permissions = array;
                     continue;

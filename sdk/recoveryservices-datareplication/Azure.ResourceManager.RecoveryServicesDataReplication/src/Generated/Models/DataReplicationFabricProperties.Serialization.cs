@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
+            if (options.Format != "W" && ServiceEndpoint != null)
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
+            if (options.Format != "W" && ServiceResourceId != null)
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
+            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = FabricModelCustomProperties.DeserializeFabricModelCustomProperties(property.Value);
+                    customProperties = FabricModelCustomProperties.DeserializeFabricModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

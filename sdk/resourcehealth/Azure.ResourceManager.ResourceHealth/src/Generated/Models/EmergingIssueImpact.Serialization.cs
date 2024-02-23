@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<EmergingIssueImpactedRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<EmergingIssueImpactedRegion> array = new List<EmergingIssueImpactedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmergingIssueImpactedRegion.DeserializeEmergingIssueImpactedRegion(item));
+                        array.Add(EmergingIssueImpactedRegion.DeserializeEmergingIssueImpactedRegion(item, options));
                     }
                     regions = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataDisks))
+            if (!(DataDisks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ImageReference))
+            if (ImageReference != null)
             {
                 writer.WritePropertyName("imageReference"u8);
                 JsonSerializer.Serialize(writer, ImageReference);
             }
-            if (Optional.IsDefined(OSDisk))
+            if (OSDisk != null)
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (Optional.IsDefined(VmConfigStoragePathId))
+            if (VmConfigStoragePathId != null)
             {
                 writer.WritePropertyName("vmConfigStoragePathId"u8);
                 writer.WriteStringValue(VmConfigStoragePathId);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osDisk = VirtualMachineInstancePropertiesStorageProfileOSDisk.DeserializeVirtualMachineInstancePropertiesStorageProfileOSDisk(property.Value);
+                    osDisk = VirtualMachineInstancePropertiesStorageProfileOSDisk.DeserializeVirtualMachineInstancePropertiesStorageProfileOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmConfigStoragePathId"u8))

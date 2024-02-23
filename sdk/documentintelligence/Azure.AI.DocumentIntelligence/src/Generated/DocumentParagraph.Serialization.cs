@@ -27,14 +27,14 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Role))
+            if (Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<BoundingRegion> array = new List<BoundingRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item));
+                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPRules))
+            if (!(IPRules is ChangeTrackingList<SearchServiceIPRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchServiceIPRule> array = new List<SearchServiceIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchServiceIPRule.DeserializeSearchServiceIPRule(item));
+                        array.Add(SearchServiceIPRule.DeserializeSearchServiceIPRule(item, options));
                     }
                     ipRules = array;
                     continue;

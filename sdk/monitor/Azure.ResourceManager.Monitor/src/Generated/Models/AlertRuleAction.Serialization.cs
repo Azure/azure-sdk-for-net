@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Azure.Management.Insights.Models.RuleEmailAction": return RuleEmailAction.DeserializeRuleEmailAction(element);
-                    case "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction": return RuleWebhookAction.DeserializeRuleWebhookAction(element);
+                    case "Microsoft.Azure.Management.Insights.Models.RuleEmailAction": return RuleEmailAction.DeserializeRuleEmailAction(element, options);
+                    case "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction": return RuleWebhookAction.DeserializeRuleWebhookAction(element, options);
                 }
             }
-            return UnknownRuleAction.DeserializeUnknownRuleAction(element);
+            return UnknownRuleAction.DeserializeUnknownRuleAction(element, options);
         }
 
         BinaryData IPersistableModel<AlertRuleAction>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Instructions))
+            if (!(Instructions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataSourceUri))
+            if (!(DataSourceUri is ChangeTrackingList<AppServiceNameValuePair> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataSourceUri"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item, options));
                     }
                     dataSourceUri = array;
                     continue;

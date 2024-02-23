@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MdeOnboarding> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<MdeOnboarding> array = new List<MdeOnboarding>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MdeOnboarding.DeserializeMdeOnboarding(item));
+                        array.Add(MdeOnboarding.DeserializeMdeOnboarding(item, options));
                     }
                     value = array;
                     continue;

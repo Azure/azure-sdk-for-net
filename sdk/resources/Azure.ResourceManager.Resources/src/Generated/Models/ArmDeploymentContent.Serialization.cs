@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ArmDeploymentProperties.DeserializeArmDeploymentProperties(property.Value);
+                    properties = ArmDeploymentProperties.DeserializeArmDeploymentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

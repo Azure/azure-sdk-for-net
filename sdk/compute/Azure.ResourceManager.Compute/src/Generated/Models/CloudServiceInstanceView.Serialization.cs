@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleInstance))
+            if (RoleInstance != null)
             {
                 writer.WritePropertyName("roleInstance"u8);
                 writer.WriteObjectValue(RoleInstance);
             }
-            if (options.Format != "W" && Optional.IsDefined(SdkVersion))
+            if (options.Format != "W" && SdkVersion != null)
             {
                 writer.WritePropertyName("sdkVersion"u8);
                 writer.WriteStringValue(SdkVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIds))
+            if (options.Format != "W" && !(PrivateIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privateIds"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<ResourceInstanceViewStatus> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    roleInstance = InstanceViewStatusesSummary.DeserializeInstanceViewStatusesSummary(property.Value);
+                    roleInstance = InstanceViewStatusesSummary.DeserializeInstanceViewStatusesSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sdkVersion"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceInstanceViewStatus> array = new List<ResourceInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;

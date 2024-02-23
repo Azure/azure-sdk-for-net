@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListCountry> array = new List<AvailableProvidersListCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableProvidersListCountry.DeserializeAvailableProvidersListCountry(item));
+                        array.Add(AvailableProvidersListCountry.DeserializeAvailableProvidersListCountry(item, options));
                     }
                     countries = array;
                     continue;

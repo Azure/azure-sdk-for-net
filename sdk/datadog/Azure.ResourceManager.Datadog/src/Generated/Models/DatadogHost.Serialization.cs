@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Aliases))
+            if (!(Aliases is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Apps))
+            if (!(Apps is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apps"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Meta))
+            if (Meta != null)
             {
                 writer.WritePropertyName("meta"u8);
                 writer.WriteObjectValue(Meta);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value);
+                    meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

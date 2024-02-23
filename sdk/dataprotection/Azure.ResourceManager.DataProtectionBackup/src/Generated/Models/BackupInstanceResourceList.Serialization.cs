@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DataProtectionBackupInstanceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupInstanceData> array = new List<DataProtectionBackupInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(item));
+                        array.Add(DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(item, options));
                     }
                     value = array;
                     continue;

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoDatabaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDatabaseData> array = new List<KustoDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDatabaseData.DeserializeKustoDatabaseData(item));
+                        array.Add(KustoDatabaseData.DeserializeKustoDatabaseData(item, options));
                     }
                     value = array;
                     continue;

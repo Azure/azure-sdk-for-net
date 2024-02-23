@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPv4Routes))
+            if (!(IPv4Routes is ChangeTrackingList<AggregateRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6Routes))
+            if (!(IPv6Routes is ChangeTrackingList<AggregateRoute> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
                     ipv4Routes = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AggregateRoute> array = new List<AggregateRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AggregateRoute.DeserializeAggregateRoute(item));
+                        array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
                     ipv6Routes = array;
                     continue;

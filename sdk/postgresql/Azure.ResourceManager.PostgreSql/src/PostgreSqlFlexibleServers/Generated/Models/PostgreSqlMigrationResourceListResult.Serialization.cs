@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<PostgreSqlMigrationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlMigrationData> array = new List<PostgreSqlMigrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(item));
+                        array.Add(PostgreSqlMigrationData.DeserializePostgreSqlMigrationData(item, options));
                     }
                     value = array;
                     continue;

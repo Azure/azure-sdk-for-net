@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ArchiveStatus))
+            if (options.Format != "W" && !(ArchiveStatus is ChangeTrackingList<AmlFileSystemArchive> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("archiveStatus"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    settings = AmlFileSystemHsmSettings.DeserializeAmlFileSystemHsmSettings(property.Value);
+                    settings = AmlFileSystemHsmSettings.DeserializeAmlFileSystemHsmSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("archiveStatus"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<AmlFileSystemArchive> array = new List<AmlFileSystemArchive>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item));
+                        array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item, options));
                     }
                     archiveStatus = array;
                     continue;

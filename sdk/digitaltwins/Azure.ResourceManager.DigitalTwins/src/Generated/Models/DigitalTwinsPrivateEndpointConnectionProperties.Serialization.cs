@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 if (ProvisioningState != null)
                 {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("provisioningState");
                 }
             }
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (PrivateLinkServiceConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = DigitalTwinsPrivateLinkServiceConnectionState.DeserializeDigitalTwinsPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = DigitalTwinsPrivateLinkServiceConnectionState.DeserializeDigitalTwinsPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

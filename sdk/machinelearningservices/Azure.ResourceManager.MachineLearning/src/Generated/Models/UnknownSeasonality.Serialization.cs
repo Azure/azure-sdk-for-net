@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSeasonality(document.RootElement, options);
+            return DeserializeForecastingSeasonality(document.RootElement, options);
         }
 
         internal static UnknownSeasonality DeserializeUnknownSeasonality(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSeasonality(document.RootElement, options);
+                        return DeserializeForecastingSeasonality(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ForecastingSeasonality)} does not support '{options.Format}' format.");

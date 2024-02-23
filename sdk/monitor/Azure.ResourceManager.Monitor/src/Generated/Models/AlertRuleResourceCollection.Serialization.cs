@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AlertRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AlertRuleData> array = new List<AlertRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertRuleData.DeserializeAlertRuleData(item));
+                        array.Add(AlertRuleData.DeserializeAlertRuleData(item, options));
                     }
                     value = array;
                     continue;

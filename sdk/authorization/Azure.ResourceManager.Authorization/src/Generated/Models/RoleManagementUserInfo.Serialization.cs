@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserType))
+            if (UserType.HasValue)
             {
                 writer.WritePropertyName("userType"u8);
                 writer.WriteStringValue(UserType.Value.ToString());
             }
-            if (Optional.IsDefined(IsBackup))
+            if (IsBackup.HasValue)
             {
                 writer.WritePropertyName("isBackup"u8);
                 writer.WriteBooleanValue(IsBackup.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

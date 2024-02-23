@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ReferralResource))
+            if (ReferralResource != null)
             {
                 writer.WritePropertyName("referralResource"u8);
                 writer.WriteStringValue(ReferralResource);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);

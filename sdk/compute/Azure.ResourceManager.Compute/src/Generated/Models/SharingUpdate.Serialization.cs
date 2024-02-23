@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operationType"u8);
             writer.WriteStringValue(OperationType.ToString());
-            if (Optional.IsCollectionDefined(Groups))
+            if (!(Groups is ChangeTrackingList<SharingProfileGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SharingProfileGroup> array = new List<SharingProfileGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item));
+                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item, options));
                     }
                     groups = array;
                     continue;

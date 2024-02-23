@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NodeId))
+            if (NodeId != null)
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    properties = DscNodeUpdateParametersProperties.DeserializeDscNodeUpdateParametersProperties(property.Value);
+                    properties = DscNodeUpdateParametersProperties.DeserializeDscNodeUpdateParametersProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

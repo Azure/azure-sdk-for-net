@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, DataFactoryElement<string>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -98,32 +98,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Body))
+            if (Body != null)
             {
                 writer.WritePropertyName("body"u8);
                 JsonSerializer.Serialize(writer, Body);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsDefined(DisableCertValidation))
+            if (DisableCertValidation.HasValue)
             {
                 writer.WritePropertyName("disableCertValidation"u8);
                 writer.WriteBooleanValue(DisableCertValidation.Value);
             }
-            if (Optional.IsDefined(HttpRequestTimeout))
+            if (HttpRequestTimeout != null)
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
                 JsonSerializer.Serialize(writer, HttpRequestTimeout);
             }
-            if (Optional.IsDefined(TurnOffAsync))
+            if (TurnOffAsync.HasValue)
             {
                 writer.WritePropertyName("turnOffAsync"u8);
                 writer.WriteBooleanValue(TurnOffAsync.Value);
             }
-            if (Optional.IsCollectionDefined(Datasets))
+            if (!(Datasets is ChangeTrackingList<DatasetReference> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedServices))
+            if (!(LinkedServices is ChangeTrackingList<DataFactoryLinkedServiceReference> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value);
+                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableCertValidation"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DatasetReference> array = new List<DatasetReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatasetReference.DeserializeDatasetReference(item));
+                                array.Add(DatasetReference.DeserializeDatasetReference(item, options));
                             }
                             datasets = array;
                             continue;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
                     }

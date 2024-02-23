@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Defender))
+            if (Defender != null)
             {
                 writer.WritePropertyName("defender"u8);
                 writer.WriteObjectValue(Defender);
             }
-            if (Optional.IsDefined(AzureKeyVaultKms))
+            if (AzureKeyVaultKms != null)
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms);
             }
-            if (Optional.IsDefined(WorkloadIdentity))
+            if (WorkloadIdentity != null)
             {
                 writer.WritePropertyName("workloadIdentity"u8);
                 writer.WriteObjectValue(WorkloadIdentity);
             }
-            if (Optional.IsDefined(ImageCleaner))
+            if (ImageCleaner != null)
             {
                 writer.WritePropertyName("imageCleaner"u8);
                 writer.WriteObjectValue(ImageCleaner);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value);
+                    defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureKeyVaultKms"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value);
+                    azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadIdentity"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    workloadIdentity = ManagedClusterSecurityProfileWorkloadIdentity.DeserializeManagedClusterSecurityProfileWorkloadIdentity(property.Value);
+                    workloadIdentity = ManagedClusterSecurityProfileWorkloadIdentity.DeserializeManagedClusterSecurityProfileWorkloadIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imageCleaner"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value);
+                    imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

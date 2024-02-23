@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(UniqueId))
+            if (options.Format != "W" && UniqueId.HasValue)
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId.Value);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsCollectionDefined(LinkedResources))
+            if (!(LinkedResources is ChangeTrackingList<MapsLinkedResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkedResources"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Cors))
+            if (Cors != null)
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsLinkedResource> array = new List<MapsLinkedResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
+                        array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item, options));
                     }
                     linkedResources = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    cors = CorsRules.DeserializeCorsRules(property.Value);
+                    cors = CorsRules.DeserializeCorsRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

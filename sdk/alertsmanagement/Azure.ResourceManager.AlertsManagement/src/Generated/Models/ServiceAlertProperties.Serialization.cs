@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Essentials))
+            if (Essentials != null)
             {
                 writer.WritePropertyName("essentials"u8);
                 writer.WriteObjectValue(Essentials);
             }
-            if (options.Format != "W" && Optional.IsDefined(Context))
+            if (options.Format != "W" && Context != null)
             {
                 writer.WritePropertyName("context"u8);
 #if NET6_0_OR_GREATER
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(EgressConfig))
+            if (options.Format != "W" && EgressConfig != null)
             {
                 writer.WritePropertyName("egressConfig"u8);
 #if NET6_0_OR_GREATER
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    essentials = ServiceAlertEssentials.DeserializeServiceAlertEssentials(property.Value);
+                    essentials = ServiceAlertEssentials.DeserializeServiceAlertEssentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("context"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SqlServerCommunicationLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerCommunicationLinkData> array = new List<SqlServerCommunicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(item));
+                        array.Add(SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(item, options));
                     }
                     value = array;
                     continue;

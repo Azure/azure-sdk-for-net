@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteStringValue(Code);
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<ErrorDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetail.DeserializeErrorDetail(item));
+                        array.Add(ErrorDetail.DeserializeErrorDetail(item, options));
                     }
                     details = array;
                     continue;

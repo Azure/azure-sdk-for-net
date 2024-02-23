@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Hive))
+            if (!(Hive is ChangeTrackingList<HiveCatalogOption> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hive"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<HiveCatalogOption> array = new List<HiveCatalogOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item));
+                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item, options));
                     }
                     hive = array;
                     continue;

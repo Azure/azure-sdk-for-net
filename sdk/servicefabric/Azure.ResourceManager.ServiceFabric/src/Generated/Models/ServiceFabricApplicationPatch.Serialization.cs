@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypeVersion))
+            if (TypeVersion != null)
             {
                 writer.WritePropertyName("typeVersion"u8);
                 writer.WriteStringValue(TypeVersion);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -84,27 +84,27 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(UpgradePolicy))
+            if (UpgradePolicy != null)
             {
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy);
             }
-            if (Optional.IsDefined(MinimumNodes))
+            if (MinimumNodes.HasValue)
             {
                 writer.WritePropertyName("minimumNodes"u8);
                 writer.WriteNumberValue(MinimumNodes.Value);
             }
-            if (Optional.IsDefined(MaximumNodes))
+            if (MaximumNodes.HasValue)
             {
                 writer.WritePropertyName("maximumNodes"u8);
                 writer.WriteNumberValue(MaximumNodes.Value);
             }
-            if (Optional.IsDefined(RemoveApplicationCapacity))
+            if (RemoveApplicationCapacity.HasValue)
             {
                 writer.WritePropertyName("removeApplicationCapacity"u8);
                 writer.WriteBooleanValue(RemoveApplicationCapacity.Value);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<ApplicationMetricDescription> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManagedIdentities))
+            if (!(ManagedIdentities is ChangeTrackingList<ApplicationUserAssignedIdentity> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("managedIdentities"u8);
                 writer.WriteStartArray();
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value);
+                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("minimumNodes"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ApplicationMetricDescription> array = new List<ApplicationMetricDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item));
+                                array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item, options));
                             }
                             metrics = array;
                             continue;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ApplicationUserAssignedIdentity> array = new List<ApplicationUserAssignedIdentity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item));
+                                array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item, options));
                             }
                             managedIdentities = array;
                             continue;

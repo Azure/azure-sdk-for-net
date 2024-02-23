@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskUri"u8);
             writer.WriteStringValue(DiskUri.AbsoluteUri);
-            if (Optional.IsDefined(RecoveryAzureStorageAccountCustomContent))
+            if (RecoveryAzureStorageAccountCustomContent != null)
             {
                 writer.WritePropertyName("recoveryAzureStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(RecoveryAzureStorageAccountCustomContent);
             }
-            if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
+            if (PrimaryStagingStorageAccountCustomContent != null)
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryAzureStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
+                    recoveryAzureStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryStagingStorageAccountCustomInput"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
+                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

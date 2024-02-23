@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Templates))
+            if (!(Templates is ChangeTrackingList<SignalRUpstreamTemplate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("templates"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRUpstreamTemplate> array = new List<SignalRUpstreamTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item));
+                        array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item, options));
                     }
                     templates = array;
                     continue;

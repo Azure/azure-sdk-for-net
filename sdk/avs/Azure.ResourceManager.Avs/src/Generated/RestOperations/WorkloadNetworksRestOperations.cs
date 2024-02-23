@@ -69,9 +69,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, workloadNetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,9 +122,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, WorkloadNetworkName workloadNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, workloadNetworkName);
             _pipeline.Send(message, cancellationToken);
@@ -153,9 +195,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -182,9 +245,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkList> List(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -232,9 +316,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkSegmentsList>> ListSegmentsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -261,9 +366,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkSegmentsList> ListSegments(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -313,10 +439,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkSegmentData>> GetSegmentAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (segmentId == null)
+            {
+                throw new ArgumentNullException(nameof(segmentId));
+            }
+            if (segmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
+            }
 
             using var message = CreateGetSegmentRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -346,10 +500,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkSegmentData> GetSegment(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (segmentId == null)
+            {
+                throw new ArgumentNullException(nameof(segmentId));
+            }
+            if (segmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
+            }
 
             using var message = CreateGetSegmentRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId);
             _pipeline.Send(message, cancellationToken);
@@ -406,11 +588,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateSegmentsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (segmentId == null)
+            {
+                throw new ArgumentNullException(nameof(segmentId));
+            }
+            if (segmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -435,11 +648,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateSegments(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (segmentId == null)
+            {
+                throw new ArgumentNullException(nameof(segmentId));
+            }
+            if (segmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId, data);
             _pipeline.Send(message, cancellationToken);
@@ -490,11 +734,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateSegmentsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (segmentId == null)
+            {
+                throw new ArgumentNullException(nameof(segmentId));
+            }
+            if (segmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -519,11 +794,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateSegments(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (segmentId == null)
+            {
+                throw new ArgumentNullException(nameof(segmentId));
+            }
+            if (segmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateSegmentsRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId, data);
             _pipeline.Send(message, cancellationToken);
@@ -569,10 +875,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteSegmentAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (segmentId == null)
+            {
+                throw new ArgumentNullException(nameof(segmentId));
+            }
+            if (segmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
+            }
 
             using var message = CreateDeleteSegmentRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -597,10 +931,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteSegment(string subscriptionId, string resourceGroupName, string privateCloudName, string segmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (segmentId == null)
+            {
+                throw new ArgumentNullException(nameof(segmentId));
+            }
+            if (segmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
+            }
 
             using var message = CreateDeleteSegmentRequest(subscriptionId, resourceGroupName, privateCloudName, segmentId);
             _pipeline.Send(message, cancellationToken);
@@ -645,9 +1007,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDhcpList>> ListDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDhcpRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -674,9 +1057,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDhcpList> ListDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDhcpRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -726,10 +1130,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDhcpData>> GetDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dhcpId == null)
+            {
+                throw new ArgumentNullException(nameof(dhcpId));
+            }
+            if (dhcpId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
+            }
 
             using var message = CreateGetDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -759,10 +1191,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDhcpData> GetDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dhcpId == null)
+            {
+                throw new ArgumentNullException(nameof(dhcpId));
+            }
+            if (dhcpId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
+            }
 
             using var message = CreateGetDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId);
             _pipeline.Send(message, cancellationToken);
@@ -819,11 +1279,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dhcpId == null)
+            {
+                throw new ArgumentNullException(nameof(dhcpId));
+            }
+            if (dhcpId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -848,11 +1339,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dhcpId == null)
+            {
+                throw new ArgumentNullException(nameof(dhcpId));
+            }
+            if (dhcpId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId, data);
             _pipeline.Send(message, cancellationToken);
@@ -903,11 +1425,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dhcpId == null)
+            {
+                throw new ArgumentNullException(nameof(dhcpId));
+            }
+            if (dhcpId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -932,11 +1485,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, WorkloadNetworkDhcpData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dhcpId == null)
+            {
+                throw new ArgumentNullException(nameof(dhcpId));
+            }
+            if (dhcpId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId, data);
             _pipeline.Send(message, cancellationToken);
@@ -982,10 +1566,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteDhcpAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dhcpId == null)
+            {
+                throw new ArgumentNullException(nameof(dhcpId));
+            }
+            if (dhcpId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
+            }
 
             using var message = CreateDeleteDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1010,10 +1622,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteDhcp(string subscriptionId, string resourceGroupName, string privateCloudName, string dhcpId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dhcpId == null)
+            {
+                throw new ArgumentNullException(nameof(dhcpId));
+            }
+            if (dhcpId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dhcpId));
+            }
 
             using var message = CreateDeleteDhcpRequest(subscriptionId, resourceGroupName, privateCloudName, dhcpId);
             _pipeline.Send(message, cancellationToken);
@@ -1058,9 +1698,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkGatewayList>> ListGatewaysAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListGatewaysRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1087,9 +1748,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkGatewayList> ListGateways(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListGatewaysRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -1139,10 +1821,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkGatewayData>> GetGatewayAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var message = CreateGetGatewayRequest(subscriptionId, resourceGroupName, privateCloudName, gatewayId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1172,10 +1882,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkGatewayData> GetGateway(string subscriptionId, string resourceGroupName, string privateCloudName, string gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (gatewayId == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayId));
+            }
+            if (gatewayId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayId));
+            }
 
             using var message = CreateGetGatewayRequest(subscriptionId, resourceGroupName, privateCloudName, gatewayId);
             _pipeline.Send(message, cancellationToken);
@@ -1225,9 +1963,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkPortMirroringList>> ListPortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListPortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1254,9 +2013,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkPortMirroringList> ListPortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListPortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -1306,10 +2086,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkPortMirroringProfileData>> GetPortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var message = CreateGetPortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1339,10 +2147,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkPortMirroringProfileData> GetPortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var message = CreateGetPortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId);
             _pipeline.Send(message, cancellationToken);
@@ -1399,11 +2235,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreatePortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreatePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1428,11 +2295,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreatePortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreatePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId, data);
             _pipeline.Send(message, cancellationToken);
@@ -1483,11 +2381,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdatePortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdatePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1512,11 +2441,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdatePortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, WorkloadNetworkPortMirroringProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdatePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId, data);
             _pipeline.Send(message, cancellationToken);
@@ -1562,10 +2522,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeletePortMirroringAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var message = CreateDeletePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1590,10 +2578,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeletePortMirroring(string subscriptionId, string resourceGroupName, string privateCloudName, string portMirroringId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (portMirroringId == null)
+            {
+                throw new ArgumentNullException(nameof(portMirroringId));
+            }
+            if (portMirroringId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(portMirroringId));
+            }
 
             using var message = CreateDeletePortMirroringRequest(subscriptionId, resourceGroupName, privateCloudName, portMirroringId);
             _pipeline.Send(message, cancellationToken);
@@ -1638,9 +2654,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkVmGroupsList>> ListVmGroupsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListVmGroupsRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1667,9 +2704,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkVmGroupsList> ListVmGroups(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListVmGroupsRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -1719,10 +2777,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkVmGroupData>> GetVmGroupAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (vmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(vmGroupId));
+            }
+            if (vmGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
+            }
 
             using var message = CreateGetVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1752,10 +2838,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkVmGroupData> GetVmGroup(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (vmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(vmGroupId));
+            }
+            if (vmGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
+            }
 
             using var message = CreateGetVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId);
             _pipeline.Send(message, cancellationToken);
@@ -1812,11 +2926,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateVmGroupAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (vmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(vmGroupId));
+            }
+            if (vmGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1841,11 +2986,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateVmGroup(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (vmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(vmGroupId));
+            }
+            if (vmGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId, data);
             _pipeline.Send(message, cancellationToken);
@@ -1896,11 +3072,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateVmGroupAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (vmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(vmGroupId));
+            }
+            if (vmGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1925,11 +3132,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateVmGroup(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (vmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(vmGroupId));
+            }
+            if (vmGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId, data);
             _pipeline.Send(message, cancellationToken);
@@ -1975,10 +3213,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteVmGroupAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (vmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(vmGroupId));
+            }
+            if (vmGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
+            }
 
             using var message = CreateDeleteVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2003,10 +3269,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteVmGroup(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (vmGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(vmGroupId));
+            }
+            if (vmGroupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
+            }
 
             using var message = CreateDeleteVmGroupRequest(subscriptionId, resourceGroupName, privateCloudName, vmGroupId);
             _pipeline.Send(message, cancellationToken);
@@ -2051,9 +3345,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkVirtualMachinesList>> ListVirtualMachinesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListVirtualMachinesRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2080,9 +3395,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkVirtualMachinesList> ListVirtualMachines(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListVirtualMachinesRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -2132,10 +3468,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkVirtualMachineData>> GetVirtualMachineAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (virtualMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineId));
+            }
+            if (virtualMachineId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
+            }
 
             using var message = CreateGetVirtualMachineRequest(subscriptionId, resourceGroupName, privateCloudName, virtualMachineId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2165,10 +3529,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkVirtualMachineData> GetVirtualMachine(string subscriptionId, string resourceGroupName, string privateCloudName, string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (virtualMachineId == null)
+            {
+                throw new ArgumentNullException(nameof(virtualMachineId));
+            }
+            if (virtualMachineId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
+            }
 
             using var message = CreateGetVirtualMachineRequest(subscriptionId, resourceGroupName, privateCloudName, virtualMachineId);
             _pipeline.Send(message, cancellationToken);
@@ -2218,9 +3610,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDnsServicesList>> ListDnsServicesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDnsServicesRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2247,9 +3660,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDnsServicesList> ListDnsServices(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDnsServicesRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -2299,10 +3733,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDnsServiceData>> GetDnsServiceAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var message = CreateGetDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2332,10 +3794,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDnsServiceData> GetDnsService(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var message = CreateGetDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId);
             _pipeline.Send(message, cancellationToken);
@@ -2392,11 +3882,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateDnsServiceAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2421,11 +3942,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateDnsService(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId, data);
             _pipeline.Send(message, cancellationToken);
@@ -2476,11 +4028,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateDnsServiceAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2505,11 +4088,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateDnsService(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, WorkloadNetworkDnsServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId, data);
             _pipeline.Send(message, cancellationToken);
@@ -2555,10 +4169,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteDnsServiceAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var message = CreateDeleteDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2583,10 +4225,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteDnsService(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsServiceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsServiceId, nameof(dnsServiceId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsServiceId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServiceId));
+            }
+            if (dnsServiceId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsServiceId));
+            }
 
             using var message = CreateDeleteDnsServiceRequest(subscriptionId, resourceGroupName, privateCloudName, dnsServiceId);
             _pipeline.Send(message, cancellationToken);
@@ -2631,9 +4301,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDnsZonesList>> ListDnsZonesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDnsZonesRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2660,9 +4351,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDnsZonesList> ListDnsZones(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDnsZonesRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -2712,10 +4424,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDnsZoneData>> GetDnsZoneAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsZoneId));
+            }
+            if (dnsZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
+            }
 
             using var message = CreateGetDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2745,10 +4485,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDnsZoneData> GetDnsZone(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsZoneId));
+            }
+            if (dnsZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
+            }
 
             using var message = CreateGetDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId);
             _pipeline.Send(message, cancellationToken);
@@ -2805,11 +4573,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateDnsZoneAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsZoneId));
+            }
+            if (dnsZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2834,11 +4633,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateDnsZone(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsZoneId));
+            }
+            if (dnsZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId, data);
             _pipeline.Send(message, cancellationToken);
@@ -2889,11 +4719,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateDnsZoneAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsZoneId));
+            }
+            if (dnsZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2918,11 +4779,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateDnsZone(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsZoneId));
+            }
+            if (dnsZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId, data);
             _pipeline.Send(message, cancellationToken);
@@ -2968,10 +4860,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteDnsZoneAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsZoneId));
+            }
+            if (dnsZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
+            }
 
             using var message = CreateDeleteDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2996,10 +4916,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteDnsZone(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (dnsZoneId == null)
+            {
+                throw new ArgumentNullException(nameof(dnsZoneId));
+            }
+            if (dnsZoneId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
+            }
 
             using var message = CreateDeleteDnsZoneRequest(subscriptionId, resourceGroupName, privateCloudName, dnsZoneId);
             _pipeline.Send(message, cancellationToken);
@@ -3044,9 +4992,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkPublicIPsList>> ListPublicIPsAsync(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListPublicIPsRequest(subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3073,9 +5042,30 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkPublicIPsList> ListPublicIPs(string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListPublicIPsRequest(subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3125,10 +5115,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkPublicIPData>> GetPublicIPAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (publicIPId == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPId));
+            }
+            if (publicIPId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
+            }
 
             using var message = CreateGetPublicIPRequest(subscriptionId, resourceGroupName, privateCloudName, publicIPId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3158,10 +5176,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkPublicIPData> GetPublicIP(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (publicIPId == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPId));
+            }
+            if (publicIPId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
+            }
 
             using var message = CreateGetPublicIPRequest(subscriptionId, resourceGroupName, privateCloudName, publicIPId);
             _pipeline.Send(message, cancellationToken);
@@ -3218,11 +5264,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreatePublicIPAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, WorkloadNetworkPublicIPData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (publicIPId == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPId));
+            }
+            if (publicIPId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreatePublicIPRequest(subscriptionId, resourceGroupName, privateCloudName, publicIPId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3247,11 +5324,42 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreatePublicIP(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, WorkloadNetworkPublicIPData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (publicIPId == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPId));
+            }
+            if (publicIPId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreatePublicIPRequest(subscriptionId, resourceGroupName, privateCloudName, publicIPId, data);
             _pipeline.Send(message, cancellationToken);
@@ -3297,10 +5405,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeletePublicIPAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (publicIPId == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPId));
+            }
+            if (publicIPId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
+            }
 
             using var message = CreateDeletePublicIPRequest(subscriptionId, resourceGroupName, privateCloudName, publicIPId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3325,10 +5461,38 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeletePublicIP(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
+            if (publicIPId == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPId));
+            }
+            if (publicIPId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
+            }
 
             using var message = CreateDeletePublicIPRequest(subscriptionId, resourceGroupName, privateCloudName, publicIPId);
             _pipeline.Send(message, cancellationToken);
@@ -3367,10 +5531,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3398,10 +5586,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3443,10 +5655,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkSegmentsList>> ListSegmentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListSegmentsNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3474,10 +5710,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkSegmentsList> ListSegmentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListSegmentsNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3519,10 +5779,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDhcpList>> ListDhcpNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDhcpNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3550,10 +5834,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDhcpList> ListDhcpNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDhcpNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3595,10 +5903,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkGatewayList>> ListGatewaysNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListGatewaysNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3626,10 +5958,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkGatewayList> ListGatewaysNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListGatewaysNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3671,10 +6027,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkPortMirroringList>> ListPortMirroringNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListPortMirroringNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3702,10 +6082,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkPortMirroringList> ListPortMirroringNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListPortMirroringNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3747,10 +6151,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkVmGroupsList>> ListVmGroupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListVmGroupsNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3778,10 +6206,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkVmGroupsList> ListVmGroupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListVmGroupsNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3823,10 +6275,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkVirtualMachinesList>> ListVirtualMachinesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListVirtualMachinesNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3854,10 +6330,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkVirtualMachinesList> ListVirtualMachinesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListVirtualMachinesNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3899,10 +6399,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDnsServicesList>> ListDnsServicesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDnsServicesNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3930,10 +6454,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDnsServicesList> ListDnsServicesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDnsServicesNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -3975,10 +6523,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkDnsZonesList>> ListDnsZonesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDnsZonesNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4006,10 +6578,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkDnsZonesList> ListDnsZonesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListDnsZonesNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);
@@ -4051,10 +6647,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadNetworkPublicIPsList>> ListPublicIPsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListPublicIPsNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4082,10 +6702,34 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadNetworkPublicIPsList> ListPublicIPsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (privateCloudName == null)
+            {
+                throw new ArgumentNullException(nameof(privateCloudName));
+            }
+            if (privateCloudName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
+            }
 
             using var message = CreateListPublicIPsNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName);
             _pipeline.Send(message, cancellationToken);

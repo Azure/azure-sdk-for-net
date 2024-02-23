@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "legacy": return ConsumptionLegacyUsageDetail.DeserializeConsumptionLegacyUsageDetail(element);
-                    case "modern": return ConsumptionModernUsageDetail.DeserializeConsumptionModernUsageDetail(element);
+                    case "legacy": return ConsumptionLegacyUsageDetail.DeserializeConsumptionLegacyUsageDetail(element, options);
+                    case "modern": return ConsumptionModernUsageDetail.DeserializeConsumptionModernUsageDetail(element, options);
                 }
             }
-            return UnknownUsageDetail.DeserializeUnknownUsageDetail(element);
+            return UnknownUsageDetail.DeserializeUnknownUsageDetail(element, options);
         }
 
         BinaryData IPersistableModel<ConsumptionUsageDetail>.Write(ModelReaderWriterOptions options)

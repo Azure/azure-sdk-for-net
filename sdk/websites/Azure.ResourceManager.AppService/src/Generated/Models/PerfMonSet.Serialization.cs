@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(TimeGrain))
+            if (TimeGrain != null)
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<PerfMonSample> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PerfMonSample> array = new List<PerfMonSample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PerfMonSample.DeserializePerfMonSample(item));
+                        array.Add(PerfMonSample.DeserializePerfMonSample(item, options));
                     }
                     values = array;
                     continue;

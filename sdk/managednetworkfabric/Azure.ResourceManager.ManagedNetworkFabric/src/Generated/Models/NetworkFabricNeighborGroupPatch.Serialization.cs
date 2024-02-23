@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value);
+                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value, options);
                             continue;
                         }
                     }

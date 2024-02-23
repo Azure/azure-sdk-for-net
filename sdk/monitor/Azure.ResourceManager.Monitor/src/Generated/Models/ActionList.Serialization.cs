@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ActionGroups))
+            if (!(ActionGroups is ChangeTrackingList<ActivityLogAlertActionGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ActivityLogAlertActionGroup> array = new List<ActivityLogAlertActionGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertActionGroup.DeserializeActivityLogAlertActionGroup(item));
+                        array.Add(ActivityLogAlertActionGroup.DeserializeActivityLogAlertActionGroup(item, options));
                     }
                     actionGroups = array;
                     continue;

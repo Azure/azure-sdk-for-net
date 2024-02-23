@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobWriterOverwriteFiles))
+            if (BlobWriterOverwriteFiles != null)
             {
                 writer.WritePropertyName("blobWriterOverwriteFiles"u8);
                 JsonSerializer.Serialize(writer, BlobWriterOverwriteFiles);
             }
-            if (Optional.IsDefined(BlobWriterDateTimeFormat))
+            if (BlobWriterDateTimeFormat != null)
             {
                 writer.WritePropertyName("blobWriterDateTimeFormat"u8);
                 JsonSerializer.Serialize(writer, BlobWriterDateTimeFormat);
             }
-            if (Optional.IsDefined(BlobWriterAddHeader))
+            if (BlobWriterAddHeader != null)
             {
                 writer.WritePropertyName("blobWriterAddHeader"u8);
                 JsonSerializer.Serialize(writer, BlobWriterAddHeader);
             }
-            if (Optional.IsDefined(CopyBehavior))
+            if (CopyBehavior != null)
             {
                 writer.WritePropertyName("copyBehavior"u8);
 #if NET6_0_OR_GREATER
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingList<DataFactoryMetadataItemInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -66,32 +66,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryMetadataItemInfo> array = new List<DataFactoryMetadataItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item));
+                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item, options));
                     }
                     metadata = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> array = new List<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(item));
+                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(item, options));
                     }
                     value = array;
                     continue;

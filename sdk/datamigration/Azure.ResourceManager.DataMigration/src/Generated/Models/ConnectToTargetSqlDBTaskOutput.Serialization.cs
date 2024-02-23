@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Databases))
+            if (options.Format != "W" && Databases != null)
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStringValue(Databases);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
+            if (options.Format != "W" && TargetServerVersion != null)
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetServerBrandVersion))
+            if (options.Format != "W" && TargetServerBrandVersion != null)
             {
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseSqlPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSqlPoolData> array = new List<SynapseSqlPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSqlPoolData.DeserializeSynapseSqlPoolData(item));
+                        array.Add(SynapseSqlPoolData.DeserializeSynapseSqlPoolData(item, options));
                     }
                     value = array;
                     continue;

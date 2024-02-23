@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,54 +55,54 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceLevel))
+            if (ServiceLevel.HasValue)
             {
                 writer.WritePropertyName("serviceLevel"u8);
                 writer.WriteStringValue(ServiceLevel.Value.ToString());
             }
-            if (Optional.IsDefined(UsageThreshold))
+            if (UsageThreshold.HasValue)
             {
                 writer.WritePropertyName("usageThreshold"u8);
                 writer.WriteNumberValue(UsageThreshold.Value);
             }
-            if (Optional.IsDefined(ExportPolicy))
+            if (ExportPolicy != null)
             {
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
-            if (Optional.IsDefined(ThroughputMibps))
+            if (ThroughputMibps.HasValue)
             {
                 writer.WritePropertyName("throughputMibps"u8);
                 writer.WriteNumberValue(ThroughputMibps.Value);
             }
-            if (Optional.IsDefined(DataProtection))
+            if (DataProtection != null)
             {
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection);
             }
-            if (Optional.IsDefined(IsDefaultQuotaEnabled))
+            if (IsDefaultQuotaEnabled.HasValue)
             {
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
-            if (Optional.IsDefined(DefaultUserQuotaInKiBs))
+            if (DefaultUserQuotaInKiBs.HasValue)
             {
                 writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultUserQuotaInKiBs.Value);
             }
-            if (Optional.IsDefined(DefaultGroupQuotaInKiBs))
+            if (DefaultGroupQuotaInKiBs.HasValue)
             {
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
-            if (Optional.IsDefined(UnixPermissions))
+            if (UnixPermissions != null)
             {
                 if (UnixPermissions != null)
                 {
@@ -114,27 +114,27 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("unixPermissions");
                 }
             }
-            if (Optional.IsDefined(IsCoolAccessEnabled))
+            if (IsCoolAccessEnabled.HasValue)
             {
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (Optional.IsDefined(CoolnessPeriod))
+            if (CoolnessPeriod.HasValue)
             {
                 writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
             }
-            if (Optional.IsDefined(CoolAccessRetrievalPolicy))
+            if (CoolAccessRetrievalPolicy.HasValue)
             {
                 writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
                 writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
+            if (IsSnapshotDirectoryVisible.HasValue)
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (SmbAccessBasedEnumeration.HasValue)
             {
                 if (SmbAccessBasedEnumeration != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("smbAccessBasedEnumeration");
                 }
             }
-            if (Optional.IsDefined(SmbNonBrowsable))
+            if (SmbNonBrowsable.HasValue)
             {
                 writer.WritePropertyName("smbNonBrowsable"u8);
                 writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            exportPolicy = VolumePatchPropertiesExportPolicy.DeserializeVolumePatchPropertiesExportPolicy(property0.Value);
+                            exportPolicy = VolumePatchPropertiesExportPolicy.DeserializeVolumePatchPropertiesExportPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("throughputMibps"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            dataProtection = NetAppVolumePatchDataProtection.DeserializeNetAppVolumePatchDataProtection(property0.Value);
+                            dataProtection = NetAppVolumePatchDataProtection.DeserializeNetAppVolumePatchDataProtection(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isDefaultQuotaEnabled"u8))

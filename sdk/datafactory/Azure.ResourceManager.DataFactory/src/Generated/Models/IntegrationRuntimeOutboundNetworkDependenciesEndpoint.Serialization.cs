@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainName))
+            if (DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsCollectionDefined(EndpointDetails))
+            if (!(EndpointDetails is ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> array = new List<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(item));
+                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(item, options));
                     }
                     endpointDetails = array;
                     continue;

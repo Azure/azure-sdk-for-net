@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);

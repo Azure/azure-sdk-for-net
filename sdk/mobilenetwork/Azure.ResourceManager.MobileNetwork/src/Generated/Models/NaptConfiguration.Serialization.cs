@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Optional.IsDefined(PortRange))
+            if (PortRange != null)
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteObjectValue(PortRange);
             }
-            if (Optional.IsDefined(PortReuseHoldTime))
+            if (PortReuseHoldTime != null)
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
                 writer.WriteObjectValue(PortReuseHoldTime);
             }
-            if (Optional.IsDefined(PinholeLimits))
+            if (PinholeLimits.HasValue)
             {
                 writer.WritePropertyName("pinholeLimits"u8);
                 writer.WriteNumberValue(PinholeLimits.Value);
             }
-            if (Optional.IsDefined(PinholeTimeouts))
+            if (PinholeTimeouts != null)
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
                 writer.WriteObjectValue(PinholeTimeouts);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    portRange = MobileNetworkPortRange.DeserializeMobileNetworkPortRange(property.Value);
+                    portRange = MobileNetworkPortRange.DeserializeMobileNetworkPortRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("portReuseHoldTime"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    portReuseHoldTime = MobileNetworkPortReuseHoldTimes.DeserializeMobileNetworkPortReuseHoldTimes(property.Value);
+                    portReuseHoldTime = MobileNetworkPortReuseHoldTimes.DeserializeMobileNetworkPortReuseHoldTimes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pinholeLimits"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    pinholeTimeouts = PinholeTimeouts.DeserializePinholeTimeouts(property.Value);
+                    pinholeTimeouts = PinholeTimeouts.DeserializePinholeTimeouts(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

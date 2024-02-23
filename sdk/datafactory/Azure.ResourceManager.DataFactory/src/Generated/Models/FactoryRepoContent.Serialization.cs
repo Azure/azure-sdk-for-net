@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FactoryResourceId))
+            if (FactoryResourceId != null)
             {
                 writer.WritePropertyName("factoryResourceId"u8);
                 writer.WriteStringValue(FactoryResourceId);
             }
-            if (Optional.IsDefined(RepoConfiguration))
+            if (RepoConfiguration != null)
             {
                 writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value);
+                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

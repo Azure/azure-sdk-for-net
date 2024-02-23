@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceEmergingIssueData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ServiceEmergingIssueData> array = new List<ServiceEmergingIssueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(item));
+                        array.Add(ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(item, options));
                     }
                     value = array;
                     continue;

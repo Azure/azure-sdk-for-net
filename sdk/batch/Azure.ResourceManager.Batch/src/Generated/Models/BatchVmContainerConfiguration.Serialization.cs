@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerType.ToString());
-            if (Optional.IsCollectionDefined(ContainerImageNames))
+            if (!(ContainerImageNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containerImageNames"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContainerRegistries))
+            if (!(ContainerRegistries is ChangeTrackingList<BatchVmContainerRegistry> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containerRegistries"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmContainerRegistry> array = new List<BatchVmContainerRegistry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item));
+                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item, options));
                     }
                     containerRegistries = array;
                     continue;

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountProvisioningState))
+            if (options.Format != "W" && AccountProvisioningState.HasValue)
             {
                 writer.WritePropertyName("accountProvisioningState"u8);
                 writer.WriteStringValue(AccountProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            if (options.Format != "W" && ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 JsonSerializer.Serialize(writer, ErrorDetails);

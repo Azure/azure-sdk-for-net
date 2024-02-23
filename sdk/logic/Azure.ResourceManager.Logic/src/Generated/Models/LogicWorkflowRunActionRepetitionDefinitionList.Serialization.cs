@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowRunActionRepetitionDefinitionData> array = new List<LogicWorkflowRunActionRepetitionDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(item));
+                        array.Add(LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(item, options));
                     }
                     value = array;
                     continue;

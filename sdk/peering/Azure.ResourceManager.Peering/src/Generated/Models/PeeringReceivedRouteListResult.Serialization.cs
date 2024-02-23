@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PeeringReceivedRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringReceivedRoute> array = new List<PeeringReceivedRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringReceivedRoute.DeserializePeeringReceivedRoute(item));
+                        array.Add(PeeringReceivedRoute.DeserializePeeringReceivedRoute(item, options));
                     }
                     value = array;
                     continue;

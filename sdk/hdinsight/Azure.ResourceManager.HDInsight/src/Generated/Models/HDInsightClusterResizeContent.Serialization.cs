@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetInstanceCount))
+            if (TargetInstanceCount.HasValue)
             {
                 writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<CustomRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CustomRule> array = new List<CustomRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRule.DeserializeCustomRule(item));
+                        array.Add(CustomRule.DeserializeCustomRule(item, options));
                     }
                     rules = array;
                     continue;

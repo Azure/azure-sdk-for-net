@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderName))
+            if (ProviderName != null)
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PropertyBag))
+            if (options.Format != "W" && !(PropertyBag is ChangeTrackingList<DataProviderKeyValuePair> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
+                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
                     }
                     propertyBag = array;
                     continue;

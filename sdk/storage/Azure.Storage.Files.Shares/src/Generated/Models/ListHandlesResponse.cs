@@ -19,7 +19,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nextMarker"/> is null. </exception>
         internal ListHandlesResponse(string nextMarker)
         {
-            Argument.AssertNotNull(nextMarker, nameof(nextMarker));
+            if (nextMarker == null)
+            {
+                throw new ArgumentNullException(nameof(nextMarker));
+            }
 
             HandleList = new ChangeTrackingList<HandleItem>();
             NextMarker = nextMarker;

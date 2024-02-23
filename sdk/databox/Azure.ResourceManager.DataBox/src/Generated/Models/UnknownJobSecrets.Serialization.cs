@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
+            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobSecrets(document.RootElement, options);
+            return DeserializeJobSecrets(document.RootElement, options);
         }
 
         internal static UnknownJobSecrets DeserializeUnknownJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJobSecrets(document.RootElement, options);
+                        return DeserializeJobSecrets(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(JobSecrets)} does not support '{options.Format}' format.");

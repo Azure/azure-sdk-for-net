@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerRegistryWebhookData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryWebhookData> array = new List<ContainerRegistryWebhookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(item));
+                        array.Add(ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(item, options));
                     }
                     value = array;
                     continue;

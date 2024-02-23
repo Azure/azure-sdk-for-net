@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<VirtualMachineScaleSetScaleInRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ForceDeletion))
+            if (ForceDeletion.HasValue)
             {
                 writer.WritePropertyName("forceDeletion"u8);
                 writer.WriteBooleanValue(ForceDeletion.Value);

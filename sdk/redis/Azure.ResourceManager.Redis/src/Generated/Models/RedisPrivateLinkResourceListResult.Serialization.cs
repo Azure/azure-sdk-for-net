@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RedisPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisPrivateLinkResource> array = new List<RedisPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisPrivateLinkResource.DeserializeRedisPrivateLinkResource(item));
+                        array.Add(RedisPrivateLinkResource.DeserializeRedisPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

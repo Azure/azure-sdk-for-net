@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteObjectValue(Schedule);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
-            if (Optional.IsDefined(UtcOffset))
+            if (UtcOffset != null)
             {
                 writer.WritePropertyName("utcOffset"u8);
                 writer.WriteStringValue(UtcOffset);
             }
-            if (Optional.IsDefined(StartDate))
+            if (StartDate != null)
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartDate);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
-            if (Optional.IsCollectionDefined(NotAllowedDates))
+            if (!(NotAllowedDates is ChangeTrackingList<ContainerServiceDateSpan> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("notAllowedDates"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = ContainerServiceMaintenanceSchedule.DeserializeContainerServiceMaintenanceSchedule(property.Value);
+                    schedule = ContainerServiceMaintenanceSchedule.DeserializeContainerServiceMaintenanceSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("durationHours"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceDateSpan> array = new List<ContainerServiceDateSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceDateSpan.DeserializeContainerServiceDateSpan(item));
+                        array.Add(ContainerServiceDateSpan.DeserializeContainerServiceDateSpan(item, options));
                     }
                     notAllowedDates = array;
                     continue;

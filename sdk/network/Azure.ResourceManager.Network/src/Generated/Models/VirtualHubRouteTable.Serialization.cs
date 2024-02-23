@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Routes))
+            if (!(Routes is ChangeTrackingList<VirtualHubRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualHubRoute> array = new List<VirtualHubRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHubRoute.DeserializeVirtualHubRoute(item));
+                        array.Add(VirtualHubRoute.DeserializeVirtualHubRoute(item, options));
                     }
                     routes = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Keys))
+            if (!(Keys is ChangeTrackingList<AutomationKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationKey> array = new List<AutomationKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationKey.DeserializeAutomationKey(item));
+                        array.Add(AutomationKey.DeserializeAutomationKey(item, options));
                     }
                     keys = array;
                     continue;

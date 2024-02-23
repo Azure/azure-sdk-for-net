@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateTimeBegin))
+            if (DateTimeBegin.HasValue)
             {
                 writer.WritePropertyName("dateTimeBegin"u8);
                 writer.WriteStringValue(DateTimeBegin.Value, "O");
             }
-            if (Optional.IsDefined(DateTimeEnd))
+            if (DateTimeEnd.HasValue)
             {
                 writer.WritePropertyName("dateTimeEnd"u8);
                 writer.WriteStringValue(DateTimeEnd.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Tables))
+            if (!(Tables is ChangeTrackingList<RankingsResponseTablesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RankingsResponseTablesItem> array = new List<RankingsResponseTablesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RankingsResponseTablesItem.DeserializeRankingsResponseTablesItem(item));
+                        array.Add(RankingsResponseTablesItem.DeserializeRankingsResponseTablesItem(item, options));
                     }
                     tables = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ReportResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ReportResourceData> array = new List<ReportResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportResourceData.DeserializeReportResourceData(item));
+                        array.Add(ReportResourceData.DeserializeReportResourceData(item, options));
                     }
                     value = array;
                     continue;

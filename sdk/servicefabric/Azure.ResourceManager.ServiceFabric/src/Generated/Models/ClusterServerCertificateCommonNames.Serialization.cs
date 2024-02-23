@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CommonNames))
+            if (!(CommonNames is ChangeTrackingList<ClusterServerCertificateCommonName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("commonNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(X509StoreName))
+            if (X509StoreName.HasValue)
             {
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterServerCertificateCommonName> array = new List<ClusterServerCertificateCommonName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item));
+                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item, options));
                     }
                     commonNames = array;
                     continue;

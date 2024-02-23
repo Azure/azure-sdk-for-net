@@ -185,7 +185,10 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlNameAvailabilityResult>> CheckPostgreSqlNameAvailabilityAsync(PostgreSqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlSubscriptionResource.CheckPostgreSqlNameAvailability");
             scope.Start();
@@ -223,7 +226,10 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<PostgreSqlNameAvailabilityResult> CheckPostgreSqlNameAvailability(PostgreSqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlSubscriptionResource.CheckPostgreSqlNameAvailability");
             scope.Start();

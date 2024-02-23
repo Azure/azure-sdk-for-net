@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(SeedNodes))
+            if (!(SeedNodes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("seedNodes"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<CassandraClusterDataCenterNodeItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterDataCenterNodeItem> array = new List<CassandraClusterDataCenterNodeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterDataCenterNodeItem.DeserializeCassandraClusterDataCenterNodeItem(item));
+                        array.Add(CassandraClusterDataCenterNodeItem.DeserializeCassandraClusterDataCenterNodeItem(item, options));
                     }
                     nodes = array;
                     continue;

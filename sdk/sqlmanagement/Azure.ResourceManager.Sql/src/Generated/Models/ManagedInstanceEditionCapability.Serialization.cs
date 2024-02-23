@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
+            if (options.Format != "W" && !(SupportedFamilies is ChangeTrackingList<ManagedInstanceFamilyCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedFamilies"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
+            if (options.Format != "W" && !(SupportedStorageCapabilities is ChangeTrackingList<StorageCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageCapabilities"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
+            if (options.Format != "W" && IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceFamilyCapability> array = new List<ManagedInstanceFamilyCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceFamilyCapability.DeserializeManagedInstanceFamilyCapability(item));
+                        array.Add(ManagedInstanceFamilyCapability.DeserializeManagedInstanceFamilyCapability(item, options));
                     }
                     supportedFamilies = array;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<StorageCapability> array = new List<StorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCapability.DeserializeStorageCapability(item));
+                        array.Add(StorageCapability.DeserializeStorageCapability(item, options));
                     }
                     supportedStorageCapabilities = array;
                     continue;

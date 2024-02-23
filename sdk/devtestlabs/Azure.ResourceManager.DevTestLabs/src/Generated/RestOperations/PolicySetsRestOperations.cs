@@ -75,11 +75,42 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (labName == null)
+            {
+                throw new ArgumentNullException(nameof(labName));
+            }
+            if (labName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateEvaluatePoliciesRequest(subscriptionId, resourceGroupName, labName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -108,11 +139,42 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DevTestLabEvaluatePoliciesResult> EvaluatePolicies(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (labName == null)
+            {
+                throw new ArgumentNullException(nameof(labName));
+            }
+            if (labName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateEvaluatePoliciesRequest(subscriptionId, resourceGroupName, labName, name, content);
             _pipeline.Send(message, cancellationToken);

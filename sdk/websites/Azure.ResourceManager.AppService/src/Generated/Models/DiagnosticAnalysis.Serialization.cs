@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(AbnormalTimePeriods))
+            if (!(AbnormalTimePeriods is ChangeTrackingList<AbnormalTimePeriod> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("abnormalTimePeriods"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Payload))
+            if (!(Payload is ChangeTrackingList<AnalysisDetectorEvidences> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NonCorrelatedDetectors))
+            if (!(NonCorrelatedDetectors is ChangeTrackingList<DetectorDefinition> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("nonCorrelatedDetectors"u8);
                 writer.WriteStartArray();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AbnormalTimePeriod> array = new List<AbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item));
+                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item, options));
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AnalysisDetectorEvidences> array = new List<AnalysisDetectorEvidences>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item));
+                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item, options));
                             }
                             payload = array;
                             continue;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorDefinition> array = new List<DetectorDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item));
+                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item, options));
                             }
                             nonCorrelatedDetectors = array;
                             continue;

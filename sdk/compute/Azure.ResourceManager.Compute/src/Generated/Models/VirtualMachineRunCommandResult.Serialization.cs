@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     value = array;
                     continue;

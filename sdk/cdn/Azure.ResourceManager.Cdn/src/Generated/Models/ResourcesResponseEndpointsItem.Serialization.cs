@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(History))
+            if (History.HasValue)
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteBooleanValue(History.Value);
             }
-            if (Optional.IsCollectionDefined(CustomDomains))
+            if (!(CustomDomains is ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ResourcesResponseEndpointsPropertiesItemsItem> array = new List<ResourcesResponseEndpointsPropertiesItemsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourcesResponseEndpointsPropertiesItemsItem.DeserializeResourcesResponseEndpointsPropertiesItemsItem(item));
+                        array.Add(ResourcesResponseEndpointsPropertiesItemsItem.DeserializeResourcesResponseEndpointsPropertiesItemsItem(item, options));
                     }
                     customDomains = array;
                     continue;

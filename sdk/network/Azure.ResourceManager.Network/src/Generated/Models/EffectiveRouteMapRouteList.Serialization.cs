@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EffectiveRouteMapRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveRouteMapRoute> array = new List<EffectiveRouteMapRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveRouteMapRoute.DeserializeEffectiveRouteMapRoute(item));
+                        array.Add(EffectiveRouteMapRoute.DeserializeEffectiveRouteMapRoute(item, options));
                     }
                     value = array;
                     continue;

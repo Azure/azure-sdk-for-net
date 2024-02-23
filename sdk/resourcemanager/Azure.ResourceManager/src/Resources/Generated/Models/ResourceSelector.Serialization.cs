@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Selectors))
+            if (!(Selectors is ChangeTrackingList<ResourceSelectorExpression> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceSelectorExpression> array = new List<ResourceSelectorExpression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSelectorExpression.DeserializeResourceSelectorExpression(item));
+                        array.Add(ResourceSelectorExpression.DeserializeResourceSelectorExpression(item, options));
                     }
                     selectors = array;
                     continue;

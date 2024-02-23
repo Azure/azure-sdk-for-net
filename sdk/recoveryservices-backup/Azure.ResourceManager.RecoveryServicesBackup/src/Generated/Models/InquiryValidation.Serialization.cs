@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(ErrorDetail))
+            if (ErrorDetail != null)
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdditionalDetail))
+            if (options.Format != "W" && AdditionalDetail != null)
             {
                 writer.WritePropertyName("additionalDetail"u8);
                 writer.WriteStringValue(AdditionalDetail);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProtectableItemCount))
+            if (options.Format != "W" && ProtectableItemCount != null)
             {
                 writer.WritePropertyName("protectableItemCount"u8);
 #if NET6_0_OR_GREATER
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalDetail"u8))

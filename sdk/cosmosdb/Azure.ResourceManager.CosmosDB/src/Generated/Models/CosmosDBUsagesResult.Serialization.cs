@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CosmosDBBaseUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBBaseUsage> array = new List<CosmosDBBaseUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(item));
+                        array.Add(CosmosDBBaseUsage.DeserializeCosmosDBBaseUsage(item, options));
                     }
                     value = array;
                     continue;

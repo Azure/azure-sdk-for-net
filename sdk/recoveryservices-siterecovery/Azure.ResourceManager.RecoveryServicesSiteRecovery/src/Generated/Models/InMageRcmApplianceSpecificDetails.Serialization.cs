@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Appliances))
+            if (options.Format != "W" && !(Appliances is ChangeTrackingList<InMageRcmApplianceDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appliances"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmApplianceDetails> array = new List<InMageRcmApplianceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmApplianceDetails.DeserializeInMageRcmApplianceDetails(item));
+                        array.Add(InMageRcmApplianceDetails.DeserializeInMageRcmApplianceDetails(item, options));
                     }
                     appliances = array;
                     continue;

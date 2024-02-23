@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
             writer.WriteStringValue(Name);
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<MessageTemplateValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Bindings))
+            if (Bindings != null)
             {
                 writer.WritePropertyName("bindings"u8);
                 writer.WriteObjectValue(Bindings);
@@ -111,7 +111,7 @@ namespace Azure.Communication.Messages
                     List<MessageTemplateValue> array = new List<MessageTemplateValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageTemplateValue.DeserializeMessageTemplateValue(item));
+                        array.Add(MessageTemplateValue.DeserializeMessageTemplateValue(item, options));
                     }
                     values = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    bindings = MessageTemplateBindings.DeserializeMessageTemplateBindings(property.Value);
+                    bindings = MessageTemplateBindings.DeserializeMessageTemplateBindings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

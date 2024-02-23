@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSubscriptionId))
+            if (AzureSubscriptionId != null)
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (ResourceGroupName != null)
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(EndpointServiceContext))
+            if (EndpointServiceContext != null)
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
+            if (!(ResourceMoveChangeHistory is ChangeTrackingList<ResourceMoveChangeHistory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceMoveChangeHistory"u8);
                 writer.WriteStartArray();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "WebHook": return WebhookPartnerDestinationInfo.DeserializeWebhookPartnerDestinationInfo(element);
+                    case "WebHook": return WebhookPartnerDestinationInfo.DeserializeWebhookPartnerDestinationInfo(element, options);
                 }
             }
-            return UnknownPartnerDestinationInfo.DeserializeUnknownPartnerDestinationInfo(element);
+            return UnknownPartnerDestinationInfo.DeserializeUnknownPartnerDestinationInfo(element, options);
         }
 
         BinaryData IPersistableModel<PartnerDestinationInfo>.Write(ModelReaderWriterOptions options)

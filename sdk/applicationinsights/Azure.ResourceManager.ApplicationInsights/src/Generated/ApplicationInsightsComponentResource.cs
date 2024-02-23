@@ -401,7 +401,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="componentTags"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentResource>> UpdateAsync(ComponentTag componentTags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(componentTags, nameof(componentTags));
+            if (componentTags == null)
+            {
+                throw new ArgumentNullException(nameof(componentTags));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.Update");
             scope.Start();
@@ -443,7 +446,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="componentTags"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentResource> Update(ComponentTag componentTags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(componentTags, nameof(componentTags));
+            if (componentTags == null)
+            {
+                throw new ArgumentNullException(nameof(componentTags));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.Update");
             scope.Start();
@@ -488,7 +494,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<ComponentPurgeResponse>> PurgeAsync(ComponentPurgeBody body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.Purge");
             scope.Start();
@@ -533,7 +542,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<ComponentPurgeResponse> Purge(ComponentPurgeBody body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.Purge");
             scope.Start();
@@ -576,7 +588,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
         public virtual async Task<Response<ComponentPurgeStatusResponse>> GetPurgeStatusAsync(string purgeId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
+            if (purgeId == null)
+            {
+                throw new ArgumentNullException(nameof(purgeId));
+            }
+            if (purgeId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(purgeId));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetPurgeStatus");
             scope.Start();
@@ -619,7 +638,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
         public virtual Response<ComponentPurgeStatusResponse> GetPurgeStatus(string purgeId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
+            if (purgeId == null)
+            {
+                throw new ArgumentNullException(nameof(purgeId));
+            }
+            if (purgeId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(purgeId));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetPurgeStatus");
             scope.Start();
@@ -659,8 +685,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Annotation> GetAnnotationsAsync(string start, string end, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(start, nameof(start));
-            Argument.AssertNotNull(end, nameof(end));
+            if (start == null)
+            {
+                throw new ArgumentNullException(nameof(start));
+            }
+            if (end == null)
+            {
+                throw new ArgumentNullException(nameof(end));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, start, end);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
@@ -690,8 +722,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Annotation> GetAnnotations(string start, string end, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(start, nameof(start));
-            Argument.AssertNotNull(end, nameof(end));
+            if (start == null)
+            {
+                throw new ArgumentNullException(nameof(start));
+            }
+            if (end == null)
+            {
+                throw new ArgumentNullException(nameof(end));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, start, end);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
@@ -720,7 +758,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Annotation> CreateAnnotationsAsync(Annotation annotationProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
+            if (annotationProperties == null)
+            {
+                throw new ArgumentNullException(nameof(annotationProperties));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationProperties);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
@@ -749,7 +790,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Annotation> CreateAnnotations(Annotation annotationProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
+            if (annotationProperties == null)
+            {
+                throw new ArgumentNullException(nameof(annotationProperties));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationProperties);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
@@ -778,7 +822,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="annotationId"/> is null. </exception>
         public virtual async Task<Response> DeleteAnnotationAsync(string annotationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
+            if (annotationId == null)
+            {
+                throw new ArgumentNullException(nameof(annotationId));
+            }
+            if (annotationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(annotationId));
+            }
 
             using var scope = _annotationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteAnnotation");
             scope.Start();
@@ -817,7 +868,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="annotationId"/> is null. </exception>
         public virtual Response DeleteAnnotation(string annotationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
+            if (annotationId == null)
+            {
+                throw new ArgumentNullException(nameof(annotationId));
+            }
+            if (annotationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(annotationId));
+            }
 
             using var scope = _annotationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteAnnotation");
             scope.Start();
@@ -857,7 +915,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Annotation> GetAnnotationsAsync(string annotationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
+            if (annotationId == null)
+            {
+                throw new ArgumentNullException(nameof(annotationId));
+            }
+            if (annotationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(annotationId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
@@ -887,7 +952,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Annotation> GetAnnotations(string annotationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
+            if (annotationId == null)
+            {
+                throw new ArgumentNullException(nameof(annotationId));
+            }
+            if (annotationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(annotationId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
@@ -965,7 +1037,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> CreateAPIKeyAsync(APIKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.CreateAPIKey");
             scope.Start();
@@ -1003,7 +1078,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentAPIKey> CreateAPIKey(APIKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.CreateAPIKey");
             scope.Start();
@@ -1042,7 +1120,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> DeleteAPIKeyAsync(string keyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
+            if (keyId == null)
+            {
+                throw new ArgumentNullException(nameof(keyId));
+            }
+            if (keyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyId));
+            }
 
             using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteAPIKey");
             scope.Start();
@@ -1081,7 +1166,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentAPIKey> DeleteAPIKey(string keyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
+            if (keyId == null)
+            {
+                throw new ArgumentNullException(nameof(keyId));
+            }
+            if (keyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyId));
+            }
 
             using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteAPIKey");
             scope.Start();
@@ -1120,7 +1212,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> GetAPIKeyAsync(string keyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
+            if (keyId == null)
+            {
+                throw new ArgumentNullException(nameof(keyId));
+            }
+            if (keyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyId));
+            }
 
             using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetAPIKey");
             scope.Start();
@@ -1159,7 +1258,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentAPIKey> GetAPIKey(string keyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
+            if (keyId == null)
+            {
+                throw new ArgumentNullException(nameof(keyId));
+            }
+            if (keyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyId));
+            }
 
             using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetAPIKey");
             scope.Start();
@@ -1248,7 +1354,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="ApplicationInsightsComponentExportConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentExportConfiguration> CreateExportConfigurationsAsync(ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            if (exportProperties == null)
+            {
+                throw new ArgumentNullException(nameof(exportProperties));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportProperties);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
@@ -1277,7 +1386,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="ApplicationInsightsComponentExportConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentExportConfiguration> CreateExportConfigurations(ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            if (exportProperties == null)
+            {
+                throw new ArgumentNullException(nameof(exportProperties));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportProperties);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
@@ -1306,7 +1418,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentExportConfiguration>> DeleteExportConfigurationAsync(string exportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
 
             using var scope = _exportConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteExportConfiguration");
             scope.Start();
@@ -1345,7 +1464,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentExportConfiguration> DeleteExportConfiguration(string exportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
 
             using var scope = _exportConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteExportConfiguration");
             scope.Start();
@@ -1384,7 +1510,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentExportConfiguration>> GetExportConfigurationAsync(string exportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
 
             using var scope = _exportConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetExportConfiguration");
             scope.Start();
@@ -1423,7 +1556,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentExportConfiguration> GetExportConfiguration(string exportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
 
             using var scope = _exportConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetExportConfiguration");
             scope.Start();
@@ -1463,8 +1603,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> or <paramref name="exportProperties"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentExportConfiguration>> UpdateExportConfigurationAsync(string exportId, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
+            if (exportProperties == null)
+            {
+                throw new ArgumentNullException(nameof(exportProperties));
+            }
 
             using var scope = _exportConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateExportConfiguration");
             scope.Start();
@@ -1504,8 +1654,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> or <paramref name="exportProperties"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentExportConfiguration> UpdateExportConfiguration(string exportId, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            if (exportId == null)
+            {
+                throw new ArgumentNullException(nameof(exportId));
+            }
+            if (exportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exportId));
+            }
+            if (exportProperties == null)
+            {
+                throw new ArgumentNullException(nameof(exportProperties));
+            }
 
             using var scope = _exportConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateExportConfiguration");
             scope.Start();
@@ -1611,7 +1771,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="billingFeaturesProperties"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentBillingFeatures>> UpdateComponentCurrentBillingFeatureAsync(ApplicationInsightsComponentBillingFeatures billingFeaturesProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(billingFeaturesProperties, nameof(billingFeaturesProperties));
+            if (billingFeaturesProperties == null)
+            {
+                throw new ArgumentNullException(nameof(billingFeaturesProperties));
+            }
 
             using var scope = _componentCurrentBillingFeaturesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateComponentCurrentBillingFeature");
             scope.Start();
@@ -1649,7 +1812,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="billingFeaturesProperties"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentBillingFeatures> UpdateComponentCurrentBillingFeature(ApplicationInsightsComponentBillingFeatures billingFeaturesProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(billingFeaturesProperties, nameof(billingFeaturesProperties));
+            if (billingFeaturesProperties == null)
+            {
+                throw new ArgumentNullException(nameof(billingFeaturesProperties));
+            }
 
             using var scope = _componentCurrentBillingFeaturesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateComponentCurrentBillingFeature");
             scope.Start();
@@ -1942,7 +2108,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="configurationId"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentProactiveDetectionConfiguration>> GetProactiveDetectionConfigurationAsync(string configurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
+            if (configurationId == null)
+            {
+                throw new ArgumentNullException(nameof(configurationId));
+            }
+            if (configurationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationId));
+            }
 
             using var scope = _proactiveDetectionConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetProactiveDetectionConfiguration");
             scope.Start();
@@ -1981,7 +2154,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="configurationId"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentProactiveDetectionConfiguration> GetProactiveDetectionConfiguration(string configurationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
+            if (configurationId == null)
+            {
+                throw new ArgumentNullException(nameof(configurationId));
+            }
+            if (configurationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationId));
+            }
 
             using var scope = _proactiveDetectionConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetProactiveDetectionConfiguration");
             scope.Start();
@@ -2021,8 +2201,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="configurationId"/> or <paramref name="proactiveDetectionProperties"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentProactiveDetectionConfiguration>> UpdateProactiveDetectionConfigurationAsync(string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
-            Argument.AssertNotNull(proactiveDetectionProperties, nameof(proactiveDetectionProperties));
+            if (configurationId == null)
+            {
+                throw new ArgumentNullException(nameof(configurationId));
+            }
+            if (configurationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationId));
+            }
+            if (proactiveDetectionProperties == null)
+            {
+                throw new ArgumentNullException(nameof(proactiveDetectionProperties));
+            }
 
             using var scope = _proactiveDetectionConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateProactiveDetectionConfiguration");
             scope.Start();
@@ -2062,8 +2252,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="configurationId"/> or <paramref name="proactiveDetectionProperties"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentProactiveDetectionConfiguration> UpdateProactiveDetectionConfiguration(string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
-            Argument.AssertNotNull(proactiveDetectionProperties, nameof(proactiveDetectionProperties));
+            if (configurationId == null)
+            {
+                throw new ArgumentNullException(nameof(configurationId));
+            }
+            if (configurationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationId));
+            }
+            if (proactiveDetectionProperties == null)
+            {
+                throw new ArgumentNullException(nameof(proactiveDetectionProperties));
+            }
 
             using var scope = _proactiveDetectionConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateProactiveDetectionConfiguration");
             scope.Start();
@@ -2151,7 +2351,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="workItemConfigurationProperties"/> is null. </exception>
         public virtual async Task<Response<WorkItemConfiguration>> CreateWorkItemConfigurationAsync(WorkItemCreateConfiguration workItemConfigurationProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(workItemConfigurationProperties, nameof(workItemConfigurationProperties));
+            if (workItemConfigurationProperties == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigurationProperties));
+            }
 
             using var scope = _workItemConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.CreateWorkItemConfiguration");
             scope.Start();
@@ -2189,7 +2392,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="workItemConfigurationProperties"/> is null. </exception>
         public virtual Response<WorkItemConfiguration> CreateWorkItemConfiguration(WorkItemCreateConfiguration workItemConfigurationProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(workItemConfigurationProperties, nameof(workItemConfigurationProperties));
+            if (workItemConfigurationProperties == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigurationProperties));
+            }
 
             using var scope = _workItemConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.CreateWorkItemConfiguration");
             scope.Start();
@@ -2296,7 +2502,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="workItemConfigId"/> is null. </exception>
         public virtual async Task<Response> DeleteWorkItemConfigurationAsync(string workItemConfigId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workItemConfigId, nameof(workItemConfigId));
+            if (workItemConfigId == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigId));
+            }
+            if (workItemConfigId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workItemConfigId));
+            }
 
             using var scope = _workItemConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteWorkItemConfiguration");
             scope.Start();
@@ -2335,7 +2548,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="workItemConfigId"/> is null. </exception>
         public virtual Response DeleteWorkItemConfiguration(string workItemConfigId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workItemConfigId, nameof(workItemConfigId));
+            if (workItemConfigId == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigId));
+            }
+            if (workItemConfigId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workItemConfigId));
+            }
 
             using var scope = _workItemConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteWorkItemConfiguration");
             scope.Start();
@@ -2374,7 +2594,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="workItemConfigId"/> is null. </exception>
         public virtual async Task<Response<WorkItemConfiguration>> GetItemWorkItemConfigurationAsync(string workItemConfigId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workItemConfigId, nameof(workItemConfigId));
+            if (workItemConfigId == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigId));
+            }
+            if (workItemConfigId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workItemConfigId));
+            }
 
             using var scope = _workItemConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetItemWorkItemConfiguration");
             scope.Start();
@@ -2413,7 +2640,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="workItemConfigId"/> is null. </exception>
         public virtual Response<WorkItemConfiguration> GetItemWorkItemConfiguration(string workItemConfigId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workItemConfigId, nameof(workItemConfigId));
+            if (workItemConfigId == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigId));
+            }
+            if (workItemConfigId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workItemConfigId));
+            }
 
             using var scope = _workItemConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetItemWorkItemConfiguration");
             scope.Start();
@@ -2453,8 +2687,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="workItemConfigId"/> or <paramref name="workItemConfigurationProperties"/> is null. </exception>
         public virtual async Task<Response<WorkItemConfiguration>> UpdateItemWorkItemConfigurationAsync(string workItemConfigId, WorkItemCreateConfiguration workItemConfigurationProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workItemConfigId, nameof(workItemConfigId));
-            Argument.AssertNotNull(workItemConfigurationProperties, nameof(workItemConfigurationProperties));
+            if (workItemConfigId == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigId));
+            }
+            if (workItemConfigId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workItemConfigId));
+            }
+            if (workItemConfigurationProperties == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigurationProperties));
+            }
 
             using var scope = _workItemConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateItemWorkItemConfiguration");
             scope.Start();
@@ -2494,8 +2738,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="workItemConfigId"/> or <paramref name="workItemConfigurationProperties"/> is null. </exception>
         public virtual Response<WorkItemConfiguration> UpdateItemWorkItemConfiguration(string workItemConfigId, WorkItemCreateConfiguration workItemConfigurationProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workItemConfigId, nameof(workItemConfigId));
-            Argument.AssertNotNull(workItemConfigurationProperties, nameof(workItemConfigurationProperties));
+            if (workItemConfigId == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigId));
+            }
+            if (workItemConfigId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workItemConfigId));
+            }
+            if (workItemConfigurationProperties == null)
+            {
+                throw new ArgumentNullException(nameof(workItemConfigurationProperties));
+            }
 
             using var scope = _workItemConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateItemWorkItemConfiguration");
             scope.Start();
@@ -2592,7 +2846,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentFavorite>> GetFavoriteAsync(string favoriteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
 
             using var scope = _favoritesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetFavorite");
             scope.Start();
@@ -2631,7 +2892,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentFavorite> GetFavorite(string favoriteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
 
             using var scope = _favoritesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetFavorite");
             scope.Start();
@@ -2671,8 +2939,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> or <paramref name="favoriteProperties"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentFavorite>> AddFavoriteAsync(string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
+            if (favoriteProperties == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteProperties));
+            }
 
             using var scope = _favoritesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.AddFavorite");
             scope.Start();
@@ -2712,8 +2990,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> or <paramref name="favoriteProperties"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentFavorite> AddFavorite(string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
+            if (favoriteProperties == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteProperties));
+            }
 
             using var scope = _favoritesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.AddFavorite");
             scope.Start();
@@ -2753,8 +3041,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> or <paramref name="favoriteProperties"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentFavorite>> UpdateFavoriteAsync(string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
+            if (favoriteProperties == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteProperties));
+            }
 
             using var scope = _favoritesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateFavorite");
             scope.Start();
@@ -2794,8 +3092,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> or <paramref name="favoriteProperties"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentFavorite> UpdateFavorite(string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
+            if (favoriteProperties == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteProperties));
+            }
 
             using var scope = _favoritesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateFavorite");
             scope.Start();
@@ -2834,7 +3142,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> is null. </exception>
         public virtual async Task<Response> DeleteFavoriteAsync(string favoriteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
 
             using var scope = _favoritesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteFavorite");
             scope.Start();
@@ -2873,7 +3188,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="favoriteId"/> is null. </exception>
         public virtual Response DeleteFavorite(string favoriteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
 
             using var scope = _favoritesClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteFavorite");
             scope.Start();
@@ -3155,7 +3477,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="itemProperties"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentAnalyticsItem>> PutAnalyticsItemAsync(ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(itemProperties, nameof(itemProperties));
+            if (itemProperties == null)
+            {
+                throw new ArgumentNullException(nameof(itemProperties));
+            }
 
             using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.PutAnalyticsItem");
             scope.Start();
@@ -3195,7 +3520,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="itemProperties"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentAnalyticsItem> PutAnalyticsItem(ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(itemProperties, nameof(itemProperties));
+            if (itemProperties == null)
+            {
+                throw new ArgumentNullException(nameof(itemProperties));
+            }
 
             using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.PutAnalyticsItem");
             scope.Start();
@@ -3312,8 +3640,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.AddTag");
             scope.Start();
@@ -3374,8 +3708,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.AddTag");
             scope.Start();
@@ -3435,7 +3775,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.SetTags");
             scope.Start();
@@ -3492,7 +3835,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.SetTags");
             scope.Start();
@@ -3549,7 +3895,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.RemoveTag");
             scope.Start();
@@ -3609,7 +3958,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ApplicationInsightsComponentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.RemoveTag");
             scope.Start();

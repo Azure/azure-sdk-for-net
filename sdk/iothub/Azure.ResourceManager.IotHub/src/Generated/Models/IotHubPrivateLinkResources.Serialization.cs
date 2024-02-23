@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<IotHubPrivateEndpointGroupInformationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubPrivateEndpointGroupInformationData> array = new List<IotHubPrivateEndpointGroupInformationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubPrivateEndpointGroupInformationData.DeserializeIotHubPrivateEndpointGroupInformationData(item));
+                        array.Add(IotHubPrivateEndpointGroupInformationData.DeserializeIotHubPrivateEndpointGroupInformationData(item, options));
                     }
                     value = array;
                     continue;

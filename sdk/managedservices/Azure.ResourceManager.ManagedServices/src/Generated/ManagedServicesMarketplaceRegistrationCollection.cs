@@ -70,7 +70,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
         public virtual async Task<Response<ManagedServicesMarketplaceRegistrationResource>> GetAsync(string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+            if (marketplaceIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceIdentifier));
+            }
+            if (marketplaceIdentifier.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceIdentifier));
+            }
 
             using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.Get");
             scope.Start();
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
         public virtual Response<ManagedServicesMarketplaceRegistrationResource> Get(string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+            if (marketplaceIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceIdentifier));
+            }
+            if (marketplaceIdentifier.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceIdentifier));
+            }
 
             using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.Get");
             scope.Start();
@@ -222,7 +236,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+            if (marketplaceIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceIdentifier));
+            }
+            if (marketplaceIdentifier.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceIdentifier));
+            }
 
             using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.Exists");
             scope.Start();
@@ -265,7 +286,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
         public virtual Response<bool> Exists(string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+            if (marketplaceIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceIdentifier));
+            }
+            if (marketplaceIdentifier.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceIdentifier));
+            }
 
             using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.Exists");
             scope.Start();
@@ -308,7 +336,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedServicesMarketplaceRegistrationResource>> GetIfExistsAsync(string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+            if (marketplaceIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceIdentifier));
+            }
+            if (marketplaceIdentifier.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceIdentifier));
+            }
 
             using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.GetIfExists");
             scope.Start();
@@ -353,7 +388,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
         public virtual NullableResponse<ManagedServicesMarketplaceRegistrationResource> GetIfExists(string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+            if (marketplaceIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(marketplaceIdentifier));
+            }
+            if (marketplaceIdentifier.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(marketplaceIdentifier));
+            }
 
             using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.GetIfExists");
             scope.Start();

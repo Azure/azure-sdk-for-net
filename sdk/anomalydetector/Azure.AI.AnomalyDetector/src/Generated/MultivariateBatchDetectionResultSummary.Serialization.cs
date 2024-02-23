@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<ErrorResponse> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VariableStates))
+            if (!(VariableStates is ChangeTrackingList<VariableState> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.AI.AnomalyDetector
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
                     }
                     errors = array;
                     continue;
@@ -125,14 +125,14 @@ namespace Azure.AI.AnomalyDetector
                     List<VariableState> array = new List<VariableState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableState.DeserializeVariableState(item));
+                        array.Add(VariableState.DeserializeVariableState(item, options));
                     }
                     variableStates = array;
                     continue;
                 }
                 if (property.NameEquals("setupInfo"u8))
                 {
-                    setupInfo = MultivariateBatchDetectionOptions.DeserializeMultivariateBatchDetectionOptions(property.Value);
+                    setupInfo = MultivariateBatchDetectionOptions.DeserializeMultivariateBatchDetectionOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

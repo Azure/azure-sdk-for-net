@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<ErrorFieldContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ErrorFieldContract> array = new List<ErrorFieldContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorFieldContract.DeserializeErrorFieldContract(item));
+                        array.Add(ErrorFieldContract.DeserializeErrorFieldContract(item, options));
                     }
                     details = array;
                     continue;

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DownloadPhase))
+            if (options.Format != "W" && DownloadPhase.HasValue)
             {
                 writer.WritePropertyName("downloadPhase"u8);
                 writer.WriteStringValue(DownloadPhase.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            if (options.Format != "W" && PercentComplete.HasValue)
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalBytesToDownload))
+            if (options.Format != "W" && TotalBytesToDownload.HasValue)
             {
                 writer.WritePropertyName("totalBytesToDownload"u8);
                 writer.WriteNumberValue(TotalBytesToDownload.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalBytesDownloaded))
+            if (options.Format != "W" && TotalBytesDownloaded.HasValue)
             {
                 writer.WritePropertyName("totalBytesDownloaded"u8);
                 writer.WriteNumberValue(TotalBytesDownloaded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesToDownload))
+            if (options.Format != "W" && NumberOfUpdatesToDownload.HasValue)
             {
                 writer.WritePropertyName("numberOfUpdatesToDownload"u8);
                 writer.WriteNumberValue(NumberOfUpdatesToDownload.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesDownloaded))
+            if (options.Format != "W" && NumberOfUpdatesDownloaded.HasValue)
             {
                 writer.WritePropertyName("numberOfUpdatesDownloaded"u8);
                 writer.WriteNumberValue(NumberOfUpdatesDownloaded.Value);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("aggregation"u8);
             writer.WriteStringValue(Aggregation);
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<MonitorMetricSingleDimension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(MetadataValues))
+            if (!(MetadataValues is ChangeTrackingList<MonitorBaselineMetadata> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metadataValues"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricSingleDimension> array = new List<MonitorMetricSingleDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricSingleDimension.DeserializeMonitorMetricSingleDimension(item));
+                        array.Add(MonitorMetricSingleDimension.DeserializeMonitorMetricSingleDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorSingleBaseline> array = new List<MonitorSingleBaseline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorSingleBaseline.DeserializeMonitorSingleBaseline(item));
+                        array.Add(MonitorSingleBaseline.DeserializeMonitorSingleBaseline(item, options));
                     }
                     data = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorBaselineMetadata> array = new List<MonitorBaselineMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorBaselineMetadata.DeserializeMonitorBaselineMetadata(item));
+                        array.Add(MonitorBaselineMetadata.DeserializeMonitorBaselineMetadata(item, options));
                     }
                     metadataValues = array;
                     continue;

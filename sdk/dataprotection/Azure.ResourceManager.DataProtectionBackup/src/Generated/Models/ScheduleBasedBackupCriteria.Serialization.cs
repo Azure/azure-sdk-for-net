@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AbsoluteCriteria))
+            if (!(AbsoluteCriteria is ChangeTrackingList<BackupAbsoluteMarker> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("absoluteCriteria"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DaysOfMonth))
+            if (!(DaysOfMonth is ChangeTrackingList<DataProtectionBackupDay> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("daysOfMonth"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DaysOfWeek))
+            if (!(DaysOfWeek is ChangeTrackingList<DataProtectionBackupDayOfWeek> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("daysOfTheWeek"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthsOfYear))
+            if (!(MonthsOfYear is ChangeTrackingList<DataProtectionBackupMonth> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("monthsOfYear"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScheduleTimes))
+            if (!(ScheduleTimes is ChangeTrackingList<DateTimeOffset> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("scheduleTimes"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WeeksOfMonth))
+            if (!(WeeksOfMonth is ChangeTrackingList<DataProtectionBackupWeekNumber> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("weeksOfTheMonth"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupDay> array = new List<DataProtectionBackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item));
+                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item, options));
                     }
                     daysOfMonth = array;
                     continue;

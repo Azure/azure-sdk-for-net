@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<EdgeOrderItemData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderItemData> array = new List<EdgeOrderItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderItemData.DeserializeEdgeOrderItemData(item));
+                        array.Add(EdgeOrderItemData.DeserializeEdgeOrderItemData(item, options));
                     }
                     value = array;
                     continue;

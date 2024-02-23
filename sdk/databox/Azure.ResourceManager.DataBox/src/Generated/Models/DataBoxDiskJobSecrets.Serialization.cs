@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DiskSecrets))
+            if (options.Format != "W" && !(DiskSecrets is ChangeTrackingList<DataBoxDiskSecret> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diskSecrets"u8);
                 writer.WriteStartArray();
@@ -37,24 +37,24 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Passkey))
+            if (options.Format != "W" && Passkey != null)
             {
                 writer.WritePropertyName("passKey"u8);
                 writer.WriteStringValue(Passkey);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPasskeyUserDefined))
+            if (options.Format != "W" && IsPasskeyUserDefined.HasValue)
             {
                 writer.WritePropertyName("isPasskeyUserDefined"u8);
                 writer.WriteBooleanValue(IsPasskeyUserDefined.Value);
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
+            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskSecret> array = new List<DataBoxDiskSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item));
+                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item, options));
                     }
                     diskSecrets = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))

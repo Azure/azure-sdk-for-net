@@ -352,7 +352,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereProductResource>> UpdateAsync(WaitUntil waitUntil, SphereProductPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.Update");
             scope.Start();
@@ -398,7 +401,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SphereProductResource> Update(WaitUntil waitUntil, SphereProductPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductResource.Update");
             scope.Start();

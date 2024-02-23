@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuleSetType))
+            if (options.Format != "W" && RuleSetType != null)
             {
                 writer.WritePropertyName("ruleSetType"u8);
                 writer.WriteStringValue(RuleSetType);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuleSetVersion))
+            if (options.Format != "W" && RuleSetVersion != null)
             {
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RuleGroups))
+            if (options.Format != "W" && !(RuleGroups is ChangeTrackingList<ManagedRuleGroupDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    sku = CdnSku.DeserializeCdnSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<ManagedRuleGroupDefinition> array = new List<ManagedRuleGroupDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item));
+                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item, options));
                             }
                             ruleGroups = array;
                             continue;

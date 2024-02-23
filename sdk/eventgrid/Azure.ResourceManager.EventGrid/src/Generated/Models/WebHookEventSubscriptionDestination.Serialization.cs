@@ -30,37 +30,37 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(BaseEndpoint))
+            if (options.Format != "W" && BaseEndpoint != null)
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(BaseEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(MaxEventsPerBatch))
+            if (MaxEventsPerBatch.HasValue)
             {
                 writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
-            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
+            if (PreferredBatchSizeInKilobytes.HasValue)
             {
                 writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
+            if (AzureActiveDirectoryTenantId.HasValue)
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
-            if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
+            if (UriOrAzureActiveDirectoryApplicationId != null)
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
+            if (!(DeliveryAttributeMappings is ChangeTrackingList<DeliveryAttributeMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (MinimumTlsVersionAllowed.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item));
+                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item, options));
                             }
                             deliveryAttributeMappings = array;
                             continue;

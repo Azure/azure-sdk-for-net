@@ -20,8 +20,14 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="defaultCategory"/> is null. </exception>
         public CategoricalVariable(TimeSeriesExpression value, TimeSeriesDefaultCategory defaultCategory)
         {
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(defaultCategory, nameof(defaultCategory));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            if (defaultCategory == null)
+            {
+                throw new ArgumentNullException(nameof(defaultCategory));
+            }
 
             Value = value;
             Categories = new ChangeTrackingList<TimeSeriesAggregateCategory>();

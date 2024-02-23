@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<DynatraceMonitorResourceFilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceMonitorResourceFilteringTag> array = new List<DynatraceMonitorResourceFilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceMonitorResourceFilteringTag.DeserializeDynatraceMonitorResourceFilteringTag(item));
+                        array.Add(DynatraceMonitorResourceFilteringTag.DeserializeDynatraceMonitorResourceFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tiers))
+            if (!(Tiers is ChangeTrackingList<ApplicationGatewayTierType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tiers"u8);
                 writer.WriteStartArray();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallRuleGroup> array = new List<ApplicationGatewayFirewallRuleGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallRuleGroup.DeserializeApplicationGatewayFirewallRuleGroup(item));
+                        array.Add(ApplicationGatewayFirewallRuleGroup.DeserializeApplicationGatewayFirewallRuleGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;

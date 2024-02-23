@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StepId))
+            if (StepId != null)
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteStringValue(StepId);
             }
-            if (Optional.IsCollectionDefined(Responses))
+            if (!(Responses is ChangeTrackingList<TroubleshooterResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TroubleshooterResult> array = new List<TroubleshooterResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item));
+                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item, options));
                     }
                     responses = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerResourceLimits))
+            if (ContainerResourceLimits != null)
             {
                 if (ContainerResourceLimits != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containerResourceLimits");
                 }
             }
-            if (Optional.IsDefined(ContainerResourceRequests))
+            if (ContainerResourceRequests != null)
             {
                 if (ContainerResourceRequests != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         containerResourceLimits = null;
                         continue;
                     }
-                    containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value);
+                    containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containerResourceRequests"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         containerResourceRequests = null;
                         continue;
                     }
-                    containerResourceRequests = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value);
+                    containerResourceRequests = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

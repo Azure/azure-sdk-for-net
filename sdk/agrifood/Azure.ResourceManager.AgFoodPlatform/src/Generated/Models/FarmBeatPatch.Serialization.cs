@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    properties = FarmBeatsUpdateProperties.DeserializeFarmBeatsUpdateProperties(property.Value);
+                    properties = FarmBeatsUpdateProperties.DeserializeFarmBeatsUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

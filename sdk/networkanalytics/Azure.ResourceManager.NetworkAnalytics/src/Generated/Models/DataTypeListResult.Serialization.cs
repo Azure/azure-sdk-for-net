@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductDataType> array = new List<DataProductDataType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductDataType.DeserializeDataProductDataType(item));
+                        array.Add(DataProductDataType.DeserializeDataProductDataType(item, options));
                     }
                     value = array;
                     continue;

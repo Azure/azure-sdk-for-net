@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoAvailableSkuDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoAvailableSkuDetails> array = new List<KustoAvailableSkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(item));
+                        array.Add(KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(item, options));
                     }
                     value = array;
                     continue;

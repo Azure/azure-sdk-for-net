@@ -77,9 +77,30 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SBQueueListResult>> ListByNamespaceAsync(string subscriptionId, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
 
             using var message = CreateListByNamespaceRequest(subscriptionId, resourceGroupName, namespaceName, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -108,9 +129,30 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SBQueueListResult> ListByNamespace(string subscriptionId, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
 
             using var message = CreateListByNamespaceRequest(subscriptionId, resourceGroupName, namespaceName, skip, top);
             _pipeline.Send(message, cancellationToken);
@@ -165,11 +207,42 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceBusQueueData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, ServiceBusQueueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, namespaceName, queueName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -198,11 +271,42 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceBusQueueData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, ServiceBusQueueData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, namespaceName, queueName, data);
             _pipeline.Send(message, cancellationToken);
@@ -252,10 +356,38 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, namespaceName, queueName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -279,10 +411,38 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, namespaceName, queueName);
             _pipeline.Send(message, cancellationToken);
@@ -328,10 +488,38 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceBusQueueData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, namespaceName, queueName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -361,10 +549,38 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceBusQueueData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string queueName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (queueName == null)
+            {
+                throw new ArgumentNullException(nameof(queueName));
+            }
+            if (queueName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, namespaceName, queueName);
             _pipeline.Send(message, cancellationToken);
@@ -410,10 +626,34 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SBQueueListResult>> ListByNamespaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
 
             using var message = CreateListByNamespaceNextPageRequest(nextLink, subscriptionId, resourceGroupName, namespaceName, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -443,10 +683,34 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SBQueueListResult> ListByNamespaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
 
             using var message = CreateListByNamespaceNextPageRequest(nextLink, subscriptionId, resourceGroupName, namespaceName, skip, top);
             _pipeline.Send(message, cancellationToken);

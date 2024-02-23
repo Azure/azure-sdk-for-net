@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RequestHeaderConfigurations))
+            if (!(RequestHeaderConfigurations is ChangeTrackingList<ApplicationGatewayHeaderConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requestHeaderConfigurations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResponseHeaderConfigurations))
+            if (!(ResponseHeaderConfigurations is ChangeTrackingList<ApplicationGatewayHeaderConfiguration> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("responseHeaderConfigurations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UrlConfiguration))
+            if (UrlConfiguration != null)
             {
                 writer.WritePropertyName("urlConfiguration"u8);
                 writer.WriteObjectValue(UrlConfiguration);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayHeaderConfiguration> array = new List<ApplicationGatewayHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item));
+                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item, options));
                     }
                     requestHeaderConfigurations = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayHeaderConfiguration> array = new List<ApplicationGatewayHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item));
+                        array.Add(ApplicationGatewayHeaderConfiguration.DeserializeApplicationGatewayHeaderConfiguration(item, options));
                     }
                     responseHeaderConfigurations = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    urlConfiguration = ApplicationGatewayUrlConfiguration.DeserializeApplicationGatewayUrlConfiguration(property.Value);
+                    urlConfiguration = ApplicationGatewayUrlConfiguration.DeserializeApplicationGatewayUrlConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

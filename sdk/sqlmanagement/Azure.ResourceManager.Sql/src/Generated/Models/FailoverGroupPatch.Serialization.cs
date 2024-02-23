@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReadWriteEndpoint))
+            if (ReadWriteEndpoint != null)
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
-            if (Optional.IsDefined(ReadOnlyEndpoint))
+            if (ReadOnlyEndpoint != null)
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
-            if (Optional.IsCollectionDefined(FailoverDatabases))
+            if (!(FailoverDatabases is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PartnerServers))
+            if (!(PartnerServers is ChangeTrackingList<PartnerServerInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("partnerServers"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value);
+                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value);
+                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databases"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<PartnerServerInfo> array = new List<PartnerServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
+                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item, options));
                             }
                             partnerServers = array;
                             continue;

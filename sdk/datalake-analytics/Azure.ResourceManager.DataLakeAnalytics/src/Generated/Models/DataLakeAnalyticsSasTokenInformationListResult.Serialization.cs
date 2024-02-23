@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<DataLakeAnalyticsSasTokenInformation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     List<DataLakeAnalyticsSasTokenInformation> array = new List<DataLakeAnalyticsSasTokenInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeAnalyticsSasTokenInformation.DeserializeDataLakeAnalyticsSasTokenInformation(item));
+                        array.Add(DataLakeAnalyticsSasTokenInformation.DeserializeDataLakeAnalyticsSasTokenInformation(item, options));
                     }
                     value = array;
                     continue;

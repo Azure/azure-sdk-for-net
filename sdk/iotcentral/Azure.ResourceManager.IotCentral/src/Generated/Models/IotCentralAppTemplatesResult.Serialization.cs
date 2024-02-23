@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<IotCentralAppTemplate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralAppTemplate> array = new List<IotCentralAppTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralAppTemplate.DeserializeIotCentralAppTemplate(item));
+                        array.Add(IotCentralAppTemplate.DeserializeIotCentralAppTemplate(item, options));
                     }
                     value = array;
                     continue;

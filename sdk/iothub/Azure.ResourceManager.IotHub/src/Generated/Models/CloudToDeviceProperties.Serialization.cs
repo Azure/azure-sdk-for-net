@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxDeliveryCount))
+            if (MaxDeliveryCount.HasValue)
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (Optional.IsDefined(DefaultTtlAsIso8601))
+            if (DefaultTtlAsIso8601.HasValue)
             {
                 writer.WritePropertyName("defaultTtlAsIso8601"u8);
                 writer.WriteStringValue(DefaultTtlAsIso8601.Value, "P");
             }
-            if (Optional.IsDefined(Feedback))
+            if (Feedback != null)
             {
                 writer.WritePropertyName("feedback"u8);
                 writer.WriteObjectValue(Feedback);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    feedback = CloudToDeviceFeedbackQueueProperties.DeserializeCloudToDeviceFeedbackQueueProperties(property.Value);
+                    feedback = CloudToDeviceFeedbackQueueProperties.DeserializeCloudToDeviceFeedbackQueueProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

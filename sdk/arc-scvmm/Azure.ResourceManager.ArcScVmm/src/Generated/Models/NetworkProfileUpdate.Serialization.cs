@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<NetworkInterfacesUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<NetworkInterfacesUpdate> array = new List<NetworkInterfacesUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfacesUpdate.DeserializeNetworkInterfacesUpdate(item));
+                        array.Add(NetworkInterfacesUpdate.DeserializeNetworkInterfacesUpdate(item, options));
                     }
                     networkInterfaces = array;
                     continue;

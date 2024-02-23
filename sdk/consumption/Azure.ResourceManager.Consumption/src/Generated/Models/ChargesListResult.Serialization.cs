@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ConsumptionChargeSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionChargeSummary> array = new List<ConsumptionChargeSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item));
+                        array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item, options));
                     }
                     value = array;
                     continue;

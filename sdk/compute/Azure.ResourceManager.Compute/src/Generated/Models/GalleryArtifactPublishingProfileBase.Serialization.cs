@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TargetRegions))
+            if (!(TargetRegions is ChangeTrackingList<TargetRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
@@ -36,37 +36,37 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReplicaCount))
+            if (ReplicaCount.HasValue)
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (Optional.IsDefined(IsExcludedFromLatest))
+            if (IsExcludedFromLatest.HasValue)
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublishedOn))
+            if (options.Format != "W" && PublishedOn.HasValue)
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOfLifeOn))
+            if (EndOfLifeOn.HasValue)
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (StorageAccountType.HasValue)
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationMode))
+            if (ReplicationMode.HasValue)
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TargetExtendedLocations))
+            if (!(TargetExtendedLocations is ChangeTrackingList<GalleryTargetExtendedLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetRegion.DeserializeTargetRegion(item));
+                        array.Add(TargetRegion.DeserializeTargetRegion(item, options));
                     }
                     targetRegions = array;
                     continue;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item));
+                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item, options));
                     }
                     targetExtendedLocations = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedItemDetails))
+            if (options.Format != "W" && !(ProtectedItemDetails is ChangeTrackingList<FailoverProtectedItemProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && Optional.IsCollectionDefined(AffectedObjectDetails))
+            if (options.Format != "W" && !(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<FailoverProtectedItemProperties> array = new List<FailoverProtectedItemProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FailoverProtectedItemProperties.DeserializeFailoverProtectedItemProperties(item));
+                        array.Add(FailoverProtectedItemProperties.DeserializeFailoverProtectedItemProperties(item, options));
                     }
                     protectedItemDetails = array;
                     continue;

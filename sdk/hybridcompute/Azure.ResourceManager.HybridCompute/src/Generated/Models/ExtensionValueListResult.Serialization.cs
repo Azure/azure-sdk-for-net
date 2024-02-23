@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<HybridComputeExtensionValueData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeExtensionValueData> array = new List<HybridComputeExtensionValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(item));
+                        array.Add(HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(item, options));
                     }
                     value = array;
                     continue;

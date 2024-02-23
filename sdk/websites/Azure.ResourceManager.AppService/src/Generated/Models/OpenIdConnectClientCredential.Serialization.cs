@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Method))
+            if (Method.HasValue)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Optional.IsDefined(ClientSecretSettingName))
+            if (ClientSecretSettingName != null)
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);

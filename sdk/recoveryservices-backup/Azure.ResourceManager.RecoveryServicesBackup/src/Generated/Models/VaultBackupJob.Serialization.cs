@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(ActionsInfo))
+            if (!(ActionsInfo is ChangeTrackingList<JobSupportedAction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionsInfo"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ErrorDetails))
+            if (!(ErrorDetails is ChangeTrackingList<VaultBackupJobErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -51,42 +51,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (ExtendedInfo != null)
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(EntityFriendlyName))
+            if (EntityFriendlyName != null)
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(Operation))
+            if (Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(ActivityId))
+            if (ActivityId != null)
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<VaultBackupJobErrorInfo> array = new List<VaultBackupJobErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultBackupJobErrorInfo.DeserializeVaultBackupJobErrorInfo(item));
+                        array.Add(VaultBackupJobErrorInfo.DeserializeVaultBackupJobErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = VaultBackupJobExtendedInfo.DeserializeVaultBackupJobExtendedInfo(property.Value);
+                    extendedInfo = VaultBackupJobExtendedInfo.DeserializeVaultBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))

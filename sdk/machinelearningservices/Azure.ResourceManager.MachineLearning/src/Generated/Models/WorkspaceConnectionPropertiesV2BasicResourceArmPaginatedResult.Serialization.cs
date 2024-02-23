@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningWorkspaceConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningWorkspaceConnectionData> array = new List<MachineLearningWorkspaceConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(item));
+                        array.Add(MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(item, options));
                     }
                     value = array;
                     continue;

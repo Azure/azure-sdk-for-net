@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryText))
+            if (QueryText != null)
             {
                 writer.WritePropertyName("queryText"u8);
                 writer.WriteStringValue(QueryText);
             }
-            if (Optional.IsDefined(StatementsInBatch))
+            if (StatementsInBatch.HasValue)
             {
                 writer.WritePropertyName("statementsInBatch"u8);
                 writer.WriteNumberValue(StatementsInBatch.Value);
             }
-            if (Optional.IsDefined(SourceResult))
+            if (SourceResult != null)
             {
                 writer.WritePropertyName("sourceResult"u8);
                 writer.WriteObjectValue(SourceResult);
             }
-            if (Optional.IsDefined(TargetResult))
+            if (TargetResult != null)
             {
                 writer.WritePropertyName("targetResult"u8);
                 writer.WriteObjectValue(TargetResult);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value);
+                    sourceResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetResult"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value);
+                    targetResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("docType"u8);
             writer.WriteStringValue(DocType);
-            if (Optional.IsCollectionDefined(BoundingRegions))
+            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Fields))
+            if (!(Fields is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<BoundingRegion> array = new List<BoundingRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BoundingRegion.DeserializeBoundingRegion(item));
+                        array.Add(BoundingRegion.DeserializeBoundingRegion(item, options));
                     }
                     boundingRegions = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentField> dictionary = new Dictionary<string, DocumentField>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DocumentField.DeserializeDocumentField(property0.Value));
+                        dictionary.Add(property0.Name, DocumentField.DeserializeDocumentField(property0.Value, options));
                     }
                     fields = dictionary;
                     continue;

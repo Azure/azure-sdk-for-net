@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CityName))
+            if (CityName != null)
             {
                 writer.WritePropertyName("cityName"u8);
                 writer.WriteStringValue(CityName);
             }
-            if (Optional.IsCollectionDefined(Providers))
+            if (!(Providers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CognitiveServicesPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesPrivateLinkResource> array = new List<CognitiveServicesPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource(item));
+                        array.Add(CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

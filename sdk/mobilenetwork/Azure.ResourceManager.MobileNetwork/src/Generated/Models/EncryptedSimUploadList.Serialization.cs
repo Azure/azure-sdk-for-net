@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<SimNameAndEncryptedProperties> array = new List<SimNameAndEncryptedProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SimNameAndEncryptedProperties.DeserializeSimNameAndEncryptedProperties(item));
+                        array.Add(SimNameAndEncryptedProperties.DeserializeSimNameAndEncryptedProperties(item, options));
                     }
                     sims = array;
                     continue;

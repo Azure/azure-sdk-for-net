@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StoragePrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StoragePrivateEndpointConnectionData> array = new List<StoragePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item));
+                        array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

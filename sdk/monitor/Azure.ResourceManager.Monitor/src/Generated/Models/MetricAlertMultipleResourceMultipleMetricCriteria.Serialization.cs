@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllOf))
+            if (!(AllOf is ChangeTrackingList<MultiMetricCriteria> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MultiMetricCriteria> array = new List<MultiMetricCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MultiMetricCriteria.DeserializeMultiMetricCriteria(item));
+                        array.Add(MultiMetricCriteria.DeserializeMultiMetricCriteria(item, options));
                     }
                     allOf = array;
                     continue;

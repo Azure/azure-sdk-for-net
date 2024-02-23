@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PacketCaptureData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PacketCaptureData> array = new List<PacketCaptureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PacketCaptureData.DeserializePacketCaptureData(item));
+                        array.Add(PacketCaptureData.DeserializePacketCaptureData(item, options));
                     }
                     value = array;
                     continue;

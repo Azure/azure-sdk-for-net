@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StoragePoolSkuInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuInfo> array = new List<StoragePoolSkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo(item));
+                        array.Add(StoragePoolSkuInfo.DeserializeStoragePoolSkuInfo(item, options));
                     }
                     value = array;
                     continue;

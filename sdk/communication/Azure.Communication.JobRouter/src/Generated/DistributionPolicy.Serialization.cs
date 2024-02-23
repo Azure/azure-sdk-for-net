@@ -37,17 +37,17 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(OfferExpiresAfter))
+            if (OfferExpiresAfter.HasValue)
             {
                 writer.WritePropertyName("offerExpiresAfterSeconds"u8);
                 WriteOfferExpiresAfter(writer);
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode != null)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteObjectValue(Mode);
@@ -125,7 +125,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    mode = DistributionMode.DeserializeDistributionMode(property.Value);
+                    mode = DistributionMode.DeserializeDistributionMode(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

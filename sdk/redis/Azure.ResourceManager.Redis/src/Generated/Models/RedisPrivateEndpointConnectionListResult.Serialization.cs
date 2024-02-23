@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RedisPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisPrivateEndpointConnectionData> array = new List<RedisPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item));
+                        array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

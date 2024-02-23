@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorConfiguration))
+            if (AdministratorConfiguration != null)
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value);
+                    administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))

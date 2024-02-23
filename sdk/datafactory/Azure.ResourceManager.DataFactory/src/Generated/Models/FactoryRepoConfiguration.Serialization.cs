@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (Optional.IsDefined(LastCommitId))
+            if (LastCommitId != null)
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (Optional.IsDefined(DisablePublish))
+            if (DisablePublish.HasValue)
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FactoryGitHubConfiguration": return FactoryGitHubConfiguration.DeserializeFactoryGitHubConfiguration(element);
-                    case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element);
+                    case "FactoryGitHubConfiguration": return FactoryGitHubConfiguration.DeserializeFactoryGitHubConfiguration(element, options);
+                    case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element, options);
                 }
             }
-            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element);
+            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<FactoryRepoConfiguration>.Write(ModelReaderWriterOptions options)

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<RunCommandParameterDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandParameterDefinition> array = new List<RunCommandParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandParameterDefinition.DeserializeRunCommandParameterDefinition(item));
+                        array.Add(RunCommandParameterDefinition.DeserializeRunCommandParameterDefinition(item, options));
                     }
                     parameters = array;
                     continue;

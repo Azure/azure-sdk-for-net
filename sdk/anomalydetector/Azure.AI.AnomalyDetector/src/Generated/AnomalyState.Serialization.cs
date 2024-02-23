@@ -29,12 +29,12 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("timestamp"u8);
             writer.WriteStringValue(Timestamp, "O");
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<ErrorResponse> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    value = AnomalyValue.DeserializeAnomalyValue(property.Value);
+                    value = AnomalyValue.DeserializeAnomalyValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -112,7 +112,7 @@ namespace Azure.AI.AnomalyDetector
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
                     }
                     errors = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ComputePrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputePrivateLinkResourceData> array = new List<ComputePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(item));
+                        array.Add(ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftStopTimeoutSeconds))
+            if (SoftStopTimeoutSeconds.HasValue)
             {
                 writer.WritePropertyName("softStopTimeoutSeconds"u8);
                 writer.WriteNumberValue(SoftStopTimeoutSeconds.Value);

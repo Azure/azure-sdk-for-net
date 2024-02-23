@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<StorageCacheUsageModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheUsageModel> array = new List<StorageCacheUsageModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheUsageModel.DeserializeStorageCacheUsageModel(item));
+                        array.Add(StorageCacheUsageModel.DeserializeStorageCacheUsageModel(item, options));
                     }
                     value = array;
                     continue;

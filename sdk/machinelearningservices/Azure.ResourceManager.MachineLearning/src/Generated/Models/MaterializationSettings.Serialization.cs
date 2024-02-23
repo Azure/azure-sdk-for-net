@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Notification))
+            if (Notification != null)
             {
                 if (Notification != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notification");
                 }
             }
-            if (Optional.IsDefined(Resource))
+            if (Resource != null)
             {
                 if (Resource != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resource");
                 }
             }
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 if (Schedule != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (Optional.IsCollectionDefined(SparkConfiguration))
+            if (!(SparkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (SparkConfiguration != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sparkConfiguration");
                 }
             }
-            if (Optional.IsDefined(StoreType))
+            if (StoreType.HasValue)
             {
                 writer.WritePropertyName("storeType"u8);
                 writer.WriteStringValue(StoreType.Value.ToString());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notification = null;
                         continue;
                     }
-                    notification = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    notification = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resource = null;
                         continue;
                     }
-                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value);
+                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedule"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value);
+                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sparkConfiguration"u8))

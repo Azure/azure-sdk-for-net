@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerRegistryTaskData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskData> array = new List<ContainerRegistryTaskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(item));
+                        array.Add(ContainerRegistryTaskData.DeserializeContainerRegistryTaskData(item, options));
                     }
                     value = array;
                     continue;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(EncryptionCertThumbprint))
+            if (EncryptionCertThumbprint != null)
             {
                 writer.WritePropertyName("encryptionCertThumbprint"u8);
                 writer.WriteStringValue(EncryptionCertThumbprint);

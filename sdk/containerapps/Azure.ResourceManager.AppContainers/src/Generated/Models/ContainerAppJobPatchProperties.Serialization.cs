@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (Optional.IsCollectionDefined(OutboundIPAddresses))
+            if (!(OutboundIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EventStreamEndpoint))
+            if (EventStreamEndpoint != null)
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    configuration = ContainerAppJobConfiguration.DeserializeContainerAppJobConfiguration(property.Value);
+                    configuration = ContainerAppJobConfiguration.DeserializeContainerAppJobConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("template"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    template = ContainerAppJobTemplate.DeserializeContainerAppJobTemplate(property.Value);
+                    template = ContainerAppJobTemplate.DeserializeContainerAppJobTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outboundIpAddresses"u8))

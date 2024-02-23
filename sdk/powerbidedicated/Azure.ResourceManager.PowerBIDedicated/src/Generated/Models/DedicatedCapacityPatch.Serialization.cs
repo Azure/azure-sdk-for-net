@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Administration))
+            if (Administration != null)
             {
                 writer.WritePropertyName("administration"u8);
                 writer.WriteObjectValue(Administration);
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = CapacitySku.DeserializeCapacitySku(property.Value);
+                    sku = CapacitySku.DeserializeCapacitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                             {
                                 continue;
                             }
-                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value);
+                            administration = DedicatedCapacityAdministrators.DeserializeDedicatedCapacityAdministrators(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mode"u8))

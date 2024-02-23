@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HealthcareApisIotFhirDestinationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisIotFhirDestinationData> array = new List<HealthcareApisIotFhirDestinationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(item));
+                        array.Add(HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(item, options));
                     }
                     value = array;
                     continue;

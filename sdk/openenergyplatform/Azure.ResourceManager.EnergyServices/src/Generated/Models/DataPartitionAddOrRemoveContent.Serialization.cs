@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     {
                         continue;
                     }
-                    name = Models.DataPartitionName.DeserializeDataPartitionName(property.Value);
+                    name = Models.DataPartitionName.DeserializeDataPartitionName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicIPAddress))
+            if (PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 JsonSerializer.Serialize(writer, PublicIPAddress);

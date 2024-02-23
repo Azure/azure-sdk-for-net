@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<VMwareNetworkInterface> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareNetworkInterface> array = new List<VMwareNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item));
+                        array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item, options));
                     }
                     networkInterfaces = array;
                     continue;

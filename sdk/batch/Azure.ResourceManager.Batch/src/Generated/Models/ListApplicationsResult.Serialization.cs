@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<BatchApplicationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchApplicationData> array = new List<BatchApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchApplicationData.DeserializeBatchApplicationData(item));
+                        array.Add(BatchApplicationData.DeserializeBatchApplicationData(item, options));
                     }
                     value = array;
                     continue;

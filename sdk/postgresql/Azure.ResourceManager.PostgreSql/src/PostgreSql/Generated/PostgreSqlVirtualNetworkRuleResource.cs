@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlVirtualNetworkRuleResource>> UpdateAsync(WaitUntil waitUntil, PostgreSqlVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlVirtualNetworkRuleResource> Update(WaitUntil waitUntil, PostgreSqlVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("PostgreSqlVirtualNetworkRuleResource.Update");
             scope.Start();

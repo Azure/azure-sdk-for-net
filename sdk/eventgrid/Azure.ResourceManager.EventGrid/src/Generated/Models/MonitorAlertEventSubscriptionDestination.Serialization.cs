@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ActionGroups))
+            if (!(ActionGroups is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();

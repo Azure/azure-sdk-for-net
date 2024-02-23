@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SiteRecoveryLogicalNetworkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryLogicalNetworkData> array = new List<SiteRecoveryLogicalNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(item));
+                        array.Add(SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(item, options));
                     }
                     value = array;
                     continue;

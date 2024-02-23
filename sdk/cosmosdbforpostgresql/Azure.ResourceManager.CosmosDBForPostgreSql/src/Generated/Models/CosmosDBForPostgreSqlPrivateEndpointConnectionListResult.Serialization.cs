@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CosmosDBForPostgreSqlPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     List<CosmosDBForPostgreSqlPrivateEndpointConnectionData> array = new List<CosmosDBForPostgreSqlPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlPrivateEndpointConnectionData.DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionData(item));
+                        array.Add(CosmosDBForPostgreSqlPrivateEndpointConnectionData.DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

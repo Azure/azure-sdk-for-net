@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsDoubleEncryptionEnabled))
+            if (options.Format != "W" && IsDoubleEncryptionEnabled.HasValue)
             {
                 writer.WritePropertyName("doubleEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(Cmk))
+            if (Cmk != null)
             {
                 writer.WritePropertyName("cmk"u8);
                 writer.WriteObjectValue(Cmk);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    cmk = WorkspaceCustomerManagedKeyDetails.DeserializeWorkspaceCustomerManagedKeyDetails(property.Value);
+                    cmk = WorkspaceCustomerManagedKeyDetails.DeserializeWorkspaceCustomerManagedKeyDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<DeploymentPreflightResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DeploymentPreflightResourceInfo> array = new List<DeploymentPreflightResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentPreflightResourceInfo.DeserializeDeploymentPreflightResourceInfo(item));
+                        array.Add(DeploymentPreflightResourceInfo.DeserializeDeploymentPreflightResourceInfo(item, options));
                     }
                     resources = array;
                     continue;

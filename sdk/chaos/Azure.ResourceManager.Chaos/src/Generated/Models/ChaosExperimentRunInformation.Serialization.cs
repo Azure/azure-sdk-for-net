@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Steps))
+            if (options.Format != "W" && !(Steps is ChangeTrackingList<ChaosExperimentRunStepStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentRunStepStatus> array = new List<ChaosExperimentRunStepStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentRunStepStatus.DeserializeChaosExperimentRunStepStatus(item));
+                        array.Add(ChaosExperimentRunStepStatus.DeserializeChaosExperimentRunStepStatus(item, options));
                     }
                     steps = array;
                     continue;

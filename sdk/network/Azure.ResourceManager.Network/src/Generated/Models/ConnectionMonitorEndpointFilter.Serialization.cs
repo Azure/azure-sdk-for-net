@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilterType))
+            if (FilterType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FilterType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Items))
+            if (!(Items is ChangeTrackingList<ConnectionMonitorEndpointFilterItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionMonitorEndpointFilterItem> array = new List<ConnectionMonitorEndpointFilterItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item));
+                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item, options));
                     }
                     items = array;
                     continue;

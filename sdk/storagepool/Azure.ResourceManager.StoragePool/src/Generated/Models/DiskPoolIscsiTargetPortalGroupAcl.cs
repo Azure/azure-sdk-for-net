@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <exception cref="ArgumentNullException"> <paramref name="initiatorIqn"/> or <paramref name="mappedLuns"/> is null. </exception>
         public DiskPoolIscsiTargetPortalGroupAcl(string initiatorIqn, IEnumerable<string> mappedLuns)
         {
-            Argument.AssertNotNull(initiatorIqn, nameof(initiatorIqn));
-            Argument.AssertNotNull(mappedLuns, nameof(mappedLuns));
+            if (initiatorIqn == null)
+            {
+                throw new ArgumentNullException(nameof(initiatorIqn));
+            }
+            if (mappedLuns == null)
+            {
+                throw new ArgumentNullException(nameof(mappedLuns));
+            }
 
             InitiatorIqn = initiatorIqn;
             MappedLuns = mappedLuns.ToList();

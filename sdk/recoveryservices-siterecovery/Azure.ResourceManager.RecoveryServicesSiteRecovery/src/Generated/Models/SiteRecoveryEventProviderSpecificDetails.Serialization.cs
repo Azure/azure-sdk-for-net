@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AEventDetails.DeserializeA2AEventDetails(element);
-                    case "HyperVReplica2012": return HyperVReplica2012EventDetails.DeserializeHyperVReplica2012EventDetails(element);
-                    case "HyperVReplica2012R2": return HyperVReplica2012R2EventDetails.DeserializeHyperVReplica2012R2EventDetails(element);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureEventDetails.DeserializeHyperVReplicaAzureEventDetails(element);
-                    case "HyperVReplicaBaseEventDetails": return HyperVReplicaBaseEventDetails.DeserializeHyperVReplicaBaseEventDetails(element);
-                    case "InMageAzureV2": return InMageAzureV2EventDetails.DeserializeInMageAzureV2EventDetails(element);
-                    case "InMageRcm": return InMageRcmEventDetails.DeserializeInMageRcmEventDetails(element);
-                    case "InMageRcmFailback": return InMageRcmFailbackEventDetails.DeserializeInMageRcmFailbackEventDetails(element);
-                    case "VMwareCbt": return VMwareCbtEventDetails.DeserializeVMwareCbtEventDetails(element);
+                    case "A2A": return A2AEventDetails.DeserializeA2AEventDetails(element, options);
+                    case "HyperVReplica2012": return HyperVReplica2012EventDetails.DeserializeHyperVReplica2012EventDetails(element, options);
+                    case "HyperVReplica2012R2": return HyperVReplica2012R2EventDetails.DeserializeHyperVReplica2012R2EventDetails(element, options);
+                    case "HyperVReplicaAzure": return HyperVReplicaAzureEventDetails.DeserializeHyperVReplicaAzureEventDetails(element, options);
+                    case "HyperVReplicaBaseEventDetails": return HyperVReplicaBaseEventDetails.DeserializeHyperVReplicaBaseEventDetails(element, options);
+                    case "InMageAzureV2": return InMageAzureV2EventDetails.DeserializeInMageAzureV2EventDetails(element, options);
+                    case "InMageRcm": return InMageRcmEventDetails.DeserializeInMageRcmEventDetails(element, options);
+                    case "InMageRcmFailback": return InMageRcmFailbackEventDetails.DeserializeInMageRcmFailbackEventDetails(element, options);
+                    case "VMwareCbt": return VMwareCbtEventDetails.DeserializeVMwareCbtEventDetails(element, options);
                 }
             }
-            return UnknownEventProviderSpecificDetails.DeserializeUnknownEventProviderSpecificDetails(element);
+            return UnknownEventProviderSpecificDetails.DeserializeUnknownEventProviderSpecificDetails(element, options);
         }
 
         BinaryData IPersistableModel<SiteRecoveryEventProviderSpecificDetails>.Write(ModelReaderWriterOptions options)

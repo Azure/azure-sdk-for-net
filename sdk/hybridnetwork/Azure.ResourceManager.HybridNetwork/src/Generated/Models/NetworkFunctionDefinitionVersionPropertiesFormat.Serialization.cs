@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionState))
+            if (options.Format != "W" && VersionState.HasValue)
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DeployParameters))
+            if (DeployParameters != null)
             {
                 writer.WritePropertyName("deployParameters"u8);
                 writer.WriteStringValue(DeployParameters);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ContainerizedNetworkFunction": return ContainerizedNetworkFunctionDefinitionVersion.DeserializeContainerizedNetworkFunctionDefinitionVersion(element);
-                    case "VirtualNetworkFunction": return VirtualNetworkFunctionDefinitionVersion.DeserializeVirtualNetworkFunctionDefinitionVersion(element);
+                    case "ContainerizedNetworkFunction": return ContainerizedNetworkFunctionDefinitionVersion.DeserializeContainerizedNetworkFunctionDefinitionVersion(element, options);
+                    case "VirtualNetworkFunction": return VirtualNetworkFunctionDefinitionVersion.DeserializeVirtualNetworkFunctionDefinitionVersion(element, options);
                 }
             }
-            return UnknownNetworkFunctionDefinitionVersionPropertiesFormat.DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(element);
+            return UnknownNetworkFunctionDefinitionVersionPropertiesFormat.DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(element, options);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)

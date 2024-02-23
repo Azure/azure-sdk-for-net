@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeType))
+            if (ComputeType.HasValue)
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (Optional.IsDefined(CoreCount))
+            if (CoreCount.HasValue)
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(TimeToLiveInMinutes))
+            if (TimeToLiveInMinutes.HasValue)
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (Optional.IsDefined(ShouldCleanupAfterTtl))
+            if (ShouldCleanupAfterTtl.HasValue)
             {
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(ShouldCleanupAfterTtl.Value);
             }
-            if (Optional.IsCollectionDefined(CustomProperties))
+            if (!(CustomProperties is ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeDataFlowCustomItem> array = new List<IntegrationRuntimeDataFlowCustomItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeDataFlowCustomItem.DeserializeIntegrationRuntimeDataFlowCustomItem(item));
+                        array.Add(IntegrationRuntimeDataFlowCustomItem.DeserializeIntegrationRuntimeDataFlowCustomItem(item, options));
                     }
                     customProperties = array;
                     continue;

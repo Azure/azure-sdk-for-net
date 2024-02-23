@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ProductionData))
+            if (ProductionData != null)
             {
                 if (ProductionData != null)
                 {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("samplingRate"u8);
             writer.WriteNumberValue(SamplingRate);
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationTokenStatisticsMetricThreshold> array = new List<GenerationTokenStatisticsMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item));
+                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         productionData = null;
                         continue;
                     }
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("samplingRate"u8))

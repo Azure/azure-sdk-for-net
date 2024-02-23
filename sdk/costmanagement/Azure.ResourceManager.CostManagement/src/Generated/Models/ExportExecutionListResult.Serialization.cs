@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ExportRun> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ExportRun> array = new List<ExportRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExportRun.DeserializeExportRun(item));
+                        array.Add(ExportRun.DeserializeExportRun(item, options));
                     }
                     value = array;
                     continue;

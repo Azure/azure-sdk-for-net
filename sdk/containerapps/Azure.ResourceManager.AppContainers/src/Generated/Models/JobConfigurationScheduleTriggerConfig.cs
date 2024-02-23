@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="cronExpression"/> is null. </exception>
         public JobConfigurationScheduleTriggerConfig(string cronExpression)
         {
-            Argument.AssertNotNull(cronExpression, nameof(cronExpression));
+            if (cronExpression == null)
+            {
+                throw new ArgumentNullException(nameof(cronExpression));
+            }
 
             CronExpression = cronExpression;
         }

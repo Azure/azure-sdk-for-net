@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainName))
+            if (DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsCollectionDefined(EndpointDetails))
+            if (!(EndpointDetails is ChangeTrackingList<MachineLearningFqdnEndpointDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFqdnEndpointDetail> array = new List<MachineLearningFqdnEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFqdnEndpointDetail.DeserializeMachineLearningFqdnEndpointDetail(item));
+                        array.Add(MachineLearningFqdnEndpointDetail.DeserializeMachineLearningFqdnEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsCollectionDefined(IPPrefixRules))
+            if (!(IPPrefixRules is ChangeTrackingList<IPPrefixRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipPrefixRules"u8);
                 writer.WriteStartArray();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<IPPrefixRule> array = new List<IPPrefixRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPrefixRule.DeserializeIPPrefixRule(item));
+                                array.Add(IPPrefixRule.DeserializeIPPrefixRule(item, options));
                             }
                             ipPrefixRules = array;
                             continue;

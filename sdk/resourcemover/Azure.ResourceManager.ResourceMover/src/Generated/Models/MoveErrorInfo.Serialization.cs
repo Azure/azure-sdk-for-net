@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(InfoMoverResources))
+            if (options.Format != "W" && !(InfoMoverResources is ChangeTrackingList<AffectedMoverResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<AffectedMoverResourceInfo> array = new List<AffectedMoverResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item));
+                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item, options));
                     }
                     moveResources = array;
                     continue;

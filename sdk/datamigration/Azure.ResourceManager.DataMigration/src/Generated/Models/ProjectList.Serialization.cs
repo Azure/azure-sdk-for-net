@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ProjectData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ProjectData> array = new List<ProjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProjectData.DeserializeProjectData(item));
+                        array.Add(ProjectData.DeserializeProjectData(item, options));
                     }
                     value = array;
                     continue;

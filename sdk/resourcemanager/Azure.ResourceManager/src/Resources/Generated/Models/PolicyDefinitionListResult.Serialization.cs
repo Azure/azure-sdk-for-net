@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PolicyDefinitionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PolicyDefinitionData> array = new List<PolicyDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyDefinitionData.DeserializePolicyDefinitionData(item));
+                        array.Add(PolicyDefinitionData.DeserializePolicyDefinitionData(item, options));
                     }
                     value = array;
                     continue;

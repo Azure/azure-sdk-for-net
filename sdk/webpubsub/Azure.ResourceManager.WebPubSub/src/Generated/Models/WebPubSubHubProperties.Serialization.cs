@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EventHandlers))
+            if (!(EventHandlers is ChangeTrackingList<WebPubSubEventHandler> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("eventHandlers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AnonymousConnectPolicy))
+            if (AnonymousConnectPolicy != null)
             {
                 writer.WritePropertyName("anonymousConnectPolicy"u8);
                 writer.WriteStringValue(AnonymousConnectPolicy);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubEventHandler> array = new List<WebPubSubEventHandler>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubEventHandler.DeserializeWebPubSubEventHandler(item));
+                        array.Add(WebPubSubEventHandler.DeserializeWebPubSubEventHandler(item, options));
                     }
                     eventHandlers = array;
                     continue;

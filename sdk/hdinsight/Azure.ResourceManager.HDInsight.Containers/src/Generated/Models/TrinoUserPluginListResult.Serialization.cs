@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Plugins))
+            if (!(Plugins is ChangeTrackingList<TrinoUserPlugin> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("plugins"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<TrinoUserPlugin> array = new List<TrinoUserPlugin>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrinoUserPlugin.DeserializeTrinoUserPlugin(item));
+                        array.Add(TrinoUserPlugin.DeserializeTrinoUserPlugin(item, options));
                     }
                     plugins = array;
                     continue;

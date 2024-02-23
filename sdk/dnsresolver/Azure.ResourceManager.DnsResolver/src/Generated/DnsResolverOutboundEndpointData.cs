@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public DnsResolverOutboundEndpointData(AzureLocation location, WritableSubResource subnet) : base(location)
         {
-            Argument.AssertNotNull(subnet, nameof(subnet));
+            if (subnet == null)
+            {
+                throw new ArgumentNullException(nameof(subnet));
+            }
 
             Subnet = subnet;
         }

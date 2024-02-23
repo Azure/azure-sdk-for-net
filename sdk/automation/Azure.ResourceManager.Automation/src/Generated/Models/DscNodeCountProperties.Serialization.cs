@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NameCount))
+            if (NameCount.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(NameCount.Value);

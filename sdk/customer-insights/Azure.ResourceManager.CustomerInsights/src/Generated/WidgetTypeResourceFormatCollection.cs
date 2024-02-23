@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
         public virtual async Task<Response<WidgetTypeResourceFormatResource>> GetAsync(string widgetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetTypeName, nameof(widgetTypeName));
+            if (widgetTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(widgetTypeName));
+            }
+            if (widgetTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(widgetTypeName));
+            }
 
             using var scope = _widgetTypeResourceFormatWidgetTypesClientDiagnostics.CreateScope("WidgetTypeResourceFormatCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
         public virtual Response<WidgetTypeResourceFormatResource> Get(string widgetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetTypeName, nameof(widgetTypeName));
+            if (widgetTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(widgetTypeName));
+            }
+            if (widgetTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(widgetTypeName));
+            }
 
             using var scope = _widgetTypeResourceFormatWidgetTypesClientDiagnostics.CreateScope("WidgetTypeResourceFormatCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string widgetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetTypeName, nameof(widgetTypeName));
+            if (widgetTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(widgetTypeName));
+            }
+            if (widgetTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(widgetTypeName));
+            }
 
             using var scope = _widgetTypeResourceFormatWidgetTypesClientDiagnostics.CreateScope("WidgetTypeResourceFormatCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string widgetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetTypeName, nameof(widgetTypeName));
+            if (widgetTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(widgetTypeName));
+            }
+            if (widgetTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(widgetTypeName));
+            }
 
             using var scope = _widgetTypeResourceFormatWidgetTypesClientDiagnostics.CreateScope("WidgetTypeResourceFormatCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
         public virtual async Task<NullableResponse<WidgetTypeResourceFormatResource>> GetIfExistsAsync(string widgetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetTypeName, nameof(widgetTypeName));
+            if (widgetTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(widgetTypeName));
+            }
+            if (widgetTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(widgetTypeName));
+            }
 
             using var scope = _widgetTypeResourceFormatWidgetTypesClientDiagnostics.CreateScope("WidgetTypeResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
         public virtual NullableResponse<WidgetTypeResourceFormatResource> GetIfExists(string widgetTypeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(widgetTypeName, nameof(widgetTypeName));
+            if (widgetTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(widgetTypeName));
+            }
+            if (widgetTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(widgetTypeName));
+            }
 
             using var scope = _widgetTypeResourceFormatWidgetTypesClientDiagnostics.CreateScope("WidgetTypeResourceFormatCollection.GetIfExists");
             scope.Start();

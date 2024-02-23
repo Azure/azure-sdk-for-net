@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataDisksToAttach))
+            if (!(DataDisksToAttach is ChangeTrackingList<DataDisksToAttach> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataDisksToAttach"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataDisksToDetach))
+            if (!(DataDisksToDetach is ChangeTrackingList<DataDisksToDetach> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataDisksToDetach"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDisksToAttach> array = new List<DataDisksToAttach>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataDisksToAttach.DeserializeDataDisksToAttach(item));
+                        array.Add(Models.DataDisksToAttach.DeserializeDataDisksToAttach(item, options));
                     }
                     dataDisksToAttach = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDisksToDetach> array = new List<DataDisksToDetach>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataDisksToDetach.DeserializeDataDisksToDetach(item));
+                        array.Add(Models.DataDisksToDetach.DeserializeDataDisksToDetach(item, options));
                     }
                     dataDisksToDetach = array;
                     continue;

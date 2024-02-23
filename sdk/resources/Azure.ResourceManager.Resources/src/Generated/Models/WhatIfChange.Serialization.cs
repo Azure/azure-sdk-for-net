@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("changeType"u8);
             writer.WriteStringValue(ChangeType.ToSerialString());
-            if (Optional.IsDefined(UnsupportedReason))
+            if (UnsupportedReason != null)
             {
                 writer.WritePropertyName("unsupportedReason"u8);
                 writer.WriteStringValue(UnsupportedReason);
             }
-            if (Optional.IsDefined(Before))
+            if (Before != null)
             {
                 writer.WritePropertyName("before"u8);
 #if NET6_0_OR_GREATER
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(After))
+            if (After != null)
             {
                 writer.WritePropertyName("after"u8);
 #if NET6_0_OR_GREATER
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Delta))
+            if (!(Delta is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteStartArray();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
+                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item, options));
                     }
                     delta = array;
                     continue;

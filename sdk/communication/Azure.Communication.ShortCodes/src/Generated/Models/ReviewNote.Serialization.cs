@@ -16,12 +16,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Date))
+            if (Date.HasValue)
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");

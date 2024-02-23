@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(WebResults))
+            if (!(WebResults is ChangeTrackingList<WebResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("webResults"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Diagnostics))
+            if (!(Diagnostics is ChangeTrackingList<SolutionsDiagnostic> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Troubleshooters))
+            if (!(Troubleshooters is ChangeTrackingList<SolutionsTroubleshooters> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("troubleshooters"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MetricsBasedCharts))
+            if (!(MetricsBasedCharts is ChangeTrackingList<MetricsBasedChart> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("metricsBasedCharts"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Videos))
+            if (!(Videos is ChangeTrackingList<SelfHelpVideo> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("videos"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VideoGroups))
+            if (!(VideoGroups is ChangeTrackingList<VideoGroup> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("videoGroups"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<WebResult> array = new List<WebResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebResult.DeserializeWebResult(item));
+                        array.Add(WebResult.DeserializeWebResult(item, options));
                     }
                     webResults = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SolutionsDiagnostic> array = new List<SolutionsDiagnostic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionsDiagnostic.DeserializeSolutionsDiagnostic(item));
+                        array.Add(SolutionsDiagnostic.DeserializeSolutionsDiagnostic(item, options));
                     }
                     diagnostics = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SolutionsTroubleshooters> array = new List<SolutionsTroubleshooters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionsTroubleshooters.DeserializeSolutionsTroubleshooters(item));
+                        array.Add(SolutionsTroubleshooters.DeserializeSolutionsTroubleshooters(item, options));
                     }
                     troubleshooters = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<MetricsBasedChart> array = new List<MetricsBasedChart>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsBasedChart.DeserializeMetricsBasedChart(item));
+                        array.Add(MetricsBasedChart.DeserializeMetricsBasedChart(item, options));
                     }
                     metricsBasedCharts = array;
                     continue;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpVideo> array = new List<SelfHelpVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpVideo.DeserializeSelfHelpVideo(item));
+                        array.Add(SelfHelpVideo.DeserializeSelfHelpVideo(item, options));
                     }
                     videos = array;
                     continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<VideoGroup> array = new List<VideoGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroup.DeserializeVideoGroup(item));
+                        array.Add(VideoGroup.DeserializeVideoGroup(item, options));
                     }
                     videoGroups = array;
                     continue;

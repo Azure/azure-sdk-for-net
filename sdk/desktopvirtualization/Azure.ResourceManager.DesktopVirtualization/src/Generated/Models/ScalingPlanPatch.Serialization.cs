@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(ExclusionTag))
+            if (ExclusionTag != null)
             {
                 writer.WritePropertyName("exclusionTag"u8);
                 writer.WriteStringValue(ExclusionTag);
             }
-            if (Optional.IsCollectionDefined(Schedules))
+            if (!(Schedules is ChangeTrackingList<ScalingSchedule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("schedules"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostPoolReferences))
+            if (!(HostPoolReferences is ChangeTrackingList<ScalingHostPoolReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostPoolReferences"u8);
                 writer.WriteStartArray();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<ScalingSchedule> array = new List<ScalingSchedule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item));
+                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item, options));
                             }
                             schedules = array;
                             continue;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<ScalingHostPoolReference> array = new List<ScalingHostPoolReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item));
+                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item, options));
                             }
                             hostPoolReferences = array;
                             continue;

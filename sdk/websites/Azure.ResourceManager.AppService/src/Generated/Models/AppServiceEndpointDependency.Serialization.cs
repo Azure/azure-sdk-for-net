@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainName))
+            if (DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsCollectionDefined(EndpointDetails))
+            if (!(EndpointDetails is ChangeTrackingList<AppServiceEndpointDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceEndpointDetail> array = new List<AppServiceEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceEndpointDetail.DeserializeAppServiceEndpointDetail(item));
+                        array.Add(AppServiceEndpointDetail.DeserializeAppServiceEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

@@ -27,27 +27,27 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsDefined(DocumentCount))
+            if (DocumentCount.HasValue)
             {
                 writer.WritePropertyName("topNDocuments"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
-            if (Optional.IsDefined(ShouldRestrictResultScope))
+            if (ShouldRestrictResultScope.HasValue)
             {
                 writer.WritePropertyName("inScope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
-            if (Optional.IsDefined(Strictness))
+            if (Strictness.HasValue)
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (Optional.IsDefined(RoleInformation))
+            if (RoleInformation != null)
             {
                 writer.WritePropertyName("roleInformation"u8);
                 writer.WriteStringValue(RoleInformation);
@@ -58,7 +58,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(IndexName);
             writer.WritePropertyName("fieldsMapping"u8);
             writer.WriteObjectValue(FieldMappingOptions);
-            if (Optional.IsDefined(EmbeddingDependency))
+            if (EmbeddingDependency != null)
             {
                 writer.WritePropertyName("embeddingDependency"u8);
                 writer.WriteObjectValue(EmbeddingDependency);
@@ -120,7 +120,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value);
+                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("topNDocuments"u8))
@@ -167,7 +167,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("fieldsMapping"u8))
                 {
-                    fieldsMapping = PineconeFieldMappingOptions.DeserializePineconeFieldMappingOptions(property.Value);
+                    fieldsMapping = PineconeFieldMappingOptions.DeserializePineconeFieldMappingOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("embeddingDependency"u8))
@@ -176,7 +176,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    embeddingDependency = OnYourDataVectorizationSource.DeserializeOnYourDataVectorizationSource(property.Value);
+                    embeddingDependency = OnYourDataVectorizationSource.DeserializeOnYourDataVectorizationSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

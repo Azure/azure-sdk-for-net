@@ -66,9 +66,30 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerDestinationData>> GetAsync(string subscriptionId, string resourceGroupName, string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, partnerDestinationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,9 +118,30 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerDestinationData> Get(string subscriptionId, string resourceGroupName, string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, partnerDestinationName);
             _pipeline.Send(message, cancellationToken);
@@ -153,10 +195,34 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string partnerDestinationName, PartnerDestinationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, partnerDestinationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -180,10 +246,34 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string partnerDestinationName, PartnerDestinationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, partnerDestinationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -226,9 +316,30 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, partnerDestinationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -252,9 +363,30 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, partnerDestinationName);
             _pipeline.Send(message, cancellationToken);
@@ -303,10 +435,34 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string partnerDestinationName, PartnerDestinationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, partnerDestinationName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -331,10 +487,34 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string partnerDestinationName, PartnerDestinationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, partnerDestinationName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -383,7 +563,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerDestinationsListResult>> ListBySubscriptionAsync(string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -410,7 +597,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerDestinationsListResult> ListBySubscription(string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId, filter, top);
             _pipeline.Send(message, cancellationToken);
@@ -465,8 +659,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerDestinationsListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -494,8 +702,22 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerDestinationsListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, top);
             _pipeline.Send(message, cancellationToken);
@@ -543,9 +765,30 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerDestinationData>> ActivateAsync(string subscriptionId, string resourceGroupName, string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
 
             using var message = CreateActivateRequest(subscriptionId, resourceGroupName, partnerDestinationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -572,9 +815,30 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerDestinationData> Activate(string subscriptionId, string resourceGroupName, string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (partnerDestinationName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerDestinationName));
+            }
+            if (partnerDestinationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
+            }
 
             using var message = CreateActivateRequest(subscriptionId, resourceGroupName, partnerDestinationName);
             _pipeline.Send(message, cancellationToken);
@@ -616,8 +880,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerDestinationsListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -645,8 +919,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerDestinationsListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, filter, top);
             _pipeline.Send(message, cancellationToken);
@@ -689,9 +973,26 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PartnerDestinationsListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -720,9 +1021,26 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PartnerDestinationsListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, top);
             _pipeline.Send(message, cancellationToken);

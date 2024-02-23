@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudClusterData(AvsSku sku)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
             Hosts = new ChangeTrackingList<string>();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automanage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomanageBestPracticeData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageBestPracticeData> array = new List<AutomanageBestPracticeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(item));
+                        array.Add(AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(item, options));
                     }
                     value = array;
                     continue;

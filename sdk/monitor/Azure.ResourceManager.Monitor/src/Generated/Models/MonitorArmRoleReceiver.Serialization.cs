@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("roleId"u8);
             writer.WriteStringValue(RoleId);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (UseCommonAlertSchema.HasValue)
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);

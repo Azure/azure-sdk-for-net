@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (ConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
+            if (options.Format != "W" && !(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = HybridComputePrivateLinkServiceConnectionStateProperty.DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(property.Value);
+                    privateLinkServiceConnectionState = HybridComputePrivateLinkServiceConnectionStateProperty.DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

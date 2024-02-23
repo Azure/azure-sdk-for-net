@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Metadatavalues))
+            if (!(Metadatavalues is ChangeTrackingList<MonitorMetadataValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadatavalues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<MonitorMetricValue> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetadataValue> array = new List<MonitorMetadataValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item));
+                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item, options));
                     }
                     metadatavalues = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricValue> array = new List<MonitorMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item));
+                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item, options));
                     }
                     data = array;
                     continue;

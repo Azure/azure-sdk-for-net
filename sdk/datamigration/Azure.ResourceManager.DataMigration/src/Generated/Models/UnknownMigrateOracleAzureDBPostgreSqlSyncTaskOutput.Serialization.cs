@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
+            return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
+                        return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutput)} does not support '{options.Format}' format.");

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DomainName))
+            if (options.Format != "W" && DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointDetails))
+            if (options.Format != "W" && !(EndpointDetails is ChangeTrackingList<ManagedInstanceEndpointDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEndpointDetail> array = new List<ManagedInstanceEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEndpointDetail.DeserializeManagedInstanceEndpointDetail(item));
+                        array.Add(ManagedInstanceEndpointDetail.DeserializeManagedInstanceEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

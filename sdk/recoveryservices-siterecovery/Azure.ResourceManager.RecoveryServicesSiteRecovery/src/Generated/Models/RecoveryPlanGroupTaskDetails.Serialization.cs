@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(RpGroupType))
+            if (RpGroupType != null)
             {
                 writer.WritePropertyName("rpGroupType"u8);
                 writer.WriteStringValue(RpGroupType);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (Optional.IsCollectionDefined(ChildTasks))
+            if (!(ChildTasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("childTasks"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element);
+                    case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element, options);
                 }
             }
             Optional<string> name = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item, options));
                     }
                     childTasks = array;
                     continue;

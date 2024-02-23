@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<RestorableGremlinResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableGremlinResourceData> array = new List<RestorableGremlinResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData(item));
+                        array.Add(RestorableGremlinResourceData.DeserializeRestorableGremlinResourceData(item, options));
                     }
                     value = array;
                     continue;

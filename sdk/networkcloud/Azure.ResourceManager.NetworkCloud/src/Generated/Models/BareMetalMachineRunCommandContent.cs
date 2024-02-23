@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="script"/> is null. </exception>
         public BareMetalMachineRunCommandContent(long limitTimeSeconds, string script)
         {
-            Argument.AssertNotNull(script, nameof(script));
+            if (script == null)
+            {
+                throw new ArgumentNullException(nameof(script));
+            }
 
             Arguments = new ChangeTrackingList<string>();
             LimitTimeSeconds = limitTimeSeconds;

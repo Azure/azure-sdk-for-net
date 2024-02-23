@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RelayPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, RelayPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _relayPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RelayPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RelayPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, RelayPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _relayPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("RelayPrivateEndpointConnectionResource.Update");
             scope.Start();

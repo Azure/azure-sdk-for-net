@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(PhysicalPartitionStorageInfoCollectionValue))
+            if (options.Format != "W" && !(PhysicalPartitionStorageInfoCollectionValue is ChangeTrackingList<PhysicalPartitionStorageInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("physicalPartitionStorageInfoCollection"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionStorageInfo> array = new List<PhysicalPartitionStorageInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionStorageInfo.DeserializePhysicalPartitionStorageInfo(item));
+                        array.Add(PhysicalPartitionStorageInfo.DeserializePhysicalPartitionStorageInfo(item, options));
                     }
                     physicalPartitionStorageInfoCollection = array;
                     continue;

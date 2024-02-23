@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Groups))
+            if (!(Groups is ChangeTrackingList<SiteRecoveryPlanGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryPlanGroup> array = new List<SiteRecoveryPlanGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item));
+                        array.Add(SiteRecoveryPlanGroup.DeserializeSiteRecoveryPlanGroup(item, options));
                     }
                     groups = array;
                     continue;

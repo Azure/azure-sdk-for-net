@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsZones))
+            if (!(DnsZones is ChangeTrackingList<DnsZoneResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<DnsZoneResult> array = new List<DnsZoneResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item));
+                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item, options));
                     }
                     dnsZones = array;
                     continue;

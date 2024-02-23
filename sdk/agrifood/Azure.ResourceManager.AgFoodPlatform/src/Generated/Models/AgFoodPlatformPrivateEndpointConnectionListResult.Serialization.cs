@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<AgFoodPlatformPrivateEndpointConnectionData> array = new List<AgFoodPlatformPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(item));
+                        array.Add(AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

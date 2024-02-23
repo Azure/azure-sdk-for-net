@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HardwareSecurityModulesPrivateLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<HardwareSecurityModulesPrivateLinkData> array = new List<HardwareSecurityModulesPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData(item));
+                        array.Add(HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData(item, options));
                     }
                     value = array;
                     continue;

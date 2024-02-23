@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
         public BareMetalMachineCommandSpecification(string command)
         {
-            Argument.AssertNotNull(command, nameof(command));
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
 
             Arguments = new ChangeTrackingList<string>();
             Command = command;

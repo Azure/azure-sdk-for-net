@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(ResourceTypes))
+            if (!(ResourceTypes is ChangeTrackingList<ResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();

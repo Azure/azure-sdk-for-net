@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (!(NetworkInterfaces is ChangeTrackingList<SecurityGroupNetworkInterface> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityGroupNetworkInterface> array = new List<SecurityGroupNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityGroupNetworkInterface.DeserializeSecurityGroupNetworkInterface(item));
+                        array.Add(SecurityGroupNetworkInterface.DeserializeSecurityGroupNetworkInterface(item, options));
                     }
                     networkInterfaces = array;
                     continue;

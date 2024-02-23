@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.Translation.Document.Models
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal TranslationError(TranslationErrorCode code, string message)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Code = code;
             Message = message;

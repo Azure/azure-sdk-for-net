@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (bareMetalMachineKeySetName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineKeySetName));
+            }
+            if (bareMetalMachineKeySetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineKeySetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (bareMetalMachineKeySetName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineKeySetName));
+            }
+            if (bareMetalMachineKeySetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineKeySetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudBareMetalMachineKeySetResource>> GetAsync(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
+            if (bareMetalMachineKeySetName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineKeySetName));
+            }
+            if (bareMetalMachineKeySetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineKeySetName));
+            }
 
             using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
         public virtual Response<NetworkCloudBareMetalMachineKeySetResource> Get(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
+            if (bareMetalMachineKeySetName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineKeySetName));
+            }
+            if (bareMetalMachineKeySetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineKeySetName));
+            }
 
             using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
+            if (bareMetalMachineKeySetName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineKeySetName));
+            }
+            if (bareMetalMachineKeySetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineKeySetName));
+            }
 
             using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
         public virtual Response<bool> Exists(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
+            if (bareMetalMachineKeySetName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineKeySetName));
+            }
+            if (bareMetalMachineKeySetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineKeySetName));
+            }
 
             using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudBareMetalMachineKeySetResource>> GetIfExistsAsync(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
+            if (bareMetalMachineKeySetName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineKeySetName));
+            }
+            if (bareMetalMachineKeySetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineKeySetName));
+            }
 
             using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudBareMetalMachineKeySetResource> GetIfExists(string bareMetalMachineKeySetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(bareMetalMachineKeySetName, nameof(bareMetalMachineKeySetName));
+            if (bareMetalMachineKeySetName == null)
+            {
+                throw new ArgumentNullException(nameof(bareMetalMachineKeySetName));
+            }
+            if (bareMetalMachineKeySetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(bareMetalMachineKeySetName));
+            }
 
             using var scope = _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineKeySetCollection.GetIfExists");
             scope.Start();

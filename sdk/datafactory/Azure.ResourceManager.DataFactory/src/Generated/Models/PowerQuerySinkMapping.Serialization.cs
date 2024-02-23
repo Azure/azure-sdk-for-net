@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryName))
+            if (QueryName != null)
             {
                 writer.WritePropertyName("queryName"u8);
                 writer.WriteStringValue(QueryName);
             }
-            if (Optional.IsCollectionDefined(DataflowSinks))
+            if (!(DataflowSinks is ChangeTrackingList<PowerQuerySink> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataflowSinks"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PowerQuerySink> array = new List<PowerQuerySink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PowerQuerySink.DeserializePowerQuerySink(item));
+                        array.Add(PowerQuerySink.DeserializePowerQuerySink(item, options));
                     }
                     dataflowSinks = array;
                     continue;

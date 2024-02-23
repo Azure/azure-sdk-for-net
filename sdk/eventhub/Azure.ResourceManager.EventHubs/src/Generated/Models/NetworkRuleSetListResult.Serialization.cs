@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<EventHubsNetworkRuleSetData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsNetworkRuleSetData> array = new List<EventHubsNetworkRuleSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsNetworkRuleSetData.DeserializeEventHubsNetworkRuleSetData(item));
+                        array.Add(EventHubsNetworkRuleSetData.DeserializeEventHubsNetworkRuleSetData(item, options));
                     }
                     value = array;
                     continue;

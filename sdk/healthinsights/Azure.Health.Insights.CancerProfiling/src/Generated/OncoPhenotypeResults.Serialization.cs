@@ -85,7 +85,7 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<OncoPhenotypePatientResult> array = new List<OncoPhenotypePatientResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OncoPhenotypePatientResult.DeserializeOncoPhenotypePatientResult(item));
+                        array.Add(OncoPhenotypePatientResult.DeserializeOncoPhenotypePatientResult(item, options));
                     }
                     patients = array;
                     continue;

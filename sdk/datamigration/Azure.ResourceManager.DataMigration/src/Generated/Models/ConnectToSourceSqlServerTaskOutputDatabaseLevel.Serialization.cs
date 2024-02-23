@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(SizeMB))
+            if (options.Format != "W" && SizeMB.HasValue)
             {
                 writer.WritePropertyName("sizeMB"u8);
                 writer.WriteNumberValue(SizeMB.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DatabaseFiles))
+            if (options.Format != "W" && !(DatabaseFiles is ChangeTrackingList<DatabaseFileInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databaseFiles"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CompatibilityLevel))
+            if (options.Format != "W" && CompatibilityLevel.HasValue)
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseState))
+            if (options.Format != "W" && DatabaseState.HasValue)
             {
                 writer.WritePropertyName("databaseState"u8);
                 writer.WriteStringValue(DatabaseState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<DatabaseFileInfo> array = new List<DatabaseFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseFileInfo.DeserializeDatabaseFileInfo(item));
+                        array.Add(DatabaseFileInfo.DeserializeDatabaseFileInfo(item, options));
                     }
                     databaseFiles = array;
                     continue;

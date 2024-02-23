@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<BackupManagementUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupManagementUsage> array = new List<BackupManagementUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupManagementUsage.DeserializeBackupManagementUsage(item));
+                        array.Add(BackupManagementUsage.DeserializeBackupManagementUsage(item, options));
                     }
                     value = array;
                     continue;

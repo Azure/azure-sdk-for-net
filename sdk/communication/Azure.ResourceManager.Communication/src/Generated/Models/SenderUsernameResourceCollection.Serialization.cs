@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SenderUsernameResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<SenderUsernameResourceData> array = new List<SenderUsernameResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SenderUsernameResourceData.DeserializeSenderUsernameResourceData(item));
+                        array.Add(SenderUsernameResourceData.DeserializeSenderUsernameResourceData(item, options));
                     }
                     value = array;
                     continue;

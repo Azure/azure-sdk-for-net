@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ChaosExperimentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 if (NextLink != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentData> array = new List<ChaosExperimentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentData.DeserializeChaosExperimentData(item));
+                        array.Add(ChaosExperimentData.DeserializeChaosExperimentData(item, options));
                     }
                     value = array;
                     continue;

@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subject))
+            if (Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Body))
+            if (Body != null)
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<EmailTemplateParametersContractProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<EmailTemplateParametersContractProperties> array = new List<EmailTemplateParametersContractProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmailTemplateParametersContractProperties.DeserializeEmailTemplateParametersContractProperties(item));
+                                array.Add(EmailTemplateParametersContractProperties.DeserializeEmailTemplateParametersContractProperties(item, options));
                             }
                             parameters = array;
                             continue;

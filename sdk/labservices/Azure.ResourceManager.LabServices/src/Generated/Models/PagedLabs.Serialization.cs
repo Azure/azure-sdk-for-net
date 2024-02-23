@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<LabData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<LabData> array = new List<LabData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabData.DeserializeLabData(item));
+                        array.Add(LabData.DeserializeLabData(item, options));
                     }
                     value = array;
                     continue;

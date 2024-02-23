@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(MappingType))
+            if (MappingType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (Optional.IsDefined(FunctionName))
+            if (FunctionName != null)
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (Optional.IsDefined(Expression))
+            if (Expression != null)
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (Optional.IsDefined(AttributeReference))
+            if (AttributeReference != null)
             {
                 writer.WritePropertyName("attributeReference"u8);
                 writer.WriteObjectValue(AttributeReference);
             }
-            if (Optional.IsCollectionDefined(AttributeReferences))
+            if (!(AttributeReferences is ChangeTrackingList<MapperAttributeReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attributeReferences"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    attributeReference = MapperAttributeReference.DeserializeMapperAttributeReference(property.Value);
+                    attributeReference = MapperAttributeReference.DeserializeMapperAttributeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("attributeReferences"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperAttributeReference> array = new List<MapperAttributeReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperAttributeReference.DeserializeMapperAttributeReference(item));
+                        array.Add(MapperAttributeReference.DeserializeMapperAttributeReference(item, options));
                     }
                     attributeReferences = array;
                     continue;

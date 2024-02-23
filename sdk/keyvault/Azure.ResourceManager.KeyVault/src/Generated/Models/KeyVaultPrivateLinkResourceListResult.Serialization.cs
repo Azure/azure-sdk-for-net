@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KeyVaultPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultPrivateLinkResourceData> array = new List<KeyVaultPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(item));
+                        array.Add(KeyVaultPrivateLinkResourceData.DeserializeKeyVaultPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

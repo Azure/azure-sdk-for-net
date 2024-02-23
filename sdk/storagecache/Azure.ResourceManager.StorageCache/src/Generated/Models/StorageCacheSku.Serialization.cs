@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (!(Capabilities is ChangeTrackingList<StorageCacheSkuCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocationInfo))
+            if (!(LocationInfo is ChangeTrackingList<StorageCacheSkuLocationInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Restrictions))
+            if (!(Restrictions is ChangeTrackingList<StorageCacheRestriction> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSkuCapability> array = new List<StorageCacheSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSkuCapability.DeserializeStorageCacheSkuCapability(item));
+                        array.Add(StorageCacheSkuCapability.DeserializeStorageCacheSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSkuLocationInfo> array = new List<StorageCacheSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSkuLocationInfo.DeserializeStorageCacheSkuLocationInfo(item));
+                        array.Add(StorageCacheSkuLocationInfo.DeserializeStorageCacheSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheRestriction> array = new List<StorageCacheRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheRestriction.DeserializeStorageCacheRestriction(item));
+                        array.Add(StorageCacheRestriction.DeserializeStorageCacheRestriction(item, options));
                     }
                     restrictions = array;
                     continue;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    properties = MonitorUpdateProperties.DeserializeMonitorUpdateProperties(property.Value);
+                    properties = MonitorUpdateProperties.DeserializeMonitorUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

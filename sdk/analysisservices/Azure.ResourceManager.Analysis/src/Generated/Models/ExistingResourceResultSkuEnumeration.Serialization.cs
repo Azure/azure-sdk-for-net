@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AnalysisExistingSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisExistingSku> array = new List<AnalysisExistingSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisExistingSku.DeserializeAnalysisExistingSku(item));
+                        array.Add(AnalysisExistingSku.DeserializeAnalysisExistingSku(item, options));
                     }
                     value = array;
                     continue;

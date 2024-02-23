@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
+            if (options.Format != "W" && ResourceRequests != null)
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
+            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformConfigurationServiceInstance> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Settings))
+            if (Settings != null)
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformConfigurationServiceRequirements.DeserializeAppPlatformConfigurationServiceRequirements(property.Value);
+                    resourceRequests = AppPlatformConfigurationServiceRequirements.DeserializeAppPlatformConfigurationServiceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceInstance> array = new List<AppPlatformConfigurationServiceInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceInstance.DeserializeAppPlatformConfigurationServiceInstance(item));
+                        array.Add(AppPlatformConfigurationServiceInstance.DeserializeAppPlatformConfigurationServiceInstance(item, options));
                     }
                     instances = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    settings = AppPlatformConfigurationServiceSettings.DeserializeAppPlatformConfigurationServiceSettings(property.Value);
+                    settings = AppPlatformConfigurationServiceSettings.DeserializeAppPlatformConfigurationServiceSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

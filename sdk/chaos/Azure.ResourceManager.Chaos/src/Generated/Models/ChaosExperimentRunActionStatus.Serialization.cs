@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActionName))
+            if (options.Format != "W" && ActionName != null)
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActionId))
+            if (options.Format != "W" && ActionId != null)
             {
                 writer.WritePropertyName("actionId"u8);
                 writer.WriteStringValue(ActionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Targets))
+            if (options.Format != "W" && !(Targets is ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ExperimentExecutionActionTargetDetailsProperties> array = new List<ExperimentExecutionActionTargetDetailsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExperimentExecutionActionTargetDetailsProperties.DeserializeExperimentExecutionActionTargetDetailsProperties(item));
+                        array.Add(ExperimentExecutionActionTargetDetailsProperties.DeserializeExperimentExecutionActionTargetDetailsProperties(item, options));
                     }
                     targets = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MoverUnresolvedDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(SummaryCollection))
+            if (options.Format != "W" && SummaryCollection != null)
             {
                 writer.WritePropertyName("summaryCollection"u8);
                 writer.WriteObjectValue(SummaryCollection);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalCount))
+            if (options.Format != "W" && TotalCount.HasValue)
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverUnresolvedDependency> array = new List<MoverUnresolvedDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency(item));
+                        array.Add(MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency(item, options));
                     }
                     value = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value);
+                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("totalCount"u8))

@@ -26,67 +26,67 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(DisplayDescription))
+            if (DisplayDescription != null)
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(AggregationType))
+            if (AggregationType != null)
             {
                 writer.WritePropertyName("aggregationType"u8);
                 writer.WriteStringValue(AggregationType);
             }
-            if (Optional.IsDefined(IsInstanceLevelAggregationSupported))
+            if (IsInstanceLevelAggregationSupported.HasValue)
             {
                 writer.WritePropertyName("supportsInstanceLevelAggregation"u8);
                 writer.WriteBooleanValue(IsInstanceLevelAggregationSupported.Value);
             }
-            if (Optional.IsDefined(IsRegionalMdmAccountEnabled))
+            if (IsRegionalMdmAccountEnabled.HasValue)
             {
                 writer.WritePropertyName("enableRegionalMdmAccount"u8);
                 writer.WriteBooleanValue(IsRegionalMdmAccountEnabled.Value);
             }
-            if (Optional.IsDefined(SourceMdmAccount))
+            if (SourceMdmAccount != null)
             {
                 writer.WritePropertyName("sourceMdmAccount"u8);
                 writer.WriteStringValue(SourceMdmAccount);
             }
-            if (Optional.IsDefined(SourceMdmNamespace))
+            if (SourceMdmNamespace != null)
             {
                 writer.WritePropertyName("sourceMdmNamespace"u8);
                 writer.WriteStringValue(SourceMdmNamespace);
             }
-            if (Optional.IsDefined(MetricFilterPattern))
+            if (MetricFilterPattern != null)
             {
                 writer.WritePropertyName("metricFilterPattern"u8);
                 writer.WriteStringValue(MetricFilterPattern);
             }
-            if (Optional.IsDefined(FillGapWithZero))
+            if (FillGapWithZero.HasValue)
             {
                 writer.WritePropertyName("fillGapWithZero"u8);
                 writer.WriteBooleanValue(FillGapWithZero.Value);
             }
-            if (Optional.IsDefined(IsInternal))
+            if (IsInternal.HasValue)
             {
                 writer.WritePropertyName("isInternal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
             }
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<MetricDimension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsCollectionDefined(Availabilities))
+            if (!(Availabilities is ChangeTrackingList<MetricAvailability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("availabilities"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedTimeGrainTypes))
+            if (!(SupportedTimeGrainTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("supportedTimeGrainTypes"u8);
                 writer.WriteStartArray();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            if (!(SupportedAggregationTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(MetricDimension.DeserializeMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricAvailability> array = new List<MetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAvailability.DeserializeMetricAvailability(item));
+                        array.Add(MetricAvailability.DeserializeMetricAvailability(item, options));
                     }
                     availabilities = array;
                     continue;

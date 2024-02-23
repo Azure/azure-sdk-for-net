@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseLanguageExtension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseLanguageExtension> array = new List<SynapseLanguageExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseLanguageExtension.DeserializeSynapseLanguageExtension(item));
+                        array.Add(SynapseLanguageExtension.DeserializeSynapseLanguageExtension(item, options));
                     }
                     value = array;
                     continue;

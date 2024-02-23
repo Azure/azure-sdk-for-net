@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tcp))
+            if (Tcp.HasValue)
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteNumberValue(Tcp.Value);
             }
-            if (Optional.IsDefined(Udp))
+            if (Udp.HasValue)
             {
                 writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
             }
-            if (Optional.IsDefined(Icmp))
+            if (Icmp.HasValue)
             {
                 writer.WritePropertyName("icmp"u8);
                 writer.WriteNumberValue(Icmp.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AssignedLicenseImmutableId))
+            if (options.Format != "W" && AssignedLicenseImmutableId.HasValue)
             {
                 writer.WritePropertyName("assignedLicenseImmutableId"u8);
                 writer.WriteStringValue(AssignedLicenseImmutableId.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EsuKeys))
+            if (options.Format != "W" && !(EsuKeys is ChangeTrackingList<EsuKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("esuKeys"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<EsuKey> array = new List<EsuKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EsuKey.DeserializeEsuKey(item));
+                        array.Add(EsuKey.DeserializeEsuKey(item, options));
                     }
                     esuKeys = array;
                     continue;

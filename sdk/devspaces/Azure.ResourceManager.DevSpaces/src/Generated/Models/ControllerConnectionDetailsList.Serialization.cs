@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ConnectionDetailsList))
+            if (!(ConnectionDetailsList is ChangeTrackingList<ControllerConnectionDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionDetailsList"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     List<ControllerConnectionDetails> array = new List<ControllerConnectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControllerConnectionDetails.DeserializeControllerConnectionDetails(item));
+                        array.Add(ControllerConnectionDetails.DeserializeControllerConnectionDetails(item, options));
                     }
                     connectionDetailsList = array;
                     continue;

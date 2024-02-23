@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(TagValue))
+            if (TagValue != null)
             {
                 writer.WritePropertyName("tagValue"u8);
                 writer.WriteStringValue(TagValue);
             }
-            if (Optional.IsDefined(Count))
+            if (Count != null)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteObjectValue(Count);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value);
+                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

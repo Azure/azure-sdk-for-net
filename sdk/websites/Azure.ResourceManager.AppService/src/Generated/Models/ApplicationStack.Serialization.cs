@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteStringValue(Display);
             }
-            if (Optional.IsDefined(Dependency))
+            if (Dependency != null)
             {
                 writer.WritePropertyName("dependency"u8);
                 writer.WriteStringValue(Dependency);
             }
-            if (Optional.IsCollectionDefined(MajorVersions))
+            if (!(MajorVersions is ChangeTrackingList<StackMajorVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Frameworks))
+            if (!(Frameworks is ChangeTrackingList<ApplicationStack> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("frameworks"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IsDeprecated))
+            if (!(IsDeprecated is ChangeTrackingList<ApplicationStack> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StackMajorVersion> array = new List<StackMajorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StackMajorVersion.DeserializeStackMajorVersion(item));
+                        array.Add(StackMajorVersion.DeserializeStackMajorVersion(item, options));
                     }
                     majorVersions = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStack> array = new List<ApplicationStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeApplicationStack(item));
+                        array.Add(DeserializeApplicationStack(item, options));
                     }
                     frameworks = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStack> array = new List<ApplicationStack>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeApplicationStack(item));
+                        array.Add(DeserializeApplicationStack(item, options));
                     }
                     isDeprecated = array;
                     continue;

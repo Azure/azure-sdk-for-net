@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventGridNamespaceClientGroupResource>> UpdateAsync(WaitUntil waitUntil, EventGridNamespaceClientGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventGridNamespaceClientGroupResource> Update(WaitUntil waitUntil, EventGridNamespaceClientGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _eventGridNamespaceClientGroupClientGroupsClientDiagnostics.CreateScope("EventGridNamespaceClientGroupResource.Update");
             scope.Start();

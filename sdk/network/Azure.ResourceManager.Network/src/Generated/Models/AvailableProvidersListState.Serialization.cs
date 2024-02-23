@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StateName))
+            if (StateName != null)
             {
                 writer.WritePropertyName("stateName"u8);
                 writer.WriteStringValue(StateName);
             }
-            if (Optional.IsCollectionDefined(Providers))
+            if (!(Providers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Cities))
+            if (!(Cities is ChangeTrackingList<AvailableProvidersListCity> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("cities"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListCity> array = new List<AvailableProvidersListCity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item));
+                        array.Add(AvailableProvidersListCity.DeserializeAvailableProvidersListCity(item, options));
                     }
                     cities = array;
                     continue;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyGroupName))
+            if (PolicyGroupName != null)
             {
                 writer.WritePropertyName("policyGroupName"u8);
                 writer.WriteStringValue(PolicyGroupName);
             }
-            if (Optional.IsDefined(Results))
+            if (Results != null)
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

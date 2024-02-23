@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteObjectValue(PrivateIPAddress);
             }
-            if (Optional.IsDefined(PublicIPAddressResourceId))
+            if (PublicIPAddressResourceId != null)
             {
                 writer.WritePropertyName("publicIpAddressResourceId"u8);
                 writer.WriteStringValue(PublicIPAddressResourceId);
             }
-            if (Optional.IsDefined(LoadBalancerResourceId))
+            if (LoadBalancerResourceId != null)
             {
                 writer.WritePropertyName("loadBalancerResourceId"u8);
                 writer.WriteStringValue(LoadBalancerResourceId);
             }
-            if (Optional.IsDefined(ProbePort))
+            if (ProbePort.HasValue)
             {
                 writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
-            if (Optional.IsCollectionDefined(SqlVmInstances))
+            if (!(SqlVmInstances is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sqlVirtualMachineInstances"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
+                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicIpAddressResourceId"u8))

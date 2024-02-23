@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BindingType))
+            if (BindingType.HasValue)
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(LaunchProperties))
+            if (LaunchProperties != null)
             {
                 writer.WritePropertyName("launchProperties"u8);
                 writer.WriteObjectValue(LaunchProperties);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    launchProperties = BuildpackBindingLaunchProperties.DeserializeBuildpackBindingLaunchProperties(property.Value);
+                    launchProperties = BuildpackBindingLaunchProperties.DeserializeBuildpackBindingLaunchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

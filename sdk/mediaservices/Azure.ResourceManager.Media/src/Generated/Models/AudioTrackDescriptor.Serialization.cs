@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChannelMapping))
+            if (ChannelMapping.HasValue)
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element);
+                    case "#Microsoft.Media.SelectAudioTrackByAttribute": return SelectAudioTrackByAttribute.DeserializeSelectAudioTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectAudioTrackById": return SelectAudioTrackById.DeserializeSelectAudioTrackById(element, options);
                 }
             }
             Optional<ChannelMapping> channelMapping = default;

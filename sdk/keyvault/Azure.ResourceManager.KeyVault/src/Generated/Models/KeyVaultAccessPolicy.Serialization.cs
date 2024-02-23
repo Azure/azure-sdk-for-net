@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId.HasValue)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("permissions"u8))
                 {
-                    permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value);
+                    permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

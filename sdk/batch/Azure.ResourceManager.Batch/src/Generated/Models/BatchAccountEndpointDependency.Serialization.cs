@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DomainName))
+            if (options.Format != "W" && DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointDetails))
+            if (options.Format != "W" && !(EndpointDetails is ChangeTrackingList<BatchEndpointDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchEndpointDetail> array = new List<BatchEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchEndpointDetail.DeserializeBatchEndpointDetail(item));
+                        array.Add(BatchEndpointDetail.DeserializeBatchEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoPrivateLinkResourceData> array = new List<KustoPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(item));
+                        array.Add(KustoPrivateLinkResourceData.DeserializeKustoPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

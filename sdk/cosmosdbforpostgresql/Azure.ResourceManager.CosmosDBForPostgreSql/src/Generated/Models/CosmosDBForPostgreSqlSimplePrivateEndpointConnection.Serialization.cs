@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (PrivateLinkServiceConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = CosmosDBForPostgreSqlPrivateLinkServiceConnectionState.DeserializeCosmosDBForPostgreSqlPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = CosmosDBForPostgreSqlPrivateLinkServiceConnectionState.DeserializeCosmosDBForPostgreSqlPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }

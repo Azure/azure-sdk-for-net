@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CognitiveServicesAccountModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesAccountModel> array = new List<CognitiveServicesAccountModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(item));
+                        array.Add(CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Base))
+            if (options.Format != "W" && Base.HasValue)
             {
                 writer.WritePropertyName("base"u8);
                 writer.WriteNumberValue(Base.Value);

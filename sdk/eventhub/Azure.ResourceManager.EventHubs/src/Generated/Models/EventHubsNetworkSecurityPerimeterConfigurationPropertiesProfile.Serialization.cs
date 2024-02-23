@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AccessRulesVersion))
+            if (AccessRulesVersion != null)
             {
                 writer.WritePropertyName("accessRulesVersion"u8);
                 writer.WriteStringValue(AccessRulesVersion);
             }
-            if (Optional.IsCollectionDefined(AccessRules))
+            if (!(AccessRules is ChangeTrackingList<EventHubsNspAccessRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsNspAccessRule> array = new List<EventHubsNspAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsNspAccessRule.DeserializeEventHubsNspAccessRule(item));
+                        array.Add(EventHubsNspAccessRule.DeserializeEventHubsNspAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;

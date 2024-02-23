@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(GroupId))
+            if (options.Format != "W" && GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
+            if (options.Format != "W" && !(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredZoneNames))
+            if (options.Format != "W" && !(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
+            if (options.Format != "W" && !(ShareablePrivateLinkResourceTypes is ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("shareablePrivateLinkResourceTypes"u8);
                 writer.WriteStartArray();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<ShareableSearchServicePrivateLinkResourceType> array = new List<ShareableSearchServicePrivateLinkResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareableSearchServicePrivateLinkResourceType.DeserializeShareableSearchServicePrivateLinkResourceType(item));
+                        array.Add(ShareableSearchServicePrivateLinkResourceType.DeserializeShareableSearchServicePrivateLinkResourceType(item, options));
                     }
                     shareablePrivateLinkResourceTypes = array;
                     continue;

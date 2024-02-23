@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -24,7 +23,10 @@ namespace Azure.Maps.Search.Models
         /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
         public GeoJsonGeometryCollectionData(IEnumerable<GeoJsonGeometry> geometries)
         {
-            Argument.AssertNotNull(geometries, nameof(geometries));
+            if (geometries == null)
+            {
+                throw new ArgumentNullException(nameof(geometries));
+            }
 
             Geometries = geometries.ToList();
         }

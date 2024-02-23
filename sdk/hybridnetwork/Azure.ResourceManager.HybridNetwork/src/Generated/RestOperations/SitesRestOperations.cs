@@ -66,9 +66,30 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, siteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -91,9 +112,30 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, siteName);
             _pipeline.Send(message, cancellationToken);
@@ -136,9 +178,30 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SiteData>> GetAsync(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, siteName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -167,9 +230,30 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SiteData> Get(string subscriptionId, string resourceGroupName, string siteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, siteName);
             _pipeline.Send(message, cancellationToken);
@@ -223,10 +307,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string siteName, SiteData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, siteName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -250,10 +358,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string siteName, SiteData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, siteName, data);
             _pipeline.Send(message, cancellationToken);
@@ -301,10 +433,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SiteData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string siteName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
+            if (tagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(tagsObject));
+            }
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, siteName, tagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -332,10 +488,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SiteData> UpdateTags(string subscriptionId, string resourceGroupName, string siteName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
+            if (siteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
+            }
+            if (tagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(tagsObject));
+            }
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, siteName, tagsObject);
             _pipeline.Send(message, cancellationToken);
@@ -377,7 +557,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SiteListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -402,7 +589,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SiteListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -447,8 +641,22 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SiteListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -474,8 +682,22 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SiteListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -515,8 +737,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SiteListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -542,8 +774,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SiteListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -584,9 +826,26 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SiteListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -613,9 +872,26 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SiteListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);

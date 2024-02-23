@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ExpressRouteConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRouteConnectionData> array = new List<ExpressRouteConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item));
+                        array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(TargetDatabaseName))
+            if (TargetDatabaseName != null)
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsDefined(SchemaSetting))
+            if (SchemaSetting != null)
             {
                 writer.WritePropertyName("schemaSetting"u8);
                 writer.WriteObjectValue(SchemaSetting);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    schemaSetting = SchemaMigrationSetting.DeserializeSchemaMigrationSetting(property.Value);
+                    schemaSetting = SchemaMigrationSetting.DeserializeSchemaMigrationSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

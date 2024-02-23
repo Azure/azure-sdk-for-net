@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IntervalStartTime))
+            if (options.Format != "W" && IntervalStartTime != null)
             {
                 writer.WritePropertyName("intervalStartTime"u8);
                 writer.WriteStringValue(IntervalStartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(IntervalType))
+            if (options.Format != "W" && IntervalType.HasValue)
             {
                 writer.WritePropertyName("intervalType"u8);
                 writer.WriteStringValue(IntervalType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionCount))
+            if (options.Format != "W" && ExecutionCount.HasValue)
             {
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<QueryMetricProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricProperties> array = new List<QueryMetricProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item));
+                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item, options));
                     }
                     metrics = array;
                     continue;

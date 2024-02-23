@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FabricType))
+            if (FabricType != null)
             {
                 writer.WritePropertyName("fabricType"u8);
                 writer.WriteStringValue(FabricType);
             }
-            if (Optional.IsCollectionDefined(Subnets))
+            if (!(Subnets is ChangeTrackingList<SiteRecoverySubnet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(NetworkType))
+            if (NetworkType != null)
             {
                 writer.WritePropertyName("networkType"u8);
                 writer.WriteStringValue(NetworkType);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySubnet> array = new List<SiteRecoverySubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item));
+                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item, options));
                     }
                     subnets = array;
                     continue;

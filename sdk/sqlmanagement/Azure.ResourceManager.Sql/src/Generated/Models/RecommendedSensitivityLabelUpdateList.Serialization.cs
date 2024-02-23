@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<RecommendedSensitivityLabelUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<RecommendedSensitivityLabelUpdate> array = new List<RecommendedSensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item));
+                        array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item, options));
                     }
                     operations = array;
                     continue;

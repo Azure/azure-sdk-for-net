@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(AccessPolicies))
+            if (!(AccessPolicies is ChangeTrackingList<KeyVaultAccessPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
@@ -40,67 +40,67 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VaultUri))
+            if (VaultUri != null)
             {
                 writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(HsmPoolResourceId))
+            if (options.Format != "W" && HsmPoolResourceId != null)
             {
                 writer.WritePropertyName("hsmPoolResourceId"u8);
                 writer.WriteStringValue(HsmPoolResourceId);
             }
-            if (Optional.IsDefined(EnabledForDeployment))
+            if (EnabledForDeployment.HasValue)
             {
                 writer.WritePropertyName("enabledForDeployment"u8);
                 writer.WriteBooleanValue(EnabledForDeployment.Value);
             }
-            if (Optional.IsDefined(EnabledForDiskEncryption))
+            if (EnabledForDiskEncryption.HasValue)
             {
                 writer.WritePropertyName("enabledForDiskEncryption"u8);
                 writer.WriteBooleanValue(EnabledForDiskEncryption.Value);
             }
-            if (Optional.IsDefined(EnabledForTemplateDeployment))
+            if (EnabledForTemplateDeployment.HasValue)
             {
                 writer.WritePropertyName("enabledForTemplateDeployment"u8);
                 writer.WriteBooleanValue(EnabledForTemplateDeployment.Value);
             }
-            if (Optional.IsDefined(EnableSoftDelete))
+            if (EnableSoftDelete.HasValue)
             {
                 writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            if (SoftDeleteRetentionInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (Optional.IsDefined(EnableRbacAuthorization))
+            if (EnableRbacAuthorization.HasValue)
             {
                 writer.WritePropertyName("enableRbacAuthorization"u8);
                 writer.WriteBooleanValue(EnableRbacAuthorization.Value);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EnablePurgeProtection))
+            if (EnablePurgeProtection.HasValue)
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (NetworkRuleSet != null)
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess != null)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
+                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item));
+                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item, options));
                     }
                     accessPolicies = array;
                     continue;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value);
+                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultPrivateEndpointConnectionItemData> array = new List<KeyVaultPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateEndpointConnectionItemData.DeserializeKeyVaultPrivateEndpointConnectionItemData(item));
+                        array.Add(KeyVaultPrivateEndpointConnectionItemData.DeserializeKeyVaultPrivateEndpointConnectionItemData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;

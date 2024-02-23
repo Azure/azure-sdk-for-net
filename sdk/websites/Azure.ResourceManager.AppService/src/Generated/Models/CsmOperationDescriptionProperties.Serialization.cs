@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceSpecification))
+            if (ServiceSpecification != null)
             {
                 writer.WritePropertyName("serviceSpecification"u8);
                 writer.WriteObjectValue(ServiceSpecification);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property.Value);
+                    serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

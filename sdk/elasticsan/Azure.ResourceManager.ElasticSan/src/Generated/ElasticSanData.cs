@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.ElasticSan
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public ElasticSanData(AzureLocation location, ElasticSanSku sku, long baseSizeTiB, long extendedCapacitySizeTiB) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
             AvailabilityZones = new ChangeTrackingList<string>();

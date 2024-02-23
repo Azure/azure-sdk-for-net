@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleName))
+            if (RoleName != null)
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(DefinitionType))
+            if (DefinitionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsCollectionDefined(Privileges))
+            if (!(Privileges is ChangeTrackingList<MongoDBPrivilege> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("privileges"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingList<MongoDBRole> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<MongoDBPrivilege> array = new List<MongoDBPrivilege>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item));
+                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item, options));
                             }
                             privileges = array;
                             continue;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<MongoDBRole> array = new List<MongoDBRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                                array.Add(MongoDBRole.DeserializeMongoDBRole(item, options));
                             }
                             roles = array;
                             continue;

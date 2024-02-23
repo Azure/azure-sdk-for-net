@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KpiResourceFormatData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiResourceFormatData> array = new List<KpiResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiResourceFormatData.DeserializeKpiResourceFormatData(item));
+                        array.Add(KpiResourceFormatData.DeserializeKpiResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

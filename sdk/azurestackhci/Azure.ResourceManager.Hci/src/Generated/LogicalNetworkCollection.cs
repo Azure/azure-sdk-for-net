@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LogicalNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string logicalNetworkName, LogicalNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (logicalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(logicalNetworkName));
+            }
+            if (logicalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _logicalNetworkClientDiagnostics.CreateScope("LogicalNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LogicalNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string logicalNetworkName, LogicalNetworkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (logicalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(logicalNetworkName));
+            }
+            if (logicalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _logicalNetworkClientDiagnostics.CreateScope("LogicalNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual async Task<Response<LogicalNetworkResource>> GetAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
+            if (logicalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(logicalNetworkName));
+            }
+            if (logicalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
+            }
 
             using var scope = _logicalNetworkClientDiagnostics.CreateScope("LogicalNetworkCollection.Get");
             scope.Start();
@@ -222,7 +249,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual Response<LogicalNetworkResource> Get(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
+            if (logicalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(logicalNetworkName));
+            }
+            if (logicalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
+            }
 
             using var scope = _logicalNetworkClientDiagnostics.CreateScope("LogicalNetworkCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
+            if (logicalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(logicalNetworkName));
+            }
+            if (logicalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
+            }
 
             using var scope = _logicalNetworkClientDiagnostics.CreateScope("LogicalNetworkCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
+            if (logicalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(logicalNetworkName));
+            }
+            if (logicalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
+            }
 
             using var scope = _logicalNetworkClientDiagnostics.CreateScope("LogicalNetworkCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogicalNetworkResource>> GetIfExistsAsync(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
+            if (logicalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(logicalNetworkName));
+            }
+            if (logicalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
+            }
 
             using var scope = _logicalNetworkClientDiagnostics.CreateScope("LogicalNetworkCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="logicalNetworkName"/> is null. </exception>
         public virtual NullableResponse<LogicalNetworkResource> GetIfExists(string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(logicalNetworkName, nameof(logicalNetworkName));
+            if (logicalNetworkName == null)
+            {
+                throw new ArgumentNullException(nameof(logicalNetworkName));
+            }
+            if (logicalNetworkName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(logicalNetworkName));
+            }
 
             using var scope = _logicalNetworkClientDiagnostics.CreateScope("LogicalNetworkCollection.GetIfExists");
             scope.Start();

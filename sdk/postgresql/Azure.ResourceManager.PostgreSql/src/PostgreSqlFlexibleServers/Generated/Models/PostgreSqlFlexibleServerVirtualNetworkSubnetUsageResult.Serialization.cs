@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(DelegatedSubnetsUsage))
+            if (options.Format != "W" && !(DelegatedSubnetsUsage is ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delegatedSubnetsUsage"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerDelegatedSubnetUsage> array = new List<PostgreSqlFlexibleServerDelegatedSubnetUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerDelegatedSubnetUsage.DeserializePostgreSqlFlexibleServerDelegatedSubnetUsage(item));
+                        array.Add(PostgreSqlFlexibleServerDelegatedSubnetUsage.DeserializePostgreSqlFlexibleServerDelegatedSubnetUsage(item, options));
                     }
                     delegatedSubnetsUsage = array;
                     continue;

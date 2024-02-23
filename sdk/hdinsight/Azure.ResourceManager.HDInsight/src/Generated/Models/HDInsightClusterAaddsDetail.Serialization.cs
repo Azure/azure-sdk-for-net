@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainName))
+            if (DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsDefined(IsInitialSyncComplete))
+            if (IsInitialSyncComplete.HasValue)
             {
                 writer.WritePropertyName("initialSyncComplete"u8);
                 writer.WriteBooleanValue(IsInitialSyncComplete.Value);
             }
-            if (Optional.IsDefined(IsLdapsEnabled))
+            if (IsLdapsEnabled.HasValue)
             {
                 writer.WritePropertyName("ldapsEnabled"u8);
                 writer.WriteBooleanValue(IsLdapsEnabled.Value);
             }
-            if (Optional.IsDefined(LdapsPublicCertificateInBase64))
+            if (LdapsPublicCertificateInBase64 != null)
             {
                 writer.WritePropertyName("ldapsPublicCertificateInBase64"u8);
                 writer.WriteStringValue(LdapsPublicCertificateInBase64);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<HDInsightStorageAccountInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightStorageAccountInfo> array = new List<HDInsightStorageAccountInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightStorageAccountInfo.DeserializeHDInsightStorageAccountInfo(item));
+                        array.Add(HDInsightStorageAccountInfo.DeserializeHDInsightStorageAccountInfo(item, options));
                     }
                     storageaccounts = array;
                     continue;

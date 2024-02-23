@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AcrDetails))
+            if (!(AcrDetails is ChangeTrackingList<RegistryAcrDetails> collection && collection.IsUndefined))
             {
                 if (AcrDetails != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrDetails");
                 }
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 if (Location != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("location");
                 }
             }
-            if (Optional.IsCollectionDefined(StorageAccountDetails))
+            if (!(StorageAccountDetails is ChangeTrackingList<StorageAccountDetails> collection0 && collection0.IsUndefined))
             {
                 if (StorageAccountDetails != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<RegistryAcrDetails> array = new List<RegistryAcrDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item));
+                        array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item, options));
                     }
                     acrDetails = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<StorageAccountDetails> array = new List<StorageAccountDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StorageAccountDetails.DeserializeStorageAccountDetails(item));
+                        array.Add(Models.StorageAccountDetails.DeserializeStorageAccountDetails(item, options));
                     }
                     storageAccountDetails = array;
                     continue;

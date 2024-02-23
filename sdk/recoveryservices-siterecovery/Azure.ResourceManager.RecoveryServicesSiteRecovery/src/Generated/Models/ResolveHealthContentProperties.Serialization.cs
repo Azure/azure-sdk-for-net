@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(HealthErrors))
+            if (!(HealthErrors is ChangeTrackingList<ResolveHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ResolveHealthError> array = new List<ResolveHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResolveHealthError.DeserializeResolveHealthError(item));
+                        array.Add(ResolveHealthError.DeserializeResolveHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;

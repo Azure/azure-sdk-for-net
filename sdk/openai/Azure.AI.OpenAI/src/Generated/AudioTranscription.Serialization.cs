@@ -29,22 +29,22 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(InternalAudioTaskLabel))
+            if (InternalAudioTaskLabel.HasValue)
             {
                 writer.WritePropertyName("task"u8);
                 writer.WriteStringValue(InternalAudioTaskLabel.Value.ToString());
             }
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(Convert.ToDouble(Duration.Value.ToString("s\\.fff")));
             }
-            if (Optional.IsCollectionDefined(Segments))
+            if (!(Segments is ChangeTrackingList<AudioTranscriptionSegment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteStartArray();
@@ -138,7 +138,7 @@ namespace Azure.AI.OpenAI
                     List<AudioTranscriptionSegment> array = new List<AudioTranscriptionSegment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AudioTranscriptionSegment.DeserializeAudioTranscriptionSegment(item));
+                        array.Add(AudioTranscriptionSegment.DeserializeAudioTranscriptionSegment(item, options));
                     }
                     segments = array;
                     continue;

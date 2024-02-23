@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DeviceUpdateInstanceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdateInstanceData> array = new List<DeviceUpdateInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(item));
+                        array.Add(DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(item, options));
                     }
                     value = array;
                     continue;

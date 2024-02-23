@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Replication))
+            if (Replication != null)
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteObjectValue(Replication);
             }
-            if (Optional.IsDefined(Snapshot))
+            if (Snapshot != null)
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (Optional.IsDefined(VolumeRelocation))
+            if (VolumeRelocation != null)
             {
                 writer.WritePropertyName("volumeRelocation"u8);
                 writer.WriteObjectValue(VolumeRelocation);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    replication = NetAppReplicationObject.DeserializeNetAppReplicationObject(property.Value);
+                    replication = NetAppReplicationObject.DeserializeNetAppReplicationObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshot"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value);
+                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeRelocation"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    volumeRelocation = NetAppVolumeRelocationProperties.DeserializeNetAppVolumeRelocationProperties(property.Value);
+                    volumeRelocation = NetAppVolumeRelocationProperties.DeserializeNetAppVolumeRelocationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

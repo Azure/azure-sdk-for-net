@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendAadLogs))
+            if (SendAadLogs.HasValue)
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteStringValue(SendAadLogs.Value.ToString());
             }
-            if (Optional.IsDefined(SendSubscriptionLogs))
+            if (SendSubscriptionLogs.HasValue)
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteStringValue(SendSubscriptionLogs.Value.ToString());
             }
-            if (Optional.IsDefined(SendActivityLogs))
+            if (SendActivityLogs.HasValue)
             {
                 writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteStringValue(SendActivityLogs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (!(FilteringTags is ChangeTrackingList<NewRelicObservabilityFilteringTag> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicObservabilityFilteringTag> array = new List<NewRelicObservabilityFilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityFilteringTag.DeserializeNewRelicObservabilityFilteringTag(item));
+                        array.Add(NewRelicObservabilityFilteringTag.DeserializeNewRelicObservabilityFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER

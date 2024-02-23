@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MetricSpecifications))
+            if (!(MetricSpecifications is ChangeTrackingList<MetricSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricSpecifications"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogSpecifications))
+            if (!(LogSpecifications is ChangeTrackingList<LogSpecification> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("logSpecifications"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricSpecification> array = new List<MetricSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSpecification.DeserializeMetricSpecification(item));
+                        array.Add(MetricSpecification.DeserializeMetricSpecification(item, options));
                     }
                     metricSpecifications = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<LogSpecification> array = new List<LogSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogSpecification.DeserializeLogSpecification(item));
+                        array.Add(LogSpecification.DeserializeLogSpecification(item, options));
                     }
                     logSpecifications = array;
                     continue;

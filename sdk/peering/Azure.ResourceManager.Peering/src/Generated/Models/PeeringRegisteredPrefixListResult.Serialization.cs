@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PeeringRegisteredPrefixData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringRegisteredPrefixData> array = new List<PeeringRegisteredPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(item));
+                        array.Add(PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(item, options));
                     }
                     value = array;
                     continue;

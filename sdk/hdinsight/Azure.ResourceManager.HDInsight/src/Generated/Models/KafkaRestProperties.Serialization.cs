@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientGroupInfo))
+            if (ClientGroupInfo != null)
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
                 writer.WriteObjectValue(ClientGroupInfo);
             }
-            if (Optional.IsCollectionDefined(ConfigurationOverride))
+            if (!(ConfigurationOverride is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationOverride"u8);
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value);
+                    clientGroupInfo = ClientGroupInfo.DeserializeClientGroupInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationOverride"u8))

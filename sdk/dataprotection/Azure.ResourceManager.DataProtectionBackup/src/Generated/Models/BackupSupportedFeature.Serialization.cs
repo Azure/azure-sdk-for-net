@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FeatureName))
+            if (FeatureName != null)
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (Optional.IsDefined(SupportStatus))
+            if (SupportStatus.HasValue)
             {
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExposureControlledFeatures))
+            if (!(ExposureControlledFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("exposureControlledFeatures"u8);
                 writer.WriteStartArray();

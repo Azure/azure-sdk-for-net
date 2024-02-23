@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Relay.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RelayAuthorizationRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayAuthorizationRuleData> array = new List<RelayAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(item));
+                        array.Add(RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(item, options));
                     }
                     value = array;
                     continue;

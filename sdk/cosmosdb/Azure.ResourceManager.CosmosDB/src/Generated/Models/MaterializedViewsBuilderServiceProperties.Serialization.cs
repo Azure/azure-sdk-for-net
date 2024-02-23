@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<MaterializedViewsBuilderRegionalService> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(InstanceSize))
+            if (InstanceSize.HasValue)
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (InstanceCount.HasValue)
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
             writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MaterializedViewsBuilderRegionalService> array = new List<MaterializedViewsBuilderRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaterializedViewsBuilderRegionalService.DeserializeMaterializedViewsBuilderRegionalService(item));
+                        array.Add(MaterializedViewsBuilderRegionalService.DeserializeMaterializedViewsBuilderRegionalService(item, options));
                     }
                     locations = array;
                     continue;

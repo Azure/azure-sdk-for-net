@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PartitionId))
+            if (options.Format != "W" && PartitionId.HasValue)
             {
                 writer.WritePropertyName("partitionId"u8);
                 writer.WriteStringValue(PartitionId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartitionKeyRangeId))
+            if (options.Format != "W" && PartitionKeyRangeId != null)
             {
                 writer.WritePropertyName("partitionKeyRangeId"u8);
                 writer.WriteStringValue(PartitionKeyRangeId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
+            if (options.Format != "W" && TimeGrain != null)
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MetricValues))
+            if (options.Format != "W" && !(MetricValues is ChangeTrackingList<CosmosDBMetricValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricValues"u8);
                 writer.WriteStartArray();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricValues"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBMetricValue> array = new List<CosmosDBMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBMetricValue.DeserializeCosmosDBMetricValue(item));
+                        array.Add(CosmosDBMetricValue.DeserializeCosmosDBMetricValue(item, options));
                     }
                     metricValues = array;
                     continue;

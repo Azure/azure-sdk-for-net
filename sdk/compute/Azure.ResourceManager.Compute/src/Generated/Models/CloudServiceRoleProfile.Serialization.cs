@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingList<CloudServiceRoleProfileProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceRoleProfileProperties> array = new List<CloudServiceRoleProfileProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceRoleProfileProperties.DeserializeCloudServiceRoleProfileProperties(item));
+                        array.Add(CloudServiceRoleProfileProperties.DeserializeCloudServiceRoleProfileProperties(item, options));
                     }
                     roles = array;
                     continue;

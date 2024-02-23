@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<FrontendEndpointData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<FrontendEndpointData> array = new List<FrontendEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item));
+                        array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item, options));
                     }
                     value = array;
                     continue;

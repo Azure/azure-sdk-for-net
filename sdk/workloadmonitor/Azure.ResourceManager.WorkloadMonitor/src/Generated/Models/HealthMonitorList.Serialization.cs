@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HealthMonitorData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                     List<HealthMonitorData> array = new List<HealthMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthMonitorData.DeserializeHealthMonitorData(item));
+                        array.Add(HealthMonitorData.DeserializeHealthMonitorData(item, options));
                     }
                     value = array;
                     continue;

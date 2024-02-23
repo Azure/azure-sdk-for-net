@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Fqdn))
+            if (Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(IsPrivateLinkEnabled))
+            if (IsPrivateLinkEnabled.HasValue)
             {
                 writer.WritePropertyName("isPrivateLinkEnabled"u8);
                 writer.WriteBooleanValue(IsPrivateLinkEnabled.Value);
             }
-            if (Optional.IsDefined(NotebookPreparationError))
+            if (NotebookPreparationError != null)
             {
                 writer.WritePropertyName("notebookPreparationError"u8);
                 writer.WriteObjectValue(NotebookPreparationError);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value);
+                    notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))

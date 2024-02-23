@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<GrafanaPrivateLinkResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<GrafanaPrivateLinkResourceData> array = new List<GrafanaPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(item));
+                        array.Add(GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

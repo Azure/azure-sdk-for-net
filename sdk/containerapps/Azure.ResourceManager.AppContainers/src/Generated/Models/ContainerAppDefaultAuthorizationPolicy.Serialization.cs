@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowedPrincipals))
+            if (AllowedPrincipals != null)
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
                 writer.WriteObjectValue(AllowedPrincipals);
             }
-            if (Optional.IsCollectionDefined(AllowedApplications))
+            if (!(AllowedApplications is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedApplications"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    allowedPrincipals = ContainerAppAllowedPrincipals.DeserializeContainerAppAllowedPrincipals(property.Value);
+                    allowedPrincipals = ContainerAppAllowedPrincipals.DeserializeContainerAppAllowedPrincipals(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedApplications"u8))

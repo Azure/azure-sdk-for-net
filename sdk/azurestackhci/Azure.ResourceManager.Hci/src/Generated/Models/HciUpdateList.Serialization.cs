@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<UpdateData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<UpdateData> array = new List<UpdateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateData.DeserializeUpdateData(item));
+                        array.Add(UpdateData.DeserializeUpdateData(item, options));
                     }
                     value = array;
                     continue;

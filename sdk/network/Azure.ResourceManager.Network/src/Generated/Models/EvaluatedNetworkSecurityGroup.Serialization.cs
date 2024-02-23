@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkSecurityGroupId))
+            if (NetworkSecurityGroupId != null)
             {
                 writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);
             }
-            if (Optional.IsDefined(AppliedTo))
+            if (AppliedTo != null)
             {
                 writer.WritePropertyName("appliedTo"u8);
                 writer.WriteStringValue(AppliedTo);
             }
-            if (Optional.IsDefined(MatchedRule))
+            if (MatchedRule != null)
             {
                 writer.WritePropertyName("matchedRule"u8);
                 writer.WriteObjectValue(MatchedRule);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RulesEvaluationResult))
+            if (options.Format != "W" && !(RulesEvaluationResult is ChangeTrackingList<NetworkSecurityRulesEvaluationResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rulesEvaluationResult"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    matchedRule = MatchedRule.DeserializeMatchedRule(property.Value);
+                    matchedRule = MatchedRule.DeserializeMatchedRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rulesEvaluationResult"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkSecurityRulesEvaluationResult> array = new List<NetworkSecurityRulesEvaluationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityRulesEvaluationResult.DeserializeNetworkSecurityRulesEvaluationResult(item));
+                        array.Add(NetworkSecurityRulesEvaluationResult.DeserializeNetworkSecurityRulesEvaluationResult(item, options));
                     }
                     rulesEvaluationResult = array;
                     continue;

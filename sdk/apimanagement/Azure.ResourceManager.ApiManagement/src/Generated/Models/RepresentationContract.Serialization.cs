@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
-            if (Optional.IsDefined(SchemaId))
+            if (SchemaId != null)
             {
                 writer.WritePropertyName("schemaId"u8);
                 writer.WriteStringValue(SchemaId);
             }
-            if (Optional.IsDefined(TypeName))
+            if (TypeName != null)
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (Optional.IsCollectionDefined(FormParameters))
+            if (!(FormParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("formParameters"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Examples))
+            if (!(Examples is ChangeTrackingDictionary<string, ParameterExampleContract> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartObject();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     formParameters = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     Dictionary<string, ParameterExampleContract> dictionary = new Dictionary<string, ParameterExampleContract>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value));
+                        dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value, options));
                     }
                     examples = dictionary;
                     continue;

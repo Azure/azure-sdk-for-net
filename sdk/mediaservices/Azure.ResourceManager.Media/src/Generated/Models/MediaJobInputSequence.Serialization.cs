@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<MediaJobInputClip> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobInputClip> array = new List<MediaJobInputClip>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobInputClip.DeserializeMediaJobInputClip(item));
+                        array.Add(MediaJobInputClip.DeserializeMediaJobInputClip(item, options));
                     }
                     inputs = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            details = UpdateJobDetails.DeserializeUpdateJobDetails(property0.Value);
+                            details = UpdateJobDetails.DeserializeUpdateJobDetails(property0.Value, options);
                             continue;
                         }
                     }

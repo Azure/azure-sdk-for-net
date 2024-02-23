@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkInterfaceAssociation))
+            if (NetworkInterfaceAssociation != null)
             {
                 writer.WritePropertyName("networkInterfaceAssociation"u8);
                 writer.WriteObjectValue(NetworkInterfaceAssociation);
             }
-            if (Optional.IsDefined(SubnetAssociation))
+            if (SubnetAssociation != null)
             {
                 writer.WritePropertyName("subnetAssociation"u8);
                 writer.WriteObjectValue(SubnetAssociation);
             }
-            if (Optional.IsCollectionDefined(DefaultSecurityRules))
+            if (!(DefaultSecurityRules is ChangeTrackingList<SecurityRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("defaultSecurityRules"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
+            if (!(EffectiveSecurityRules is ChangeTrackingList<EffectiveNetworkSecurityRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("effectiveSecurityRules"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value);
+                    networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subnetAssociation"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value);
+                    subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultSecurityRules"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityRuleData> array = new List<SecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                     }
                     defaultSecurityRules = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveNetworkSecurityRule> array = new List<EffectiveNetworkSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveNetworkSecurityRule.DeserializeEffectiveNetworkSecurityRule(item));
+                        array.Add(EffectiveNetworkSecurityRule.DeserializeEffectiveNetworkSecurityRule(item, options));
                     }
                     effectiveSecurityRules = array;
                     continue;

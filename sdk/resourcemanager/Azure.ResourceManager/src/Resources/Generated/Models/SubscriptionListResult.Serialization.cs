@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SubscriptionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<SubscriptionData> array = new List<SubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionData.DeserializeSubscriptionData(item));
+                        array.Add(SubscriptionData.DeserializeSubscriptionData(item, options));
                     }
                     value = array;
                     continue;

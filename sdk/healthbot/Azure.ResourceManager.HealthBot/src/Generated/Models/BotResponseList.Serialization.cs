@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<HealthBotData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     List<HealthBotData> array = new List<HealthBotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthBotData.DeserializeHealthBotData(item));
+                        array.Add(HealthBotData.DeserializeHealthBotData(item, options));
                     }
                     value = array;
                     continue;

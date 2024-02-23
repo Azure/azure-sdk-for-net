@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RestorableTimeRanges))
+            if (!(RestorableTimeRanges is ChangeTrackingList<RestorableTimeRange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restorableTimeRanges"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ObjectType))
+            if (ObjectType != null)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<RestorableTimeRange> array = new List<RestorableTimeRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableTimeRange.DeserializeRestorableTimeRange(item));
+                        array.Add(RestorableTimeRange.DeserializeRestorableTimeRange(item, options));
                     }
                     restorableTimeRanges = array;
                     continue;

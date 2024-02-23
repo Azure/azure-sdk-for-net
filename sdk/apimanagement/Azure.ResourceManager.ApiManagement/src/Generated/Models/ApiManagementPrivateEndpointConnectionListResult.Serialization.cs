@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ApiManagementPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementPrivateEndpointConnectionData> array = new List<ApiManagementPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(item));
+                        array.Add(ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

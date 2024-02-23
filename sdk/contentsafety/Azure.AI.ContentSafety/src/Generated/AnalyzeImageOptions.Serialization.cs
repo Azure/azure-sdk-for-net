@@ -29,7 +29,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<ImageCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OutputType))
+            if (OutputType.HasValue)
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
@@ -91,7 +91,7 @@ namespace Azure.AI.ContentSafety
             {
                 if (property.NameEquals("image"u8))
                 {
-                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value);
+                    image = ContentSafetyImageData.DeserializeContentSafetyImageData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("categories"u8))

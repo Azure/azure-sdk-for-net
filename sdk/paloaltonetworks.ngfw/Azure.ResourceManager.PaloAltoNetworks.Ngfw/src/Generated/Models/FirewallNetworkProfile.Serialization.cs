@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetConfiguration))
+            if (VnetConfiguration != null)
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
                 writer.WriteObjectValue(VnetConfiguration);
             }
-            if (Optional.IsDefined(VwanConfiguration))
+            if (VwanConfiguration != null)
             {
                 writer.WritePropertyName("vwanConfiguration"u8);
                 writer.WriteObjectValue(VwanConfiguration);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
             writer.WriteStringValue(EnableEgressNat.ToString());
-            if (Optional.IsCollectionDefined(EgressNatIP))
+            if (!(EgressNatIP is ChangeTrackingList<IPAddressInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("egressNatIp"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedRanges))
+            if (!(TrustedRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("trustedRanges"u8);
                 writer.WriteStartArray();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    vnetConfiguration = FirewallVnetConfiguration.DeserializeFirewallVnetConfiguration(property.Value);
+                    vnetConfiguration = FirewallVnetConfiguration.DeserializeFirewallVnetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vwanConfiguration"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    vwanConfiguration = FirewallVwanConfiguration.DeserializeFirewallVwanConfiguration(property.Value);
+                    vwanConfiguration = FirewallVwanConfiguration.DeserializeFirewallVwanConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkType"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item));
+                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
                     publicIPs = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item));
+                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
                     egressNatIP = array;
                     continue;

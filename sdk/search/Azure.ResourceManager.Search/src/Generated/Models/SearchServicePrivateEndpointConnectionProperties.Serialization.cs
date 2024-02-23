@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (ConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
-            if (Optional.IsDefined(GroupId))
+            if (GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = SearchServicePrivateLinkServiceConnectionState.DeserializeSearchServicePrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = SearchServicePrivateLinkServiceConnectionState.DeserializeSearchServicePrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("groupId"u8))

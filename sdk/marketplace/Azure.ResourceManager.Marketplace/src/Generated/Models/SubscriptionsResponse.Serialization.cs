@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MarketplaceSubscription> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(SkipToken))
+            if (options.Format != "W" && SkipToken != null)
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (options.Format != "W" && Optional.IsDefined(Count))
+            if (options.Format != "W" && Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<MarketplaceSubscription> array = new List<MarketplaceSubscription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceSubscription.DeserializeMarketplaceSubscription(item));
+                        array.Add(MarketplaceSubscription.DeserializeMarketplaceSubscription(item, options));
                     }
                     value = array;
                     continue;

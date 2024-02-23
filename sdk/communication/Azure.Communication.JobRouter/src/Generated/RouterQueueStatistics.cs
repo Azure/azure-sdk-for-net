@@ -52,7 +52,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         internal RouterQueueStatistics(string queueId, int length)
         {
-            Argument.AssertNotNull(queueId, nameof(queueId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
 
             QueueId = queueId;
             Length = length;

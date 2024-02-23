@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<MachineLearningUserFeature> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningUserFeature> array = new List<MachineLearningUserFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item));
+                        array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item, options));
                     }
                     value = array;
                     continue;

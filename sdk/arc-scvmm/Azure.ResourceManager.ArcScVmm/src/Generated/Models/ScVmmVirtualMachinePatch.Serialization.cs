@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    properties = VirtualMachineUpdateProperties.DeserializeVirtualMachineUpdateProperties(property.Value);
+                    properties = VirtualMachineUpdateProperties.DeserializeVirtualMachineUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

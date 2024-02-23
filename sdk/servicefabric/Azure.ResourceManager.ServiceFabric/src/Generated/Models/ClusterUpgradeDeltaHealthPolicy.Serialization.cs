@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes);
             writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications);
-            if (Optional.IsCollectionDefined(ApplicationDeltaHealthPolicies))
+            if (!(ApplicationDeltaHealthPolicies is ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applicationDeltaHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ApplicationDeltaHealthPolicy> dictionary = new Dictionary<string, ApplicationDeltaHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplicationDeltaHealthPolicy.DeserializeApplicationDeltaHealthPolicy(property0.Value));
+                        dictionary.Add(property0.Name, ApplicationDeltaHealthPolicy.DeserializeApplicationDeltaHealthPolicy(property0.Value, options));
                     }
                     applicationDeltaHealthPolicies = dictionary;
                     continue;

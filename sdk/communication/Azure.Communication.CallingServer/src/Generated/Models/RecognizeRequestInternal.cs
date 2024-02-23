@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -19,7 +18,10 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
         public RecognizeRequestInternal(RecognizeInputType recognizeInputType, RecognizeOptionsInternal recognizeOptions)
         {
-            Argument.AssertNotNull(recognizeOptions, nameof(recognizeOptions));
+            if (recognizeOptions == null)
+            {
+                throw new ArgumentNullException(nameof(recognizeOptions));
+            }
 
             RecognizeInputType = recognizeInputType;
             RecognizeOptions = recognizeOptions;

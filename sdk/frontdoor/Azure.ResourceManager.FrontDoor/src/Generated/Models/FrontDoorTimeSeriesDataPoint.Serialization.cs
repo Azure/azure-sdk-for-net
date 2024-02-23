@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateTimeUtc))
+            if (DateTimeUtc.HasValue)
             {
                 writer.WritePropertyName("dateTimeUTC"u8);
                 writer.WriteStringValue(DateTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(Value))
+            if (Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);

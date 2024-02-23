@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PublicKeys))
+            if (!(PublicKeys is ChangeTrackingList<SshPublicKeyConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SshPublicKeyConfiguration> array = new List<SshPublicKeyConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKeyConfiguration.DeserializeSshPublicKeyConfiguration(item));
+                        array.Add(SshPublicKeyConfiguration.DeserializeSshPublicKeyConfiguration(item, options));
                     }
                     publicKeys = array;
                     continue;

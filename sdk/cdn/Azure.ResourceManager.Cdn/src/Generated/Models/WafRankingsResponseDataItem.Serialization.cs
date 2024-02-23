@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GroupValues))
+            if (!(GroupValues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupValues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> array = new List<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.DeserializeComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(item));
+                        array.Add(ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.DeserializeComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(item, options));
                     }
                     metrics = array;
                     continue;

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(SecurityRules))
+            if (!(SecurityRules is ChangeTrackingList<SecurityRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityRuleData> array = new List<SecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                     }
                     securityRules = array;
                     continue;

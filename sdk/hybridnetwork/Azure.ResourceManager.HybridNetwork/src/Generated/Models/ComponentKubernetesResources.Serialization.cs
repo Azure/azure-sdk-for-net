@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Deployments))
+            if (!(Deployments is ChangeTrackingList<KubernetesDeployment> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Pods))
+            if (!(Pods is ChangeTrackingList<KubernetesPod> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("pods"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReplicaSets))
+            if (!(ReplicaSets is ChangeTrackingList<KubernetesReplicaSet> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("replicaSets"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StatefulSets))
+            if (!(StatefulSets is ChangeTrackingList<KubernetesStatefulSet> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("statefulSets"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DaemonSets))
+            if (!(DaemonSets is ChangeTrackingList<KubernetesDaemonSet> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("daemonSets"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesDeployment> array = new List<KubernetesDeployment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item));
+                        array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item, options));
                     }
                     deployments = array;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesPod> array = new List<KubernetesPod>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesPod.DeserializeKubernetesPod(item));
+                        array.Add(KubernetesPod.DeserializeKubernetesPod(item, options));
                     }
                     pods = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesReplicaSet> array = new List<KubernetesReplicaSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item));
+                        array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item, options));
                     }
                     replicaSets = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesStatefulSet> array = new List<KubernetesStatefulSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item));
+                        array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item, options));
                     }
                     statefulSets = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesDaemonSet> array = new List<KubernetesDaemonSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item));
+                        array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item, options));
                     }
                     daemonSets = array;
                     continue;

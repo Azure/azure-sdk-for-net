@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(SkuNames))
+            if (!(SkuNames is ChangeTrackingList<DataBoxSkuName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("skuNames"u8);
                 writer.WriteStartArray();

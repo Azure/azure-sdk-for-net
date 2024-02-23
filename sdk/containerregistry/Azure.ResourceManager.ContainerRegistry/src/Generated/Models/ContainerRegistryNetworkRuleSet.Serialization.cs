@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToString());
-            if (Optional.IsCollectionDefined(IPRules))
+            if (!(IPRules is ChangeTrackingList<ContainerRegistryIPRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryIPRule> array = new List<ContainerRegistryIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryIPRule.DeserializeContainerRegistryIPRule(item));
+                        array.Add(ContainerRegistryIPRule.DeserializeContainerRegistryIPRule(item, options));
                     }
                     ipRules = array;
                     continue;

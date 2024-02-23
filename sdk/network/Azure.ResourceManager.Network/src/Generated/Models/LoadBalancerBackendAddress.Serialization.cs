@@ -27,39 +27,39 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetwork))
+            if (VirtualNetwork != null)
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceIPConfiguration))
+            if (options.Format != "W" && NetworkInterfaceIPConfiguration != null)
             {
                 writer.WritePropertyName("networkInterfaceIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, NetworkInterfaceIPConfiguration);
             }
-            if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
+            if (LoadBalancerFrontendIPConfiguration != null)
             {
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRulesPortMapping))
+            if (options.Format != "W" && !(InboundNatRulesPortMapping is ChangeTrackingList<NatRulePortMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inboundNatRulesPortMapping"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AdminState))
+            if (AdminState.HasValue)
             {
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<NatRulePortMapping> array = new List<NatRulePortMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item));
+                                array.Add(NatRulePortMapping.DeserializeNatRulePortMapping(item, options));
                             }
                             inboundNatRulesPortMapping = array;
                             continue;

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (!(Regions is ChangeTrackingList<TrafficManagerRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerRegion> array = new List<TrafficManagerRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeTrafficManagerRegion(item));
+                        array.Add(DeserializeTrafficManagerRegion(item, options));
                     }
                     regions = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewaySslPredefinedPolicy> array = new List<ApplicationGatewaySslPredefinedPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(item));
+                        array.Add(ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(item, options));
                     }
                     value = array;
                     continue;

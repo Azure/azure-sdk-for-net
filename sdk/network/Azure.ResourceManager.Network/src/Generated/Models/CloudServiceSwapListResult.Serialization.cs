@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CloudServiceSwapData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<CloudServiceSwapData> array = new List<CloudServiceSwapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceSwapData.DeserializeCloudServiceSwapData(item));
+                        array.Add(CloudServiceSwapData.DeserializeCloudServiceSwapData(item, options));
                     }
                     value = array;
                     continue;

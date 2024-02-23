@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<VirtualHubEffectiveRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualHubEffectiveRoute> array = new List<VirtualHubEffectiveRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHubEffectiveRoute.DeserializeVirtualHubEffectiveRoute(item));
+                        array.Add(VirtualHubEffectiveRoute.DeserializeVirtualHubEffectiveRoute(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Inputs))
+            if (!(Inputs is ChangeTrackingList<LogicExpressionRoot> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpressionRoot> array = new List<LogicExpressionRoot>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicExpressionRoot.DeserializeLogicExpressionRoot(item));
+                        array.Add(LogicExpressionRoot.DeserializeLogicExpressionRoot(item, options));
                     }
                     inputs = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RequestReportRecordContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<RequestReportRecordContract> array = new List<RequestReportRecordContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RequestReportRecordContract.DeserializeRequestReportRecordContract(item));
+                        array.Add(RequestReportRecordContract.DeserializeRequestReportRecordContract(item, options));
                     }
                     value = array;
                     continue;

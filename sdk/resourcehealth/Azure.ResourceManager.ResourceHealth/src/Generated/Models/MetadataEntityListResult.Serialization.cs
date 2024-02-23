@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ResourceHealthMetadataEntityData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthMetadataEntityData> array = new List<ResourceHealthMetadataEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(item));
+                        array.Add(ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(item, options));
                     }
                     value = array;
                     continue;

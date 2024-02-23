@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ApiManagementOpenIdConnectProviderData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementOpenIdConnectProviderData> array = new List<ApiManagementOpenIdConnectProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(item));
+                        array.Add(ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(item, options));
                     }
                     value = array;
                     continue;

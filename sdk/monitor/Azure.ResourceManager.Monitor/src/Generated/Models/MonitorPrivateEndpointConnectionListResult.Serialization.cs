@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MonitorPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorPrivateEndpointConnectionData> array = new List<MonitorPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(item));
+                        array.Add(MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

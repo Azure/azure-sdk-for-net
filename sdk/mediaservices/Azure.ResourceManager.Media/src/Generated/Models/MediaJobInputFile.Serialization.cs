@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Filename))
+            if (Filename != null)
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsCollectionDefined(IncludedTracks))
+            if (!(IncludedTracks is ChangeTrackingList<TrackDescriptor> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<TrackDescriptor> array = new List<TrackDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item));
+                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item, options));
                     }
                     includedTracks = array;
                     continue;

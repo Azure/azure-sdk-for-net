@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionType))
+            if (ActionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingList<RouteMapActionParameter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteMapActionParameter> array = new List<RouteMapActionParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteMapActionParameter.DeserializeRouteMapActionParameter(item));
+                        array.Add(RouteMapActionParameter.DeserializeRouteMapActionParameter(item, options));
                     }
                     parameters = array;
                     continue;

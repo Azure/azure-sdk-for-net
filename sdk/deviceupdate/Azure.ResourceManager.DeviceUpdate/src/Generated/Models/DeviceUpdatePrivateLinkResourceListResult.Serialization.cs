@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DeviceUpdatePrivateLinkData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkData> array = new List<DeviceUpdatePrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkData.DeserializeDeviceUpdatePrivateLinkData(item));
+                        array.Add(DeviceUpdatePrivateLinkData.DeserializeDeviceUpdatePrivateLinkData(item, options));
                     }
                     value = array;
                     continue;

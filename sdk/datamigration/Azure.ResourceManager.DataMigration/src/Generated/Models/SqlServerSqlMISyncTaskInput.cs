@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -56,11 +55,26 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="selectedDatabases"/>, <paramref name="storageResourceId"/>, <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="azureApp"/> is null. </exception>
         public SqlServerSqlMISyncTaskInput(IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string storageResourceId, SqlConnectionInfo sourceConnectionInfo, MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp)
         {
-            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
-            Argument.AssertNotNull(storageResourceId, nameof(storageResourceId));
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
-            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
-            Argument.AssertNotNull(azureApp, nameof(azureApp));
+            if (selectedDatabases == null)
+            {
+                throw new ArgumentNullException(nameof(selectedDatabases));
+            }
+            if (storageResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(storageResourceId));
+            }
+            if (sourceConnectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(sourceConnectionInfo));
+            }
+            if (targetConnectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(targetConnectionInfo));
+            }
+            if (azureApp == null)
+            {
+                throw new ArgumentNullException(nameof(azureApp));
+            }
 
             SelectedDatabases = selectedDatabases.ToList();
             StorageResourceId = storageResourceId;

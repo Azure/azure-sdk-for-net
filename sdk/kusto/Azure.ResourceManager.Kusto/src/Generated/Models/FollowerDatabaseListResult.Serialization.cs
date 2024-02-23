@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoFollowerDatabaseDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoFollowerDatabaseDefinition> array = new List<KustoFollowerDatabaseDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition(item));
+                        array.Add(KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition(item, options));
                     }
                     value = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,29 +38,29 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TopicSpacesConfiguration))
+            if (TopicSpacesConfiguration != null)
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
                 writer.WriteObjectValue(TopicSpacesConfiguration);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InboundIPRules))
+            if (!(InboundIPRules is ChangeTrackingList<EventGridInboundIPRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    sku = NamespaceSku.DeserializeNamespaceSku(property.Value);
+                    sku = NamespaceSku.DeserializeNamespaceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             {
                                 continue;
                             }
-                            topicSpacesConfiguration = UpdateTopicSpacesConfigurationInfo.DeserializeUpdateTopicSpacesConfigurationInfo(property0.Value);
+                            topicSpacesConfiguration = UpdateTopicSpacesConfigurationInfo.DeserializeUpdateTopicSpacesConfigurationInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                             }
                             inboundIPRules = array;
                             continue;

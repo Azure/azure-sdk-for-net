@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<AvsClusterZone> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsClusterZone> array = new List<AvsClusterZone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsClusterZone.DeserializeAvsClusterZone(item));
+                        array.Add(AvsClusterZone.DeserializeAvsClusterZone(item, options));
                     }
                     zones = array;
                     continue;

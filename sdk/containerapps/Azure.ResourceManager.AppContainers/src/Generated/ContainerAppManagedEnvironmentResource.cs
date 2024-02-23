@@ -640,7 +640,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppManagedEnvironmentResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Update");
             scope.Start();
@@ -686,7 +689,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppManagedEnvironmentResource> Update(WaitUntil waitUntil, ContainerAppManagedEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.Update");
             scope.Start();
@@ -863,7 +869,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ContainerAppNameAvailabilityResult>> CheckContainerAppNameAvailabilityAsync(ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _namespacesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.CheckContainerAppNameAvailability");
             scope.Start();
@@ -901,7 +910,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ContainerAppNameAvailabilityResult> CheckContainerAppNameAvailability(ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _namespacesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.CheckContainerAppNameAvailability");
             scope.Start();
@@ -944,8 +956,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ContainerAppManagedEnvironmentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.AddTag");
             scope.Start();
@@ -1006,8 +1024,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ContainerAppManagedEnvironmentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.AddTag");
             scope.Start();
@@ -1067,7 +1091,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ContainerAppManagedEnvironmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.SetTags");
             scope.Start();
@@ -1124,7 +1151,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ContainerAppManagedEnvironmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.SetTags");
             scope.Start();
@@ -1181,7 +1211,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ContainerAppManagedEnvironmentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.RemoveTag");
             scope.Start();
@@ -1241,7 +1274,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ContainerAppManagedEnvironmentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentResource.RemoveTag");
             scope.Start();

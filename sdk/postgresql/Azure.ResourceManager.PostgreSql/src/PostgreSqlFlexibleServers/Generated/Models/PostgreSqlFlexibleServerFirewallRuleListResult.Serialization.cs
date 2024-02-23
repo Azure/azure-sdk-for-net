@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PostgreSqlFlexibleServerFirewallRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerFirewallRuleData> array = new List<PostgreSqlFlexibleServerFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(item));
+                        array.Add(PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<GeoBackupPolicyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<GeoBackupPolicyData> array = new List<GeoBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeoBackupPolicyData.DeserializeGeoBackupPolicyData(item));
+                        array.Add(GeoBackupPolicyData.DeserializeGeoBackupPolicyData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CompilationErrors))
+            if (!(CompilationErrors is ChangeTrackingList<RouteCompilationError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("compilationErrors"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RouteCompilationError> array = new List<RouteCompilationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteCompilationError.DeserializeRouteCompilationError(item));
+                        array.Add(RouteCompilationError.DeserializeRouteCompilationError(item, options));
                     }
                     compilationErrors = array;
                     continue;

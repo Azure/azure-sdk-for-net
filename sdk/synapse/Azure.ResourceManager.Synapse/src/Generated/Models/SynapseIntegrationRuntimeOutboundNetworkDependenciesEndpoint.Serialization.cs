@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainName))
+            if (DomainName != null)
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsCollectionDefined(EndpointDetails))
+            if (!(EndpointDetails is ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> array = new List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(item));
+                        array.Add(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(item, options));
                     }
                     endpointDetails = array;
                     continue;

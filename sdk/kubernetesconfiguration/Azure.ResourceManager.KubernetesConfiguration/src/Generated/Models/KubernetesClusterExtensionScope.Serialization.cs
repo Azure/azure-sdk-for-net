@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cluster))
+            if (Cluster != null)
             {
                 if (Cluster != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("cluster");
                 }
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 if (Namespace != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         cluster = null;
                         continue;
                     }
-                    cluster = ScopeCluster.DeserializeScopeCluster(property.Value);
+                    cluster = ScopeCluster.DeserializeScopeCluster(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("namespace"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         @namespace = null;
                         continue;
                     }
-                    @namespace = ScopeNamespace.DeserializeScopeNamespace(property.Value);
+                    @namespace = ScopeNamespace.DeserializeScopeNamespace(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

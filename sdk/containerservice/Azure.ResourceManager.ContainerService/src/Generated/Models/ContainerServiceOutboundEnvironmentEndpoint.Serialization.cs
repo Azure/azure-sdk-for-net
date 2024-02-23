@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsCollectionDefined(Endpoints))
+            if (!(Endpoints is ChangeTrackingList<ContainerServiceEndpointDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceEndpointDependency> array = new List<ContainerServiceEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceEndpointDependency.DeserializeContainerServiceEndpointDependency(item));
+                        array.Add(ContainerServiceEndpointDependency.DeserializeContainerServiceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;

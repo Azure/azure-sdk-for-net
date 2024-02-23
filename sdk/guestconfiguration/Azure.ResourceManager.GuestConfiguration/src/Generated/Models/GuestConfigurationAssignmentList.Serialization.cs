@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<GuestConfigurationAssignmentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationAssignmentData> array = new List<GuestConfigurationAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(item));
+                        array.Add(GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(item, options));
                     }
                     value = array;
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningFqdnEndpoints> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFqdnEndpoints> array = new List<MachineLearningFqdnEndpoints>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints(item));
+                        array.Add(MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints(item, options));
                     }
                     value = array;
                     continue;

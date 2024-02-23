@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("alwaysEncryptedAkvAuthType"u8);
             writer.WriteStringValue(AlwaysEncryptedAkvAuthType.ToString());
-            if (Optional.IsDefined(ServicePrincipalId))
+            if (ServicePrincipalId != null)
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
-            if (Optional.IsDefined(ServicePrincipalKey))
+            if (ServicePrincipalKey != null)
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoPrivateEndpointConnectionData> array = new List<KustoPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(item));
+                        array.Add(KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

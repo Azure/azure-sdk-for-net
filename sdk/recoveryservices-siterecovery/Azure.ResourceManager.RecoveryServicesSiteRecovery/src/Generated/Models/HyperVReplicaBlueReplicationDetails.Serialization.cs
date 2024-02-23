@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastReplicatedOn))
+            if (LastReplicatedOn.HasValue)
             {
                 writer.WritePropertyName("lastReplicatedTime"u8);
                 writer.WriteStringValue(LastReplicatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VmId))
+            if (VmId != null)
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (Optional.IsDefined(VmProtectionState))
+            if (VmProtectionState != null)
             {
                 writer.WritePropertyName("vmProtectionState"u8);
                 writer.WriteStringValue(VmProtectionState);
             }
-            if (Optional.IsDefined(VmProtectionStateDescription))
+            if (VmProtectionStateDescription != null)
             {
                 writer.WritePropertyName("vmProtectionStateDescription"u8);
                 writer.WriteStringValue(VmProtectionStateDescription);
             }
-            if (Optional.IsDefined(InitialReplicationDetails))
+            if (InitialReplicationDetails != null)
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
                 writer.WriteObjectValue(InitialReplicationDetails);
             }
-            if (Optional.IsCollectionDefined(VmDiskDetails))
+            if (!(VmDiskDetails is ChangeTrackingList<SiteRecoveryDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vMDiskDetails"u8);
                 writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value);
+                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vMDiskDetails"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
+                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item, options));
                     }
                     vmDiskDetails = array;
                     continue;
