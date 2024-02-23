@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchAccountCertificateData> array = new List<BatchAccountCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchAccountCertificateData.DeserializeBatchAccountCertificateData(item));
+                        array.Add(BatchAccountCertificateData.DeserializeBatchAccountCertificateData(item, options));
                     }
                     value = array;
                     continue;

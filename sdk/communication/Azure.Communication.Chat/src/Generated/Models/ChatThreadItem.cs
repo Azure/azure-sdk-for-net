@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -19,8 +18,14 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="topic"/> is null. </exception>
         internal ChatThreadItem(string id, string topic)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(topic, nameof(topic));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (topic == null)
+            {
+                throw new ArgumentNullException(nameof(topic));
+            }
 
             Id = id;
             Topic = topic;

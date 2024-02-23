@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorWorkspaceResourceData> array = new List<MonitorWorkspaceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(item));
+                        array.Add(MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(item, options));
                     }
                     value = array;
                     continue;

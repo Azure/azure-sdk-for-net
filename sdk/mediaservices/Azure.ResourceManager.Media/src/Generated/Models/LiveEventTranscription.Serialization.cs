@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<LiveEventInputTrackSelection> array = new List<LiveEventInputTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventInputTrackSelection.DeserializeLiveEventInputTrackSelection(item));
+                        array.Add(LiveEventInputTrackSelection.DeserializeLiveEventInputTrackSelection(item, options));
                     }
                     inputTrackSelection = array;
                     continue;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    outputTranscriptionTrack = LiveEventOutputTranscriptionTrack.DeserializeLiveEventOutputTranscriptionTrack(property.Value);
+                    outputTranscriptionTrack = LiveEventOutputTranscriptionTrack.DeserializeLiveEventOutputTranscriptionTrack(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

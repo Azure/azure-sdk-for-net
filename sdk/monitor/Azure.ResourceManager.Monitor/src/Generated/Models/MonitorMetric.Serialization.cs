@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorTimeSeriesElement> array = new List<MonitorTimeSeriesElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorTimeSeriesElement.DeserializeMonitorTimeSeriesElement(item));
+                        array.Add(MonitorTimeSeriesElement.DeserializeMonitorTimeSeriesElement(item, options));
                     }
                     timeseries = array;
                     continue;

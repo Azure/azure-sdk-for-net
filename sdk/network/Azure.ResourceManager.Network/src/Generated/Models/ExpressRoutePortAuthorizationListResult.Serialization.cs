@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExpressRoutePortAuthorizationData> array = new List<ExpressRoutePortAuthorizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(item));
+                        array.Add(ExpressRoutePortAuthorizationData.DeserializeExpressRoutePortAuthorizationData(item, options));
                     }
                     value = array;
                     continue;

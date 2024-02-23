@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkDeviceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkDeviceName, NetworkDeviceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkDeviceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceName));
+            }
+            if (networkDeviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkDeviceResource> CreateOrUpdate(WaitUntil waitUntil, string networkDeviceName, NetworkDeviceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkDeviceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceName));
+            }
+            if (networkDeviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
         public virtual async Task<Response<NetworkDeviceResource>> GetAsync(string networkDeviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            if (networkDeviceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceName));
+            }
+            if (networkDeviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceName));
+            }
 
             using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
         public virtual Response<NetworkDeviceResource> Get(string networkDeviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            if (networkDeviceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceName));
+            }
+            if (networkDeviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceName));
+            }
 
             using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkDeviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            if (networkDeviceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceName));
+            }
+            if (networkDeviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceName));
+            }
 
             using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkDeviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            if (networkDeviceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceName));
+            }
+            if (networkDeviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceName));
+            }
 
             using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkDeviceResource>> GetIfExistsAsync(string networkDeviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            if (networkDeviceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceName));
+            }
+            if (networkDeviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceName));
+            }
 
             using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceName"/> is null. </exception>
         public virtual NullableResponse<NetworkDeviceResource> GetIfExists(string networkDeviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
+            if (networkDeviceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkDeviceName));
+            }
+            if (networkDeviceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceName));
+            }
 
             using var scope = _networkDeviceClientDiagnostics.CreateScope("NetworkDeviceCollection.GetIfExists");
             scope.Start();

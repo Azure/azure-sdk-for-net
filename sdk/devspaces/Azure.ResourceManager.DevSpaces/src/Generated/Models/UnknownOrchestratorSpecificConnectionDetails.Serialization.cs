@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOrchestratorSpecificConnectionDetails(document.RootElement, options);
+            return DeserializeOrchestratorSpecificConnectionDetails(document.RootElement, options);
         }
 
         internal static UnknownOrchestratorSpecificConnectionDetails DeserializeUnknownOrchestratorSpecificConnectionDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOrchestratorSpecificConnectionDetails(document.RootElement, options);
+                        return DeserializeOrchestratorSpecificConnectionDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support '{options.Format}' format.");

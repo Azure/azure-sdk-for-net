@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayNamespaceAuthorizationRuleResource"/> object. </returns>
         public static RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetRelayNamespaceAuthorizationRuleResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayHybridConnectionAuthorizationRuleResource"/> object. </returns>
         public static RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetRelayHybridConnectionAuthorizationRuleResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="WcfRelayAuthorizationRuleResource"/> object. </returns>
         public static WcfRelayAuthorizationRuleResource GetWcfRelayAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetWcfRelayAuthorizationRuleResource(id);
         }
@@ -106,7 +115,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayNamespaceResource"/> object. </returns>
         public static RelayNamespaceResource GetRelayNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetRelayNamespaceResource(id);
         }
@@ -125,7 +137,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayNetworkRuleSetResource"/> object. </returns>
         public static RelayNetworkRuleSetResource GetRelayNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetRelayNetworkRuleSetResource(id);
         }
@@ -144,7 +159,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayHybridConnectionResource"/> object. </returns>
         public static RelayHybridConnectionResource GetRelayHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetRelayHybridConnectionResource(id);
         }
@@ -163,7 +181,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="WcfRelayResource"/> object. </returns>
         public static WcfRelayResource GetWcfRelayResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetWcfRelayResource(id);
         }
@@ -182,7 +203,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayPrivateEndpointConnectionResource"/> object. </returns>
         public static RelayPrivateEndpointConnectionResource GetRelayPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetRelayPrivateEndpointConnectionResource(id);
         }
@@ -201,7 +225,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayPrivateLinkResource"/> object. </returns>
         public static RelayPrivateLinkResource GetRelayPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableRelayArmClient(client).GetRelayPrivateLinkResource(id);
         }
@@ -218,7 +245,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An object representing collection of RelayNamespaceResources and their operations over a RelayNamespaceResource. </returns>
         public static RelayNamespaceCollection GetRelayNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayNamespaces();
         }
@@ -256,7 +286,10 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public static async Task<Response<RelayNamespaceResource>> GetRelayNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayNamespaceAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -294,7 +327,10 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public static Response<RelayNamespaceResource> GetRelayNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayNamespace(namespaceName, cancellationToken);
         }
@@ -330,7 +366,10 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableRelaySubscriptionResource(subscriptionResource).CheckRelayNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -366,7 +405,10 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(this SubscriptionResource subscriptionResource, RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableRelaySubscriptionResource(subscriptionResource).CheckRelayNamespaceNameAvailability(content, cancellationToken);
         }
@@ -402,7 +444,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An async collection of <see cref="RelayNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RelayNamespaceResource> GetRelayNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableRelaySubscriptionResource(subscriptionResource).GetRelayNamespacesAsync(cancellationToken);
         }
@@ -438,7 +483,10 @@ namespace Azure.ResourceManager.Relay
         /// <returns> A collection of <see cref="RelayNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RelayNamespaceResource> GetRelayNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableRelaySubscriptionResource(subscriptionResource).GetRelayNamespaces(cancellationToken);
         }

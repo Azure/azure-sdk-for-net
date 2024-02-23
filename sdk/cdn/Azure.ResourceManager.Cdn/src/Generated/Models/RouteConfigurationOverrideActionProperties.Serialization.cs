@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         originGroupOverride = null;
                         continue;
                     }
-                    originGroupOverride = OriginGroupOverride.DeserializeOriginGroupOverride(property.Value);
+                    originGroupOverride = OriginGroupOverride.DeserializeOriginGroupOverride(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cacheConfiguration"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    cacheConfiguration = CacheConfiguration.DeserializeCacheConfiguration(property.Value);
+                    cacheConfiguration = CacheConfiguration.DeserializeCacheConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

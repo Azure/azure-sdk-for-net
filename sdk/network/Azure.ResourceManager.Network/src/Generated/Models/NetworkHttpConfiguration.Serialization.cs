@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item, options));
                     }
                     headers = array;
                     continue;

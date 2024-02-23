@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisPrivateLinkResourceData> array = new List<HealthcareApisPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(item));
+                        array.Add(HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

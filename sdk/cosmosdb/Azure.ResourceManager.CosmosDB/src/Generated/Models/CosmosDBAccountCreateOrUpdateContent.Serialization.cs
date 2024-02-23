@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            consistencyPolicy = ConsistencyPolicy.DeserializeConsistencyPolicy(property0.Value);
+                            consistencyPolicy = ConsistencyPolicy.DeserializeConsistencyPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("locations"u8))
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBAccountLocation> array = new List<CosmosDBAccountLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBAccountLocation.DeserializeCosmosDBAccountLocation(item));
+                                array.Add(CosmosDBAccountLocation.DeserializeCosmosDBAccountLocation(item, options));
                             }
                             locations = array;
                             continue;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBIPAddressOrRange> array = new List<CosmosDBIPAddressOrRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBIPAddressOrRange.DeserializeCosmosDBIPAddressOrRange(item));
+                                array.Add(CosmosDBIPAddressOrRange.DeserializeCosmosDBIPAddressOrRange(item, options));
                             }
                             ipRules = array;
                             continue;
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBAccountCapability> array = new List<CosmosDBAccountCapability>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBAccountCapability.DeserializeCosmosDBAccountCapability(item));
+                                array.Add(CosmosDBAccountCapability.DeserializeCosmosDBAccountCapability(item, options));
                             }
                             capabilities = array;
                             continue;
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBVirtualNetworkRule> array = new List<CosmosDBVirtualNetworkRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBVirtualNetworkRule.DeserializeCosmosDBVirtualNetworkRule(item));
+                                array.Add(CosmosDBVirtualNetworkRule.DeserializeCosmosDBVirtualNetworkRule(item, options));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            apiProperties = ApiProperties.DeserializeApiProperties(property0.Value);
+                            apiProperties = ApiProperties.DeserializeApiProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableAnalyticalStorage"u8))
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            analyticalStorageConfiguration = AnalyticalStorageConfiguration.DeserializeAnalyticalStorageConfiguration(property0.Value);
+                            analyticalStorageConfiguration = AnalyticalStorageConfiguration.DeserializeAnalyticalStorageConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createMode"u8))
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            backupPolicy = CosmosDBAccountBackupPolicy.DeserializeCosmosDBAccountBackupPolicy(property0.Value);
+                            backupPolicy = CosmosDBAccountBackupPolicy.DeserializeCosmosDBAccountBackupPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cors"u8))
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBAccountCorsPolicy> array = new List<CosmosDBAccountCorsPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBAccountCorsPolicy.DeserializeCosmosDBAccountCorsPolicy(item));
+                                array.Add(CosmosDBAccountCorsPolicy.DeserializeCosmosDBAccountCorsPolicy(item, options));
                             }
                             cors = array;
                             continue;
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            diagnosticLogSettings = DiagnosticLogSettings.DeserializeDiagnosticLogSettings(property0.Value);
+                            diagnosticLogSettings = DiagnosticLogSettings.DeserializeDiagnosticLogSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            restoreParameters = CosmosDBAccountRestoreParameters.DeserializeCosmosDBAccountRestoreParameters(property0.Value);
+                            restoreParameters = CosmosDBAccountRestoreParameters.DeserializeCosmosDBAccountRestoreParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("capacity"u8))
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value);
+                            capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableMaterializedViews"u8))
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            keysMetadata = DatabaseAccountKeysMetadata.DeserializeDatabaseAccountKeysMetadata(property0.Value);
+                            keysMetadata = DatabaseAccountKeysMetadata.DeserializeDatabaseAccountKeysMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enablePartitionMerge"u8))

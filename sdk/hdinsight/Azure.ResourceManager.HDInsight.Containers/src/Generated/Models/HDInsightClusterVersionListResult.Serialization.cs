@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<HDInsightClusterVersion> array = new List<HDInsightClusterVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterVersion.DeserializeHDInsightClusterVersion(item));
+                        array.Add(HDInsightClusterVersion.DeserializeHDInsightClusterVersion(item, options));
                     }
                     value = array;
                     continue;

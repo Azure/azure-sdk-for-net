@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             List<EventHubsProvisioningIssue> array = new List<EventHubsProvisioningIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsProvisioningIssue.DeserializeEventHubsProvisioningIssue(item));
+                                array.Add(EventHubsProvisioningIssue.DeserializeEventHubsProvisioningIssue(item, options));
                             }
                             provisioningIssues = array;
                             continue;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             {
                                 continue;
                             }
-                            networkSecurityPerimeter = EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(property0.Value);
+                            networkSecurityPerimeter = EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             {
                                 continue;
                             }
-                            resourceAssociation = EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(property0.Value);
+                            resourceAssociation = EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                             {
                                 continue;
                             }
-                            profile = EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(property0.Value);
+                            profile = EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(property0.Value, options);
                             continue;
                         }
                     }

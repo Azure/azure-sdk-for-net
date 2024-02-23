@@ -103,7 +103,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerError(property.Value);
+                    innererror = DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

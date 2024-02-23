@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -22,7 +21,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         protected EndpointBase(string url)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
 
             Url = url;
         }

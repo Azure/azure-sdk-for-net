@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppAccountData> array = new List<NetAppAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppAccountData.DeserializeNetAppAccountData(item));
+                        array.Add(NetAppAccountData.DeserializeNetAppAccountData(item, options));
                     }
                     value = array;
                     continue;

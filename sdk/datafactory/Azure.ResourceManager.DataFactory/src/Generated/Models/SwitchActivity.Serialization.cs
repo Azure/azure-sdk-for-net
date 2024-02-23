@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("on"u8))
                         {
-                            @on = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value);
+                            @on = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cases"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SwitchCaseActivity> array = new List<SwitchCaseActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SwitchCaseActivity.DeserializeSwitchCaseActivity(item));
+                                array.Add(SwitchCaseActivity.DeserializeSwitchCaseActivity(item, options));
                             }
                             cases = array;
                             continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializePipelineActivity(item, options));
                             }
                             defaultActivities = array;
                             continue;

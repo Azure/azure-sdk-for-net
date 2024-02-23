@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
                     List<RelayAuthorizationRuleData> array = new List<RelayAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(item));
+                        array.Add(RelayAuthorizationRuleData.DeserializeRelayAuthorizationRuleData(item, options));
                     }
                     value = array;
                     continue;

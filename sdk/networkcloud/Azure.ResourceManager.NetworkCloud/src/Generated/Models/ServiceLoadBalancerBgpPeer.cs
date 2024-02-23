@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="peerAddress"/> is null. </exception>
         public ServiceLoadBalancerBgpPeer(string name, string peerAddress, long peerAsn)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(peerAddress, nameof(peerAddress));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (peerAddress == null)
+            {
+                throw new ArgumentNullException(nameof(peerAddress));
+            }
 
             Name = name;
             PeerAddress = peerAddress;

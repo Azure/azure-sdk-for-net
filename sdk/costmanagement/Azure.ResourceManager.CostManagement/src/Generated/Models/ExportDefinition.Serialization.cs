@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = ExportTimePeriod.DeserializeExportTimePeriod(property.Value);
+                    timePeriod = ExportTimePeriod.DeserializeExportTimePeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataSet"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dataSet = ExportDataset.DeserializeExportDataset(property.Value);
+                    dataSet = ExportDataset.DeserializeExportDataset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

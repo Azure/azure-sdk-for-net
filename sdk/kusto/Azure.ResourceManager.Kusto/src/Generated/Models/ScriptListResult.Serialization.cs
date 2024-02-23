@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoScriptData> array = new List<KustoScriptData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoScriptData.DeserializeKustoScriptData(item));
+                        array.Add(KustoScriptData.DeserializeKustoScriptData(item, options));
                     }
                     value = array;
                     continue;

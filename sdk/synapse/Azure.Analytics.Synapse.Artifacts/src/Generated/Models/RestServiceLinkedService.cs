@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public RestServiceLinkedService(object url, RestServiceAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
 
             Url = url;
             AuthenticationType = authenticationType;

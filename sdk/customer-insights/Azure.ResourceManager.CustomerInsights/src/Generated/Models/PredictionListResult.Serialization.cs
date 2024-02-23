@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<PredictionResourceFormatData> array = new List<PredictionResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictionResourceFormatData.DeserializePredictionResourceFormatData(item));
+                        array.Add(PredictionResourceFormatData.DeserializePredictionResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

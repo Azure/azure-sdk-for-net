@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value);
+                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

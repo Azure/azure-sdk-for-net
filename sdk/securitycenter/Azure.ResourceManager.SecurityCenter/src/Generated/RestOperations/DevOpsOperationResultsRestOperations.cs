@@ -69,10 +69,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OperationStatusResult>> GetAsync(string subscriptionId, string resourceGroupName, string securityConnectorName, string operationResultId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (securityConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(securityConnectorName));
+            }
+            if (securityConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityConnectorName));
+            }
+            if (operationResultId == null)
+            {
+                throw new ArgumentNullException(nameof(operationResultId));
+            }
+            if (operationResultId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationResultId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, securityConnectorName, operationResultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -100,10 +128,38 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OperationStatusResult> Get(string subscriptionId, string resourceGroupName, string securityConnectorName, string operationResultId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (securityConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(securityConnectorName));
+            }
+            if (securityConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(securityConnectorName));
+            }
+            if (operationResultId == null)
+            {
+                throw new ArgumentNullException(nameof(operationResultId));
+            }
+            if (operationResultId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationResultId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, securityConnectorName, operationResultId);
             _pipeline.Send(message, cancellationToken);

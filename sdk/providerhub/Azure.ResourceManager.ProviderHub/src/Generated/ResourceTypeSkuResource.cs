@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceTypeSkuResource>> UpdateAsync(WaitUntil waitUntil, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceTypeSkuResource> Update(WaitUntil waitUntil, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuResource.Update");
             scope.Start();

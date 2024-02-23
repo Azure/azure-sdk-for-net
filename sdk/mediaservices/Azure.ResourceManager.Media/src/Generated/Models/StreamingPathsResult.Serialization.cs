@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPath> array = new List<StreamingPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPath.DeserializeStreamingPath(item));
+                        array.Add(StreamingPath.DeserializeStreamingPath(item, options));
                     }
                     streamingPaths = array;
                     continue;

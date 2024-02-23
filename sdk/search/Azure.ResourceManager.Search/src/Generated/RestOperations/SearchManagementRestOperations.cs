@@ -67,8 +67,22 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(string subscriptionId, AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (skuName == null)
+            {
+                throw new ArgumentNullException(nameof(skuName));
+            }
+            if (skuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
+            }
 
             using var message = CreateUsageBySubscriptionSkuRequest(subscriptionId, location, skuName, searchManagementRequestOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,8 +110,22 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QuotaUsageResult> UsageBySubscriptionSku(string subscriptionId, AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (skuName == null)
+            {
+                throw new ArgumentNullException(nameof(skuName));
+            }
+            if (skuName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
+            }
 
             using var message = CreateUsageBySubscriptionSkuRequest(subscriptionId, location, skuName, searchManagementRequestOptions);
             _pipeline.Send(message, cancellationToken);

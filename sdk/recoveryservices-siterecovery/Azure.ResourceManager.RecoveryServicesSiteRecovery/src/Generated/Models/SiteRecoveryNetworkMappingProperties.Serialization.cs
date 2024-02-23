@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricSpecificSettings = NetworkMappingFabricSpecificSettings.DeserializeNetworkMappingFabricSpecificSettings(property.Value);
+                    fabricSpecificSettings = NetworkMappingFabricSpecificSettings.DeserializeNetworkMappingFabricSpecificSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

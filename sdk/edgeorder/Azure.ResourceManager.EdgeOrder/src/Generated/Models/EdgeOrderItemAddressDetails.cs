@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="forwardAddress"/> is null. </exception>
         public EdgeOrderItemAddressDetails(EdgeOrderItemAddressProperties forwardAddress)
         {
-            Argument.AssertNotNull(forwardAddress, nameof(forwardAddress));
+            if (forwardAddress == null)
+            {
+                throw new ArgumentNullException(nameof(forwardAddress));
+            }
 
             ForwardAddress = forwardAddress;
         }

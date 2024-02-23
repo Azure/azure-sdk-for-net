@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBSqlRolePermission> array = new List<CosmosDBSqlRolePermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBSqlRolePermission.DeserializeCosmosDBSqlRolePermission(item));
+                                array.Add(CosmosDBSqlRolePermission.DeserializeCosmosDBSqlRolePermission(item, options));
                             }
                             permissions = array;
                             continue;

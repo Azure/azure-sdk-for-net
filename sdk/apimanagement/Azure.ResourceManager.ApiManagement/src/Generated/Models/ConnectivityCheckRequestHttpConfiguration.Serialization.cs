@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<HttpHeaderConfiguration> array = new List<HttpHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeaderConfiguration.DeserializeHttpHeaderConfiguration(item));
+                        array.Add(HttpHeaderConfiguration.DeserializeHttpHeaderConfiguration(item, options));
                     }
                     headers = array;
                     continue;

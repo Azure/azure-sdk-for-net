@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         repositoryRef = null;
                         continue;
                     }
-                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value);
+                    repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshKnownHosts"u8))

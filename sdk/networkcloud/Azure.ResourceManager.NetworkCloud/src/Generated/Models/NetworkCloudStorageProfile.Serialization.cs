@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("osDisk"u8))
                 {
-                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value);
+                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeAttachments"u8))

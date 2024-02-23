@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabNotificationChannelData> array = new List<DevTestLabNotificationChannelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(item));
+                        array.Add(DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(item, options));
                     }
                     value = array;
                     continue;

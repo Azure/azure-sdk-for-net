@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformGatewayOperatorResourceRequirements.DeserializeAppPlatformGatewayOperatorResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformGatewayOperatorResourceRequirements.DeserializeAppPlatformGatewayOperatorResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayInstance> array = new List<AppPlatformGatewayInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayInstance.DeserializeAppPlatformGatewayInstance(item));
+                        array.Add(AppPlatformGatewayInstance.DeserializeAppPlatformGatewayInstance(item, options));
                     }
                     instances = array;
                     continue;

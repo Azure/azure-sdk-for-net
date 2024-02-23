@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMonitorComputeConfigurationBase(document.RootElement, options);
+            return DeserializeMonitorComputeConfigurationBase(document.RootElement, options);
         }
 
         internal static UnknownMonitorComputeConfigurationBase DeserializeUnknownMonitorComputeConfigurationBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMonitorComputeConfigurationBase(document.RootElement, options);
+                        return DeserializeMonitorComputeConfigurationBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MonitorComputeConfigurationBase)} does not support '{options.Format}' format.");

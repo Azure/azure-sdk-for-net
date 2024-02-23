@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceTrustedAccessRoleBindingData> array = new List<ContainerServiceTrustedAccessRoleBindingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(item));
+                        array.Add(ContainerServiceTrustedAccessRoleBindingData.DeserializeContainerServiceTrustedAccessRoleBindingData(item, options));
                     }
                     value = array;
                     continue;

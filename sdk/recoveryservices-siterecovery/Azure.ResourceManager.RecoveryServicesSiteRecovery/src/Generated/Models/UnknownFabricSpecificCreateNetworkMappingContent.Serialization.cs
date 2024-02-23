@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFabricSpecificCreateNetworkMappingContent(document.RootElement, options);
+            return DeserializeFabricSpecificCreateNetworkMappingContent(document.RootElement, options);
         }
 
         internal static UnknownFabricSpecificCreateNetworkMappingContent DeserializeUnknownFabricSpecificCreateNetworkMappingContent(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFabricSpecificCreateNetworkMappingContent(document.RootElement, options);
+                        return DeserializeFabricSpecificCreateNetworkMappingContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FabricSpecificCreateNetworkMappingContent)} does not support '{options.Format}' format.");

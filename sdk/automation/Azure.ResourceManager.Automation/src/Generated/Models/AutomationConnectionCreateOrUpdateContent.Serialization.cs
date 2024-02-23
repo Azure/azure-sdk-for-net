@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Automation.Models
                         }
                         if (property0.NameEquals("connectionType"u8))
                         {
-                            connectionType = ConnectionTypeAssociationProperty.DeserializeConnectionTypeAssociationProperty(property0.Value);
+                            connectionType = ConnectionTypeAssociationProperty.DeserializeConnectionTypeAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fieldDefinitionValues"u8))

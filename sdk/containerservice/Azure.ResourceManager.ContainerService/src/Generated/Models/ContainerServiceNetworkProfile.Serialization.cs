@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(property.Value);
+                    loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("natGatewayProfile"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(property.Value);
+                    natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("podCidrs"u8))

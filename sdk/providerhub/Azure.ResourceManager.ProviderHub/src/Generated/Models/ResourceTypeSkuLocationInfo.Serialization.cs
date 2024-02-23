@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuZoneDetail> array = new List<ResourceTypeSkuZoneDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuZoneDetail.DeserializeResourceTypeSkuZoneDetail(item));
+                        array.Add(ResourceTypeSkuZoneDetail.DeserializeResourceTypeSkuZoneDetail(item, options));
                     }
                     zoneDetails = array;
                     continue;

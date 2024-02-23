@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobRestoreRange> array = new List<BlobRestoreRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
+                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item, options));
                     }
                     blobRanges = array;
                     continue;

@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    sku = PostgreSqlSku.DeserializePostgreSqlSku(property.Value);
+                    sku = PostgreSqlSku.DeserializePostgreSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = PostgreSqlServerPropertiesForCreate.DeserializePostgreSqlServerPropertiesForCreate(property.Value);
+                    properties = PostgreSqlServerPropertiesForCreate.DeserializePostgreSqlServerPropertiesForCreate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

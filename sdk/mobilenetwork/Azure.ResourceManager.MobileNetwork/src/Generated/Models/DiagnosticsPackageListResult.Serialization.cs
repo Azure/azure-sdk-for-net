@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkDiagnosticsPackageData> array = new List<MobileNetworkDiagnosticsPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(item));
+                        array.Add(MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(item, options));
                     }
                     value = array;
                     continue;

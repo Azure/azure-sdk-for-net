@@ -58,8 +58,14 @@ namespace Azure.ResourceManager.Kubernetes
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> or <paramref name="agentPublicKeyCertificate"/> is null. </exception>
         public ConnectedClusterData(AzureLocation location, ManagedServiceIdentity identity, string agentPublicKeyCertificate) : base(location)
         {
-            Argument.AssertNotNull(identity, nameof(identity));
-            Argument.AssertNotNull(agentPublicKeyCertificate, nameof(agentPublicKeyCertificate));
+            if (identity == null)
+            {
+                throw new ArgumentNullException(nameof(identity));
+            }
+            if (agentPublicKeyCertificate == null)
+            {
+                throw new ArgumentNullException(nameof(agentPublicKeyCertificate));
+            }
 
             Identity = identity;
             AgentPublicKeyCertificate = agentPublicKeyCertificate;

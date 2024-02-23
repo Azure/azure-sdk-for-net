@@ -81,7 +81,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    grounding = AzureGroundingEnhancement.DeserializeAzureGroundingEnhancement(property.Value);
+                    grounding = AzureGroundingEnhancement.DeserializeAzureGroundingEnhancement(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

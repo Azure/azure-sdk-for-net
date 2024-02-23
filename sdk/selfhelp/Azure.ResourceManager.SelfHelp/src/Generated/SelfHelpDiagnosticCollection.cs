@@ -69,8 +69,18 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (diagnosticsResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsResourceName));
+            }
+            if (diagnosticsResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +128,18 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SelfHelpDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (diagnosticsResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsResourceName));
+            }
+            if (diagnosticsResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         public virtual async Task<Response<SelfHelpDiagnosticResource>> GetAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+            if (diagnosticsResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsResourceName));
+            }
+            if (diagnosticsResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
+            }
 
             using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
             scope.Start();
@@ -210,7 +237,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         public virtual Response<SelfHelpDiagnosticResource> Get(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+            if (diagnosticsResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsResourceName));
+            }
+            if (diagnosticsResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
+            }
 
             using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Get");
             scope.Start();
@@ -255,7 +289,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+            if (diagnosticsResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsResourceName));
+            }
+            if (diagnosticsResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
+            }
 
             using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
             scope.Start();
@@ -298,7 +339,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+            if (diagnosticsResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsResourceName));
+            }
+            if (diagnosticsResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
+            }
 
             using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.Exists");
             scope.Start();
@@ -341,7 +389,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SelfHelpDiagnosticResource>> GetIfExistsAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+            if (diagnosticsResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsResourceName));
+            }
+            if (diagnosticsResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
+            }
 
             using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
             scope.Start();
@@ -386,7 +441,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         public virtual NullableResponse<SelfHelpDiagnosticResource> GetIfExists(string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+            if (diagnosticsResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticsResourceName));
+            }
+            if (diagnosticsResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
+            }
 
             using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
             scope.Start();

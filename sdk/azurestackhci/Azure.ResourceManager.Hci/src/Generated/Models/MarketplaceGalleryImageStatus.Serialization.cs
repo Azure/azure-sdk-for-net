@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = MarketplaceGalleryImageStatusProvisioningStatus.DeserializeMarketplaceGalleryImageStatusProvisioningStatus(property.Value);
+                    provisioningStatus = MarketplaceGalleryImageStatusProvisioningStatus.DeserializeMarketplaceGalleryImageStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("downloadStatus"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    downloadStatus = MarketplaceGalleryImageStatusDownloadStatus.DeserializeMarketplaceGalleryImageStatusDownloadStatus(property.Value);
+                    downloadStatus = MarketplaceGalleryImageStatusDownloadStatus.DeserializeMarketplaceGalleryImageStatusDownloadStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progressPercentage"u8))

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<SuppressionContractData> array = new List<SuppressionContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionContractData.DeserializeSuppressionContractData(item));
+                        array.Add(SuppressionContractData.DeserializeSuppressionContractData(item, options));
                     }
                     value = array;
                     continue;

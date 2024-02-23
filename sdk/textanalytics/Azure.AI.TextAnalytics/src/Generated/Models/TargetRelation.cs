@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> is null. </exception>
         public TargetRelation(TargetRelationType relationType, string @ref)
         {
-            Argument.AssertNotNull(@ref, nameof(@ref));
+            if (@ref == null)
+            {
+                throw new ArgumentNullException(nameof(@ref));
+            }
 
             RelationType = relationType;
             Ref = @ref;

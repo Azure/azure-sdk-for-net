@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceGroup"/> is null. </exception>
         public NetAppQuotaAvailabilityContent(string name, NetAppQuotaAvailabilityResourceType availabilityResourceType, string resourceGroup)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (resourceGroup == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroup));
+            }
 
             Name = name;
             AvailabilityResourceType = availabilityResourceType;

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = WebChatChannelProperties.DeserializeWebChatChannelProperties(property.Value);
+                    properties = WebChatChannelProperties.DeserializeWebChatChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))

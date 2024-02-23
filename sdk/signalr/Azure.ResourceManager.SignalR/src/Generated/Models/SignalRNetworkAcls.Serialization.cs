@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    publicNetwork = SignalRNetworkAcl.DeserializeSignalRNetworkAcl(property.Value);
+                    publicNetwork = SignalRNetworkAcl.DeserializeSignalRNetworkAcl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpoints"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRPrivateEndpointAcl> array = new List<SignalRPrivateEndpointAcl>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRPrivateEndpointAcl.DeserializeSignalRPrivateEndpointAcl(item));
+                        array.Add(SignalRPrivateEndpointAcl.DeserializeSignalRPrivateEndpointAcl(item, options));
                     }
                     privateEndpoints = array;
                     continue;

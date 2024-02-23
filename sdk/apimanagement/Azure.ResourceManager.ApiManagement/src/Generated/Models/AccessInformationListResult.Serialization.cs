@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<TenantAccessInfoData> array = new List<TenantAccessInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantAccessInfoData.DeserializeTenantAccessInfoData(item));
+                        array.Add(TenantAccessInfoData.DeserializeTenantAccessInfoData(item, options));
                     }
                     value = array;
                     continue;

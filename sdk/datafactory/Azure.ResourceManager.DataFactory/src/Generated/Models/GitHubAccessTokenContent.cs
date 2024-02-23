@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUri"/> is null. </exception>
         public GitHubAccessTokenContent(string gitHubAccessCode, Uri gitHubAccessTokenBaseUri)
         {
-            Argument.AssertNotNull(gitHubAccessCode, nameof(gitHubAccessCode));
-            Argument.AssertNotNull(gitHubAccessTokenBaseUri, nameof(gitHubAccessTokenBaseUri));
+            if (gitHubAccessCode == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubAccessCode));
+            }
+            if (gitHubAccessTokenBaseUri == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubAccessTokenBaseUri));
+            }
 
             GitHubAccessCode = gitHubAccessCode;
             GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;

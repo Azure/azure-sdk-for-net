@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<GlobalRulestackCertificateObjectData> array = new List<GlobalRulestackCertificateObjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(item));
+                        array.Add(GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(item, options));
                     }
                     value = array;
                     continue;

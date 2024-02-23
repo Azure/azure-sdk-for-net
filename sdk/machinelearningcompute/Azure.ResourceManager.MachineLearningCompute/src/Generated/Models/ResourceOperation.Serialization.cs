@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    display = ResourceOperationDisplay.DeserializeResourceOperationDisplay(property.Value);
+                    display = ResourceOperationDisplay.DeserializeResourceOperationDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))

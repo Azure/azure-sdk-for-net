@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayPrivateLinkIPConfiguration> array = new List<ApplicationGatewayPrivateLinkIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayPrivateLinkIPConfiguration.DeserializeApplicationGatewayPrivateLinkIPConfiguration(item));
+                                array.Add(ApplicationGatewayPrivateLinkIPConfiguration.DeserializeApplicationGatewayPrivateLinkIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value);
+                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value);
+                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value);
+                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfileUpdate.DeserializeOSProfileUpdate(property.Value);
+                    osProfile = OSProfileUpdate.DeserializeOSProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

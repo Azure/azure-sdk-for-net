@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            gitHub = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value);
+                            gitHub = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adoGit"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value);
+                            adoGit = DevCenterGitCatalog.DeserializeDevCenterGitCatalog(property0.Value, options);
                             continue;
                         }
                     }

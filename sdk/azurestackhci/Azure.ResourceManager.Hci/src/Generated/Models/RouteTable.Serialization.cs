@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Hci.Models
                             List<Route> array = new List<Route>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Route.DeserializeRoute(item));
+                                array.Add(Route.DeserializeRoute(item, options));
                             }
                             routes = array;
                             continue;

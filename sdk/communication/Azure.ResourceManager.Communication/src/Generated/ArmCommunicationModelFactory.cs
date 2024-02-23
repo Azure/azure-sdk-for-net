@@ -168,37 +168,5 @@ namespace Azure.ResourceManager.Communication.Models
         {
             return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState, serializedAdditionalRawData: null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Communication.SuppressionListResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="listName"> The the name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </param>
-        /// <param name="lastUpdatedTimeStamp"> The date the resource was last updated. </param>
-        /// <param name="createdTimeStamp"> The date the resource was created. </param>
-        /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
-        /// <returns> A new <see cref="Communication.SuppressionListResourceData"/> instance for mocking. </returns>
-        public static SuppressionListResourceData SuppressionListResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string listName = null, DateTimeOffset? lastUpdatedTimeStamp = null, DateTimeOffset? createdTimeStamp = null, string dataLocation = null)
-        {
-            return new SuppressionListResourceData(id, name, resourceType, systemData, listName, lastUpdatedTimeStamp, createdTimeStamp, dataLocation, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Communication.SuppressionListAddressResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="email"> Email address of the recipient. </param>
-        /// <param name="firstName"> The first name of the email recipient. </param>
-        /// <param name="lastName"> The last name of the email recipient. </param>
-        /// <param name="notes"> An optional property to provide contextual notes or a description for an address. </param>
-        /// <param name="lastModified"> The date the address was last updated in a suppression list. </param>
-        /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
-        /// <returns> A new <see cref="Communication.SuppressionListAddressResourceData"/> instance for mocking. </returns>
-        public static SuppressionListAddressResourceData SuppressionListAddressResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string email = null, string firstName = null, string lastName = null, string notes = null, DateTimeOffset? lastModified = null, string dataLocation = null)
-        {
-            return new SuppressionListAddressResourceData(id, name, resourceType, systemData, email, firstName, lastName, notes, lastModified, dataLocation, serializedAdditionalRawData: null);
-        }
     }
 }

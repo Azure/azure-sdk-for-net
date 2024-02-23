@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (property.NameEquals("specification"u8))
                 {
-                    specification = CustomRolloutSpecification.DeserializeCustomRolloutSpecification(property.Value);
+                    specification = CustomRolloutSpecification.DeserializeCustomRolloutSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    status = CustomRolloutStatus.DeserializeCustomRolloutStatus(property.Value);
+                    status = CustomRolloutStatus.DeserializeCustomRolloutStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

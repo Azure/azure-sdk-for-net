@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value);
+                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterComputeCapacityInfo"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value);
+                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("nodeCapacityInfos"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             Dictionary<string, HostCapacity> dictionary = new Dictionary<string, HostCapacity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value));
+                                dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value, options));
                             }
                             nodeCapacityInfos = dictionary;
                             continue;

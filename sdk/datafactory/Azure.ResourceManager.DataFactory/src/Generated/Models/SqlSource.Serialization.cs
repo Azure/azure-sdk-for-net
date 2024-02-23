@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = SqlPartitionSettings.DeserializeSqlPartitionSettings(property.Value);
+                    partitionSettings = SqlPartitionSettings.DeserializeSqlPartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))

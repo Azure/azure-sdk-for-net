@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryDataFlowResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryDataFlowData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryDataFlowDataFlowsClientDiagnostics.CreateScope("DataFactoryDataFlowResource.Update");
             scope.Start();
@@ -331,7 +334,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryDataFlowResource> Update(WaitUntil waitUntil, DataFactoryDataFlowData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryDataFlowDataFlowsClientDiagnostics.CreateScope("DataFactoryDataFlowResource.Update");
             scope.Start();

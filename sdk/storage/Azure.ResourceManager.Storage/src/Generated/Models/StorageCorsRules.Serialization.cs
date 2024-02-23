@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageCorsRule> array = new List<StorageCorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCorsRule.DeserializeStorageCorsRule(item));
+                        array.Add(StorageCorsRule.DeserializeStorageCorsRule(item, options));
                     }
                     corsRules = array;
                     continue;

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item));
+                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item, options));
                     }
                     dimensionFilter = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item));
+                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item, options));
                     }
                     additionalDimensions = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<VirtualDisk> array = new List<VirtualDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDisk.DeserializeVirtualDisk(item));
+                        array.Add(VirtualDisk.DeserializeVirtualDisk(item, options));
                     }
                     disks = array;
                     continue;

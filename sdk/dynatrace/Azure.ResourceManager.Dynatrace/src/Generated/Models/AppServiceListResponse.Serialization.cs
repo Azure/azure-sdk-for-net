@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceOneAgentEnabledAppServiceInfo> array = new List<DynatraceOneAgentEnabledAppServiceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo(item));
+                        array.Add(DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo(item, options));
                     }
                     value = array;
                     continue;

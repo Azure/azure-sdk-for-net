@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<SshPublicKey> array = new List<SshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKey.DeserializeSshPublicKey(item));
+                        array.Add(SshPublicKey.DeserializeSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementTenantSettingData> array = new List<ApiManagementTenantSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(item));
+                        array.Add(ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(item, options));
                     }
                     value = array;
                     continue;

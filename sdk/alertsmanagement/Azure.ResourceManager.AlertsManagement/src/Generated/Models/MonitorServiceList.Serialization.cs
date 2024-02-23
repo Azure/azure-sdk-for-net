@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<MonitorServiceDetails> array = new List<MonitorServiceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorServiceDetails.DeserializeMonitorServiceDetails(item));
+                        array.Add(MonitorServiceDetails.DeserializeMonitorServiceDetails(item, options));
                     }
                     data = array;
                     continue;

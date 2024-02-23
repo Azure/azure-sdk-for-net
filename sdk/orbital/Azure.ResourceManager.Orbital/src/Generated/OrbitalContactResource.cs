@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OrbitalContactResource>> UpdateAsync(WaitUntil waitUntil, OrbitalContactData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _orbitalContactContactsClientDiagnostics.CreateScope("OrbitalContactResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OrbitalContactResource> Update(WaitUntil waitUntil, OrbitalContactData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _orbitalContactContactsClientDiagnostics.CreateScope("OrbitalContactResource.Update");
             scope.Start();

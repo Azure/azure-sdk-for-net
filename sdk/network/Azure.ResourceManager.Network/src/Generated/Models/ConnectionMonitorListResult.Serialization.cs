@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionMonitorData> array = new List<ConnectionMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorData.DeserializeConnectionMonitorData(item));
+                        array.Add(ConnectionMonitorData.DeserializeConnectionMonitorData(item, options));
                     }
                     value = array;
                     continue;

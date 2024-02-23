@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public FrontDoorValidateCustomDomainContent(string hostName)
         {
-            Argument.AssertNotNull(hostName, nameof(hostName));
+            if (hostName == null)
+            {
+                throw new ArgumentNullException(nameof(hostName));
+            }
 
             HostName = hostName;
         }

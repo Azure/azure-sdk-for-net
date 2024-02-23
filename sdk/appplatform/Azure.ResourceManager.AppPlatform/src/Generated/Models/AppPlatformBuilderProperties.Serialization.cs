@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value);
+                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("buildpackGroups"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<BuildpacksGroupProperties> array = new List<BuildpacksGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BuildpacksGroupProperties.DeserializeBuildpacksGroupProperties(item));
+                        array.Add(BuildpacksGroupProperties.DeserializeBuildpacksGroupProperties(item, options));
                     }
                     buildpackGroups = array;
                     continue;

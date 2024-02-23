@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementCertificateData> array = new List<ApiManagementCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementCertificateData.DeserializeApiManagementCertificateData(item));
+                        array.Add(ApiManagementCertificateData.DeserializeApiManagementCertificateData(item, options));
                     }
                     value = array;
                     continue;

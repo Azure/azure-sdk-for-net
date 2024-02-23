@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("routingConfiguration"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
+                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableInternetSecurity"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<VpnServerConfigurationPolicyGroupData> array = new List<VpnServerConfigurationPolicyGroupData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(item));
+                                array.Add(VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(item, options));
                             }
                             previousConfigurationPolicyGroupAssociations = array;
                             continue;

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataSetMapping(document.RootElement, options);
+            return DeserializeShareDataSetMappingData(document.RootElement, options);
         }
 
         internal static UnknownDataSetMapping DeserializeUnknownDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataSetMapping(document.RootElement, options);
+                        return DeserializeShareDataSetMappingData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ShareDataSetMappingData)} does not support '{options.Format}' format.");

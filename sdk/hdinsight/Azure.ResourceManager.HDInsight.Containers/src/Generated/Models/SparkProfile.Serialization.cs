@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    metastoreSpec = SparkMetastoreSpec.DeserializeSparkMetastoreSpec(property.Value);
+                    metastoreSpec = SparkMetastoreSpec.DeserializeSparkMetastoreSpec(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userPluginsSpec"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userPluginsSpec = SparkUserPluginListResult.DeserializeSparkUserPluginListResult(property.Value);
+                    userPluginsSpec = SparkUserPluginListResult.DeserializeSparkUserPluginListResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

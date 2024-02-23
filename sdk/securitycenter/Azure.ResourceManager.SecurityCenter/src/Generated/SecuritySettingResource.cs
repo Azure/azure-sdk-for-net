@@ -197,7 +197,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecuritySettingResource>> UpdateAsync(WaitUntil waitUntil, SecuritySettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingResource.Update");
             scope.Start();
@@ -243,7 +246,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecuritySettingResource> Update(WaitUntil waitUntil, SecuritySettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _securitySettingSettingsClientDiagnostics.CreateScope("SecuritySettingResource.Update");
             scope.Start();

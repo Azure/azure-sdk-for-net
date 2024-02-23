@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public async Task<Response<PolicyMetadataData>> GetResourceAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
 
             using var message = CreateGetResourceRequest(resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -85,7 +88,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public Response<PolicyMetadataData> GetResource(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
 
             using var message = CreateGetResourceRequest(resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -187,7 +193,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<Models.PolicyMetadataCollection>> ListNextPageAsync(string nextLink, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -212,7 +221,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<Models.PolicyMetadataCollection> ListNextPage(string nextLink, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);

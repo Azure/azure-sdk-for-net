@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value);
+                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value);
+                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

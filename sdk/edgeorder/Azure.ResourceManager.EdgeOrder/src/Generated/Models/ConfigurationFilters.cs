@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
         public ConfigurationFilters(HierarchyInformation hierarchyInformation)
         {
-            Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
+            if (hierarchyInformation == null)
+            {
+                throw new ArgumentNullException(nameof(hierarchyInformation));
+            }
 
             HierarchyInformation = hierarchyInformation;
             FilterableProperty = new ChangeTrackingList<FilterableProperty>();

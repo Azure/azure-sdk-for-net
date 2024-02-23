@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<NetworkIPConfigurationProfile> array = new List<NetworkIPConfigurationProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkIPConfigurationProfile.DeserializeNetworkIPConfigurationProfile(item));
+                                array.Add(NetworkIPConfigurationProfile.DeserializeNetworkIPConfigurationProfile(item, options));
                             }
                             ipConfigurations = array;
                             continue;

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

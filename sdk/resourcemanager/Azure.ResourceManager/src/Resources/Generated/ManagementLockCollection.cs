@@ -72,8 +72,18 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagementLockResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string lockName, ManagementLockData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (lockName == null)
+            {
+                throw new ArgumentNullException(nameof(lockName));
+            }
+            if (lockName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(lockName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.CreateOrUpdate");
             scope.Start();
@@ -123,8 +133,18 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagementLockResource> CreateOrUpdate(WaitUntil waitUntil, string lockName, ManagementLockData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (lockName == null)
+            {
+                throw new ArgumentNullException(nameof(lockName));
+            }
+            if (lockName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(lockName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.CreateOrUpdate");
             scope.Start();
@@ -172,7 +192,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual async Task<Response<ManagementLockResource>> GetAsync(string lockName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            if (lockName == null)
+            {
+                throw new ArgumentNullException(nameof(lockName));
+            }
+            if (lockName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(lockName));
+            }
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Get");
             scope.Start();
@@ -217,7 +244,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual Response<ManagementLockResource> Get(string lockName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            if (lockName == null)
+            {
+                throw new ArgumentNullException(nameof(lockName));
+            }
+            if (lockName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(lockName));
+            }
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Get");
             scope.Start();
@@ -324,7 +358,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string lockName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            if (lockName == null)
+            {
+                throw new ArgumentNullException(nameof(lockName));
+            }
+            if (lockName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(lockName));
+            }
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Exists");
             scope.Start();
@@ -367,7 +408,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual Response<bool> Exists(string lockName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            if (lockName == null)
+            {
+                throw new ArgumentNullException(nameof(lockName));
+            }
+            if (lockName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(lockName));
+            }
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.Exists");
             scope.Start();
@@ -410,7 +458,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagementLockResource>> GetIfExistsAsync(string lockName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            if (lockName == null)
+            {
+                throw new ArgumentNullException(nameof(lockName));
+            }
+            if (lockName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(lockName));
+            }
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetIfExists");
             scope.Start();
@@ -455,7 +510,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
         public virtual NullableResponse<ManagementLockResource> GetIfExists(string lockName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            if (lockName == null)
+            {
+                throw new ArgumentNullException(nameof(lockName));
+            }
+            if (lockName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(lockName));
+            }
 
             using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetIfExists");
             scope.Start();

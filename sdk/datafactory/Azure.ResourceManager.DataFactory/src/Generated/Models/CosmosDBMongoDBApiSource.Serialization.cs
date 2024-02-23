@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    cursorMethods = MongoDBCursorMethodsProperties.DeserializeMongoDBCursorMethodsProperties(property.Value);
+                    cursorMethods = MongoDBCursorMethodsProperties.DeserializeMongoDBCursorMethodsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("batchSize"u8))

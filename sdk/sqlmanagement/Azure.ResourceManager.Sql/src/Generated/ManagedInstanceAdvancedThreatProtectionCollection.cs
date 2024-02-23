@@ -82,7 +82,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceAdvancedThreatProtectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AdvancedThreatProtectionName advancedThreatProtectionName, ManagedInstanceAdvancedThreatProtectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedInstanceAdvancedThreatProtectionCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +132,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceAdvancedThreatProtectionResource> CreateOrUpdate(WaitUntil waitUntil, AdvancedThreatProtectionName advancedThreatProtectionName, ManagedInstanceAdvancedThreatProtectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedInstanceAdvancedThreatProtectionCollection.CreateOrUpdate");
             scope.Start();

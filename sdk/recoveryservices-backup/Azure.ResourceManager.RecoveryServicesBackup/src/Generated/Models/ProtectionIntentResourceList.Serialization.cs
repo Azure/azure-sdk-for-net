@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupProtectionIntentData> array = new List<BackupProtectionIntentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupProtectionIntentData.DeserializeBackupProtectionIntentData(item));
+                        array.Add(BackupProtectionIntentData.DeserializeBackupProtectionIntentData(item, options));
                     }
                     value = array;
                     continue;

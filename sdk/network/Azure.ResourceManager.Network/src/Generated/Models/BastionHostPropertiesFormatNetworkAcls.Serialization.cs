@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BastionHostIPRule> array = new List<BastionHostIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BastionHostIPRule.DeserializeBastionHostIPRule(item));
+                        array.Add(BastionHostIPRule.DeserializeBastionHostIPRule(item, options));
                     }
                     ipRules = array;
                     continue;

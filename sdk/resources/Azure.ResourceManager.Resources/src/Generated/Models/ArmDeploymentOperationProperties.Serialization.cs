@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Resources.Models
                         statusMessage = null;
                         continue;
                     }
-                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value);
+                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetResource"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    targetResource = TargetResource.DeserializeTargetResource(property.Value);
+                    targetResource = TargetResource.DeserializeTargetResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    request = HttpMessage.DeserializeHttpMessage(property.Value);
+                    request = HttpMessage.DeserializeHttpMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    response = HttpMessage.DeserializeHttpMessage(property.Value);
+                    response = HttpMessage.DeserializeHttpMessage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

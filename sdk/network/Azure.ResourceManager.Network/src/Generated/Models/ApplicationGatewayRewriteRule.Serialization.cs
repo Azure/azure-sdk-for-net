@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayRewriteRuleCondition> array = new List<ApplicationGatewayRewriteRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item));
+                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value);
+                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

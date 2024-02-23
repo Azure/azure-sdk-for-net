@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -60,8 +59,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="computeConfiguration"/> or <paramref name="signals"/> is null. </exception>
         public MonitorDefinition(MonitorComputeConfigurationBase computeConfiguration, IDictionary<string, MonitoringSignalBase> signals)
         {
-            Argument.AssertNotNull(computeConfiguration, nameof(computeConfiguration));
-            Argument.AssertNotNull(signals, nameof(signals));
+            if (computeConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(computeConfiguration));
+            }
+            if (signals == null)
+            {
+                throw new ArgumentNullException(nameof(signals));
+            }
 
             ComputeConfiguration = computeConfiguration;
             Signals = signals;

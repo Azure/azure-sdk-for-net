@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<ShareableSearchServicePrivateLinkResourceType> array = new List<ShareableSearchServicePrivateLinkResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareableSearchServicePrivateLinkResourceType.DeserializeShareableSearchServicePrivateLinkResourceType(item));
+                        array.Add(ShareableSearchServicePrivateLinkResourceType.DeserializeShareableSearchServicePrivateLinkResourceType(item, options));
                     }
                     shareablePrivateLinkResourceTypes = array;
                     continue;

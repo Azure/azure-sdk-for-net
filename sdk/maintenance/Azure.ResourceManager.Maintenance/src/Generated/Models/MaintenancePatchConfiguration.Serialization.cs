@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    windowsParameters = MaintenanceWindowsPatchSettings.DeserializeMaintenanceWindowsPatchSettings(property.Value);
+                    windowsParameters = MaintenanceWindowsPatchSettings.DeserializeMaintenanceWindowsPatchSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    linuxParameters = MaintenanceLinuxPatchSettings.DeserializeMaintenanceLinuxPatchSettings(property.Value);
+                    linuxParameters = MaintenanceLinuxPatchSettings.DeserializeMaintenanceLinuxPatchSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

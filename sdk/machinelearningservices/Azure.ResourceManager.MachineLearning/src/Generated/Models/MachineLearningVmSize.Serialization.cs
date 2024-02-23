@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value);
+                    estimatedVmPrices = MachineLearningEstimatedVmPrices.DeserializeMachineLearningEstimatedVmPrices(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedComputeTypes"u8))

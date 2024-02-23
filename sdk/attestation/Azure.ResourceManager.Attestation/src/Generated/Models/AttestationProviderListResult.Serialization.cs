@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<AttestationProviderData> array = new List<AttestationProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationProviderData.DeserializeAttestationProviderData(item));
+                        array.Add(AttestationProviderData.DeserializeAttestationProviderData(item, options));
                     }
                     value = array;
                     continue;

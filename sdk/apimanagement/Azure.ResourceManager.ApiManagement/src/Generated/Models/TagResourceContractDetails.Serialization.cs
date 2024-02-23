@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("tag"u8))
                 {
-                    tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(property.Value);
+                    tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("api"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value);
+                    api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operation"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value);
+                    operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("product"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    product = AssociatedProductProperties.DeserializeAssociatedProductProperties(property.Value);
+                    product = AssociatedProductProperties.DeserializeAssociatedProductProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

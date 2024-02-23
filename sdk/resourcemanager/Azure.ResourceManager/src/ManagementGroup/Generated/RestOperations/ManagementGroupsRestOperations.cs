@@ -199,7 +199,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagementGroupData>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
 
             using var message = CreateGetRequest(groupId, expand, recurse, filter, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -233,7 +240,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagementGroupData> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
 
             using var message = CreateGetRequest(groupId, expand, recurse, filter, cacheControl);
             _pipeline.Send(message, cancellationToken);
@@ -300,8 +314,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCreateOrUpdateRequest(groupId, content, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -328,8 +352,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCreateOrUpdateRequest(groupId, content, cacheControl);
             _pipeline.Send(message, cancellationToken);
@@ -389,8 +423,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagementGroupData>> UpdateAsync(string groupId, ManagementGroupPatch patch, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(groupId, patch, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -420,8 +464,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagementGroupData> Update(string groupId, ManagementGroupPatch patch, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(groupId, patch, cacheControl);
             _pipeline.Send(message, cancellationToken);
@@ -481,7 +535,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string groupId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
 
             using var message = CreateDeleteRequest(groupId, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -507,7 +568,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string groupId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
 
             using var message = CreateDeleteRequest(groupId, cacheControl);
             _pipeline.Send(message, cancellationToken);
@@ -581,7 +649,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DescendantListResult>> GetDescendantsAsync(string groupId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
 
             using var message = CreateGetDescendantsRequest(groupId, skipToken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -615,7 +690,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DescendantListResult> GetDescendants(string groupId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
 
             using var message = CreateGetDescendantsRequest(groupId, skipToken, top);
             _pipeline.Send(message, cancellationToken);
@@ -667,7 +749,10 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -691,7 +776,10 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(content);
             _pipeline.Send(message, cancellationToken);
@@ -750,7 +838,10 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ManagementGroupListResult>> ListNextPageAsync(string nextLink, string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, cacheControl, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -783,7 +874,10 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ManagementGroupListResult> ListNextPage(string nextLink, string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, cacheControl, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -840,8 +934,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DescendantListResult>> GetDescendantsNextPageAsync(string nextLink, string groupId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
 
             using var message = CreateGetDescendantsNextPageRequest(nextLink, groupId, skipToken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -876,8 +980,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DescendantListResult> GetDescendantsNextPage(string nextLink, string groupId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+            if (groupId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
+            }
 
             using var message = CreateGetDescendantsNextPageRequest(nextLink, groupId, skipToken, top);
             _pipeline.Send(message, cancellationToken);

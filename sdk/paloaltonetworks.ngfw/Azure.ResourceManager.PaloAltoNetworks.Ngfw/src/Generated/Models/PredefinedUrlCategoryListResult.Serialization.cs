@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<PredefinedUrlCategory> array = new List<PredefinedUrlCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredefinedUrlCategory.DeserializePredefinedUrlCategory(item));
+                        array.Add(PredefinedUrlCategory.DeserializePredefinedUrlCategory(item, options));
                     }
                     value = array;
                     continue;

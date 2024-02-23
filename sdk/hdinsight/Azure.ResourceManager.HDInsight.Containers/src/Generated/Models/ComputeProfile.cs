@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nodes"/> is null. </exception>
         public ComputeProfile(IEnumerable<ClusterComputeNodeProfile> nodes)
         {
-            Argument.AssertNotNull(nodes, nameof(nodes));
+            if (nodes == null)
+            {
+                throw new ArgumentNullException(nameof(nodes));
+            }
 
             Nodes = nodes.ToList();
         }

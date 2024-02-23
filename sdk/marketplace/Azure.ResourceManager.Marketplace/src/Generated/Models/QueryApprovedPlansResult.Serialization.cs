@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<QueryApprovedPlansDetails> array = new List<QueryApprovedPlansDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryApprovedPlansDetails.DeserializeQueryApprovedPlansDetails(item));
+                        array.Add(QueryApprovedPlansDetails.DeserializeQueryApprovedPlansDetails(item, options));
                     }
                     details = array;
                     continue;

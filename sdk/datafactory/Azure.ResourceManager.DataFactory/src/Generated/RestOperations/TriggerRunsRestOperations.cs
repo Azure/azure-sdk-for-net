@@ -73,11 +73,46 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RerunAsync(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (factoryName == null)
+            {
+                throw new ArgumentNullException(nameof(factoryName));
+            }
+            if (factoryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
+            }
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var message = CreateRerunRequest(subscriptionId, resourceGroupName, factoryName, triggerName, runId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,11 +136,46 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Rerun(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (factoryName == null)
+            {
+                throw new ArgumentNullException(nameof(factoryName));
+            }
+            if (factoryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
+            }
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var message = CreateRerunRequest(subscriptionId, resourceGroupName, factoryName, triggerName, runId);
             _pipeline.Send(message, cancellationToken);
@@ -154,11 +224,46 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (factoryName == null)
+            {
+                throw new ArgumentNullException(nameof(factoryName));
+            }
+            if (factoryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
+            }
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, factoryName, triggerName, runId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -182,11 +287,46 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="triggerName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Cancel(string subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (factoryName == null)
+            {
+                throw new ArgumentNullException(nameof(factoryName));
+            }
+            if (factoryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
+            }
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+            if (runId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
+            }
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, factoryName, triggerName, runId);
             _pipeline.Send(message, cancellationToken);
@@ -234,10 +374,34 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataFactoryTriggerRunsQueryResult>> QueryByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, RunFilterContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (factoryName == null)
+            {
+                throw new ArgumentNullException(nameof(factoryName));
+            }
+            if (factoryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateQueryByFactoryRequest(subscriptionId, resourceGroupName, factoryName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -265,10 +429,34 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataFactoryTriggerRunsQueryResult> QueryByFactory(string subscriptionId, string resourceGroupName, string factoryName, RunFilterContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (factoryName == null)
+            {
+                throw new ArgumentNullException(nameof(factoryName));
+            }
+            if (factoryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateQueryByFactoryRequest(subscriptionId, resourceGroupName, factoryName, content);
             _pipeline.Send(message, cancellationToken);

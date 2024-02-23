@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<SessionHostData> array = new List<SessionHostData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SessionHostData.DeserializeSessionHostData(item));
+                        array.Add(SessionHostData.DeserializeSessionHostData(item, options));
                     }
                     value = array;
                     continue;

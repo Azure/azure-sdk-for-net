@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountKeyVaultKey> array = new List<IntegrationAccountKeyVaultKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(item));
+                        array.Add(IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(item, options));
                     }
                     value = array;
                     continue;

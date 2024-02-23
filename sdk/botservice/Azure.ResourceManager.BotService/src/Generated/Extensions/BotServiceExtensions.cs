@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> Returns a <see cref="BotResource"/> object. </returns>
         public static BotResource GetBotResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableBotServiceArmClient(client).GetBotResource(id);
         }
@@ -73,7 +76,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> Returns a <see cref="BotChannelResource"/> object. </returns>
         public static BotChannelResource GetBotChannelResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableBotServiceArmClient(client).GetBotChannelResource(id);
         }
@@ -92,7 +98,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> Returns a <see cref="BotConnectionSettingResource"/> object. </returns>
         public static BotConnectionSettingResource GetBotConnectionSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableBotServiceArmClient(client).GetBotConnectionSettingResource(id);
         }
@@ -111,7 +120,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> Returns a <see cref="BotServicePrivateEndpointConnectionResource"/> object. </returns>
         public static BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableBotServiceArmClient(client).GetBotServicePrivateEndpointConnectionResource(id);
         }
@@ -128,7 +140,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An object representing collection of BotResources and their operations over a BotResource. </returns>
         public static BotCollection GetBots(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableBotServiceResourceGroupResource(resourceGroupResource).GetBots();
         }
@@ -166,7 +181,10 @@ namespace Azure.ResourceManager.BotService
         [ForwardsClientCalls]
         public static async Task<Response<BotResource>> GetBotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableBotServiceResourceGroupResource(resourceGroupResource).GetBotAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -204,7 +222,10 @@ namespace Azure.ResourceManager.BotService
         [ForwardsClientCalls]
         public static Response<BotResource> GetBot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableBotServiceResourceGroupResource(resourceGroupResource).GetBot(resourceName, cancellationToken);
         }
@@ -240,7 +261,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="BotResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BotResource> GetBotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableBotServiceSubscriptionResource(subscriptionResource).GetBotsAsync(cancellationToken);
         }
@@ -276,7 +300,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BotResource> GetBots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableBotServiceSubscriptionResource(subscriptionResource).GetBots(cancellationToken);
         }
@@ -312,7 +339,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="BotServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BotServiceProvider> GetBotConnectionServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableBotServiceSubscriptionResource(subscriptionResource).GetBotConnectionServiceProvidersAsync(cancellationToken);
         }
@@ -348,7 +378,10 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BotServiceProvider> GetBotConnectionServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableBotServiceSubscriptionResource(subscriptionResource).GetBotConnectionServiceProviders(cancellationToken);
         }
@@ -380,7 +413,10 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(this SubscriptionResource subscriptionResource, GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableBotServiceSubscriptionResource(subscriptionResource).GetBotServiceQnAMakerEndpointKeyAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -412,7 +448,10 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(this SubscriptionResource subscriptionResource, GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableBotServiceSubscriptionResource(subscriptionResource).GetBotServiceQnAMakerEndpointKey(content, cancellationToken);
         }
@@ -443,7 +482,10 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<BotServiceHostSettingsResult>> GetBotServiceHostSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableBotServiceSubscriptionResource(subscriptionResource).GetBotServiceHostSettingsAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -474,7 +516,10 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<BotServiceHostSettingsResult> GetBotServiceHostSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableBotServiceSubscriptionResource(subscriptionResource).GetBotServiceHostSettings(cancellationToken);
         }
@@ -510,7 +555,10 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(this TenantResource tenantResource, BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableBotServiceTenantResource(tenantResource).CheckBotServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -546,7 +594,10 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(this TenantResource tenantResource, BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableBotServiceTenantResource(tenantResource).CheckBotServiceNameAvailability(content, cancellationToken);
         }

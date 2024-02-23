@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<FrontDoorNetworkExperimentProfileData> array = new List<FrontDoorNetworkExperimentProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(item));
+                        array.Add(FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(item, options));
                     }
                     value = array;
                     continue;

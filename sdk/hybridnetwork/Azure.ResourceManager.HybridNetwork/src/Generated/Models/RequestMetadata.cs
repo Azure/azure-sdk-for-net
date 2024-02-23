@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="relativePath"/> or <paramref name="serializedBody"/> is null. </exception>
         public RequestMetadata(string relativePath, HttpMethod httpMethod, string serializedBody)
         {
-            Argument.AssertNotNull(relativePath, nameof(relativePath));
-            Argument.AssertNotNull(serializedBody, nameof(serializedBody));
+            if (relativePath == null)
+            {
+                throw new ArgumentNullException(nameof(relativePath));
+            }
+            if (serializedBody == null)
+            {
+                throw new ArgumentNullException(nameof(serializedBody));
+            }
 
             RelativePath = relativePath;
             HttpMethod = httpMethod;

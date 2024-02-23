@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricL2IsolationDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l2IsolationDomainName, NetworkFabricL2IsolationDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (l2IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l2IsolationDomainName));
+            }
+            if (l2IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l2IsolationDomainName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricL2IsolationDomainResource> CreateOrUpdate(WaitUntil waitUntil, string l2IsolationDomainName, NetworkFabricL2IsolationDomainData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (l2IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l2IsolationDomainName));
+            }
+            if (l2IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l2IsolationDomainName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricL2IsolationDomainResource>> GetAsync(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            if (l2IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l2IsolationDomainName));
+            }
+            if (l2IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l2IsolationDomainName));
+            }
 
             using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         public virtual Response<NetworkFabricL2IsolationDomainResource> Get(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            if (l2IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l2IsolationDomainName));
+            }
+            if (l2IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l2IsolationDomainName));
+            }
 
             using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            if (l2IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l2IsolationDomainName));
+            }
+            if (l2IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l2IsolationDomainName));
+            }
 
             using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         public virtual Response<bool> Exists(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            if (l2IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l2IsolationDomainName));
+            }
+            if (l2IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l2IsolationDomainName));
+            }
 
             using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricL2IsolationDomainResource>> GetIfExistsAsync(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            if (l2IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l2IsolationDomainName));
+            }
+            if (l2IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l2IsolationDomainName));
+            }
 
             using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricL2IsolationDomainResource> GetIfExists(string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(l2IsolationDomainName, nameof(l2IsolationDomainName));
+            if (l2IsolationDomainName == null)
+            {
+                throw new ArgumentNullException(nameof(l2IsolationDomainName));
+            }
+            if (l2IsolationDomainName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(l2IsolationDomainName));
+            }
 
             using var scope = _networkFabricL2IsolationDomainL2IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL2IsolationDomainCollection.GetIfExists");
             scope.Start();
