@@ -27,44 +27,44 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesName))
+            if (NamePropertiesName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Asn))
+            if (Asn.HasValue)
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (Optional.IsDefined(TunnelIdentifier))
+            if (TunnelIdentifier.HasValue)
             {
                 writer.WritePropertyName("tunnelIdentifier"u8);
                 writer.WriteNumberValue(TunnelIdentifier.Value);
             }
-            if (Optional.IsCollectionDefined(BgpPeerAddress))
+            if (!(BgpPeerAddress is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bgpPeerAddress"u8);
                 writer.WriteStartArray();
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableInternetSecurity))
+            if (EnableInternetSecurity.HasValue)
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsDefined(ConnectionRoutingConfiguration))
+            if (ConnectionRoutingConfiguration != null)
             {
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(ConnectionRoutingConfiguration);

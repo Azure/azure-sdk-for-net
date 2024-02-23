@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OutputType))
+            if (OutputType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (Optional.IsDefined(WorkspaceSettings))
+            if (WorkspaceSettings != null)
             {
                 writer.WritePropertyName("workspaceSettings"u8);
                 writer.WriteObjectValue(WorkspaceSettings);

@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowClassicOperations))
+            if (AllowClassicOperations.HasValue)
             {
                 writer.WritePropertyName("allowClassicOperations"u8);
                 writer.WriteBooleanValue(AllowClassicOperations.Value);
             }
-            if (Optional.IsDefined(CircuitProvisioningState))
+            if (CircuitProvisioningState != null)
             {
                 writer.WritePropertyName("circuitProvisioningState"u8);
                 writer.WriteStringValue(CircuitProvisioningState);
             }
-            if (Optional.IsDefined(ServiceProviderProvisioningState))
+            if (ServiceProviderProvisioningState.HasValue)
             {
                 writer.WritePropertyName("serviceProviderProvisioningState"u8);
                 writer.WriteStringValue(ServiceProviderProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Authorizations))
+            if (!(Authorizations is ChangeTrackingList<ExpressRouteCircuitAuthorizationData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Peerings))
+            if (!(Peerings is ChangeTrackingList<ExpressRouteCircuitPeeringData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("peerings"u8);
                 writer.WriteStartArray();
@@ -107,57 +107,57 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ServiceKey))
+            if (ServiceKey != null)
             {
                 writer.WritePropertyName("serviceKey"u8);
                 writer.WriteStringValue(ServiceKey);
             }
-            if (Optional.IsDefined(ServiceProviderNotes))
+            if (ServiceProviderNotes != null)
             {
                 writer.WritePropertyName("serviceProviderNotes"u8);
                 writer.WriteStringValue(ServiceProviderNotes);
             }
-            if (Optional.IsDefined(ServiceProviderProperties))
+            if (ServiceProviderProperties != null)
             {
                 writer.WritePropertyName("serviceProviderProperties"u8);
                 writer.WriteObjectValue(ServiceProviderProperties);
             }
-            if (Optional.IsDefined(ExpressRoutePort))
+            if (ExpressRoutePort != null)
             {
                 writer.WritePropertyName("expressRoutePort"u8);
                 JsonSerializer.Serialize(writer, ExpressRoutePort);
             }
-            if (Optional.IsDefined(BandwidthInGbps))
+            if (BandwidthInGbps.HasValue)
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
                 writer.WriteNumberValue(BandwidthInGbps.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(STag))
+            if (options.Format != "W" && STag.HasValue)
             {
                 writer.WritePropertyName("stag"u8);
                 writer.WriteNumberValue(STag.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(GatewayManagerETag))
+            if (GatewayManagerETag != null)
             {
                 writer.WritePropertyName("gatewayManagerEtag"u8);
                 writer.WriteStringValue(GatewayManagerETag);
             }
-            if (Optional.IsDefined(GlobalReachEnabled))
+            if (GlobalReachEnabled.HasValue)
             {
                 writer.WritePropertyName("globalReachEnabled"u8);
                 writer.WriteBooleanValue(GlobalReachEnabled.Value);
             }
-            if (Optional.IsDefined(AuthorizationKey))
+            if (AuthorizationKey != null)
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(AuthorizationStatus))
+            if (options.Format != "W" && AuthorizationStatus != null)
             {
                 writer.WritePropertyName("authorizationStatus"u8);
                 writer.WriteStringValue(AuthorizationStatus);

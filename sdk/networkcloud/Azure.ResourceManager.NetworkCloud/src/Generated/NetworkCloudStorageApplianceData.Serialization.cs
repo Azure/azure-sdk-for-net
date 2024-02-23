@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -68,37 +68,37 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
             writer.WriteObjectValue(AdministratorCredentials);
-            if (options.Format != "W" && Optional.IsDefined(Capacity))
+            if (options.Format != "W" && Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityUsed))
+            if (options.Format != "W" && CapacityUsed.HasValue)
             {
                 writer.WritePropertyName("capacityUsed"u8);
                 writer.WriteNumberValue(CapacityUsed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId != null)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            if (options.Format != "W" && DetailedStatus.HasValue)
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            if (options.Format != "W" && DetailedStatusMessage != null)
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
+            if (options.Format != "W" && ManagementIPv4Address != null)
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
                 writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(RackId);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
-            if (options.Format != "W" && Optional.IsDefined(RemoteVendorManagementFeature))
+            if (options.Format != "W" && RemoteVendorManagementFeature.HasValue)
             {
                 writer.WritePropertyName("remoteVendorManagementFeature"u8);
                 writer.WriteStringValue(RemoteVendorManagementFeature.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RemoteVendorManagementStatus))
+            if (options.Format != "W" && RemoteVendorManagementStatus.HasValue)
             {
                 writer.WritePropertyName("remoteVendorManagementStatus"u8);
                 writer.WriteStringValue(RemoteVendorManagementStatus.Value.ToString());

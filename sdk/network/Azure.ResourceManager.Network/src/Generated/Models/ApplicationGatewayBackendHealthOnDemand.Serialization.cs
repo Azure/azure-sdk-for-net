@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackendAddressPool))
+            if (BackendAddressPool != null)
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 writer.WriteObjectValue(BackendAddressPool);
             }
-            if (Optional.IsDefined(BackendHealthHttpSettings))
+            if (BackendHealthHttpSettings != null)
             {
                 writer.WritePropertyName("backendHealthHttpSettings"u8);
                 writer.WriteObjectValue(BackendHealthHttpSettings);

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionName))
+            if (ActionName != null)
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (Optional.IsDefined(LinkedProperty))
+            if (LinkedProperty != null)
             {
                 writer.WritePropertyName("linkedProperty"u8);
                 writer.WriteStringValue(LinkedProperty);
             }
-            if (Optional.IsDefined(LinkedAction))
+            if (LinkedAction != null)
             {
                 writer.WritePropertyName("linkedAction"u8);
                 writer.WriteStringValue(LinkedAction);
             }
-            if (Optional.IsDefined(LinkedActionVerb))
+            if (LinkedActionVerb != null)
             {
                 writer.WritePropertyName("linkedActionVerb"u8);
                 writer.WriteStringValue(LinkedActionVerb);
             }
-            if (Optional.IsDefined(LinkedType))
+            if (LinkedType != null)
             {
                 writer.WritePropertyName("linkedType"u8);
                 writer.WriteStringValue(LinkedType);

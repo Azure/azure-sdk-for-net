@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CommitId))
+            if (options.Format != "W" && CommitId != null)
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ConfigurationIds))
+            if (!(ConfigurationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurationIds"u8);
                 writer.WriteStartArray();

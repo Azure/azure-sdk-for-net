@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SchemaOwners))
+            if (!(SchemaOwners is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("schemaOwners"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManifestOwners))
+            if (!(ManifestOwners is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("manifestOwners"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IncidentRoutingService))
+            if (IncidentRoutingService != null)
             {
                 writer.WritePropertyName("incidentRoutingService"u8);
                 writer.WriteStringValue(IncidentRoutingService);
             }
-            if (Optional.IsDefined(IncidentRoutingTeam))
+            if (IncidentRoutingTeam != null)
             {
                 writer.WritePropertyName("incidentRoutingTeam"u8);
                 writer.WriteStringValue(IncidentRoutingTeam);
             }
-            if (Optional.IsDefined(IncidentContactEmail))
+            if (IncidentContactEmail != null)
             {
                 writer.WritePropertyName("incidentContactEmail"u8);
                 writer.WriteStringValue(IncidentContactEmail);
             }
-            if (Optional.IsCollectionDefined(ServiceTreeInfos))
+            if (!(ServiceTreeInfos is ChangeTrackingList<ServiceTreeInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResourceAccessPolicy))
+            if (ResourceAccessPolicy.HasValue)
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
                 writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(ResourceAccessRoles))
+            if (!(ResourceAccessRoles is ChangeTrackingList<BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("resourceAccessRoles"u8);
                 writer.WriteStartArray();

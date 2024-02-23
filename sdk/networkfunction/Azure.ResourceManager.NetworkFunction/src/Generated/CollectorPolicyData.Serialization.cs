@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.NetworkFunction
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IngestionPolicy))
+            if (IngestionPolicy != null)
             {
                 writer.WritePropertyName("ingestionPolicy"u8);
                 writer.WriteObjectValue(IngestionPolicy);
             }
-            if (Optional.IsCollectionDefined(EmissionPolicies))
+            if (!(EmissionPolicies is ChangeTrackingList<EmissionPoliciesPropertiesFormat> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("emissionPolicies"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
