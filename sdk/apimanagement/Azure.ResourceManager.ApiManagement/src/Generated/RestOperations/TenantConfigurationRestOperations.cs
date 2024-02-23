@@ -37,6 +37,23 @@ namespace Azure.ResourceManager.ApiManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeployRequestUri(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/tenant/", false);
+            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath("/deploy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeployRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -166,6 +183,23 @@ namespace Azure.ResourceManager.ApiManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSaveRequestUri(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationSaveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/tenant/", false);
+            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath("/save", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSaveRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationSaveContent content)
@@ -299,6 +333,23 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
+        internal RequestUriBuilder CreateValidateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/tenant/", false);
+            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName, ConfigurationDeployContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -428,6 +479,23 @@ namespace Azure.ResourceManager.ApiManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSyncStateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/tenant/", false);
+            uri.AppendPath(configurationName.ToString(), true);
+            uri.AppendPath("/syncState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSyncStateRequest(string subscriptionId, string resourceGroupName, string serviceName, ConfigurationName configurationName)

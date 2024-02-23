@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsUserRegistrationDelegationEnabled))
+            if (IsUserRegistrationDelegationEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsUserRegistrationDelegationEnabled.Value);

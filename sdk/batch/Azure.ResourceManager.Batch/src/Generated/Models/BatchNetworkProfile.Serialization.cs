@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountAccess))
+            if (AccountAccess != null)
             {
                 writer.WritePropertyName("accountAccess"u8);
                 writer.WriteObjectValue(AccountAccess);
             }
-            if (Optional.IsDefined(NodeManagementAccess))
+            if (NodeManagementAccess != null)
             {
                 writer.WritePropertyName("nodeManagementAccess"u8);
                 writer.WriteObjectValue(NodeManagementAccess);

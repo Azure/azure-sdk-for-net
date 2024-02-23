@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CounterProperty))
+            if (options.Format != "W" && CounterProperty != null)
             {
                 writer.WritePropertyName("counterProperty"u8);
                 writer.WriteStringValue(CounterProperty);
             }
-            if (options.Format != "W" && Optional.IsDefined(CounterValue))
+            if (options.Format != "W" && CounterValue.HasValue)
             {
                 writer.WritePropertyName("counterValue"u8);
                 writer.WriteNumberValue(CounterValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

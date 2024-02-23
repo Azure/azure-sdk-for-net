@@ -269,7 +269,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _assignmentRestClient.DeleteAsync(Id.Parent, Id.Name, deleteBehavior, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _assignmentRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name, deleteBehavior);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -312,7 +314,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _assignmentRestClient.Delete(Id.Parent, Id.Name, deleteBehavior, cancellationToken);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _assignmentRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name, deleteBehavior);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -361,7 +365,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _assignmentRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _assignmentRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -410,7 +416,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _assignmentRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _assignmentRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

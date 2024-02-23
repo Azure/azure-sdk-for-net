@@ -101,7 +101,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementDiagnosticDiagnosticRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementDiagnosticResource>(Response.FromValue(new ApiManagementDiagnosticResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementDiagnosticDiagnosticRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementDiagnosticResource>(Response.FromValue(new ApiManagementDiagnosticResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -161,7 +163,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementDiagnosticDiagnosticRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementDiagnosticResource>(Response.FromValue(new ApiManagementDiagnosticResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementDiagnosticDiagnosticRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementDiagnosticResource>(Response.FromValue(new ApiManagementDiagnosticResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

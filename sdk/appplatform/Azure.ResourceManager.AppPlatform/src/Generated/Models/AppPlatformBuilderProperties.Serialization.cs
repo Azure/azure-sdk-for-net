@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Stack))
+            if (Stack != null)
             {
                 writer.WritePropertyName("stack"u8);
                 writer.WriteObjectValue(Stack);
             }
-            if (Optional.IsCollectionDefined(BuildpackGroups))
+            if (!(BuildpackGroups is ChangeTrackingList<BuildpacksGroupProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("buildpackGroups"u8);
                 writer.WriteStartArray();

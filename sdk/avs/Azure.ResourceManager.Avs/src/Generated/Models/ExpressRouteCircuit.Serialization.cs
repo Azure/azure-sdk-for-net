@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrimarySubnet))
+            if (options.Format != "W" && PrimarySubnet != null)
             {
                 writer.WritePropertyName("primarySubnet"u8);
                 writer.WriteStringValue(PrimarySubnet);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondarySubnet))
+            if (options.Format != "W" && SecondarySubnet != null)
             {
                 writer.WritePropertyName("secondarySubnet"u8);
                 writer.WriteStringValue(SecondarySubnet);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpressRouteId))
+            if (options.Format != "W" && ExpressRouteId != null)
             {
                 writer.WritePropertyName("expressRouteID"u8);
                 writer.WriteStringValue(ExpressRouteId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpressRoutePrivatePeeringId))
+            if (options.Format != "W" && ExpressRoutePrivatePeeringId != null)
             {
                 writer.WritePropertyName("expressRoutePrivatePeeringID"u8);
                 writer.WriteStringValue(ExpressRoutePrivatePeeringId);
