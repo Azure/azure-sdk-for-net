@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> version = default;
             Optional<string> state = default;
             Optional<string> fullyQualifiedDomainName = default;
-            Optional<IReadOnlyList<SqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
+            IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections = default;
             Optional<SqlMinimalTlsVersion> minimalTlsVersion = default;
             Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
             Optional<ServerWorkspaceFeature> workspaceFeature = default;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerPatch(identity, Optional.ToDictionary(tags), administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
+            return new SqlServerPatch(identity, Optional.ToDictionary(tags), administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerPatch>.Write(ModelReaderWriterOptions options)

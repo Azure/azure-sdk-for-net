@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IotSecurityRecommendationType> type = default;
             Optional<SecurityCenterPublisherInfo> publisherInfo = default;
             Optional<bool> common = default;
-            Optional<IList<string>> userSids = default;
-            Optional<IList<UserRecommendation>> usernames = default;
+            IList<string> userSids = default;
+            IList<UserRecommendation> usernames = default;
             Optional<PathRecommendationFileType> fileType = default;
             Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), Optional.ToList(userSids), Optional.ToList(usernames), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus), serializedAdditionalRawData);
+            return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), userSids ?? new ChangeTrackingList<string>(), usernames ?? new ChangeTrackingList<UserRecommendation>(), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PathRecommendation>.Write(ModelReaderWriterOptions options)

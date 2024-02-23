@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<bool> preserveOriginal = default;
             Optional<bool> splitOnNumerics = default;
             Optional<bool> stemEnglishPossessive = default;
-            Optional<IList<string>> protectedWords = default;
+            IList<string> protectedWords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new WordDelimiterTokenFilter(odataType, name, Optional.ToNullable(generateWordParts), Optional.ToNullable(generateNumberParts), Optional.ToNullable(catenateWords), Optional.ToNullable(catenateNumbers), Optional.ToNullable(catenateAll), Optional.ToNullable(splitOnCaseChange), Optional.ToNullable(preserveOriginal), Optional.ToNullable(splitOnNumerics), Optional.ToNullable(stemEnglishPossessive), Optional.ToList(protectedWords));
+            return new WordDelimiterTokenFilter(odataType, name, Optional.ToNullable(generateWordParts), Optional.ToNullable(generateNumberParts), Optional.ToNullable(catenateWords), Optional.ToNullable(catenateNumbers), Optional.ToNullable(catenateAll), Optional.ToNullable(splitOnCaseChange), Optional.ToNullable(preserveOriginal), Optional.ToNullable(splitOnNumerics), Optional.ToNullable(stemEnglishPossessive), protectedWords ?? new ChangeTrackingList<string>());
         }
     }
 }

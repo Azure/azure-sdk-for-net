@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<string>> articles = default;
+            IList<string> articles = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ElisionTokenFilter(odataType, name, Optional.ToList(articles));
+            return new ElisionTokenFilter(odataType, name, articles ?? new ChangeTrackingList<string>());
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CustomEntityStoreAssignmentData>> value = default;
+            IReadOnlyList<CustomEntityStoreAssignmentData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomEntityStoreAssignmentsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CustomEntityStoreAssignmentsListResult(value ?? new ChangeTrackingList<CustomEntityStoreAssignmentData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomEntityStoreAssignmentsListResult>.Write(ModelReaderWriterOptions options)

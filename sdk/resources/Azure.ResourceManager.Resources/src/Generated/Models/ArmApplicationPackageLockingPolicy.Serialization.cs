@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedActions = default;
-            Optional<IList<string>> allowedDataActions = default;
+            IList<string> allowedActions = default;
+            IList<string> allowedDataActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationPackageLockingPolicy(Optional.ToList(allowedActions), Optional.ToList(allowedDataActions), serializedAdditionalRawData);
+            return new ArmApplicationPackageLockingPolicy(allowedActions ?? new ChangeTrackingList<string>(), allowedDataActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationPackageLockingPolicy>.Write(ModelReaderWriterOptions options)

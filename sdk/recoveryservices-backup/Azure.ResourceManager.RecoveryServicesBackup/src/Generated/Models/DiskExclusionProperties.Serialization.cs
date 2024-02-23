@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<int>> diskLunList = default;
+            IList<int> diskLunList = default;
             Optional<bool> isInclusionList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskExclusionProperties(Optional.ToList(diskLunList), Optional.ToNullable(isInclusionList), serializedAdditionalRawData);
+            return new DiskExclusionProperties(diskLunList ?? new ChangeTrackingList<int>(), Optional.ToNullable(isInclusionList), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskExclusionProperties>.Write(ModelReaderWriterOptions options)

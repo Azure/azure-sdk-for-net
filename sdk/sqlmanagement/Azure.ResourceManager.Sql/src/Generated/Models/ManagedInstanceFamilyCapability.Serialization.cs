@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Sql.Models
             }
             Optional<string> name = default;
             Optional<string> sku = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Optional<IReadOnlyList<ManagedInstanceVcoresCapability>> supportedVcoresValues = default;
+            IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
+            IReadOnlyList<ManagedInstanceVcoresCapability> supportedVcoresValues = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceFamilyCapability(name.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToList(supportedVcoresValues), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceFamilyCapability(name.Value, sku.Value, supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(), supportedVcoresValues ?? new ChangeTrackingList<ManagedInstanceVcoresCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceFamilyCapability>.Write(ModelReaderWriterOptions options)

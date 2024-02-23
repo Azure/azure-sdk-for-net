@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> generatedKeyName = default;
             Optional<string> source = default;
             Optional<string> sourceContext = default;
-            Optional<IList<InputFieldMappingEntry>> inputs = default;
+            IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageContainer"u8))
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreFileProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer);
+            return new KnowledgeStoreFileProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(), storageContainer);
         }
     }
 }

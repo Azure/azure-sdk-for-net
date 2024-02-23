@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> code = default;
             Optional<string> type = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<SelfHelpError>> details = default;
+            IReadOnlyList<SelfHelpError> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpError(code.Value, type.Value, message.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new SelfHelpError(code.Value, type.Value, message.Value, details ?? new ChangeTrackingList<SelfHelpError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpError>.Write(ModelReaderWriterOptions options)

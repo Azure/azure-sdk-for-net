@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             Optional<string> groupNickname = default;
-            Optional<IList<RedisEnterpriseLinkedDatabase>> linkedDatabases = default;
+            IList<RedisEnterpriseLinkedDatabase> linkedDatabases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDatabaseGeoReplication(groupNickname.Value, Optional.ToList(linkedDatabases), serializedAdditionalRawData);
+            return new RedisEnterpriseDatabaseGeoReplication(groupNickname.Value, linkedDatabases ?? new ChangeTrackingList<RedisEnterpriseLinkedDatabase>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabaseGeoReplication>.Write(ModelReaderWriterOptions options)

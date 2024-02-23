@@ -20,8 +20,8 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             Optional<QueryResultDocumentSemanticField> titleField = default;
-            Optional<IReadOnlyList<QueryResultDocumentSemanticField>> contentFields = default;
-            Optional<IReadOnlyList<QueryResultDocumentSemanticField>> keywordFields = default;
+            IReadOnlyList<QueryResultDocumentSemanticField> contentFields = default;
+            IReadOnlyList<QueryResultDocumentSemanticField> keywordFields = default;
             Optional<QueryResultDocumentRerankerInput> rerankerInput = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SemanticDebugInfo(titleField.Value, Optional.ToList(contentFields), Optional.ToList(keywordFields), rerankerInput.Value);
+            return new SemanticDebugInfo(titleField.Value, contentFields ?? new ChangeTrackingList<QueryResultDocumentSemanticField>(), keywordFields ?? new ChangeTrackingList<QueryResultDocumentSemanticField>(), rerankerInput.Value);
         }
     }
 }

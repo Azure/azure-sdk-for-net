@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityCenterAllowedConnection>> value = default;
+            IReadOnlyList<SecurityCenterAllowedConnection> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllowedConnectionsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AllowedConnectionsList(value ?? new ChangeTrackingList<SecurityCenterAllowedConnection>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllowedConnectionsList>.Write(ModelReaderWriterOptions options)

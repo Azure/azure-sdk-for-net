@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<IaasVmBackupJobTaskDetails>> tasksList = default;
+            IList<IaasVmBackupJobTaskDetails> tasksList = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<IDictionary<string, string>> internalPropertyBag = default;
             Optional<double> progressPercentage = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), Optional.ToDictionary(internalPropertyBag), Optional.ToNullable(progressPercentage), estimatedRemainingDuration.Value, dynamicErrorMessage.Value, serializedAdditionalRawData);
+            return new IaasVmBackupJobExtendedInfo(tasksList ?? new ChangeTrackingList<IaasVmBackupJobTaskDetails>(), Optional.ToDictionary(propertyBag), Optional.ToDictionary(internalPropertyBag), Optional.ToNullable(progressPercentage), estimatedRemainingDuration.Value, dynamicErrorMessage.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmBackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

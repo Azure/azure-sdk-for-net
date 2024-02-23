@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<AzureLocation> location = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IList<ResourceSelector>> resourceSelectors = default;
-            Optional<IList<PolicyOverride>> overrides = default;
+            IList<ResourceSelector> resourceSelectors = default;
+            IList<PolicyOverride> overrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentPatch(Optional.ToNullable(location), identity, Optional.ToList(resourceSelectors), Optional.ToList(overrides), serializedAdditionalRawData);
+            return new PolicyAssignmentPatch(Optional.ToNullable(location), identity, resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(), overrides ?? new ChangeTrackingList<PolicyOverride>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentPatch>.Write(ModelReaderWriterOptions options)

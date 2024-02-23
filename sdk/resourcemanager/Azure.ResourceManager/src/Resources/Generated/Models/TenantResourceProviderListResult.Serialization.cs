@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TenantResourceProvider>> value = default;
+            IReadOnlyList<TenantResourceProvider> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantResourceProviderListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TenantResourceProviderListResult(value ?? new ChangeTrackingList<TenantResourceProvider>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantResourceProviderListResult>.Write(ModelReaderWriterOptions options)
