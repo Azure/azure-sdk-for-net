@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryMetric))
+            if (PrimaryMetric.HasValue)
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(ModelSettings))
+            if (ModelSettings != null)
             {
                 if (ModelSettings != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(SearchSpace))
+            if (!(SearchSpace is ChangeTrackingList<ImageModelDistributionSettingsObjectDetection> collection && collection.IsUndefined))
             {
                 if (SearchSpace != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("limitSettings"u8);
             writer.WriteObjectValue(LimitSettings);
-            if (Optional.IsDefined(SweepSettings))
+            if (SweepSettings != null)
             {
                 if (SweepSettings != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (ValidationData != null)
             {
                 if (ValidationData != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Optional.IsDefined(ValidationDataSize))
+            if (ValidationDataSize.HasValue)
             {
                 if (ValidationDataSize != null)
                 {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
-            if (Optional.IsDefined(LogVerbosity))
+            if (LogVerbosity.HasValue)
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (TargetColumnName != null)
             {
                 if (TargetColumnName != null)
                 {

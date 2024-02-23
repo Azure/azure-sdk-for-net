@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Media
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ScaleUnits))
+            if (ScaleUnits.HasValue)
             {
                 writer.WritePropertyName("scaleUnits"u8);
                 writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (Optional.IsDefined(AvailabilitySetName))
+            if (AvailabilitySetName != null)
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
-            if (Optional.IsDefined(AccessControl))
+            if (AccessControl != null)
             {
                 if (AccessControl != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("accessControl");
                 }
             }
-            if (Optional.IsDefined(MaxCacheAge))
+            if (MaxCacheAge.HasValue)
             {
                 if (MaxCacheAge != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("maxCacheAge");
                 }
             }
-            if (Optional.IsCollectionDefined(CustomHostNames))
+            if (!(CustomHostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customHostNames"u8);
                 writer.WriteStartArray();
@@ -117,37 +117,37 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(IsCdnEnabled))
+            if (IsCdnEnabled.HasValue)
             {
                 writer.WritePropertyName("cdnEnabled"u8);
                 writer.WriteBooleanValue(IsCdnEnabled.Value);
             }
-            if (Optional.IsDefined(CdnProvider))
+            if (CdnProvider != null)
             {
                 writer.WritePropertyName("cdnProvider"u8);
                 writer.WriteStringValue(CdnProvider);
             }
-            if (Optional.IsDefined(CdnProfile))
+            if (CdnProfile != null)
             {
                 writer.WritePropertyName("cdnProfile"u8);
                 writer.WriteStringValue(CdnProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (Optional.IsDefined(CrossSiteAccessPolicies))
+            if (CrossSiteAccessPolicies != null)
             {
                 if (CrossSiteAccessPolicies != null)
                 {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("crossSiteAccessPolicies");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(FreeTrialEndOn))
+            if (options.Format != "W" && FreeTrialEndOn.HasValue)
             {
                 writer.WritePropertyName("freeTrialEndTime"u8);
                 writer.WriteStringValue(FreeTrialEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");

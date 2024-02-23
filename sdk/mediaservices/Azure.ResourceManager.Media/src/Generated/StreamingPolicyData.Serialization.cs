@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(DefaultContentKeyPolicyName))
+            if (DefaultContentKeyPolicyName != null)
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
             }
-            if (Optional.IsDefined(EnvelopeEncryption))
+            if (EnvelopeEncryption != null)
             {
                 writer.WritePropertyName("envelopeEncryption"u8);
                 writer.WriteObjectValue(EnvelopeEncryption);
             }
-            if (Optional.IsDefined(CommonEncryptionCenc))
+            if (CommonEncryptionCenc != null)
             {
                 writer.WritePropertyName("commonEncryptionCenc"u8);
                 writer.WriteObjectValue(CommonEncryptionCenc);
             }
-            if (Optional.IsDefined(CommonEncryptionCbcs))
+            if (CommonEncryptionCbcs != null)
             {
                 writer.WritePropertyName("commonEncryptionCbcs"u8);
                 writer.WriteObjectValue(CommonEncryptionCbcs);
             }
-            if (Optional.IsDefined(NoEncryption))
+            if (NoEncryption != null)
             {
                 writer.WritePropertyName("noEncryption"u8);
                 writer.WriteObjectValue(NoEncryption);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (IgnoreMissingVnetServiceEndpoint.HasValue)
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);

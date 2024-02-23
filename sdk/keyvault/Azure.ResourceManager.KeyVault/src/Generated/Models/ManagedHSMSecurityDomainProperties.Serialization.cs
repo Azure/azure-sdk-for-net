@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ActivationStatus))
+            if (options.Format != "W" && ActivationStatus.HasValue)
             {
                 writer.WritePropertyName("activationStatus"u8);
                 writer.WriteStringValue(ActivationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivationStatusMessage))
+            if (options.Format != "W" && ActivationStatusMessage != null)
             {
                 writer.WritePropertyName("activationStatusMessage"u8);
                 writer.WriteStringValue(ActivationStatusMessage);

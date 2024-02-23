@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdditionalUsageQuota))
+            if (AdditionalUsageQuota.HasValue)
             {
                 writer.WritePropertyName("additionalUsageQuota"u8);
                 writer.WriteStringValue(AdditionalUsageQuota.Value, "P");

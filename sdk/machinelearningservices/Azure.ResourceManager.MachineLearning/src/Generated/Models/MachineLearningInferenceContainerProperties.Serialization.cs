@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LivenessRoute))
+            if (LivenessRoute != null)
             {
                 writer.WritePropertyName("livenessRoute"u8);
                 writer.WriteObjectValue(LivenessRoute);
             }
-            if (Optional.IsDefined(ReadinessRoute))
+            if (ReadinessRoute != null)
             {
                 writer.WritePropertyName("readinessRoute"u8);
                 writer.WriteObjectValue(ReadinessRoute);
             }
-            if (Optional.IsDefined(ScoringRoute))
+            if (ScoringRoute != null)
             {
                 writer.WritePropertyName("scoringRoute"u8);
                 writer.WriteObjectValue(ScoringRoute);

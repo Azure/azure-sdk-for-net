@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkToNetworkInterconnectId))
+            if (NetworkToNetworkInterconnectId != null)
             {
                 writer.WritePropertyName("networkToNetworkInterconnectId"u8);
                 writer.WriteStringValue(NetworkToNetworkInterconnectId);
             }
-            if (Optional.IsDefined(PeeringOption))
+            if (PeeringOption.HasValue)
             {
                 writer.WritePropertyName("peeringOption"u8);
                 writer.WriteStringValue(PeeringOption.Value.ToString());
             }
-            if (Optional.IsDefined(OptionBProperties))
+            if (OptionBProperties != null)
             {
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties);
             }
-            if (Optional.IsDefined(OptionAProperties))
+            if (OptionAProperties != null)
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);

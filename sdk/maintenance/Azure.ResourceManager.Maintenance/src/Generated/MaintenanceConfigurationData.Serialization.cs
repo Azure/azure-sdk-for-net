@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Maintenance
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsCollectionDefined(ExtensionProperties))
+            if (!(ExtensionProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("extensionProperties"u8);
                 writer.WriteStartObject();
@@ -79,44 +79,44 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(MaintenanceScope))
+            if (MaintenanceScope.HasValue)
             {
                 writer.WritePropertyName("maintenanceScope"u8);
                 writer.WriteStringValue(MaintenanceScope.Value.ToString());
             }
-            if (Optional.IsDefined(Visibility))
+            if (Visibility.HasValue)
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
-            if (Optional.IsDefined(InstallPatches))
+            if (InstallPatches != null)
             {
                 writer.WritePropertyName("installPatches"u8);
                 writer.WriteObjectValue(InstallPatches);
             }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 SerializeStartOn(writer);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDateTime"u8);
                 SerializeExpireOn(writer);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(RecurEvery))
+            if (RecurEvery != null)
             {
                 writer.WritePropertyName("recurEvery"u8);
                 writer.WriteStringValue(RecurEvery);

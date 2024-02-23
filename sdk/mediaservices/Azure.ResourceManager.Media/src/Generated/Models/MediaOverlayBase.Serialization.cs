@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("inputLabel"u8);
             writer.WriteStringValue(InputLabel);
-            if (Optional.IsDefined(Start))
+            if (Start.HasValue)
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start.Value, "P");
             }
-            if (Optional.IsDefined(End))
+            if (End.HasValue)
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End.Value, "P");
             }
-            if (Optional.IsDefined(FadeInDuration))
+            if (FadeInDuration.HasValue)
             {
                 writer.WritePropertyName("fadeInDuration"u8);
                 writer.WriteStringValue(FadeInDuration.Value, "P");
             }
-            if (Optional.IsDefined(FadeOutDuration))
+            if (FadeOutDuration.HasValue)
             {
                 writer.WritePropertyName("fadeOutDuration"u8);
                 writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
-            if (Optional.IsDefined(AudioGainLevel))
+            if (AudioGainLevel.HasValue)
             {
                 writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);

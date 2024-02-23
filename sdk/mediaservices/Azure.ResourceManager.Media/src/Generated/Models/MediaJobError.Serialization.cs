@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code.HasValue)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Retry))
+            if (options.Format != "W" && Retry.HasValue)
             {
                 writer.WritePropertyName("retry"u8);
                 writer.WriteStringValue(Retry.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && !(Details is ChangeTrackingList<MediaJobErrorDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();

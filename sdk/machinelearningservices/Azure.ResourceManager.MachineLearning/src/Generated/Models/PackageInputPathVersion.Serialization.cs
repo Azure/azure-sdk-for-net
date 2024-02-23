@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceName))
+            if (ResourceName != null)
             {
                 if (ResourceName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceName");
                 }
             }
-            if (Optional.IsDefined(ResourceVersion))
+            if (ResourceVersion != null)
             {
                 if (ResourceVersion != null)
                 {
