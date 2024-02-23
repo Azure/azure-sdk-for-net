@@ -191,11 +191,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
             // The ResourceBuilder won't allow a non-primitive type for an
             // attribute value but, just to be sure, catch any exceptions
             // and return an empty string.
-            // Also truncates the value to a reasonably length.
+            // Also truncates the value to a reasonable length.
             static string SafeConvertToString(object? value)
             {
                 // The limit is somewhat arbitrary. We want to be able to
-                // represent any *reasonable* attribute values without blowing
+                // represent any *reasonable* attribute value without blowing
                 // up the total event payload.
                 const int maxSensibleLength = 200;
                 try
