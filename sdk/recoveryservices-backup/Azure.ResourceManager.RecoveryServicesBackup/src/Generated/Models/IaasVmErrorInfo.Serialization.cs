@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorTitle))
+            if (options.Format != "W" && ErrorTitle != null)
             {
                 writer.WritePropertyName("errorTitle"u8);
                 writer.WriteStringValue(ErrorTitle);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorString))
+            if (options.Format != "W" && ErrorString != null)
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Recommendations))
+            if (options.Format != "W" && !(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();

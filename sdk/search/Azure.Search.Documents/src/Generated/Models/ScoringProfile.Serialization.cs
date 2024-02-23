@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(TextWeights))
+            if (TextWeights != null)
             {
                 if (TextWeights != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("text");
                 }
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (!(Functions is ChangeTrackingList<ScoringFunction> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FunctionAggregation))
+            if (FunctionAggregation.HasValue)
             {
                 if (FunctionAggregation != null)
                 {

@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientProtocol))
+            if (ClientProtocol.HasValue)
             {
                 writer.WritePropertyName("clientProtocol"u8);
                 writer.WriteStringValue(ClientProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (Optional.IsDefined(ClusteringPolicy))
+            if (ClusteringPolicy.HasValue)
             {
                 writer.WritePropertyName("clusteringPolicy"u8);
                 writer.WriteStringValue(ClusteringPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(EvictionPolicy))
+            if (EvictionPolicy.HasValue)
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(Persistence))
+            if (Persistence != null)
             {
                 writer.WritePropertyName("persistence"u8);
                 writer.WriteObjectValue(Persistence);
             }
-            if (Optional.IsCollectionDefined(Modules))
+            if (!(Modules is ChangeTrackingList<RedisEnterpriseModule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GeoReplication))
+            if (GeoReplication != null)
             {
                 writer.WritePropertyName("geoReplication"u8);
                 writer.WriteObjectValue(GeoReplication);

@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(LocationType))
+            if (options.Format != "W" && LocationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegionalDisplayName))
+            if (options.Format != "W" && RegionalDisplayName != null)
             {
                 writer.WritePropertyName("regionalDisplayName"u8);
                 writer.WriteStringValue(RegionalDisplayName);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
+            if (!(AvailabilityZoneMappings is ChangeTrackingList<AvailabilityZoneMappings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("availabilityZoneMappings"u8);
                 writer.WriteStartArray();

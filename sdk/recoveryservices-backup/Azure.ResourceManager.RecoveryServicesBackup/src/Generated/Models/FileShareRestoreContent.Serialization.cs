@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryType))
+            if (RecoveryType.HasValue)
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(CopyOptions))
+            if (CopyOptions.HasValue)
             {
                 writer.WritePropertyName("copyOptions"u8);
                 writer.WriteStringValue(CopyOptions.Value.ToString());
             }
-            if (Optional.IsDefined(RestoreRequestType))
+            if (RestoreRequestType.HasValue)
             {
                 writer.WritePropertyName("restoreRequestType"u8);
                 writer.WriteStringValue(RestoreRequestType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpecs))
+            if (!(RestoreFileSpecs is ChangeTrackingList<RestoreFileSpecs> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("restoreFileSpecs"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetDetails))
+            if (TargetDetails != null)
             {
                 writer.WritePropertyName("targetDetails"u8);
                 writer.WriteObjectValue(TargetDetails);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();

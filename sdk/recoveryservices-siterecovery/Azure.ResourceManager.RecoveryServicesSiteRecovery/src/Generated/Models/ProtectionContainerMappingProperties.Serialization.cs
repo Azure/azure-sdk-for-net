@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetProtectionContainerId))
+            if (TargetProtectionContainerId != null)
             {
                 writer.WritePropertyName("targetProtectionContainerId"u8);
                 writer.WriteStringValue(TargetProtectionContainerId);
             }
-            if (Optional.IsDefined(TargetProtectionContainerFriendlyName))
+            if (TargetProtectionContainerFriendlyName != null)
             {
                 writer.WritePropertyName("targetProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(TargetProtectionContainerFriendlyName);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
-            if (Optional.IsDefined(Health))
+            if (Health != null)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health);
             }
-            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            if (!(HealthErrorDetails is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrorDetails"u8);
                 writer.WriteStartArray();
@@ -56,32 +56,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(SourceProtectionContainerFriendlyName))
+            if (SourceProtectionContainerFriendlyName != null)
             {
                 writer.WritePropertyName("sourceProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(SourceProtectionContainerFriendlyName);
             }
-            if (Optional.IsDefined(SourceFabricFriendlyName))
+            if (SourceFabricFriendlyName != null)
             {
                 writer.WritePropertyName("sourceFabricFriendlyName"u8);
                 writer.WriteStringValue(SourceFabricFriendlyName);
             }
-            if (Optional.IsDefined(TargetFabricFriendlyName))
+            if (TargetFabricFriendlyName != null)
             {
                 writer.WritePropertyName("targetFabricFriendlyName"u8);
                 writer.WriteStringValue(TargetFabricFriendlyName);
             }
-            if (Optional.IsDefined(PolicyFriendlyName))
+            if (PolicyFriendlyName != null)
             {
                 writer.WritePropertyName("policyFriendlyName"u8);
                 writer.WriteStringValue(PolicyFriendlyName);

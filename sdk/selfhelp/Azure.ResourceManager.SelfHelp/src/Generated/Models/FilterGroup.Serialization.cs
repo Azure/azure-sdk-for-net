@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Filter))
+            if (!(Filter is ChangeTrackingList<SelfHelpFilter> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStartArray();

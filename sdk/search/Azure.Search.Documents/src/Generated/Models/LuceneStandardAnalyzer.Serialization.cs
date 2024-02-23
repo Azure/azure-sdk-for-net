@@ -16,12 +16,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxTokenLength))
+            if (MaxTokenLength.HasValue)
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (Optional.IsCollectionDefined(Stopwords))
+            if (!(Stopwords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();

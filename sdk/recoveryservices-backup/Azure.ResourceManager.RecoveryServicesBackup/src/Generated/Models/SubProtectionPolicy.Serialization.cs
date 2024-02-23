@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyType))
+            if (PolicyType.HasValue)
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(SchedulePolicy))
+            if (SchedulePolicy != null)
             {
                 writer.WritePropertyName("schedulePolicy"u8);
                 writer.WriteObjectValue(SchedulePolicy);
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (RetentionPolicy != null)
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Optional.IsCollectionDefined(TieringPolicy))
+            if (!(TieringPolicy is ChangeTrackingDictionary<string, BackupTieringPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tieringPolicy"u8);
                 writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SnapshotBackupAdditionalDetails))
+            if (SnapshotBackupAdditionalDetails != null)
             {
                 writer.WritePropertyName("snapshotBackupAdditionalDetails"u8);
                 writer.WriteObjectValue(SnapshotBackupAdditionalDetails);

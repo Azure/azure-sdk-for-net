@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("nicId"u8);
             writer.WriteStringValue(NicId);
-            if (options.Format != "W" && Optional.IsDefined(NetworkName))
+            if (options.Format != "W" && NetworkName != null)
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);

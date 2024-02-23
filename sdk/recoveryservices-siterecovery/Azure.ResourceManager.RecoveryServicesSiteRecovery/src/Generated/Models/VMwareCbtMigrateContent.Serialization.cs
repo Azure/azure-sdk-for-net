@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("performShutdown"u8);
             writer.WriteStringValue(PerformShutdown);
-            if (Optional.IsDefined(OSUpgradeVersion))
+            if (OSUpgradeVersion != null)
             {
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsDefined(FilterType))
+            if (FilterType.HasValue)
             {
                 writer.WritePropertyName("filterType"u8);
                 writer.WriteStringValue(FilterType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SqlFilter))
+            if (SqlFilter != null)
             {
                 writer.WritePropertyName("sqlFilter"u8);
                 writer.WriteObjectValue(SqlFilter);
             }
-            if (Optional.IsDefined(CorrelationFilter))
+            if (CorrelationFilter != null)
             {
                 writer.WritePropertyName("correlationFilter"u8);
                 writer.WriteObjectValue(CorrelationFilter);

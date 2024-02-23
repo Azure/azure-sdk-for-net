@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartIPAddress))
+            if (StartIPAddress != null)
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress);
             }
-            if (Optional.IsDefined(EndIPAddress))
+            if (EndIPAddress != null)
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress);

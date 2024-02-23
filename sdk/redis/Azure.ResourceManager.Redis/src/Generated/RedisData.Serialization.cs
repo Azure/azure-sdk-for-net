@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,39 +73,39 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RedisConfiguration))
+            if (RedisConfiguration != null)
             {
                 writer.WritePropertyName("redisConfiguration"u8);
                 writer.WriteObjectValue(RedisConfiguration);
             }
-            if (Optional.IsDefined(RedisVersion))
+            if (RedisVersion != null)
             {
                 writer.WritePropertyName("redisVersion"u8);
                 writer.WriteStringValue(RedisVersion);
             }
-            if (Optional.IsDefined(EnableNonSslPort))
+            if (EnableNonSslPort.HasValue)
             {
                 writer.WritePropertyName("enableNonSslPort"u8);
                 writer.WriteBooleanValue(EnableNonSslPort.Value);
             }
-            if (Optional.IsDefined(ReplicasPerMaster))
+            if (ReplicasPerMaster.HasValue)
             {
                 writer.WritePropertyName("replicasPerMaster"u8);
                 writer.WriteNumberValue(ReplicasPerMaster.Value);
             }
-            if (Optional.IsDefined(ReplicasPerPrimary))
+            if (ReplicasPerPrimary.HasValue)
             {
                 writer.WritePropertyName("replicasPerPrimary"u8);
                 writer.WriteNumberValue(ReplicasPerPrimary.Value);
             }
-            if (Optional.IsCollectionDefined(TenantSettings))
+            if (!(TenantSettings is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("tenantSettings"u8);
                 writer.WriteStartObject();
@@ -116,59 +116,59 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ShardCount))
+            if (ShardCount.HasValue)
             {
                 writer.WritePropertyName("shardCount"u8);
                 writer.WriteNumberValue(ShardCount.Value);
             }
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (MinimumTlsVersion.HasValue)
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateChannel))
+            if (UpdateChannel.HasValue)
             {
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(StaticIP))
+            if (StaticIP != null)
             {
                 writer.WritePropertyName("staticIP"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HostName))
+            if (options.Format != "W" && HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Port))
+            if (options.Format != "W" && Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SslPort))
+            if (options.Format != "W" && SslPort.HasValue)
             {
                 writer.WritePropertyName("sslPort"u8);
                 writer.WriteNumberValue(SslPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccessKeys))
+            if (options.Format != "W" && AccessKeys != null)
             {
                 if (AccessKeys != null)
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Redis
                     writer.WriteNull("accessKeys");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LinkedServers))
+            if (options.Format != "W" && !(LinkedServers is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("linkedServers"u8);
                 writer.WriteStartArray();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
+            if (options.Format != "W" && !(Instances is ChangeTrackingList<RedisInstanceDetails> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Redis
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<RedisPrivateEndpointConnectionData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(WeeklyRetention))
+            if (WeeklyRetention != null)
             {
                 writer.WritePropertyName("weeklyRetention"u8);
                 writer.WriteStringValue(WeeklyRetention);
             }
-            if (Optional.IsDefined(MonthlyRetention))
+            if (MonthlyRetention != null)
             {
                 writer.WritePropertyName("monthlyRetention"u8);
                 writer.WriteStringValue(MonthlyRetention);
             }
-            if (Optional.IsDefined(YearlyRetention))
+            if (YearlyRetention != null)
             {
                 writer.WritePropertyName("yearlyRetention"u8);
                 writer.WriteStringValue(YearlyRetention);
             }
-            if (Optional.IsDefined(WeekOfYear))
+            if (WeekOfYear.HasValue)
             {
                 writer.WritePropertyName("weekOfYear"u8);
                 writer.WriteNumberValue(WeekOfYear.Value);

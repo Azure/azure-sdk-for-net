@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceRestart))
+            if (ForceRestart.HasValue)
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WritePropertyName("healthPolicy"u8);
             writer.WriteObjectValue(HealthPolicy);
-            if (Optional.IsDefined(DeltaHealthPolicy))
+            if (DeltaHealthPolicy != null)
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
                 writer.WriteObjectValue(DeltaHealthPolicy);

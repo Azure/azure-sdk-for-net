@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityArmId))
+            if (IdentityArmId != null)
             {
                 writer.WritePropertyName("identityArmId"u8);
                 writer.WriteStringValue(IdentityArmId);
             }
-            if (Optional.IsDefined(IdentityName))
+            if (IdentityName != null)
             {
                 writer.WritePropertyName("identityName"u8);
                 writer.WriteStringValue(IdentityName);
             }
-            if (Optional.IsDefined(UserAssignedIdentityProperties))
+            if (UserAssignedIdentityProperties != null)
             {
                 writer.WritePropertyName("userAssignedIdentityProperties"u8);
                 JsonSerializer.Serialize(writer, UserAssignedIdentityProperties);

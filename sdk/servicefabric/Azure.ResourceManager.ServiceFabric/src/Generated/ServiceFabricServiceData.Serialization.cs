@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ServiceFabric
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlacementConstraints))
+            if (PlacementConstraints != null)
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (Optional.IsCollectionDefined(CorrelationScheme))
+            if (!(CorrelationScheme is ChangeTrackingList<ServiceCorrelationDescription> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
+            if (!(ServiceLoadMetrics is ChangeTrackingList<ServiceLoadMetricDescription> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
+            if (!(ServicePlacementPolicies is ChangeTrackingList<ServicePlacementPolicyDescription> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
@@ -104,37 +104,37 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultMoveCost))
+            if (DefaultMoveCost.HasValue)
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(ServiceKind))
+            if (ServiceKind.HasValue)
             {
                 writer.WritePropertyName("serviceKind"u8);
                 writer.WriteStringValue(ServiceKind.Value.ToString());
             }
-            if (Optional.IsDefined(ServiceTypeName))
+            if (ServiceTypeName != null)
             {
                 writer.WritePropertyName("serviceTypeName"u8);
                 writer.WriteStringValue(ServiceTypeName);
             }
-            if (Optional.IsDefined(PartitionDescription))
+            if (PartitionDescription != null)
             {
                 writer.WritePropertyName("partitionDescription"u8);
                 writer.WriteObjectValue(PartitionDescription);
             }
-            if (Optional.IsDefined(ServicePackageActivationMode))
+            if (ServicePackageActivationMode.HasValue)
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (Optional.IsDefined(ServiceDnsName))
+            if (ServiceDnsName != null)
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);

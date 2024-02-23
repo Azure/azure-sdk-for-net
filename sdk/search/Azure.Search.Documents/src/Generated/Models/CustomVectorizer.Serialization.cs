@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomWebApiParameters))
+            if (CustomWebApiParameters != null)
             {
                 writer.WritePropertyName("customWebApiParameters"u8);
                 writer.WriteObjectValue(CustomWebApiParameters);

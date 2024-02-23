@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HasPersistedState))
+            if (HasPersistedState.HasValue)
             {
                 writer.WritePropertyName("hasPersistedState"u8);
                 writer.WriteBooleanValue(HasPersistedState.Value);
             }
-            if (Optional.IsDefined(TargetReplicaSetSize))
+            if (TargetReplicaSetSize.HasValue)
             {
                 writer.WritePropertyName("targetReplicaSetSize"u8);
                 writer.WriteNumberValue(TargetReplicaSetSize.Value);
             }
-            if (Optional.IsDefined(MinReplicaSetSize))
+            if (MinReplicaSetSize.HasValue)
             {
                 writer.WritePropertyName("minReplicaSetSize"u8);
                 writer.WriteNumberValue(MinReplicaSetSize.Value);
             }
-            if (Optional.IsDefined(ReplicaRestartWaitDuration))
+            if (ReplicaRestartWaitDuration.HasValue)
             {
                 writer.WritePropertyName("replicaRestartWaitDuration"u8);
                 writer.WriteStringValue(ReplicaRestartWaitDuration.Value, "c");
             }
-            if (Optional.IsDefined(QuorumLossWaitDuration))
+            if (QuorumLossWaitDuration.HasValue)
             {
                 writer.WritePropertyName("quorumLossWaitDuration"u8);
                 writer.WriteStringValue(QuorumLossWaitDuration.Value, "c");
             }
-            if (Optional.IsDefined(StandByReplicaKeepDuration))
+            if (StandByReplicaKeepDuration.HasValue)
             {
                 writer.WritePropertyName("standByReplicaKeepDuration"u8);
                 writer.WriteStringValue(StandByReplicaKeepDuration.Value, "c");
             }
-            if (Optional.IsDefined(ServicePlacementTimeLimit))
+            if (ServicePlacementTimeLimit.HasValue)
             {
                 writer.WritePropertyName("servicePlacementTimeLimit"u8);
                 writer.WriteStringValue(ServicePlacementTimeLimit.Value, "c");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
             writer.WriteObjectValue(PartitionDescription);
-            if (Optional.IsDefined(ServicePackageActivationMode))
+            if (ServicePackageActivationMode.HasValue)
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (Optional.IsDefined(ServiceDnsName))
+            if (ServiceDnsName != null)
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
             }
-            if (Optional.IsDefined(PlacementConstraints))
+            if (PlacementConstraints != null)
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (Optional.IsCollectionDefined(CorrelationScheme))
+            if (!(CorrelationScheme is ChangeTrackingList<ManagedServiceCorrelation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
+            if (!(ServiceLoadMetrics is ChangeTrackingList<ManagedServiceLoadMetric> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
+            if (!(ServicePlacementPolicies is ChangeTrackingList<ManagedServicePlacementPolicy> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultMoveCost))
+            if (DefaultMoveCost.HasValue)
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ScalingPolicies))
+            if (!(ScalingPolicies is ChangeTrackingList<ManagedServiceScalingPolicy> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();

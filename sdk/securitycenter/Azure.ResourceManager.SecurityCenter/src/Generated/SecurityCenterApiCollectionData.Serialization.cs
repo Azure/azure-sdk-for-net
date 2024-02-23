@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiscoveredVia))
+            if (options.Format != "W" && DiscoveredVia != null)
             {
                 writer.WritePropertyName("discoveredVia"u8);
                 writer.WriteStringValue(DiscoveredVia);
             }
-            if (options.Format != "W" && Optional.IsDefined(BaseUri))
+            if (options.Format != "W" && BaseUri != null)
             {
                 writer.WritePropertyName("baseUrl"u8);
                 writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfApiEndpoints))
+            if (options.Format != "W" && NumberOfApiEndpoints.HasValue)
             {
                 writer.WritePropertyName("numberOfApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfApiEndpoints.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfInactiveApiEndpoints))
+            if (options.Format != "W" && NumberOfInactiveApiEndpoints.HasValue)
             {
                 writer.WritePropertyName("numberOfInactiveApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfInactiveApiEndpoints.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfUnauthenticatedApiEndpoints))
+            if (options.Format != "W" && NumberOfUnauthenticatedApiEndpoints.HasValue)
             {
                 writer.WritePropertyName("numberOfUnauthenticatedApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfUnauthenticatedApiEndpoints.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfExternalApiEndpoints))
+            if (options.Format != "W" && NumberOfExternalApiEndpoints.HasValue)
             {
                 writer.WritePropertyName("numberOfExternalApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfExternalApiEndpoints.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfApiEndpointsWithSensitiveDataExposed))
+            if (options.Format != "W" && NumberOfApiEndpointsWithSensitiveDataExposed.HasValue)
             {
                 writer.WritePropertyName("numberOfApiEndpointsWithSensitiveDataExposed"u8);
                 writer.WriteNumberValue(NumberOfApiEndpointsWithSensitiveDataExposed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SensitivityLabel))
+            if (options.Format != "W" && SensitivityLabel != null)
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
                 writer.WriteStringValue(SensitivityLabel);

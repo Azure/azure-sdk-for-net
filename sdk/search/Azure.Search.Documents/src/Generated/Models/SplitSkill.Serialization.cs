@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (DefaultLanguageCode.HasValue)
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(TextSplitMode))
+            if (TextSplitMode.HasValue)
             {
                 writer.WritePropertyName("textSplitMode"u8);
                 writer.WriteStringValue(TextSplitMode.Value.ToString());
             }
-            if (Optional.IsDefined(MaximumPageLength))
+            if (MaximumPageLength.HasValue)
             {
                 if (MaximumPageLength != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumPageLength");
                 }
             }
-            if (Optional.IsDefined(PageOverlapLength))
+            if (PageOverlapLength.HasValue)
             {
                 if (PageOverlapLength != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("pageOverlapLength");
                 }
             }
-            if (Optional.IsDefined(MaximumPagesToTake))
+            if (MaximumPagesToTake.HasValue)
             {
                 if (MaximumPagesToTake != null)
                 {
@@ -71,17 +71,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);

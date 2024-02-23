@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code.HasValue)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastScannedOn))
+            if (options.Format != "W" && LastScannedOn.HasValue)
             {
                 writer.WritePropertyName("lastScannedDate"u8);
                 writer.WriteStringValue(LastScannedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusChangeOn))
+            if (options.Format != "W" && StatusChangeOn.HasValue)
             {
                 writer.WritePropertyName("statusChangeDate"u8);
                 writer.WriteStringValue(StatusChangeOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstEvaluationOn))
+            if (options.Format != "W" && FirstEvaluationOn.HasValue)
             {
                 writer.WritePropertyName("firstEvaluationDate"u8);
                 writer.WriteStringValue(FirstEvaluationOn.Value, "O");
