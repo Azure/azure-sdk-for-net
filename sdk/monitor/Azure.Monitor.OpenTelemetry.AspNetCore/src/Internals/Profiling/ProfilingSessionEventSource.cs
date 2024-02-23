@@ -194,11 +194,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
             // Also truncates the value to a reasonably length.
             static string SafeConvertToString(object? value)
             {
-                const int maxLength = 128;
+                // The limit is somewhat arbitrary. We want to be able to
+                // represent any *reasonable* attribute values without blowing
+                // up the total event payload.
+                const int maxSensibleLength = 200;
                 try
                 {
                     string converted = Convert.ToString(value, InvariantCulture) ?? string.Empty;
-                    return converted.Length <= maxLength ? converted : converted.Substring(0, maxLength);
+                    return converted.Length <= maxSensibleLength ? converted : converted.Substring(0, maxSensibleLength);
                 }
                 catch // In case value's ToString implementation throws.
                 {
