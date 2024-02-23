@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServices
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.RecoveryServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IntegrityKey))
+            if (IntegrityKey != null)
             {
                 writer.WritePropertyName("integrityKey"u8);
                 writer.WriteStringValue(IntegrityKey);
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (EncryptionKey != null)
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteStringValue(EncryptionKey);
             }
-            if (Optional.IsDefined(EncryptionKeyThumbprint))
+            if (EncryptionKeyThumbprint != null)
             {
                 writer.WritePropertyName("encryptionKeyThumbprint"u8);
                 writer.WriteStringValue(EncryptionKeyThumbprint);
             }
-            if (Optional.IsDefined(Algorithm))
+            if (Algorithm != null)
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm);

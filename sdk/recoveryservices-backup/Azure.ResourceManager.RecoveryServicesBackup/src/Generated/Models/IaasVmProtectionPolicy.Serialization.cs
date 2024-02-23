@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstantRPDetails))
+            if (InstantRPDetails != null)
             {
                 writer.WritePropertyName("instantRPDetails"u8);
                 writer.WriteObjectValue(InstantRPDetails);
             }
-            if (Optional.IsDefined(SchedulePolicy))
+            if (SchedulePolicy != null)
             {
                 writer.WritePropertyName("schedulePolicy"u8);
                 writer.WriteObjectValue(SchedulePolicy);
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (RetentionPolicy != null)
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Optional.IsCollectionDefined(TieringPolicy))
+            if (!(TieringPolicy is ChangeTrackingDictionary<string, BackupTieringPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tieringPolicy"u8);
                 writer.WriteStartObject();
@@ -52,29 +52,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InstantRPRetentionRangeInDays))
+            if (InstantRPRetentionRangeInDays.HasValue)
             {
                 writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
                 writer.WriteNumberValue(InstantRPRetentionRangeInDays.Value);
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(PolicyType))
+            if (PolicyType.HasValue)
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(ProtectedItemsCount))
+            if (ProtectedItemsCount.HasValue)
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();

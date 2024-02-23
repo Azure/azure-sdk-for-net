@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ProcessServers))
+            if (!(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MasterTargetServers))
+            if (!(MasterTargetServers is ChangeTrackingList<MasterTargetServer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("masterTargetServers"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RunAsAccounts))
+            if (!(RunAsAccounts is ChangeTrackingList<SiteRecoveryRunAsAccount> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("runAsAccounts"u8);
                 writer.WriteStartArray();
@@ -57,152 +57,152 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReplicationPairCount))
+            if (ReplicationPairCount != null)
             {
                 writer.WritePropertyName("replicationPairCount"u8);
                 writer.WriteStringValue(ReplicationPairCount);
             }
-            if (Optional.IsDefined(ProcessServerCount))
+            if (ProcessServerCount != null)
             {
                 writer.WritePropertyName("processServerCount"u8);
                 writer.WriteStringValue(ProcessServerCount);
             }
-            if (Optional.IsDefined(AgentCount))
+            if (AgentCount != null)
             {
                 writer.WritePropertyName("agentCount"u8);
                 writer.WriteStringValue(AgentCount);
             }
-            if (Optional.IsDefined(ProtectedServers))
+            if (ProtectedServers != null)
             {
                 writer.WritePropertyName("protectedServers"u8);
                 writer.WriteStringValue(ProtectedServers);
             }
-            if (Optional.IsDefined(SystemLoad))
+            if (SystemLoad != null)
             {
                 writer.WritePropertyName("systemLoad"u8);
                 writer.WriteStringValue(SystemLoad);
             }
-            if (Optional.IsDefined(SystemLoadStatus))
+            if (SystemLoadStatus != null)
             {
                 writer.WritePropertyName("systemLoadStatus"u8);
                 writer.WriteStringValue(SystemLoadStatus);
             }
-            if (Optional.IsDefined(CpuLoad))
+            if (CpuLoad != null)
             {
                 writer.WritePropertyName("cpuLoad"u8);
                 writer.WriteStringValue(CpuLoad);
             }
-            if (Optional.IsDefined(CpuLoadStatus))
+            if (CpuLoadStatus != null)
             {
                 writer.WritePropertyName("cpuLoadStatus"u8);
                 writer.WriteStringValue(CpuLoadStatus);
             }
-            if (Optional.IsDefined(TotalMemoryInBytes))
+            if (TotalMemoryInBytes.HasValue)
             {
                 writer.WritePropertyName("totalMemoryInBytes"u8);
                 writer.WriteNumberValue(TotalMemoryInBytes.Value);
             }
-            if (Optional.IsDefined(AvailableMemoryInBytes))
+            if (AvailableMemoryInBytes.HasValue)
             {
                 writer.WritePropertyName("availableMemoryInBytes"u8);
                 writer.WriteNumberValue(AvailableMemoryInBytes.Value);
             }
-            if (Optional.IsDefined(MemoryUsageStatus))
+            if (MemoryUsageStatus != null)
             {
                 writer.WritePropertyName("memoryUsageStatus"u8);
                 writer.WriteStringValue(MemoryUsageStatus);
             }
-            if (Optional.IsDefined(TotalSpaceInBytes))
+            if (TotalSpaceInBytes.HasValue)
             {
                 writer.WritePropertyName("totalSpaceInBytes"u8);
                 writer.WriteNumberValue(TotalSpaceInBytes.Value);
             }
-            if (Optional.IsDefined(AvailableSpaceInBytes))
+            if (AvailableSpaceInBytes.HasValue)
             {
                 writer.WritePropertyName("availableSpaceInBytes"u8);
                 writer.WriteNumberValue(AvailableSpaceInBytes.Value);
             }
-            if (Optional.IsDefined(SpaceUsageStatus))
+            if (SpaceUsageStatus != null)
             {
                 writer.WritePropertyName("spaceUsageStatus"u8);
                 writer.WriteStringValue(SpaceUsageStatus);
             }
-            if (Optional.IsDefined(WebLoad))
+            if (WebLoad != null)
             {
                 writer.WritePropertyName("webLoad"u8);
                 writer.WriteStringValue(WebLoad);
             }
-            if (Optional.IsDefined(WebLoadStatus))
+            if (WebLoadStatus != null)
             {
                 writer.WritePropertyName("webLoadStatus"u8);
                 writer.WriteStringValue(WebLoadStatus);
             }
-            if (Optional.IsDefined(DatabaseServerLoad))
+            if (DatabaseServerLoad != null)
             {
                 writer.WritePropertyName("databaseServerLoad"u8);
                 writer.WriteStringValue(DatabaseServerLoad);
             }
-            if (Optional.IsDefined(DatabaseServerLoadStatus))
+            if (DatabaseServerLoadStatus != null)
             {
                 writer.WritePropertyName("databaseServerLoadStatus"u8);
                 writer.WriteStringValue(DatabaseServerLoadStatus);
             }
-            if (Optional.IsDefined(CsServiceStatus))
+            if (CsServiceStatus != null)
             {
                 writer.WritePropertyName("csServiceStatus"u8);
                 writer.WriteStringValue(CsServiceStatus);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(LastHeartbeat))
+            if (LastHeartbeat.HasValue)
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeat.Value, "O");
             }
-            if (Optional.IsDefined(VersionStatus))
+            if (VersionStatus != null)
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsDefined(SslCertExpireOn))
+            if (SslCertExpireOn.HasValue)
             {
                 writer.WritePropertyName("sslCertExpiryDate"u8);
                 writer.WriteStringValue(SslCertExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(SslCertExpiryRemainingDays))
+            if (SslCertExpiryRemainingDays.HasValue)
             {
                 writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
                 writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
             }
-            if (Optional.IsDefined(PSTemplateVersion))
+            if (PSTemplateVersion != null)
             {
                 writer.WritePropertyName("psTemplateVersion"u8);
                 writer.WriteStringValue(PSTemplateVersion);
             }
-            if (Optional.IsDefined(AgentExpireOn))
+            if (AgentExpireOn.HasValue)
             {
                 writer.WritePropertyName("agentExpiryDate"u8);
                 writer.WriteStringValue(AgentExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(AgentVersionDetails))
+            if (AgentVersionDetails != null)
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
                 writer.WriteObjectValue(AgentVersionDetails);
             }
-            if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+            if (!(SwitchProviderBlockingErrorDetails is ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
                 writer.WriteStartArray();

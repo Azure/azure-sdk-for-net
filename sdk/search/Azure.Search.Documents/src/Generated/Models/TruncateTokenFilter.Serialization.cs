@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Length))
+            if (Length.HasValue)
             {
                 writer.WritePropertyName("length"u8);
                 writer.WriteNumberValue(Length.Value);

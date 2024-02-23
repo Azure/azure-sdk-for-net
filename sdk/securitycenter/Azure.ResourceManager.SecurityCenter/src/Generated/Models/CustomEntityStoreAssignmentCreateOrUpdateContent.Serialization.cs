@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Principal))
+            if (Principal != null)
             {
                 writer.WritePropertyName("principal"u8);
                 writer.WriteStringValue(Principal);

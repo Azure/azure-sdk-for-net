@@ -100,7 +100,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlFirewallRuleResource>(Response.FromValue(new SqlFirewallRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _sqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<SqlFirewallRuleResource>(Response.FromValue(new SqlFirewallRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -159,7 +161,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlFirewallRuleFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlFirewallRuleResource>(Response.FromValue(new SqlFirewallRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _sqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<SqlFirewallRuleResource>(Response.FromValue(new SqlFirewallRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

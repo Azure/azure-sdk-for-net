@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionType))
+            if (SolutionType.HasValue)
             {
                 if (SolutionType != null)
                 {

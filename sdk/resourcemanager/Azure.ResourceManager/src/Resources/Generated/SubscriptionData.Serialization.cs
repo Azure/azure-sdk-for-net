@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SubscriptionPolicies))
+            if (SubscriptionPolicies != null)
             {
                 writer.WritePropertyName("subscriptionPolicies"u8);
                 writer.WriteObjectValue(SubscriptionPolicies);
             }
-            if (Optional.IsDefined(AuthorizationSource))
+            if (AuthorizationSource != null)
             {
                 writer.WritePropertyName("authorizationSource"u8);
                 writer.WriteStringValue(AuthorizationSource);
             }
-            if (Optional.IsCollectionDefined(ManagedByTenants))
+            if (!(ManagedByTenants is ChangeTrackingList<ManagedByTenant> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByTenants"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

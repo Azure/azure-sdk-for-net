@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ResourceSelectors))
+            if (!(ResourceSelectors is ChangeTrackingList<ResourceSelector> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Overrides))
+            if (!(Overrides is ChangeTrackingList<PolicyOverride> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();

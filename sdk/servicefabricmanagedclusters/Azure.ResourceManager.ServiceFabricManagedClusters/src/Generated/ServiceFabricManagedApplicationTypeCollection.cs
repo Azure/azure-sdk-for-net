@@ -100,7 +100,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             try
             {
                 var response = await _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeResource>(Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeResource>(Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -159,7 +161,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             try
             {
                 var response = _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data, cancellationToken);
-                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeResource>(Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceFabricManagedApplicationTypeApplicationTypesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeResource>(Response.FromValue(new ServiceFabricManagedApplicationTypeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

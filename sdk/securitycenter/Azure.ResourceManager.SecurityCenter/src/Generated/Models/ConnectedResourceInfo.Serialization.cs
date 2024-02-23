@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConnectedResourceId))
+            if (options.Format != "W" && ConnectedResourceId != null)
             {
                 writer.WritePropertyName("connectedResourceId"u8);
                 writer.WriteStringValue(ConnectedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TcpPorts))
+            if (options.Format != "W" && TcpPorts != null)
             {
                 writer.WritePropertyName("tcpPorts"u8);
                 writer.WriteStringValue(TcpPorts);
             }
-            if (options.Format != "W" && Optional.IsDefined(UdpPorts))
+            if (options.Format != "W" && UdpPorts != null)
             {
                 writer.WritePropertyName("udpPorts"u8);
                 writer.WriteStringValue(UdpPorts);

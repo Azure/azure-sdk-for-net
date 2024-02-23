@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("failoverDirection"u8);
             writer.WriteStringValue(FailoverDirection.ToString());
-            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
+            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();

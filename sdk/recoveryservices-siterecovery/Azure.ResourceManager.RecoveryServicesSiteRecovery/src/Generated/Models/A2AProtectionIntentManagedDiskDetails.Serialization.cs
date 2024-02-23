@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
+            if (PrimaryStagingStorageAccountCustomContent != null)
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
             }
-            if (Optional.IsDefined(RecoveryResourceGroupCustomContent))
+            if (RecoveryResourceGroupCustomContent != null)
             {
                 writer.WritePropertyName("recoveryResourceGroupCustomInput"u8);
                 writer.WriteObjectValue(RecoveryResourceGroupCustomContent);
             }
-            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
+            if (RecoveryReplicaDiskAccountType != null)
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
-            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
+            if (RecoveryTargetDiskAccountType != null)
             {
                 writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
-            if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
+            if (RecoveryDiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("recoveryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(RecoveryDiskEncryptionSetId);
             }
-            if (Optional.IsDefined(DiskEncryptionInfo))
+            if (DiskEncryptionInfo != null)
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);

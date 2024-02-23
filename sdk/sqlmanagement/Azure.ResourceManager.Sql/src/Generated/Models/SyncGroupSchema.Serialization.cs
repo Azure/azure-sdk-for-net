@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tables))
+            if (!(Tables is ChangeTrackingList<SyncGroupSchemaTable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MasterSyncMemberName))
+            if (MasterSyncMemberName != null)
             {
                 writer.WritePropertyName("masterSyncMemberName"u8);
                 writer.WriteStringValue(MasterSyncMemberName);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(KeyType))
+            if (options.Format != "W" && KeyType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Subregion))
+            if (options.Format != "W" && Subregion != null)
             {
                 writer.WritePropertyName("subregion"u8);
                 writer.WriteStringValue(Subregion);

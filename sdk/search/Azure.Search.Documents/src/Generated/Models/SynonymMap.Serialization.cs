@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Format);
             writer.WritePropertyName("synonyms"u8);
             writer.WriteStringValue(Synonyms);
-            if (Optional.IsDefined(EncryptionKey))
+            if (EncryptionKey != null)
             {
                 if (EncryptionKey != null)
                 {
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey");
                 }
             }
-            if (Optional.IsDefined(_etag))
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);

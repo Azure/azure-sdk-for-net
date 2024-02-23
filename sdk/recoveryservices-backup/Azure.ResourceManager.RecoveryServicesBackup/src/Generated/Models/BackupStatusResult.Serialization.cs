@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtectionStatus))
+            if (ProtectionStatus.HasValue)
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(VaultId))
+            if (VaultId != null)
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
             }
-            if (Optional.IsDefined(FabricName))
+            if (FabricName.HasValue)
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName.Value.ToString());
             }
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(ProtectedItemName))
+            if (ProtectedItemName != null)
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(PolicyName))
+            if (PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(RegistrationStatus))
+            if (RegistrationStatus != null)
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Optional.IsDefined(ProtectedItemsCount))
+            if (ProtectedItemsCount.HasValue)
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            if (Optional.IsDefined(AcquireStorageAccountLock))
+            if (AcquireStorageAccountLock.HasValue)
             {
                 writer.WritePropertyName("acquireStorageAccountLock"u8);
                 writer.WriteStringValue(AcquireStorageAccountLock.Value.ToString());
