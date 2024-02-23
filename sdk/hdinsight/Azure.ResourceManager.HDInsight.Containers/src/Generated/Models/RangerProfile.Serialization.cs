@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("rangerAdmin"u8);
             writer.WriteObjectValue(RangerAdmin);
-            if (Optional.IsDefined(RangerAudit))
+            if (RangerAudit != null)
             {
                 writer.WritePropertyName("rangerAudit"u8);
                 writer.WriteObjectValue(RangerAudit);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("rangerAdmin"u8))
                 {
-                    rangerAdmin = RangerAdminSpec.DeserializeRangerAdminSpec(property.Value);
+                    rangerAdmin = RangerAdminSpec.DeserializeRangerAdminSpec(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rangerAudit"u8))
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    rangerAudit = RangerAuditSpec.DeserializeRangerAuditSpec(property.Value);
+                    rangerAudit = RangerAuditSpec.DeserializeRangerAuditSpec(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rangerUsersync"u8))
                 {
-                    rangerUsersync = RangerUsersyncSpec.DeserializeRangerUsersyncSpec(property.Value);
+                    rangerUsersync = RangerUsersyncSpec.DeserializeRangerUsersyncSpec(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

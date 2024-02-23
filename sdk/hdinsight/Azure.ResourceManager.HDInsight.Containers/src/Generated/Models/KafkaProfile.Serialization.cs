@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableKRaft))
+            if (EnableKRaft.HasValue)
             {
                 writer.WritePropertyName("enableKRaft"u8);
                 writer.WriteBooleanValue(EnableKRaft.Value);
             }
-            if (Optional.IsDefined(EnablePublicEndpoints))
+            if (EnablePublicEndpoints.HasValue)
             {
                 writer.WritePropertyName("enablePublicEndpoints"u8);
                 writer.WriteBooleanValue(EnablePublicEndpoints.Value);
             }
-            if (Optional.IsDefined(RemoteStorageUri))
+            if (RemoteStorageUri != null)
             {
                 writer.WritePropertyName("remoteStorageUri"u8);
                 writer.WriteStringValue(RemoteStorageUri.AbsoluteUri);
             }
             writer.WritePropertyName("diskStorage"u8);
             writer.WriteObjectValue(DiskStorage);
-            if (options.Format != "W" && Optional.IsDefined(ClusterIdentity))
+            if (options.Format != "W" && ClusterIdentity != null)
             {
                 writer.WritePropertyName("clusterIdentity"u8);
                 writer.WriteObjectValue(ClusterIdentity);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
+            if (options.Format != "W" && ConnectivityEndpoints != null)
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteObjectValue(ConnectivityEndpoints);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("diskStorage"u8))
                 {
-                    diskStorage = DiskStorageProfile.DeserializeDiskStorageProfile(property.Value);
+                    diskStorage = DiskStorageProfile.DeserializeDiskStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clusterIdentity"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    clusterIdentity = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value);
+                    clusterIdentity = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectivityEndpoints"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    connectivityEndpoints = KafkaConnectivityEndpoints.DeserializeKafkaConnectivityEndpoints(property.Value);
+                    connectivityEndpoints = KafkaConnectivityEndpoints.DeserializeKafkaConnectivityEndpoints(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

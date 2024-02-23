@@ -53,9 +53,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/>, <paramref name="ossVersion"/> or <paramref name="authorizationProfile"/> is null. </exception>
         public ClusterProfile(string clusterVersion, string ossVersion, AuthorizationProfile authorizationProfile)
         {
-            Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
-            Argument.AssertNotNull(ossVersion, nameof(ossVersion));
-            Argument.AssertNotNull(authorizationProfile, nameof(authorizationProfile));
+            if (clusterVersion == null)
+            {
+                throw new ArgumentNullException(nameof(clusterVersion));
+            }
+            if (ossVersion == null)
+            {
+                throw new ArgumentNullException(nameof(ossVersion));
+            }
+            if (authorizationProfile == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationProfile));
+            }
 
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;

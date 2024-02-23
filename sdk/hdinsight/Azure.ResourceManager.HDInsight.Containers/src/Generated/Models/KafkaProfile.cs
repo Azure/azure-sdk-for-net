@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskStorage"/> is null. </exception>
         public KafkaProfile(DiskStorageProfile diskStorage)
         {
-            Argument.AssertNotNull(diskStorage, nameof(diskStorage));
+            if (diskStorage == null)
+            {
+                throw new ArgumentNullException(nameof(diskStorage));
+            }
 
             DiskStorage = diskStorage;
         }

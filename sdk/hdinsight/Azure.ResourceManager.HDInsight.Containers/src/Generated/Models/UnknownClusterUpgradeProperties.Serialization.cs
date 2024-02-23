@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownClusterUpgradeProperties(document.RootElement, options);
+            return DeserializeClusterUpgradeProperties(document.RootElement, options);
         }
 
         internal static UnknownClusterUpgradeProperties DeserializeUnknownClusterUpgradeProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownClusterUpgradeProperties(document.RootElement, options);
+                        return DeserializeClusterUpgradeProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ClusterUpgradeProperties)} does not support '{options.Format}' format.");

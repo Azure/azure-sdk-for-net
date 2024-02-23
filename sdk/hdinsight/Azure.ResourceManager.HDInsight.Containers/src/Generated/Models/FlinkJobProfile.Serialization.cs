@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(JobJarDirectory);
             writer.WritePropertyName("jarName"u8);
             writer.WriteStringValue(JarName);
-            if (Optional.IsDefined(EntryClass))
+            if (EntryClass != null)
             {
                 writer.WritePropertyName("entryClass"u8);
                 writer.WriteStringValue(EntryClass);
             }
-            if (Optional.IsDefined(Args))
+            if (Args != null)
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStringValue(Args);
             }
-            if (Optional.IsDefined(SavePointName))
+            if (SavePointName != null)
             {
                 writer.WritePropertyName("savePointName"u8);
                 writer.WriteStringValue(SavePointName);

@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("prometheusProfile"u8);
                 writer.WriteObjectValue(PrometheusProfile);
             }
-            if (Optional.IsDefined(RangerPluginProfile))
+            if (RangerPluginProfile != null)
             {
                 writer.WritePropertyName("rangerPluginProfile"u8);
                 writer.WriteObjectValue(RangerPluginProfile);
             }
-            if (Optional.IsDefined(RangerProfile))
+            if (RangerProfile != null)
             {
                 writer.WritePropertyName("rangerProfile"u8);
                 writer.WriteObjectValue(RangerProfile);
             }
-            if (Optional.IsCollectionDefined(ScriptActionProfiles))
+            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value);
+                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rangerProfile"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value);
+                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scriptActionProfiles"u8))

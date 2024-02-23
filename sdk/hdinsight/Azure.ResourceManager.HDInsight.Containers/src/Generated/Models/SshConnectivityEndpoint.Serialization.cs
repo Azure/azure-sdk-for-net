@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint);
-            if (Optional.IsDefined(PrivateSshEndpoint))
+            if (PrivateSshEndpoint != null)
             {
                 writer.WritePropertyName("privateSshEndpoint"u8);
                 writer.WriteStringValue(PrivateSshEndpoint);

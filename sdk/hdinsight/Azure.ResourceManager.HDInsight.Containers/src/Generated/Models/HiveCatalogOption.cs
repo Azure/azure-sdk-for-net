@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/>, <paramref name="metastoreDBConnectionUriString"/> or <paramref name="metastoreWarehouseDir"/> is null. </exception>
         public HiveCatalogOption(string catalogName, string metastoreDBConnectionUriString, string metastoreWarehouseDir)
         {
-            Argument.AssertNotNull(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(metastoreDBConnectionUriString, nameof(metastoreDBConnectionUriString));
-            Argument.AssertNotNull(metastoreWarehouseDir, nameof(metastoreWarehouseDir));
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (metastoreDBConnectionUriString == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreDBConnectionUriString));
+            }
+            if (metastoreWarehouseDir == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreWarehouseDir));
+            }
 
             CatalogName = catalogName;
             MetastoreDBConnectionUriString = metastoreDBConnectionUriString;

@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("catalogName"u8);
             writer.WriteStringValue(CatalogName);
-            if (Optional.IsDefined(MetastoreDBConnectionAuthenticationMode))
+            if (MetastoreDBConnectionAuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("metastoreDbConnectionAuthenticationMode"u8);
                 writer.WriteStringValue(MetastoreDBConnectionAuthenticationMode.Value.ToString());
             }
-            if (Optional.IsDefined(MetastoreDBConnectionPasswordSecret))
+            if (MetastoreDBConnectionPasswordSecret != null)
             {
                 writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
                 writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
             }
             writer.WritePropertyName("metastoreDbConnectionURL"u8);
             writer.WriteStringValue(MetastoreDBConnectionUriString);
-            if (Optional.IsDefined(MetastoreDBConnectionUserName))
+            if (MetastoreDBConnectionUserName != null)
             {
                 writer.WritePropertyName("metastoreDbConnectionUserName"u8);
                 writer.WriteStringValue(MetastoreDBConnectionUserName);

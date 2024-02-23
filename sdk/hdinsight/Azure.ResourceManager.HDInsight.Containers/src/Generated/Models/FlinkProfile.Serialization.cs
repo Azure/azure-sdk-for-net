@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
-            if (Optional.IsDefined(DeploymentMode))
+            if (DeploymentMode.HasValue)
             {
                 writer.WritePropertyName("deploymentMode"u8);
                 writer.WriteStringValue(DeploymentMode.Value.ToString());
             }
-            if (Optional.IsDefined(JobSpec))
+            if (JobSpec != null)
             {
                 writer.WritePropertyName("jobSpec"u8);
                 writer.WriteObjectValue(JobSpec);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    jobSpec = FlinkJobProfile.DeserializeFlinkJobProfile(property.Value);
+                    jobSpec = FlinkJobProfile.DeserializeFlinkJobProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

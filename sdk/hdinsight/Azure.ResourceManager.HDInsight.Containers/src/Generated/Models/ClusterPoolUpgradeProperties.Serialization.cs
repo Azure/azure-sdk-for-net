@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AKSPatchUpgrade": return ClusterPoolAKSPatchVersionUpgradeProperties.DeserializeClusterPoolAKSPatchVersionUpgradeProperties(element);
-                    case "NodeOsUpgrade": return ClusterPoolNodeOSImageUpdateProperties.DeserializeClusterPoolNodeOSImageUpdateProperties(element);
+                    case "AKSPatchUpgrade": return ClusterPoolAKSPatchVersionUpgradeProperties.DeserializeClusterPoolAKSPatchVersionUpgradeProperties(element, options);
+                    case "NodeOsUpgrade": return ClusterPoolNodeOSImageUpdateProperties.DeserializeClusterPoolNodeOSImageUpdateProperties(element, options);
                 }
             }
-            return UnknownClusterPoolUpgradeProperties.DeserializeUnknownClusterPoolUpgradeProperties(element);
+            return UnknownClusterPoolUpgradeProperties.DeserializeUnknownClusterPoolUpgradeProperties(element, options);
         }
 
         BinaryData IPersistableModel<ClusterPoolUpgradeProperties>.Write(ModelReaderWriterOptions options)

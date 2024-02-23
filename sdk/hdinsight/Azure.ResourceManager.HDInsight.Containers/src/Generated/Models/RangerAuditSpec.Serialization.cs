@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccount))
+            if (StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);

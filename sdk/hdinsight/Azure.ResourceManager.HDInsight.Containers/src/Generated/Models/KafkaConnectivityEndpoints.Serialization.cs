@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BootstrapServerEndpoint))
+            if (BootstrapServerEndpoint != null)
             {
                 writer.WritePropertyName("bootstrapServerEndpoint"u8);
                 writer.WriteStringValue(BootstrapServerEndpoint);
             }
-            if (Optional.IsCollectionDefined(BrokerEndpoints))
+            if (!(BrokerEndpoints is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("brokerEndpoints"u8);
                 writer.WriteStartArray();

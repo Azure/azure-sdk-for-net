@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(Host);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(PasswordSecretRef))
+            if (PasswordSecretRef != null)
             {
                 writer.WritePropertyName("passwordSecretRef"u8);
                 writer.WriteStringValue(PasswordSecretRef);
             }
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);

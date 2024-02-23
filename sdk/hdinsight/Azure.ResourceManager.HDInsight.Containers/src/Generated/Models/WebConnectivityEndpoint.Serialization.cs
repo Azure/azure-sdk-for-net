@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("fqdn"u8);
             writer.WriteStringValue(Fqdn);
-            if (Optional.IsDefined(PrivateFqdn))
+            if (PrivateFqdn != null)
             {
                 writer.WritePropertyName("privateFqdn"u8);
                 writer.WriteStringValue(PrivateFqdn);

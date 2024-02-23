@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metastoreDBConnectionUriString"/> is null. </exception>
         public FlinkHiveCatalogOption(string metastoreDBConnectionUriString)
         {
-            Argument.AssertNotNull(metastoreDBConnectionUriString, nameof(metastoreDBConnectionUriString));
+            if (metastoreDBConnectionUriString == null)
+            {
+                throw new ArgumentNullException(nameof(metastoreDBConnectionUriString));
+            }
 
             MetastoreDBConnectionUriString = metastoreDBConnectionUriString;
         }

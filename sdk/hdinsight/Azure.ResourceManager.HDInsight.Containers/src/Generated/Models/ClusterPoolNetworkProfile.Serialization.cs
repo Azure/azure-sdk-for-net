@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (Optional.IsDefined(OutboundType))
+            if (OutboundType.HasValue)
             {
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType.Value.ToString());
             }
-            if (Optional.IsDefined(EnablePrivateApiServer))
+            if (EnablePrivateApiServer.HasValue)
             {
                 writer.WritePropertyName("enablePrivateApiServer"u8);
                 writer.WriteBooleanValue(EnablePrivateApiServer.Value);
             }
-            if (Optional.IsCollectionDefined(ApiServerAuthorizedIPRanges))
+            if (!(ApiServerAuthorizedIPRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("apiServerAuthorizedIpRanges"u8);
                 writer.WriteStartArray();

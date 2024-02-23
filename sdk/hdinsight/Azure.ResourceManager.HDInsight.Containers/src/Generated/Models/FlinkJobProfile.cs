@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="jobJarDirectory"/> or <paramref name="jarName"/> is null. </exception>
         public FlinkJobProfile(string jobJarDirectory, string jarName, UpgradeMode upgradeMode)
         {
-            Argument.AssertNotNull(jobJarDirectory, nameof(jobJarDirectory));
-            Argument.AssertNotNull(jarName, nameof(jarName));
+            if (jobJarDirectory == null)
+            {
+                throw new ArgumentNullException(nameof(jobJarDirectory));
+            }
+            if (jarName == null)
+            {
+                throw new ArgumentNullException(nameof(jarName));
+            }
 
             JobJarDirectory = jobJarDirectory;
             JarName = jarName;

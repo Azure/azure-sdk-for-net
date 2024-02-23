@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsCollectionDefined(Groups))
+            if (!(Groups is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(UserMappingLocation))
+            if (UserMappingLocation != null)
             {
                 writer.WritePropertyName("userMappingLocation"u8);
                 writer.WriteStringValue(UserMappingLocation);
             }
-            if (Optional.IsCollectionDefined(Users))
+            if (!(Users is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("users"u8);
                 writer.WriteStartArray();

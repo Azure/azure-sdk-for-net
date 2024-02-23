@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RunId))
+            if (RunId != null)
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);
             }
-            if (Optional.IsDefined(JobName))
+            if (JobName != null)
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Optional.IsDefined(JobJarDirectory))
+            if (JobJarDirectory != null)
             {
                 writer.WritePropertyName("jobJarDirectory"u8);
                 writer.WriteStringValue(JobJarDirectory);

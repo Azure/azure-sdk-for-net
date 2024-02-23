@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IdentityProfile))
+            if (IdentityProfile != null)
             {
                 writer.WritePropertyName("identityProfile"u8);
                 writer.WriteObjectValue(IdentityProfile);
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("connectivityProfile"u8);
                 writer.WriteObjectValue(ConnectivityProfile);
             }
-            if (Optional.IsDefined(ClusterAccessProfile))
+            if (ClusterAccessProfile != null)
             {
                 writer.WritePropertyName("clusterAccessProfile"u8);
                 writer.WriteObjectValue(ClusterAccessProfile);
             }
-            if (Optional.IsDefined(LogAnalyticsProfile))
+            if (LogAnalyticsProfile != null)
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
                 writer.WriteObjectValue(LogAnalyticsProfile);
@@ -92,22 +92,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("autoscaleProfile"u8);
                 writer.WriteObjectValue(AutoscaleProfile);
             }
-            if (Optional.IsDefined(RangerPluginProfile))
+            if (RangerPluginProfile != null)
             {
                 writer.WritePropertyName("rangerPluginProfile"u8);
                 writer.WriteObjectValue(RangerPluginProfile);
             }
-            if (Optional.IsDefined(KafkaProfile))
+            if (KafkaProfile != null)
             {
                 writer.WritePropertyName("kafkaProfile"u8);
                 writer.WriteObjectValue(KafkaProfile);
             }
-            if (Optional.IsDefined(TrinoProfile))
+            if (TrinoProfile != null)
             {
                 writer.WritePropertyName("trinoProfile"u8);
                 writer.WriteObjectValue(TrinoProfile);
             }
-            if (!(LlapProfile is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
+            if (!(LlapProfile is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("llapProfile"u8);
                 writer.WriteStartObject();
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("sparkProfile"u8);
                 writer.WriteObjectValue(SparkProfile);
             }
-            if (Optional.IsDefined(RangerProfile))
+            if (RangerProfile != null)
             {
                 writer.WritePropertyName("rangerProfile"u8);
                 writer.WriteObjectValue(RangerProfile);
             }
-            if (Optional.IsCollectionDefined(StubProfile))
+            if (!(StubProfile is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("stubProfile"u8);
                 writer.WriteStartObject();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection4 && collection4.IsUndefined))
+            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterComponentItem> array = new List<ClusterComponentItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterComponentItem.DeserializeClusterComponentItem(item));
+                        array.Add(ClusterComponentItem.DeserializeClusterComponentItem(item, options));
                     }
                     components = array;
                     continue;
@@ -272,12 +272,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    identityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value);
+                    identityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationProfile"u8))
                 {
-                    authorizationProfile = AuthorizationProfile.DeserializeAuthorizationProfile(property.Value);
+                    authorizationProfile = AuthorizationProfile.DeserializeAuthorizationProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretsProfile"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    secretsProfile = ClusterSecretsProfile.DeserializeClusterSecretsProfile(property.Value);
+                    secretsProfile = ClusterSecretsProfile.DeserializeClusterSecretsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceConfigsProfiles"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterServiceConfigsProfile> array = new List<ClusterServiceConfigsProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServiceConfigsProfile.DeserializeClusterServiceConfigsProfile(item));
+                        array.Add(ClusterServiceConfigsProfile.DeserializeClusterServiceConfigsProfile(item, options));
                     }
                     serviceConfigsProfiles = array;
                     continue;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    connectivityProfile = ClusterConnectivityProfile.DeserializeClusterConnectivityProfile(property.Value);
+                    connectivityProfile = ClusterConnectivityProfile.DeserializeClusterConnectivityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clusterAccessProfile"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    clusterAccessProfile = ClusterAccessProfile.DeserializeClusterAccessProfile(property.Value);
+                    clusterAccessProfile = ClusterAccessProfile.DeserializeClusterAccessProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logAnalyticsProfile"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    logAnalyticsProfile = ClusterLogAnalyticsProfile.DeserializeClusterLogAnalyticsProfile(property.Value);
+                    logAnalyticsProfile = ClusterLogAnalyticsProfile.DeserializeClusterLogAnalyticsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("prometheusProfile"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    prometheusProfile = ClusterPrometheusProfile.DeserializeClusterPrometheusProfile(property.Value);
+                    prometheusProfile = ClusterPrometheusProfile.DeserializeClusterPrometheusProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshProfile"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    sshProfile = ClusterSshProfile.DeserializeClusterSshProfile(property.Value);
+                    sshProfile = ClusterSshProfile.DeserializeClusterSshProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoscaleProfile"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value);
+                    autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rangerPluginProfile"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value);
+                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kafkaProfile"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    kafkaProfile = KafkaProfile.DeserializeKafkaProfile(property.Value);
+                    kafkaProfile = KafkaProfile.DeserializeKafkaProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trinoProfile"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    trinoProfile = TrinoProfile.DeserializeTrinoProfile(property.Value);
+                    trinoProfile = TrinoProfile.DeserializeTrinoProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("llapProfile"u8))
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    flinkProfile = FlinkProfile.DeserializeFlinkProfile(property.Value);
+                    flinkProfile = FlinkProfile.DeserializeFlinkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sparkProfile"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    sparkProfile = SparkProfile.DeserializeSparkProfile(property.Value);
+                    sparkProfile = SparkProfile.DeserializeSparkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rangerProfile"u8))
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value);
+                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stubProfile"u8))
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ScriptActionProfile> array = new List<ScriptActionProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActionProfile.DeserializeScriptActionProfile(item));
+                        array.Add(ScriptActionProfile.DeserializeScriptActionProfile(item, options));
                     }
                     scriptActionProfiles = array;
                     continue;

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("database"u8))
                 {
-                    database = RangerAdminSpecDatabase.DeserializeRangerAdminSpecDatabase(property.Value);
+                    database = RangerAdminSpecDatabase.DeserializeRangerAdminSpecDatabase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(DBServerHost);
             writer.WritePropertyName("dbName"u8);
             writer.WriteStringValue(DBName);
-            if (Optional.IsDefined(DBConnectionAuthenticationMode))
+            if (DBConnectionAuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("dbConnectionAuthenticationMode"u8);
                 writer.WriteStringValue(DBConnectionAuthenticationMode.Value.ToString());
             }
-            if (Optional.IsDefined(DBUserName))
+            if (DBUserName != null)
             {
                 writer.WritePropertyName("dbUserName"u8);
                 writer.WriteStringValue(DBUserName);
             }
-            if (Optional.IsDefined(DBPasswordSecretName))
+            if (DBPasswordSecretName != null)
             {
                 writer.WritePropertyName("dbPasswordSecretName"u8);
                 writer.WriteStringValue(DBPasswordSecretName);
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (KeyVaultId != null)
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (Optional.IsDefined(ThriftUriString))
+            if (ThriftUriString != null)
             {
                 writer.WritePropertyName("thriftUrl"u8);
                 writer.WriteStringValue(ThriftUriString);

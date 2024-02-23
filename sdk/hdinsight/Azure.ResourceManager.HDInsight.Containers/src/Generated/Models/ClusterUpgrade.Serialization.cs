@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ClusterUpgradeProperties.DeserializeClusterUpgradeProperties(property.Value);
+                    properties = ClusterUpgradeProperties.DeserializeClusterUpgradeProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

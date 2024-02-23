@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetOssVersion))
+            if (TargetOssVersion != null)
             {
                 writer.WritePropertyName("targetOssVersion"u8);
                 writer.WriteStringValue(TargetOssVersion);
             }
-            if (Optional.IsDefined(TargetClusterVersion))
+            if (TargetClusterVersion != null)
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);
             }
-            if (Optional.IsDefined(TargetBuildNumber))
+            if (TargetBuildNumber != null)
             {
                 writer.WritePropertyName("targetBuildNumber"u8);
                 writer.WriteStringValue(TargetBuildNumber);
             }
-            if (Optional.IsDefined(ComponentName))
+            if (ComponentName != null)
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName);
