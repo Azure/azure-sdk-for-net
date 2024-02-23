@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceCreationBegin))
+            if (ResourceCreationBegin != null)
             {
                 writer.WritePropertyName("resourceCreationBegin"u8);
                 writer.WriteObjectValue(ResourceCreationBegin);

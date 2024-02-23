@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionId))
+            if (options.Format != "W" && PolicyDefinitionId != null)
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicySetDefinitionId))
+            if (options.Format != "W" && PolicySetDefinitionId != null)
             {
                 writer.WritePropertyName("policySetDefinitionId"u8);
                 writer.WriteStringValue(PolicySetDefinitionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (options.Format != "W" && PolicyDefinitionReferenceId != null)
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentId))
+            if (options.Format != "W" && PolicyAssignmentId != null)
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);

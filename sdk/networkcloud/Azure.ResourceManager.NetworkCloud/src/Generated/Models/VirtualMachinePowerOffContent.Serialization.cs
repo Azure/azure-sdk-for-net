@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SkipShutdown))
+            if (SkipShutdown.HasValue)
             {
                 writer.WritePropertyName("skipShutdown"u8);
                 writer.WriteStringValue(SkipShutdown.Value.ToString());

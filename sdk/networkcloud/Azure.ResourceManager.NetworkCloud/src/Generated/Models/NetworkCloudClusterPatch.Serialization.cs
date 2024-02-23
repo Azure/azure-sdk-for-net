@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AggregatorOrSingleRackDefinition))
+            if (AggregatorOrSingleRackDefinition != null)
             {
                 writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
                 writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
             }
-            if (Optional.IsDefined(ClusterLocation))
+            if (ClusterLocation != null)
             {
                 writer.WritePropertyName("clusterLocation"u8);
                 writer.WriteStringValue(ClusterLocation);
             }
-            if (Optional.IsDefined(ClusterServicePrincipal))
+            if (ClusterServicePrincipal != null)
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
                 writer.WriteObjectValue(ClusterServicePrincipal);
             }
-            if (Optional.IsDefined(ComputeDeploymentThreshold))
+            if (ComputeDeploymentThreshold != null)
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
                 writer.WriteObjectValue(ComputeDeploymentThreshold);
             }
-            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
+            if (!(ComputeRackDefinitions is ChangeTrackingList<NetworkCloudRackDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("computeRackDefinitions"u8);
                 writer.WriteStartArray();

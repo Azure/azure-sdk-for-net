@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PerformanceCounters))
+            if (!(PerformanceCounters is ChangeTrackingList<PerfCounterDataSource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("performanceCounters"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WindowsEventLogs))
+            if (!(WindowsEventLogs is ChangeTrackingList<WindowsEventLogDataSource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("windowsEventLogs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Syslog))
+            if (!(Syslog is ChangeTrackingList<SyslogDataSource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("syslog"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<ExtensionDataSource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogFiles))
+            if (!(LogFiles is ChangeTrackingList<LogFilesDataSource> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("logFiles"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IisLogs))
+            if (!(IisLogs is ChangeTrackingList<IisLogsDataSource> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("iisLogs"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WindowsFirewallLogs))
+            if (!(WindowsFirewallLogs is ChangeTrackingList<WindowsFirewallLogsDataSource> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("windowsFirewallLogs"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrometheusForwarder))
+            if (!(PrometheusForwarder is ChangeTrackingList<PrometheusForwarderDataSource> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("prometheusForwarder"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PlatformTelemetry))
+            if (!(PlatformTelemetry is ChangeTrackingList<PlatformTelemetryDataSource> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("platformTelemetry"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DataImports))
+            if (DataImports != null)
             {
                 writer.WritePropertyName("dataImports"u8);
                 writer.WriteObjectValue(DataImports);

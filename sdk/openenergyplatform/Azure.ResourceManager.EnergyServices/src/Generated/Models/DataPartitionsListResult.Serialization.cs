@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataPartitionInfo))
+            if (!(DataPartitionInfo is ChangeTrackingList<DataPartition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataPartitionInfo"u8);
                 writer.WriteStartArray();

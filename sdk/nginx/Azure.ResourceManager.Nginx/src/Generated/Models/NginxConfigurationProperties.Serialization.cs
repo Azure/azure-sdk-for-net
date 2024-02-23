@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (!(Files is ChangeTrackingList<NginxConfigurationFile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProtectedFiles))
+            if (!(ProtectedFiles is ChangeTrackingList<NginxConfigurationFile> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedFiles"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Package))
+            if (Package != null)
             {
                 writer.WritePropertyName("package"u8);
                 writer.WriteObjectValue(Package);
             }
-            if (Optional.IsDefined(RootFile))
+            if (RootFile != null)
             {
                 writer.WritePropertyName("rootFile"u8);
                 writer.WriteStringValue(RootFile);

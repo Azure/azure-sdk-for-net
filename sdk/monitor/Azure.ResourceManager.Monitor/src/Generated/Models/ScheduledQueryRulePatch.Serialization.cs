@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedWithApiVersion))
+            if (options.Format != "W" && CreatedWithApiVersion != null)
             {
                 writer.WritePropertyName("createdWithApiVersion"u8);
                 writer.WriteStringValue(CreatedWithApiVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsLegacyLogAnalyticsRule))
+            if (options.Format != "W" && IsLegacyLogAnalyticsRule.HasValue)
             {
                 writer.WritePropertyName("isLegacyLogAnalyticsRule"u8);
                 writer.WriteBooleanValue(IsLegacyLogAnalyticsRule.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EvaluationFrequency))
+            if (EvaluationFrequency.HasValue)
             {
                 writer.WritePropertyName("evaluationFrequency"u8);
                 writer.WriteStringValue(EvaluationFrequency.Value, "P");
             }
-            if (Optional.IsDefined(WindowSize))
+            if (WindowSize.HasValue)
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            if (Optional.IsDefined(OverrideQueryTimeRange))
+            if (OverrideQueryTimeRange.HasValue)
             {
                 writer.WritePropertyName("overrideQueryTimeRange"u8);
                 writer.WriteStringValue(OverrideQueryTimeRange.Value, "P");
             }
-            if (Optional.IsCollectionDefined(TargetResourceTypes))
+            if (!(TargetResourceTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetResourceTypes"u8);
                 writer.WriteStartArray();
@@ -104,37 +104,37 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Criteria))
+            if (Criteria != null)
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteObjectValue(Criteria);
             }
-            if (Optional.IsDefined(MuteActionsDuration))
+            if (MuteActionsDuration.HasValue)
             {
                 writer.WritePropertyName("muteActionsDuration"u8);
                 writer.WriteStringValue(MuteActionsDuration.Value, "P");
             }
-            if (Optional.IsDefined(Actions))
+            if (Actions != null)
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsWorkspaceAlertsStorageConfigured))
+            if (options.Format != "W" && IsWorkspaceAlertsStorageConfigured.HasValue)
             {
                 writer.WritePropertyName("isWorkspaceAlertsStorageConfigured"u8);
                 writer.WriteBooleanValue(IsWorkspaceAlertsStorageConfigured.Value);
             }
-            if (Optional.IsDefined(CheckWorkspaceAlertsStorageConfigured))
+            if (CheckWorkspaceAlertsStorageConfigured.HasValue)
             {
                 writer.WritePropertyName("checkWorkspaceAlertsStorageConfigured"u8);
                 writer.WriteBooleanValue(CheckWorkspaceAlertsStorageConfigured.Value);
             }
-            if (Optional.IsDefined(SkipQueryValidation))
+            if (SkipQueryValidation.HasValue)
             {
                 writer.WritePropertyName("skipQueryValidation"u8);
                 writer.WriteBooleanValue(SkipQueryValidation.Value);
             }
-            if (Optional.IsDefined(AutoMitigate))
+            if (AutoMitigate.HasValue)
             {
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -25,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PredefinedPolicies))
+            if (!(PredefinedPolicies is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("predefinedPolicies"u8);
                 writer.WriteStartArray();
@@ -68,12 +69,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultPolicy))
+            if (DefaultPolicy.HasValue)
             {
                 writer.WritePropertyName("defaultPolicy"u8);
                 writer.WriteStringValue(DefaultPolicy.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AvailableCipherSuites))
+            if (!(AvailableCipherSuites is ChangeTrackingList<ApplicationGatewaySslCipherSuite> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("availableCipherSuites"u8);
                 writer.WriteStartArray();
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AvailableProtocols))
+            if (!(AvailableProtocols is ChangeTrackingList<ApplicationGatewaySslProtocol> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("availableProtocols"u8);
                 writer.WriteStartArray();

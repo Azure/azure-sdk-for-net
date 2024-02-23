@@ -27,22 +27,22 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TitleFieldName))
+            if (TitleFieldName != null)
             {
                 writer.WritePropertyName("titleField"u8);
                 writer.WriteStringValue(TitleFieldName);
             }
-            if (Optional.IsDefined(UrlFieldName))
+            if (UrlFieldName != null)
             {
                 writer.WritePropertyName("urlField"u8);
                 writer.WriteStringValue(UrlFieldName);
             }
-            if (Optional.IsDefined(FilepathFieldName))
+            if (FilepathFieldName != null)
             {
                 writer.WritePropertyName("filepathField"u8);
                 writer.WriteStringValue(FilepathFieldName);
             }
-            if (Optional.IsCollectionDefined(ContentFieldNames))
+            if (!(ContentFieldNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("contentFields"u8);
                 writer.WriteStartArray();
@@ -52,12 +52,12 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentFieldSeparator))
+            if (ContentFieldSeparator != null)
             {
                 writer.WritePropertyName("contentFieldsSeparator"u8);
                 writer.WriteStringValue(ContentFieldSeparator);
             }
-            if (Optional.IsCollectionDefined(VectorFieldNames))
+            if (!(VectorFieldNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vectorFields"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ImageVectorFieldNames))
+            if (!(ImageVectorFieldNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("imageVectorFields"u8);
                 writer.WriteStartArray();

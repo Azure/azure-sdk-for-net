@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteBase64StringValue(Data.ToArray(), "D");
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
-            if (Optional.IsDefined(Filename))
+            if (Filename != null)
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);

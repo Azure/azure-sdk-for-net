@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("canary"u8);
             writer.WriteObjectValue(Canary);
-            if (Optional.IsDefined(ProviderRegistration))
+            if (ProviderRegistration != null)
             {
                 writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
-            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
+            if (!(ResourceTypeRegistrations is ChangeTrackingList<ResourceTypeRegistrationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProcessorArchitecture))
+            if (ProcessorArchitecture.HasValue)
             {
                 writer.WritePropertyName("processorArchitecture"u8);
                 writer.WriteStringValue(ProcessorArchitecture.Value.ToString());
             }
-            if (Optional.IsDefined(AuthenticationMethod))
+            if (AuthenticationMethod.HasValue)
             {
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
             }
-            if (Optional.IsDefined(RadiusServerAuthCertificate))
+            if (RadiusServerAuthCertificate != null)
             {
                 writer.WritePropertyName("radiusServerAuthCertificate"u8);
                 writer.WriteStringValue(RadiusServerAuthCertificate);
             }
-            if (Optional.IsCollectionDefined(ClientRootCertificates))
+            if (!(ClientRootCertificates is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("clientRootCertificates"u8);
                 writer.WriteStartArray();
