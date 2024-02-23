@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pk))
+            if (Pk != null)
             {
                 writer.WritePropertyName("pk"u8);
                 writer.WriteObjectValue(Pk);
             }
-            if (Optional.IsCollectionDefined(Kek))
+            if (!(Kek is ChangeTrackingList<UefiKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kek"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Db))
+            if (!(Db is ChangeTrackingList<UefiKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("db"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Dbx))
+            if (!(Dbx is ChangeTrackingList<UefiKey> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dbx"u8);
                 writer.WriteStartArray();

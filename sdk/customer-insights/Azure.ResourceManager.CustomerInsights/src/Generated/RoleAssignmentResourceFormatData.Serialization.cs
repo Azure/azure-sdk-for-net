@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssignmentName))
+            if (options.Format != "W" && AssignmentName != null)
             {
                 writer.WritePropertyName("assignmentName"u8);
                 writer.WriteStringValue(AssignmentName);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Role))
+            if (Role.HasValue)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Principals))
+            if (!(Principals is ChangeTrackingList<AssignmentPrincipal> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("principals"u8);
                 writer.WriteStartArray();
@@ -102,67 +102,67 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Profiles))
+            if (Profiles != null)
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteObjectValue(Profiles);
             }
-            if (Optional.IsDefined(Interactions))
+            if (Interactions != null)
             {
                 writer.WritePropertyName("interactions"u8);
                 writer.WriteObjectValue(Interactions);
             }
-            if (Optional.IsDefined(Links))
+            if (Links != null)
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteObjectValue(Links);
             }
-            if (Optional.IsDefined(Kpis))
+            if (Kpis != null)
             {
                 writer.WritePropertyName("kpis"u8);
                 writer.WriteObjectValue(Kpis);
             }
-            if (Optional.IsDefined(SasPolicies))
+            if (SasPolicies != null)
             {
                 writer.WritePropertyName("sasPolicies"u8);
                 writer.WriteObjectValue(SasPolicies);
             }
-            if (Optional.IsDefined(Connectors))
+            if (Connectors != null)
             {
                 writer.WritePropertyName("connectors"u8);
                 writer.WriteObjectValue(Connectors);
             }
-            if (Optional.IsDefined(Views))
+            if (Views != null)
             {
                 writer.WritePropertyName("views"u8);
                 writer.WriteObjectValue(Views);
             }
-            if (Optional.IsDefined(RelationshipLinks))
+            if (RelationshipLinks != null)
             {
                 writer.WritePropertyName("relationshipLinks"u8);
                 writer.WriteObjectValue(RelationshipLinks);
             }
-            if (Optional.IsDefined(Relationships))
+            if (Relationships != null)
             {
                 writer.WritePropertyName("relationships"u8);
                 writer.WriteObjectValue(Relationships);
             }
-            if (Optional.IsDefined(WidgetTypes))
+            if (WidgetTypes != null)
             {
                 writer.WritePropertyName("widgetTypes"u8);
                 writer.WriteObjectValue(WidgetTypes);
             }
-            if (Optional.IsDefined(RoleAssignments))
+            if (RoleAssignments != null)
             {
                 writer.WritePropertyName("roleAssignments"u8);
                 writer.WriteObjectValue(RoleAssignments);
             }
-            if (Optional.IsDefined(ConflationPolicies))
+            if (ConflationPolicies != null)
             {
                 writer.WritePropertyName("conflationPolicies"u8);
                 writer.WriteObjectValue(ConflationPolicies);
             }
-            if (Optional.IsDefined(Segments))
+            if (Segments != null)
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteObjectValue(Segments);

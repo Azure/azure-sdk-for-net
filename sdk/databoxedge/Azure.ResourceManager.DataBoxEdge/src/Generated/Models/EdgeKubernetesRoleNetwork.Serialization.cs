@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CniConfig))
+            if (options.Format != "W" && CniConfig != null)
             {
                 writer.WritePropertyName("cniConfig"u8);
                 writer.WriteObjectValue(CniConfig);
             }
-            if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfig))
+            if (options.Format != "W" && LoadBalancerConfig != null)
             {
                 writer.WritePropertyName("loadBalancerConfig"u8);
                 writer.WriteObjectValue(LoadBalancerConfig);

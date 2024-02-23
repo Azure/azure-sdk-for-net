@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterTotalStorageInMB))
+            if (ClusterTotalStorageInMB.HasValue)
             {
                 writer.WritePropertyName("clusterTotalStorageMb"u8);
                 writer.WriteNumberValue(ClusterTotalStorageInMB.Value);
             }
-            if (Optional.IsDefined(ClusterFreeStorageInMB))
+            if (ClusterFreeStorageInMB.HasValue)
             {
                 writer.WritePropertyName("clusterFreeStorageMb"u8);
                 writer.WriteNumberValue(ClusterFreeStorageInMB.Value);

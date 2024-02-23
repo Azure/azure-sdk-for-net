@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(JobName))
+            if (options.Format != "W" && JobName != null)
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsDefined(Destination))
+            if (Destination != null)
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessedCount))
+            if (options.Format != "W" && ProcessedCount.HasValue)
             {
                 writer.WritePropertyName("processedCount"u8);
                 writer.WriteNumberValue(ProcessedCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalCount))
+            if (options.Format != "W" && TotalCount.HasValue)
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedUtcOn))
+            if (options.Format != "W" && LastUpdatedUtcOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedUtcTime"u8);
                 writer.WriteStringValue(LastUpdatedUtcOn.Value, "O");
             }
-            if (Optional.IsDefined(WorkerCount))
+            if (WorkerCount.HasValue)
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);

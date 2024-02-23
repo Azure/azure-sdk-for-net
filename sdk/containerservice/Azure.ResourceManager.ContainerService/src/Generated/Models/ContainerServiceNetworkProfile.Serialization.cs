@@ -26,67 +26,67 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkPlugin))
+            if (NetworkPlugin.HasValue)
             {
                 writer.WritePropertyName("networkPlugin"u8);
                 writer.WriteStringValue(NetworkPlugin.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkPluginMode))
+            if (NetworkPluginMode.HasValue)
             {
                 writer.WritePropertyName("networkPluginMode"u8);
                 writer.WriteStringValue(NetworkPluginMode.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkPolicy))
+            if (NetworkPolicy.HasValue)
             {
                 writer.WritePropertyName("networkPolicy"u8);
                 writer.WriteStringValue(NetworkPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkMode))
+            if (NetworkMode.HasValue)
             {
                 writer.WritePropertyName("networkMode"u8);
                 writer.WriteStringValue(NetworkMode.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkDataplane))
+            if (NetworkDataplane.HasValue)
             {
                 writer.WritePropertyName("networkDataplane"u8);
                 writer.WriteStringValue(NetworkDataplane.Value.ToString());
             }
-            if (Optional.IsDefined(PodCidr))
+            if (PodCidr != null)
             {
                 writer.WritePropertyName("podCidr"u8);
                 writer.WriteStringValue(PodCidr);
             }
-            if (Optional.IsDefined(ServiceCidr))
+            if (ServiceCidr != null)
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (Optional.IsDefined(DnsServiceIP))
+            if (DnsServiceIP != null)
             {
                 writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
-            if (Optional.IsDefined(OutboundType))
+            if (OutboundType.HasValue)
             {
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType.Value.ToString());
             }
-            if (Optional.IsDefined(LoadBalancerSku))
+            if (LoadBalancerSku.HasValue)
             {
                 writer.WritePropertyName("loadBalancerSku"u8);
                 writer.WriteStringValue(LoadBalancerSku.Value.ToString());
             }
-            if (Optional.IsDefined(LoadBalancerProfile))
+            if (LoadBalancerProfile != null)
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile);
             }
-            if (Optional.IsDefined(NatGatewayProfile))
+            if (NatGatewayProfile != null)
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
                 writer.WriteObjectValue(NatGatewayProfile);
             }
-            if (Optional.IsCollectionDefined(PodCidrs))
+            if (!(PodCidrs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceCidrs))
+            if (!(ServiceCidrs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPFamilies))
+            if (!(IPFamilies is ChangeTrackingList<IPFamily> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipFamilies"u8);
                 writer.WriteStartArray();

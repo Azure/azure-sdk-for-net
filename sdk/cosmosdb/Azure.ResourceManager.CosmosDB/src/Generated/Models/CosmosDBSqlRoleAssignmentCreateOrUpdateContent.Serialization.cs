@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleDefinitionId))
+            if (RoleDefinitionId != null)
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(PrincipalId))
+            if (PrincipalId.HasValue)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);

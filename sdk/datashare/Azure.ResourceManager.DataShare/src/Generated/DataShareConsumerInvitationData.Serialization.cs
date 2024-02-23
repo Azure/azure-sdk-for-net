@@ -43,81 +43,81 @@ namespace Azure.ResourceManager.DataShare
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataSetCount))
+            if (options.Format != "W" && DataSetCount.HasValue)
             {
                 writer.WritePropertyName("dataSetCount"u8);
                 writer.WriteNumberValue(DataSetCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WritePropertyName("invitationId"u8);
             writer.WriteStringValue(InvitationId);
-            if (options.Format != "W" && Optional.IsDefined(InvitationStatus))
+            if (options.Format != "W" && InvitationStatus.HasValue)
             {
                 writer.WritePropertyName("invitationStatus"u8);
                 writer.WriteStringValue(InvitationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProviderEmail))
+            if (options.Format != "W" && ProviderEmail != null)
             {
                 writer.WritePropertyName("providerEmail"u8);
                 writer.WriteStringValue(ProviderEmail);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProviderName))
+            if (options.Format != "W" && ProviderName != null)
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProviderTenantName))
+            if (options.Format != "W" && ProviderTenantName != null)
             {
                 writer.WritePropertyName("providerTenantName"u8);
                 writer.WriteStringValue(ProviderTenantName);
             }
-            if (options.Format != "W" && Optional.IsDefined(RespondedOn))
+            if (options.Format != "W" && RespondedOn.HasValue)
             {
                 writer.WritePropertyName("respondedAt"u8);
                 writer.WriteStringValue(RespondedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SentOn))
+            if (options.Format != "W" && SentOn.HasValue)
             {
                 writer.WritePropertyName("sentAt"u8);
                 writer.WriteStringValue(SentOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ShareName))
+            if (options.Format != "W" && ShareName != null)
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TermsOfUse))
+            if (options.Format != "W" && TermsOfUse != null)
             {
                 writer.WritePropertyName("termsOfUse"u8);
                 writer.WriteStringValue(TermsOfUse);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserEmail))
+            if (options.Format != "W" && UserEmail != null)
             {
                 writer.WritePropertyName("userEmail"u8);
                 writer.WriteStringValue(UserEmail);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);

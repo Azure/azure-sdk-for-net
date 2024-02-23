@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,54 +76,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("project"u8);
             JsonSerializer.Serialize(writer, Project);
-            if (Optional.IsDefined(AdditionalProjects))
+            if (AdditionalProjects != null)
             {
                 writer.WritePropertyName("additionalProjects"u8);
                 JsonSerializer.Serialize(writer, AdditionalProjects);
             }
-            if (Optional.IsDefined(RequestGoogleDriveScope))
+            if (RequestGoogleDriveScope != null)
             {
                 writer.WritePropertyName("requestGoogleDriveScope"u8);
                 JsonSerializer.Serialize(writer, RequestGoogleDriveScope);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Optional.IsDefined(RefreshToken))
+            if (RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 JsonSerializer.Serialize(writer, RefreshToken);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 JsonSerializer.Serialize(writer, ClientSecret);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 JsonSerializer.Serialize(writer, Email);
             }
-            if (Optional.IsDefined(KeyFilePath))
+            if (KeyFilePath != null)
             {
                 writer.WritePropertyName("keyFilePath"u8);
                 JsonSerializer.Serialize(writer, KeyFilePath);
             }
-            if (Optional.IsDefined(TrustedCertPath))
+            if (TrustedCertPath != null)
             {
                 writer.WritePropertyName("trustedCertPath"u8);
                 JsonSerializer.Serialize(writer, TrustedCertPath);
             }
-            if (Optional.IsDefined(UseSystemTrustStore))
+            if (UseSystemTrustStore != null)
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 JsonSerializer.Serialize(writer, UseSystemTrustStore);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);

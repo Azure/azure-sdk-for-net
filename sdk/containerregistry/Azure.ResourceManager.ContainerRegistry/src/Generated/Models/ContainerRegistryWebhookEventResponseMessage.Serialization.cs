@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ReasonPhrase))
+            if (ReasonPhrase != null)
             {
                 writer.WritePropertyName("reasonPhrase"u8);
                 writer.WriteStringValue(ReasonPhrase);
             }
-            if (Optional.IsDefined(StatusCode))
+            if (StatusCode != null)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

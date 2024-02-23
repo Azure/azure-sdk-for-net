@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Image))
+            if (Image != null)
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsCollectionDefined(Command))
+            if (!(Command is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (!(EnvironmentVariables is ChangeTrackingList<ContainerEnvironmentVariable> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            if (options.Format != "W" && InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (Optional.IsCollectionDefined(VolumeMounts))
+            if (!(VolumeMounts is ChangeTrackingList<ContainerVolumeMount> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SecurityContext))
+            if (SecurityContext != null)
             {
                 writer.WritePropertyName("securityContext"u8);
                 writer.WriteObjectValue(SecurityContext);

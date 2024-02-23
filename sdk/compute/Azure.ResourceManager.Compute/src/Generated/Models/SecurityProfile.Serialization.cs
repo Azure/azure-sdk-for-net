@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UefiSettings))
+            if (UefiSettings != null)
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
             }
-            if (Optional.IsDefined(EncryptionAtHost))
+            if (EncryptionAtHost.HasValue)
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
-            if (Optional.IsDefined(SecurityType))
+            if (SecurityType.HasValue)
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionIdentity))
+            if (EncryptionIdentity != null)
             {
                 writer.WritePropertyName("encryptionIdentity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);
             }
-            if (Optional.IsDefined(ProxyAgentSettings))
+            if (ProxyAgentSettings != null)
             {
                 writer.WritePropertyName("proxyAgentSettings"u8);
                 writer.WriteObjectValue(ProxyAgentSettings);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteObjectValue(ShippingAddress);
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
-            if (Optional.IsDefined(TransportPreferences))
+            if (TransportPreferences != null)
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);

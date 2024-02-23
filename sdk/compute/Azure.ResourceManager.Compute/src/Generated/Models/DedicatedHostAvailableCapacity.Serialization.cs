@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllocatableVms))
+            if (!(AllocatableVms is ChangeTrackingList<DedicatedHostAllocatableVm> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allocatableVMs"u8);
                 writer.WriteStartArray();

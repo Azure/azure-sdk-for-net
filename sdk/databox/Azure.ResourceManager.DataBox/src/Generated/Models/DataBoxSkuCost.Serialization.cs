@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId.HasValue)
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterType))
+            if (options.Format != "W" && MeterType != null)
             {
                 writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Multiplier))
+            if (options.Format != "W" && Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);

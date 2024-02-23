@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SkuName))
+            if (SkuName.HasValue)
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName.Value.ToSerialString());

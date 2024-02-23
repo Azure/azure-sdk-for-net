@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,69 +67,69 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(VCenterId))
+            if (VCenterId != null)
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (Optional.IsDefined(MoRefId))
+            if (MoRefId != null)
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (Optional.IsDefined(InventoryItemId))
+            if (InventoryItemId != null)
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MoName))
+            if (options.Format != "W" && MoName != null)
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemorySizeMB))
+            if (options.Format != "W" && MemorySizeMB.HasValue)
             {
                 writer.WritePropertyName("memorySizeMB"u8);
                 writer.WriteNumberValue(MemorySizeMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumCpus))
+            if (options.Format != "W" && NumCpus.HasValue)
             {
                 writer.WritePropertyName("numCPUs"u8);
                 writer.WriteNumberValue(NumCpus.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumCoresPerSocket))
+            if (options.Format != "W" && NumCoresPerSocket.HasValue)
             {
                 writer.WritePropertyName("numCoresPerSocket"u8);
                 writer.WriteNumberValue(NumCoresPerSocket.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FolderPath))
+            if (options.Format != "W" && FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
+            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<VMwareNetworkInterface> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            if (options.Format != "W" && !(Disks is ChangeTrackingList<VMwareVirtualDisk> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -149,27 +149,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
+            if (options.Format != "W" && CustomResourceName != null)
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ToolsVersionStatus))
+            if (options.Format != "W" && ToolsVersionStatus != null)
             {
                 writer.WritePropertyName("toolsVersionStatus"u8);
                 writer.WriteStringValue(ToolsVersionStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ToolsVersion))
+            if (options.Format != "W" && ToolsVersion != null)
             {
                 writer.WritePropertyName("toolsVersion"u8);
                 writer.WriteStringValue(ToolsVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirmwareType))
+            if (options.Format != "W" && FirmwareType.HasValue)
             {
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

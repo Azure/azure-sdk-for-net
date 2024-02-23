@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileLocation))
+            if (FileLocation != null)
             {
                 writer.WritePropertyName("fileLocation"u8);
                 writer.WriteStringValue(FileLocation);
             }
-            if (Optional.IsDefined(FamilySequenceNumber))
+            if (FamilySequenceNumber.HasValue)
             {
                 writer.WritePropertyName("familySequenceNumber"u8);
                 writer.WriteNumberValue(FamilySequenceNumber.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSourceType))
+            if (DataSourceType != null)
             {
                 writer.WritePropertyName("datasourceType"u8);
                 writer.WriteStringValue(DataSourceType);
             }
-            if (Optional.IsDefined(ObjectType))
+            if (ObjectType != null)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             writer.WritePropertyName("resourceID"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(ResourceLocation))
+            if (ResourceLocation.HasValue)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(ResourceUriString))
+            if (ResourceUriString != null)
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
             }
-            if (Optional.IsDefined(ResourceProperties))
+            if (ResourceProperties != null)
             {
                 writer.WritePropertyName("resourceProperties"u8);
                 writer.WriteObjectValue(ResourceProperties);

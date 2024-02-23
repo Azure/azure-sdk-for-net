@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(Applicability))
+            if (Applicability.HasValue)
             {
                 writer.WritePropertyName("applicability"u8);
                 writer.WriteStringValue(Applicability.Value.ToString());
             }
-            if (Optional.IsDefined(Cores))
+            if (Cores.HasValue)
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (Optional.IsDefined(MemoryInGiB))
+            if (MemoryInGiB.HasValue)
             {
                 writer.WritePropertyName("memoryGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

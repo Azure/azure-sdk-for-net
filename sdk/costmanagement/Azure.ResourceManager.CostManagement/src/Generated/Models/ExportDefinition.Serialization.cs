@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(ExportType.ToString());
             writer.WritePropertyName("timeframe"u8);
             writer.WriteStringValue(Timeframe.ToString());
-            if (Optional.IsDefined(TimePeriod))
+            if (TimePeriod != null)
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
-            if (Optional.IsDefined(DataSet))
+            if (DataSet != null)
             {
                 writer.WritePropertyName("dataSet"u8);
                 writer.WriteObjectValue(DataSet);
