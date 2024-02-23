@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IList<SapLandscapeMonitorSidMapping>> landscape = default;
-            Optional<IList<SapLandscapeMonitorSidMapping>> sapApplication = default;
+            IList<SapLandscapeMonitorSidMapping> landscape = default;
+            IList<SapLandscapeMonitorSidMapping> sapApplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLandscapeMonitorPropertiesGrouping(Optional.ToList(landscape), Optional.ToList(sapApplication), serializedAdditionalRawData);
+            return new SapLandscapeMonitorPropertiesGrouping(landscape ?? new ChangeTrackingList<SapLandscapeMonitorSidMapping>(), sapApplication ?? new ChangeTrackingList<SapLandscapeMonitorSidMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapLandscapeMonitorPropertiesGrouping>.Write(ModelReaderWriterOptions options)

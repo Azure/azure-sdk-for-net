@@ -119,11 +119,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> description = default;
-            Optional<IList<Activity>> activities = default;
+            IList<Activity> activities = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IDictionary<string, VariableSpecification>> variables = default;
             Optional<int> concurrency = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<IDictionary<string, object>> runDimensions = default;
             Optional<PipelineFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
+            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, activities ?? new ChangeTrackingList<Activity>(), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), annotations ?? new ChangeTrackingList<object>(), Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
         }
 
         internal partial class PipelineResourceConverter : JsonConverter<PipelineResource>

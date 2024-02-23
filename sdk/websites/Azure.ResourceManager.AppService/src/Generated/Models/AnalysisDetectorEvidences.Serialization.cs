@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.AppService.Models
             }
             Optional<string> source = default;
             Optional<DetectorDefinition> detectorDefinition = default;
-            Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            IList<DiagnosticMetricSet> metrics = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
             Optional<DetectorMetadata> detectorMetaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(data), detectorMetaData.Value, serializedAdditionalRawData);
+            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(), data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(), detectorMetaData.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisDetectorEvidences>.Write(ModelReaderWriterOptions options)

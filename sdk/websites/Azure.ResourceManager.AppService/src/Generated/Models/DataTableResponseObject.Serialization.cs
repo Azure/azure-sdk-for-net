@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<string> tableName = default;
-            Optional<IList<DataTableResponseColumn>> columns = default;
-            Optional<IList<IList<string>>> rows = default;
+            IList<DataTableResponseColumn> columns = default;
+            IList<IList<string>> rows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTableResponseObject(tableName.Value, Optional.ToList(columns), Optional.ToList(rows), serializedAdditionalRawData);
+            return new DataTableResponseObject(tableName.Value, columns ?? new ChangeTrackingList<DataTableResponseColumn>(), rows ?? new ChangeTrackingList<IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTableResponseObject>.Write(ModelReaderWriterOptions options)

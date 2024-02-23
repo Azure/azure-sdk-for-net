@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProblemClassificationData>> value = default;
+            IReadOnlyList<ProblemClassificationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProblemClassificationsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ProblemClassificationsListResult(value ?? new ChangeTrackingList<ProblemClassificationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProblemClassificationsListResult>.Write(ModelReaderWriterOptions options)

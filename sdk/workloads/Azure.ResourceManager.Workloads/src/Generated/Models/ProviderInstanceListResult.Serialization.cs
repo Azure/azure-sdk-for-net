@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapProviderInstanceData>> value = default;
+            IReadOnlyList<SapProviderInstanceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderInstanceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProviderInstanceListResult(value ?? new ChangeTrackingList<SapProviderInstanceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderInstanceListResult>.Write(ModelReaderWriterOptions options)

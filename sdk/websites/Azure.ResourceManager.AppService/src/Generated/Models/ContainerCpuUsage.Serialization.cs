@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<long> totalUsage = default;
-            Optional<IList<long>> perCpuUsage = default;
+            IList<long> perCpuUsage = default;
             Optional<long> kernelModeUsage = default;
             Optional<long> userModeUsage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCpuUsage(Optional.ToNullable(totalUsage), Optional.ToList(perCpuUsage), Optional.ToNullable(kernelModeUsage), Optional.ToNullable(userModeUsage), serializedAdditionalRawData);
+            return new ContainerCpuUsage(Optional.ToNullable(totalUsage), perCpuUsage ?? new ChangeTrackingList<long>(), Optional.ToNullable(kernelModeUsage), Optional.ToNullable(userModeUsage), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCpuUsage>.Write(ModelReaderWriterOptions options)

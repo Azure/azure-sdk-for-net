@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IList<object> annotations = default;
             Optional<object> connectionString = default;
             Optional<object> server = default;
             Optional<TeradataAuthenticationType> authenticationType = default;
@@ -242,7 +242,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TeradataLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, server.Value, Optional.ToNullable(authenticationType), username.Value, password.Value, encryptedCredential.Value);
+            return new TeradataLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, server.Value, Optional.ToNullable(authenticationType), username.Value, password.Value, encryptedCredential.Value);
         }
 
         internal partial class TeradataLinkedServiceConverter : JsonConverter<TeradataLinkedService>

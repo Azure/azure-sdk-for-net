@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             Optional<string> displayText = default;
             Optional<string> value = default;
-            Optional<IReadOnlyList<FunctionAppMinorVersion>> minorVersions = default;
+            IReadOnlyList<FunctionAppMinorVersion> minorVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppMajorVersion(displayText.Value, value.Value, Optional.ToList(minorVersions), serializedAdditionalRawData);
+            return new FunctionAppMajorVersion(displayText.Value, value.Value, minorVersions ?? new ChangeTrackingList<FunctionAppMinorVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppMajorVersion>.Write(ModelReaderWriterOptions options)

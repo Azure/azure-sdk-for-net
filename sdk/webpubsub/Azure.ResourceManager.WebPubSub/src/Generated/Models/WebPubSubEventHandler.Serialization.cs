@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             string urlTemplate = default;
             Optional<string> userEventPattern = default;
-            Optional<IList<string>> systemEvents = default;
+            IList<string> systemEvents = default;
             Optional<UpstreamAuthSettings> auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, Optional.ToList(systemEvents), auth.Value, serializedAdditionalRawData);
+            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, systemEvents ?? new ChangeTrackingList<string>(), auth.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubEventHandler>.Write(ModelReaderWriterOptions options)
