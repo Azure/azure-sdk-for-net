@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<Common.NodeCommunicationMode?> TargetNodeCommunicationModeProperty;
             public readonly PropertyAccessor<TaskSchedulingPolicy> TaskSchedulingPolicyProperty;
             public readonly PropertyAccessor<int?> TaskSlotsPerNodeProperty;
+            public readonly PropertyAccessor<UpgradePolicy> UpgradePolicyProperty;
             public readonly PropertyAccessor<IList<UserAccount>> UserAccountsProperty;
             public readonly PropertyAccessor<VirtualMachineConfiguration> VirtualMachineConfigurationProperty;
             public readonly PropertyAccessor<string> VirtualMachineSizeProperty;
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.Batch
                 this.TargetNodeCommunicationModeProperty = this.CreatePropertyAccessor<Common.NodeCommunicationMode?>(nameof(TargetNodeCommunicationMode), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>(nameof(TaskSchedulingPolicy), BindingAccess.Read | BindingAccess.Write);
                 this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor<int?>(nameof(TaskSlotsPerNode), BindingAccess.Read | BindingAccess.Write);
+                this.UpgradePolicyProperty = this.CreatePropertyAccessor<UpgradePolicy>(nameof(UpgradePolicy), BindingAccess.Read | BindingAccess.Write);
                 this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>(nameof(UserAccounts), BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor<VirtualMachineConfiguration>(nameof(VirtualMachineConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor<string>(nameof(VirtualMachineSize), BindingAccess.Read | BindingAccess.Write);
@@ -156,6 +158,10 @@ namespace Microsoft.Azure.Batch
                 this.TaskSlotsPerNodeProperty = this.CreatePropertyAccessor(
                     protocolObject.TaskSlotsPerNode,
                     nameof(TaskSlotsPerNode),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.UpgradePolicyProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UpgradePolicy, o => new UpgradePolicy(o)),
+                    nameof(UpgradePolicy),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserAccountsProperty = this.CreatePropertyAccessor(
                     UserAccount.ConvertFromProtocolCollection(protocolObject.UserAccounts),
@@ -445,6 +451,15 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the upgrade policy for the pool.
+        /// </summary>
+        public UpgradePolicy UpgradePolicy
+        {
+            get { return this.propertyContainer.UpgradePolicyProperty.Value; }
+            set { this.propertyContainer.UpgradePolicyProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the list of user accounts to be created on each node in the pool.
         /// </summary>
         public IList<UserAccount> UserAccounts
@@ -527,6 +542,7 @@ namespace Microsoft.Azure.Batch
                 TargetNodeCommunicationMode = UtilitiesInternal.MapNullableEnum<Common.NodeCommunicationMode, Models.NodeCommunicationMode>(this.TargetNodeCommunicationMode),
                 TaskSchedulingPolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.TaskSchedulingPolicy, (o) => o.GetTransportObject()),
                 TaskSlotsPerNode = this.TaskSlotsPerNode,
+                UpgradePolicy = UtilitiesInternal.CreateObjectWithNullCheck(this.UpgradePolicy, (o) => o.GetTransportObject()),
                 UserAccounts = UtilitiesInternal.ConvertToProtocolCollection(this.UserAccounts),
                 VirtualMachineConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.VirtualMachineConfiguration, (o) => o.GetTransportObject()),
                 VmSize = this.VirtualMachineSize,
