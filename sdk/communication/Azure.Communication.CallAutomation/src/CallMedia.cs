@@ -405,7 +405,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     OperationContext = options.OperationContext,
                     PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
-                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
                 return CallMediaRestClient.StartHoldMusic(CallConnectionId, request, cancellationToken: cancellationToken);
@@ -435,7 +434,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     OperationContext = options.OperationContext,
                     PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
-                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
                 return await CallMediaRestClient.StartHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);

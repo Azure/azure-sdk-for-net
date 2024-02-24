@@ -141,17 +141,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
-        private static readonly StartHoldMusicOptions _startHoldMusicOptions = new StartHoldMusicOptions(new CommunicationUserIdentifier("targetUserId"))
+        private static readonly StartHoldMusicOptions _startHoldMusicOptions = new StartHoldMusicOptions(new CommunicationUserIdentifier("targetUserId"), _textSource)
         {
             OperationContext = "operationContext",
-            PlaySourceInfo = _textSource,
-            OperationCallbackUri = new Uri("https://localhost")
-        };
-
-        private static readonly StartHoldMusicOptions _startHoldMusicOptionsNoMusic = new StartHoldMusicOptions(new CommunicationUserIdentifier("targetUserId"))
-        {
-            OperationContext = "operationContext",
-            OperationCallbackUri = new Uri("https://localhost")
         };
 
         private static readonly StopHoldMusicOptions _stopHoldMusicOptions = new StopHoldMusicOptions(new CommunicationUserIdentifier("targetUserId"))
@@ -819,10 +811,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartHoldMusicAsync(_startHoldMusicOptionsNoMusic)
-                },
-                new Func<CallMedia, Task<Response>>?[]
-                {
                    callMedia => callMedia.StopHoldMusicAsync(_stopHoldMusicOptions)
                 },
                 new Func<CallMedia, Task<Response>>?[]
@@ -848,10 +836,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response>?[]
                 {
                    callMedia => callMedia.StartHoldMusic(_startHoldMusicOptions)
-                },
-                new Func<CallMedia, Response>?[]
-                {
-                   callMedia => callMedia.StartHoldMusic(_startHoldMusicOptionsNoMusic)
                 },
                 new Func<CallMedia, Response>?[]
                 {
