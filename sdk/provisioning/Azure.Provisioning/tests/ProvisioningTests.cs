@@ -44,6 +44,8 @@ namespace Azure.Provisioning.Tests
             AppServicePlan appServicePlan = infra.AddAppServicePlan();
 
             WebSite frontEnd = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
+            Assert.AreEqual("subscription()", frontEnd.Properties.AppServicePlanId.SubscriptionId);
+
             var frontEndPrincipalId = frontEnd.AddOutput(
                 website => website.Identity.PrincipalId, //Identity.PrincipalId
                 "SERVICE_API_IDENTITY_PRINCIPAL_ID",
@@ -105,6 +107,8 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             infra.AddFrontEndWebSite();
+            Assert.AreEqual("subscription()", infra.GetSingleResourceInScope<WebSite>()!.Properties.AppServicePlanId.SubscriptionId);
+
             infra.AddCommonSqlDatabase();
             infra.AddBackEndWebSite();
 
@@ -127,6 +131,35 @@ namespace Azure.Provisioning.Tests
 
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
             infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
+
+            foreach (var website in infra.GetResources().Where(r => r is WebSite))
+            {
+                Assert.AreEqual("subscription()", ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
+            }
+
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    sqlAdminPassword = new { value = "password" },
+                    appUserPassword = new { value = "password" }
+                }));
+        }
+
+        [Test]
+        public async Task WebSiteUsingL3SpecificSubscription()
+        {
+            var infra = new TestInfrastructure(Guid.Empty);
+            infra.AddWebSiteWithSqlBackEnd();
+
+            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
+            infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
+            foreach (var website in infra.GetResources().Where(r => r is WebSite))
+            {
+                Assert.AreEqual(Guid.Empty.ToString(), ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
+            }
+
             infra.Build(GetOutputPath());
 
             await ValidateBicepAsync(BinaryData.FromObjectAsJson(

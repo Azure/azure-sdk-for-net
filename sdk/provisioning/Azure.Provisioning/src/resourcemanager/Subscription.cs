@@ -37,9 +37,11 @@ namespace Azure.Provisioning.ResourceManager
         }
 
         /// <inheritdoc/>
-        protected override string GetAzureName(IConstruct scope, string resourceName)
+        protected override string GetAzureName(IConstruct scope, string? resourceName)
         {
-            return resourceName is not null ? resourceName : Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID") ?? throw new InvalidOperationException("No environment variable named 'AZURE_SUBSCRIPTION_ID' found");
+            return resourceName is not null
+                ? resourceName
+                : Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID") ?? "subscription()";
         }
     }
 }
