@@ -4,6 +4,10 @@
 
 ### Features Added
 
+* Added support for "service.version" in Resource attributes.
+  This is mapped as Application Version in Application Insights.
+  ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
+
 ### Breaking Changes
 
 ### Bugs Fixed
