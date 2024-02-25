@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.Confluent
             writer.WriteObjectValue(OfferDetail);
             writer.WritePropertyName("userDetail"u8);
             writer.WriteObjectValue(UserDetail);
+            if (LinkOrganization != null)
+            {
+                writer.WritePropertyName("linkOrganization"u8);
+                writer.WriteObjectValue(LinkOrganization);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.Confluent
             Optional<Uri> ssoUrl = default;
             ConfluentOfferDetail offerDetail = default;
             ConfluentUserDetail userDetail = default;
+            Optional<LinkOrganization> linkOrganization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,6 +246,15 @@ namespace Azure.ResourceManager.Confluent
                             userDetail = ConfluentUserDetail.DeserializeConfluentUserDetail(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("linkOrganization"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            linkOrganization = LinkOrganization.DeserializeLinkOrganization(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -249,7 +264,7 @@ namespace Azure.ResourceManager.Confluent
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOrganizationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), Optional.ToNullable(organizationId), ssoUrl.Value, offerDetail, userDetail, serializedAdditionalRawData);
+            return new ConfluentOrganizationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), Optional.ToNullable(organizationId), ssoUrl.Value, offerDetail, userDetail, linkOrganization.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options)
