@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
                 createAPIKeyModel.Description = "testkey";
                 if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
                 {
-                    var apiKey = confluentOrganization.CreateClusterAPIKeyAsync("env-123", "cluster-134", createAPIKeyModel);
+                    var apiKey = confluentOrganization.CreateAPIKeyAsync("env-123", "cluster-134", createAPIKeyModel);
                     Assert.IsNotNull(apiKey);  // since the access is via partner signed token which is failing to get env.
                     break;
                 }
