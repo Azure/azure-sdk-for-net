@@ -182,7 +182,7 @@ namespace Azure.Provisioning.ResourceManager
     public partial class Subscription : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.SubscriptionData>
     {
         public Subscription(Azure.Provisioning.IConstruct scope, System.Guid? guid = default(System.Guid?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.SubscriptionData>)) { }
-        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string? resourceName) { throw null; }
     }
     public partial class Tenant : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.TenantData>
     {
